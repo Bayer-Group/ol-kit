@@ -1,0 +1,43 @@
+{
+    "plugins": [
+        "node_modules/better-docs/category",
+        "node_modules/better-docs/component"
+    ],
+    "recurseDepth": 10,
+    "source": {
+        "include": "src/"
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc", "closure"]
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "better-docs": {
+            "name": "ol-kit",
+            "hideGenerator": true,
+            "navigation": [
+                {
+                    "label": "Get Started",
+                    "href": "tutorial-Getting%20Started.html"
+                },
+                {
+                    "label": "Docs",
+                    "href": "docs.html"
+                },
+                {
+                    "label": "Github",
+                    "href": "https://github.com/MonsantoCo/ol-kit"
+                }
+            ]
+        }
+    },
+    "opts": {
+        "template": "node_modules/better-docs",
+        "destination": "./docs/",
+        "readme": "./readme.md",
+        "tutorials": "./tutorials"
+    }
+}

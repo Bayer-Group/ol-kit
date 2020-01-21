@@ -1,0 +1,76 @@
+{
+  "name": "ol-kit",
+  "version": "0.1.0",
+  "license": "BSD",
+  "description": "Mapping components & utils built with openlayers + react",
+  "contributors": [
+    {
+      "name": "Jake Stäzrad",
+      "email": "jake.webb@1904labs.com",
+      "url": "https://github.com/webbhead777"
+    },
+    {
+      "name": "Glen Selle",
+      "email": "glen.selle@1904labs.com",
+      "url": "https://github.com/glenselle"
+    },
+    {
+      "name": "Daniel Rodenberg",
+      "email": "daniel.rodenberg@1904labs.com",
+      "url": "https://github.com/drodenberg"
+    },
+    {
+      "name": "Patrick Moulden",
+      "email": "patrick.moulden@1904labs.com",
+      "url": "https://github.com/Patchez"
+    }
+  ],
+  "main": "./src/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "rm -rf lib/ && babel src/ -d lib",
+    "dev": "rm -rf lib/ && { babel --watch src/ -d lib; } | tee >&2",
+    "docs": "jsdoc -r -c jsdoc.json && cp static/index.html static/docs.html static/bayer-logo.png docs/",
+    "test": "jest --notify --config=jest.config.js",
+    "test:coverage": "jest --config=jest.config.js --coverage",
+    "test:watch": "jest --notify --config=jest.config.js --watch --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MonsantoCo/ol-kit.git"
+  },
+  "dependencies": {
+    "nanoid": "^2.1.6",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/runtime": "^7.7.2",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "better-docs": "^1.4.7",
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
+    "jest": "^24.9.0",
+    "jest-environment-jsdom-global": "^1.2.0",
+    "jsdoc": "^3.6.3",
+    "ol": "4.6.5",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  },
+  "peerDependencies": {
+    "ol": "4.6.5",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}

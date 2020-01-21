@@ -1,0 +1,12 @@
+docs/static/
+coverage/
+dist/
+.jest/
+lib/
+node_modules/
+*.log
+.env
+/.idea
+*.iml
+.parcel-cache
+.DS_Store

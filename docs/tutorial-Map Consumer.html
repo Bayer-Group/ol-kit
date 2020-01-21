@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Map Consumer</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">ol-kit</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html" target="_blank">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html" target="_blank">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li><li><a href="tutorial-Map Consumer.html">Map Consumer</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#MapConsumer">MapConsumer</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Tutorial</p>
+                        <h1>Map Consumer</h1>
+                    </header>
+                    
+                    <section>
+
+<header>
+    
+</header>
+
+<article>
+    <h1>MapConsumer</h1>
+<p>The <code>MapConsumer</code> component automatically passes an <code>ol.Map</code> to its children.</p>
+<h2>How does it work?</h2>
+<p>When the <code>Map</code> component is constructed, it attaches the OpenLayers map to a <a href="https://reactjs.org/docs/context.html">context</a>. If this context exists (which means <code>Map</code> has been constructed), <code>MapConsumer</code> renders it's child with a prop of <code>map</code> from the <code>Map</code> parent and also spreads the rest of the inline props. If a <code>Map</code> is not mounted, <code>MapConsumer</code> will just render the child and pass props through without consuming a context.</p>
+<h2>Automatic Example</h2>
+<p>All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup } from 'ol-kit/components'
+
+const App = () => {
+  return (
+    &lt;Map>
+      &lt;Popup /> {/* This component was automatically given a map prop */}
+    &lt;/Map>
+  )
+}
+
+export default App
+</code></pre>
+<h2>Manual Example</h2>
+<p>If you prefer to not use the <code>Map</code> component you must manually pass the <code>map</code> prop to all ol-kit components:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup } from 'ol-kit/components'
+
+const App = () => {
+  return (
+    &lt;div>
+      &lt;Popup map={yourOlMap} />
+    &lt;/div>
+  )
+}
+
+export default App
+</code></pre>
+<h2>Wrapping Your Components</h2>
+<p>Prebuilt ol-kit components get wrapped by this consumer before they are exported so they can be dropped in and just work. If you want to leverage the same logic, wrap your custom component like so:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import PropTypes from 'prop-types'
+import { MapConsumer } from 'ol-kit/components'
+
+const CustomMapComponent = props => {
+  const { map } = props
+
+  // do some logic with the map
+
+  return (
+    &lt;div>This component has map as a prop!&lt;/div>
+  )
+}
+
+CustomMapComponent.propTypes = {
+  map: PropTypes.object.isRequired
+}
+
+export default MapConsumer(CustomMapComponent)
+</code></pre>
+</article>
+
+</section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 15 2020 15:26:28 GMT-0600 (Central Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Getting Started</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">ol-kit</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html" target="_blank">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html" target="_blank">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit" target="_blank">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li><li><a href="tutorial-Map Consumer.html">Map Consumer</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#MapConsumer">MapConsumer</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Tutorial</p>
+                        <h1>Getting Started</h1>
+                    </header>
+                    
+                    <section>
+
+<header>
+    
+</header>
+
+<article>
+    <h2>Getting Started</h2>
+<p>Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like <a href="https://create-react-app.dev/">Create React App</a>. Then simply <code>npm i ol-kit --save</code> and you're ready to go.</p>
+<p>There are two ways to get started with ol-kit.</p>
+<h3>Auto-Generate a Map</h3>
+<p>To get started quickly, you can let ol-kit create an <code>ol.Map</code> by simply importing &amp; rendering <code>Map</code>.</p>
+<pre class="prettyprint source lang-javascript"><code>import { Map } from 'ol-kit/components'
+
+const MyApp = () => &lt;Map />
+</code></pre>
+<p>Without a reference to the map ol-kit created, you can't do anything useful. You can get around this by passing the <code>onMapInit</code> prop. This callback is passed one argument: an <code>ol.Map</code> instance created by ol-kit. Your application should save this for later interaction with the map and other Openlayers APIs.</p>
+<pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
+import { Map } from 'ol-kit/components'
+
+class App extends Component {
+  onMapInit = map => {}
+
+  render () {
+    return (
+      &lt;Map onMapInit={this.onMapInit} />
+    )
+  }
+}
+</code></pre>
+<h3>Pass a Custom Map</h3>
+<p>If you prefer creating your own <code>ol.Map</code> you can ignore the <code>onMapInit</code> prop and instead pass the <code>map</code> prop like so:</p>
+<pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
+import { Map } from 'ol-kit/components'
+import olMap from 'ol/Map'
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.myMap = new olMap({...})
+  }
+
+  render () {
+    return (
+      &lt;Map map={this.myMap} />
+    )
+  }
+}
+</code></pre>
+<h2>Child Components</h2>
+<p>Applications will need to render children which overaly on top of the map and interact with it. Even though the ol-kit <code>Map</code> component renders a map to the page, it also includes a wrapper container allowing you to render custom application components as <code>children</code>. It can be as simple as a popup or a full-fledged routed application.</p>
+<p>In the example below, the <code>Popup</code> and <code>Controls</code> components will be rendered &quot;within&quot; the bounds of the map and on top of the map surface.</p>
+<pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
+import { Map, Popup, Controls } from 'ol-kit/components'
+
+class App extends Component {
+  onMapInit = map => {}
+
+  render () {
+    return (
+      &lt;Map onMapInit={this.onMapInit}>
+        &lt;Popup />
+        &lt;Controls />
+      &lt;/Map>
+    )
+  }
+}
+</code></pre>
+<h2>Next Steps</h2>
+<p>Now that you have a map rendered, you probably want to make it awesome. Check out the components and tutorials provided by ol-kit that make it easy to add info popups, layer management, drawing capability, URI location tracking and much more.</p>
+</article>
+
+</section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 15 2020 15:26:28 GMT-0600 (Central Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
