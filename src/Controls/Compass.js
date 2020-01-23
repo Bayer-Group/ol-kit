@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import MapConsumer from '../MapConsumer'
+import { connectToMap } from 'Map/utils'
 import { CompassContainer } from './styled'
 import { rotateMap } from './utils'
 
@@ -83,4 +83,4 @@ Compass.propTypes = {
   variation: PropTypes.oneOf(['light', 'dark'])
 }
 
-export default MapConsumer(Compass)
+export default connectToMap(Compass)

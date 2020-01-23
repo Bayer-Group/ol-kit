@@ -1,7 +1,10 @@
+import React from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
+
+import { MapContext } from './Map'
 
 /**
  * Create an openlayers map
@@ -38,18 +41,16 @@ export function createMap ({ target }) {
  * @category Map
  * @since 0.1.0
  * @param {Component} component - A React component you want wrapped
- * @returns {Component} A wrapped React component which will automatically be passed
+ * @returns {Component} A wrapped React component which will automatically be passed a reference to the ol.Map
  */
-export function MapConsumer (Component) {
-  return props => {
-    return (
-      !MapContext
-        ? <Component {...props} />
-        : (
-          <MapContext.Consumer>
-            {({ map }) => <Component map={map} {...props} />}
-          </MapContext.Consumer>
-        )
-    )
-  }
+export function connectToMap (Component) {
+  return props => (
+    !MapContext
+      ? <Component {...props} />
+      : (
+        <MapContext.Consumer>
+          {({ map }) => <Component map={map} {...props} />}
+        </MapContext.Consumer>
+      )
+  )
 }
