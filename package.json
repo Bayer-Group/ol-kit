@@ -53,6 +53,7 @@
     "@babel/runtime": "^7.7.2",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-inline-react-svg": "^1.1.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "better-docs": "^1.4.7",
     "canvas-prebuilt": "^1.6.5-prerelease.1",

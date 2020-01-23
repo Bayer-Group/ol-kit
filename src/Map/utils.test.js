@@ -1,5 +1,7 @@
 import React from 'react'
+import { mount } from 'enzyme'
 import olMap from 'ol/map'
+import Map from './Map'
 import { connectToMap, createMap } from './utils'
 
 describe('Map utils', () => {
