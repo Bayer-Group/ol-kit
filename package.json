@@ -1,5 +1,5 @@
 {
-  "name": "@MonsantoCo/ol-kit",
+  "name": "ol-kit",
   "version": "0.1.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",

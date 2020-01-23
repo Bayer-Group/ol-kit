@@ -3,6 +3,7 @@ coverage/
 dist/
 .jest/
 lib/
+core/
 node_modules/
 *.log
 .env
