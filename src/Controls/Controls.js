@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { ControlsContainer, IconsContainer } from './styled'
 import Compass from './Compass'
-import { connectToMap } from 'Map/utils'
+import { connectToMap } from 'Map'
 import ZoomControls from './ZoomControls'
 
 function Controls (props) {

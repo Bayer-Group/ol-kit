@@ -1,8 +1,8 @@
 import React from 'react'
-import Map from 'ol/Map'
-import View from 'ol/View'
-import TileLayer from 'ol/layer/Tile'
-import OSM from 'ol/source/OSM'
+import Map from 'ol/map'
+import View from 'ol/view'
+import TileLayer from 'ol/layer/tile'
+import OSM from 'ol/source/osm'
 
 import { MapContext } from './Map'
 

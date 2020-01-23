@@ -5,7 +5,7 @@ import MINUS from 'images/zoom_out_ico.svg'
 import PLUS from 'images/zoom_in_ico.svg'
 import { Icon, IconSeparator } from './styled'
 import { zoomDelta } from './utils'
-import { connectToMap } from 'Map/utils'
+import { connectToMap } from 'Map'
 
 function ZoomControls (props) {
   const { map } = props
