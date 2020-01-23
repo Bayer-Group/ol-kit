@@ -1,5 +1,5 @@
 {
-  "name": "ol-kit",
+  "name": "@MonsantoCo/ol-kit",
   "version": "0.1.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
@@ -25,13 +25,10 @@
       "url": "https://github.com/Patchez"
     }
   ],
-  "main": "./src/index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "./core/index.js",
   "scripts": {
-    "build": "rm -rf lib/ && babel src/ -d lib",
-    "dev": "rm -rf lib/ && { babel --watch src/ -d lib; } | tee >&2",
+    "build": "rm -rf core/ && babel src/ -d core",
+    "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
     "docs": "jsdoc -r -c jsdoc.json && cp static/index.html static/docs.html static/bayer-logo.png docs/",
     "test": "jest --notify --config=jest.config.js",
     "test:coverage": "jest --config=jest.config.js --coverage",
@@ -43,7 +40,8 @@
   },
   "dependencies": {
     "nanoid": "^2.1.6",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "styled-components": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
