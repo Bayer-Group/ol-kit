@@ -6,9 +6,9 @@ import { MapContext } from '../Map/Map'
  * An HOC designed to automatically pass down an ol.Map from the top-level Map component
  * @function
  * @category Map
- * @since 1.0.0
+ * @since 0.1.0
  * @param {Component} component - A React component you want wrapped
- * @returns {Component} A wrapped React component which will automatically be passed 
+ * @returns {Component} A wrapped React component which will automatically be passed
  */
 export function MapConsumer (Component) {
   return props => {
