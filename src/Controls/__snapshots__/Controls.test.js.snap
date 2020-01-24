@@ -315,7 +315,9 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -342,7 +344,9 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -2058,7 +2062,9 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -2085,7 +2091,9 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -3801,7 +3809,9 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -3828,7 +3838,9 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -5544,7 +5556,9 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
@@ -5571,7 +5585,9 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "callOnce": false,
           "listener": [Function],
           "target": <div
+            height="800px"
             id="map"
+            width="1200px"
           >
             <div
               class="ol-viewport"
