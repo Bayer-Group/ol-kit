@@ -72,7 +72,7 @@ describe('Zoom control interactions', () => {
 
     expect(initialZoom).toBe(5)
     // click + zoom in button
-    wrapper.find('#_ol_kit_zoom_in').first().simulate('click')
+    wrapper.find('#_ol_kit_zoom_in').first().simulate('mousedown')
     expect(mockMap.getView().getZoom()).toBe(5.1)
   })
   it('should zoom map out', () => {
@@ -81,10 +81,10 @@ describe('Zoom control interactions', () => {
 
     expect(initialZoom).not.toBe(5)
     // click - zoom out button
-    wrapper.find('#_ol_kit_zoom_out').first().simulate('click')
+    wrapper.find('#_ol_kit_zoom_out').first().simulate('mousedown')
     expect(mockMap.getView().getZoom()).toBe(5)
     // click - zoom out button
-    wrapper.find('#_ol_kit_zoom_out').first().simulate('click')
+    wrapper.find('#_ol_kit_zoom_out').first().simulate('mousedown')
     expect(mockMap.getView().getZoom()).toBe(4.9)
   })
 })
