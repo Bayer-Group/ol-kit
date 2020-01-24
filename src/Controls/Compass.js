@@ -32,7 +32,7 @@ function Compass (props) {
     return function cleanup() {
       map.getView().un('change:rotation', listener)
     }
-  })
+  }, [map]) // optimization: listeners will only attach/cleanup if the map prop changes
 
   const getRadianOffset = (radians, clockwiseTurn) => {
     return clockwiseTurn
