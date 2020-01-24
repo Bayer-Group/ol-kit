@@ -55,15 +55,15 @@ function Compass (props) {
   return (
     <CompassContainer background={colors[variation].background}>
       <svg width='48px' height='48px' viewBox='0 0 48 48' version='1.1' xmlns='http://www.w3.org/2000/svg'>
-        <g onClick={() => rotate('left')} transform='translate(8, 11)'>
+        <g onClick={() => rotate('left')} transform='translate(8, 11)' id='_ol_kit_rotate_left'>
           <path stroke={colors[variation].arrows} strokeWidth='2' strokeLinecap='square' fill='transparent' d='M6.08917588,0.274482759 C2.08917588,3.50525199 0.0891758754,7.27448276 0.0891758754,11.5821751 C0.0891758754,18.0437135 3.5177473,21.2744828 3.5177473,21.2744828'></path>
           <polygon fill={colors[variation].arrows} transform='translate(5.838799, 24.192853) rotate(143.000000) translate(-5.838799, -24.192853) ' points='5.93396953 20.6928529 8.83879936 27.636638 2.83879936 27.6928529'></polygon>
         </g>
-        <g onClick={() => rotate('north')} transform={`translate(18.0, 10.0) rotate(${degrees} 6.0 15.0)`}>
+        <g onClick={() => rotate('north')} transform={`translate(18.0, 10.0) rotate(${degrees} 6.0 15.0)`} id='_ol_kit_true_north'>
           <polygon fill={colors[variation].needleTop} points='5.74325656 0 11.4865131 15.4007427 0 15.4007427'></polygon>
           <polygon fill={colors[variation].needleBottom} points='5.74325656 30.8014854 0 15.4007427 11.4865131 15.4007427'></polygon>
         </g>
-        <g onClick={() => rotate('right')} transform='translate(34.500000, 25.500000) scale(-1, 1) translate(-34.500000, -25.500000) translate(29.000000, 11.000000)'>
+        <g onClick={() => rotate('right')} transform='translate(34.500000, 25.500000) scale(-1, 1) translate(-34.500000, -25.500000) translate(29.000000, 11.000000)' id='_ol_kit_rotate_right'>
           <path stroke={colors[variation].arrows} strokeWidth='2' strokeLinecap='square' fill='transparent' d='M6.08917588,0.274482759 C2.08917588,3.50525199 0.0891758754,7.27448276 0.0891758754,11.5821751 C0.0891758754,18.0437135 3.5177473,21.2744828 3.5177473,21.2744828'></path>
           <polygon fill={colors[variation].arrows} transform='translate(5.838799, 24.192853) rotate(143.000000) translate(-5.838799, -24.192853) ' points='5.93396953 20.6928529 8.83879936 27.636638 2.83879936 27.6928529'></polygon>
         </g>

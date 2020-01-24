@@ -46,11 +46,11 @@ function ZoomControls (props) {
 
   return (
     <>
-      <Icon onClick={() => zoom('ZOOM_IN')}>
+      <Icon onClick={() => zoom('ZOOM_IN')} id='_ol_kit_zoom_in'>
         <PLUS />
       </Icon>
       <IconSeparator />
-      <Icon onClick={() => zoom('ZOOM_OUT')}>
+      <Icon onClick={() => zoom('ZOOM_OUT')} id='_ol_kit_zoom_out'>
         <MINUS />
       </Icon>
     </>
