@@ -9,7 +9,6 @@ import { connectToMap } from 'Map'
 
 function ZoomControls (props) {
   const { map } = props
-  let mouseUpTime
   let mouseDownTime
   let mouseDownTimeout
   let repeatTimeout
@@ -30,8 +29,7 @@ function ZoomControls (props) {
     }, 200)
   }
   const stopZoom = direction => {
-    mouseUpTime = Date.now()
-    if (mouseUpTime - mouseDownTime < 150) {
+    if (Date.now() - mouseDownTime < 150) {
       zoom(direction)
       clearTimeout(mouseDownTimeout)
     }
