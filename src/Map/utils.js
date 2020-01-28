@@ -18,7 +18,7 @@ import { MapContext } from './Map'
 export function createMap (opts = {}) {
   if (!opts.target) throw new Error('You must pass an options object with a DOM target for the map')
   if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) throw new Error('The target should either by a string id of an existing DOM element or the element itself')
-  
+
   // create a new map instance
   const map = new Map({
     view: new View({
@@ -36,7 +36,6 @@ export function createMap (opts = {}) {
 
   return map
 }
-
 
 /**
  * An HOC designed to automatically pass down an ol.Map from the top-level Map component

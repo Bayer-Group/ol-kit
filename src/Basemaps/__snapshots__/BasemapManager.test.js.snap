@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Map /> should render a basic basemap manager component 1`] = `
+<styled.div>
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+</styled.div>
+`;
+
+exports[`<Map /> should render a single child 1`] = `
+<styled.div>
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <div
+    id="child comp"
+  >
+    child comp
+  </div>
+</styled.div>
+`;
+
+exports[`<Map /> should render an array of children 1`] = `
+<styled.div>
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <Component
+    layerTypeID="_ol_kit_basemap"
+  />
+  <div
+    id="1"
+    key="1"
+  >
+    child comp
+  </div>
+  <div
+    id="2"
+    key="2"
+  >
+    child comp
+  </div>
+  <div
+    id="3"
+    key="3"
+  >
+    child comp
+  </div>
+</styled.div>
+`;
