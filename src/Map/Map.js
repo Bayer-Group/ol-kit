@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import { StyledMap } from './styled'
-import { createMap } from './utils'
+import { createMap, updateUrlFromMap } from './utils'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
 export let MapContext = null
@@ -37,6 +37,9 @@ class Map extends React.Component {
     } else {
       this.map = map
     }
+
+    // TODO make conditoina;
+    updateUrlFromMap(this.map)
   }
 
   getContextValue = () => {
@@ -80,7 +83,7 @@ Map.propTypes = {
   /** optionally pass a custom map */
   map: PropTypes.object,
   /** returns an initialized map object if nothing was passed to the `map` prop */
-  onMapInit: PropTypes.func.isRequired
+  onMapInit: PropTypes.func
 }
 
 export default Map

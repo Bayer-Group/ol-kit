@@ -3,6 +3,8 @@ import Map from 'ol/map'
 import View from 'ol/view'
 import TileLayer from 'ol/layer/tile'
 import OSM from 'ol/source/osm'
+import olProj from 'ol/proj'
+import qs from 'qs'
 
 import { MapContext } from './Map'
 
@@ -18,7 +20,7 @@ import { MapContext } from './Map'
 export function createMap (opts = {}) {
   if (!opts.target) throw new Error('You must pass an options object with a DOM target for the map')
   if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) throw new Error('The target should either by a string id of an existing DOM element or the element itself')
-  
+
   // create a new map instance
   const map = new Map({
     view: new View({
@@ -56,4 +58,17 @@ export function connectToMap (Component) {
         </MapContext.Consumer>
       )
   )
+}
+
+export function updateUrlFromMap (map, viewParam = 'view') {
+  const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+  const coords = olProj.transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
+  const view = `${parseFloat(coords[1]).toFixed(6)},${parseFloat(coords[0]).toFixed(6)},${parseFloat(map.getView().getZoom()).toFixed(2)},${parseFloat(map.getView().getRotation()).toFixed(2)}`
+  const newQuery = {...query, view}
+  const queryString = qs.stringify(newQuery, { addQueryPrefix: true, encoder: (str) => str })
+  const newUrl = window.location.pathname + queryString
+
+  window.history.replaceState(null, '', newUrl)
+
+  return newUrl
 }
