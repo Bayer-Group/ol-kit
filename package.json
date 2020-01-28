@@ -40,8 +40,7 @@
   },
   "dependencies": {
     "nanoid": "^2.1.6",
-    "prop-types": "^15.7.2",
-    "styled-components": "^5.0.0"
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -65,11 +64,13 @@
     "jsdoc": "^3.6.3",
     "ol": "4.6.5",
     "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react-dom": "^16.11.0",
+    "styled-components": "^5.0.0"
   },
   "peerDependencies": {
     "ol": "4.6.5",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "styled-components": ">=5.0.0"
   }
 }

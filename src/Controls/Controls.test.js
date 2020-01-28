@@ -10,6 +10,11 @@ const mockMap = new olMap({
 })
 
 describe('<Controls />', () => {
+  // // jest does not reset the DOM after each test, so we do this manually
+  // afterEach(() => {
+  //   document.body.innerHTML = ''
+  // })
+
   it('should shallow controls default position', () => {
     const wrapper = shallow(<Controls map={mockMap} />)
 
