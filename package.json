@@ -25,13 +25,10 @@
       "url": "https://github.com/Patchez"
     }
   ],
-  "main": "./src/index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "./core/index.js",
   "scripts": {
-    "build": "rm -rf lib/ && babel src/ -d lib",
-    "dev": "rm -rf lib/ && { babel --watch src/ -d lib; } | tee >&2",
+    "build": "rm -rf core/ && babel src/ -d core",
+    "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
     "docs": "jsdoc -r -c jsdoc.json && cp static/index.html static/docs.html static/bayer-logo.png docs/",
     "test": "jest --notify --config=jest.config.js",
     "test:coverage": "jest --config=jest.config.js --coverage",
@@ -55,6 +52,7 @@
     "@babel/runtime": "^7.7.2",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-inline-react-svg": "^1.1.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "better-docs": "^1.4.7",
     "canvas-prebuilt": "^1.6.5-prerelease.1",
@@ -66,11 +64,13 @@
     "jsdoc": "^3.6.3",
     "ol": "4.6.5",
     "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react-dom": "^16.11.0",
+    "styled-components": "^5.0.0"
   },
   "peerDependencies": {
     "ol": "4.6.5",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "styled-components": ">=5.0.0"
   }
 }

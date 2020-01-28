@@ -14,7 +14,7 @@ module.exports = {
   ],
   'testPathIgnorePatterns': [
     'node_modules',
-    'lib'
+    'core'
   ],
   'setupFiles': [
     './jest.setup.js'
