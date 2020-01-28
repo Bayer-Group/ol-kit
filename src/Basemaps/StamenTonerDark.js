@@ -52,7 +52,7 @@ class StamenTonerDark extends React.Component {
     const { translations, thumbnail, map, layerTypeID } = this.props
     const label = translations.label
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0][layerTypeID] === stamenTonerDark : false
+    const isActive = layerArray.length ? layerArray[0][layerTypeID] === 'stamenTonerDark' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>

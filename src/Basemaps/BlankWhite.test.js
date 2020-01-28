@@ -75,9 +75,9 @@ describe('<BlankWhite />', () => {
     const map = new olMap()
     const wrapper = mount(<BlankWhite map={map} onBasemapChanged={callback} />, { wrappingComponent: Map })
 
+    expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
     wrapper.simulate('click')
-
     expect(callback).toHaveBeenCalledTimes(1)
-    expect(wrapper).toMatchSnapshot()
+    expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeTruthy()
   })
 })

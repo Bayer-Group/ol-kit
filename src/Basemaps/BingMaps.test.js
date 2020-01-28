@@ -90,9 +90,9 @@ describe('<BingMaps />', () => {
     const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} onBasemapChanged={callback} />,
       { wrappingComponent: Map })
 
+    expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
     wrapper.simulate('click')
-
     expect(callback).toHaveBeenCalledTimes(1)
-    expect(wrapper).toMatchSnapshot()
+    expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeTruthy()
   })
 })
