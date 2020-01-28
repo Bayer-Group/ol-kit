@@ -1,2 +1,6 @@
-export { default as Controls, Compass, ZoomControls } from './Controls'
-export { default as Map, connectToMap } from './Map'
+// components
+import Map from './Map'
+
+export {
+    Map
+}

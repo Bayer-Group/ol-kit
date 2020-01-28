@@ -1,5 +1,5 @@
 # Map
-The `<Map>` component will either create an [OpenLayers map](https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html) for you or take a prebuilt map as a prop. A reference to this map will be passed down via props to `olKit` child components of `<Map>` via [`connectToMap`](../connectToMap/example.md).
+The `<Map>` component will either create an [OpenLayers map](https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html) for you or take a prebuilt map as a prop. A reference to this map will be passed down via props to `olKit` child components of `<Map>` via [`MapConsumer`](../MapConsumer/example.md).
 
 ## Drop-in example:
 This one-liner will create a map + div with the id of `_olKit_map_{uuid}` & render the map into that div.
