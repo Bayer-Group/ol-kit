@@ -15,7 +15,10 @@ import { MapContext } from './Map'
  * @param {String} [opts.target] - htm id tag that map will into which the map will render
  * @returns {ol.Map} A newly constructed [ol.Map]{@link https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html}
  */
-export function createMap ({ target }) {
+export function createMap (opts = {}) {
+  if (!opts.target) throw new Error('You must pass an options object with a DOM target for the map')
+  if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) throw new Error('The target should either by a string id of an existing DOM element or the element itself')
+  
   // create a new map instance
   const map = new Map({
     view: new View({
@@ -27,7 +30,7 @@ export function createMap ({ target }) {
         source: new OSM()
       })
     ],
-    target,
+    target: opts.target,
     controls: []
   })
 
