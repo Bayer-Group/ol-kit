@@ -8,7 +8,7 @@ When the `Map` component is constructed, it attaches the OpenLayers map to a [co
 All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:
 ```javascript
 import React from 'react'
-import { Map, Popup } from 'ol-kit/components'
+import { Map, Popup } from '@bayer/ol-kit'
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ export default App
 If you prefer to not use the `Map` component you must manually pass the `map` prop to all ol-kit components:
 ```javascript
 import React from 'react'
-import { Map, Popup } from 'ol-kit/components'
+import { Map, Popup } from '@bayer/ol-kit'
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ Prebuilt ol-kit components get wrapped by this consumer before they are exported
 ```javascript
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connectToMap } from 'ol-kit/components'
+import { connectToMap } from '@bayer/ol-kit'
 
 const CustomMapComponent = props => {
   const { map } = props

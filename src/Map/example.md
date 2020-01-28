@@ -5,7 +5,7 @@ The `<Map>` component will either create an [OpenLayers map](https://openlayers.
 This one-liner will create a map + div with the id of `_olKit_map_{uuid}` & render the map into that div.
 ```javascript static
 import React from 'react'
-import { Map } from 'olKit/components'
+import { Map } from '@bayer/ol-kit'
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ export default App
 `onMapInit` is not required but it will be called on [`componentDidMount`](https://reactjs.org/docs/react-component.html#componentdidmount) and return a reference to the newly created OpenLayers map (in case you want to manipulate it).
 ```javascript static
 import React from 'react'
-import { Map } from 'olKit/components'
+import { Map } from '@bayer/ol-kit'
 
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
@@ -52,7 +52,7 @@ export default App
 Make sure the passed map is created before `<Map>` is mounted; if the `map` prop is falsey on mount, `<Map>` will create it's own map instead (and return it via `onMapInit`).
 ```javascript static
 import React from 'react'
-import { Map, Popup, Controls } from 'olKit/components'
+import { Map, Popup, Controls } from '@bayer/ol-kit'
 
 import Map from 'ol/Map'
 import View from 'ol/View'

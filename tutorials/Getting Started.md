@@ -7,7 +7,7 @@ There are two ways to get started with ol-kit.
 ### Auto-Generate a Map
 To get started quickly, you can let ol-kit create an `ol.Map` by simply importing & rendering `Map`.
 ```javascript
-import { Map } from 'ol-kit/components'
+import { Map } from '@bayer/ol-kit'
 
 const MyApp = () => <Map />
 ```
@@ -15,7 +15,7 @@ const MyApp = () => <Map />
 Without a reference to the map ol-kit created, you can't do anything useful. You can get around this by passing the `onMapInit` prop. This callback is passed one argument: an `ol.Map` instance created by ol-kit. Your application should save this for later interaction with the map and other Openlayers APIs.
 ```javascript
 import { Component } from 'react'
-import { Map } from 'ol-kit/components'
+import { Map } from '@bayer/ol-kit'
 
 class App extends Component {
   onMapInit = map => {}
@@ -33,7 +33,7 @@ class App extends Component {
 If you prefer creating your own `ol.Map` you can ignore the `onMapInit` prop and instead pass the `map` prop like so:
 ```javascript
 import { Component } from 'react'
-import { Map } from 'ol-kit/components'
+import { Map } from '@bayer/ol-kit'
 import olMap from 'ol/Map'
 
 class App extends Component {
@@ -58,7 +58,7 @@ In the example below, the `Popup` and `Controls` components will be rendered "wi
 
 ```javascript
 import { Component } from 'react'
-import { Map, Popup, Controls } from 'ol-kit/components'
+import { Map, Popup, Controls } from '@bayer/ol-kit'
 
 class App extends Component {
   onMapInit = map => {}
@@ -75,4 +75,4 @@ class App extends Component {
 ```
 
 ## Next Steps
-Now that you have a map rendered, you probably want to make it awesome. Check out the components and tutorials provided by ol-kit that make it easy to add info popups, layer management, drawing capability, URI location tracking and much more. 
+Now that you have a map rendered, you probably want to make it awesome. Check out the components and tutorials provided by ol-kit that make it easy to add info popups, layer management, drawing capability, URI location tracking and much more.
