@@ -63,8 +63,8 @@ export function connectToMap (Component) {
 export function updateUrlFromMap (map, viewParam = 'view') {
   const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
   const coords = olProj.transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
-  const view = `${parseFloat(coords[1]).toFixed(6)},${parseFloat(coords[0]).toFixed(6)},${parseFloat(map.getView().getZoom()).toFixed(2)},${parseFloat(map.getView().getRotation()).toFixed(2)}`
-  const newQuery = {...query, view}
+  const view = { [viewParam]: `${parseFloat(coords[1]).toFixed(6)},${parseFloat(coords[0]).toFixed(6)},${parseFloat(map.getView().getZoom()).toFixed(2)},${parseFloat(map.getView().getRotation()).toFixed(2)}` }
+  const newQuery = {...query, ...view}
   const queryString = qs.stringify(newQuery, { addQueryPrefix: true, encoder: (str) => str })
   const newUrl = window.location.pathname + queryString
 

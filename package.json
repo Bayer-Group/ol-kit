@@ -39,6 +39,7 @@
     "url": "git@github.com:MonsantoCo/ol-kit.git"
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "nanoid": "^2.1.6",
     "prop-types": "^15.7.2",
     "qs": "^6.9.1"

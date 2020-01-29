@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
+import debounce from 'lodash.debounce'
 import { StyledMap } from './styled'
 import { createMap, updateUrlFromMap } from './utils'
 
@@ -25,7 +26,7 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { map, onMapInit } = this.props
+    const { map, onMapInit, shouldUpdateUrl, urlViewParam } = this.props
 
     if (!map) {
       // if no map was passed, create the map
@@ -38,8 +39,11 @@ class Map extends React.Component {
       this.map = map
     }
 
-    // TODO make conditoina;
-    updateUrlFromMap(this.map)
+    if (shouldUpdateUrl) {
+      const mapMoveListener = debounce(() => updateUrlFromMap(this.map, urlViewParam), 400)
+
+      this.map.on('moveend', mapMoveListener)
+    }
   }
 
   getContextValue = () => {
@@ -69,7 +73,9 @@ class Map extends React.Component {
 Map.defaultProps = {
   fullScreen: false,
   map: null,
-  onMapInit: () => {}
+  onMapInit: () => {},
+  shouldUpdateUrl: true,
+  urlViewParam: 'view'
 }
 
 Map.propTypes = {
@@ -83,7 +89,11 @@ Map.propTypes = {
   /** optionally pass a custom map */
   map: PropTypes.object,
   /** returns an initialized map object if nothing was passed to the `map` prop */
-  onMapInit: PropTypes.func
+  onMapInit: PropTypes.func,
+  /** add map location coords + zoom level to url as query params */
+  shouldUpdateUrl: PropTypes.bool,
+  /** change the url param used to set the map location coords */
+  urlViewParam: PropTypes.string
 }
 
 export default Map
