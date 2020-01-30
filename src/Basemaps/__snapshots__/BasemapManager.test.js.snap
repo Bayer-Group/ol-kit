@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Map /> should render a basic basemap manager component 1`] = `
+exports[`<BasemapManager /> should render a basic basemap manager component 1`] = `
 <styled.div>
   <Component
     layerTypeID="_ol_kit_basemap"
@@ -20,7 +20,7 @@ exports[`<Map /> should render a basic basemap manager component 1`] = `
 </styled.div>
 `;
 
-exports[`<Map /> should render a single child 1`] = `
+exports[`<BasemapManager /> should render a single child 1`] = `
 <styled.div>
   <Component
     layerTypeID="_ol_kit_basemap"
@@ -45,7 +45,7 @@ exports[`<Map /> should render a single child 1`] = `
 </styled.div>
 `;
 
-exports[`<Map /> should render an array of children 1`] = `
+exports[`<BasemapManager /> should render an array of children 1`] = `
 <styled.div>
   <Component
     layerTypeID="_ol_kit_basemap"

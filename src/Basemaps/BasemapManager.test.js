@@ -1,10 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import BasemapManager from './BasemapManager'
-import 'jest-styled-components'
 import Map from '../Map'
 
-describe('<Map />', () => {
+describe('<BasemapManager />', () => {
   it('should render a basic basemap manager component', () => {
     const wrapper = shallow(<BasemapManager inlineProp={true} />, { wrappingComponent: Map })
 

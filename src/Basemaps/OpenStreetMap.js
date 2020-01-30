@@ -64,6 +64,7 @@ class OpenStreetMap extends React.Component {
 }
 
 OpenStreetMap.propTypes = {
+  /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({

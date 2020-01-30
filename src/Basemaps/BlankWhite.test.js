@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import BlankWhite from './BlankWhite'
-import 'jest-styled-components'
 import Map from '../Map'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'

@@ -66,6 +66,7 @@ class BingMaps extends React.Component {
 }
 
 BingMaps.propTypes = {
+  /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
   layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
