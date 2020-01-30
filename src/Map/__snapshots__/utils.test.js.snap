@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`updateMapFromUrl should return rejected promise for missing view url param 1`] = `"url param: \\"view\\" could not be found- map not updated from 'updateMapFromUrl'"`;

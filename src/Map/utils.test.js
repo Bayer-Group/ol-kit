@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import olMap from 'ol/map'
 import Map from './Map'
-import { connectToMap, createMap } from './utils'
+import { connectToMap, createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
 
 describe('createMap', () => {
   // jest does not reset the DOM after each test, so we do this manually
@@ -62,5 +62,94 @@ describe('connectToMap', () => {
     expect(wrapper.find(Child).props().inlineProp).toBe(true)
     // connectToMap should add a map prop since Map is mounted
     expect(wrapper.find(Child).props().map).toBeTruthy()
+  })
+})
+
+describe('updateMapFromUrl', () => {
+  // jest does not reset the DOM after each test, so we do this manually
+  afterEach(() => {
+    document.getElementsByTagName('html')[0].innerHTML = '';
+  })
+
+  it('should return rejected promise for missing view url param', () => {
+    global.document.body.innerHTML = '<div id="map"></div>'
+
+    const el = global.document.getElementById('map')
+    const map = createMap({ target: el })
+
+    expect(updateMapFromUrl(map)).rejects.toMatchSnapshot()
+  })
+
+  it('should update map from url with default "view" url param', () => {
+    global.document.body.innerHTML = '<div id="map"></div>'
+
+    const el = global.document.getElementById('map')
+    const map = createMap({ target: el })
+
+    // set initial center, zoom & rotation
+    map.getView().setCenter([0,0])
+    map.getView().setZoom(3)
+    map.getView().setRotation(0)
+
+    expect(map.getView().getCenter()).toEqual([0,0])
+    expect(map.getView().getZoom()).toBe(3)
+    expect(map.getView().getRotation()).toBe(0)
+
+    // set the url with a view param
+    window.history.replaceState(null, '', 'www.ol-kit.dev/?view=49.618551,-97.280674,8.00,0.91')
+
+    // second arg (viewParam) is defaulted to "view"
+    updateMapFromUrl(map)
+    // updated map center, zoom & rotation from url
+    expect(map.getView().getCenter()).toEqual([ -10829235.09370645, 6380475.798452517 ])
+    expect(map.getView().getZoom()).toBe(8)
+    // round off crazy long decimal
+    expect(Number(map.getView().getRotation().toFixed(2))).toEqual(0.91)
+  })
+
+  it('should update map from url with custom "customParam" url param', () => {
+    global.document.body.innerHTML = '<div id="map"></div>'
+
+    const el = global.document.getElementById('map')
+    const map = createMap({ target: el })
+
+    // set initial center, zoom & rotation
+    map.getView().setCenter([0,0])
+    map.getView().setZoom(3)
+    map.getView().setRotation(0)
+
+    expect(map.getView().getCenter()).toEqual([0,0])
+    expect(map.getView().getZoom()).toBe(3)
+    expect(map.getView().getRotation()).toBe(0)
+
+    // set the url with a view param
+    window.history.replaceState(null, '', 'www.ol-kit.dev/?customParam=49.618551,-97.280674,8.00,0.91')
+
+    // second arg (viewParam) is "customParam"
+    updateMapFromUrl(map, 'customParam')
+    // updated map center, zoom & rotation from url
+    expect(map.getView().getCenter()).toEqual([ -10829235.09370645, 6380475.798452517 ])
+    expect(map.getView().getZoom()).toBe(8)
+    // round off crazy long decimal
+    expect(Number(map.getView().getRotation().toFixed(2))).toEqual(0.91)
+  })
+})
+
+describe('updateUrlFromMap', () => {
+  // jest does not reset the DOM after each test, so we do this manually
+  afterEach(() => {
+    document.getElementsByTagName('html')[0].innerHTML = '';
+  })
+
+  it('should update url from map changes', () => {
+    global.document.body.innerHTML = '<div id="map"></div>'
+
+    const el = global.document.getElementById('map')
+    const map = createMap({ target: el })
+
+    // set the url with a competing url param
+    window.history.replaceState(null, '', 'www.ol-kit.dev/?existingParam=true')
+
+    // CHECK HERE
   })
 })
