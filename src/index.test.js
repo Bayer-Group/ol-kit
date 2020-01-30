@@ -1,9 +1,11 @@
-import * as olKit from './index'
+import * as ol_kit from './index'
 
-describe('olKit package', () => {
+describe('ol-kit package', () => {
   it('should not export undefined', () => {
-    Object.keys(olKit).forEach(exportKey => {
-      expect(Boolean(olKit[exportKey])).not.toBeUndefined()
+    Object.keys(ol_kit).forEach(exportKey => {
+      expect(Boolean(ol_kit[exportKey])).not.toBeUndefined()
     })
+
+    expect(ol_kit).toMatchSnapshot()
   })
 })

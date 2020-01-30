@@ -48,9 +48,7 @@ class Map extends React.Component {
 
     if (shouldReadUrl) {
       // read the url to update the map from view info
-      updateMapFromUrl(this.map, urlViewParam)
-        .then((e) => console.log('resolved!', e))
-        .catch(console.error)
+      updateMapFromUrl(this.map, urlViewParam).catch(console.error)
     }
   }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import qs from 'qs'
 import olMap from 'ol/map'
 import Map from './Map'
 import { connectToMap, createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
@@ -96,7 +97,7 @@ describe('updateMapFromUrl', () => {
     expect(map.getView().getRotation()).toBe(0)
 
     // set the url with a view param
-    window.history.replaceState(null, '', 'www.ol-kit.dev/?view=49.618551,-97.280674,8.00,0.91')
+    window.history.replaceState(null, '', '?view=49.618551,-97.280674,8.00,0.91')
 
     // second arg (viewParam) is defaulted to "view"
     updateMapFromUrl(map)
@@ -123,7 +124,7 @@ describe('updateMapFromUrl', () => {
     expect(map.getView().getRotation()).toBe(0)
 
     // set the url with a view param
-    window.history.replaceState(null, '', 'www.ol-kit.dev/?customParam=49.618551,-97.280674,8.00,0.91')
+    window.history.replaceState(null, '', '?customParam=49.618551,-97.280674,8.00,0.91')
 
     // second arg (viewParam) is "customParam"
     updateMapFromUrl(map, 'customParam')
@@ -143,13 +144,18 @@ describe('updateUrlFromMap', () => {
 
   it('should update url from map changes', () => {
     global.document.body.innerHTML = '<div id="map"></div>'
+    // set the url with a competing url param
+    window.history.replaceState(null, '', '?existingParam=true&otherParam=false')
 
     const el = global.document.getElementById('map')
-    const map = createMap({ target: el })
-
-    // set the url with a competing url param
-    window.history.replaceState(null, '', 'www.ol-kit.dev/?existingParam=true')
-
-    // CHECK HERE
+    const onMapInit = map => {
+      map.getView().setCenter([0,0])
+      const query = qs.parse(window.location.href, { ignoreQueryPrefix: true })
+      console.log('query', query)
+      expect(query.existingParam).toBe(true)
+      expect(query.otherParam).toBe(false)
+    }
+    // default updateUrlFromMap is true
+    const wrapper = mount(<Map onMapInit={onMapInit} />)
   })
 })

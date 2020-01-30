@@ -76,6 +76,7 @@ export function updateUrlFromMap (map, viewParam = 'view') {
   const newQuery = {...query, ...view}
   const queryString = qs.stringify(newQuery, { addQueryPrefix: true, encoder: (str) => str })
   const newUrl = window.location.pathname + queryString
+  console.log('newUrl', newUrl)
 
   window.history.replaceState(null, '', newUrl)
 
