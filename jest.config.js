@@ -17,7 +17,8 @@ module.exports = {
     'core'
   ],
   'setupFiles': [
-    './jest.setup.js'
+    './jest.setup.js',
+    'jest-canvas-mock'
   ],
   'snapshotSerializers': [
     '<rootDir>/node_modules/enzyme-to-json/serializer'

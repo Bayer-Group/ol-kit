@@ -40,7 +40,6 @@ export function createMap (opts = {}) {
   return map
 }
 
-
 /**
  * An HOC designed to automatically pass down an ol.Map from the top-level Map component
  * @function
