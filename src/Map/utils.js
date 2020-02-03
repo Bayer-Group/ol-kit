@@ -99,7 +99,7 @@ export function updateMapFromUrl (map, viewParam = 'view') {
     const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
     if (!(map instanceof Map)) return ugh.throw("'updateMapFromUrl' requires a valid openlayers map as the first argument", reject)
-    if (!query[viewParam]) return ugh.warn(`url param: "${viewParam}" could not be found- map view was not updated from 'updateMapFromUrl'`)
+    if (!query[viewParam]) return ugh.warn(`url param "${viewParam}" could not be found- map view was not updated by 'updateMapFromUrl'`)
     const [y, x, zoom, rotation] = query[viewParam].split(',')
     const centerAndZoomOpts = { x, y, zoom }
     const coords = centerAndZoom(map, centerAndZoomOpts)

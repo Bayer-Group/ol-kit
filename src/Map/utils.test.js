@@ -72,6 +72,10 @@ describe('updateMapFromUrl', () => {
     document.getElementsByTagName('html')[0].innerHTML = '';
   })
 
+  it('should throw error for missing map arg', () => {
+    expect(updateMapFromUrl()).rejects.toMatchSnapshot()
+  })
+
   it('should return rejected promise for missing view url param', () => {
     global.document.body.innerHTML = '<div id="map"></div>'
 
@@ -97,7 +101,7 @@ describe('updateMapFromUrl', () => {
     expect(map.getView().getRotation()).toBe(0)
 
     // set the url with a view param
-    window.history.replaceState(null, '', '?view=49.618551,-97.280674,8.00,0.91')
+    window.history.replaceState(null, '', `${window.location.pathname}?view=49.618551,-97.280674,8.00,0.91`)
 
     // second arg (viewParam) is defaulted to "view"
     updateMapFromUrl(map)
@@ -124,7 +128,7 @@ describe('updateMapFromUrl', () => {
     expect(map.getView().getRotation()).toBe(0)
 
     // set the url with a view param
-    window.history.replaceState(null, '', '?customParam=49.618551,-97.280674,8.00,0.91')
+    window.history.replaceState(null, '', `${window.location.pathname}?customParam=49.618551,-97.280674,8.00,0.91`)
 
     // second arg (viewParam) is "customParam"
     updateMapFromUrl(map, 'customParam')
@@ -145,18 +149,21 @@ describe('updateUrlFromMap', () => {
   it('should update url from map changes', () => {
     global.document.body.innerHTML = '<div id="map"></div>'
     // set the url with a competing url param
-    window.history.replaceState(null, '', '?existingParam=true&otherParam=false')
+    window.history.replaceState(null, '', `${window.location.pathname}?existingParam=true&otherParam=false`)
 
     const el = global.document.getElementById('map')
     const onMapInit = map => {
-      map.getView().setCenter([0,0])
-      const query = qs.parse(window.location.href, { ignoreQueryPrefix: true })
-      console.log('query', query, window.location.href)
-      // expect(query.existingParam).toBe(true)
+      const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+      // existingParam is set above when the url is reset^ (make sure it still exists)
+      expect(query.existingParam).toBe('true')
+      // check to make sure the param otherParam set to the url hasn't been overwritten
       expect(query.otherParam).toBe('false')
-      expect(query.view).toBeTruthy()
+      // check to make sure the view param was added to the url
+      expect(query.view).toBe('39.000000,-96.000000,5.00,0.00')
     }
     // default updateUrlFromMap is true
-    const wrapper = mount(<Map onMapInit={onMapInit} />)
+    // shouldReadUrl is set to false here since jest can't hit the .finally block
+    // in Map's componentDidMount
+    const wrapper = mount(<Map onMapInit={onMapInit} shouldReadUrl={false} />)
   })
 })

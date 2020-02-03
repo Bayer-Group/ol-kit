@@ -8,7 +8,7 @@ describe('<Map />', () => {
     const mockMap = new olMap()
     // still fires callback with the passed map after optional animations
     const onMapInit = jest.fn(map => { expect(map).toBeInstanceOf(olMap) })
-    const wrapper = mount(<Map onMapInit={onMapInit} />)
+    const wrapper = mount(<Map onMapInit={onMapInit} shouldReadUrl={false} />)
 
     expect(onMapInit).toHaveReturnedTimes(1)
   })

@@ -39,7 +39,11 @@ class Map extends React.Component {
     }
 
     if (shouldUpdateUrl) {
-      const mapMoveListener = debounce(() => updateUrlFromMap(this.map, urlViewParam), urlUpdateDebounce)
+      const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
+
+      // set url param on mount in case no movement occurs initially
+      setUrl()
+      const mapMoveListener = debounce(setUrl, urlUpdateDebounce)
 
       // update the url param after map movements
       this.map.on('moveend', mapMoveListener)
@@ -48,8 +52,11 @@ class Map extends React.Component {
     if (shouldReadUrl) {
       // read the url to update the map from view info
       updateMapFromUrl(this.map, urlViewParam)
-        .catch(ugh.error)
-        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
+        .then(() => onMapInit(this.map))
+        .catch(e => {
+          onMapInit(this.map) // always fire callback with map reference on success/failure
+          ugh.error(e)
+        })
     } else {
       // callback that returns a reference to the created map
       onMapInit(this.map)
