@@ -100,7 +100,6 @@
     "prefer-spread": "error",
     "prefer-template": "error",
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-    "react/jsx-fragments": ["error"],
     "space-in-parens": ["error", "never"],
     "spaced-comment": ["error", "always"],
     "wrap-iife": ["error", "any"]
