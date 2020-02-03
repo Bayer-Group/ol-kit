@@ -52,11 +52,8 @@ class Map extends React.Component {
     if (shouldReadUrl) {
       // read the url to update the map from view info
       updateMapFromUrl(this.map, urlViewParam)
-        .then(() => onMapInit(this.map))
-        .catch(e => {
-          onMapInit(this.map) // always fire callback with map reference on success/failure
-          ugh.error(e)
-        })
+        .catch(ugh.error)
+        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
     } else {
       // callback that returns a reference to the created map
       onMapInit(this.map)
