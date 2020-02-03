@@ -20,7 +20,7 @@ import { MapContext } from './Map'
  */
 export function createMap (opts = {}) {
   if (!opts.target) return ugh.throw('You must pass an options object with a DOM target for the map')
-  if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself')
+  if (typeof opts.target !== 'string' || opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself') // eslint-disable-line no-undef
 
   // create a new map instance
   const map = new Map({
@@ -49,9 +49,9 @@ export function createMap (opts = {}) {
  * @returns {Component} A wrapped React component which will automatically be passed a reference to the ol.Map
  */
 export function connectToMap (Component) {
-  if (!Component) return ugh.throw("Pass a React component to 'connectToMap'")
+  if (!Component) return ugh.throw('Pass a React component to \'connectToMap\'')
 
-  return props => (
+  return props => ( // eslint-disable-line react/display-name
     !MapContext
       ? <Component {...props} />
       : (
@@ -72,11 +72,11 @@ export function connectToMap (Component) {
  * @returns {String} The url that is set within the function
  */
 export function updateUrlFromMap (map, viewParam = 'view') {
-  if (!(map instanceof Map)) return ugh.throw("'updateUrlFromMap' requires a valid openlayers map as the first argument")
+  if (!(map instanceof Map)) return ugh.throw('\'updateUrlFromMap\' requires a valid openlayers map as the first argument')
   const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
   const coords = olProj.transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
   const view = { [viewParam]: `${parseFloat(coords[1]).toFixed(6)},${parseFloat(coords[0]).toFixed(6)},${parseFloat(map.getView().getZoom()).toFixed(2)},${parseFloat(map.getView().getRotation()).toFixed(2)}` }
-  const newQuery = {...query, ...view}
+  const newQuery = { ...query, ...view }
   const queryString = qs.stringify(newQuery, { addQueryPrefix: true, encoder: (str) => str })
   const newUrl = window.location.pathname + queryString
 
@@ -98,7 +98,7 @@ export function updateMapFromUrl (map, viewParam = 'view') {
   const promise = new Promise((resolve, reject) => {
     const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
-    if (!(map instanceof Map)) return ugh.throw("'updateMapFromUrl' requires a valid openlayers map as the first argument", reject)
+    if (!(map instanceof Map)) return ugh.throw('\'updateMapFromUrl\' requires a valid openlayers map as the first argument', reject)
     if (!query[viewParam]) return ugh.warn(`url param "${viewParam}" could not be found- map view was not updated by 'updateMapFromUrl'`)
     const [y, x, zoom, rotation] = query[viewParam].split(',')
     const centerAndZoomOpts = { x, y, zoom }
@@ -125,7 +125,7 @@ export function updateMapFromUrl (map, viewParam = 'view') {
  * @returns {Array} Coordinates used to update the map
  */
 export function centerAndZoom (map, opts = {}) {
-  if (!(map instanceof Map)) return ugh.throw("'centerAndZoom' requires a valid openlayers map as the first argument")
+  if (!(map instanceof Map)) return ugh.throw('\'centerAndZoom\' requires a valid openlayers map as the first argument')
   const transformedCoords = olProj.transform([Number(opts.x), Number(opts.y)], 'EPSG:4326', map.getView().getProjection().getCode())
 
   map.getView().setCenter(transformedCoords)

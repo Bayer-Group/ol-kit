@@ -1,4 +1,4 @@
-import * as ol_kit from './index'
+import * as ol_kit from './index' // eslint-disable-line camelcase
 
 describe('ol-kit package', () => {
   it('should not export undefined', () => {

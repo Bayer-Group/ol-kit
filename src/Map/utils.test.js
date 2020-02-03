@@ -1,14 +1,13 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import qs from 'qs'
-import olMap from 'ol/map'
 import Map from './Map'
-import { connectToMap, createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
+import { connectToMap, createMap, updateMapFromUrl } from './utils'
 
 describe('createMap', () => {
   // jest does not reset the DOM after each test, so we do this manually
   afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
+    document.getElementsByTagName('html')[0].innerHTML = ''
   })
 
   it('createMap should return a map when given a DOM id', () => {
@@ -31,7 +30,7 @@ describe('createMap', () => {
   it('createMap called without arguments throws an error', () => {
     const testCreate = () => createMap()
 
-    expect(testCreate).toThrowError(new Error('You must pass an options object with a DOM target for the map'));
+    expect(testCreate).toThrowError(new Error('You must pass an options object with a DOM target for the map'))
   })
 
   it('createMap called with incorrect arguments throws an error', () => {
@@ -69,7 +68,7 @@ describe('connectToMap', () => {
 describe('updateMapFromUrl', () => {
   // jest does not reset the DOM after each test, so we do this manually
   afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
+    document.getElementsByTagName('html')[0].innerHTML = ''
   })
 
   it('should throw error for missing map arg', () => {
@@ -92,11 +91,11 @@ describe('updateMapFromUrl', () => {
     const map = createMap({ target: el })
 
     // set initial center, zoom & rotation
-    map.getView().setCenter([0,0])
+    map.getView().setCenter([0, 0])
     map.getView().setZoom(3)
     map.getView().setRotation(0)
 
-    expect(map.getView().getCenter()).toEqual([0,0])
+    expect(map.getView().getCenter()).toEqual([0, 0])
     expect(map.getView().getZoom()).toBe(3)
     expect(map.getView().getRotation()).toBe(0)
 
@@ -106,7 +105,7 @@ describe('updateMapFromUrl', () => {
     // second arg (viewParam) is defaulted to "view"
     updateMapFromUrl(map)
     // updated map center, zoom & rotation from url
-    expect(map.getView().getCenter()).toEqual([ -10829235.09370645, 6380475.798452517 ])
+    expect(map.getView().getCenter()).toEqual([-10829235.09370645, 6380475.798452517])
     expect(map.getView().getZoom()).toBe(8)
     // round off crazy long decimal
     expect(Number(map.getView().getRotation().toFixed(2))).toEqual(0.91)
@@ -119,11 +118,11 @@ describe('updateMapFromUrl', () => {
     const map = createMap({ target: el })
 
     // set initial center, zoom & rotation
-    map.getView().setCenter([0,0])
+    map.getView().setCenter([0, 0])
     map.getView().setZoom(3)
     map.getView().setRotation(0)
 
-    expect(map.getView().getCenter()).toEqual([0,0])
+    expect(map.getView().getCenter()).toEqual([0, 0])
     expect(map.getView().getZoom()).toBe(3)
     expect(map.getView().getRotation()).toBe(0)
 
@@ -133,7 +132,7 @@ describe('updateMapFromUrl', () => {
     // second arg (viewParam) is "customParam"
     updateMapFromUrl(map, 'customParam')
     // updated map center, zoom & rotation from url
-    expect(map.getView().getCenter()).toEqual([ -10829235.09370645, 6380475.798452517 ])
+    expect(map.getView().getCenter()).toEqual([-10829235.09370645, 6380475.798452517])
     expect(map.getView().getZoom()).toBe(8)
     // round off crazy long decimal
     expect(Number(map.getView().getRotation().toFixed(2))).toEqual(0.91)
@@ -143,7 +142,7 @@ describe('updateMapFromUrl', () => {
 describe('updateUrlFromMap', () => {
   // jest does not reset the DOM after each test, so we do this manually
   afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
+    document.getElementsByTagName('html')[0].innerHTML = ''
   })
 
   it('should update url from map changes', () => {
@@ -151,10 +150,10 @@ describe('updateUrlFromMap', () => {
     // set the url with a competing url param
     window.history.replaceState(null, '', `${window.location.pathname}?existingParam=true&otherParam=false`)
 
-    const el = global.document.getElementById('map')
     const onMapInit = map => {
       const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
       // existingParam is set above when the url is reset^ (make sure it still exists)
+
       expect(query.existingParam).toBe('true')
       // check to make sure the param otherParam set to the url hasn't been overwritten
       expect(query.otherParam).toBe('false')
@@ -164,6 +163,7 @@ describe('updateUrlFromMap', () => {
     // default updateUrlFromMap is true
     // shouldReadUrl is set to false here since jest can't hit the .finally block
     // in Map's componentDidMount
-    const wrapper = mount(<Map onMapInit={onMapInit} shouldReadUrl={false} />)
+
+    mount(<Map onMapInit={onMapInit} shouldReadUrl={false} />)
   })
 })

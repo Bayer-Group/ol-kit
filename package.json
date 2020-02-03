@@ -30,6 +30,8 @@
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
     "docs": "jsdoc -r -c jsdoc.json && cp static/index.html static/docs.html static/bayer-logo.png docs/",
+    "lint": "eslint src/*",
+    "lint:fix": "eslint src/* --fix",
     "test": "jest --notify --config=jest.config.js",
     "test:coverage": "jest --config=jest.config.js --coverage",
     "test:watch": "jest --notify --config=jest.config.js --watch --coverage"
