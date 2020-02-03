@@ -9,11 +9,8 @@ import { connectToMap } from 'Map'
 
 function ZoomControls (props) {
   const { map } = props
-
   let mouseDownTime
-
   let mouseDownTimeout
-
   let repeatTimeout
   const zoom = direction => {
     const delta = direction === 'ZOOM_IN' ? 0.1 : -0.1
@@ -40,19 +37,23 @@ function ZoomControls (props) {
   }
 
   return (
-    <>'     '<Icon
-      id='_ol_kit_zoom_in'
-      onMouseDown={() => handleMouseDown('ZOOM_IN')}
-      onMouseOut={() => stopZoom('ZOOM_IN')}
-      onMouseUp={() => stopZoom('ZOOM_IN')}>
-      <PLUS />
-    </Icon>'     '<IconSeparator />'     '<Icon
-      id='_ol_kit_zoom_out'
-      onMouseDown={() => handleMouseDown('ZOOM_OUT')}
-      onMouseOut={() => stopZoom('ZOOM_OUT')}
-      onMouseUp={() => stopZoom('ZOOM_OUT')}>
-      <MINUS />
-    </Icon>'   '</>
+    <>
+      <Icon
+        id='_ol_kit_zoom_in'
+        onMouseDown={() => handleMouseDown('ZOOM_IN')}
+        onMouseOut={() => stopZoom('ZOOM_IN')}
+        onMouseUp={() => stopZoom('ZOOM_IN')}>
+        <PLUS />
+      </Icon>
+      <IconSeparator />
+      <Icon
+        id='_ol_kit_zoom_out'
+        onMouseDown={() => handleMouseDown('ZOOM_OUT')}
+        onMouseOut={() => stopZoom('ZOOM_OUT')}
+        onMouseUp={() => stopZoom('ZOOM_OUT')}>
+        <MINUS />
+      </Icon>
+    </>
   )
 }
 

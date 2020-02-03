@@ -9,6 +9,11 @@
       "jsx": true
     }
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "array-bracket-spacing": ["error", "never"],
     "block-scoped-var": "error",
@@ -95,6 +100,7 @@
     "prefer-spread": "error",
     "prefer-template": "error",
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "react/jsx-fragments": ["error"],
     "space-in-parens": ["error", "never"],
     "spaced-comment": ["error", "always"],
     "wrap-iife": ["error", "any"]

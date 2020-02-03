@@ -14,9 +14,12 @@ function Controls (props) {
     ReactDOM.createPortal(
       <ControlsContainer position={position}>
         {children || (
-            <>'             '<IconsContainer>
+          <>
+            <IconsContainer>
               <ZoomControls map={map} />
-            </IconsContainer>'             '<Compass map={map} />'           '</>
+            </IconsContainer>
+            <Compass map={map} />
+          </>
         )
         }
       </ControlsContainer>,

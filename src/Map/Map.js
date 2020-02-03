@@ -73,13 +73,16 @@ class Map extends React.Component {
     const { children, fullScreen } = this.props
 
     return (
-      <>'       '<StyledMap
-        id={this.target}
-        fullScreen={fullScreen} />'       '<MapContext.Provider value={this.getContextValue()}>
+      <>
+        <StyledMap
+          id={this.target}
+          fullScreen={fullScreen} />
+        <MapContext.Provider value={this.getContextValue()}>
           {!this.map // wait for a map to exist before rendering children that need a ref to map
             ? null
             : children}
-        </MapContext.Provider>'     '</>
+        </MapContext.Provider>
+      </>
     )
   }
 }
