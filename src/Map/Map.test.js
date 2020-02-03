@@ -1,11 +1,18 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import olMap from 'ol/map'
+import olView from 'ol/view'
 import Map from './Map'
 
 describe('<Map />', () => {
   it('should render with a map prop', () => {
-    const mockMap = new olMap()
+    const mockMap = new olMap({
+      view: new olView({
+        center: [],
+        zoom: 5
+      })
+    })
+
     // still fires callback with the passed map after optional animations
     const onMapInit = jest.fn(map => { expect(map).toBeInstanceOf(olMap) })
 
