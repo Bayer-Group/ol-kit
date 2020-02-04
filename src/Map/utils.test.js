@@ -152,18 +152,18 @@ describe('updateUrlFromMap', () => {
 
     const onMapInit = map => {
       const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+      
       // existingParam is set above when the url is reset^ (make sure it still exists)
-
       expect(query.existingParam).toBe('true')
       // check to make sure the param otherParam set to the url hasn't been overwritten
       expect(query.otherParam).toBe('false')
       // check to make sure the view param was added to the url
       expect(query.view).toBe('39.000000,-96.000000,5.00,0.00')
     }
-    // default updateUrlFromMap is true
-    // shouldReadUrl is set to false here since jest can't hit the .finally block
-    // in Map's componentDidMount
 
-    mount(<Map onMapInit={onMapInit} shouldReadUrl={false} />)
+    // default updateUrlFromMap is true
+    // updateViewFromUrl is set to false here since jest can't hit the .finally block
+    // in Map's componentDidMount
+    mount(<Map onMapInit={onMapInit} updateViewFromUrl={false} />)
   })
 })

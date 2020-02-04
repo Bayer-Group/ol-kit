@@ -15,8 +15,11 @@ class Ugh {
     }
   }
 
-  warn = (...args) => {
-    console.warn(...args) // eslint-disable-line
+  warn = (message, resolve) => {
+    console.warn(message) // eslint-disable-line
+
+    // this is used within promises to resolve & continue the promise chain
+    if (typeof resolve === 'function') resolve()
   }
 }
 

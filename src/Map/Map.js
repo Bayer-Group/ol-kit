@@ -27,7 +27,7 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { map, onMapInit, shouldUpdateUrl, shouldReadUrl, urlUpdateDebounce, urlViewParam } = this.props
+    const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
 
     if (!map) {
       // if no map was passed, create the map
@@ -38,18 +38,18 @@ class Map extends React.Component {
       this.map = map
     }
 
-    if (shouldUpdateUrl) {
+    if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
 
       // set url param on mount in case no movement occurs initially
       setUrl()
-      const mapMoveListener = debounce(setUrl, urlUpdateDebounce)
+      const mapMoveListener = debounce(setUrl, updateUrlDebounce)
 
       // update the url param after map movements
       this.map.on('moveend', mapMoveListener)
     }
 
-    if (shouldReadUrl) {
+    if (updateViewFromUrl) {
       // read the url to update the map from view info
       updateMapFromUrl(this.map, urlViewParam)
         .catch(ugh.error)
@@ -88,9 +88,9 @@ Map.defaultProps = {
   fullScreen: false,
   map: null,
   onMapInit: () => {},
-  shouldReadUrl: true,
-  shouldUpdateUrl: true,
-  urlUpdateDebounce: 400,
+  updateUrlDebounce: 400,
+  updateUrlFromView: true,
+  updateViewFromUrl: true,
   urlViewParam: 'view'
 }
 
@@ -106,12 +106,12 @@ Map.propTypes = {
   map: PropTypes.object,
   /** returns an initialized map object after optional animations complete */
   onMapInit: PropTypes.func,
-  /** update map view based off the url param */
-  shouldReadUrl: PropTypes.bool,
-  /** add map location coords + zoom level to url as query params */
-  shouldUpdateUrl: PropTypes.bool,
   /** the length of debounce on map movements before the url gets updated */
-  urlUpdateDebounce: PropTypes.number,
+  updateUrlDebounce: PropTypes.number,
+  /** add map location coords + zoom level to url as query params */
+  updateUrlFromView: PropTypes.bool,
+  /** update map view based off the url param */
+  updateViewFromUrl: PropTypes.bool,
   /** change the url param used to set the map location coords */
   urlViewParam: PropTypes.string
 }

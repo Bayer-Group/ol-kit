@@ -16,7 +16,7 @@ describe('<Map />', () => {
     // still fires callback with the passed map after optional animations
     const onMapInit = jest.fn(map => { expect(map).toBeInstanceOf(olMap) })
 
-    mount(<Map map={mockMap} onMapInit={onMapInit} shouldReadUrl={false} />)
+    mount(<Map map={mockMap} onMapInit={onMapInit} updateViewFromUrl={false} />)
 
     expect(onMapInit).toHaveReturnedTimes(1)
   })
@@ -24,8 +24,8 @@ describe('<Map />', () => {
   it('should render with onMapInit callback', () => {
     const onMapInit = jest.fn(map => { expect(map).toBeInstanceOf(olMap) })
 
-    // using shouldReadUrl={false} checks a separate if block inside Map's componentDidMount
-    mount(<Map onMapInit={onMapInit} shouldReadUrl={false} />)
+    // using updateViewFromUrl={false} checks a separate if block inside Map's componentDidMount
+    mount(<Map onMapInit={onMapInit} updateViewFromUrl={false} />)
 
     expect(onMapInit).toHaveReturnedTimes(1)
   })
