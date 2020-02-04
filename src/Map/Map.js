@@ -40,9 +40,6 @@ class Map extends React.Component {
 
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
-
-      // set url param on mount in case no movement occurs initially
-      setUrl()
       const mapMoveListener = debounce(setUrl, updateUrlDebounce)
 
       // update the url param after map movements
