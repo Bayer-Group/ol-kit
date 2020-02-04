@@ -1,6 +1,6 @@
 # Modified BSD License
 
-Copyright (c) 2019, Monsanto Company
+Copyright (c) 2020, Bayer Company
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

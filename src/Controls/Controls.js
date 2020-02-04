@@ -13,16 +13,14 @@ function Controls (props) {
   return (
     ReactDOM.createPortal(
       <ControlsContainer position={position}>
-        {children
-          ? children
-          : (
-            <>
-              <IconsContainer>
-                <ZoomControls map={map} />
-              </IconsContainer>
-              <Compass map={map} />
-            </>
-          )
+        {children || (
+          <>
+            <IconsContainer>
+              <ZoomControls map={map} />
+            </IconsContainer>
+            <Compass map={map} />
+          </>
+        )
         }
       </ControlsContainer>,
       map.getTargetElement()

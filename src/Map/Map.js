@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
+import debounce from 'lodash.debounce'
 import { StyledMap } from './styled'
-import { createMap } from './utils'
+import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
+import ugh from 'ugh'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
 export let MapContext = null
@@ -25,17 +27,33 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { map, onMapInit } = this.props
+    const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
 
     if (!map) {
       // if no map was passed, create the map
       this.map = createMap({ target: this.target })
-      // callback that returns a reference to the created map
-      onMapInit(this.map)
       // force update to get this.map into the context
       this.forceUpdate()
     } else {
       this.map = map
+    }
+
+    if (updateUrlFromView) {
+      const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
+      const mapMoveListener = debounce(setUrl, updateUrlDebounce)
+
+      // update the url param after map movements
+      this.map.on('moveend', mapMoveListener)
+    }
+
+    if (updateViewFromUrl) {
+      // read the url to update the map from view info
+      updateMapFromUrl(this.map, urlViewParam)
+        .catch(ugh.error)
+        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
+    } else {
+      // callback that returns a reference to the created map
+      onMapInit(this.map)
     }
   }
 
@@ -66,7 +84,11 @@ class Map extends React.Component {
 Map.defaultProps = {
   fullScreen: false,
   map: null,
-  onMapInit: () => {}
+  onMapInit: () => {},
+  updateUrlDebounce: 400,
+  updateUrlFromView: true,
+  updateViewFromUrl: true,
+  urlViewParam: 'view'
 }
 
 Map.propTypes = {
@@ -79,8 +101,16 @@ Map.propTypes = {
   fullScreen: PropTypes.bool,
   /** optionally pass a custom map */
   map: PropTypes.object,
-  /** returns an initialized map object if nothing was passed to the `map` prop */
-  onMapInit: PropTypes.func.isRequired
+  /** returns an initialized map object after optional animations complete */
+  onMapInit: PropTypes.func,
+  /** the length of debounce on map movements before the url gets updated */
+  updateUrlDebounce: PropTypes.number,
+  /** add map location coords + zoom level to url as query params */
+  updateUrlFromView: PropTypes.bool,
+  /** update map view based off the url param */
+  updateViewFromUrl: PropTypes.bool,
+  /** change the url param used to set the map location coords */
+  urlViewParam: PropTypes.string
 }
 
 export default Map
