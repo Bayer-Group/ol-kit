@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ol-kit package should not export undefined 1`] = `
+Object {
+  "Compass": [Function],
+  "Controls": [Function],
+  "Map": [Function],
+  "ZoomControls": [Function],
+  "connectToMap": [Function],
+  "updateMapFromUrl": [Function],
+  "updateUrlFromMap": [Function],
+}
+`;

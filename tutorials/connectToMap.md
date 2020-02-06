@@ -1,14 +1,14 @@
-# MapConsumer
-The `MapConsumer` component automatically passes an `ol.Map` to its children.
+# connectToMap
+The `connectToMap` component automatically passes an `ol.Map` to its children.
 
 ## How does it work?
-When the `Map` component is constructed, it attaches the OpenLayers map to a [context](https://reactjs.org/docs/context.html). If this context exists (which means `Map` has been constructed), `MapConsumer` renders it's child with a prop of `map` from the `Map` parent and also spreads the rest of the inline props. If a `Map` is not mounted, `MapConsumer` will just render the child and pass props through without consuming a context.
+When the `Map` component is constructed, it attaches the OpenLayers map to a [context](https://reactjs.org/docs/context.html). If this context exists (which means `Map` has been constructed), `connectToMap` renders it's child with a prop of `map` from the `Map` parent and also spreads the rest of the inline props. If a `Map` is not mounted, `connectToMap` will just render the child and pass props through without consuming a context.
 
 ## Automatic Example
 All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:
 ```javascript
 import React from 'react'
-import { Map, Popup } from 'ol-kit/components'
+import { Map, Popup } from '@bayer/ol-kit'
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ export default App
 If you prefer to not use the `Map` component you must manually pass the `map` prop to all ol-kit components:
 ```javascript
 import React from 'react'
-import { Map, Popup } from 'ol-kit/components'
+import { Map, Popup } from '@bayer/ol-kit'
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ Prebuilt ol-kit components get wrapped by this consumer before they are exported
 ```javascript
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MapConsumer } from 'ol-kit/components'
+import { connectToMap } from '@bayer/ol-kit'
 
 const CustomMapComponent = props => {
   const { map } = props
@@ -59,5 +59,5 @@ CustomMapComponent.propTypes = {
   map: PropTypes.object.isRequired
 }
 
-export default MapConsumer(CustomMapComponent)
+export default connectToMap(CustomMapComponent)
 ```

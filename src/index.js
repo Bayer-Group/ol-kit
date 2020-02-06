@@ -3,4 +3,4 @@ export { default as BasemapManager, BingMaps, BlankWhite, OpenStreetMap, StamenT
 export { default as Draw, Box, Circle, Freehand, Line, Point, Polygon } from './Draw'
 export { default as Measure } from './Measure'
 export { default as Toolbar } from './Toolbar'
-export { default as Map, connectToMap } from './Map'
+export { default as Map, connectToMap, updateMapFromUrl, updateUrlFromMap } from './Map'

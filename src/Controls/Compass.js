@@ -29,7 +29,7 @@ function Compass (props) {
 
     map.getView().on('change:rotation', listener)
 
-    return function cleanup() {
+    return function cleanup () {
       map.getView().un('change:rotation', listener)
     }
   }, [map]) // optimization: listeners will only attach/cleanup if the map prop changes

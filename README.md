@@ -5,8 +5,7 @@ Easy to use, open source React/Openlayers component toolkit.
 It's easy to start building map apps with olKit. For simple projects the following will get you started:
 ```javascript
 import React from 'react'
-import { Map, Popup, Controls } from 'olKit/components'
-import { zoomToExtent } from 'olKit/utils'
+import { Map, Popup, Controls, zoomToExtent } from '@bayer/ol-kit'
 
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
