@@ -1,2 +1,6 @@
 export { default as Controls, Compass, ZoomControls } from './Controls'
+export { default as BasemapManager, BingMaps, BlankWhite, OpenStreetMap, StamenTerrain, StamenTonerDark, StamenTonerLite } from './Basemaps'
+export { default as Draw, Box, Circle, Freehand, Line, Point, Polygon } from './Draw'
+export { default as Measure } from './Measure'
+export { default as Toolbar } from './Toolbar'
 export { default as Map, connectToMap } from './Map'

@@ -19,17 +19,19 @@ export function createMap (opts = {}) {
   if (!opts.target) throw new Error('You must pass an options object with a DOM target for the map')
   if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) throw new Error('The target should either by a string id of an existing DOM element or the element itself')
 
+  const basemap = new TileLayer({
+    source: new OSM()
+  })
+
+  basemap._ol_kit_basemap = 'osm'
+
   // create a new map instance
   const map = new Map({
     view: new View({
       center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
       zoom: 5
     }),
-    layers: [
-      new TileLayer({
-        source: new OSM()
-      })
-    ],
+    layers: [basemap],
     target: opts.target,
     controls: []
   })
