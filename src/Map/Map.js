@@ -28,15 +28,15 @@ class Map extends React.Component {
 
   componentDidMount () {
     const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
-
-    if (!map) {
-      // if no map was passed, create the map
-      this.map = createMap({ target: this.target })
-      // force update to get this.map into the context
+    const onMapReady = map => {
+      // pass map back via callback
+      onMapInit(map)
+      // force update AFTER onMapInit to get this.map into the context
       this.forceUpdate()
-    } else {
-      this.map = map
     }
+
+    // if no map was passed, create the map
+    this.map = !map ? createMap({ target: this.target }) : map
 
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
@@ -50,10 +50,10 @@ class Map extends React.Component {
       // read the url to update the map from view info
       updateMapFromUrl(this.map, urlViewParam)
         .catch(ugh.error)
-        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
+        .finally(() => onMapReady(this.map)) // always fire callback with map reference on success/failure
     } else {
       // callback that returns a reference to the created map
-      onMapInit(this.map)
+      onMapReady(this.map)
     }
   }
 
