@@ -133,6 +133,8 @@
     "File": true,
     "URL": true,
     "fetch": true,
-    "XMLSerializer": true
+    "XMLSerializer": true,
+    "Worker": true,
+    "self": true
   }
 }
