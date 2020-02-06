@@ -208,10 +208,10 @@ class Draw extends React.Component {
 }
 
 Draw.propTypes = {
-  /** openlayers map */
-  map: PropTypes.object,
+  /** openlayers map object */
+  map: PropTypes.object.isRequired,
 
-  /** openlayers layersource */
+  /** openlayers source object */
   source: PropTypes.object,
 
   /** callback that's called when the feature's draw is completed and returns an openlayers feature */
@@ -253,21 +253,12 @@ Draw.propTypes = {
 
 Draw.defaultProps = {
   translations: {
-    'Measurement.distance': 'Distance: ',
-    'Measurement.area': 'Area: ',
-    'units.feet': 'Feet',
-    'units.yards': 'Yards',
-    'units.miles': 'Miles',
-    'units.acres': 'Acres',
-    'units.meters': 'Meters',
-    'units.kilometers': 'Kilometers',
-    'units.hectares': 'Hectares',
-    'draw.pointTooltip': 'tooltip',
-    'draw.lineTooltip': 'tooltip',
-    'draw.polygonTooltip': 'tooltip',
-    'draw.circleTooltip': 'tooltip',
-    'draw.boxTooltip': 'tooltip',
-    'draw.freehandTooltip': 'tooltip'
+    'ol-kit.draw.pointTooltip': 'tooltip',
+    'ol-kit.draw.lineTooltip': 'tooltip',
+    'ol-kit.draw.polygonTooltip': 'tooltip',
+    'ol-kit.draw.circleTooltip': 'tooltip',
+    'ol-kit.draw.boxTooltip': 'tooltip',
+    'ol-kit.draw.freehandTooltip': 'tooltip'
   },
   drawOpts: {},
   source: new olSourceVector(),
