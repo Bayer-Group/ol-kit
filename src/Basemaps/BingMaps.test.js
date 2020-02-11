@@ -54,10 +54,7 @@ describe('<BingMaps />', () => {
 
   it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a Symbol layerTypeID.', () => {
     const mockLayerTypeID = Symbol('mockLayerTypeID')
-    const mockLayer = new olLayerVector()
-
-    mockLayer.set(mockLayerTypeID, 'osm')
-
+    const mockLayer = new olLayerVector({ [mockLayerTypeID]: 'osm' })
     const map = new olMap({
       layers: [
         mockLayer

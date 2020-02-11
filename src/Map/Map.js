@@ -37,7 +37,7 @@ class Map extends React.Component {
 
     // if no map was passed, create the map
     this.map = !map ? createMap({ target: this.target }) : map
-    
+    this.forceUpdate()
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
       const mapMoveListener = debounce(setUrl, updateUrlDebounce)
@@ -88,7 +88,7 @@ Map.defaultProps = {
   onMapInit: () => {},
   updateUrlDebounce: 400,
   updateUrlFromView: true,
-  updateViewFromUrl: true,
+  updateViewFromUrl: false,
   urlViewParam: 'view',
   style: {}
 }
