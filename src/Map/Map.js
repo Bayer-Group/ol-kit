@@ -29,7 +29,6 @@ class Map extends React.Component {
   componentDidMount () {
     const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
     const onMapReady = map => {
-      console.log('onMapReady')
       // pass map back via callback
       onMapInit(map)
       // force update AFTER onMapInit to get this.map into the context
