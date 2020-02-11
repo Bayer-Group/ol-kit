@@ -28,16 +28,16 @@ class Map extends React.Component {
 
   componentDidMount () {
     const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
-    const onMapReady = map => {
-      // pass map back via callback
-      onMapInit(map)
-      // force update AFTER onMapInit to get this.map into the context
+
+    if (!map) {
+      // if no map was passed, create the map
+      this.map = createMap({ target: this.target })
+      // force update to get this.map into the context
       this.forceUpdate()
+    } else {
+      this.map = map
     }
 
-    // if no map was passed, create the map
-    this.map = !map ? createMap({ target: this.target }) : map
-    this.forceUpdate()
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
       const mapMoveListener = debounce(setUrl, updateUrlDebounce)
@@ -50,10 +50,10 @@ class Map extends React.Component {
       // read the url to update the map from view info
       updateMapFromUrl(this.map, urlViewParam)
         .catch(ugh.error)
-        .finally(() => onMapReady(this.map)) // always fire callback with map reference on success/failure
+        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
     } else {
       // callback that returns a reference to the created map
-      onMapReady(this.map)
+      onMapInit(this.map)
     }
   }
 
@@ -64,14 +64,13 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, style } = this.props
+    const { children, fullScreen } = this.props
 
     return (
       <>
         <StyledMap
           id={this.target}
-          fullScreen={fullScreen}
-          style={style} />
+          fullScreen={fullScreen} />
         <MapContext.Provider value={this.getContextValue()}>
           {!this.map // wait for a map to exist before rendering children that need a ref to map
             ? null
@@ -88,9 +87,8 @@ Map.defaultProps = {
   onMapInit: () => {},
   updateUrlDebounce: 400,
   updateUrlFromView: true,
-  updateViewFromUrl: false,
-  urlViewParam: 'view',
-  style: {}
+  updateViewFromUrl: true,
+  urlViewParam: 'view'
 }
 
 Map.propTypes = {
@@ -112,9 +110,7 @@ Map.propTypes = {
   /** update map view based off the url param */
   updateViewFromUrl: PropTypes.bool,
   /** change the url param used to set the map location coords */
-  urlViewParam: PropTypes.string,
-  /** apply inline styles to the map container */
-  style: PropTypes.object
+  urlViewParam: PropTypes.string
 }
 
 export default Map

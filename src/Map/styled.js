@@ -8,5 +8,4 @@ export const StyledMap = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  ${p => p.style}
 `
