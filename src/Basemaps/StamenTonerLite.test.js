@@ -26,7 +26,7 @@ describe('<StamenTonerLite />', () => {
     const mockLayerTypeID = 'mockLayerTypeID'
     const mockLayer = new olLayerVector()
 
-    mockLayer[mockLayerTypeID] = 'osm'
+    mockLayer.set(mockLayerTypeID, 'osm')
 
     const map = new olMap({
       layers: [
@@ -45,7 +45,7 @@ describe('<StamenTonerLite />', () => {
     const mockLayerTypeID = Symbol('mockLayerTypeID')
     const mockLayer = new olLayerVector()
 
-    mockLayer[mockLayerTypeID] = 'osm'
+    mockLayer.set(mockLayerTypeID, 'osm')
 
     const map = new olMap({
       layers: [
