@@ -103,7 +103,7 @@ Map.propTypes = {
   fullScreen: PropTypes.bool,
   /** optionally pass a custom map */
   map: PropTypes.object,
-  /** returns an initialized map object after optional animations complete */
+  /** callback called with initialized map object after optional animations complete, right before children of Map are rendered */
   onMapInit: PropTypes.func,
   /** the length of debounce on map movements before the url gets updated */
   updateUrlDebounce: PropTypes.number,

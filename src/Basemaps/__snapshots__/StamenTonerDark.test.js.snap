@@ -1,7 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<StamenTonerDark /> should render a basic basemap option component 1`] = `
-<ContextConsumer>
-  <Component />
-</ContextConsumer>
+<Fragment>
+  <styled.div
+    fullScreen={false}
+    id="_ol_kit_map_I1laR2"
+    style={Object {}}
+  />
+  <ContextProvider
+    value={
+      Object {
+        "map": undefined,
+      }
+    }
+  />
+</Fragment>
 `;

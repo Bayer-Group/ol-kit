@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import '@babel/polyfill'
 import qs from 'qs'
 import Map from './Map'
 import { connectToMap, createMap, updateMapFromUrl } from './utils'

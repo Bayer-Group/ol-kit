@@ -6,19 +6,22 @@ import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
 describe('<StamenTonerDark />', () => {
-  it('should render a basic basemap option component', () => {
-    const wrapper = shallow(<StamenTonerDark />, { wrappingComponent: Map })
-
-    expect(wrapper).toMatchSnapshot()
+  it('should render a basic basemap option component', (done) => {
+    const onMapInit = jest.fn(map => {
+      expect(wrapper).toMatchSnapshot()
+      done()
+    })
+    const wrapper = shallow(<Map onMapInit={onMapInit}><StamenTonerDark /></Map>)
   })
-  it('should add a basemap to an empty map when clicked', () => {
+  it('should add a basemap to an empty map when clicked', (done) => {
+    const onMapInit = map => {
+      expect(map.getLayers().getArray().length).toBe(0)
+      wrapper.simulate('click')
+      expect(map.getLayers().getArray().length).toBe(1)
+      done()
+    }
     const map = new olMap()
-    const wrapper = mount(<StamenTonerDark map={map} />, { wrappingComponent: Map })
-
-    expect(map.getLayers().getArray().length).toBe(0)
-
-    wrapper.simulate('click')
-    expect(map.getLayers().getArray().length).toBe(1)
+    const wrapper = mount(<Map map={map} onMapInit={onMapInit}><StamenTonerDark /></Map>)
   })
 
   it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a string layerTypeID.', () => {
