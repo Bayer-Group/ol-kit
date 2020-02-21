@@ -34,7 +34,7 @@ class BingMaps extends React.Component {
     const opts = { ...DEFAULT_OPTS, ...sourceOpts }
     const source = new olSourceBingMaps(opts)
     const layer = new olLayerTile({
-      [layerTypeID]: layerId, // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
+      [layerTypeID]: layerID, // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
     const layers = map.getLayers()

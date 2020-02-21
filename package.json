@@ -22,7 +22,7 @@
     {
       "name": "Patrick Moulden",
       "email": "patrick.moulden@1904labs.com",
-      "url": "https://github.com/Patchez"
+      "url": "https://github.com/PatchesMaps"
     }
   ],
   "main": "./core/index.js",
@@ -51,6 +51,7 @@
     "@babel/core": "~7.7.2",
     "@babel/plugin-proposal-class-properties": "~7.7.0",
     "@babel/plugin-transform-runtime": "~7.6.2",
+    "@babel/polyfill": "^7.8.3",
     "@babel/preset-env": "~7.7.1",
     "@babel/preset-react": "~7.7.0",
     "@babel/runtime": "~7.7.2",

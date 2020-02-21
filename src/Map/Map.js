@@ -82,8 +82,7 @@ class Map extends React.Component {
       <>
         <StyledMap
           id={this.target}
-          fullScreen={fullScreen}
-          style={style} />
+          fullScreen={fullScreen} />
         <MapContext.Provider value={this.getContextValue()}>
           {!map // wait for a map to exist before rendering children that need a ref to map
             ? null
@@ -101,8 +100,7 @@ Map.defaultProps = {
   updateUrlDebounce: 400,
   updateUrlFromView: true,
   updateViewFromUrl: true,
-  urlViewParam: 'view',
-  style: {}
+  urlViewParam: 'view'
 }
 
 Map.propTypes = {
@@ -126,9 +124,7 @@ Map.propTypes = {
   /** update map view based off the url param */
   updateViewFromUrl: PropTypes.bool,
   /** change the url param used to set the map location coords */
-  urlViewParam: PropTypes.string,
-  /** apply inline styles to the map container */
-  style: PropTypes.object
+  urlViewParam: PropTypes.string
 }
 
 export default Map
