@@ -20,6 +20,7 @@ class StamenTonerDark extends React.Component {
   }
 
   onClick = () => {
+    const { map, layerTypeID, onBasemapChanged } = this.props
     const source = new olSourceStamen({
       layer: 'toner',
       url: 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
@@ -29,15 +30,12 @@ class StamenTonerDark extends React.Component {
     const layer = new olLayerTile({
       preload: Infinity,
       extent: undefined,
+      [layerTypeID]: 'stamenTonerDark', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
-    const { map, layerTypeID, onBasemapChanged } = this.props
-
-    layer[layerTypeID] = 'stamenTonerDark' // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-
     const layers = map.getLayers()
     const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0][layerTypeID] : false
+    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0].get(layerTypeID) : false
 
     if (hasBasemap) {
       layers.setAt(0, layer)
@@ -52,7 +50,7 @@ class StamenTonerDark extends React.Component {
     const { translations, thumbnail, map, layerTypeID } = this.props
     const label = translations.label
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0][layerTypeID] === 'stamenTonerDark' : false
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'stamenTonerDark' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>

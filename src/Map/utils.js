@@ -30,6 +30,7 @@ export function createMap (opts = {}) {
     }),
     layers: [
       new TileLayer({
+        _ol_kit_basemap: 'osm', // used by BasemapManager
         source: new OSM()
       })
     ],

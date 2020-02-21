@@ -26,26 +26,7 @@ describe('<StamenTonerLite />', () => {
     const mockLayerTypeID = 'mockLayerTypeID'
     const mockLayer = new olLayerVector()
 
-    mockLayer[mockLayerTypeID] = 'osm'
-
-    const map = new olMap({
-      layers: [
-        mockLayer
-      ]
-    })
-    const wrapper = mount(<StamenTonerLite map={map} layerTypeID={mockLayerTypeID} />, { wrappingComponent: Map })
-
-    expect(map.getLayers().getArray().length).toBe(1)
-
-    wrapper.simulate('click')
-    expect(map.getLayers().getArray().length).toBe(1)
-  })
-
-  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a Symbol layerTypeID.', () => {
-    const mockLayerTypeID = Symbol('mockLayerTypeID')
-    const mockLayer = new olLayerVector()
-
-    mockLayer[mockLayerTypeID] = 'osm'
+    mockLayer.set(mockLayerTypeID, 'osm')
 
     const map = new olMap({
       layers: [

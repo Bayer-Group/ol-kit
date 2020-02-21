@@ -33,13 +33,13 @@ class BingMaps extends React.Component {
     const { map, layerTypeID, layerID, sourceOpts, onBasemapChanged } = this.props
     const opts = { ...DEFAULT_OPTS, ...sourceOpts }
     const source = new olSourceBingMaps(opts)
-    const layer = new olLayerTile({ source })
-
-    layer[layerTypeID] = layerID // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-
+    const layer = new olLayerTile({
+      [layerTypeID]: layerID, // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
+      source
+    })
     const layers = map.getLayers()
     const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0][layerTypeID] : false
+    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0].get(layerTypeID) : false
 
     if (hasBasemap) {
       layers.setAt(0, layer)
@@ -54,7 +54,7 @@ class BingMaps extends React.Component {
     const { translations, thumbnail, map, layerTypeID, layerID } = this.props
     const label = translations.label
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0][layerTypeID] === layerID : false
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === layerID : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
