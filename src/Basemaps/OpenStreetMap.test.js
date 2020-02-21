@@ -40,22 +40,6 @@ describe('<OpenStreetMap />', () => {
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
-  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a Symbol layerTypeID.', () => {
-    const mockLayerTypeID = Symbol('mockLayerTypeID')
-    const mockLayer = new olLayerVector({ [mockLayerTypeID]: 'osm' })
-    const map = new olMap({
-      layers: [
-        mockLayer
-      ]
-    })
-    const wrapper = mount(<OpenStreetMap map={map} layerTypeID={mockLayerTypeID} />, { wrappingComponent: Map })
-
-    expect(map.getLayers().getArray().length).toBe(1)
-
-    wrapper.simulate('click')
-    expect(map.getLayers().getArray().length).toBe(1)
-  })
-
   it('should fire the callback when the layers are changed', () => {
     const map = new olMap()
     const callback = jest.fn()
