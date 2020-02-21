@@ -19,6 +19,10 @@ class Map extends React.Component {
   constructor (props) {
     super(props)
 
+    this.state = {
+      map: null
+    }
+
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
 
@@ -27,44 +31,52 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
-    const onMapReady = map => {
-      // pass map back via callback
-      onMapInit(map)
-      // force update AFTER onMapInit to get this.map into the context
-      this.forceUpdate()
-    }
+    const { map: passedMap, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
 
     // if no map was passed, create the map
-    this.map = !map ? createMap({ target: this.target }) : map
+    const map = !passedMap ? createMap({ target: this.target }) : passedMap
+    const onMapReady = map => {
+      // pass map back via callback prop
+      const initCallback = onMapInit(map)
+      // if a promise is returned from onMapInit, render children after it's resolved
+      const isPromise = !!initCallback && typeof initCallback.then === 'function'
+
+      // update AFTER onMapInit to get map into the state/context
+      isPromise
+        ? initCallback.then(() => this.setState({ map }))
+        : this.setState({ map })
+    }
 
     if (updateUrlFromView) {
-      const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
+      const setUrl = () => updateUrlFromMap(map, urlViewParam)
       const mapMoveListener = debounce(setUrl, updateUrlDebounce)
 
       // update the url param after map movements
-      this.map.on('moveend', mapMoveListener)
+      map.on('moveend', mapMoveListener)
     }
 
     if (updateViewFromUrl) {
       // read the url to update the map from view info
-      updateMapFromUrl(this.map, urlViewParam)
+      updateMapFromUrl(map, urlViewParam)
         .catch(ugh.error)
-        .finally(() => onMapReady(this.map)) // always fire callback with map reference on success/failure
+        .finally(() => onMapReady(map)) // always fire callback with map reference on success/failure
     } else {
       // callback that returns a reference to the created map
-      onMapReady(this.map)
+      onMapReady(map)
     }
   }
 
   getContextValue = () => {
+    const { map } = this.state
+
     return {
-      map: this.map
+      map
     }
   }
 
   render () {
     const { children, fullScreen, style } = this.props
+    const { map } = this.state
 
     return (
       <>
@@ -73,7 +85,7 @@ class Map extends React.Component {
           fullScreen={fullScreen}
           style={style} />
         <MapContext.Provider value={this.getContextValue()}>
-          {!this.map // wait for a map to exist before rendering children that need a ref to map
+          {!map // wait for a map to exist before rendering children that need a ref to map
             ? null
             : children}
         </MapContext.Provider>
@@ -103,7 +115,9 @@ Map.propTypes = {
   fullScreen: PropTypes.bool,
   /** optionally pass a custom map */
   map: PropTypes.object,
-  /** callback called with initialized map object after optional animations complete, right before children of Map are rendered */
+  /** callback called with initialized map object after optional animations complete
+    note: if a <Promise> is returned from this function, Map will wait for onMapInit to resolve before rendering children
+  */
   onMapInit: PropTypes.func,
   /** the length of debounce on map movements before the url gets updated */
   updateUrlDebounce: PropTypes.number,
