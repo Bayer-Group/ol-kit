@@ -5,6 +5,7 @@ import debounce from 'lodash.debounce'
 import { StyledMap } from './styled'
 import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
 import ugh from 'ugh'
+import en from 'locales/en'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
 export let MapContext = null
@@ -59,7 +60,8 @@ class Map extends React.Component {
 
   getContextValue = () => {
     return {
-      map: this.map
+      map: this.map,
+      translations: en
     }
   }
 
