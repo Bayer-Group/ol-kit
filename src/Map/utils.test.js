@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { mountOpts } from 'index.test'
 import qs from 'qs'
 import Map from './Map'
 import { connectToMap, createMap, updateMapFromUrl } from './utils'
@@ -55,7 +56,7 @@ describe('connectToMap', () => {
   it('should pass a map prop to children', () => {
     const Child = props => <div>child comp</div>
     const Consumer = connectToMap(Child)
-    const wrapper = mount(<Consumer inlineProp={true} />, { wrappingComponent: Map })
+    const wrapper = mount(<Consumer inlineProp={true} />, mountOpts())
 
     expect(wrapper.find(Consumer).props().inlineProp).toBe(true)
     // make sure connectToMap is passing inline props down to children

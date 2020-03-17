@@ -1,29 +1,22 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
+import { mountOpts } from 'index.test'
 import BingMaps from './BingMaps'
-import Map from '../Map'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
 const mockSourceOpts = {
   key: ''
 }
-const mountOpts = props => ({
-  wrappingComponent: Map,
-  wrappingComponentProps: {
-    allowAsyncMount: false, // this forces wrappingComponent to render children immediately
-    ...props
-  }
-})
 
-describe.only('<BingMaps />', () => {
+describe('<BingMaps />', () => {
   it('should render a basic basemap option component', () => {
     const wrapper = shallow(<BingMaps sourceOpts={mockSourceOpts} />, mountOpts())
 
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('should require a key', () => {
+  it.skip('should require a key', () => {
     const map = new olMap()
     const wrapper = shallow(<BingMaps map={map} sourceOpts={{ key: undefined }} />)
 
@@ -32,7 +25,7 @@ describe.only('<BingMaps />', () => {
 
   it('should add a basemap to an empty map when clicked', () => {
     const map = new olMap()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} />)
+    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} />, mountOpts({ map }))
 
     expect(map.getLayers().getArray().length).toBe(0)
 

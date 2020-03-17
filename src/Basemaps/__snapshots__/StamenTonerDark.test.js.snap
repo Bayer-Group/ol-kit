@@ -1,18 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<StamenTonerDark /> should render a basic basemap option component 1`] = `
-<Fragment>
-  <styled.div
-    fullScreen={false}
-    id="_ol_kit_map_I1laR2"
-    style={Object {}}
-  />
-  <ContextProvider
-    value={
-      Object {
-        "map": undefined,
-      }
-    }
-  />
-</Fragment>
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
+`;
+
+exports[`ol-kit package should not export undefined 1`] = `
+Object {
+  "Compass": [Function],
+  "Controls": [Function],
+  "Map": [Function],
+  "ZoomControls": [Function],
+  "connectToMap": [Function],
+  "updateMapFromUrl": [Function],
+  "updateUrlFromMap": [Function],
+}
 `;

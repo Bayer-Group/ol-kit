@@ -110,7 +110,7 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
-  /** allows animations and map to initialize before rendering children, set to false if you require a synchronous render on mount */
+  /** allows map animations/initialization to complete before rendering children, set to false if you require a synchronous render on mount */
   allowAsyncMount: PropTypes.bool,
   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([

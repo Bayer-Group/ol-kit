@@ -1,15 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { mountOpts } from 'index.test'
 import BasemapManager from './BasemapManager'
-import Map from '../Map'
-
-const mountOpts = props => ({
-  wrappingComponent: Map,
-  wrappingComponentProps: {
-    allowAsyncMount: false, // this forces wrappingComponent to render children immediately
-    ...props
-  }
-})
 
 describe('<BasemapManager />', () => {
   it('should render a basic basemap manager component', () => {

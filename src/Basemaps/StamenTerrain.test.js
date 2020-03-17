@@ -1,17 +1,9 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
+import { mountOpts } from 'index.test'
 import StamenTerrain from './StamenTerrain'
-import Map from '../Map'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
-
-const mountOpts = props => ({
-  wrappingComponent: Map,
-  wrappingComponentProps: {
-    allowAsyncMount: false, // this forces wrappingComponent to render children immediately
-    ...props
-  }
-})
 
 describe('<StamenTerrain />', () => {
   it('should render a basic basemap option component', () => {

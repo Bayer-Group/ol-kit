@@ -82,3 +82,15 @@ exports[`<BasemapManager /> should render an array of children 1`] = `
   </div>
 </styled.div>
 `;
+
+exports[`ol-kit package should not export undefined 1`] = `
+Object {
+  "Compass": [Function],
+  "Controls": [Function],
+  "Map": [Function],
+  "ZoomControls": [Function],
+  "connectToMap": [Function],
+  "updateMapFromUrl": [Function],
+  "updateUrlFromMap": [Function],
+}
+`;
