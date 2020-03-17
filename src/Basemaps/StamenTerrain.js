@@ -54,7 +54,7 @@ class StamenTerrain extends React.Component {
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{translations['olKit.StamenTerrain.title']}</Label>
+        <Label>{translations['_ol_kit.StamenTerrain.title']}</Label>
       </BasemapOption>
     )
   }
@@ -65,7 +65,7 @@ StamenTerrain.propTypes = {
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    'olKit.StamenTerrain.title': PropTypes.string
+    '_ol_kit.StamenTerrain.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
