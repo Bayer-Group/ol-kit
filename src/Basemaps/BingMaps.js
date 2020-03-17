@@ -59,7 +59,7 @@ class BingMaps extends React.Component {
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{label}</Label>
+        <Label>{translations['_ol_kit.BingMaps.title']}</Label>
       </BasemapOption>
     )
   }
@@ -74,7 +74,7 @@ BingMaps.propTypes = {
   layerID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    label: PropTypes.string
+    '_ol_kit.BingMaps.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
@@ -89,9 +89,6 @@ BingMaps.propTypes = {
 BingMaps.defaultProps = {
   onBasemapChanged: () => {},
   layerTypeID: '_ol_kit_basemap',
-  translations: {
-    label: 'Bing Maps'
-  },
   thumbnail: '',
   layerID: 'bingAerial'
 }

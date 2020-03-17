@@ -68,7 +68,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li><li><a href="tutorial-Map Consumer.html">Map Consumer</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#MapConsumer">MapConsumer</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li><li><a href="tutorial-connectToMap.html">connectToMap</a></li><li><a href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Components</h3><ul><li><a href="CompassContainer.html">CompassContainer</a></li><li><a href="Container.html">Container</a></li><li><a href="ControlsContainer.html">ControlsContainer</a></li><li><a href="Icon.html">Icon</a></li><li><a href="IconsContainer.html">IconsContainer</a></li><li><a href="IconSeparator.html">IconSeparator</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -163,12 +163,12 @@
 
 
     
-    <h4 class="name" id="createMap">
-        <a class="href-link" href="#createMap">#</a>
+    <h4 class="name" id="centerAndZoom">
+        <a class="href-link" href="#centerAndZoom">#</a>
         
         <span class="code-name">
             
-                createMap<span class="signature">(opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {ol.Map}</span>
+                centerAndZoom<span class="signature">(map, opts)</span><span class="type-signature"> &rarr; {Array}</span>
             
         </span>
     </h4>
@@ -177,7 +177,7 @@
     
     
     <div class="description">
-        Create an openlayers map
+        Update the map location to provided zoom & x, y coordinates
     </div>
     
 
@@ -202,8 +202,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -212,6 +210,31 @@
     </thead>
 
     <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">reference to the openlayer map object</td>
+</tr>
+
+
     
 
         
@@ -230,57 +253,11 @@
   </td>
 
   
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
 
   
 
-  <td class="description last">Object of optional params</td>
+  <td class="description last">include x, y, & zoom options</td>
 </tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>target</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">String</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-
-  <td class="description last">htm id tag that map will into which the map will render</td>
-</tr>
-
-  
 
 
     
@@ -297,7 +274,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
     
 
     
@@ -327,9 +304,9 @@
 
     
         <p class="tag-source">
-            <a href="utils.js.html" class="button">View Source</a>
+            <a href="Map_utils.js.html" class="button">View Source</a>
             <span>
-                <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line15">line 15</a>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line128">line 128</a>
             </span>
         </p>
     
@@ -360,13 +337,13 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>A newly constructed <a href="https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html">ol.Map</a></div>
+    <div class='param-desc column is-7'>Coordinates used to update the map</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">ol.Map</span>
+<span class="param-type">Array</span>
 
 
     </div>
@@ -386,12 +363,12 @@
 
 
     
-    <h4 class="name" id="MapConsumer">
-        <a class="href-link" href="#MapConsumer">#</a>
+    <h4 class="name" id="connectToMap">
+        <a class="href-link" href="#connectToMap">#</a>
         
         <span class="code-name">
             
-                MapConsumer<span class="signature">(component)</span><span class="type-signature"> &rarr; {Component}</span>
+                connectToMap<span class="signature">(component)</span><span class="type-signature"> &rarr; {Component}</span>
             
         </span>
     </h4>
@@ -472,7 +449,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
     
 
     
@@ -502,9 +479,9 @@
 
     
         <p class="tag-source">
-            <a href="utils.js.html" class="button">View Source</a>
+            <a href="Map_utils.js.html" class="button">View Source</a>
             <span>
-                <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line42">line 42</a>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line52">line 52</a>
             </span>
         </p>
     
@@ -535,13 +512,413 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>A wrapped React component which will automatically be passed</div>
+    <div class='param-desc column is-7'>A wrapped React component which will automatically be passed a reference to the ol.Map</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
 <span class="param-type">Component</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateMapFromUrl">
+        <a class="href-link" href="#updateMapFromUrl">#</a>
+        
+        <span class="code-name">
+            
+                updateMapFromUrl<span class="signature">(map, viewParam)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Update the map view with location coordinates, zoom level & rotation from the url
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">reference to the openlayer map object</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>viewParam</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">the query param that will be read to update the map position</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Map_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line98">line 98</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Resolved with transformed center coords after the map has been updated by url info</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateUrlFromMap">
+        <a class="href-link" href="#updateUrlFromMap">#</a>
+        
+        <span class="code-name">
+            
+                updateUrlFromMap<span class="signature">(map, viewParam)</span><span class="type-signature"> &rarr; {String}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Update the url with map location coordinates, zoom level & rotation
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">reference to the openlayer map object</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>viewParam</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">the query param that will be used to update the url with view info</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Map_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line75">line 75</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>The url that is set within the function</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">String</span>
 
 
     </div>
@@ -579,7 +956,7 @@
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 15 2020 15:26:27 GMT-0600 (Central Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Mar 17 2020 10:36:21 GMT-0500 (Central Daylight Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
