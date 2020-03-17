@@ -53,7 +53,7 @@ export function connectToMap (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToMap\'')
 
   return props => ( // eslint-disable-line react/display-name
-    !MapContext
+    !MapContext || !!props.map
       ? <Component {...props} />
       : (
         <MapContext.Consumer>

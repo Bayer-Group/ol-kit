@@ -26,16 +26,19 @@ class Map extends React.Component {
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
 
+    // if no map was passed, create the map
+    this.map = !props.map ? createMap({ target: this.target }) : props.map
+
     // create a map context
     MapContext = React.createContext()
   }
 
   componentDidMount () {
-    const { map: passedMap, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
+    const { onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
     const onMapReady = map => {
       // pass map back via callback prop
       const initCallback = onMapInit(map)
-      // if a promise is returned from onMapInit, render children after promise is resolved
+      // if onMapInit prop returns a promise, render children after promise is resolved
       const isPromise = !!initCallback && typeof initCallback.then === 'function'
 
       // update AFTER onMapInit to get map into the state/context
@@ -43,9 +46,6 @@ class Map extends React.Component {
         ? initCallback.then(() => this.setState({ mapInitialized: true }))
         : this.setState({ mapInitialized: true })
     }
-
-    // if no map was passed, create the map
-    this.map = !passedMap ? createMap({ target: this.target }) : passedMap
 
     // optionally attach map listener
     if (updateUrlFromView) {
@@ -75,7 +75,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, style } = this.props
+    const { allowAsyncMount, children, fullScreen, style } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -85,9 +85,12 @@ class Map extends React.Component {
           fullScreen={fullScreen}
           style={style} />
         <MapContext.Provider value={this.getContextValue()}>
-          {!mapInitialized // wait for a map to exist before rendering children that need a ref to map
-            ? null
-            : children}
+          {/* wait for map to initialize before rendering children
+            unless a synchronous mount is forced, render children before map is initialized */
+            mapInitialized || !allowAsyncMount
+              ? children
+              : null
+          }
         </MapContext.Provider>
       </>
     )
@@ -95,6 +98,7 @@ class Map extends React.Component {
 }
 
 Map.defaultProps = {
+  allowAsyncMount: true,
   fullScreen: false,
   map: null,
   onMapInit: () => {},
@@ -106,6 +110,8 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
+  /** allows animations and map to initialize before rendering children, set to false if you require a synchronous render on mount */
+  allowAsyncMount: PropTypes.bool,
   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

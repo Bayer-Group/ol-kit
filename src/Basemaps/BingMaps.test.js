@@ -8,23 +8,31 @@ import olLayerVector from 'ol/layer/vector'
 const mockSourceOpts = {
   key: ''
 }
+const mountOpts = props => ({
+  wrappingComponent: Map,
+  wrappingComponentProps: {
+    allowAsyncMount: false, // this forces wrappingComponent to render children immediately
+    ...props
+  }
+})
 
-describe('<BingMaps />', () => {
+describe.only('<BingMaps />', () => {
   it('should render a basic basemap option component', () => {
-    const wrapper = shallow(<BingMaps sourceOpts={mockSourceOpts} />, { wrappingComponent: Map })
+    const wrapper = shallow(<BingMaps sourceOpts={mockSourceOpts} />, mountOpts())
 
     expect(wrapper).toMatchSnapshot()
   })
 
   it('should require a key', () => {
-    const wrapper = shallow(<BingMaps sourceOpts={{ key: undefined }} />, { wrappingComponent: Map })
+    const map = new olMap()
+    const wrapper = shallow(<BingMaps map={map} sourceOpts={{ key: undefined }} />)
 
     expect(wrapper).toThrowErrorMatchingSnapshot()
   })
 
   it('should add a basemap to an empty map when clicked', () => {
     const map = new olMap()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} />, { wrappingComponent: Map })
+    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} />)
 
     expect(map.getLayers().getArray().length).toBe(0)
 
@@ -43,8 +51,7 @@ describe('<BingMaps />', () => {
         mockLayer
       ]
     })
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} />,
-      { wrappingComponent: Map })
+    const wrapper = mount(<BingMaps sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} />, mountOpts({ map }))
 
     expect(map.getLayers().getArray().length).toBe(1)
 
@@ -55,8 +62,7 @@ describe('<BingMaps />', () => {
   it('should fire the callback when the layers are changed', () => {
     const map = new olMap()
     const callback = jest.fn()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} onBasemapChanged={callback} />,
-      { wrappingComponent: Map })
+    const wrapper = mount(<BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />, mountOpts({ map }))
 
     expect(callback).not.toHaveBeenCalled()
     wrapper.simulate('click')
@@ -66,8 +72,7 @@ describe('<BingMaps />', () => {
   it('should render a blue border to indicate when the layer is present on the map', () => {
     const callback = jest.fn()
     const map = new olMap()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} onBasemapChanged={callback} />,
-      { wrappingComponent: Map })
+    const wrapper = mount(<BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />, mountOpts({ map }))
 
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
     wrapper.simulate('click')

@@ -5,16 +5,24 @@ import Map from '../Map'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
+const mountOpts = props => ({
+  wrappingComponent: Map,
+  wrappingComponentProps: {
+    allowAsyncMount: false, // this forces wrappingComponent to render children immediately
+    ...props
+  }
+})
+
 describe('<StamenTonerLite />', () => {
   it('should render a basic basemap option component', () => {
-    const wrapper = shallow(<StamenTonerLite />, { wrappingComponent: Map })
+    const wrapper = shallow(<StamenTonerLite />, mountOpts())
 
     expect(wrapper).toMatchSnapshot()
   })
 
   it('should add a basemap to an empty map when clicked', () => {
     const map = new olMap()
-    const wrapper = mount(<StamenTonerLite map={map} />, { wrappingComponent: Map })
+    const wrapper = mount(<StamenTonerLite map={map} />, mountOpts({ map }))
 
     expect(map.getLayers().getArray().length).toBe(0)
 
@@ -33,7 +41,7 @@ describe('<StamenTonerLite />', () => {
         mockLayer
       ]
     })
-    const wrapper = mount(<StamenTonerLite map={map} layerTypeID={mockLayerTypeID} />, { wrappingComponent: Map })
+    const wrapper = mount(<StamenTonerLite layerTypeID={mockLayerTypeID} />, mountOpts({ map }))
 
     expect(map.getLayers().getArray().length).toBe(1)
 
@@ -44,7 +52,7 @@ describe('<StamenTonerLite />', () => {
   it('should fire the callback when the layers are changed', () => {
     const map = new olMap()
     const callback = jest.fn()
-    const wrapper = mount(<StamenTonerLite map={map} onBasemapChanged={callback} />, { wrappingComponent: Map })
+    const wrapper = mount(<StamenTonerLite onBasemapChanged={callback} />, mountOpts({ map }))
 
     expect(callback).not.toHaveBeenCalled()
     wrapper.simulate('click')
@@ -54,7 +62,7 @@ describe('<StamenTonerLite />', () => {
   it('should render a blue border to indicate when the layer is present on the map', () => {
     const callback = jest.fn()
     const map = new olMap()
-    const wrapper = mount(<StamenTonerLite map={map} onBasemapChanged={callback} />, { wrappingComponent: Map })
+    const wrapper = mount(<StamenTonerLite onBasemapChanged={callback} />, mountOpts({ map }))
 
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
     wrapper.simulate('click')
