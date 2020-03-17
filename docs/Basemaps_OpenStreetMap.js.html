@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Map/utils.js</title>
+    <title>JSDoc: Basemaps/OpenStreetMap.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -78,7 +78,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>Map/utils.js</h1>
+                        <h1>Basemaps/OpenStreetMap.js</h1>
                     </header>
                     
                     
@@ -89,141 +89,89 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
-import Map from 'ol/map'
-import View from 'ol/view'
-import TileLayer from 'ol/layer/tile'
-import OSM from 'ol/source/osm'
-import olProj from 'ol/proj'
-import qs from 'qs'
+import PropTypes from 'prop-types'
+import olLayerTile from 'ol/layer/tile'
+import olSourceOSM from 'ol/source/osm'
+import { BasemapOption, BasemapThumbnail, Label } from './styled'
+import { osm } from './thumbnails'
+import { connectToMap } from 'Map'
 
-import ugh from 'ugh'
-import { MapContext } from './Map'
+class OpenStreetMap extends React.Component {
+  handleLayersChange = () => {
+    this.forceUpdate()
+  }
 
-/**
- * Create an openlayers map
- * @function
- * @category Map
- * @since 0.1.0
- * @param {Object} [opts] - Object of optional params
- * @param {String} [opts.target] - htm id tag that map will into which the map will render
- * @returns {ol.Map} A newly constructed [ol.Map]{@link https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html}
- */
-export function createMap (opts = {}) {
-  if (!opts.target) return ugh.throw('You must pass an options object with a DOM target for the map')
-  if (typeof opts.target !== 'string' &amp;&amp; opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself') // eslint-disable-line no-undef
+  componentDidMount () {
+    this.props.map.getLayers().on('change', this.handleLayersChange)
+  }
 
-  // create a new map instance
-  const map = new Map({
-    view: new View({
-      center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
-      zoom: 5
-    }),
-    layers: [
-      new TileLayer({
-        _ol_kit_basemap: 'osm', // used by BasemapManager
-        source: new OSM()
-      })
-    ],
-    target: opts.target,
-    controls: []
-  })
+  componentWillUnmount () {
+    this.props.map.getLayers().un('change', this.handleLayersChange)
+  }
 
-  return map
-}
-
-/**
- * An HOC designed to automatically pass down an ol.Map from the top-level Map component
- * @function
- * @category Map
- * @since 0.1.0
- * @param {Component} component - A React component you want wrapped
- * @returns {Component} A wrapped React component which will automatically be passed a reference to the ol.Map
- */
-export function connectToMap (Component) {
-  if (!Component) return ugh.throw('Pass a React component to \'connectToMap\'')
-
-  return props => ( // eslint-disable-line react/display-name
-    !MapContext
-      ? &lt;Component {...props} />
-      : (
-        &lt;MapContext.Consumer>
-          {({ map, translations }) => &lt;Component map={map} translations={translations} {...props} />}
-        &lt;/MapContext.Consumer>
-      )
-  )
-}
-
-/**
- * Update the url with map location coordinates, zoom level &amp; rotation
- * @function
- * @category Map
- * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
- * @param {String} viewParam - the query param that will be used to update the url with view info
- * @returns {String} The url that is set within the function
- */
-export function updateUrlFromMap (map, viewParam = 'view') {
-  if (!(map instanceof Map)) return ugh.throw('\'updateUrlFromMap\' requires a valid openlayers map as the first argument')
-  const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
-  const coords = olProj.transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
-  const view = { [viewParam]: `${parseFloat(coords[1]).toFixed(6)},${parseFloat(coords[0]).toFixed(6)},${parseFloat(map.getView().getZoom()).toFixed(2)},${parseFloat(map.getView().getRotation()).toFixed(2)}` }
-  const newQuery = { ...query, ...view }
-  const queryString = qs.stringify(newQuery, { addQueryPrefix: true, encoder: (str) => str })
-  const newUrl = window.location.pathname + queryString
-
-  window.history.replaceState(null, '', newUrl)
-
-  return newUrl
-}
-
-/**
- * Update the map view with location coordinates, zoom level &amp; rotation from the url
- * @function
- * @category Map
- * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
- * @param {String} viewParam - the query param that will be read to update the map position
- * @returns {Promise} Resolved with transformed center coords after the map has been updated by url info
- */
-export function updateMapFromUrl (map, viewParam = 'view') {
-  const promise = new Promise((resolve, reject) => {
-    const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
-
-    if (!(map instanceof Map)) return ugh.throw('\'updateMapFromUrl\' requires a valid openlayers map as the first argument', reject)
-    if (!query[viewParam]) return ugh.warn(`url param "${viewParam}" was not found on page load`, resolve)
-    const [y, x, zoom, rotation] = query[viewParam].split(',')
-    const centerAndZoomOpts = { x, y, zoom }
-    const coords = centerAndZoom(map, centerAndZoomOpts)
-
-    // wait for the map to update then resolve promise
-    map.once('postrender', () => resolve(coords))
-    map.getView().animate({
-      rotation,
-      duration: 0
+  onClick = () => {
+    const { map, layerTypeID, onBasemapChanged } = this.props
+    const source = new olSourceOSM({
+      layer: 'osm',
+      cacheSize: 4096,
+      reprojectionErrorThreshold: 0,
+      crossOrigin: 'Anonymous'
     })
-  })
+    const layer = new olLayerTile({
+      preload: Infinity,
+      extent: undefined,
+      [layerTypeID]: 'osm', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
+      source
+    })
+    const layers = map.getLayers()
+    const layerArray = layers.getArray()
+    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
 
-  return promise
+    if (hasBasemap) {
+      layers.setAt(0, layer)
+    } else {
+      layers.insertAt(0, layer)
+    }
+    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
+    onBasemapChanged(layer)
+  }
+
+  render () {
+    const { translations, thumbnail, map, layerTypeID } = this.props
+    const layerArray = map.getLayers().getArray()
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'osm' : false
+
+    return (
+      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
+        &lt;BasemapThumbnail thumbnail={thumbnail} />
+        &lt;Label>{translations['olKit.OpenStreetMap.title']}&lt;/Label>
+      &lt;/BasemapOption>
+    )
+  }
 }
 
-/**
- * Update the map location to provided zoom &amp; x, y coordinates
- * @function
- * @category Map
- * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
- * @param {Object} opts - include x, y, &amp; zoom options
- * @returns {Array} Coordinates used to update the map
- */
-export function centerAndZoom (map, opts = {}) {
-  if (!(map instanceof Map)) return ugh.throw('\'centerAndZoom\' requires a valid openlayers map as the first argument')
-  const transformedCoords = olProj.transform([Number(opts.x), Number(opts.y)], 'EPSG:4326', map.getView().getProjection().getCode())
-
-  map.getView().setCenter(transformedCoords)
-  map.getView().setZoom(opts.zoom)
-
-  return transformedCoords
+OpenStreetMap.propTypes = {
+  /** reference to Openlayers map object */
+  map: PropTypes.object.isRequired,
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.shape({
+    'olKit.OpenStreetMap.title': PropTypes.string
+  }),
+  /** A string containing an http url or data url to a thumbnail image */
+  thumbnail: PropTypes.string,
+  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
+  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
+  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
+  onBasemapChanged: PropTypes.func
 }
+
+OpenStreetMap.defaultProps = {
+  thumbnail: osm,
+  onBasemapChanged: () => {},
+  layerTypeID: '_ol_kit_basemap'
+}
+
+export default connectToMap(OpenStreetMap)
 </code></pre>
         </article>
     </section>

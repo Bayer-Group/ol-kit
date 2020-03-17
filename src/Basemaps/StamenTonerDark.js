@@ -48,14 +48,13 @@ class StamenTonerDark extends React.Component {
 
   render () {
     const { translations, thumbnail, map, layerTypeID } = this.props
-    const label = translations.label
     const layerArray = map.getLayers().getArray()
     const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'stamenTonerDark' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{label}</Label>
+        <Label>{translations['_ol_kit.StamenTonerDark.title']}</Label>
       </BasemapOption>
     )
   }
@@ -66,7 +65,7 @@ StamenTonerDark.propTypes = {
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    label: PropTypes.string
+    '_ol_kit.StamenTonerDark.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
@@ -79,9 +78,6 @@ StamenTonerDark.propTypes = {
 StamenTonerDark.defaultProps = {
   thumbnail: stamenTonerDark,
   onBasemapChanged: () => {},
-  translations: {
-    label: 'Stamen Toner Dark'
-  },
   layerTypeID: '_ol_kit_basemap'
 }
 

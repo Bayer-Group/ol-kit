@@ -57,7 +57,7 @@ export function connectToMap (Component) {
       ? <Component {...props} />
       : (
         <MapContext.Consumer>
-          {({ map }) => <Component map={map} {...props} />}
+          {({ map, translations }) => <Component map={map} translations={translations} {...props} />}
         </MapContext.Consumer>
       )
   )
