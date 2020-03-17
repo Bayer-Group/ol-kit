@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Map/Map.js</title>
+    <title>JSDoc: connectToMap</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,141 +75,76 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>Map/Map.js</h1>
+                        <p>Tutorial</p>
+                        <h1>connectToMap</h1>
                     </header>
                     
-                    
+                    <section>
 
-
-
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import PropTypes from 'prop-types'
-import nanoid from 'nanoid'
-import debounce from 'lodash.debounce'
-import { StyledMap } from './styled'
-import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
-import ugh from 'ugh'
-import en from 'locales/en'
+</header>
 
-// context should only be created when &lt;Map> is mounted (see constructor), otherwise it's null so child comps don't use context
-export let MapContext = null
+<article>
+    <h1>connectToMap</h1>
+<p>The <code>connectToMap</code> component automatically passes an <code>ol.Map</code> to its children.</p>
+<h2>How does it work?</h2>
+<p>When the <code>Map</code> component is constructed, it attaches the OpenLayers map to a <a href="https://reactjs.org/docs/context.html">context</a>. If this context exists (which means <code>Map</code> has been constructed), <code>connectToMap</code> renders it's child with a prop of <code>map</code> from the <code>Map</code> parent and also spreads the rest of the inline props. If a <code>Map</code> is not mounted, <code>connectToMap</code> will just render the child and pass props through without consuming a context.</p>
+<h2>Automatic Example</h2>
+<p>All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup } from '@bayer/ol-kit'
 
-/**
- * A Reactified ol.Map wrapper component
- * @component
- * @category Map
- * @since 0.1.0
- */
-class Map extends React.Component {
-  constructor (props) {
-    super(props)
-
-    // this is used to create a unique identifier for the map div
-    this.target = `_ol_kit_map_${nanoid(6)}`
-
-    // create a map context
-    MapContext = React.createContext()
-  }
-
-  componentDidMount () {
-    const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
-
-    if (!map) {
-      // if no map was passed, create the map
-      this.map = createMap({ target: this.target })
-      // force update to get this.map into the context
-      this.forceUpdate()
-    } else {
-      this.map = map
-    }
-
-    if (updateUrlFromView) {
-      const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
-      const mapMoveListener = debounce(setUrl, updateUrlDebounce)
-
-      // update the url param after map movements
-      this.map.on('moveend', mapMoveListener)
-    }
-
-    if (updateViewFromUrl) {
-      // read the url to update the map from view info
-      updateMapFromUrl(this.map, urlViewParam)
-        .catch(ugh.error)
-        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
-    } else {
-      // callback that returns a reference to the created map
-      onMapInit(this.map)
-    }
-  }
-
-  getContextValue = () => {
-    return {
-      map: this.map,
-      translations: en
-    }
-  }
-
-  render () {
-    const { children, fullScreen } = this.props
-
-    return (
-      &lt;>
-        &lt;StyledMap
-          id={this.target}
-          fullScreen={fullScreen} />
-        &lt;MapContext.Provider value={this.getContextValue()}>
-          {!this.map // wait for a map to exist before rendering children that need a ref to map
-            ? null
-            : children}
-        &lt;/MapContext.Provider>
-      &lt;/>
-    )
-  }
+const App = () => {
+  return (
+    &lt;Map>
+      &lt;Popup /> {/* This component was automatically given a map prop */}
+    &lt;/Map>
+  )
 }
 
-Map.defaultProps = {
-  fullScreen: false,
-  map: null,
-  onMapInit: () => {},
-  updateUrlDebounce: 400,
-  updateUrlFromView: true,
-  updateViewFromUrl: true,
-  urlViewParam: 'view'
-}
-
-Map.propTypes = {
-  /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  /** if this is set to false, the map will fill it's parent container */
-  fullScreen: PropTypes.bool,
-  /** optionally pass a custom map */
-  map: PropTypes.object,
-  /** returns an initialized map object after optional animations complete */
-  onMapInit: PropTypes.func,
-  /** the length of debounce on map movements before the url gets updated */
-  updateUrlDebounce: PropTypes.number,
-  /** add map location coords + zoom level to url as query params */
-  updateUrlFromView: PropTypes.bool,
-  /** update map view based off the url param */
-  updateViewFromUrl: PropTypes.bool,
-  /** change the url param used to set the map location coords */
-  urlViewParam: PropTypes.string
-}
-
-export default Map
+export default App
 </code></pre>
-        </article>
-    </section>
+<h2>Manual Example</h2>
+<p>If you prefer to not use the <code>Map</code> component you must manually pass the <code>map</code> prop to all ol-kit components:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup } from '@bayer/ol-kit'
 
+const App = () => {
+  return (
+    &lt;div>
+      &lt;Popup map={yourOlMap} />
+    &lt;/div>
+  )
+}
 
+export default App
+</code></pre>
+<h2>Wrapping Your Components</h2>
+<p>Prebuilt ol-kit components get wrapped by this consumer before they are exported so they can be dropped in and just work. If you want to leverage the same logic, wrap your custom component like so:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import PropTypes from 'prop-types'
+import { connectToMap } from '@bayer/ol-kit'
 
+const CustomMapComponent = props => {
+  const { map } = props
+
+  // do some logic with the map
+
+  return (
+    &lt;div>This component has map as a prop!&lt;/div>
+  )
+}
+
+CustomMapComponent.propTypes = {
+  map: PropTypes.object.isRequired
+}
+
+export default connectToMap(CustomMapComponent)
+</code></pre>
+</article>
+
+</section>
 
                 </div>
             </div>
