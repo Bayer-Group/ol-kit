@@ -1,6 +1,9 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
+import { fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { prettyDOM } from '@testing-library/dom'
 import { mountOpts } from 'index.test'
+import Map from '../Map'
 import BingMaps from './BingMaps'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
@@ -10,26 +13,36 @@ const mockSourceOpts = {
 }
 
 describe('<BingMaps />', () => {
-  it('should render a basic basemap option component', () => {
-    const wrapper = shallow(<BingMaps sourceOpts={mockSourceOpts} />, mountOpts())
+  it('should render a basic basemap option component', async () => {
+    const onMapInit = jest.fn()
+    const { wrapper } = render(<Map onMapInit={onMapInit}><BingMaps sourceOpts={mockSourceOpts} /></Map>)
 
-    expect(wrapper).toMatchSnapshot()
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+
+    expect(prettyDOM(wrapper)).toMatchSnapshot()
   })
 
-  it.skip('should require a key', () => {
+  it('should require a key', async () => {
     const map = new olMap()
-    const wrapper = shallow(<BingMaps map={map} sourceOpts={{ key: undefined }} />)
+    const onMapInit = jest.fn()
+    const { wrapper } = render(<Map map={map} onMapInit={onMapInit}><BingMaps sourceOpts={{ key: undefined }} /></Map>)
 
-    expect(wrapper).toThrowErrorMatchingSnapshot()
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+
+    expect(prettyDOM(wrapper)).toMatchSnapshot()
   })
 
-  it('should add a basemap to an empty map when clicked', () => {
+  it('should add a basemap to an empty map when clicked', async () => {
     const map = new olMap()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} />, mountOpts({ map }))
+    const onMapInit = jest.fn()
+    const MapWrapper = props => <Map map={map} onMapInit={onMapInit} {...props} />
+    const { container } = render(<BingMaps sourceOpts={mockSourceOpts} />, { wrapper: MapWrapper })
+
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
     expect(map.getLayers().getArray().length).toBe(0)
 
-    wrapper.simulate('click')
+    fireEvent.click(getByText(container, 'Bing Maps'))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
