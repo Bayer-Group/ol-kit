@@ -20,6 +20,7 @@ class StamenTerrain extends React.Component {
   }
 
   onClick = () => {
+    const { map, layerTypeID, onBasemapChanged } = this.props
     const source = new olSourceStamen({
       layer: 'terrain',
       url: 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',
@@ -29,15 +30,12 @@ class StamenTerrain extends React.Component {
     const layer = new olLayerTile({
       preload: Infinity,
       extent: undefined,
+      [layerTypeID]: 'stamenTerrain', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
-    const { map, layerTypeID, onBasemapChanged } = this.props
-
-    layer[layerTypeID] = 'stamenTerrain' // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-
     const layers = map.getLayers()
     const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0][layerTypeID] : false
+    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0].get(layerTypeID) : false
 
     if (hasBasemap) {
       layers.setAt(0, layer)
@@ -50,14 +48,13 @@ class StamenTerrain extends React.Component {
 
   render () {
     const { translations, thumbnail, map, layerTypeID } = this.props
-    const label = translations.label
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0][layerTypeID] === 'stamenTerrain' : false
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'stamenTerrain' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{label}</Label>
+        <Label>{translations['_ol_kit.StamenTerrain.title']}</Label>
       </BasemapOption>
     )
   }
@@ -68,7 +65,7 @@ StamenTerrain.propTypes = {
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    label: PropTypes.string
+    '_ol_kit.StamenTerrain.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
@@ -81,9 +78,6 @@ StamenTerrain.propTypes = {
 StamenTerrain.defaultProps = {
   thumbnail: stamenTerrain,
   onBasemapChanged: () => {},
-  translations: {
-    label: 'Stamen Terrain'
-  },
   layerTypeID: '_ol_kit_basemap'
 }
 

@@ -22,19 +22,18 @@ export function createMap (opts = {}) {
   if (!opts.target) return ugh.throw('You must pass an options object with a DOM target for the map')
   if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself') // eslint-disable-line no-undef
 
-  const basemap = new TileLayer({
-    source: new OSM()
-  })
-
-  basemap._ol_kit_basemap = 'osm'
-
   // create a new map instance
   const map = new Map({
     view: new View({
       center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
       zoom: 5
     }),
-    layers: [basemap],
+    layers: [
+      new TileLayer({
+        _ol_kit_basemap: 'osm', // used by BasemapManager
+        source: new OSM()
+      })
+    ],
     target: opts.target,
     controls: []
   })
@@ -58,7 +57,7 @@ export function connectToMap (Component) {
       ? <Component {...props} />
       : (
         <MapContext.Consumer>
-          {({ map }) => <Component map={map} {...props} />}
+          {({ map, translations }) => <Component map={map} translations={translations} {...props} />}
         </MapContext.Consumer>
       )
   )

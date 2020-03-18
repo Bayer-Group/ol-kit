@@ -30,14 +30,12 @@ class OpenStreetMap extends React.Component {
     const layer = new olLayerTile({
       preload: Infinity,
       extent: undefined,
+      [layerTypeID]: 'osm', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
-
-    layer[layerTypeID] = 'osm' // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-
     const layers = map.getLayers()
     const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0][layerTypeID] : false
+    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0].get(layerTypeID) : false
 
     if (hasBasemap) {
       layers.setAt(0, layer)
@@ -50,14 +48,13 @@ class OpenStreetMap extends React.Component {
 
   render () {
     const { translations, thumbnail, map, layerTypeID } = this.props
-    const label = translations.label
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0][layerTypeID] === 'osm' : false
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'osm' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{label}</Label>
+        <Label>{translations['_ol_kit.OpenStreetMap.title']}</Label>
       </BasemapOption>
     )
   }
@@ -68,7 +65,7 @@ OpenStreetMap.propTypes = {
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    label: PropTypes.string
+    '_ol_kit.OpenStreetMap.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
@@ -81,9 +78,6 @@ OpenStreetMap.propTypes = {
 OpenStreetMap.defaultProps = {
   thumbnail: osm,
   onBasemapChanged: () => {},
-  translations: {
-    label: 'Open Street Map'
-  },
   layerTypeID: '_ol_kit_basemap'
 }
 

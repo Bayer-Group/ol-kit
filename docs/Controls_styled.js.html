@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Map/Map.js</title>
+    <title>JSDoc: Controls/styled.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -78,7 +78,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>Map/Map.js</h1>
+                        <h1>Controls/styled.js</h1>
                     </header>
                     
                     
@@ -88,124 +88,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import PropTypes from 'prop-types'
-import nanoid from 'nanoid'
-import debounce from 'lodash.debounce'
-import { StyledMap } from './styled'
-import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
-import ugh from 'ugh'
-import en from 'locales/en'
+            <pre class="prettyprint source linenums"><code>import styled from 'styled-components'
 
-// context should only be created when &lt;Map> is mounted (see constructor), otherwise it's null so child comps don't use context
-export let MapContext = null
+/** @component */
+export const CompassContainer = styled.div`
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  right: 7px;
+  border-radius: 55px;
+  background: ${props => props.background};
+  z-index: 1;
+  position: relative;
+  box-shadow: 1px 2px 5px #757575;
+`
 
-/**
- * A Reactified ol.Map wrapper component
- * @component
- * @category Map
- * @since 0.1.0
- */
-class Map extends React.Component {
-  constructor (props) {
-    super(props)
+/** @component */
+export const ControlsContainer = styled.div`
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  position: absolute;
+  left: ${p => p.position.includes('left') ? '14px' : 'unset'};
+  right: ${p => p.position.includes('right') ? '14px' : 'unset'};
+  bottom: ${p => p.position.includes('bottom') ? '0px' : 'unset'};
+  top: ${p => p.position.includes('top') ? '14px' : 'unset'};
+  z-index: 95;
+  width: 34px;
+  margin: 0 6px 12px 6px;
+`
 
-    // this is used to create a unique identifier for the map div
-    this.target = `_ol_kit_map_${nanoid(6)}`
-
-    // create a map context
-    MapContext = React.createContext()
+/** @component */
+export const Icon = styled.div`
+  cursor: pointer;
+  width: 33px;
+  height: 26px;
+  text-align: center;
+  padding-top: 8px;
+  transition: all 0.2s;
+  &amp;:hover {
+    color: black;
   }
+`
 
-  componentDidMount () {
-    const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
+/** @component */
+export const IconSeparator = styled.div`
+  width: 50%;
+  background: rgb(211, 211, 211);
+  height: 1px;
+  margin: auto;
+`
 
-    if (!map) {
-      // if no map was passed, create the map
-      this.map = createMap({ target: this.target })
-      // force update to get this.map into the context
-      this.forceUpdate()
-    } else {
-      this.map = map
-    }
-
-    if (updateUrlFromView) {
-      const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
-      const mapMoveListener = debounce(setUrl, updateUrlDebounce)
-
-      // update the url param after map movements
-      this.map.on('moveend', mapMoveListener)
-    }
-
-    if (updateViewFromUrl) {
-      // read the url to update the map from view info
-      updateMapFromUrl(this.map, urlViewParam)
-        .catch(ugh.error)
-        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
-    } else {
-      // callback that returns a reference to the created map
-      onMapInit(this.map)
-    }
-  }
-
-  getContextValue = () => {
-    return {
-      map: this.map,
-      translations: en
-    }
-  }
-
-  render () {
-    const { children, fullScreen } = this.props
-
-    return (
-      &lt;>
-        &lt;StyledMap
-          id={this.target}
-          fullScreen={fullScreen} />
-        &lt;MapContext.Provider value={this.getContextValue()}>
-          {!this.map // wait for a map to exist before rendering children that need a ref to map
-            ? null
-            : children}
-        &lt;/MapContext.Provider>
-      &lt;/>
-    )
-  }
-}
-
-Map.defaultProps = {
-  fullScreen: false,
-  map: null,
-  onMapInit: () => {},
-  updateUrlDebounce: 400,
-  updateUrlFromView: true,
-  updateViewFromUrl: true,
-  urlViewParam: 'view'
-}
-
-Map.propTypes = {
-  /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  /** if this is set to false, the map will fill it's parent container */
-  fullScreen: PropTypes.bool,
-  /** optionally pass a custom map */
-  map: PropTypes.object,
-  /** returns an initialized map object after optional animations complete */
-  onMapInit: PropTypes.func,
-  /** the length of debounce on map movements before the url gets updated */
-  updateUrlDebounce: PropTypes.number,
-  /** add map location coords + zoom level to url as query params */
-  updateUrlFromView: PropTypes.bool,
-  /** update map view based off the url param */
-  updateViewFromUrl: PropTypes.bool,
-  /** change the url param used to set the map location coords */
-  urlViewParam: PropTypes.string
-}
-
-export default Map
+/** @component */
+export const IconsContainer = styled.div`
+  background: white;
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px #757575;
+  width: 34px;
+  margin: 0 6px 12px 0px;
+`
 </code></pre>
         </article>
     </section>
