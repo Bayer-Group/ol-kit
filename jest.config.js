@@ -16,8 +16,8 @@ module.exports = {
     'node_modules',
     'core'
   ],
-  'setupFiles': [
-    './jest.setup.js',
+  'setupFilesAfterEnv': [
+    '<rootDir>/jest.setup.js',
     'jest-canvas-mock'
   ],
   'snapshotSerializers': [

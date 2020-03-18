@@ -1,5 +1,6 @@
 import { configure } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import 'jest-styled-components'
 import '@babel/polyfill'
 
 // add mock to keep map snapshots consistent
