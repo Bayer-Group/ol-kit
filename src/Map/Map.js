@@ -77,7 +77,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { allowAsyncMount, children, fullScreen, style } = this.props
+    const { children, fullScreen, style } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -87,9 +87,8 @@ class Map extends React.Component {
           fullScreen={fullScreen}
           style={style} />
         <MapContext.Provider value={this.getContextValue()}>
-          {/* wait for map to initialize before rendering children
-            unless a synchronous mount is forced, render children before map is initialized */
-            mapInitialized || !allowAsyncMount
+          {
+            mapInitialized // wait for map to initialize before rendering children
               ? children
               : null
           }
@@ -100,7 +99,6 @@ class Map extends React.Component {
 }
 
 Map.defaultProps = {
-  allowAsyncMount: true,
   fullScreen: false,
   map: null,
   onMapInit: () => {},
@@ -112,8 +110,6 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
-  /** allows map animations/initialization to complete before rendering children, set to false if you require a synchronous render on mount */
-  allowAsyncMount: PropTypes.bool,
   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

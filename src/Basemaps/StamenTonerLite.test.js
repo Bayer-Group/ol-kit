@@ -1,14 +1,15 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import { cleanup, fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import Map from '../Map'
 import StamenTonerLite from './StamenTonerLite'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
+const TEXT_IDENTIFIER = 'Stamen Toner Lite'
+
 describe('<StamenTonerLite />', () => {
-  afterEach(cleanup)
   it('should render a basic basemap option component', async () => {
     const { container } = render(<Map><StamenTonerLite /></Map>)
 
@@ -20,13 +21,13 @@ describe('<StamenTonerLite />', () => {
 
   it('should add a basemap to an empty map when clicked', async () => {
     const map = new olMap()
-    const { container } = render(<Map map={map}><StamenTonerLite /></Map>)
+    const { container, getByText } = render(<Map map={map}><StamenTonerLite /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(0)
-    fireEvent.click(getByText(container, 'Stamen Toner Lite'))
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
@@ -41,25 +42,25 @@ describe('<StamenTonerLite />', () => {
         mockLayer
       ]
     })
-    const { container } = render(<Map map={map}><StamenTonerLite layerTypeID={mockLayerTypeID} /></Map>)
+    const { container, getByText } = render(<Map map={map}><StamenTonerLite layerTypeID={mockLayerTypeID} /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(1)
-    fireEvent.click(getByText(container, 'Stamen Toner Lite'))
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
   it('should fire the callback when the layers are changed', async () => {
     const callback = jest.fn()
-    const { container } = render(<Map><StamenTonerLite onBasemapChanged={callback} /></Map>)
+    const { container, getByText } = render(<Map><StamenTonerLite onBasemapChanged={callback} /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
     expect(callback).not.toHaveBeenCalled()
-    fireEvent.click(getByText(container, 'Stamen Toner Lite'))
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(callback).toHaveBeenCalledTimes(1)
   })
 

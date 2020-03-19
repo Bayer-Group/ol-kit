@@ -1,11 +1,10 @@
 import React from 'react'
-import { cleanup, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import Map from '../Map'
 import BasemapManager from './BasemapManager'
 
 describe('<BasemapManager />', () => {
-  afterEach(cleanup)
   it('should render a basic basemap manager component', async () => {
     const { container } = render(<Map><BasemapManager inlineProp={true} /></Map>)
 

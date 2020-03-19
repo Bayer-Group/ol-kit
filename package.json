@@ -81,7 +81,6 @@
     "ol": "4.6.5",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
-    "react-test-renderer": "^16.13.0",
     "styled-components": "~5.0.0"
   },
   "peerDependencies": {

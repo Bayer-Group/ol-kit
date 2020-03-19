@@ -1,14 +1,15 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import { cleanup, fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import Map from '../Map'
 import BlankWhite from './BlankWhite'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
+const TEXT_IDENTIFIER = 'Blank White'
+
 describe('<BlankWhite />', () => {
-  afterEach(cleanup)
   it('should render a basic basemap option component', async () => {
     const { container } = render(<Map><BlankWhite /></Map>)
 
@@ -19,13 +20,13 @@ describe('<BlankWhite />', () => {
   })
   it('should add a basemap to an empty map when clicked', async () => {
     const map = new olMap()
-    const { container } = render(<Map map={map}><BlankWhite /></Map>)
+    const { container, getByText } = render(<Map map={map}><BlankWhite /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(0)
-    fireEvent.click(getByText(container, 'Blank White'))
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
@@ -40,25 +41,25 @@ describe('<BlankWhite />', () => {
         mockLayer
       ]
     })
-    const { container } = render(<Map map={map}><BlankWhite layerTypeID={mockLayerTypeID} /></Map>)
+    const { container, getByText } = render(<Map map={map}><BlankWhite layerTypeID={mockLayerTypeID} /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(1)
-    fireEvent.click(getByText(container, 'Blank White'))
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
   it('should fire the callback when the layers are changed', async () => {
     const callback = jest.fn()
-    const { container } = render(<Map><BlankWhite onBasemapChanged={callback} /></Map>)
+    const { container, getByText } = render(<Map><BlankWhite onBasemapChanged={callback} /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
     expect(callback).not.toHaveBeenCalled()
-    fireEvent.click(getByText(container, 'Blank White'))
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(callback).toHaveBeenCalledTimes(1)
   })
 

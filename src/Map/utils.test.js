@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { mountOpts } from 'index.test'
+import { waitFor } from '@testing-library/react'
 import qs from 'qs'
 import Map from './Map'
 import { connectToMap, createMap, updateMapFromUrl } from './utils'
@@ -53,10 +53,15 @@ describe('connectToMap', () => {
     expect(wrapper.props().map).toBeUndefined()
   })
 
-  it('should pass a map prop to children', () => {
+  it('should pass a map prop to children', async () => {
     const Child = props => <div>child comp</div>
     const Consumer = connectToMap(Child)
-    const wrapper = mount(<Consumer inlineProp={true} />, mountOpts())
+    const onMapInit = jest.fn()
+    const wrapper = mount(<Map onMapInit={onMapInit}><Consumer inlineProp={true} /></Map>)
+
+    // wait for async child render
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+    wrapper.update()
 
     expect(wrapper.find(Consumer).props().inlineProp).toBe(true)
     // make sure connectToMap is passing inline props down to children
