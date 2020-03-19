@@ -72,7 +72,8 @@ describe('<OpenStreetMap />', () => {
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
     wrapper.update()
 
-    expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
+    // osm is the default basemap loaded by Map so it's actually truthy
+    expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeTruthy()
     wrapper.find('._ol_kit_basemapOption').first().simulate('click')
     expect(callback).toHaveBeenCalledTimes(1)
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeTruthy()
