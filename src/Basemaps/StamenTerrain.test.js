@@ -9,7 +9,7 @@ import olLayerVector from 'ol/layer/vector'
 
 const TEXT_IDENTIFIER = 'Stamen Terrain'
 
-describe('<StamenTerrain />', async () => {
+describe('<StamenTerrain />', () => {
   it('should render a basic basemap option component', async () => {
     const { container } = render(<Map><StamenTerrain /></Map>)
 

@@ -1,5 +1,4 @@
 import * as ol_kit from './index' // eslint-disable-line camelcase
-import Map from 'Map'
 
 describe('ol-kit package', () => {
   it('should not export undefined', () => {
