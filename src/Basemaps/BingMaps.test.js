@@ -1,8 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import { fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, getByText, render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
-import { mountOpts } from 'index.test'
 import Map from '../Map'
 import BingMaps from './BingMaps'
 import olMap from 'ol/map'
@@ -13,6 +12,7 @@ const mockSourceOpts = {
 }
 
 describe('<BingMaps />', () => {
+  afterEach(cleanup)
   it('should render a basic basemap option component', async () => {
     const { container } = render(<Map><BingMaps sourceOpts={mockSourceOpts} /></Map>)
 
@@ -23,12 +23,12 @@ describe('<BingMaps />', () => {
   })
 
   it('should require a key', async () => {
-    const { container, wrapper } = render(<Map><BingMaps sourceOpts={{ key: undefined }} /></Map>)
+    const { container } = render(<Map><BingMaps sourceOpts={{ key: undefined }} /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
 
-    expect(prettyDOM(wrapper)).toMatchSnapshot()
+    expect(prettyDOM(container)).toMatchSnapshot()
   })
 
   it('should add a basemap to an empty map when clicked', async () => {
@@ -54,7 +54,7 @@ describe('<BingMaps />', () => {
         mockLayer
       ]
     })
-    const { container } = render(<Map><BingMaps sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} /></Map>)
+    const { container } = render(<Map map={map}><BingMaps sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} /></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
@@ -79,14 +79,10 @@ describe('<BingMaps />', () => {
   it('should render a blue border to indicate when the layer is present on the map', async () => {
     const callback = jest.fn()
     const onMapInit = jest.fn()
-    const wrapper = mount(<Map onMapInit={onMapInit} />)
-    const children = <BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />
-
-    wrapper.setProps({ children })
+    const wrapper = mount(<Map onMapInit={onMapInit}><BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} /></Map>)
 
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
-
     wrapper.update()
 
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()

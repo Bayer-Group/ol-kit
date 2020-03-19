@@ -1,96 +1,240 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<BasemapManager /> should render a basic basemap manager component 1`] = `
-<styled.div>
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-</styled.div>
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKC dsYIKf\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKD hRUgPd\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE cIkYyn _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF iWUCxL\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mOpenStreetMap[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF eflfDt\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Terrain[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF kSjnCy\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Toner Dark[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF fIzkiO\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Toner Lite[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF fOiiMC\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mBlank White[0m
+      [36m</label>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;
 
 exports[`<BasemapManager /> should render a single child 1`] = `
-<styled.div>
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <div
-    id="child comp"
-  >
-    child comp
-  </div>
-</styled.div>
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKC dsYIKf\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKD hRUgPd\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE cIkYyn _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF iWUCxL\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mOpenStreetMap[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF eflfDt\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Terrain[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF kSjnCy\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Toner Dark[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF fIzkiO\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Toner Lite[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF fOiiMC\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mBlank White[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"child comp\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;
 
 exports[`<BasemapManager /> should render an array of children 1`] = `
-<styled.div>
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <div
-    id="1"
-    key="1"
-  >
-    child comp
-  </div>
-  <div
-    id="2"
-    key="2"
-  >
-    child comp
-  </div>
-  <div
-    id="3"
-    key="3"
-  >
-    child comp
-  </div>
-</styled.div>
-`;
-
-exports[`ol-kit package should not export undefined 1`] = `
-Object {
-  "Compass": [Function],
-  "Controls": [Function],
-  "Map": [Function],
-  "ZoomControls": [Function],
-  "connectToMap": [Function],
-  "updateMapFromUrl": [Function],
-  "updateUrlFromMap": [Function],
-}
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKC dsYIKf\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKD hRUgPd\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE cIkYyn _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF iWUCxL\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mOpenStreetMap[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF eflfDt\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Terrain[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF kSjnCy\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Toner Dark[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF fIzkiO\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mStamen Toner Lite[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AykKF fOiiMC\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+      [36m>[39m
+        [0mBlank White[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"1\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"2\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"3\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;

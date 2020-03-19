@@ -1,28 +1,36 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import { mountOpts } from 'index.test'
+import { cleanup, fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { prettyDOM } from '@testing-library/dom'
+import Map from '../Map'
 import StamenTonerLite from './StamenTonerLite'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
 describe('<StamenTonerLite />', () => {
-  it('should render a basic basemap option component', () => {
-    const wrapper = shallow(<StamenTonerLite />, mountOpts())
+  afterEach(cleanup)
+  it('should render a basic basemap option component', async () => {
+    const { container } = render(<Map><StamenTonerLite /></Map>)
 
-    expect(wrapper).toMatchSnapshot()
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    expect(prettyDOM(container)).toMatchSnapshot()
   })
 
-  it('should add a basemap to an empty map when clicked', () => {
+  it('should add a basemap to an empty map when clicked', async () => {
     const map = new olMap()
-    const wrapper = mount(<StamenTonerLite map={map} />, mountOpts({ map }))
+    const { container } = render(<Map map={map}><StamenTonerLite /></Map>)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(0)
-
-    wrapper.simulate('click')
+    fireEvent.click(getByText(container, 'Stamen Toner Lite'))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
-  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a string layerTypeID.', () => {
+  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a string layerTypeID.', async () => {
     const mockLayerTypeID = 'mockLayerTypeID'
     const mockLayer = new olLayerVector()
 
@@ -33,31 +41,39 @@ describe('<StamenTonerLite />', () => {
         mockLayer
       ]
     })
-    const wrapper = mount(<StamenTonerLite layerTypeID={mockLayerTypeID} />, mountOpts({ map }))
+    const { container } = render(<Map map={map}><StamenTonerLite layerTypeID={mockLayerTypeID} /></Map>)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(1)
-
-    wrapper.simulate('click')
+    fireEvent.click(getByText(container, 'Stamen Toner Lite'))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
-  it('should fire the callback when the layers are changed', () => {
-    const map = new olMap()
+  it('should fire the callback when the layers are changed', async () => {
     const callback = jest.fn()
-    const wrapper = mount(<StamenTonerLite onBasemapChanged={callback} />, mountOpts({ map }))
+    const { container } = render(<Map><StamenTonerLite onBasemapChanged={callback} /></Map>)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
 
     expect(callback).not.toHaveBeenCalled()
-    wrapper.simulate('click')
+    fireEvent.click(getByText(container, 'Stamen Toner Lite'))
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
-  it('should render a blue border to indicate when the layer is present on the map', () => {
+  it('should render a blue border to indicate when the layer is present on the map', async () => {
     const callback = jest.fn()
-    const map = new olMap()
-    const wrapper = mount(<StamenTonerLite onBasemapChanged={callback} />, mountOpts({ map }))
+    const onMapInit = jest.fn()
+    const wrapper = mount(<Map onMapInit={onMapInit}><StamenTonerLite onBasemapChanged={callback} /></Map>)
+
+    // wait for async child render
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+    wrapper.update()
 
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
-    wrapper.simulate('click')
+    wrapper.find('._ol_kit_basemapOption').first().simulate('click')
     expect(callback).toHaveBeenCalledTimes(1)
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeTruthy()
   })
