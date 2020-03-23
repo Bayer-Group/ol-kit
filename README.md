@@ -2,7 +2,7 @@
 Easy to use, open source React/Openlayers component toolkit.
 
 ## Getting Started
-It's easy to start building map apps with olKit. For simple projects the following will get you started:
+It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
 ```javascript
 import React from 'react'
 import { Map, Popup, Controls, zoomToExtent } from '@bayer/ol-kit'
