@@ -1,7 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<StamenTonerLite /> should render a basic basemap option component 1`] = `
-<ContextConsumer>
-  <Component />
-</ContextConsumer>
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKC dsYIKf\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AykKE iBOYxc _ol_kit_basemapOption\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AykKF fIzkiO\\"[39m
+    [36m/>[39m
+    [36m<label[39m
+      [33mclass[39m=[32m\\"sc-AykKG fFNDtM\\"[39m
+    [36m>[39m
+      [0mStamen Toner Lite[0m
+    [36m</label>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;

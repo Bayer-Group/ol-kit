@@ -20,25 +20,35 @@ class Map extends React.Component {
   constructor (props) {
     super(props)
 
+    this.state = {
+      mapInitialized: false
+    }
+
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
+
+    // if no map was passed, create the map
+    this.map = !props.map ? createMap({ target: this.target }) : props.map
 
     // create a map context
     MapContext = React.createContext()
   }
 
   componentDidMount () {
-    const { map, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
+    const { onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
+    const onMapReady = map => {
+      // pass map back via callback prop
+      const initCallback = onMapInit(map)
+      // if onMapInit prop returns a promise, render children after promise is resolved
+      const isPromise = !!initCallback && typeof initCallback.then === 'function'
 
-    if (!map) {
-      // if no map was passed, create the map
-      this.map = createMap({ target: this.target })
-      // force update to get this.map into the context
-      this.forceUpdate()
-    } else {
-      this.map = map
+      // update AFTER onMapInit to get map into the state/context
+      isPromise
+        ? initCallback.then(() => this.setState({ mapInitialized: true }))
+        : this.setState({ mapInitialized: true })
     }
 
+    // optionally attach map listener
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
       const mapMoveListener = debounce(setUrl, updateUrlDebounce)
@@ -47,14 +57,15 @@ class Map extends React.Component {
       this.map.on('moveend', mapMoveListener)
     }
 
+    // optionally update map view from url param
     if (updateViewFromUrl) {
       // read the url to update the map from view info
       updateMapFromUrl(this.map, urlViewParam)
         .catch(ugh.error)
-        .finally(() => onMapInit(this.map)) // always fire callback with map reference on success/failure
+        .finally(() => onMapReady(this.map)) // always fire callback with map reference on success/failure
     } else {
       // callback that returns a reference to the created map
-      onMapInit(this.map)
+      onMapReady(this.map)
     }
   }
 
@@ -66,17 +77,21 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen } = this.props
+    const { children, fullScreen, style } = this.props
+    const { mapInitialized } = this.state
 
     return (
       <>
         <StyledMap
           id={this.target}
-          fullScreen={fullScreen} />
+          fullScreen={fullScreen}
+          style={style} />
         <MapContext.Provider value={this.getContextValue()}>
-          {!this.map // wait for a map to exist before rendering children that need a ref to map
-            ? null
-            : children}
+          {
+            mapInitialized // wait for map to initialize before rendering children
+              ? children
+              : null
+          }
         </MapContext.Provider>
       </>
     )
@@ -90,7 +105,8 @@ Map.defaultProps = {
   updateUrlDebounce: 400,
   updateUrlFromView: true,
   updateViewFromUrl: true,
-  urlViewParam: 'view'
+  urlViewParam: 'view',
+  style: {}
 }
 
 Map.propTypes = {
@@ -103,7 +119,9 @@ Map.propTypes = {
   fullScreen: PropTypes.bool,
   /** optionally pass a custom map */
   map: PropTypes.object,
-  /** returns an initialized map object after optional animations complete */
+  /** callback called with initialized map object after optional animations complete
+    note: if a <Promise> is returned from this function, Map will wait for onMapInit to resolve before rendering children
+  */
   onMapInit: PropTypes.func,
   /** the length of debounce on map movements before the url gets updated */
   updateUrlDebounce: PropTypes.number,
@@ -112,7 +130,9 @@ Map.propTypes = {
   /** update map view based off the url param */
   updateViewFromUrl: PropTypes.bool,
   /** change the url param used to set the map location coords */
-  urlViewParam: PropTypes.string
+  urlViewParam: PropTypes.string,
+  /** apply inline styles to the map container */
+  style: PropTypes.object
 }
 
 export default Map

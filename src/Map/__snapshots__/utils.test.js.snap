@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`updateMapFromUrl should return resolved promise for missing view url param 1`] = `undefined`;
+
 exports[`updateMapFromUrl should throw error for missing map arg 1`] = `"'updateMapFromUrl' requires a valid openlayers map as the first argument"`;
