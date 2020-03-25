@@ -1,0 +1,32 @@
+# Project
+__tests__
+docs/
+.jest
+.huskyrc
+.babelrc
+.eslintrc
+.gitignore
+jest.config.js
+jest.setup.js
+
+# OS X
+.DS_Store*
+._*
+
+# NPM
+node_modules
+*.log
+*.gz
+
+# Test Coverage
+coverage
+
+# Benchmarking
+benchmarks/graphs
+
+# IDEs
+/.idea
+.idea
+/.idea_modules
+*.iml
+*.tgz
