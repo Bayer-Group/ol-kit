@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
-export const Logo = styled.a`
+export const Logo = styled.a.attrs(props => ({
+  title: props.title
+}))`
   position: absolute;
   width: 28px;
-  bottom: 16px;
+  bottom: 8px;
   z-index: 1;
   cursor: pointer;
-  ${p => p.position === 'left' ? 'left: 16px;' : 'right: 16px;'}
+  ${p => p.position === 'left' ? 'left: 14px;' : 'right: 14px;'}
 `
 
 export const StyledMap = styled.div`

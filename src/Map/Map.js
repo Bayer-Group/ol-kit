@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import debounce from 'lodash.debounce'
-import { Logo, StyledMap } from './styled'
+import MapLogo from './MapLogo'
 import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
-import OL_KIT_MARK from 'images/ol_kit_mark_black.svg'
+import { StyledMap } from './styled'
 import en from 'locales/en'
 import ugh from 'ugh'
 
@@ -87,15 +87,10 @@ class Map extends React.Component {
           id={this.target}
           fullScreen={fullScreen}
           style={style}>
-          {mapLogoPosition !== 'none' &&
-            <Logo position={mapLogoPosition} href='https://ol-kit.com/' target='_blank'>
-              <OL_KIT_MARK />
-            </Logo>
-          }
+          <MapLogo mapLogoPosition={mapLogoPosition} />
         </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
-          {
-            mapInitialized // wait for map to initialize before rendering children
+          {mapInitialized // wait for map to initialize before rendering children
               ? children
               : null
           }
