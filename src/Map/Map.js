@@ -79,7 +79,6 @@ class Map extends React.Component {
   render () {
     const { children, fullScreen, style } = this.props
     const { mapInitialized } = this.state
-    console.log('render', mapInitialized)
 
     return (
       <>
