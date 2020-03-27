@@ -27,15 +27,12 @@ class Map extends React.Component {
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
 
-    // if no map was passed, create the map
-    this.map = !props.map ? createMap({ target: this.target }) : props.map
-
     // create a map context
     MapContext = React.createContext()
   }
 
   componentDidMount () {
-    const { onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
+    const { map: passedMap, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
     const onMapReady = map => {
       // pass map back via callback prop
       const initCallback = onMapInit(map)
@@ -47,6 +44,9 @@ class Map extends React.Component {
         ? initCallback.then(() => this.setState({ mapInitialized: true }))
         : this.setState({ mapInitialized: true })
     }
+
+    // if no map was passed, create the map
+    this.map = !passedMap ? createMap({ target: this.target }) : passedMap
 
     // optionally attach map listener
     if (updateUrlFromView) {
