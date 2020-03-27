@@ -4,7 +4,7 @@ export const Logo = styled.a.attrs(props => ({
   title: props.title
 }))`
   position: absolute;
-  width: 28px;
+  width: 22px;
   bottom: 8px;
   z-index: 1;
   cursor: pointer;

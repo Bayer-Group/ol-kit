@@ -78,7 +78,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, mapLogoPosition, style } = this.props
+    const { children, fullScreen, logoPosition, style } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -87,7 +87,7 @@ class Map extends React.Component {
           id={this.target}
           fullScreen={fullScreen}
           style={style}>
-          <MapLogo mapLogoPosition={mapLogoPosition} />
+          <MapLogo logoPosition={logoPosition} />
         </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
           {mapInitialized // wait for map to initialize before rendering children
@@ -102,8 +102,8 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   fullScreen: false,
+  logoPosition: 'left',
   map: null,
-  mapLogoPosition: 'left',
   onMapInit: () => {},
   updateUrlDebounce: 400,
   updateUrlFromView: true,
@@ -120,10 +120,10 @@ Map.propTypes = {
   ]),
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
+  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
+  logoPosition: PropTypes.string,
   /** optionally pass a custom map */
   map: PropTypes.object,
-  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
-  mapLogoPosition: PropTypes.string,
   /** callback called with initialized map object after optional animations complete
     note: if a <Promise> is returned from this function, Map will wait for onMapInit to resolve before rendering children
   */

@@ -7,7 +7,7 @@ exports[`<BingMaps /> should render a basic basemap option component 1`] = `
     [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
   [36m>[39m
     [36m<a[39m
-      [33mclass[39m=[32m\\"sc-AxjAm cAAQIm\\"[39m
+      [33mclass[39m=[32m\\"sc-AxjAm iteaqE\\"[39m
       [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
       [33mtarget[39m=[32m\\"_blank\\"[39m
       [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m
@@ -74,7 +74,7 @@ exports[`<BingMaps /> should require a key 1`] = `
     [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
   [36m>[39m
     [36m<a[39m
-      [33mclass[39m=[32m\\"sc-AxjAm cAAQIm\\"[39m
+      [33mclass[39m=[32m\\"sc-AxjAm iteaqE\\"[39m
       [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
       [33mtarget[39m=[32m\\"_blank\\"[39m
       [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m

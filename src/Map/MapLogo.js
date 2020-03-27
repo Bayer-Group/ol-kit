@@ -5,15 +5,15 @@ import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 import OL_KIT_MARK_BLACK from 'images/ol_kit_mark_black.svg'
 
 export default function MapLogo (props) {
-  const { mapLogoPosition } = props
+  const { logoPosition } = props
   const [isHovered, setHovered] = useState(false)
 
   return (
-    mapLogoPosition === 'none'
+    logoPosition === 'none'
       ? null
       : (
         <Logo
-          position={mapLogoPosition}
+          position={logoPosition}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           title='Powered by ol-kit'
@@ -29,9 +29,9 @@ export default function MapLogo (props) {
 }
 
 MapLogo.defaultProps = {
-  mapLogoPosition: 'left'
+  logoPosition: 'left'
 }
 
 MapLogo.propTypes = {
-  mapLogoPosition: PropTypes.string
+  logoPosition: PropTypes.string
 }
