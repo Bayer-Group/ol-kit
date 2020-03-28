@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import debounce from 'lodash.debounce'
-import { StyledMap } from './styled'
+import MapLogo from './MapLogo'
 import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
-import ugh from 'ugh'
+import { StyledMap } from './styled'
 import en from 'locales/en'
+import ugh from 'ugh'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
 export let MapContext = null
@@ -77,7 +78,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, style } = this.props
+    const { children, fullScreen, logoPosition, style } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -85,10 +86,11 @@ class Map extends React.Component {
         <StyledMap
           id={this.target}
           fullScreen={fullScreen}
-          style={style} />
+          style={style}>
+          <MapLogo logoPosition={logoPosition} />
+        </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
-          {
-            mapInitialized // wait for map to initialize before rendering children
+          {mapInitialized // wait for map to initialize before rendering children
               ? children
               : null
           }
@@ -100,6 +102,7 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   fullScreen: false,
+  logoPosition: 'left',
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,
@@ -117,6 +120,8 @@ Map.propTypes = {
   ]),
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
+  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
+  logoPosition: PropTypes.string,
   /** optionally pass a custom map */
   map: PropTypes.object,
   /** callback called with initialized map object after optional animations complete
