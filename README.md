@@ -1,5 +1,5 @@
 # ol-kit
-Easy to use, open source React/Openlayers component toolkit.
+Easy to use, open source, geospatial toolkit- built with mapping library [OpenLayers](https://github.com/openlayers/openlayers) & component library [React](https://github.com/facebook/react).
 
 ## Getting Started
 It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
