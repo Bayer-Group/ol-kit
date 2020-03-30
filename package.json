@@ -25,11 +25,11 @@
       "url": "https://github.com/PatchesMaps"
     }
   ],
-  "main": "./core/index.js",
+  "main": "./dist/ol-kit.umd.js",
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
-    "docs": "jsdoc -r -c jsdoc.json && cp static/index.html static/docs.html static/bayer-logo.png docs/",
+    "docs": "jsdoc -r -c jsdoc.json && cp src-docs/index.html docs/",
     "lint": "eslint src/*.js",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest --notify --config=jest.config.js",
@@ -79,6 +79,7 @@
     "ol": "4.6.5",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
+    "rollup-plugin-babel": "^4.4.0",
     "styled-components": "~5.0.0"
   },
   "peerDependencies": {

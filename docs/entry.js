@@ -9,7 +9,7 @@
       import ReactDOM from "react-dom";
 
 
-      import ReactWrapper from '../node_modules/better-docs/lib/react-wrapper.js';
+      import ReactWrapper from '../config/jsdoc/template/lib/react-wrapper.js';
 
       window.React = React;
 

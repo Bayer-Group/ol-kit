@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit</title>
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+
+    <style>
+        .prettyprint {
+            border-radius: 7px;
+            background-color: #f1f1f1;
+        }
+        .content code {
+            background: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                     
+                        <h1 class="navbar-item">ol-kit</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <div class="content" id="main-content-wrapper">
+    <section>
+        <article><h1>ol-kit</h1>
+<p>Easy to use, open source React/OpenLayers component toolkit.</p>
+<h2>Getting Started</h2>
+<p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
+<pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
+import { Map, Popup, Controls } from 'ol-kit/components'
+import { zoomToExtent } from 'ol-kit/utils'
+
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+
+class App extends Component {
+  onMapInit = map => {
+    const data = new VectorLayer({
+      source: new VectorSource({
+        features: [/** Get some data and have fun with it */]
+      })
+    })
+
+    // add the data to the map
+    map.addLayer(data)
+
+    // quickly take the map
+    zoomToExtent([0, 0], 12)
+  }
+
+  render () {
+    return (
+      &lt;Map onMapInit={this.onMapInit}>
+        &lt;Popup />
+        &lt;Controls />
+      &lt;/Map>
+    )
+  }
+}
+</code></pre></article>
+    </section>
+                </div>
+                <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+                    <img src="bayer-logo.png" width="200px" />
+                    <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

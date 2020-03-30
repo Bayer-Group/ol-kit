@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Basemaps/BlankWhite.js</title>
+    <title>ol-kit | Basemaps/BlankWhite.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -16,8 +16,8 @@
     <![endif]-->
     <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
     <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
@@ -27,10 +27,7 @@
         <div class="container">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                    
-                     
-                        <h1 class="navbar-item">ol-kit</h1>
-                    
+                    <a href="/index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -42,19 +39,19 @@
                     <div class="navbar-end">
                     
                         <div class="navbar-item">
-                            <a href="tutorial-Getting%20Started.html" target="_blank">
+                            <a href="tutorial-Getting%20Started.html">
                                 Get Started
                             </a>
                         </div>
                     
                         <div class="navbar-item">
-                            <a href="docs.html" target="_blank">
+                            <a href="docs.html">
                                 Docs
                             </a>
                         </div>
                     
                         <div class="navbar-item">
-                            <a href="https://github.com/MonsantoCo/ol-kit" target="_blank">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
                                 Github
                             </a>
                         </div>
@@ -68,19 +65,14 @@
     <div class="container">
         <div class="columns">
             <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
+                <div class="sidebar sidebar__inner">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li><li><a href="tutorial-connectToMap.html">connectToMap</a></li><li><a href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Components</h3><ul><li><a href="CompassContainer.html">CompassContainer</a></li><li><a href="Container.html">Container</a></li><li><a href="ControlsContainer.html">ControlsContainer</a></li><li><a href="Icon.html">Icon</a></li><li><a href="IconsContainer.html">IconsContainer</a></li><li><a href="IconSeparator.html">IconSeparator</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="active href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="active href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="active href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Components</h3><ul><li><a href="CompassContainer.html" class="active">CompassContainer</a></li><li><a href="Container.html" class="active">Container</a></li><li><a href="ControlsContainer.html" class="active">ControlsContainer</a></li><li><a href="Icon.html" class="active">Icon</a></li><li><a href="IconsContainer.html" class="active">IconsContainer</a></li><li><a href="IconSeparator.html" class="active">IconSeparator</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html" class="active">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#centerAndZoom" class="active">centerAndZoom</a></li><li><a href="global.html#connectToMap" class="active">connectToMap</a></li><li><a href="global.html#updateMapFromUrl" class="active">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap" class="active">updateUrlFromMap</a></li></ul></div>
                     </nav>
                 </div>
             </div>
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Source</p>
-                        <h1>Basemaps/BlankWhite.js</h1>
-                    </header>
-                    
                     
 
 
@@ -135,7 +127,7 @@ class BlankWhite extends React.Component {
     return (
       &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['olKit.BlankWhite.title']}&lt;/Label>
+        &lt;Label>{translations['_ol_kit.BlankWhite.title']}&lt;/Label>
       &lt;/BasemapOption>
     )
   }
@@ -146,7 +138,7 @@ BlankWhite.propTypes = {
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    'olKit.BlankWhite.title': PropTypes.string
+    '_ol_kit.BlankWhite.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
@@ -178,15 +170,18 @@ export default connectToMap(BlankWhite)
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Mar 17 2020 10:36:21 GMT-0500 (Central Daylight Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <img src="static/bayer-logo.png" width="200px" />
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
     </div>
 </footer>
 
 
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script>
+var sidebar = new StickySidebar('#sidebarNav', {topSpacing: 0});
+</script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
