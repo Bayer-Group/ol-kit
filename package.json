@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
+  "keywords": ["map", "mapping", "toolkit", "react", "openlayers", "components"],
   "contributors": [
     {
       "name": "Jake Stäzrad",
@@ -25,7 +26,9 @@
       "url": "https://github.com/PatchesMaps"
     }
   ],
-  "main": "./dist/ol-kit.umd.js",
+  "homepage": "https://ol-kit.com",
+  "bugs": "https://github.com/MonsantoCo/ol-kit/issues",
+  "main": "./core/index.js",
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
