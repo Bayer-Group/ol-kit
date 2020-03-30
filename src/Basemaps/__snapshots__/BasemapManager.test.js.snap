@@ -1,84 +1,378 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<BasemapManager /> should render a basic basemap manager component 1`] = `
-<styled.div>
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-</styled.div>
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AxirZ BmIVJ\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m>[39m
+    [36m<a[39m
+      [33mclass[39m=[32m\\"sc-AxjAm iteaqE\\"[39m
+      [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
+      [33mtarget[39m=[32m\\"_blank\\"[39m
+      [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
+        [33mxmlns[39m=[32m\\"http://www.w3.org/2000/svg\\"[39m
+      [36m>[39m
+        [36m<defs>[39m
+          [36m<style>[39m
+            [0m.cls-1[0m
+            [0m{[0m
+            [0mfill:#231f20[0m
+            [0m}[0m
+          [36m</style>[39m
+        [36m</defs>[39m
+        [36m<g[39m
+          [33mid[39m=[32m\\"Layer_2\\"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33mclass[39m=[32m\\"cls-1\\"[39m
+            [33md[39m=[32m\\"M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z\\"[39m
+            [33mid[39m=[32m\\"logo_examples\\"[39m
+          [36m/>[39m
+        [36m</g>[39m
+      [36m</svg>[39m
+    [36m</a>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"ol-viewport\\"[39m
+      [33mdata-view[39m=[32m\\"1\\"[39m
+      [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
+    [36m>[39m
+      [36m<canvas[39m
+        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
+        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: block;\\"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
+      [36m/>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AxiKw hpaBKs\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb ioUkCn _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy jEqjfp\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mOpenStreetMap[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy bbSndl\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Terrain[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy iSovdS\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Toner Dark[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy fVJaAY\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Toner Lite[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy htKphA\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mBlank White[0m
+      [36m</label>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;
 
 exports[`<BasemapManager /> should render a single child 1`] = `
-<styled.div>
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <div
-    id="child comp"
-  >
-    child comp
-  </div>
-</styled.div>
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AxirZ BmIVJ\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m>[39m
+    [36m<a[39m
+      [33mclass[39m=[32m\\"sc-AxjAm iteaqE\\"[39m
+      [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
+      [33mtarget[39m=[32m\\"_blank\\"[39m
+      [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
+        [33mxmlns[39m=[32m\\"http://www.w3.org/2000/svg\\"[39m
+      [36m>[39m
+        [36m<defs>[39m
+          [36m<style>[39m
+            [0m.cls-1[0m
+            [0m{[0m
+            [0mfill:#231f20[0m
+            [0m}[0m
+          [36m</style>[39m
+        [36m</defs>[39m
+        [36m<g[39m
+          [33mid[39m=[32m\\"Layer_2\\"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33mclass[39m=[32m\\"cls-1\\"[39m
+            [33md[39m=[32m\\"M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z\\"[39m
+            [33mid[39m=[32m\\"logo_examples\\"[39m
+          [36m/>[39m
+        [36m</g>[39m
+      [36m</svg>[39m
+    [36m</a>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"ol-viewport\\"[39m
+      [33mdata-view[39m=[32m\\"19\\"[39m
+      [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
+    [36m>[39m
+      [36m<canvas[39m
+        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
+        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: none;\\"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
+      [36m/>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AxiKw hpaBKs\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb ioUkCn _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy jEqjfp\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mOpenStreetMap[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy bbSndl\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Terrain[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy iSovdS\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Toner Dark[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy fVJaAY\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Toner Lite[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy htKphA\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mBlank White[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"child comp\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;
 
 exports[`<BasemapManager /> should render an array of children 1`] = `
-<styled.div>
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <Component
-    layerTypeID="_ol_kit_basemap"
-  />
-  <div
-    id="1"
-    key="1"
-  >
-    child comp
-  </div>
-  <div
-    id="2"
-    key="2"
-  >
-    child comp
-  </div>
-  <div
-    id="3"
-    key="3"
-  >
-    child comp
-  </div>
-</styled.div>
+"[36m<div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AxirZ BmIVJ\\"[39m
+    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
+  [36m>[39m
+    [36m<a[39m
+      [33mclass[39m=[32m\\"sc-AxjAm iteaqE\\"[39m
+      [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
+      [33mtarget[39m=[32m\\"_blank\\"[39m
+      [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m
+    [36m>[39m
+      [36m<svg[39m
+        [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
+        [33mxmlns[39m=[32m\\"http://www.w3.org/2000/svg\\"[39m
+      [36m>[39m
+        [36m<defs>[39m
+          [36m<style>[39m
+            [0m.cls-1[0m
+            [0m{[0m
+            [0mfill:#231f20[0m
+            [0m}[0m
+          [36m</style>[39m
+        [36m</defs>[39m
+        [36m<g[39m
+          [33mid[39m=[32m\\"Layer_2\\"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33mclass[39m=[32m\\"cls-1\\"[39m
+            [33md[39m=[32m\\"M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z\\"[39m
+            [33mid[39m=[32m\\"logo_examples\\"[39m
+          [36m/>[39m
+        [36m</g>[39m
+      [36m</svg>[39m
+    [36m</a>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"ol-viewport\\"[39m
+      [33mdata-view[39m=[32m\\"37\\"[39m
+      [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
+    [36m>[39m
+      [36m<canvas[39m
+        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
+        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: none;\\"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
+      [36m/>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m\\"sc-AxiKw hpaBKs\\"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb ioUkCn _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy jEqjfp\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mOpenStreetMap[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy bbSndl\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Terrain[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy iSovdS\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Toner Dark[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy fVJaAY\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mStamen Toner Lite[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m\\"sc-AxhCb fzckja _ol_kit_basemapOption\\"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"sc-AxhUy htKphA\\"[39m
+      [36m/>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"sc-AxgMl UrWPV\\"[39m
+      [36m>[39m
+        [0mBlank White[0m
+      [36m</label>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"1\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"2\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mid[39m=[32m\\"3\\"[39m
+    [36m>[39m
+      [0mchild comp[0m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</div>[39m"
 `;

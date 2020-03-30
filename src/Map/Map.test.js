@@ -1,5 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { render, waitFor } from '@testing-library/react'
+import { prettyDOM } from '@testing-library/dom'
 import olMap from 'ol/map'
 import olView from 'ol/view'
 import Map from './Map'
@@ -25,10 +27,13 @@ describe('<Map />', () => {
     mount(<Map map={mockMap} onMapInit={onMapInit} />)
   })
 
-  it('should render with onMapInit callback', (done) => {
+  it('should render with onMapInit callback', async () => {
     // set the url with a view param
     window.history.replaceState(null, '', `${window.location.pathname}?view=49.618551,-97.280674,8.00,0.91`)
+    let testMap = null
     const onMapInit = map => {
+      // hoist map to closure for later expect
+      testMap = map
       // returned map should be an openlayers map
       expect(map).toBeInstanceOf(olMap)
       // do not respect the view location from the url since updateViewFromUrl={false}
@@ -36,11 +41,16 @@ describe('<Map />', () => {
       expect(map.getView().getZoom()).not.toBe(8)
       // round off crazy long decimal
       expect(Number(map.getView().getRotation().toFixed(2))).not.toEqual(0.91)
-      done()
     }
 
     // using updateViewFromUrl={false} checks a separate if block inside Map's componentDidMount
-    mount(<Map onMapInit={onMapInit} updateViewFromUrl={false} />)
+    const { container } = render(<Map onMapInit={onMapInit} updateViewFromUrl={false} />)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    // make sure a <canvas> element is within the rendered html
+    expect(prettyDOM(testMap.getTargetElement())).toEqual(expect.stringContaining('<canvas'))
   })
 
   it('should read the url and set the map location', (done) => {
