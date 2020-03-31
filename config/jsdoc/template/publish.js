@@ -4,8 +4,10 @@ var doop = require('jsdoc/util/doop');
 var env = require('jsdoc/env');
 var fs = require('jsdoc/fs');
 var helper = require('jsdoc/util/templateHelper');
+var markdown = require('jsdoc/util/markdown');
 var logger = require('jsdoc/util/logger');
 var path = require('jsdoc/path');
+//const { lsSync } = require('@jsdoc/util').fs;
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
@@ -37,10 +39,7 @@ function tutoriallink(tutorial, className) {
     if (raw.includes('class=')) {
         return raw.replace('class=', 'class="' + className || '' + '"');
     } else {
-        const parts = raw.split(' ');
-        parts.splice(1, 0, 'class="' + className || '' + '"');
-        
-        return parts.join(' ');
+        return '<a class="' + className + '"' + raw.slice(3)
     }
 }
 
@@ -771,8 +770,39 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     saveChildren(tutorials);
 
-    // TODO
-    // we need the ability to create one-off pages
-    // iterate over all pages
-    // render the pages and output in the root
+    // pages are simply one-off markdown files converted to pages in the root of the output site
+    var pagesSrc = path.normalize(env.opts.pages);
+    
+    fs.readdir(pagesSrc, function (err, files) {
+        if (err) {
+            console.error("Could not list the directory.", err);
+            process.exit(1);
+        }
+
+        files.forEach(function (file, index) {
+            var filePath = path.join(pagesSrc, file);
+            var content = fs.readFileSync(filePath, env.opts.encoding);
+            var parsed = markdown.getParser()(content);
+
+            var pageData = {
+                title: capitalize(file.replace('.md', '')),
+                subtitle: 'Page',
+                header: file,
+                content: parsed
+            };
+
+            var pagePath = path.join(outdir, file.replace('.md', '.html'));
+            var html = view.render('page.tmpl', pageData);
+
+            // yes, you can use {@link} in tutorials too!
+            html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
+
+            fs.writeFileSync(pagePath, html, 'utf8');
+        })
+    })
+
+    const capitalize = (s) => {
+        if (typeof s !== 'string') return '';
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
 };

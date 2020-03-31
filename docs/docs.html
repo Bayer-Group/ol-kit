@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/styled.js</title>
+    <title>ol-kit | Docs</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -73,64 +71,22 @@
             </div>
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
-                    
+                    <section>
 
+<article>
+    <h2>Documentation</h2>
+<p>You can browse the docs for ol-kit here on the site or in the <code>/docs</code> directory.</p>
+<h2>Conventions</h2>
+<p>Whenever an OpenLayers object is referenced it is prefixed with <code>ol.</code> to denote it is not an ol-kit object. To learn more about an OpenLayers object type you can head over to their excellent <a href="https://openlayers.org/en/latest/apidoc/index.html">API docs</a> and search for the object type, replacing all <code>.</code> with <code>/</code>.</p>
+<h2>Bugs &amp; Feature Requests</h2>
+<p>If you find a bug or think of a new feature, please submit a <a href="https://github.com/MonsantoCo/ol-kit/issues">Github issue</a>.</p>
+<h2>Maintainers &amp; Contributions</h2>
+<p>The current maintainers are listed in <a href="https://github.com/MonsantoCo/ol-kit/blob/master/MAINTAINERS.md">MAINTAINERS.md</a>. If you would like contribute to the project see <a href="https://github.com/MonsantoCo/ol-kit/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<h2>Sponsor</h2>
+<p>The ol-kit project was internally developed at Bayer Crop Science. Without the generous support of various stakeholders at Bayer, this project would never have become an open source reality. Thank you for the support, resources &amp; final approval!</p>
+</article>
 
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import styled from 'styled-components'
-
-/** @component */
-export const Container = styled.div`
-height: auto;
-width: 100%;
-display: flex;
-flex-flow: row wrap;
-justify-content: space-evenly;
-`
-
-export const BasemapOption = styled.div`
-  cursor: pointer;
-  width: 130px;
-  height: 120px;
-  margin-top: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  position: relative;
-  border-radius: 3px;
-  border: ${props => props.isActive ? '3px solid #3f51b5' : 'none'};
-`
-
-export const BasemapThumbnail = styled.div`
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-image: url(${props => props.thumbnail});
-  ${props => props.blur ? 'filter: blur(0.5px);' : ''};
-`
-
-export const Label = styled.label`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-  text-shadow:
-  -1px -1px 0 #000,
-  1px -1px 0 #000,
-  -1px 1px 0 #000,
-  1px 1px 0 #000;
-`
-</code></pre>
-        </article>
-    </section>
-
-
-
+</section>
 
                 </div>
             </div>

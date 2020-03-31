@@ -11827,17 +11827,30 @@ pre.prettyprint li.L9 {
 }
 
 .button {
-    font-size: 15px;
+    height: auto;
+    font-size: 16px;
     border-style: none;
-    border-radius: 2px;
-    background: #798897;
-    color: rgb(222, 77, 76);
-    padding: 13px 16px;
-    height: auto
+    border-radius: 30px;
+    padding: 9px 16px;
+    font-weight: 700;
 }
 
-.button:hover {
-    color: rgb(194, 42, 45);
+.button.primary {
+    background: #DE494C;
+    color: white;
+}
+
+.button.primary:hover {
+    background: #B33834;
+}
+
+.button.secondary {
+    background: none;
+    color: #3D3286;
+}
+
+.button.secondary:hover {
+    text-decoration: underline;
 }
 
 .tag-source {

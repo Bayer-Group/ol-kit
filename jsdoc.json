@@ -16,7 +16,8 @@
         "template": "config/jsdoc/template",
         "destination": "./docs/",
         "readme": "./readme.md",
-        "tutorials": "./src-docs/tutorials"
+        "tutorials": "./src-docs/tutorials",
+        "pages": "./src-docs/pages"
     },
     "templates": {
         "cleverLinks": false,
