@@ -71,6 +71,7 @@
             </div>
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
+                    <button class="button">Call to Action</button>
                     
 
 
@@ -81,7 +82,7 @@
 <header>
     
         <h2>
-            &ltMap <i>children</i> <i>fullScreen</i> <i>map</i> <i>onMapInit</i> <i>updateUrlDebounce</i> <i>updateUrlFromView</i> <i>updateViewFromUrl</i> <i>urlViewParam</i> /&gt
+            &ltMap <i>children</i> <i>fullScreen</i> <i>logoPosition</i> <i>map</i> <i>onMapInit</i> <i>updateUrlDebounce</i> <i>updateUrlFromView</i> <i>updateViewFromUrl</i> <i>urlViewParam</i> <i>style</i> /&gt
         </h2>
         
             <div class="class-description">A Reactified ol.Map wrapper component</div>
@@ -105,7 +106,7 @@
         
         <span class="code-name">
             
-                &ltMap <i>children</i> <i>fullScreen</i> <i>map</i> <i>onMapInit</i> <i>updateUrlDebounce</i> <i>updateUrlFromView</i> <i>updateViewFromUrl</i> <i>urlViewParam</i> /&gt
+                &ltMap <i>children</i> <i>fullScreen</i> <i>logoPosition</i> <i>map</i> <i>onMapInit</i> <i>updateUrlDebounce</i> <i>updateUrlFromView</i> <i>updateViewFromUrl</i> <i>urlViewParam</i> <i>style</i> /&gt
             
         </span>
     </h4>
@@ -160,6 +161,17 @@
         
   
         <tr class="deep-level-0">
+          <td class="name"><code>logoPosition</code></td>
+          <td>
+            string
+          </td>
+          <td>No</td>
+          <td>place the ol-kit logo on the 'left', 'right', or set to 'none' to hide</td>
+          <td>'left'</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
           <td class="name"><code>map</code></td>
           <td>
             object
@@ -176,7 +188,8 @@
             func
           </td>
           <td>No</td>
-          <td>returns an initialized map object after optional animations complete</td>
+          <td>callback called with initialized map object after optional animations complete
+    note: if a <Promise> is returned from this function, Map will wait for onMapInit to resolve before rendering children</td>
           <td>() => {}</td>
         </tr>
         
@@ -222,6 +235,17 @@
           <td>No</td>
           <td>change the url param used to set the map location coords</td>
           <td>'view'</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>style</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>apply inline styles to the map container</td>
+          <td>{}</td>
         </tr>
         
   
@@ -273,7 +297,7 @@
         <p class="tag-source">
             <a href="Map_Map.js.html" class="button">View Source</a>
             <span>
-                <a href="Map_Map.js.html">Map/Map.js</a>, <a href="Map_Map.js.html#line20">line 20</a>
+                <a href="Map_Map.js.html">Map/Map.js</a>, <a href="Map_Map.js.html#line21">line 21</a>
             </span>
         </p>
     

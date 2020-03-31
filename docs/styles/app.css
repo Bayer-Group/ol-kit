@@ -11489,13 +11489,8 @@ body {
 }
 
 .sidebar a {
-    color: #798897;
-    overflow-wrap: break-word
-}
-
-.sidebar a:hover,
-.sidebar a.active {
-    color: #E6282B
+    color: rgb(56, 46, 123);
+    overflow-wrap: break-word;
 }
 
 .sidebar a.active {
@@ -11836,13 +11831,13 @@ pre.prettyprint li.L9 {
     border-style: none;
     border-radius: 2px;
     background: #798897;
-    color: #fff;
+    color: rgb(222, 77, 76);
     padding: 13px 16px;
     height: auto
 }
 
 .button:hover {
-    color: #eee
+    color: rgb(194, 42, 45);
 }
 
 .tag-source {

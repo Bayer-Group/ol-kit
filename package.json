@@ -32,7 +32,7 @@
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
-    "docs": "jsdoc -r -c jsdoc.json && cp src-docs/index.html docs/",
+    "docs": "jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
     "lint": "eslint src/*.js",
     "lint:fix": "npm run lint -- --fix",
     "prepublishOnly": "run preventPublish",

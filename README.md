@@ -1,8 +1,6 @@
 ![ol-kit logo](https://raw.github.com/MonsantoCo/ol-kit/master/config/jsdoc/template/static/readme-ol-kit-logo.png?sanitize=true)
 
 ![npm version](https://img.shields.io/npm/v/@bayer/ol-kit)
-
-# ol-kit
 An easy to use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
 
 ## Installation
@@ -53,7 +51,7 @@ The documentation for the project is available in the `/docs` directory and the 
 If you find a bug or think of a new feature, please submit a Github issue.
 
 ## Maintainers & Contributions
-The current maintainers are listed in [MAINTAINERS.md](https://github.com/MonsantoCo/ol-kit/blob/master/MAINTAINERS.md). If you would like to submit a PR or contribute back to the project see [CONTRIBUTING.md](https://github.com/MonsantoCo/ol-kit/blob/master/CONTRIBUTING.md).
+The current maintainers are listed in [MAINTAINERS.md](https://github.com/MonsantoCo/ol-kit/blob/master/MAINTAINERS.md). If you would like contribute to the project see [CONTRIBUTING.md](https://github.com/MonsantoCo/ol-kit/blob/master/CONTRIBUTING.md).
 
 ## Sponsor
 The ol-kit project was internally developed at Bayer Crop Science. Without the generous support of various stakeholders at Bayer, this project would never have become an open source reality. Thank you for the support, resources & final approval!
