@@ -20,6 +20,12 @@ const colors = {
   }
 }
 
+/**
+ * A map rotation control
+ * @component
+ * @category Controls
+ * @since 0.1.0
+ */
 function Compass (props) {
   const { map, variation } = props
   const [radians, setRadians] = useState(map.getView().getRotation())

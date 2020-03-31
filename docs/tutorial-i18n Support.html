@@ -65,7 +65,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar sidebar__inner">
                     <nav>
-                        <div class="category"><h3>Tutorials</h3><ul><li><a class="active"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="active"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="active"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Components</h3><ul><li><a href="CompassContainer.html" class="active">CompassContainer</a></li><li><a href="Container.html" class="active">Container</a></li><li><a href="ControlsContainer.html" class="active">ControlsContainer</a></li><li><a href="Icon.html" class="active">Icon</a></li><li><a href="IconsContainer.html" class="active">IconsContainer</a></li><li><a href="IconSeparator.html" class="active">IconSeparator</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html" class="active">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#centerAndZoom" class="active">centerAndZoom</a></li><li><a href="global.html#connectToMap" class="active">connectToMap</a></li><li><a href="global.html#updateMapFromUrl" class="active">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap" class="active">updateUrlFromMap</a></li></ul></div>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -78,7 +78,7 @@
 </header>
 
 <article>
-    <h2>i18n Support</h2>
+    <h1>i18n Support</h1>
 <p>Out of the box, ol-kit ships with English strings but makes it easy to override strings or add other langauges. Localization of numbers, dates etc. is something we would like to add in the future; you can follow the progress <a href="https://github.com/MonsantoCo/ol-kit/issues/17">here</a>.</p>
 <h3>Override strings</h3>
 <p>To override the default strings, extend the base translation files (see <code>src/locales</code>) and override only the appropriate keys.</p>
@@ -128,6 +128,20 @@ const fr = {
 <script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
 <script>
 var sidebar = new StickySidebar('#sidebarNav', {topSpacing: 0});
+
+// code to highlight the selected page
+var urlParts = document.URL.split('/')
+var urlFile = urlParts[urlParts.length - 1]
+var links = document.getElementsByTagName('a')
+for (var i = 0; i < links.length; i++) {
+    var el = links[i]
+    var linkParts = el.href.split('/')
+    var linkFile = linkParts[linkParts.length - 1]
+console.log(el, el.href, urlFile, linkFile)
+    if (urlFile === linkFile) {
+        el.className = 'active'
+    }
+}
 </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>

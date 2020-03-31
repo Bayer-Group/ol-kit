@@ -1,4 +1,4 @@
-## Getting Started
+# Getting Started
 
 Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). Then simply `npm i ol-kit --save` and you're ready to go.
 

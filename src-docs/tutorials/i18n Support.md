@@ -1,4 +1,4 @@
-## i18n Support
+# i18n Support
 Out of the box, ol-kit ships with English strings but makes it easy to override strings or add other langauges. Localization of numbers, dates etc. is something we would like to add in the future; you can follow the progress [here](https://github.com/MonsantoCo/ol-kit/issues/17).
 
 ### Override strings

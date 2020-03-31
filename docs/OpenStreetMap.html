@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/OpenStreetMap.js</title>
+    <title>ol-kit | OpenStreetMap</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,102 +75,228 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import PropTypes from 'prop-types'
-import olLayerTile from 'ol/layer/tile'
-import olSourceOSM from 'ol/source/osm'
-import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { osm } from './thumbnails'
-import { connectToMap } from 'Map';
+        <h2>
+            &ltOpenStreetMap <i>map</i> <i>translations</i> <i>thumbnail</i> <i>layerTypeID</i> <i>onBasemapChanged</i> /&gt
+        </h2>
+        
+            <div class="class-description">OSM basemap option</div>
+        
+    
+</header>
 
-/**
- * OSM basemap option
- * @component
- * @category Basemap
- * @since 0.1.0
- */
-class OpenStreetMap extends React.Component {
-  handleLayersChange = () => {
-    this.forceUpdate()
-  }
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-  componentDidMount () {
-    this.props.map.getLayers().on('change', this.handleLayersChange)
-  }
 
-  componentWillUnmount () {
-    this.props.map.getLayers().un('change', this.handleLayersChange)
-  }
+    
+    <h4 class="name" id="OpenStreetMap">
+        <a class="href-link" href="#OpenStreetMap">#</a>
+        
+        <span class="code-name">
+            
+                &ltOpenStreetMap <i>map</i> <i>translations</i> <i>thumbnail</i> <i>layerTypeID</i> <i>onBasemapChanged</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-  onClick = () => {
-    const { map, layerTypeID, onBasemapChanged } = this.props
-    const source = new olSourceOSM({
-      layer: 'osm',
-      cacheSize: 4096,
-      reprojectionErrorThreshold: 0,
-      crossOrigin: 'Anonymous'
-    })
-    const layer = new olLayerTile({
-      preload: Infinity,
-      extent: undefined,
-      [layerTypeID]: 'osm', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-      source
-    })
-    const layers = map.getLayers()
-    const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
+    
+    
 
-    if (hasBasemap) {
-      layers.setAt(0, layer)
-    } else {
-      layers.insertAt(0, layer)
-    }
-    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
-    onBasemapChanged(layer)
-  }
 
-  render () {
-    const { translations, thumbnail, map, layerTypeID } = this.props
-    const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'osm' : false
 
-    return (
-      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
-        &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['_ol_kit.OpenStreetMap.title']}&lt;/Label>
-      &lt;/BasemapOption>
-    )
-  }
-}
 
-OpenStreetMap.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.OpenStreetMap.title': PropTypes.string
-  }),
-  /** A string containing an http url or data url to a thumbnail image */
-  thumbnail: PropTypes.string,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
-  onBasemapChanged: PropTypes.func
-}
 
-OpenStreetMap.defaultProps = {
-  thumbnail: osm,
-  onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
-}
 
-export default connectToMap(OpenStreetMap)
-</code></pre>
-        </article>
-    </section>
+
+    
+        <h5>PropTypes:</h5>
+        
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>reference to Openlayers map object</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            shape
+          </td>
+          <td>No</td>
+          <td>Object with key/value pairs for translated strings</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>thumbnail</code></td>
+          <td>
+            string
+          </td>
+          <td>No</td>
+          <td>A string containing an http url or data url to a thumbnail image</td>
+          <td>function()</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>layerTypeID</code></td>
+          <td>
+            union
+          </td>
+          <td>No</td>
+          <td>A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.</td>
+          <td>'_ol_kit_basemap'</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onBasemapChanged</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>A callback that is fired when the basemap layer has been changed.  It is called with the updated layer.</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Basemaps_OpenStreetMap.js.html" class="button">View Source</a>
+            <span>
+                <a href="Basemaps_OpenStreetMap.js.html">Basemaps/OpenStreetMap.js</a>, <a href="Basemaps_OpenStreetMap.js.html#line15">line 15</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

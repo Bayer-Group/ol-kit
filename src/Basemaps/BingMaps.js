@@ -16,6 +16,12 @@ const DEFAULT_OPTS = {
   wrapX: true
 }
 
+/**
+ * Bing basemap option (requires a Bing key to work properly)
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class BingMaps extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()

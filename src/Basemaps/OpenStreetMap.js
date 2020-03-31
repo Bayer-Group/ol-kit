@@ -4,8 +4,14 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceOSM from 'ol/source/osm'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
-import { connectToMap } from 'Map'
+import { connectToMap } from 'Map';
 
+/**
+ * OSM basemap option
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class OpenStreetMap extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()

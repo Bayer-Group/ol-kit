@@ -9,6 +9,12 @@ import StamenTonerLite from './StamenTonerLite'
 
 const LAYER_TYPE_ID = '_ol_kit_basemap'
 
+/**
+ * An easy Basemap switching component with customizable basemap options
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class BasemapManager extends React.Component {
   static getLayerTypeID () {
     return LAYER_TYPE_ID

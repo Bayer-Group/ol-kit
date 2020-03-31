@@ -91,6 +91,20 @@ if(env.conf.templates && env.conf.templates.betterDocs) {
 <script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
 <script>
 var sidebar = new StickySidebar('#sidebarNav', {topSpacing: 0});
+
+// code to highlight the selected page
+var urlParts = document.URL.split('/')
+var urlFile = urlParts[urlParts.length - 1]
+var links = document.getElementsByTagName('a')
+for (var i = 0; i < links.length; i++) {
+    var el = links[i]
+    var linkParts = el.href.split('/')
+    var linkFile = linkParts[linkParts.length - 1]
+
+    if (urlFile === linkFile) {
+        el.className = 'active'
+    }
+}
 </script>
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>

@@ -23,8 +23,6 @@
         "cleverLinks": false,
         "monospaceLinks": false,
         "better-docs": {
-            "logo": "ol-kit-logo.png",
-            "hideGenerator": true,
             "navigation": [
                 {
                     "label": "Get Started",

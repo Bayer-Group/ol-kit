@@ -331,7 +331,7 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
             var displayName;
 
             if ( !hasOwnProp.call(item, 'longname') ) {
-                itemsNav += '<li>' + linktoFn('', item.name, 'active') + '</li>';
+                itemsNav += '<li>' + linktoFn('', item.name) + '</li>';
             }
             else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
                 if (env.conf.templates.default.useLongnameInNav) {
@@ -339,7 +339,7 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
                 } else {
                     displayName = item.name;
                 }
-                itemsNav += '<li>' + linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''), 'active') + '</li>';
+                itemsNav += '<li>' + linktoFn(item.longname, displayName.replace(/\b(module|event):/g, '')) + '</li>';
 
                 itemsSeen[item.longname] = true;
             }
@@ -385,14 +385,14 @@ function buildGroupNav (members, title) {
 
         members.globals.forEach(function(g) {
             if ( g.kind !== 'typedef' && !hasOwnProp.call(seen, g.longname) ) {
-                globalNav += '<li>' + linkto(g.longname, g.name, 'active') + '</li>';
+                globalNav += '<li>' + linkto(g.longname, g.name) + '</li>';
             }
             seen[g.longname] = true;
         });
 
         if (!globalNav) {
             // turn the heading into a link so you can actually get to the global page
-            nav += '<h3>' + linkto('global', 'Global', 'active') + '</h3>';
+            nav += '<h3>' + linkto('global', 'Global') + '</h3>';
         }
         else {
             nav += '<h3>Global</h3><ul>' + globalNav + '</ul>';
