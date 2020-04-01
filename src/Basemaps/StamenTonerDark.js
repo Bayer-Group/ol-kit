@@ -4,7 +4,7 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceStamen from 'ol/source/stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTonerDark } from './thumbnails'
-import { connectToMap } from 'Map'
+import { connectToMap } from 'Map'; // eslint-disable-line
 
 /**
  * Stamen toner dark basemap option

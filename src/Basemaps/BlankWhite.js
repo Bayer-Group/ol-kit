@@ -9,7 +9,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  * Blank white basemap option
  * @component
  * @category Basemap
- * @since 1.2.0
+ * @since 0.1.0
  */
 class BlankWhite extends React.Component {
   handleLayersChange = () => {
