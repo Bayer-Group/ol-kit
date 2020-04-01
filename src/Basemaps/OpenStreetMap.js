@@ -4,7 +4,7 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceOSM from 'ol/source/osm'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
-import { connectToMap } from 'Map';
+import { connectToMap } from 'Map'
 
 /**
  * OSM basemap option

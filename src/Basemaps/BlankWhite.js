@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import olLayerVector from 'ol/layer/vector'
 import olSourceVector from 'ol/source/vector'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map';
+import { connectToMap } from 'Map'; // eslint-disable-line
 
 /**
  * Blank white basemap option
  * @component
  * @category Basemap
- * @since 0.1.0
+ * @since 1.2.0
  */
 class BlankWhite extends React.Component {
   handleLayersChange = () => {

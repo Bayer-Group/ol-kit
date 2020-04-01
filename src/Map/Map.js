@@ -33,7 +33,14 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
-    const { map: passedMap, onMapInit, updateUrlDebounce, updateUrlFromView, updateViewFromUrl, urlViewParam } = this.props
+    const {
+      map: passedMap,
+      onMapInit,
+      updateUrlDebounce,
+      updateUrlFromView,
+      updateViewFromUrl,
+      urlViewParam
+    } = this.props
     const onMapReady = map => {
       // pass map back via callback prop
       const initCallback = onMapInit(map)
@@ -91,8 +98,8 @@ class Map extends React.Component {
         </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
           {mapInitialized // wait for map to initialize before rendering children
-              ? children
-              : null
+            ? children
+            : null
           }
         </MapContext.Provider>
       </>

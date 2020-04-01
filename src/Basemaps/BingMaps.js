@@ -58,7 +58,6 @@ class BingMaps extends React.Component {
 
   render () {
     const { translations, thumbnail, map, layerTypeID, layerID } = this.props
-    const label = translations.label
     const layerArray = map.getLayers().getArray()
     const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === layerID : false
 

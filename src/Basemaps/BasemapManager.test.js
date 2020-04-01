@@ -22,7 +22,7 @@ describe('<BasemapManager />', () => {
 
     expect(prettyDOM(container)).toMatchSnapshot()
   })
-  it('should render an array of children',async () => {
+  it('should render an array of children', async () => {
     const child1 = <div key={1} id='1'>child comp</div>
     const child2 = <div key={2} id='2'>child comp</div>
     const child3 = <div key={3} id='3'>child comp</div>

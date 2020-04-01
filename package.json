@@ -33,7 +33,7 @@
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
-    "lint": "eslint src/*.js",
+    "lint": "eslint src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
     "prepublishOnly": "run preventPublish",
     "ship": "run ship",

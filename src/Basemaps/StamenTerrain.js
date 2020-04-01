@@ -4,7 +4,7 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceStamen from 'ol/source/stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTerrain } from './thumbnails'
-import { connectToMap } from 'Map';
+import { connectToMap } from 'Map'
 
 /**
  * Stamen terrain basemap option
