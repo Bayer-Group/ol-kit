@@ -394,7 +394,7 @@ function buildGroupNav (members, title) {
             nav += '<h3>' + linkto('global', 'Global') + '</h3>';
         }
         else {
-            nav += '<h3>Global</h3><ul>' + globalNav + '</ul>';
+            nav += '<h3>Utils</h3><ul>' + globalNav + '</ul>';
         }
     }
     nav += '</div>';
