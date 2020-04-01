@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="utf-8">
-    <title>JSDoc: Getting Started</title>
+    <title>ol-kit | Docs</title>
 
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
     <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
@@ -25,10 +23,7 @@
         <div class="container">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                    
-                     
-                        <h1 class="navbar-item">ol-kit</h1>
-                    
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -40,19 +35,19 @@
                     <div class="navbar-end">
                     
                         <div class="navbar-item">
-                            <a href="tutorial-Getting%20Started.html" target="_blank">
+                            <a href="tutorial-Getting%20Started.html">
                                 Get Started
                             </a>
                         </div>
                     
                         <div class="navbar-item">
-                            <a href="docs.html" target="_blank">
+                            <a href="docs.html">
                                 Docs
                             </a>
                         </div>
                     
                         <div class="navbar-item">
-                            <a href="https://github.com/MonsantoCo/ol-kit" target="_blank">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
                                 Github
                             </a>
                         </div>
@@ -63,41 +58,52 @@
             </nav>
         </div>
     </div>
-    <div class="container">
+    <div id="page-wrapper" class="container">
         <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createMap">createMap</a></li></ul></div>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
                     </nav>
                 </div>
             </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    
-                    
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
                     <section>
+
 <article>
-    <h1>Documentation</h1>
-<p>The docs are organized into components and you will find utilities next to their corresponding components. We hope you find these docs helpful as you use ol-kit. Feel free to submit a PR on Github if you find a mistake or have an idea to improve the docs</p>
+    <h2>Documentation</h2>
+<p>You can browse the docs for ol-kit here on the site or in the <code>/docs</code> directory.</p>
 <h2>Conventions</h2>
-<p>Whenever an OpenLayers object is referenced it is prefixed with `ol.` to denote it is not an ol-kit object. To learn more about an OpenLayers object type you can head over to their excellent [API docs](https://openlayers.org/en/latest/apidoc/index.html) and search for the object type, replacing all `.` with `/`.</p>
+<p>Whenever an OpenLayers object is referenced it is prefixed with <code>ol.</code> to denote it is not an ol-kit object. To learn more about an OpenLayers object type you can head over to their excellent <a href="https://openlayers.org/en/latest/apidoc/index.html">API docs</a> and search for the object type, replacing all <code>.</code> with <code>/</code>.</p>
+<h2>Bugs &amp; Feature Requests</h2>
+<p>If you find a bug or think of a new feature, please submit a <a href="https://github.com/MonsantoCo/ol-kit/issues">Github issue</a>.</p>
+<h2>Maintainers &amp; Contributions</h2>
+<p>The current maintainers are listed in <a href="https://github.com/MonsantoCo/ol-kit/blob/master/MAINTAINERS.md">MAINTAINERS.md</a>. If you would like contribute to the project see <a href="https://github.com/MonsantoCo/ol-kit/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<h2>Sponsor</h2>
+<p>The ol-kit project was internally developed at Bayer Crop Science. Without the generous support of various stakeholders at Bayer, this project would never have become an open source reality. Thank you for the support, resources &amp; final approval!</p>
 </article>
 
 </section>
 
                 </div>
-                <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
-                    <img src="bayer-logo.png" width="200px" />
-                    <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
-                </div>
             </div>
         </div>
     </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
 
-
-
-<script src="scripts/app.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
 </html>

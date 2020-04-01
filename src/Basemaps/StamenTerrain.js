@@ -6,6 +6,12 @@ import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTerrain } from './thumbnails'
 import { connectToMap } from 'Map'
 
+/**
+ * Stamen terrain basemap option
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class StamenTerrain extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()

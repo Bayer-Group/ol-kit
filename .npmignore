@@ -1,6 +1,7 @@
 # Project
 __tests__
 docs/
+src-docs/
 src/
 static/
 tutorials/

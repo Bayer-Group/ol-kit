@@ -7,6 +7,12 @@ import Compass from './Compass'
 import { connectToMap } from 'Map'
 import ZoomControls from './ZoomControls'
 
+/**
+ * A map control container with built-in positioning
+ * @component
+ * @category Controls
+ * @since 0.1.0
+ */
 function Controls (props) {
   const { children, map, position } = props
 

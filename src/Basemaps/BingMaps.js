@@ -16,6 +16,12 @@ const DEFAULT_OPTS = {
   wrapX: true
 }
 
+/**
+ * Bing basemap option (requires a Bing key to work properly)
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class BingMaps extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
@@ -52,7 +58,6 @@ class BingMaps extends React.Component {
 
   render () {
     const { translations, thumbnail, map, layerTypeID, layerID } = this.props
-    const label = translations.label
     const layerArray = map.getLayers().getArray()
     const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === layerID : false
 

@@ -12,12 +12,17 @@
         "allowUnknownTags": true,
         "dictionaries": ["jsdoc", "closure"]
     },
+    "opts": {
+        "template": "config/jsdoc/template",
+        "destination": "./docs/",
+        "readme": "./readme.md",
+        "tutorials": "./src-docs/tutorials",
+        "pages": "./src-docs/pages"
+    },
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false,
         "better-docs": {
-            "name": "ol-kit",
-            "hideGenerator": true,
             "navigation": [
                 {
                     "label": "Get Started",
@@ -33,11 +38,5 @@
                 }
             ]
         }
-    },
-    "opts": {
-        "template": "node_modules/better-docs",
-        "destination": "./docs/",
-        "readme": "./readme.md",
-        "tutorials": "./tutorials"
     }
 }

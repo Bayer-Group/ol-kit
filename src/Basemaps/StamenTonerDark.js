@@ -6,6 +6,12 @@ import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTonerDark } from './thumbnails'
 import { connectToMap } from 'Map'
 
+/**
+ * Stamen toner dark basemap option
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class StamenTonerDark extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
