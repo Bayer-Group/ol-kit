@@ -1,7 +1,7 @@
 'use strict';
 
 // configure the sticky sidebar
-if (window.innerWidth > 1023 && StickySidebar) {
+if (window.innerWidth > 1023 && window.StickySidebar) {
     var sidebar = new StickySidebar('#sidebar-nav', {
         innerWrapperSelector: '.sidebar__inner',
         topSpacing: 20,
