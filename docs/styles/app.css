@@ -7599,7 +7599,12 @@ body.has-navbar-fixed-bottom {
 }
 
 .navbar-menu {
-    display: none
+    text-align: center;
+    display: none;
+}
+
+.navbar-menu.active {
+    display: block;
 }
 
 .navbar-item,
@@ -7721,7 +7726,7 @@ a.navbar-item.is-active,
         display: none
     }
     .navbar-menu {
-        background-color: #fff;
+        background-color: #0f0f0f;
         box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
         padding: 0.5rem 0
     }
@@ -11437,12 +11442,6 @@ body {
     margin-bottom: 50px
 }
 
-@media screen and (max-width: 1023px) {
-    #main-content-wrapper {
-        padding: 0 30px
-    }
-}
-
 .top-navbar {
     background: #101010;
     padding: 1.66667rem 0;
@@ -11474,8 +11473,12 @@ body {
 }
 
 @media screen and (max-width: 1023px) {
+    .top-navbar {
+        margin: 0;
+    }
+
     .top-navbar .navbar-brand img {
-        margin-left: 30px
+        margin-left: 30px;
     }
 }
 
@@ -11500,7 +11503,7 @@ body {
 
 .sidebar h3 {
     margin: 1.6rem 0 .4rem;
-    color: #211D1A;
+    color: #838383;
     font-size: 12px;
     text-transform: uppercase
 }
@@ -11514,27 +11517,32 @@ body {
 }
 
 .sidebar .category h2 {
-    color: #000;
+    color: #898989;
     font-size: 20px;
     margin-top: 40px
 }
 
-#sidebarNav .sidebar {
+#sidebar-nav {
+    padding: 0;
+}
+
+#sidebar-nav .sidebar {
     will-change: min-height;
 }
     
-#sidebarNav .sidebar__inner {
+#sidebar-nav .sidebar__inner {
     transform: translate(0, 0); /* For browsers don't support translate3d. */
     transform: translate3d(0, 0, 0);
     will-change: position, transform;
 }
 
-#sidebarNav.is-affixed .inner-wrapper-sticky {
-    padding: 12px !important;
+#sidebar-nav.sticky {
+    right: 0;
+    transition: right 0.5s;
 }
 
 @media screen and (max-width: 1023px) {
-    #sidebarNav {
+    #sidebar-nav {
         z-index: 100;
         top: 0;
         right: -300px;
@@ -11546,7 +11554,7 @@ body {
         overflow: auto;
         background: #fff
     }
-    #sidebarNav .sidebar {
+    #sidebar-nav .sidebar {
         padding-bottom: 10px
     }
 }
@@ -11564,6 +11572,18 @@ body {
 
 #stickyNavbarOverlay.active {
     display: block
+}
+
+#main-content-wrapper {
+    padding-top: 0;
+    margin-top: -20px;
+}
+
+@media screen and (max-width: 1023px) {
+    #main-content-wrapper {
+        padding: 0 30px;
+        margin-top: 0px;
+    }
 }
 
 .footer {

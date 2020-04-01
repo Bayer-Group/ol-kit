@@ -7,7 +7,6 @@ var helper = require('jsdoc/util/templateHelper');
 var markdown = require('jsdoc/util/markdown');
 var logger = require('jsdoc/util/logger');
 var path = require('jsdoc/path');
-//const { lsSync } = require('@jsdoc/util').fs;
 var taffy = require('taffydb').taffy;
 var template = require('jsdoc/template');
 var util = require('util');
@@ -458,6 +457,8 @@ exports.publish = function(taffyData, opts, tutorials) {
     var files;
     var staticDir;
     var styleDir;
+    var scriptDir;
+    var scriptFiles;
     var globalUrl;
     var indexUrl;
     var interfaces;
@@ -571,6 +572,17 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     staticFiles.forEach(function(fileName) {
         var toDir = fs.toDir( fileName.replace(styleDir, path.join( outdir, 'styles' ) ));
+
+        fs.mkPath(toDir);
+        fs.copyFileSync(fileName, toDir);
+    });
+
+    // copy the template's scripts files to outdir
+    scriptDir = path.join(templatePath, 'scripts');
+    scriptFiles = fs.ls(scriptDir, 3);
+
+    scriptFiles.forEach(function(fileName) {
+        var toDir = fs.toDir( fileName.replace(scriptDir, path.join( outdir, 'scripts' ) ));
 
         fs.mkPath(toDir);
         fs.copyFileSync(fileName, toDir);
