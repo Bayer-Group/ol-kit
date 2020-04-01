@@ -3,7 +3,14 @@
   "version": "0.0.0-4",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
-  "keywords": ["map", "mapping", "toolkit", "react", "openlayers", "components"],
+  "keywords": [
+    "map",
+    "mapping",
+    "toolkit",
+    "react",
+    "openlayers",
+    "components"
+  ],
   "contributors": [
     {
       "name": "Jake Stäzrad",
