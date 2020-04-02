@@ -9,7 +9,7 @@ import olGeomLinestring from 'ol/geom/linestring'
 import olGeomMultiPoint from 'ol/geom/multipoint'
 import olGeomMultiLinestring from 'ol/geom/multilinestring'
 
-class olkitLayerVector extends olLayerVector {
+class VectorLayer extends olLayerVector {
   constructor (opts) {
     super(opts)
 
@@ -17,7 +17,7 @@ class olkitLayerVector extends olLayerVector {
     this.userStyles = []
     this.defaultStyles = []
     this._defaultStylesCache = []
-    this.isOlkitLayerVector = true
+    this.isVectorLayer = true
     this.setInitialStyle()
     this.setDefaultVectorStyles()
 
@@ -118,4 +118,4 @@ class olkitLayerVector extends olLayerVector {
   }
 }
 
-export default olkitLayerVector
+export default VectorLayer
