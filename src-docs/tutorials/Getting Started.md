@@ -58,7 +58,7 @@ In the example below, the `Popup` and `Controls` components will be rendered "wi
 
 ```javascript
 import { Component } from 'react'
-import { Map, Popup, Controls } from '@bayer/ol-kit'
+import { Map, Controls } from '@bayer/ol-kit'
 
 class App extends Component {
   onMapInit = map => {}
@@ -66,7 +66,6 @@ class App extends Component {
   render () {
     return (
       <Map onMapInit={this.onMapInit}>
-        <Popup />
         <Controls />
       </Map>
     )

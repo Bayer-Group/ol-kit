@@ -64,12 +64,11 @@
                 <div class="content" id="main-content-wrapper">
     <section>
         <article>
-<p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/">OpenLayers</a> map component toolkit.</p>
+<p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/en/v4.6.5/apidoc/">OpenLayers</a> map component toolkit.</p>
 <h2>Getting Started</h2>
 <p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
 <pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
-import { Map, Popup, Controls } from 'ol-kit/components'
-import { zoomToExtent } from 'ol-kit/utils'
+import { Map, Controls, zoomToExtent } from '@bayer/ol-kit'
 
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
@@ -92,7 +91,6 @@ class App extends Component {
   render () {
     return (
       &lt;Map onMapInit={this.onMapInit}>
-        &lt;Popup />
         &lt;Controls />
       &lt;/Map>
     )
