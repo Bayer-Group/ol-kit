@@ -5,9 +5,9 @@ Object {
   "Compass": [Function],
   "Controls": [Function],
   "Map": [Function],
+  "VectorLayer": [Function],
   "ZoomControls": [Function],
   "connectToMap": [Function],
-  "olkitLayerVector": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }
