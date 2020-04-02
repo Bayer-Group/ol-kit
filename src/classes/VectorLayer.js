@@ -29,7 +29,9 @@ class VectorLayer extends olLayerVector {
   }
 
   fetchValuesForAttribute (attribute) {
-    return this.getSource().getFeatures().map(feature => feature.getProperties()[`${attribute}`])
+    const dupes = this.getSource().getFeatures().map(feature => feature.getProperties()[`${attribute}`])
+
+    return [...new Set(dupes)]
   }
 
   setUserVectorStyles (styles) {
@@ -43,7 +45,7 @@ class VectorLayer extends olLayerVector {
   }
 
   setDefaultVectorStyles () {
-    this.parser.readStyle(this.getStyle()).then(style => {
+    return this.parser.readStyle(this.getStyle()()).then(style => {
       this._defaultStylesCache = style.rules
       this.defaultStyles = style.rules
     })
@@ -82,7 +84,7 @@ class VectorLayer extends olLayerVector {
       ]
     }
 
-    this.parser
+    return this.parser
       .writeStyle(style)
       .then(olStyle => {
         // update the sld_body which is what geoserver uses to style the layer
@@ -114,7 +116,7 @@ class VectorLayer extends olLayerVector {
       })]
     }
 
-    this.setStyle(style)
+    this.setStyle(() => style)
   }
 }
 
