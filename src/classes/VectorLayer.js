@@ -131,7 +131,7 @@ class VectorLayer extends olLayerVector {
     })
 
     const style = {
-      name: 'Custom Vector Style',
+      name: this.get('title') || 'Custom Vector Style',
       rules: [
         ...this.getDefaultVectorStyles(),
         ...filteredUserStyles
