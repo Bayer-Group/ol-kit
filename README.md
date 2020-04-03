@@ -1,13 +1,17 @@
-# ol-kit
-Easy to use, open source, geospatial toolkit- built with mapping library [OpenLayers](https://github.com/openlayers/openlayers) & component library [React](https://github.com/facebook/react).
+![ol-kit logo](./config/jsdoc/template/static/readme-ol-kit-logo.png)
 
-## Getting Started
-Install `ol-kit` and few `peerDependencies` required by this library:
+![npm version](https://img.shields.io/npm/v/@bayer/ol-kit)
 
-```
+An easy to use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
+
+## Installation
+Install `ol-kit` and its `peerDependencies`
+
+```bash
 npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
 ```
 
+## Getting Started
 It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
 ```javascript
 import React from 'react'
@@ -20,7 +24,7 @@ class App extends React.Component {
   onMapInit = map => {
     const data = new VectorLayer({
       source: new VectorSource({
-        features: [/** Get some data and have fun with it */]
+        features: [/** get some data and have fun with it */]
       })
     })
 
@@ -40,3 +44,17 @@ class App extends React.Component {
     )
   }
 ```
+
+## Documentation
+The documentation for the project is available in the `/docs` directory and the hosted version is available at [ol-kit.com](https://ol-kit.com).
+
+## Bugs & Feature Requests
+If you find a bug or think of a new feature, please submit a Github issue.
+
+## Maintainers & Contributions
+The current maintainers are listed in [MAINTAINERS.md](https://github.com/MonsantoCo/ol-kit/blob/master/MAINTAINERS.md). If you would like contribute to the project see [CONTRIBUTING.md](https://github.com/MonsantoCo/ol-kit/blob/master/CONTRIBUTING.md).
+
+## Sponsor
+The ol-kit project was internally developed at Bayer Crop Science. Without the generous support of various stakeholders at Bayer, this project would never have become an open source reality. Thank you for the support, resources & final approval!
+
+![ol-kit logo](./config/jsdoc/template/static/readme-bayer-logo.png)

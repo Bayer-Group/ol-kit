@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | ZoomControls</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            &ltZoomControls <i>map</i> /&gt
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
+
+
+    
+    <h4 class="name" id="ZoomControls">
+        <a class="href-link" href="#ZoomControls">#</a>
+        
+        <span class="code-name">
+            
+                &ltZoomControls <i>map</i> /&gt
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        A simple map zoom control
+    </div>
+    
+
+
+
+
+
+
+
+    
+        <h5>PropTypes:</h5>
+        
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>reference to Openlayers map object</td>
+          <td></td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Controls_ZoomControls.js.html" class="button">View Source</a>
+            <span>
+                <a href="Controls_ZoomControls.js.html">Controls/ZoomControls.js</a>, <a href="Controls_ZoomControls.js.html#line16">line 16</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

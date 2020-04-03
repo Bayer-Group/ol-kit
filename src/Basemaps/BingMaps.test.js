@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import Map from '../Map'
@@ -54,7 +54,11 @@ describe('<BingMaps />', () => {
         mockLayer
       ]
     })
-    const { container, getByText } = render(<Map map={map}><BingMaps sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} /></Map>)
+    const { container, getByText } = render(
+      <Map map={map}>
+        <BingMaps sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} />
+      </Map>
+    )
 
     // wait for async child render
     await waitFor(() => {}, { container })
@@ -66,7 +70,11 @@ describe('<BingMaps />', () => {
 
   it('should fire the callback when the layers are changed', async () => {
     const callback = jest.fn()
-    const { container, getByText } = render(<Map><BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} /></Map>)
+    const { container, getByText } = render(
+      <Map>
+        <BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />
+      </Map>
+    )
 
     // wait for async child render
     await waitFor(() => {}, { container })
@@ -79,7 +87,11 @@ describe('<BingMaps />', () => {
   it('should render a blue border to indicate when the layer is present on the map', async () => {
     const callback = jest.fn()
     const onMapInit = jest.fn()
-    const wrapper = mount(<Map onMapInit={onMapInit}><BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} /></Map>)
+    const wrapper = mount(
+      <Map onMapInit={onMapInit}>
+        <BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />
+      </Map>
+    )
 
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())

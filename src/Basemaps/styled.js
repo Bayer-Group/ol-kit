@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
-/** @component */
 export const Container = styled.div`
-height: auto;
-width: 100%;
-display: flex;
-flex-flow: row wrap;
-justify-content: space-evenly;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
 `
 
 export const BasemapOption = styled.div`

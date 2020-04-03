@@ -5,12 +5,21 @@ import MINUS from 'images/zoom_out_ico.svg'
 import PLUS from 'images/zoom_in_ico.svg'
 import { Icon, IconSeparator } from './styled'
 import { zoomDelta } from './utils'
-import { connectToMap } from 'Map'
+import { connectToMap } from 'Map'; // eslint-disable-line
 
+/**
+ * A simple map zoom control
+ * @component
+ * @category Controls
+ * @since 0.1.0
+ */
 function ZoomControls (props) {
   const { map } = props
+
   let mouseDownTime
+
   let mouseDownTimeout
+
   let repeatTimeout
   const zoom = direction => {
     const delta = direction === 'ZOOM_IN' ? 0.1 : -0.1

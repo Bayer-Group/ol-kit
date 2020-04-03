@@ -4,8 +4,14 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceStamen from 'ol/source/stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTonerLite } from './thumbnails'
-import { connectToMap } from 'Map'
+import { connectToMap } from 'Map'; // eslint-disable-line
 
+/**
+ * Stamen toner light basemap option
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
 class StamenTonerLite extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
