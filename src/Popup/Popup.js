@@ -39,7 +39,6 @@ class Popup extends Component {
     const { map } = this.props
 
     map.un('click', this.mapClickHandler)
-    removeMovementListener(this.movementListener) // TODO this needs to move to whenever popup show is false
   }
 
   mapClickHandler = e => {
@@ -95,7 +94,7 @@ class Popup extends Component {
 
     const layers = await Promise.all(promises)
 
-    const features = layers.reduce((acc, { features, layer }) => {
+    const parsedFeatures = layers.reduce((acc, { features, layer }) => {
       const layerFeatures = features.map(feature => {
         feature.set('_ol_kit_parent', layer)
 
@@ -104,9 +103,9 @@ class Popup extends Component {
 
       return [...acc, ...layerFeatures]
     }, [])
+
     // ol returns these in reverse z-index order
-    .reverse() // eslint-disable-line indent
-    .featuresFilter() // eslint-disable-line indent
+    const features = parsedFeatures.reverse()
 
     const popupPosition = getPopupPositionFromFeatures(e, features)
 
@@ -116,6 +115,9 @@ class Popup extends Component {
   hidePopup = () => {
     const { map, onMapClick } = this.props
     const popupPosition = getPopupPositionFromFeatures({ map }, [])
+
+    // stop tracking movement when popup show is set to false
+    this.movementListener && removeMovementListener(this.movementListener)
 
     this.setState({ features: [], popupPosition, show: false }, () => onMapClick(this.state))
   }

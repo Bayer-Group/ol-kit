@@ -2,23 +2,10 @@ import bboxTurf from '@turf/bbox'
 import { lineString } from '@turf/helpers'
 import centroid from '@turf/centroid'
 import olMap from 'ol/map'
-import olCircle from 'ol/geom/circle'
-import olPolygon from 'ol/geom/polygon'
 import olObservable from 'ol/observable'
-import olSourceImageWMS from 'ol/source/imagewms'
-import olSourceTileWMS from 'ol/source/tilewms'
 import GeoJSON from 'ol/format/geojson'
-import proj from 'ol/proj'
 import debounce from 'lodash.debounce'
-
-import { buildWfsFilters } from 'utils/geoserver'
 import ugh from 'ugh'
-
-const VMF_RESERVED = {
-  filters: '_vmf_filters',
-  basemap: '_vmf_basemap',
-  catalogId: '_vmf_catalogId'
-}
 
 /**
  * Bind multiple move listeners with the same callback
@@ -57,44 +44,6 @@ export const removeMovementListener = (keys = []) => {
 }
 
 /**
- * Make a WMS layer retrieve it's WFS features at a given pixel location
- * @function
- * @since 0.1.0
- * @param {Object} event - An object with an `event` and `pixel` property
- * @param {ol.Map} event.map - The openlayers map where the layer exists
- * @param {Number[]} event.pixel - An array consisting of `x` and `y` pixel locations
- * @returns {ol.Source} The openlayers source where the features were just added
- */
-export const convertWmsToWfsAndAddToMap = (event, catalogLayer, opts = {}) => {
-  const { map, pixel } = event
-  const source = catalogLayer.getWfsSource()
-  const coords = map.getCoordinateFromPixel(pixel)
-  const existingFilters = catalogLayer.get(VMF_RESERVED.filters) || ['AND', new Map()]
-  const properties = source.getProperties().body
-  const geometryName = properties.geometryName
-  const bufferSize = opts.hitTolerance ? opts.hitTolerance : 8
-  // calculate hitTolerance in units relative to map view resoultion
-  const relativeUnits = bufferSize * map.getView().getResolution()
-  // apply hitTolerance as radius of circle
-  const bufferedClick = olPolygon.fromCircle(new olCircle(coords, relativeUnits))
-  const intersectParams = new Set([[geometryName, bufferedClick, 'EPSG:3857']])
-
-  existingFilters[1].set('INTERSECTS', intersectParams)
-  const filter = {
-    filter: buildWfsFilters(existingFilters),
-    maxFeatures: 50,
-    outputFormat: undefined
-  }
-  const body = Object.assign(properties, filter)
-
-  source.clear()
-  source.setFilter && source.setFilter(body)
-  source.refresh()
-
-  return source
-}
-
-/**
  * Get all features for a given click event
  * @function
  * @since 0.1.0
@@ -113,14 +62,9 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    const source = layer.getSource && layer.getSource()
-    const isWMS = source instanceof olSourceImageWMS || source instanceof olSourceTileWMS
-    const isGeoServerlayer = layer.isGeoserverLayer
-
-    if (!layer.get(VMF_RESERVED.catalogId) && layer.getLayerState().managed && !layer.get(VMF_RESERVED.basemap) && !isWMS && !isGeoServerlayer) { // eslint-disable-line
-      // catalog layers are handled by wmsSelector
+    if (layer.getLayerState().managed && !layer.get('_ol_kit_basemap')) {
       // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
-      // _vmf_basemap is set to true on all basemaps via vmf
+      // _ol_kit_basemap is set to true on all basemaps from ol-kit
       const features = []
       const sourceFeatures = layer.getSource().getFeatures()
 
@@ -135,59 +79,14 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       if (features.length) promises.push(wfsPromise)
     }
   }
-  const wmsSelector = layer => {
-    const source = layer.getSource && layer.getSource()
-    const isWMS = source instanceof olSourceImageWMS || source instanceof olSourceTileWMS
 
-    if (!!layer.get(VMF_RESERVED.catalogId) && isWMS) {
-      // if we're dealing with a catalog layer, only work with the WFS source
-      // ignore wms layers that are not catalog layers
-      const catalogLayers = map.getLayers(true).getArray().filter(layer => layer.isCatalogLayer)
-      const catalogLayer = catalogLayers.find(cat => cat.layers.get('wms').get('_vmf_catalogId') === layer.get('_vmf_catalogId'))
-      const wfsSource = convertWmsToWfsAndAddToMap(event, catalogLayer, opts)
-      const wmsPromise = new Promise(resolve => {
-        const features = []
-        const featureCounter = e => {
-          // clear the timeout to resolve an empty array if features exist
-          clearTimeout(timeout)
-          features.push(e.feature)
-          resolver()
-        }
-        const resolver = debounce(() => {
-          resolve({ features, layer })
-        }, 200)
-
-        wfsSource.on('addfeature', featureCounter)
-        // in the case no features get converted/added to source resolve empty array
-        const timeout = setTimeout(() => resolve({ features: [], layer }), 1000)
-      })
-
-      promises.push(wmsPromise)
-    } else if (!!layer.get('_ol_kit_parent') && layer.get('_ol_kit_parent').isGeoserverLayer) {
-      // this logic handles clicks on GeoserverLayers
-      const parentLayer = layer.get('_ol_kit_parent')
-      const coords = map.getCoordinateFromPixel(pixel)
-      const wmsPromise = new Promise(async resolve => {
-        const rawFeatures = await parentLayer.fetchFeaturesAtClick(coords, map)
-        // filter out deleted=true from PFO layers
-        const features = rawFeatures.filter(feature => feature.get('deleted') != 'true') // eslint-disable-line eqeqeq
-
-        resolve({ features, layer })
-      })
-
-      promises.push(wmsPromise)
-    }
-  }
-  // check for featuresAtPixel to account for hitTolerance first then do catalogLayer check as well
+  // check for featuresAtPixel to account for hitTolerance
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
     hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
   })
 
   // if there's features at click, loop through the layers to find corresponding layer & features
   if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
-
-  // this check is for wms features on catalog layers
-  map.forEachLayerAtPixel(pixel, wmsSelector)
 
   return promises
 }

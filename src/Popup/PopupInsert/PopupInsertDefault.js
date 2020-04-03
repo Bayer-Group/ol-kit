@@ -50,8 +50,7 @@ class PopupInsert extends Component {
 
       this.selectInteraction = new olSelect({
         hitTolerance: 3,
-        style: [style],
-        removeCondition: () => true // removes ol's selection action
+        style: [style]
       })
       map.addInteraction(this.selectInteraction)
     }
