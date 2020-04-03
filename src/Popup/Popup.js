@@ -70,7 +70,7 @@ class Popup extends Component {
     // when the map is panned, we need to re-calculate the position of the popup
     const popupMoveHandler = () => {
       const { show, features, popupPosition: lastPosition } = this.state
-      const opts = { lastPosition } // use current position as lastPosition for animation
+      const opts = { lastPosition } // use current position as lastPosition for animation when moving map
 
       // only compute new positions if the popup is showing
       if (show) {

@@ -112,7 +112,7 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
 
   if (!(map instanceof olMap)) return ugh.error('getPopupPositionFromFeatures requires a valid openlayers map as a property of the first arg')
   const arrowHeight = opts.arrowHeight || 16
-  const geoJSON = new GeoJSON({ dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
+  const geoJSON = new GeoJSON({ dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' })
   const height = opts.popupHeight || 280
   const width = opts.popupWidth || 280
   const fullHeight = height + arrowHeight
@@ -150,6 +150,8 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     const jsonFeatures = geoJSON.writeFeatures(features)
     const [minX, minY, maxX, maxY] = bboxTurf(JSON.parse(jsonFeatures))
 
+    console.log('getFitsForFeatures', rawFeatures, JSON.parse(jsonFeatures), [minX, minY, maxX, maxY])
+
     return {
       top: getMidPixel([[minX, maxY], [maxX, maxY]]),
       right: getMidPixel([[maxX, maxY], [maxX, minY]]),
@@ -161,7 +163,7 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
   const getMidPixel = lineCoords => {
     const centerFeature = centroid(lineString(lineCoords))
     const coords = geoJSON.readFeature(centerFeature).getGeometry().flatCoordinates
-
+    console.log('getMidPixel', map.getPixelFromCoordinate(coords))
     return map.getPixelFromCoordinate(coords)
   }
 
