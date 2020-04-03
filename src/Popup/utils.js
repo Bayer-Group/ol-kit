@@ -126,7 +126,7 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     bottom: getPadding(2),
     left: getPadding(3)
   }
-  // olMap.getPixelFromCoordinate return s a pixel relative to the map's target element so we need to convert that to a pixel relative to the window.
+  // olMap.getPixelFromCoordinate returns a pixel relative to the map's target element so we need to convert that to a pixel relative to the window.
   const mapToScreenPixel = (pixel = [0, 0]) => {
     const { x, y } = map.getTargetElement().getBoundingClientRect()
     const offset = [x, y]

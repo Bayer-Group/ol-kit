@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import olInteractionDraw from 'ol/interaction/draw'
 
@@ -123,20 +124,23 @@ class Popup extends Component {
   }
 
   render () {
-    const { children } = this.props
+    const { children, map } = this.props
     const { features, loading, popupPosition: { arrow, pixel }, show } = this.state
 
     // spread props to keep show prop as source of truth over state
     return (
-      <PopupBase show={show} pixel={pixel} arrow={arrow} {...this.props}>
-        {children || (
-          <PopupInsertDefault
-            features={features}
-            loading={loading}
-            onClose={this.hidePopup}
-            {...this.props} /> // default ui if no children are passed
-        )}
-      </PopupBase>
+      ReactDOM.createPortal(
+        <PopupBase show={show} pixel={pixel} arrow={arrow} {...this.props}>
+          {children || (
+            <PopupInsertDefault
+              features={features}
+              loading={loading}
+              onClose={this.hidePopup}
+              {...this.props} /> // default ui if no children are passed
+          )}
+        </PopupBase>,
+        map.getTargetElement()
+      )
     )
   }
 }
