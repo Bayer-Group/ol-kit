@@ -1,3 +1,3 @@
 export { default as Popup } from './Popup'
 export { default as PopupBase } from './PopupBase'
-export { default as PopupShell } from './PopupShell'
+export { default as PopupInsertDefault } from './PopupInsert/PopupInsertDefault'

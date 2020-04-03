@@ -40,7 +40,10 @@ PopupBase.propTypes = {
   /** The position of the popup's arrow (`top`, `right`, `bottom`, `left` or `none`) */
   arrow: PropTypes.string,
   /** The content of the popup */
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
   /** The height of the popup */
   height: PropTypes.number,
   /** Render the component inline (without absolute positioning) */
