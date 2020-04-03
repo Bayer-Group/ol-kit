@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ManageLayer as VmcManageLayer } from 'vmc'
+import StyleManager from 'LayerStyler/StyleManager'
 import olObservable from 'ol/observable'
 
-// TODO fix this
-import { addMovementListener } from 'utils/events'
+import { addMovementListener } from './utils'
 
 class LayerStyler extends React.Component {
   constructor (props) {
@@ -57,18 +56,8 @@ class LayerStyler extends React.Component {
     }
   }
 
-  onFilterChange = (layer, filters) => {
-    // if (layer && layer.isGeoserverLayer) {
-    //   const { typeName } = layer
-    //   const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
-    //   const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
-
-    //   layer.setWMSFilters(filters, opts)
-
-    //   // cause a re-render which will re-hydrate the latest styles
-    //   this.forceUpdate()
-    // }
-  }
+  // TODO -- add vector layer filtering capabilities
+  onFilterChange = (layer, filters) => {}
 
   onDefaultStyleChange = (layer, styles) => {
     if (layer && layer.isVectorLayer) {
@@ -103,18 +92,15 @@ class LayerStyler extends React.Component {
     const { translations } = this.props
 
     return (
-      <VmcManageLayer
+      <StyleManager
         layers={layers}
         translations={translations}
-        filters={layers.map(l => l.getWMSFilters())}
         userStyles={layers.map(l => l.getUserWMSStyles())}
         defaultStyles={layers.map(l => l.getDefaultWMSStyles())}
-        getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
         getTitleForLayer={this.getTitleForLayer}
         getValuesForAttribute={this.getValuesForAttribute}
         getAttributesForLayer={this.getAttributesForLayer}
         attributeValues={attributeValues}
-        onFilterChange={this.onFilterChange}
         onUserStyleChange={this.onUserStyleChange}
         onDefaultStyleChange={this.onDefaultStyleChange}
         onDefaultStyleReset={this.onDefaultStyleReset}
@@ -128,7 +114,7 @@ LayerStyler.propTypes = {
   translations: PropTypes.object,
 
   /** Openlayers map object */
-  map: PropTypes.object.isRequired,
+  map: PropTypes.object.isRequired
 }
 
 export default LayerStyler

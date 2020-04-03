@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import SelectTabs from 'vmc/universal/SelectTabs'
+import SelectTabs from 'LayerStyler/_SelectTabs'
 import StyleGroup from './_StyleGroup'
 import {
   Button,
@@ -106,11 +106,11 @@ class LayerStyler extends Component {
                   <i className='zmdi zmdi-plus-circle' />
                 </AddNew>
               }
-              {onDefaultStyleReset && <ResetText onClick={onDefaultStyleReset}>{translations['olKit.LayerStyler.reset']}</ResetText>}
+              {onDefaultStyleReset && <ResetText onClick={onDefaultStyleReset}>{translations['_ol_kit.LayerStyler.reset']}</ResetText>}
             </StyleGroupHeading>
           </Half>
           <CollapseText>
-            {styles.length > 0 && <Button onClick={this.collapse}>{collapsed ? translations['olKit.LayerStyler.show'] : translations['olKit.LayerStyler.hide']}</Button>}
+            {styles.length > 0 && <Button onClick={this.collapse}>{collapsed ? translations['_ol_kit.LayerStyler.show'] : translations['_ol_kit.LayerStyler.hide']}</Button>}
           </CollapseText>
         </ButtonContainer>
         {!showTabs && !collapsed
@@ -132,7 +132,7 @@ class LayerStyler extends Component {
         {showTabs && !collapsed
           ? (
             <SelectTabs>
-              <div title={translations['olKit.LayerStyler.zoomedIn']}>
+              <div title={translations['_ol_kit.LayerStyler.zoomedIn']}>
                 {styles.map((styleGroup, i) => {
                   const mutatedStyleGroup = styleGroup.map(style => {
                     // pass a hidden flag for non zoomed in styles to the StyleGroup component to keep the indexes on styles aligned
@@ -152,7 +152,7 @@ class LayerStyler extends Component {
                     key={i} />
                 })}
               </div>
-              <div title={translations['olKit.LayerStyler.zoomedOut']}>
+              <div title={translations['_ol_kit.LayerStyler.zoomedOut']}>
                 {styles.map((styleGroup, i) => {
                   const mutatedStyleGroup = styleGroup.map(style => {
                     // pass a hidden flag for non zoomed out styles to the StyleGroup component to keep the indexes on styles aligned
@@ -214,9 +214,7 @@ LayerStyler.propTypes = {
   /** Callback function which resolves a promise to the values available for a given attribute */
   getValuesForAttribute: PropTypes.func,
 
-  /** FIXME -- is this being used anymore???? */
   attributeValues: PropTypes.array,
-  commaDelimitedAttributes: PropTypes.array
 }
 
 LayerStyler.defaultProps = {
@@ -227,11 +225,11 @@ LayerStyler.defaultProps = {
   isDefaultStyler: false,
   showNewButtons: false,
   translations: {
-    'olKit.LayerStyler.reset': 'Reset Styles',
-    'olKit.LayerStyler.show': 'Show All',
-    'olKit.LayerStyler.hide': 'Hide All',
-    'olKit.LayerStyler.zoomedIn': 'Zoomed In',
-    'olKit.LayerStyler.zoomedOut': 'Zoomed Out'
+    '_ol_kit.LayerStyler.reset': 'Reset Styles',
+    '_ol_kit.LayerStyler.show': 'Show All',
+    '_ol_kit.LayerStyler.hide': 'Hide All',
+    '_ol_kit.LayerStyler.zoomedIn': 'Zoomed In',
+    '_ol_kit.LayerStyler.zoomedOut': 'Zoomed Out'
   }
 }
 

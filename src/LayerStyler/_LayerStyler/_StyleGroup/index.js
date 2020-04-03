@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 
-import Selector from 'vmc/universal/Selector'
+import Selector from 'LayerStyler/_Selector'
 import GenericSymbolizer from './_GenericSymbolizer'
 import escapeRegExp from 'lodash.escaperegexp'
 

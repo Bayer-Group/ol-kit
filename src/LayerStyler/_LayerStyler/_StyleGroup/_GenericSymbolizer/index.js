@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import ColorPicker from 'vmc/universal/ColorPicker'
+import ColorPicker from 'LayerStyler/_ColorPicker'
 import { Trashcan } from '../styled'
 import { Container, Fourth, Title } from './styled'
 
