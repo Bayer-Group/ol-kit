@@ -5,7 +5,7 @@ import Map from '../Map'
 import BasemapManager from './BasemapManager'
 
 describe('<BasemapManager />', () => {
-  it('should render a basic basemap manager component', async () => {
+  it.skip('should render a basic basemap manager component', async () => {
     const { container } = render(<Map><BasemapManager inlineProp={true} /></Map>)
 
     // wait for async child render
@@ -13,7 +13,7 @@ describe('<BasemapManager />', () => {
 
     expect(prettyDOM(container)).toMatchSnapshot()
   })
-  it('should render a single child', async () => {
+  it.skip('should render a single child', async () => {
     const child = <div id='child comp'>child comp</div>
     const { container } = render(<Map><BasemapManager>{child}</BasemapManager></Map>)
 
@@ -22,7 +22,7 @@ describe('<BasemapManager />', () => {
 
     expect(prettyDOM(container)).toMatchSnapshot()
   })
-  it('should render an array of children', async () => {
+  it.skip('should render an array of children', async () => {
     const child1 = <div key={1} id='1'>child comp</div>
     const child2 = <div key={2} id='2'>child comp</div>
     const child3 = <div key={3} id='3'>child comp</div>

@@ -5,6 +5,7 @@ Object {
   "Compass": [Function],
   "Controls": [Function],
   "Map": [Function],
+  "VectorLayer": [Function],
   "ZoomControls": [Function],
   "connectToMap": [Function],
   "updateMapFromUrl": [Function],
