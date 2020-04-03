@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>ol-kit | Getting Started</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
 
     <!-- these scripts must be at the top to properly syntax highlight code examples -->
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
@@ -124,7 +125,7 @@ class App extends Component {
 <p>Applications will need to render children which overaly on top of the map and interact with it. Even though the ol-kit <code>Map</code> component renders a map to the page, it also includes a wrapper container allowing you to render custom application components as <code>children</code>. It can be as simple as a popup or a full-fledged routed application.</p>
 <p>In the example below, the <code>Popup</code> and <code>Controls</code> components will be rendered &quot;within&quot; the bounds of the map and on top of the map surface.</p>
 <pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
-import { Map, Popup, Controls } from '@bayer/ol-kit'
+import { Map, Controls } from '@bayer/ol-kit'
 
 class App extends Component {
   onMapInit = map => {}
@@ -132,7 +133,6 @@ class App extends Component {
   render () {
     return (
       &lt;Map onMapInit={this.onMapInit}>
-        &lt;Popup />
         &lt;Controls />
       &lt;/Map>
     )
