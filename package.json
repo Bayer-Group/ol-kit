@@ -53,6 +53,7 @@
     "url": "git@github.com:MonsantoCo/ol-kit.git"
   },
   "dependencies": {
+    "geostyler-openlayers-parser": "0.21.0",
     "lodash.debounce": "~4.0.8",
     "nanoid": "~2.1.6",
     "prop-types": "~15.7.2",
