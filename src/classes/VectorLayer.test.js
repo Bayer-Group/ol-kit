@@ -152,7 +152,7 @@ describe('Vector Layer class', () => {
     expect(vectorLayer.getUserVectorStyles()).toMatchObject(userStyles.rules)
   })
 
-  it('should set, update and reset default styles', () => {
+  it('should set, update and reset default styles', async () => {
     const vectorLayer = new VectorLayer({
       format: new olFormatGeoJSON(),
       source: new olSourceVector({
@@ -162,18 +162,17 @@ describe('Vector Layer class', () => {
       })
     })
 
-    vectorLayer.setDefaultVectorStyles().then(() => {
-      expect(vectorLayer.getDefaultVectorStyles()).toMatchObject(defaultStyles)
+    await vectorLayer.setDefaultVectorStyles()
+    expect(vectorLayer.getDefaultVectorStyles()).toMatchObject(defaultStyles)
 
-      vectorLayer.updateDefaultVectorStyles(updatedDefaultStyles)
-      expect(vectorLayer.getDefaultVectorStyles()).toMatchObject(updatedDefaultStyles)
+    vectorLayer.updateDefaultVectorStyles(updatedDefaultStyles)
+    expect(vectorLayer.getDefaultVectorStyles()).toMatchObject(updatedDefaultStyles)
 
-      vectorLayer.resetDefaultVectorStyles()
-      expect(vectorLayer.getDefaultVectorStyles()).toMatchObject(defaultStyles)
-    })
+    vectorLayer.resetDefaultVectorStyles()
+    expect(vectorLayer.getDefaultVectorStyles()).toMatchObject(defaultStyles)
   })
 
-  it('should write default and user styles to ol styles', () => {
+  it('should write default and user styles to ol styles', async () => {
     const vectorLayer = new VectorLayer({
       format: new olFormatGeoJSON(),
       source: new olSourceVector({
@@ -183,12 +182,10 @@ describe('Vector Layer class', () => {
       })
     })
 
-    vectorLayer.setDefaultVectorStyles().then(() => {
-      vectorLayer.setUserVectorStyles(userStyles.rules)
+    await vectorLayer.setDefaultVectorStyles()
+    vectorLayer.setUserVectorStyles(userStyles.rules)
 
-      vectorLayer.applyVectorStyles().then(() => { // eslint-disable-line
-        expect(vectorLayer.getStyle()().length).toBe(2)
-      })
-    })
+    await vectorLayer._applyVectorStyles()
+    expect(vectorLayer.getStyle()().length).toBe(2)
   })
 })
