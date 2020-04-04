@@ -1,7 +1,7 @@
 coverage/
 dist/
 .jest/
-lib/
+/lib
 core/
 node_modules/
 *.log
