@@ -18,7 +18,7 @@ for (var i = 0; i < links.length; i++) {
     var linkFile = linkParts[linkParts.length - 1]
 
     if (urlFile === linkFile) {
-        el.className = 'active'
+        el.className += 'active'
     }
 }
 

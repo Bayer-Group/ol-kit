@@ -163,7 +163,9 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
   const getMidPixel = lineCoords => {
     const centerFeature = centroid(lineString(lineCoords))
     const coords = geoJSON.readFeature(centerFeature).getGeometry().flatCoordinates
+
     console.log('getMidPixel', map.getPixelFromCoordinate(coords), lineCoords, map)
+
     return map.getPixelFromCoordinate(coords)
   }
 
@@ -190,7 +192,9 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     // if none of the above return, it doesn't fit on any side (it's on top of or within)
     return { arrow: 'none', pixel: mapToScreenPixel(pixel), fits: false }
   }
+
   console.log('KAE', getFitsForFeatures(features))
+
   return getPosition(getFitsForFeatures(features))
 }
 

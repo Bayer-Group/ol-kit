@@ -4,6 +4,9 @@
 
 An easy to use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
 
+## Prebuilt Map Components
+![ol-kit logo](./config/jsdoc/template/static/example-screenshot-1.png)
+
 ## Installation
 Install `ol-kit` and its `peerDependencies`
 

@@ -40,7 +40,7 @@
         <?js }) ?>
     <?js } else if (doc.component) { ?>
         <h2>
-            <?js= '&lt' + doc.name + ' ' + doc.component.props.map(p => '<i>' + p.name + '</i>').join(' ') + ' /&gt' ?>
+            <?js= '&lt' + doc.name + ' /&gt' ?>
         </h2>
         <?js if (doc.classdesc) { ?>
             <div class="class-description"><?js= doc.classdesc ?></div>
