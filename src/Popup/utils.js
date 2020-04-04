@@ -7,6 +7,14 @@ import GeoJSON from 'ol/format/geojson'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
+// DELETE THESE
+import proj from 'ol/proj'
+import olFeature from 'ol/feature'
+import olPolygon from 'ol/geom/polygon'
+import olVectorLayer from 'ol/layer/vector'
+import olPoint from 'ol/geom/point'
+import olVectorSource from 'ol/source/vector'
+
 /**
  * Bind multiple move listeners with the same callback
  * @function
@@ -115,13 +123,17 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
   const { map, pixel = [0, 0] } = event
 
   if (!(map instanceof olMap)) return ugh.error('getPopupPositionFromFeatures requires a valid openlayers map as a property of the first arg')
+  if (!features.length) return { arrow: 'none', pixel, fits: false }
   const arrowHeight = opts.arrowHeight || 16
-  const geoJSON = new GeoJSON({ dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
+  const geoJSON = new GeoJSON({ defaultDataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
+  const featureProjection = geoJSON.readProjection(features).getCode() || 'EPSG:3857'
+  const dataProjection = geoJSON.readProjection(features).getCode() || 'EPSG:3857'
   const height = opts.popupHeight || 280
   const width = opts.popupWidth || 280
   const fullHeight = height + arrowHeight
   const fullWidth = width + arrowHeight
   const [mapX, mapY] = map.getSize()
+  console.log('mapSize', mapX, mapY, geoJSON.readProjection(features).getCode(), features.length)
 
   const getPadding = (idx) => opts.viewPadding ? opts.viewPadding[idx] : calculateViewPadding(map)[idx]
   const padding = {
@@ -154,7 +166,9 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     const jsonFeatures = geoJSON.writeFeatures(features)
     const [minX, minY, maxX, maxY] = bboxTurf(JSON.parse(jsonFeatures))
 
-    console.log('getFitsForFeatures', rawFeatures, JSON.parse(jsonFeatures), [minX, minY, maxX, maxY])
+    console.log('getFitsForFeatures', rawFeatures, JSON.parse(jsonFeatures))
+
+    ADD_POINTS_TO_MAP(map, [[minX, maxY], [maxX, maxY], [maxX, minY], [minX, minY], [minX, maxY]])
 
     return {
       top: getMidPixel([[minX, maxY], [maxX, maxY]]),
@@ -165,12 +179,13 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
   }
 
   const getMidPixel = lineCoords => {
+    // const lineCoords = passedLineCoords.map(coord => proj.fromLonLat(coord))
+    console.log('lineCoords?', lineCoords)
     const centerFeature = centroid(lineString(lineCoords))
-    const coords = geoJSON.readFeature(centerFeature).getGeometry().flatCoordinates
-
-    console.log('getMidPixel', map.getPixelFromCoordinate(coords), lineCoords, map)
-
-    return map.getPixelFromCoordinate(coords)
+    console.log('centerFeature', centerFeature.geometry.coordinates)
+    const coords = proj.fromLonLat(centerFeature.geometry.coordinates)
+    console.log('getMidPixel', map.getPixelFromCoordinate(coords), coords)
+    return map.getPixelFromCoordinate(coords) // THIS IS THE PROBLEM [x,y] x is wayyy negative??
   }
 
   const fitsRight = ([x, y]) => x + fullWidth <= mapX - padding.right && y >= (height / 2) + padding.top && y + (height / 2) <= mapY - padding.bottom // eslint-disable-line
@@ -196,10 +211,28 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     // if none of the above return, it doesn't fit on any side (it's on top of or within)
     return { arrow: 'none', pixel: mapToScreenPixel(pixel), fits: false }
   }
-
-  console.log('KAE', getFitsForFeatures(features))
-
+  console.log('KAE', getPosition(getFitsForFeatures(features)))
   return getPosition(getFitsForFeatures(features))
+}
+
+const ADD_POINTS_TO_MAP = (map, points = []) => {
+  const features = []
+
+  points.forEach(point => {
+    features.push(new olFeature(new olPoint(proj.fromLonLat(point))))
+  })
+  // const coordinates = points
+  // console.log('coordinates for POLYGON', coordinates)
+  // const polygon = new olPolygon(coordinates)
+  //
+  // features.push(polygon)
+
+  const source = new olVectorSource({ features })
+  const vectorLayer = new olVectorLayer({ source })
+
+  console.log('ADD_POINTS_TO_MAP', points)
+
+  map.addLayer(vectorLayer)
 }
 
 /**
