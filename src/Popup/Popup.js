@@ -124,13 +124,13 @@ class Popup extends Component {
   }
 
   render () {
-    const { children, map } = this.props
-    const { features, loading, popupPosition: { arrow, pixel }, show } = this.state
+    const { children, map, show: propShow } = this.props
+    const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
+    const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
-    // spread props to keep show prop as source of truth over state
     return (
       ReactDOM.createPortal(
-        <PopupBase show={show} pixel={pixel} arrow={arrow} {...this.props}>
+        <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
           {children || (
             <PopupInsertDefault
               features={features}

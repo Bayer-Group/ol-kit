@@ -25,8 +25,8 @@ export function createMap (opts = {}) {
   // create a new map instance
   const map = new Map({
     view: new View({
-      center: [0, 0], // [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
-      zoom: 0
+      center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
+      zoom: 5
     }),
     layers: [
       new TileLayer({
