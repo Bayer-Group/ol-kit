@@ -5,7 +5,7 @@ import { Item, Action } from './styled'
 
 /**
  * @component
- * @category vmc
+ * @category Popup
  * @example ./example.md
  */
 class PopupActionItem extends Component {

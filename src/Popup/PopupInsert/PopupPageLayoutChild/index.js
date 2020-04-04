@@ -4,7 +4,7 @@ import { HeightContainer } from 'vmc/popup/styled'
 
 /**
  * @component
- * @category vmc
+ * @category Popup
  * @example ./example.md
  */
 class PopupPageLayoutChild extends Component {

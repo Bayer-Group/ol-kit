@@ -5,7 +5,7 @@ import { Flex, TabButton, TabList, TabsContainer, TabSlider } from './styled'
 
 /**
  * @component
- * @category vmc
+ * @category Popup
  * @example ./example.md
  */
 class PopupTabs extends Component {

@@ -5,7 +5,7 @@ import { Container, Key, Row, Value } from './styled'
 
 /**
  * @component
- * @category vmc
+ * @category Popup
  * @example ./example.md
  */
 class PopupDataList extends Component {

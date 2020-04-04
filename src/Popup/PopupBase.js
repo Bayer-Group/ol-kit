@@ -18,7 +18,7 @@ class PopupBase extends Component {
     }
 
     return (
-      <Container width={width} height={height} show={show} inline={inline} pixel={pixel} arrow={arrow} {...this.props}>
+      <Container width={width} height={height} show={show} inline={inline} pixel={pixel} arrow={arrow}>
         <ArrowBox position={arrowTranslator[arrow]}>
           {children}
         </ArrowBox>

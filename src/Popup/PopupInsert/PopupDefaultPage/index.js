@@ -10,7 +10,7 @@ import { Header, Body, Close, Title, FeatureNavigator, FeatureCount, HeaderDetai
 
 /**
  * @component
- * @category vmc
+ * @category Popup
  * @example ./example.md
  */
 class PopupDefaultPage extends Component {

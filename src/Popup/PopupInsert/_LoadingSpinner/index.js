@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-/**
- * @example ./example.md
- */
 class LoadingSpinner extends Component {
   render () {
     const { style } = this.props

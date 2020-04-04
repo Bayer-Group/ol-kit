@@ -112,7 +112,7 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
 
   if (!(map instanceof olMap)) return ugh.error('getPopupPositionFromFeatures requires a valid openlayers map as a property of the first arg')
   const arrowHeight = opts.arrowHeight || 16
-  const geoJSON = new GeoJSON({ dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' })
+  const geoJSON = new GeoJSON({ dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
   const height = opts.popupHeight || 280
   const width = opts.popupWidth || 280
   const fullHeight = height + arrowHeight
@@ -163,7 +163,7 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
   const getMidPixel = lineCoords => {
     const centerFeature = centroid(lineString(lineCoords))
     const coords = geoJSON.readFeature(centerFeature).getGeometry().flatCoordinates
-    console.log('getMidPixel', map.getPixelFromCoordinate(coords))
+    console.log('getMidPixel', map.getPixelFromCoordinate(coords), lineCoords, map)
     return map.getPixelFromCoordinate(coords)
   }
 
@@ -190,7 +190,7 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     // if none of the above return, it doesn't fit on any side (it's on top of or within)
     return { arrow: 'none', pixel: mapToScreenPixel(pixel), fits: false }
   }
-
+  console.log('KAE', getFitsForFeatures(features))
   return getPosition(getFitsForFeatures(features))
 }
 
