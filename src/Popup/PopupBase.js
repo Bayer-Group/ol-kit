@@ -5,7 +5,7 @@ import { Container, ArrowBox } from './styled'
 /**
  * @component
  * @category Popup
- * @since 0.1.0
+ * @since 0.2.0
  */
 class PopupBase extends Component {
   render () {

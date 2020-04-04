@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/BlankWhite.js</title>
+    <title>ol-kit | Popup/PopupInsert/PopupPageLayout/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,87 +80,103 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { HeightContainer } from '../styled'
 
 /**
- * Blank white basemap option
  * @component
- * @category Basemap
- * @since 0.1.0
+ * @category Popup
+ * @example ./example.md
  */
-class BlankWhite extends React.Component {
-  handleLayersChange = () => {
-    this.forceUpdate()
-  }
+class PopupPageLayout extends Component {
+  constructor (props) {
+    super(props)
 
-  componentDidMount () {
-    this.props.map.getLayers().on('change', this.handleLayersChange)
-  }
-
-  componentWillUnmount () {
-    this.props.map.getLayers().un('change', this.handleLayersChange)
-  }
-
-  onClick = () => {
-    const { map, layerTypeID, onBasemapChanged } = this.props
-    const layer = new olLayerVector({
-      [layerTypeID]: 'blankWhite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-      source: new olSourceVector()
-    })
-    const layers = map.getLayers()
-    const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
-
-    if (hasBasemap) {
-      layers.setAt(0, layer)
-    } else {
-      layers.insertAt(0, layer)
+    this.state = {
+      selectedIdx: props.selectedIdx
     }
-    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
-    onBasemapChanged(layer)
+
+    this.dataProp = this.dataProp.bind(this)
+    this.nextPage = this.nextPage.bind(this)
+    this.prevPage = this.prevPage.bind(this)
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps ({ selectedIdx }) {
+    if (this.state.selectedIdx !== selectedIdx) this.setState({ selectedIdx })
+  }
+
+  // this method returns either the data prop passed to the child or the idx of the child
+  dataProp (idx) {
+    const child = this.props.children[idx]
+
+    return child.props.data || idx
+  }
+
+  prevPage () {
+    const currIdx = this.state.selectedIdx
+    const nextIdx = this.state.selectedIdx - 1
+
+    if (currIdx > 0) {
+      // notify consumers that we're going back to the previous page
+      this.props.onPageChange(this.dataProp(currIdx), this.dataProp(nextIdx))
+
+      this.setState({ selectedIdx: nextIdx })
+    }
+  }
+
+  nextPage () {
+    const currIdx = this.state.selectedIdx
+    const nextIdx = this.state.selectedIdx + 1
+    const childLength = this.props.children.length
+
+    if (nextIdx &lt; childLength) {
+      // notify consumers that we're advancing to the next page
+      this.props.onPageChange(this.dataProp(currIdx), this.dataProp(nextIdx))
+
+      this.setState({ selectedIdx: nextIdx })
+    }
   }
 
   render () {
-    const { translations, thumbnail, map, layerTypeID } = this.props
-    const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'blankWhite' : false
+    const { children } = this.props
+    const { selectedIdx } = this.state
+
+    const childrenWithProps = React.Children.map(children, child =>
+      React.cloneElement(child, {
+        onNextPage: this.nextPage,
+        onPrevPage: this.prevPage,
+        pageCount: Array.isArray(children) ? children.length : 1,
+        currentPage: selectedIdx + 1
+      })
+    )
 
     return (
-      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
-        &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['_ol_kit.BlankWhite.title']}&lt;/Label>
-      &lt;/BasemapOption>
+      &lt;HeightContainer>
+        {React.Children.toArray(childrenWithProps)[selectedIdx]}
+      &lt;/HeightContainer>
     )
   }
 }
 
-BlankWhite.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.BlankWhite.title': PropTypes.string
-  }),
-  /** A string containing an http url or data url to a thumbnail image */
-  thumbnail: PropTypes.string,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.  */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
-  onBasemapChanged: PropTypes.func
+PopupPageLayout.defaultProps = {
+  children: [],
+  selectedIdx: 0
 }
 
-BlankWhite.defaultProps = {
-  thumbnail: '',
-  onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
+PopupPageLayout.propTypes = {
+  /** An array of components which are rendered as individual pages */
+  children: PropTypes.node.isRequired,
+
+  /** The index of the currently shown page */
+  selectedIdx: PropTypes.number,
+
+  /** Callback fired when a user navigates the page layout or closes the popup. The callback is passed the current page index and the next page index or `null` if the popup was closed. If the children of the layout passed a `data` prop, this is passed instead of the index for easier consumption. */
+  onPageChange: PropTypes.func
 }
 
-export default connectToMap(BlankWhite)
+export default PopupPageLayout
 </code></pre>
         </article>
     </section>

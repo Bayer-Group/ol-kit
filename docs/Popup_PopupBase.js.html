@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/BlankWhite.js</title>
+    <title>ol-kit | Popup/PopupBase.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,87 +80,65 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { Container, ArrowBox } from './styled'
 
 /**
- * Blank white basemap option
  * @component
- * @category Basemap
- * @since 0.1.0
+ * @category Popup
+ * @since 0.2.0
  */
-class BlankWhite extends React.Component {
-  handleLayersChange = () => {
-    this.forceUpdate()
-  }
-
-  componentDidMount () {
-    this.props.map.getLayers().on('change', this.handleLayersChange)
-  }
-
-  componentWillUnmount () {
-    this.props.map.getLayers().un('change', this.handleLayersChange)
-  }
-
-  onClick = () => {
-    const { map, layerTypeID, onBasemapChanged } = this.props
-    const layer = new olLayerVector({
-      [layerTypeID]: 'blankWhite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-      source: new olSourceVector()
-    })
-    const layers = map.getLayers()
-    const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
-
-    if (hasBasemap) {
-      layers.setAt(0, layer)
-    } else {
-      layers.insertAt(0, layer)
-    }
-    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
-    onBasemapChanged(layer)
-  }
-
+class PopupBase extends Component {
   render () {
-    const { translations, thumbnail, map, layerTypeID } = this.props
-    const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'blankWhite' : false
+    const { show, width, height, inline, pixel, children, arrow } = this.props
+    const arrowTranslator = {
+      top: 'bottom',
+      bottom: 'top',
+      left: 'right',
+      right: 'left'
+    }
 
     return (
-      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
-        &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['_ol_kit.BlankWhite.title']}&lt;/Label>
-      &lt;/BasemapOption>
+      &lt;Container width={width} height={height} show={show} inline={inline} pixel={pixel} arrow={arrow}>
+        &lt;ArrowBox position={arrowTranslator[arrow]}>
+          {children}
+        &lt;/ArrowBox>
+      &lt;/Container>
     )
   }
 }
 
-BlankWhite.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.BlankWhite.title': PropTypes.string
-  }),
-  /** A string containing an http url or data url to a thumbnail image */
-  thumbnail: PropTypes.string,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.  */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
-  onBasemapChanged: PropTypes.func
+PopupBase.defaultProps = {
+  arrow: 'none',
+  height: 280,
+  inline: false,
+  pixel: [0, 0],
+  show: false,
+  width: 280
 }
 
-BlankWhite.defaultProps = {
-  thumbnail: '',
-  onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
+PopupBase.propTypes = {
+  /** The position of the popup's arrow (`top`, `right`, `bottom`, `left` or `none`) */
+  arrow: PropTypes.string,
+  /** The content of the popup */
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  /** The height of the popup */
+  height: PropTypes.number,
+  /** Render the component inline (without absolute positioning) */
+  inline: PropTypes.bool,
+  /** The pixel coordinate where the popup should render */
+  pixel: PropTypes.array,
+  /** Show/hide the popup */
+  show: PropTypes.bool,
+  /** The width of the popup */
+  width: PropTypes.number
 }
 
-export default connectToMap(BlankWhite)
+export default PopupBase
 </code></pre>
         </article>
     </section>

@@ -1,23 +1,23 @@
 import styled from 'styled-components'
 
-/** @component */
+
 export const Header = styled.div`
   background-color: #ededed;
 `
 
-/** @component */
+
 export const HeaderDetails = styled.div`
   padding: 32px 20px ${props => props.loading ? '20px' : '0'} 20px;
   ${props => props.loading ? 'min-height: 105px' : 'min-height: 0px'};
   color: #787878;
 `
 
-/** @component */
+
 export const Body = styled.div`
   height: 100%;
 `
 
-/** @component */
+
 export const Frame = styled.div`
   height: ${props => props.height}px;
   overflow-y: scroll;
@@ -41,7 +41,7 @@ export const Frame = styled.div`
   }
 `
 
-/** @component */
+
 export const Title = styled.div`
   font-size: 17px;
   font-style: normal;
@@ -54,7 +54,7 @@ export const Title = styled.div`
   text-align: center;
 `
 
-/** @component */
+
 export const FeatureNavigator = styled.div`
   display: inline-block;
   position: absolute;
@@ -68,7 +68,7 @@ export const FeatureNavigator = styled.div`
   left: 10px;
 `
 
-/** @component */
+
 export const FeatureCount = styled.div`
   display: inline-block;
   vertical-align: inherit;
@@ -76,7 +76,7 @@ export const FeatureCount = styled.div`
   user-select: none;
 `
 
-/** @component */
+
 export const Close = styled.button`
   display: block;
   position: absolute;

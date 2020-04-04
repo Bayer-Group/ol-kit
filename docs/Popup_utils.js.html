@@ -1,4 +1,86 @@
-import bboxTurf from '@turf/bbox'
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | Popup/utils.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupInsert.html">PopupInsert</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import bboxTurf from '@turf/bbox'
 import { lineString } from '@turf/helpers'
 import centroid from '@turf/centroid'
 import olMap from 'ol/map'
@@ -18,9 +100,9 @@ import ugh from 'ugh'
  * @returns {ol.EventsKey[]} Array of openlayers event keys for unsetting listener events (use with removeMovementListener)
  */
 export const addMovementListener = (map, callback, thisObj) => {
-  if (typeof callback !== 'function') return ugh.error('addMovementListener requires a valid openlayers map & callback function') // eslint-disable-line
+  if (typeof callback !== 'function') return ugh.error('addMovementListener requires a valid openlayers map &amp; callback function') // eslint-disable-line
 
-  // If performance becomes an issue with catalog layers & far zoom level, these debounce levels can be adjusted
+  // If performance becomes an issue with catalog layers &amp; far zoom level, these debounce levels can be adjusted
   const slowDebounce = debounce(callback, 0)
   const fastDebounce = debounce(callback, 0)
 
@@ -62,10 +144,10 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   const { map, pixel } = event
   const promises = []
 
-  if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
+  if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map &amp; pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    if (layer.getLayerState().managed && !layer.get('_ol_kit_basemap')) {
+    if (layer.getLayerState().managed &amp;&amp; !layer.get('_ol_kit_basemap')) {
       // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
       // _ol_kit_basemap is set to true on all basemaps from ol-kit
       const features = []
@@ -88,7 +170,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
   })
 
-  // if there's features at click, loop through the layers to find corresponding layer & features
+  // if there's features at click, loop through the layers to find corresponding layer &amp; features
   if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
 
   return promises
@@ -108,10 +190,10 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
  * @param {Number} [opts.arrowHeight = 16] - The height of the popup's arrow/pointer
  * @param {Number} [opts.navbarOffset = 55] - The height of the navbar
  * @param {Number[]} [opts.viewPadding = [0, 0, 0, 0]] - An array of padding to apply to the best fit logic in top, right, bottom, left order
- * @returns {Object} An object containing the arrow/pointer position, pixel location & if the popup will fit properly within the viewport
+ * @returns {Object} An object containing the arrow/pointer position, pixel location &amp; if the popup will fit properly within the viewport
  */
 export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
-  if (typeof event !== 'object' || !Array.isArray(features)) return ugh.error('getPopupPositionFromFeatures first arg must be an object & second arg array of features')
+  if (typeof event !== 'object' || !Array.isArray(features)) return ugh.error('getPopupPositionFromFeatures first arg must be an object &amp; second arg array of features')
   const { map, pixel = [0, 0] } = event
 
   if (!(map instanceof olMap)) return ugh.error('getPopupPositionFromFeatures requires a valid openlayers map as a property of the first arg')
@@ -173,10 +255,10 @@ export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
     return map.getPixelFromCoordinate(coords)
   }
 
-  const fitsRight = ([x, y]) => x + fullWidth <= mapX - padding.right && y >= (height / 2) + padding.top && y + (height / 2) <= mapY - padding.bottom // eslint-disable-line
-  const fitsBelow = ([x, y]) => y + fullHeight - padding.bottom <= mapY && (width / 2) + padding.left <= x && x + (width / 2) - padding.right <= mapX // eslint-disable-line
-  const fitsAbove = ([x, y]) => y - padding.top >= fullHeight && (width / 2) + padding.left <= x && x + (width / 2) - padding.right <= mapX // eslint-disable-line
-  const fitsLeft = ([x, y]) => x + padding.left >= fullWidth && y >= (height / 2) + padding.top && y + (height / 2) <= mapY - padding.bottom // eslint-disable-line
+  const fitsRight = ([x, y]) => x + fullWidth &lt;= mapX - padding.right &amp;&amp; y >= (height / 2) + padding.top &amp;&amp; y + (height / 2) &lt;= mapY - padding.bottom // eslint-disable-line
+  const fitsBelow = ([x, y]) => y + fullHeight - padding.bottom &lt;= mapY &amp;&amp; (width / 2) + padding.left &lt;= x &amp;&amp; x + (width / 2) - padding.right &lt;= mapX // eslint-disable-line
+  const fitsAbove = ([x, y]) => y - padding.top >= fullHeight &amp;&amp; (width / 2) + padding.left &lt;= x &amp;&amp; x + (width / 2) - padding.right &lt;= mapX // eslint-disable-line
+  const fitsLeft = ([x, y]) => x + padding.left >= fullWidth &amp;&amp; y >= (height / 2) + padding.top &amp;&amp; y + (height / 2) &lt;= mapY - padding.bottom // eslint-disable-line
 
   // the order of these checks determine which side is tried first (right, left, top, and then bottom)
   const getPosition = bbox => {
@@ -219,32 +301,60 @@ export const calculateViewPadding = (map, opts = {}) => {
 
   boundaryElements.forEach(elem => {
     const bbox = elem.getBoundingClientRect()
-    const isOffScreen = bbox.x < 0 || bbox.x >= mapX || bbox.y < navbarOffset || bbox.y >= mapY
+    const isOffScreen = bbox.x &lt; 0 || bbox.x >= mapX || bbox.y &lt; navbarOffset || bbox.y >= mapY
 
     if (!isOffScreen) {
-      if (bbox.right < mapX / 2) {
+      if (bbox.right &lt; mapX / 2) {
         // set left padding for elements on left half of map
         const newPadding = bbox.right
 
-        if (viewPadding[3] < newPadding) viewPadding[3] = newPadding
+        if (viewPadding[3] &lt; newPadding) viewPadding[3] = newPadding
       } else if (bbox.left > mapX / 2) {
         // set right padding for elements on right half of map
         const newPadding = mapX - bbox.left
 
-        if (viewPadding[1] < newPadding) viewPadding[1] = newPadding
+        if (viewPadding[1] &lt; newPadding) viewPadding[1] = newPadding
       } else if (bbox.top > mapY / 2) {
         // set bottom padding for elements on bottom half of map
         const newPadding = (mapY + navbarOffset) - bbox.top
 
-        if (viewPadding[2] < newPadding) viewPadding[2] = newPadding
+        if (viewPadding[2] &lt; newPadding) viewPadding[2] = newPadding
       } else if (bbox.y > navbarOffset) {
         // set top padding for elements lower than navbar
         const newPadding = bbox.bottom
 
-        if (viewPadding[0] < newPadding) viewPadding[0] = newPadding
+        if (viewPadding[0] &lt; newPadding) viewPadding[0] = newPadding
       }
     }
   })
 
   return viewPadding
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

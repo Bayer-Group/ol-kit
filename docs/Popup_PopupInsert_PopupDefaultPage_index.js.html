@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/BlankWhite.js</title>
+    <title>ol-kit | Popup/PopupInsert/PopupDefaultPage/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,87 +80,158 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'; // eslint-disable-line
+
+import { HeightContainer, AttributeSettings } from '../styled'
+import ZmdiButton from '../_PopupZmdiButton'
+import LoadingSpinner from '../_LoadingSpinner'
+import DataList from '../PopupDataList'
+import PopupTabs from '../PopupTabs'
+import { Header, Body, Close, Title, FeatureNavigator, FeatureCount, HeaderDetails, Frame } from '../PopupHeader/styled'
 
 /**
- * Blank white basemap option
  * @component
- * @category Basemap
- * @since 0.1.0
+ * @category Popup
+ * @example ./example.md
  */
-class BlankWhite extends React.Component {
-  handleLayersChange = () => {
-    this.forceUpdate()
-  }
-
-  componentDidMount () {
-    this.props.map.getLayers().on('change', this.handleLayersChange)
-  }
-
-  componentWillUnmount () {
-    this.props.map.getLayers().un('change', this.handleLayersChange)
-  }
-
-  onClick = () => {
-    const { map, layerTypeID, onBasemapChanged } = this.props
-    const layer = new olLayerVector({
-      [layerTypeID]: 'blankWhite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-      source: new olSourceVector()
-    })
-    const layers = map.getLayers()
-    const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
-
-    if (hasBasemap) {
-      layers.setAt(0, layer)
-    } else {
-      layers.insertAt(0, layer)
-    }
-    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
-    onBasemapChanged(layer)
-  }
-
+class PopupDefaultPage extends Component {
   render () {
-    const { translations, thumbnail, map, layerTypeID } = this.props
-    const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'blankWhite' : false
+    const {
+      translations,
+      title,
+      loading,
+      currentTab,
+      attributes,
+      children,
+      onNextPage,
+      onPrevPage,
+      pageCount,
+      currentPage,
+      onClose,
+      showCustomizeDetails
+    } = this.props
+
+    const isReactFragment = child => {
+      try {
+        return child.type.toString() === React.Fragment.toString()
+      } catch (e) {
+        return false
+      }
+    }
+
+    // Sometimes an IA will supply a React.Fragment as the children properties. The fragment could contain multiple
+    // Action Items. A fragment child element won't have a length, we so need to check the fragment's children.
+    const childrenCount = isReactFragment(children) ? children.props.children.length : children.length
 
     return (
-      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
-        &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['_ol_kit.BlankWhite.title']}&lt;/Label>
-      &lt;/BasemapOption>
+      &lt;HeightContainer>
+        &lt;Header>
+          &lt;Close onClick={onClose}>&lt;i className='zmdi zmdi-close'>&lt;/i>&lt;/Close>
+          {pageCount > 1 &amp;&amp;
+            &lt;FeatureNavigator>
+              &lt;ZmdiButton onClick={onPrevPage}>
+                &lt;i className='zmdi zmdi-chevron-left'>&lt;/i>
+              &lt;/ZmdiButton>
+              &lt;FeatureCount>{`${currentPage} / ${pageCount}`}&lt;/FeatureCount>
+              &lt;ZmdiButton onClick={onNextPage}>
+                &lt;i className='zmdi zmdi-chevron-right'>&lt;/i>
+              &lt;/ZmdiButton>
+            &lt;/FeatureNavigator>
+          }
+          &lt;HeaderDetails loading={loading}>
+            &lt;Title>{title}&lt;/Title>
+          &lt;/HeaderDetails>
+        &lt;/Header>
+
+        {loading
+          ? (
+            &lt;LoadingSpinner style={{ marginTop: '70px', textAlign: 'center' }} />
+          ) : (
+            &lt;Body>
+              &lt;PopupTabs selectedIdx={currentTab}>
+                &lt;div title={translations['olKit.PopupDefaultPage.details']} style={{ height: '170px', overflowY: 'scroll' }}>
+                  { showCustomizeDetails &amp;&amp;
+                    &lt;AttributeSettings onClick={this.props.onSettingsClick}>
+                      &lt;i className='zmdi zmdi-settings'>&lt;/i>
+                      &lt;p style={{ fontSize: 'smaller', padding: '0px 5px', margin: 0 }}>{translations['olKit.PopupDefaultPage.customize']}&lt;/p>
+                    &lt;/AttributeSettings>
+                  }
+                  &lt;DataList attributes={attributes} />
+                &lt;/div>
+                {childrenCount > 3
+                  ? &lt;Frame title={translations['olKit.PopupDefaultPage.actions']} height={169}>
+                    {children}
+                  &lt;/Frame>
+                  : &lt;div title={translations['olKit.PopupDefaultPage.actions']} style={{ height: '169px' }}>
+                    {children}
+                  &lt;/div>
+                }
+              &lt;/PopupTabs>
+            &lt;/Body>
+          )
+        }
+      &lt;/HeightContainer>
     )
   }
 }
 
-BlankWhite.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.BlankWhite.title': PropTypes.string
-  }),
-  /** A string containing an http url or data url to a thumbnail image */
-  thumbnail: PropTypes.string,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.  */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
-  onBasemapChanged: PropTypes.func
+PopupDefaultPage.propTypes = {
+
+  translations: PropTypes.object,
+
+  /** The title shown centered in the top of the popup page */
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+
+  /** Render the page with a loading indicator and no details or actions */
+  loading: PropTypes.bool,
+
+  /** The index of the selected tab */
+  currentTab: PropTypes.number,
+
+  /** An object consisting of stringify-able key/value pairs */
+  attributes: PropTypes.object.isRequired,
+
+  /** (passed by `PopupPageLayout`) Callback invoked when the next page should be shown */
+  onNextPage: PropTypes.func,
+
+  /** (passed by `PopupPageLayout`) Callback invoked when the previous page should be shown */
+  onPrevPage: PropTypes.func,
+
+  /** (passed by `PopupPageLayout`) Total number of pages */
+  pageCount: PropTypes.number,
+
+  /** (passed by `PopupPageLayout`) The index of the currently shown page */
+  currentPage: PropTypes.number,
+
+  /** An array of components rendered in the actions tab */
+  children: PropTypes.node,
+
+  /** A callback fired when the close button is clicked */
+  onClose: PropTypes.func.isRequired,
+
+  /** Opens up the settings modal */
+  onSettingsClick: PropTypes.func,
+
+  /** Shows the customize details button in popup details */
+  showCustomizeDetails: PropTypes.bool
 }
 
-BlankWhite.defaultProps = {
-  thumbnail: '',
-  onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
+PopupDefaultPage.defaultProps = {
+  onClose: () => {},
+  children: [],
+  loading: false,
+  currentTab: 0,
+  attributes: {},
+  showCustomizeDetails: false,
+  translations: {
+    'olKit.PopupDefaultPage.details': 'Details',
+    'olKit.PopupDefaultPage.actions': 'Actions',
+    'olKit.PopupDefaultPage.customize': 'Customize Details'
+  }
 }
 
-export default connectToMap(BlankWhite)
+export default PopupDefaultPage
 </code></pre>
         </article>
     </section>

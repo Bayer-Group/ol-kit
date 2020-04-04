@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-/** @component */
+
 export const TabsContainer = styled.div`
   color: #333333;
   height: 100%;
@@ -11,7 +11,7 @@ export const TabsContainer = styled.div`
   flex-shrink: 0;
   flex-direction: column;
 `
-/** @component */
+
 export const TabList = styled.div`
   display: inline-block;
   position: relative;
@@ -22,18 +22,18 @@ export const TabList = styled.div`
   margin-bottom: 0;
   min-height: 50px;
 `
-/** @component */
+
 export const Flex = styled.div`
   display: flex;
 `
-/** @component */
+
 export const FlexContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 `
-/** @component */
+
 export const TabButton = styled.button`
     flex: none;
     flex-grow: 1;
@@ -65,7 +65,7 @@ export const TabButton = styled.button`
     color: ${props => props.selected ? 'inherit' : 'rgba(0, 0, 0, 0.38)'};
 `
 
-/** @component */
+
 export const TabSlider = styled.span`
   background-color: #152357;
   width: 100%;

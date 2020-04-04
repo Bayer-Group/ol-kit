@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-/** @component */
+
 export const Container = styled.div`
   position: relative;
   padding: 20px;
@@ -12,19 +12,19 @@ export const Container = styled.div`
   }
 `
 
-/** @component */
+
 export const Row = styled.div`
   color: #787878;
   margin: 0 0 15px 0;
   max-height: 200px;
 `
 
-/** @component */
+
 export const Key = styled.div`
   display: block;
 `
 
-/** @component */
+
 export const Value = styled.div`
   display: -webkit-box;
   text-overflow: ellipsis;

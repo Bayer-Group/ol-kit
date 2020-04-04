@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-/** @component */
+
 export const Icon = styled.button`
   display: inline-block;
   position: relative;

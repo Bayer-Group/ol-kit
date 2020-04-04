@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-/** @component */
+
 export const Action = styled.div`
   cursor: pointer;
 `
 
-/** @component */
+
 export const Item = styled.div`
   padding: 12px 15px;
   font-size: 15px;

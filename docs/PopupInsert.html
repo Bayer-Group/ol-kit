@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/BlankWhite.js</title>
+    <title>ol-kit | PopupInsert</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,93 +75,278 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'; // eslint-disable-line
+        <h2>
+            &ltPopupInsert /&gt
+        </h2>
+        
+    
+</header>
 
-/**
- * Blank white basemap option
- * @component
- * @category Basemap
- * @since 0.1.0
- */
-class BlankWhite extends React.Component {
-  handleLayersChange = () => {
-    this.forceUpdate()
-  }
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-  componentDidMount () {
-    this.props.map.getLayers().on('change', this.handleLayersChange)
-  }
 
-  componentWillUnmount () {
-    this.props.map.getLayers().un('change', this.handleLayersChange)
-  }
+    
+    <h4 class="name" id="PopupInsert">
+        <a class="href-link" href="#PopupInsert">#</a>
+        
+        <span class="code-name">
+            
+                &ltPopupInsert <i>features</i> <i>loading</i> <i>map</i> <i>onClose</i> <i>onSelectFeature</i> <i>onSettingsClick</i> <i>propertiesFilter</i> <i>selectedIdx</i> <i>selectInteraction</i> <i>showSettingsCog</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-  onClick = () => {
-    const { map, layerTypeID, onBasemapChanged } = this.props
-    const layer = new olLayerVector({
-      [layerTypeID]: 'blankWhite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-      source: new olSourceVector()
-    })
-    const layers = map.getLayers()
-    const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
+    
+    
 
-    if (hasBasemap) {
-      layers.setAt(0, layer)
-    } else {
-      layers.insertAt(0, layer)
-    }
-    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
-    onBasemapChanged(layer)
-  }
 
-  render () {
-    const { translations, thumbnail, map, layerTypeID } = this.props
-    const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'blankWhite' : false
 
-    return (
-      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
-        &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['_ol_kit.BlankWhite.title']}&lt;/Label>
-      &lt;/BasemapOption>
-    )
-  }
-}
 
-BlankWhite.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.BlankWhite.title': PropTypes.string
-  }),
-  /** A string containing an http url or data url to a thumbnail image */
-  thumbnail: PropTypes.string,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.  */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
-  onBasemapChanged: PropTypes.func
-}
 
-BlankWhite.defaultProps = {
-  thumbnail: '',
-  onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
-}
 
-export default connectToMap(BlankWhite)
-</code></pre>
-        </article>
-    </section>
+
+    
+        <h5>PropTypes:</h5>
+        
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>features</code></td>
+          <td>
+            array
+          </td>
+          <td>No</td>
+          <td>array from which to select a feature</td>
+          <td>[]</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>loading</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td>put ui into loading state</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>a reference to openlayers map object</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onClose</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>callback fired when popup closed with x button</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onSelectFeature</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>fired whenever a new feature is selected</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onSettingsClick</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>callback fired if no children passed and default page settings cog is clicked</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>propertiesFilter</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>filter properties displayed for a feature</td>
+          <td>properties => properties</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>selectedIdx</code></td>
+          <td>
+            number
+          </td>
+          <td>No</td>
+          <td>index of currently selected page in popup</td>
+          <td>0</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>selectInteraction</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>reference to openlayers select interaction which can optionally be managed by IA</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>showSettingsCog</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td>show the settings cog -- use with onSettingsClick</td>
+          <td>false</td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Popup_PopupInsert_PopupInsertDefault.js.html" class="button">View Source</a>
+            <span>
+                <a href="Popup_PopupInsert_PopupInsertDefault.js.html">Popup/PopupInsert/PopupInsertDefault.js</a>, <a href="Popup_PopupInsert_PopupInsertDefault.js.html#line18">line 18</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
