@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { connectToMap } from 'Map'
+import CLOSE from 'images/close_icon.svg'
+import LEFT_ARROW from 'images/left_arrow.svg'
+import RIGHT_ARROW from 'images/right_arrow.svg'
 import { HeightContainer, AttributeSettings } from '../styled'
 import ZmdiButton from '../_PopupZmdiButton'
 import LoadingSpinner from '../_LoadingSpinner'
@@ -41,19 +45,19 @@ class PopupDefaultPage extends Component {
     // Sometimes an IA will supply a React.Fragment as the children properties. The fragment could contain multiple
     // Action Items. A fragment child element won't have a length, we so need to check the fragment's children.
     const childrenCount = isReactFragment(children) ? children.props.children.length : children.length
-
+    
     return (
       <HeightContainer>
         <Header>
-          <Close onClick={onClose}><i className='zmdi zmdi-close'></i></Close>
+          <Close onClick={onClose}><CLOSE /></Close>
           {pageCount > 1 &&
             <FeatureNavigator>
               <ZmdiButton onClick={onPrevPage}>
-                <i className='zmdi zmdi-chevron-left'></i>
+                <LEFT_ARROW />
               </ZmdiButton>
               <FeatureCount>{`${currentPage} / ${pageCount}`}</FeatureCount>
               <ZmdiButton onClick={onNextPage}>
-                <i className='zmdi zmdi-chevron-right'></i>
+                <RIGHT_ARROW />
               </ZmdiButton>
             </FeatureNavigator>
           }
@@ -68,20 +72,20 @@ class PopupDefaultPage extends Component {
           ) : (
             <Body>
               <PopupTabs selectedIdx={currentTab}>
-                <div title={translations['olKit.PopupDefaultPage.details']} style={{ height: '170px', overflowY: 'scroll' }}>
+                <div title={translations['_ol_kit.PopupDefaultPage.details']} style={{ height: '170px', overflowY: 'scroll' }}>
                   { showCustomizeDetails &&
                     <AttributeSettings onClick={this.props.onSettingsClick}>
                       <i className='zmdi zmdi-settings'></i>
-                      <p style={{ fontSize: 'smaller', padding: '0px 5px', margin: 0 }}>{translations['olKit.PopupDefaultPage.customize']}</p>
+                      <p style={{ fontSize: 'smaller', padding: '0px 5px', margin: 0 }}>{translations['_ol_kit.PopupDefaultPage.customize']}</p>
                     </AttributeSettings>
                   }
                   <DataList attributes={attributes} />
                 </div>
                 {childrenCount > 3
-                  ? <Frame title={translations['olKit.PopupDefaultPage.actions']} height={169}>
+                  ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
                     {children}
                   </Frame>
-                  : <div title={translations['olKit.PopupDefaultPage.actions']} style={{ height: '169px' }}>
+                  : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px' }}>
                     {children}
                   </div>
                 }
@@ -95,42 +99,34 @@ class PopupDefaultPage extends Component {
 }
 
 PopupDefaultPage.propTypes = {
-
-  translations: PropTypes.object,
-
-  /** The title shown centered in the top of the popup page */
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-
-  /** Render the page with a loading indicator and no details or actions */
-  loading: PropTypes.bool,
-
-  /** The index of the selected tab */
-  currentTab: PropTypes.number,
-
   /** An object consisting of stringify-able key/value pairs */
-  attributes: PropTypes.object.isRequired,
-
-  /** (passed by `PopupPageLayout`) Callback invoked when the next page should be shown */
-  onNextPage: PropTypes.func,
-
-  /** (passed by `PopupPageLayout`) Callback invoked when the previous page should be shown */
-  onPrevPage: PropTypes.func,
-
-  /** (passed by `PopupPageLayout`) Total number of pages */
-  pageCount: PropTypes.number,
-
-  /** (passed by `PopupPageLayout`) The index of the currently shown page */
-  currentPage: PropTypes.number,
-
+  attributes: PropTypes.object,
   /** An array of components rendered in the actions tab */
   children: PropTypes.node,
-
+  /** (passed by `PopupPageLayout`) The index of the currently shown page */
+  currentPage: PropTypes.number,
+  /** The index of the selected tab */
+  currentTab: PropTypes.number,
+  /** Render the page with a loading indicator and no details or actions */
+  loading: PropTypes.bool,
   /** A callback fired when the close button is clicked */
-  onClose: PropTypes.func.isRequired,
-
+  onClose: PropTypes.func,
+  /** (passed by `PopupPageLayout`) Callback invoked when the next page should be shown */
+  onNextPage: PropTypes.func,
+  /** (passed by `PopupPageLayout`) Callback invoked when the previous page should be shown */
+  onPrevPage: PropTypes.func,
   /** Opens up the settings modal */
   onSettingsClick: PropTypes.func,
-
+  /** (passed by `PopupPageLayout`) Total number of pages */
+  pageCount: PropTypes.number,
+  /** The title shown centered in the top of the popup page */
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.shape({
+    '_ol_kit.PopupDefaultPage.details': PropTypes.string,
+    '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
+    '_ol_kit.PopupDefaultPage.customize': PropTypes.string
+  }),
   /** Shows the customize details button in popup details */
   showCustomizeDetails: PropTypes.bool
 }
@@ -141,12 +137,7 @@ PopupDefaultPage.defaultProps = {
   loading: false,
   currentTab: 0,
   attributes: {},
-  showCustomizeDetails: false,
-  translations: {
-    'olKit.PopupDefaultPage.details': 'Details',
-    'olKit.PopupDefaultPage.actions': 'Actions',
-    'olKit.PopupDefaultPage.customize': 'Customize Details'
-  }
+  showCustomizeDetails: false
 }
 
-export default PopupDefaultPage
+export default connectToMap(PopupDefaultPage)

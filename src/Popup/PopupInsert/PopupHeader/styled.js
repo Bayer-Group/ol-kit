@@ -58,14 +58,14 @@ export const Title = styled.div`
 export const FeatureNavigator = styled.div`
   display: inline-block;
   position: absolute;
-  top: -4px;
+  top: 4px;
   color: #787878;
   vertical-align: middle;
   height: 22px;
   z-index: 1;
   right: 0;
   text-align: left;
-  left: 10px;
+  left: 4px;
 `
 
 
@@ -81,13 +81,12 @@ export const Close = styled.button`
   display: block;
   position: absolute;
   outline: none;
-  top: 7px;
-  right: 7px;
+  height: 18px;
+  width: 40px;
+  cursor: pointer;
+  top: 8px;
+  right: 2px;
   background: none;
   border: none;
   z-index: 2;
-  i {
-    font-size: 1.5em;
-    padding: 0;
-  }
 `

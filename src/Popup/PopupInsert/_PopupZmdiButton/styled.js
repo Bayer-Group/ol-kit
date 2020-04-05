@@ -5,7 +5,7 @@ export const Icon = styled.button`
   display: inline-block;
   position: relative;
   cursor: pointer;
-  padding: 12px;
+  padding-bottom: 6px;
   outline: none;
   border: 10px;
   background: none;
