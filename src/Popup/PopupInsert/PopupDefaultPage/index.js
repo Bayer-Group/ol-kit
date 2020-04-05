@@ -45,7 +45,7 @@ class PopupDefaultPage extends Component {
     // Sometimes an IA will supply a React.Fragment as the children properties. The fragment could contain multiple
     // Action Items. A fragment child element won't have a length, we so need to check the fragment's children.
     const childrenCount = isReactFragment(children) ? children.props.children.length : children.length
-    
+
     return (
       <HeightContainer>
         <Header>
