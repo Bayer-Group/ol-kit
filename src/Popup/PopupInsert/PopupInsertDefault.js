@@ -84,7 +84,7 @@ class PopupInsert extends Component {
   }
 
   onPageChange = (currIdx, nextIdx) => {
-    const { features } = this.state
+    const { features } = this.props
 
     if (features.length) {
       // select new feature when paging & update state
@@ -104,12 +104,16 @@ class PopupInsert extends Component {
               <PopupDefaultPage
                 key={i}
                 title={f.get('title') || `Feature ${i+1}`}
-                attributes={propertiesFilter(f.getProperties)}
-                {...this.props}>
+                loading={loading}
+                onClose={onClose}
+                attributes={propertiesFilter(f.getProperties())}>
                 <div style={{ padding: '10px' }}>No available actions</div>
               </PopupDefaultPage>
             ))
-          : <PopupDefaultPage title={loading ? 'Loading features' : 'Select a feature'} {...this.props} />
+          : <PopupDefaultPage
+            title={loading ? 'Loading features' : 'Select a feature'}
+            loading={loading}
+            onClose={onClose} />
         }
       </PopupPageLayout>
     )
@@ -149,4 +153,4 @@ PopupInsert.propTypes = {
   showSettingsCog: PropTypes.bool
 }
 
-export default PopupInsert
+export default connectToMap(PopupInsert)

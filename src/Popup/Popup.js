@@ -114,6 +114,7 @@ class Popup extends Component {
   }
 
   hidePopup = () => {
+    console.log('HIDE')
     const { map, onMapClick } = this.props
     const popupPosition = getPopupPositionFromFeatures({ map }, [])
 
@@ -135,8 +136,7 @@ class Popup extends Component {
             <PopupInsertDefault
               features={features}
               loading={loading}
-              onClose={this.hidePopup}
-              {...this.props} /> // default ui if no children are passed
+              onClose={this.hidePopup} /> // default ui if no children are passed
           )}
         </PopupBase>,
         map.getTargetElement()
