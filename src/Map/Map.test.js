@@ -4,7 +4,8 @@ import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import olMap from 'ol/map'
 import olView from 'ol/view'
-import Map from './Map'
+import olInteractionSelect from 'ol/interaction/select'
+import Map, { createMap } from 'Map'
 
 describe('<Map />', () => {
   it('should render with a map prop', (done) => {
@@ -67,5 +68,65 @@ describe('<Map />', () => {
 
     // updateViewFromUrl should be defaulted to true
     mount(<Map onMapInit={onMapInit} />)
+  })
+})
+
+describe('select interaction', () => {
+  it('should add a select interaction to the map by default', async () => {
+    let testMap
+    const onMapInit = jest.fn(map => {
+      testMap = map
+    })
+    const { container } = render(<Map onMapInit={onMapInit} />)
+
+    // wait for async map init
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+
+    const selectInteractionsOnMap = testMap.getInteractions().getArray().filter(interaction => {
+      return interaction instanceof olInteractionSelect
+    })
+
+    expect(selectInteractionsOnMap.length).toBe(1)
+  })
+
+  it('should not double add a select interaction to the map', async () => {
+    document.body.innerHTML = '<div id="map"></div>'
+    const testMap = createMap({ target: 'map' })
+    const selectInteraction = new olInteractionSelect()
+
+    // add the interaction to the map before it is passed as a prop
+    testMap.addInteraction(selectInteraction)
+
+    const { container } = render(<Map map={testMap} selectInteraction={selectInteraction} />)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    const selectInteractionsOnMap = testMap.getInteractions().getArray().filter(interaction => {
+      return interaction instanceof olInteractionSelect
+    })
+
+    expect(selectInteractionsOnMap.length).toBe(1)
+    // make sure the select insteraction Map uses is the same instance created and passed in
+    expect(selectInteractionsOnMap[0]).toBe(selectInteraction)
+  })
+  it('add the passed selectInteraction to the map for the user', async () => {
+    document.body.innerHTML = '<div id="map"></div>'
+    const testMap = createMap({ target: 'map' })
+    // this time the interaction is just passed but not added to the map beforehand
+    const selectInteraction = new olInteractionSelect()
+
+    const { container } = render(<Map map={testMap} selectInteraction={selectInteraction} />)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    const selectInteractionsOnMap = testMap.getInteractions().getArray().filter(interaction => {
+      return interaction instanceof olInteractionSelect
+    })
+
+    expect(selectInteractionsOnMap.length).toBe(1)
+    // make sure the select insteraction Map uses is the same instance created and passed in
+    expect(selectInteractionsOnMap[0]).toBe(selectInteraction)
   })
 })

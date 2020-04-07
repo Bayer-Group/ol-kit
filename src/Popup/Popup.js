@@ -114,7 +114,6 @@ class Popup extends Component {
   }
 
   hidePopup = () => {
-    console.log('HIDE')
     const { map, onMapClick } = this.props
     const popupPosition = getPopupPositionFromFeatures({ map }, [])
 
