@@ -77,7 +77,8 @@ describe('select interaction', () => {
     const onMapInit = jest.fn(map => {
       testMap = map
     })
-    const { container } = render(<Map onMapInit={onMapInit} />)
+
+    render(<Map onMapInit={onMapInit} />)
 
     // wait for async map init
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())

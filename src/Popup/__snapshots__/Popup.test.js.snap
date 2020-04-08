@@ -1,140 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Popup /> should render default insert 1`] = `
-"[36m<div>[39m
-  [36m<div[39m
-    [33mclass[39m=[32m\\"sc-AxirZ BmIVJ\\"[39m
-    [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
-  [36m>[39m
-    [36m<a[39m
-      [33mclass[39m=[32m\\"sc-AxjAm iteaqE\\"[39m
-      [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
-      [33mtarget[39m=[32m\\"_blank\\"[39m
-      [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m
-    [36m>[39m
-      [36m<svg[39m
-        [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
-        [33mxmlns[39m=[32m\\"http://www.w3.org/2000/svg\\"[39m
-      [36m>[39m
-        [36m<defs>[39m
-          [36m<style>[39m
-            [0m.cls-1[0m
-            [0m{[0m
-            [0mfill:#231f20[0m
-            [0m}[0m
-          [36m</style>[39m
-        [36m</defs>[39m
-        [36m<g[39m
-          [33mid[39m=[32m\\"Layer_2\\"[39m
-        [36m>[39m
-          [36m<path[39m
-            [33mclass[39m=[32m\\"cls-1\\"[39m
-            [33md[39m=[32m\\"M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z\\"[39m
-            [33mid[39m=[32m\\"logo_examples\\"[39m
-          [36m/>[39m
-        [36m</g>[39m
-      [36m</svg>[39m
-    [36m</a>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m\\"ol-viewport\\"[39m
-      [33mdata-view[39m=[32m\\"1\\"[39m
-      [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
-    [36m>[39m
-      [36m<canvas[39m
-        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
-        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: block;\\"[39m
-      [36m/>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
-      [36m/>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
-      [36m/>[39m
-    [36m</div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m\\"sc-AxiKw dOaRiT\\"[39m
-      [33mheight[39m=[32m\\"280\\"[39m
-      [33mwidth[39m=[32m\\"280\\"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m\\"sc-AxhCb fwfcQe\\"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m\\"sc-AxgMl UhTan\\"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m\\"sc-AxgMl UhTan\\"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m\\"sc-fzqBZW chUvbZ\\"[39m
-            [36m>[39m
-              [36m<button[39m
-                [33mclass[39m=[32m\\"sc-fznJRM gdZwES\\"[39m
-              [36m>[39m
-                [36m<svg[39m
-                  [33mheight[39m=[32m\\"14\\"[39m
-                  [33mviewBox[39m=[32m\\"0 0 329.26933 329\\"[39m
-                  [33mwidth[39m=[32m\\"24\\"[39m
-                  [33mxmlns[39m=[32m\\"http://www.w3.org/2000/svg\\"[39m
-                [36m>[39m
-                  [36m<path[39m
-                    [33md[39m=[32m\\"M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0 0 15.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0 0 15.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0\\"[39m
-                  [36m/>[39m
-                [36m</svg>[39m
-              [36m</button>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m\\"sc-fzqNJr fhiMGp\\"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m\\"sc-fzoXzr fyJsCa\\"[39m
-                [36m>[39m
-                  [0mSelect a feature[0m
-                [36m</div>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m\\"sc-fzoyAV bGfeaF\\"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33mclass[39m=[32m\\"sc-fzpans hwEZqR\\"[39m
-              [36m>[39m
-                [36m<div[39m
-                  [33mclass[39m=[32m\\"sc-fzplWN jXYNwg\\"[39m
-                [36m>[39m
-                  [36m<div[39m
-                    [33mclass[39m=[32m\\"sc-fznyAO buKZiX\\"[39m
-                  [36m>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m\\"sc-fznZeY qOrcZ\\"[39m
-                    [36m>[39m
-                      [0mDetails[0m
-                      [36m<span[39m
-                        [33mclass[39m=[32m\\"sc-fzokOt cNBvrh\\"[39m
-                      [36m/>[39m
-                    [36m</button>[39m
-                    [36m<button[39m
-                      [33mclass[39m=[32m\\"sc-fznZeY cdnlFu\\"[39m
-                    [36m>[39m
-                      [0mActions[0m
-                    [36m</button>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-                [36m<div>[39m
-                  [36m<div[39m
-                    [33mstyle[39m=[32m\\"height: 170px; overflow-y: scroll;\\"[39m
-                    [33mtitle[39m=[32m\\"Details\\"[39m
-                  [36m>[39m
-                    [36m<div[39m
-                      [33mclass[39m=[32m\\"sc-Axmtr hZJWCT\\"[39m
-                    [36m/>[39m
-                  [36m</div>[39m
-                [36m</div>[39m
-              [36m</div>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</div>[39m
-[36m</div>[39m"
+.c1 {
+  position: absolute;
+  width: 22px;
+  bottom: 8px;
+  z-index: 1;
+  cursor: pointer;
+  left: 14px;
+}
+
+.c0 {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+<div
+  class="c0"
+  id="_ol_kit_map_test_id"
+>
+  <a
+    class="c1"
+    href="https://ol-kit.com/"
+    target="_blank"
+    title="Powered by ol-kit"
+  >
+    <svg
+      viewBox="0 0 204.76 236.44"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <style>
+          .cls-1
+          {
+          fill:#231f20
+          }
+        </style>
+      </defs>
+      <g
+        id="Layer_2"
+      >
+        <path
+          class="cls-1"
+          d="M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z"
+          id="logo_examples"
+        />
+      </g>
+    </svg>
+  </a>
+  <div
+    class="ol-viewport"
+    data-view="1"
+    style="position: relative; overflow: hidden; width: 100%; height: 100%;"
+  >
+    <canvas
+      class="ol-unselectable"
+      style="width: 100%; height: 100%; display: block;"
+    />
+    <div
+      class="ol-overlaycontainer"
+    />
+    <div
+      class="ol-overlaycontainer-stopevent"
+    />
+  </div>
+</div>
 `;

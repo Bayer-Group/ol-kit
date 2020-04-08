@@ -42,7 +42,7 @@ export function createMap (opts = {}) {
 }
 
 /**
- * An HOC designed to automatically pass down an ol.Map from the top-level Map component
+ * A wrapper utility function designed to automatically pass down an ol.Map from the top-level Map component
  * @function
  * @category Map
  * @since 0.1.0
@@ -57,7 +57,20 @@ export function connectToMap (Component) {
       ? <Component {...props} />
       : (
         <MapContext.Consumer>
-          {consumerProps => <Component {...consumerProps} {...props} />}
+          {providerProps => {
+            // if propTypes are not defined on the component just send all providerProps
+            const filteredProviderProps = { ...providerProps }
+            const { propTypes } = Component
+
+            if (propTypes) {
+              // filter out any props that do not need to get passed to this wrapped component
+              Object.keys(providerProps).forEach(key => {
+                if (!propTypes[key]) delete filteredProviderProps[key]
+              })
+            }
+
+            return <Component {...filteredProviderProps} {...props} />
+          }}
         </MapContext.Consumer>
       )
   )
