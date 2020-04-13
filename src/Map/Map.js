@@ -2,14 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import debounce from 'lodash.debounce'
-import olInteractionSelect from 'ol/interaction/select'
-import olFill from 'ol/style/fill'
-import olCircle from 'ol/style/circle'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
 
 import MapLogo from './MapLogo'
-import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
+import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
 import ugh from 'ugh'
@@ -94,27 +89,7 @@ class Map extends React.Component {
       this.selectInteraction = selectInteraction
     } else {
       // otherwise create a new select interaction
-      const DEFAULT_SELECT_STYLE = new olStyle({
-        stroke: new olStroke({
-          color: 'cyan',
-          width: 3
-        }),
-        image: new olCircle({
-          radius: 5,
-          fill: new olFill({
-            color: 'white'
-          }),
-          stroke: new olStroke({
-            color: 'cyan',
-            width: 2
-          })
-        })
-      })
-
-      this.selectInteraction = new olInteractionSelect({
-        hitTolerance: 3,
-        style: [DEFAULT_SELECT_STYLE]
-      })
+      this.selectInteraction = createSelectInteraction()
     }
 
     // check the map to see if select interaction has been added

@@ -4,6 +4,11 @@ import View from 'ol/view'
 import TileLayer from 'ol/layer/tile'
 import OSM from 'ol/source/osm'
 import olProj from 'ol/proj'
+import olInteractionSelect from 'ol/interaction/select'
+import olFill from 'ol/style/fill'
+import olCircle from 'ol/style/circle'
+import olStyle from 'ol/style/style'
+import olStroke from 'ol/style/stroke'
 import qs from 'qs'
 
 import ugh from 'ugh'
@@ -58,7 +63,7 @@ export function connectToMap (Component) {
       : (
         <MapContext.Consumer>
           {providerProps => {
-            // if propTypes are not defined on the component just send all providerProps
+            // if propTypes is not defined on the component just pass all providerProps
             const filteredProviderProps = { ...providerProps }
             const { propTypes } = Component
 
@@ -146,4 +151,35 @@ export function centerAndZoom (map, opts = {}) {
   map.getView().setZoom(opts.zoom)
 
   return transformedCoords
+}
+
+/**
+ * Create a new openlayers select interaction with default styling
+ * @function
+ * @category Map
+ * @since 0.2.0
+ * @returns {ol.interaction.Select} https://openlayers.org/en/v4.6.5/apidoc/ol.interaction.Select.html
+ */
+export function createSelectInteraction () {
+  const DEFAULT_SELECT_STYLE = new olStyle({
+    stroke: new olStroke({
+      color: 'cyan',
+      width: 3
+    }),
+    image: new olCircle({
+      radius: 5,
+      fill: new olFill({
+        color: 'white'
+      }),
+      stroke: new olStroke({
+        color: 'cyan',
+        width: 2
+      })
+    })
+  })
+
+  return new olInteractionSelect({
+    hitTolerance: 3,
+    style: [DEFAULT_SELECT_STYLE]
+  })
 }
