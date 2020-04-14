@@ -67,7 +67,7 @@
             <div class="column is-3" id="sidebar-nav">
                 <div class="sidebar sidebar__inner">
                     <nav>
-                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupInsert.html">PopupInsert</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -84,8 +84,9 @@
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import debounce from 'lodash.debounce'
+
 import MapLogo from './MapLogo'
-import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
+import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
 import ugh from 'ugh'
@@ -138,6 +139,9 @@ class Map extends React.Component {
     // if no map was passed, create the map
     this.map = !passedMap ? createMap({ target: this.target }) : passedMap
 
+    // setup select interactions for the map
+    this.initializeSelect(this.map)
+
     // optionally attach map listener
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
@@ -159,10 +163,34 @@ class Map extends React.Component {
     }
   }
 
+  initializeSelect = map => {
+    const { selectInteraction } = this.props
+
+    if (selectInteraction) {
+      // if select is passed as a prop always use that one first
+      this.selectInteraction = selectInteraction
+    } else {
+      // otherwise create a new select interaction
+      this.selectInteraction = createSelectInteraction()
+    }
+
+    // check the map to see if select interaction has been added
+    const selectInteractionOnMap = map.getInteractions().getArray().find(interaction => {
+      // this checks if the select interaction created or passed in is the same instance on the map and never double adds
+      return interaction === this.selectInteraction
+    })
+
+    // do not double add the interaction to the map
+    if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
+  }
+
   getContextValue = () => {
+    const { translations } = this.props
+
     return {
       map: this.map,
-      translations: en
+      selectInteraction: this.selectInteraction,
+      translations
     }
   }
 
@@ -198,7 +226,8 @@ Map.defaultProps = {
   updateUrlFromView: true,
   updateViewFromUrl: true,
   urlViewParam: 'view',
-  style: {}
+  style: {},
+  translations: en
 }
 
 Map.propTypes = {
@@ -225,8 +254,12 @@ Map.propTypes = {
   updateViewFromUrl: PropTypes.bool,
   /** change the url param used to set the map location coords */
   urlViewParam: PropTypes.string,
+  /** an openlayers select interaction passed down to connected components - created internally if not passed as prop */
+  selectInteraction: PropTypes.object,
   /** apply inline styles to the map container */
-  style: PropTypes.object
+  style: PropTypes.object,
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.object
 }
 
 export default Map

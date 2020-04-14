@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | Popup/utils.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupInsert.html">PopupInsert</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import bboxTurf from '@turf/bbox'
+import { lineString } from '@turf/helpers'
+import centroid from '@turf/centroid'
+import olMap from 'ol/map'
+import olObservable from 'ol/observable'
+import proj from 'ol/proj'
+import GeoJSON from 'ol/format/geojson'
+import debounce from 'lodash.debounce'
+import ugh from 'ugh'
+
+/**
+ * Bind multiple move listeners with the same callback
+ * @function
+ * @category Popup
+ * @since 0.2.0
+ * @param {ol.Map} map - The openlayers map to which the events are bound
+ * @param {Function} callback - The callback invoked when a `change:size`, `change:resolution` or a `change:center` event was fired
+ * @param {Object} [thisObj] - The object to use as `this` in the event listeners.
+ * @returns {ol.EventsKey[]} Array of openlayers event keys for unsetting listener events (use with removeMovementListener)
+ */
+export const addMovementListener = (map, callback, thisObj) => {
+  if (typeof callback !== 'function') return ugh.error('addMovementListener requires a valid openlayers map &amp; callback function') // eslint-disable-line
+
+  // If performance becomes an issue with catalog layers &amp; far zoom level, these debounce levels can be adjusted
+  const slowDebounce = debounce(callback, 0)
+  const fastDebounce = debounce(callback, 0)
+
+  const keys = [
+    map.on('change:size', slowDebounce, thisObj),
+    map.getView().on('change:resolution', slowDebounce, thisObj),
+    map.getView().on('change:center', fastDebounce, thisObj)
+  ]
+
+  return keys
+}
+
+/**
+ * Remove list of event keys
+ * @function
+ * @category Popup
+ * @since 0.2.0
+ * @param {ol.Map} map - The openlayers map to which the events are bound
+ * @param {Array} keys - remove the listeners via an array of event keys
+ */
+export const removeMovementListener = (keys = []) => {
+  keys.forEach(key => olObservable.unByKey(key))
+}
+
+/**
+ * Get all features for a given click event
+ * @function
+ * @category Popup
+ * @since 0.2.0
+ * @param {Object} event - An object with an `event` and `pixel` property
+ * @param {ol.Map} event.map - The openlayers map where the layer exists
+ * @param {Number[]} event.pixel - An array consisting of `x` and `y` pixel locations
+ * @param {Object} [opts] - Object of optional params
+ * @param {Number} [opts.hitTolerance = 3] - Additional area around features that is clickable to select them
+ * @returns {Promise[]} An array of promises, each of which resolve to an object `{ layer, features }`
+ */
+export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
+  if (typeof event !== 'object') return ugh.error('getLayersAndFeaturesForEvent first arg must be an object') // eslint-disable-line
+  const { map, pixel } = event
+  const promises = []
+
+  if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map &amp; pixel location (as an array)') // eslint-disable-line
+
+  const wfsSelector = layer => {
+    if (layer.getLayerState().managed &amp;&amp; !layer.get('_ol_kit_basemap')) {
+      // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
+      // _ol_kit_basemap is set to true on all basemaps from ol-kit
+      const features = []
+      const sourceFeatures = layer.getSource().getFeatures()
+
+      sourceFeatures.forEach(sourceFeature => {
+        // check if any feature on layer source is also at click location
+        const isAtPixel = featuresAtPixel ? featuresAtPixel.find(f => f === sourceFeature) : null
+
+        if (isAtPixel) features.push(sourceFeature)
+      })
+      const wfsPromise = Promise.resolve({ features, layer })
+
+      if (features.length) promises.push(wfsPromise)
+    }
+  }
+
+  // check for featuresAtPixel to account for hitTolerance
+  const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
+    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
+  })
+
+  // if there's features at click, loop through the layers to find corresponding layer &amp; features
+  if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
+
+  return promises
+}
+
+/**
+ * Get the best position for the popup to be displayed given features
+ * @function
+ * @category Popup
+ * @param {Object} event - An object with an `event` and `pixel` property
+ * @param {ol.Map} event.map - The openlayers map where the layer exists
+ * @param {Number[]} event.pixel - An array consisting of `x` and `y` pixel locations
+ * @param {ol.Feature[]} features - An array of features around which the popup should position
+ * @param {Object} [opts]
+ * @param {Number} [opts.popupHeight = 280] - The height of the popup
+ * @param {Number} [opts.popupWidth = 280] - The width of the popup
+ * @param {Number} [opts.arrowHeight = 16] - The height of the popup's arrow/pointer
+ * @param {Number} [opts.navbarOffset = 55] - The height of the navbar
+ * @param {Number[]} [opts.viewPadding = [0, 0, 0, 0]] - An array of padding to apply to the best fit logic in top, right, bottom, left order
+ * @returns {Object} An object containing the arrow/pointer position, pixel location &amp; if the popup will fit properly within the viewport
+ */
+export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
+  if (typeof event !== 'object' || !Array.isArray(features)) return ugh.error('getPopupPositionFromFeatures first arg must be an object &amp; second arg array of features')
+  const { map, pixel = [0, 0] } = event
+
+  if (!(map instanceof olMap)) return ugh.error('getPopupPositionFromFeatures requires a valid openlayers map as a property of the first arg')
+  if (!features.length) return { arrow: 'none', pixel, fits: false }
+  const arrowHeight = opts.arrowHeight || 16
+  const geoJSON = new GeoJSON({ featureProjection: 'EPSG:3857' })
+  const height = opts.popupHeight || 280
+  const width = opts.popupWidth || 280
+  const fullHeight = height + arrowHeight
+  const fullWidth = width + arrowHeight
+  const [mapX, mapY] = map.getSize()
+
+  const getPadding = (idx) => opts.viewPadding ? opts.viewPadding[idx] : calculateViewPadding(map)[idx]
+  const padding = {
+    top: getPadding(0),
+    right: getPadding(1),
+    bottom: getPadding(2),
+    left: getPadding(3)
+  }
+  // olMap.getPixelFromCoordinate returns a pixel relative to the map's target element so we need to convert that to a pixel relative to the window.
+  const mapToScreenPixel = (pixel = [0, 0]) => {
+    const { x, y } = map.getTargetElement().getBoundingClientRect()
+    const offset = [x, y]
+
+    return pixel.map((val, i) => {
+      return val + offset[i]
+    })
+  }
+
+  // find bbox for passed features
+  const getFitsForFeatures = rawFeatures => {
+    // create a new array so original features are not mutated when _ol_kit_parent is nullified
+    const features = rawFeatures.map(feature => {
+      const clone = feature.clone()
+
+      // this removes a ref to _ol_kit_parent to solve circularJSON bug
+      clone.set('_ol_kit_parent', null)
+
+      return clone
+    })
+    const jsonFeatures = geoJSON.writeFeatures(features)
+    const [minX, minY, maxX, maxY] = bboxTurf(JSON.parse(jsonFeatures))
+
+    return {
+      top: getMidPixel([[minX, maxY], [maxX, maxY]]),
+      right: getMidPixel([[maxX, maxY], [maxX, minY]]),
+      bottom: getMidPixel([[minX, minY], [maxX, minY]]),
+      left: getMidPixel([[minX, minY], [minX, maxY]])
+    }
+  }
+
+  const getMidPixel = lineCoords => {
+    const centerFeature = centroid(lineString(lineCoords))
+    const coords = proj.fromLonLat(centerFeature.geometry.coordinates)
+
+    return map.getPixelFromCoordinate(coords)
+  }
+
+  const fitsRight = ([x, y]) => x + fullWidth &lt;= mapX - padding.right &amp;&amp; y >= (height / 2) + padding.top &amp;&amp; y + (height / 2) &lt;= mapY - padding.bottom // eslint-disable-line
+  const fitsBelow = ([x, y]) => y + fullHeight - padding.bottom &lt;= mapY &amp;&amp; (width / 2) + padding.left &lt;= x &amp;&amp; x + (width / 2) - padding.right &lt;= mapX // eslint-disable-line
+  const fitsAbove = ([x, y]) => y - padding.top >= fullHeight &amp;&amp; (width / 2) + padding.left &lt;= x &amp;&amp; x + (width / 2) - padding.right &lt;= mapX // eslint-disable-line
+  const fitsLeft = ([x, y]) => x + padding.left >= fullWidth &amp;&amp; y >= (height / 2) + padding.top &amp;&amp; y + (height / 2) &lt;= mapY - padding.bottom // eslint-disable-line
+
+  // the order of these checks determine which side is tried first (right, left, top, and then bottom)
+  const getPosition = bbox => {
+    if (fitsRight(bbox.right)) return { arrow: 'left', pixel: mapToScreenPixel(bbox.right), fits: true }
+    if (fitsLeft(bbox.left)) return { arrow: 'right', pixel: mapToScreenPixel(bbox.left), fits: true }
+    if (fitsAbove(bbox.top)) return { arrow: 'bottom', pixel: mapToScreenPixel(bbox.top), fits: true }
+    if (fitsBelow(bbox.bottom)) return { arrow: 'top', pixel: mapToScreenPixel(bbox.bottom), fits: true }
+
+    if (opts.lastPosition) {
+      if (opts.lastPosition.arrow === 'left') return { arrow: 'left', pixel: mapToScreenPixel(bbox.right), fits: false }
+      if (opts.lastPosition.arrow === 'top') return { arrow: 'top', pixel: mapToScreenPixel(bbox.bottom), fits: false }
+      if (opts.lastPosition.arrow === 'bottom') return { arrow: 'bottom', pixel: mapToScreenPixel(bbox.top), fits: false }
+      if (opts.lastPosition.arrow === 'right') return { arrow: 'right', pixel: mapToScreenPixel(bbox.left), fits: false }
+      if (opts.lastPosition.arrow === 'none') return { arrow: 'none', pixel: mapToScreenPixel(opts.lastPosition.pixel), fits: false }
+    }
+
+    // if none of the above return, it doesn't fit on any side (it's on top of or within)
+    return { arrow: 'none', pixel: mapToScreenPixel(pixel), fits: false }
+  }
+
+  return getPosition(getFitsForFeatures(features))
+}
+
+/**
+ * Calculate bounding box of elements on page with _popup_boundary class and returns padding array excluding area of these elements
+ * @function
+ * @category Popup
+ * @param {olMap} map - An instance of an openlayers map
+ * @param {Object} opts
+ * @returns {Array} - Array of view padding pixel numbers: [top, right, bottom, left]
+ */
+export const calculateViewPadding = (map, opts = {}) => {
+  if (!(map instanceof olMap)) return ugh.error('calculateViewPadding requires a valid openlayers map as arg')
+  const viewPadding = [0, 0, 0, 0]
+  const navbarOffset = opts.navbarOffset || 55
+  const boundaryElements = Array.from(document.getElementsByClassName('_popup_boundary'))
+  const [mapX, mapY] = map.getSize()
+
+  boundaryElements.forEach(elem => {
+    const bbox = elem.getBoundingClientRect()
+    const isOffScreen = bbox.x &lt; 0 || bbox.x >= mapX || bbox.y &lt; navbarOffset || bbox.y >= mapY
+
+    if (!isOffScreen) {
+      if (bbox.right &lt; mapX / 2) {
+        // set left padding for elements on left half of map
+        const newPadding = bbox.right
+
+        if (viewPadding[3] &lt; newPadding) viewPadding[3] = newPadding
+      } else if (bbox.left > mapX / 2) {
+        // set right padding for elements on right half of map
+        const newPadding = mapX - bbox.left
+
+        if (viewPadding[1] &lt; newPadding) viewPadding[1] = newPadding
+      } else if (bbox.top > mapY / 2) {
+        // set bottom padding for elements on bottom half of map
+        const newPadding = (mapY + navbarOffset) - bbox.top
+
+        if (viewPadding[2] &lt; newPadding) viewPadding[2] = newPadding
+      } else if (bbox.y > navbarOffset) {
+        // set top padding for elements lower than navbar
+        const newPadding = bbox.bottom
+
+        if (viewPadding[0] &lt; newPadding) viewPadding[0] = newPadding
+      }
+    }
+  })
+
+  return viewPadding
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

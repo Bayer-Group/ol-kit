@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import { waitFor } from '@testing-library/react'
 import qs from 'qs'
@@ -66,8 +67,36 @@ describe('connectToMap', () => {
     expect(wrapper.find(Consumer).props().inlineProp).toBe(true)
     // make sure connectToMap is passing inline props down to children
     expect(wrapper.find(Child).props().inlineProp).toBe(true)
-    // connectToMap should add a map prop since Map is mounted
+    // connectToMap should add map, selectInteraction, translations props since Map is mounted
     expect(wrapper.find(Child).props().map).toBeTruthy()
+    expect(wrapper.find(Child).props().selectInteraction).toBeTruthy()
+    expect(wrapper.find(Child).props().translations).toBeTruthy()
+  })
+
+  it('should filter out unneeded providerProps', async () => {
+    const Child = props => <div>child comp</div>
+
+    // this is defined to make sure uneeded propTypes get filtered out
+    Child.propTypes = {
+      inlineProp: PropTypes.bool,
+      map: PropTypes.object
+    }
+    const Consumer = connectToMap(Child)
+    const onMapInit = jest.fn()
+    const wrapper = mount(<Map onMapInit={onMapInit}><Consumer inlineProp={true} /></Map>)
+
+    // wait for async child render
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+    wrapper.update()
+
+    expect(wrapper.find(Consumer).props().inlineProp).toBe(true)
+    // make sure connectToMap is passing inline props down to children
+    expect(wrapper.find(Child).props().inlineProp).toBe(true)
+    // connectToMap should add a map prop since Map is mounted and defined in propTypes
+    expect(wrapper.find(Child).props().map).toBeTruthy()
+    // connectToMap should not pass extra provided props down since propTypes do not include these props:
+    expect(wrapper.find(Child).props().translations).toBeUndefined()
+    expect(wrapper.find(Child).props().selectInteraction).toBeUndefined()
   })
 })
 

@@ -1,17 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
-    <title>ol-kit | Docs</title>
+    <title>ol-kit | Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.css">
@@ -52,26 +53,57 @@
                                 Github
                             </a>
                         </div>
+
                     </div>
                 </div>
 
             </nav>
         </div>
     </div>
-    <div class="container">
+    <div id="page-wrapper" class="container">
         <div class="columns">
-            <div class="column is-three-fifths is-offset-one-fifth">
-                <div class="content" id="main-content-wrapper">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupInsert.html">PopupInsert</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+
+
+
+
+
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section>
-        <article>
-<img src="static/readme-ol-kit-logo.png" />
-<p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/en/v4.6.5/apidoc/">OpenLayers</a> map component toolkit.</p>
+        <article><p><img src="./config/jsdoc/template/static/readme-ol-kit-logo.png" alt="ol-kit logo"></p>
+<p><img src="https://img.shields.io/npm/v/@bayer/ol-kit" alt="npm version"></p>
+<p>An easy to use, open source <a href="https://github.com/facebook/react">React</a> &amp; <a href="https://github.com/openlayers/openlayers">OpenLayers</a> map component toolkit.</p>
 <h2>Prebuilt Map Components</h2>
-<p>Ready to use and <em>just work</em> with the map via a single line drop-in!</p>
-<img src="static/example-screenshot-1.png" />
+<p><img src="./config/jsdoc/template/static/example-screenshot-1.png" alt="ol-kit logo"></p>
 <h2>Installation</h2>
-<p>Install ol-kit and its <code>peerDependencies</code></p>
-<code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save</code>
+<p>Install <code>ol-kit</code> and its <code>peerDependencies</code></p>
+<pre class="prettyprint source lang-bash"><code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
+</code></pre>
 <h2>Getting Started</h2>
 <p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
 <pre class="prettyprint source lang-javascript"><code>import React, { Component } from 'react'
@@ -80,11 +112,11 @@ import { Map, Controls, zoomToExtent } from '@bayer/ol-kit'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 
-class App extends Component {
+class App extends React.Component {
   onMapInit = map => {
     const data = new VectorLayer({
       source: new VectorSource({
-        features: [/** Get some data and have fun with it */]
+        features: [/** get some data and have fun with it */]
       })
     })
 
@@ -98,17 +130,32 @@ class App extends Component {
   render () {
     return (
       &lt;Map onMapInit={this.onMapInit}>
+        &lt;Popup />
         &lt;Controls />
       &lt;/Map>
     )
   }
-}
 </code></pre>
-<h4><a href="docs.html">Go to docs</a></h4>
-</article>
+<h2>Documentation</h2>
+<p>The documentation for the project is available in the <code>/docs</code> directory and the hosted version is available at <a href="https://ol-kit.com">ol-kit.com</a>.</p>
+<h2>Bugs &amp; Feature Requests</h2>
+<p>If you find a bug or think of a new feature, please submit a Github issue.</p>
+<h2>Maintainers &amp; Contributions</h2>
+<p>The current maintainers are listed in <a href="https://github.com/MonsantoCo/ol-kit/blob/master/MAINTAINERS.md">MAINTAINERS.md</a>. If you would like contribute to the project see <a href="https://github.com/MonsantoCo/ol-kit/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<h2>Sponsor</h2>
+<p>The ol-kit project was internally developed at Bayer Crop Science. Without the generous support of various stakeholders at Bayer, this project would never have become an open source reality. Thank you for the support, resources &amp; final approval!</p>
+<p><img src="./config/jsdoc/template/static/readme-bayer-logo.png" alt="ol-kit logo"></p></article>
     </section>
-                </div>
 
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 <footer class="footer">
     <div class="content has-text-centered">
         <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
@@ -119,7 +166,9 @@ class App extends Component {
         </div>
     </div>
 </footer>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
