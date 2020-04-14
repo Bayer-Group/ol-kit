@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, getByTestId, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import olFeature from 'ol/feature'
 import olVectorLayer from 'ol/layer/vector'
@@ -15,24 +15,24 @@ describe('<Popup />', () => {
       testMap = map
     })
     const onMapClick = jest.fn()
-    const { container } = render(<Map onMapInit={onMapInit}><Popup onMapClick={onMapClick} /></Map>)
+    const { getByTestId } = render(<Map onMapInit={onMapInit}><Popup onMapClick={onMapClick} show /></Map>)
 
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
     // click the map anywhere (there are no features to trigger the popup)
-    testMap.dispatchEvent({ type: 'click', map: testMap, pixel: [20,20] })
+    testMap.dispatchEvent({ type: 'click', map: testMap, pixel: [20, 20] })
 
     const hidePopupEvent = {
       features: [],
       loading: false,
-      popupPosition: { arrow: 'none', pixel: [0,0], fits: false },
+      popupPosition: { arrow: 'none', pixel: [0, 0], fits: false },
       show: false
     }
 
     expect(onMapClick).toHaveBeenCalledWith(hidePopupEvent)
 
-    const defaultInsert = await getByTestId(container, 'popup-insert-default')
+    const defaultInsert = await getByTestId('popup-insert-default')
 
     expect(defaultInsert).toBeTruthy()
   })
@@ -47,7 +47,7 @@ describe('<Popup />', () => {
       testMap = map
     })
     const onMapClick = jest.fn(e => console.log(e))
-    const { container } = render(<Map onMapInit={onMapInit} fullScreen><Popup onMapClick={onMapClick} /></Map>)
+    const { getByTestId } = render(<Map onMapInit={onMapInit} fullScreen><Popup onMapClick={onMapClick} show /></Map>)
 
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
@@ -56,11 +56,12 @@ describe('<Popup />', () => {
     testMap.getTargetElement().style.setProperty('width', '600px')
     testMap.getTargetElement().style.setProperty('height', '400px')
     testMap.setSize(600, 400)
-    const [minx, miny, maxx, maxy] = testMap.getView().calculateExtent([600, 400])
+    const [minx, miny, maxx, maxy] = testMap.getView().calculateExtent([600, 400]) // eslint-disable-line no-unused-vars
 
     const coords = [minx, maxy]
+
     console.log('set', testMap.getTargetElement())
-    console.log('pixel', testMap.getCoordinateFromPixel([0,0]), testMap.getSize(), testMap.getView().getCenter(), testMap.getView().calculateExtent([600, 400]))
+    console.log('pixel', testMap.getCoordinateFromPixel([0, 0]), testMap.getSize(), testMap.getView().getCenter(), testMap.getView().calculateExtent([600, 400]))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([coords]))]
@@ -71,29 +72,29 @@ describe('<Popup />', () => {
     testMap.addLayer(vectorLayer)
 
     // click the map anywhere (there are no features to trigger the popup)
-    testMap.dispatchEvent({ type: 'click', map: testMap, pixel: [0,0] })
+    testMap.dispatchEvent({ type: 'click', map: testMap, pixel: [0, 0] })
 
     const hidePopupEvent = {
       features, // should have an array with single feature above
       loading: false,
-      popupPosition: { arrow: 'none', pixel: [0,0], fits: false },
+      popupPosition: { arrow: 'none', pixel: [0, 0], fits: false },
       show: true
     }
 
     expect(onMapClick).toHaveBeenCalledWith(hidePopupEvent)
 
-    const defaultInsert = await getByTestId(container, 'popup-insert-default')
+    const defaultInsert = await getByTestId('popup-insert-default')
 
     expect(defaultInsert).toBeTruthy()
   })
 
   it('should render custom child', async () => {
     const customChild = <div data-testid='popup-insert-custom'>this is a custom popup insert</div>
-    const { container }= render(<Map><Popup>{customChild}</Popup></Map>)
+    const { container, getByTestId } = render(<Map><Popup show>{customChild}</Popup></Map>)
 
     // wait for async child render
     await waitFor(() => {}, { container })
-    const child = await getByTestId(container, 'popup-insert-custom')
+    const child = await getByTestId('popup-insert-custom')
 
     expect(prettyDOM(child)).toMatchSnapshot()
   })
