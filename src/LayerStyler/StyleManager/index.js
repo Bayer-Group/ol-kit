@@ -6,10 +6,10 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import cloneDeep from 'lodash.clonedeep'
 
-import AttributesFilter from 'vmc/universal/AttributesFilter'
-import LabelStyler from 'vmc/manageLayer/_LabelStyler'
-import LayerStyler from 'vmc/manageLayer/_LayerStyler'
-import SelectTabs from 'vmc/universal/SelectTabs'
+import AttributesFilter from 'LayerStyler/_AttributesFilter'
+import LabelStyler from 'LayerStyler/_LabelStyler'
+import LayerStyler from 'LayerStyler/_LayerStyler'
+import SelectTabs from 'LayerStyler/_SelectTabs'
 import { HeaderContainer, InputContainer, FilterContainer } from './styled'
 
 const DEFAULT_LABEL_STYLE = {
@@ -48,7 +48,7 @@ const getLabelStyle = (ss = []) => ss.find(s => s.symbolizers[0].kind === 'Text'
  * @category vmc
  * @example ./example.md
  */
-class ManageLayer extends Component {
+class StyleManager extends Component {
   constructor (props) {
     super(props)
 
@@ -160,7 +160,7 @@ class ManageLayer extends Component {
 
       const dedup = {}
 
-      styles.forEach((s, i) => {
+      styles?.forEach((s, i) => {
         const key = JSON.stringify(trimFilters(s.filter))
         const val = dedup[key] ? [...dedup[key], { ...s, _index: i }] : [{ ...s, _index: i }]
 
@@ -174,18 +174,18 @@ class ManageLayer extends Component {
     const layerSelected = activeIdx !== null
 
     return (
-      <div data-testid='ManageLayer'>
+      <div data-testid='StyleManager'>
         <HeaderContainer>
           <InputContainer>
             <FormControl style={{ width: '300px', margin: '20px' }}>
-              <InputLabel htmlFor='layer-selector'>{translations['olKit.ManageLayer.chooseLayer']}</InputLabel>
+              <InputLabel htmlFor='layer-selector'>{translations['olKit.StyleManager.chooseLayer']}</InputLabel>
               <Select
                 value={layerTitles[activeIdx] || ''}
                 onChange={this.handleLayerChange}
                 type='text'
                 inputProps={{
                   id: 'layer-selector',
-                  'data-testid': 'ManageLayer.chooseLayer'
+                  'data-testid': 'StyleManager.chooseLayer'
                 }}>
                 {layerTitles.map(t => {
                   return <MenuItem key={t} value={t}>{t}</MenuItem>
@@ -207,23 +207,23 @@ class ManageLayer extends Component {
         </HeaderContainer>
         {layerSelected &&
           <SelectTabs>
-            <div title={translations['olKit.ManageLayer.styleTab']}>
+            <div title={translations['olKit.StyleManager.styleTab']}>
               <LayerStyler
                 translations={translations}
-                heading={`${translations['olKit.ManageLayer.customStyles']} (${getNonLabelStyles(userStyles[activeIdx]).length})`}
+                heading={`${translations['olKit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
                 showNewButtons={true}
                 collapsed={userCollapsed}
                 getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)}
                 attributeValues={attributeValues}
                 layer={layers[activeIdx]}
-                commaDelimitedAttributes={getCommaDelimitedAttributesForLayer(layers[activeIdx])}
+                commaDelimitedAttributes={getCommaDelimitedAttributesForLayer?.(layers[activeIdx])}
                 attributes={getAttributesForLayer(layers[activeIdx])}
                 styles={groupStyles(getNonLabelStyles(userStyles[activeIdx]))}
                 onCollapseToggle={() => this.onCollapseToggle('userCollapsed')}
                 onStylesChange={this.onUserStyleChange} />
               <LayerStyler
                 translations={translations}
-                heading={`${translations['olKit.ManageLayer.defaultStyles']} (${defaultStyles[activeIdx].length})`}
+                heading={`${translations['olKit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length})`}
                 collapsed={defaultCollapsed}
                 attributes={getAttributesForLayer(layers[activeIdx])}
                 styles={groupStyles(defaultStyles[activeIdx])}
@@ -232,7 +232,7 @@ class ManageLayer extends Component {
                 onDefaultStyleReset={this.onDefaultStyleReset}
                 isDefaultStyler={true} />
             </div>
-            <div data-testid='ManageLayer.labelTab' title={translations['olKit.ManageLayer.labelTab']}>
+            <div data-testid='StyleManager.labelTab' title={translations['olKit.StyleManager.labelTab']}>
               <LabelStyler
                 style={getLabelStyle(userStyles[activeIdx]) || cloneDeep(DEFAULT_LABEL_STYLE)}
                 attributes={getAttributesForLayer(layers[activeIdx])}
@@ -245,7 +245,7 @@ class ManageLayer extends Component {
   }
 }
 
-ManageLayer.propTypes = {
+StyleManager.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object,
 
@@ -290,14 +290,14 @@ ManageLayer.propTypes = {
   getCommaDelimitedAttributesForLayer: PropTypes.func.isRequired
 }
 
-ManageLayer.defaultProps = {
+StyleManager.defaultProps = {
   translations: {
-    'olKit.ManageLayer.chooseLayer': 'Choose a layer to style',
-    'olKit.ManageLayer.styleTab': 'Styles',
-    'olKit.ManageLayer.labelTab': 'Labels',
-    'olKit.ManageLayer.customStyles': 'Custom Styles',
-    'olKit.ManageLayer.defaultStyles': 'Default Styles'
+    'olKit.StyleManager.chooseLayer': 'Choose a layer to style',
+    'olKit.StyleManager.styleTab': 'Styles',
+    'olKit.StyleManager.labelTab': 'Labels',
+    'olKit.StyleManager.customStyles': 'Custom Styles',
+    'olKit.StyleManager.defaultStyles': 'Default Styles'
   }
 }
 
-export default ManageLayer
+export default StyleManager

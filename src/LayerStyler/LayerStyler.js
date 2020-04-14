@@ -19,6 +19,8 @@ class LayerStyler extends React.Component {
     const { map } = this.props
     const layers = map.getLayers()
 
+    console.log('mount') // eslint-disable-line no-console
+
     // if a layer is added or removed, the list of layers should be updated
     const handleMapChange = (e) => this.forceUpdate()
 
@@ -39,72 +41,154 @@ class LayerStyler extends React.Component {
   }
 
   getTitleForLayer = (layer) => {
-    return layer.get('title') || layer.getTypeName() || 'untitled layer'
+    return layer?.get?.('title') || layer?.getTypeName?.() || 'untitled layer'
   }
 
   getAttributesForLayer = layer => {
-    if (layer && layer.isVectorLayer) {
-      return layer.getAttributes().sort((a, b) => a.localeCompare(b))
+    if (layer) {
+      if (layer.isGeoserverLayer) {
+        return layer.getAttributes().sort((a, b) => a.localeCompare(b))
+      } else if (layer.isVectorLayer) {
+        return layer.getAttributes().sort((a, b) => a.localeCompare(b))
+      }
     }
   }
 
   getValuesForAttribute = async (layer, attribute) => {
-    if (layer && layer.isVectorLayer) {
-      const attributeValues = layer.fetchValuesForAttribute(attribute)
+    if (layer) {
+      if (layer.isGeoserverLayer) {
+        const { typeName } = layer
+        const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
+        const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
+        const attributeValues = await layer.fetchValuesForAttribute(this.props.map, attribute, opts)
 
-      this.setState({ attributeValues })
+        this.setState({ attributeValues })
+      } else if (layer.isVectorLayer) {
+        const attributeValues = layer.fetchValuesForAttribute(attribute)
+
+        this.setState({ attributeValues })
+      }
     }
   }
 
-  // TODO -- add vector layer filtering capabilities
-  onFilterChange = (layer, filters) => {}
+  getCommaDelimitedAttributesForLayer = (layer) => {
+    if (layer && layer.isGeoserverLayer) {
+      const { typeName } = layer
+      const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
 
-  onDefaultStyleChange = (layer, styles) => {
-    if (layer && layer.isVectorLayer) {
-      layer.updateDefaultVectorStyles(styles)
+      return whitelistedLayer ? whitelistedLayer.commaDelimitedAttributes : []
+    }
+  }
+
+  onFilterChange = (layer, filters) => {
+    if (layer && layer.isGeoserverLayer) {
+      const { typeName } = layer
+      const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
+      const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
+
+      layer.setWMSFilters(filters, opts)
+      layer.setOlFilters(this.setOlFilters(filters, opts))
 
       // cause a re-render which will re-hydrate the latest styles
       this.forceUpdate()
     }
+  }
+
+  setOlFilters = (filters = [], opts) => {
+    const olFilters = filters.map(({ attribute, value }) => {
+      if (opts.commaDelimitedAttributes && opts.commaDelimitedAttributes.includes(attribute)) {
+        // this filter is due to commaDelimitedAttributes, we have to make an OR filter with 3 regex filters
+        // the olFilterFunction is our custom filter function due to openlayers not supporting functions as filters
+        return new olFormatFilterOr(
+          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `^${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
+          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `.*,( )??${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
+          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `.*,( )??${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
+          new olFormatFilterEqualTo(attribute, escapeRegExp(value))
+        )
+      } else {
+        return new olFormatFilterEqualTo(attribute, value)
+      }
+    })
+
+    if (filters[0]?.logical === 'AND' && filters.length > 1) {
+      return new olFormatFilterAnd(...olFilters)
+    } else if (filters[0]?.logical === 'OR' && filters.length > 1) {
+      return new olFormatFilterOr(...olFilters)
+    } else {
+      return olFilters[0]
+    }
+  }
+
+  onDefaultStyleChange = (layer, styles) => {
+    if (layer && layer.isGeoserverLayer) {
+      layer.setDefaultWMSStyles(styles)
+    } else {
+      layer.updateDefaultVectorStyles(styles)
+    }
+
+    // cause a re-render which will re-hydrate the latest styles
+    this.forceUpdate()
   }
 
   onUserStyleChange = (layer, styles) => {
-    if (layer && layer.isVectorLayer) {
+    if (layer && layer.isGeoserverLayer) {
+      layer.setUserWMSStyles(styles)
+    } else if (layer && layer.isVectorLayer) {
       layer.setUserVectorStyles(styles)
-
-      // cause a re-render which will re-hydrate the latest styles
-      this.forceUpdate()
     }
+
+    // cause a re-render which will re-hydrate the latest styles
+    this.forceUpdate()
   }
 
   onDefaultStyleReset = (layer) => {
-    if (layer && layer.isVectorLayer) {
+    if (layer && layer.isGeoserverLayer) {
+      layer.resetDefaultWMSStyles()
+    } else if (layer.isVectorLayer) {
       layer.resetDefaultVectorStyles()
-
-      // cause a re-render which will re-hydrate the latest styles
-      this.forceUpdate()
     }
+
+    // cause a re-render which will re-hydrate the latest styles
+    this.forceUpdate()
   }
 
+  getValidLayers = () => {
+    const { map } = this.props
+    const layers = map.getLayers().getArray()
+    const validLayers = layers.filter(layer => {
+      return !layer.get('_vmf_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer)
+    })
+
+    if (layers.length - validLayers.length > 1) {
+      logger.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer') // eslint-disable-line
+    }
+
+    return validLayers
+  }
+
+
   render () {
-    const layers = this.props.map.getLayers().getArray().filter(l => l.isVectorLayer)
+    const layers = this.props.map.getLayers().getArray()
     const { attributeValues } = this.state
     const { translations } = this.props
 
     return (
       <StyleManager
-        layers={layers}
-        translations={translations}
-        userStyles={layers.map(l => l.getUserWMSStyles())}
-        defaultStyles={layers.map(l => l.getDefaultWMSStyles())}
-        getTitleForLayer={this.getTitleForLayer}
-        getValuesForAttribute={this.getValuesForAttribute}
-        getAttributesForLayer={this.getAttributesForLayer}
-        attributeValues={attributeValues}
-        onUserStyleChange={this.onUserStyleChange}
-        onDefaultStyleChange={this.onDefaultStyleChange}
-        onDefaultStyleReset={this.onDefaultStyleReset}
-        {...this.props} />
+      layers={layers}
+      translations={translations}
+      filters={layers.map(l => l.isGeoserverLayer && l.getWMSFilters()).filter(l => l)}
+      userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles?.().filter(l => l) : l.getUserVectorStyles?.().filter(l => l))}
+      defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles?.().filter(l => l) : l.getDefaultVectorStyles?.().filter(l => l))}
+      getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
+      getTitleForLayer={this.getTitleForLayer}
+      getValuesForAttribute={this.getValuesForAttribute}
+      getAttributesForLayer={this.getAttributesForLayer}
+      attributeValues={attributeValues}
+      onFilterChange={this.onFilterChange}
+      onUserStyleChange={this.onUserStyleChange}
+      onDefaultStyleChange={this.onDefaultStyleChange}
+      onDefaultStyleReset={this.onDefaultStyleReset}
+      {...this.props} />
     )
   }
 }
