@@ -61,7 +61,7 @@ class PopupDefaultPage extends Component {
               </ZmdiButton>
             </FeatureNavigator>
           }
-          <HeaderDetails loading={loading}>
+          <HeaderDetails loading={loading.toString()}>
             <Title>{title}</Title>
           </HeaderDetails>
         </Header>
