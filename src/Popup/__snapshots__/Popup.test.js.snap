@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Popup /> should render custom child 1`] = `
+"[36m<div[39m
+  [33mdata-testid[39m=[32m\\"popup-insert-custom\\"[39m
+[36m>[39m
+  [0mthis is a custom popup insert[0m
+[36m</div>[39m"
+`;

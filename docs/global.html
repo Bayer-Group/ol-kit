@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>ol-kit | Global</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
 
     <!-- these scripts must be at the top to properly syntax highlight code examples -->
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
@@ -64,7 +65,7 @@
             <div class="column is-3" id="sidebar-nav">
                 <div class="sidebar sidebar__inner">
                     <nav>
-                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BingMaps.html">BingMaps</a></li><li><a href="BlankWhite.html">BlankWhite</a></li><li><a href="OpenStreetMap.html">OpenStreetMap</a></li><li><a href="StamenTerrain.html">StamenTerrain</a></li><li><a href="StamenTonerDark.html">StamenTonerDark</a></li><li><a href="StamenTonerLite.html">StamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="Controls.html">Controls</a></li><li><a href="ZoomControls.html">ZoomControls</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupInsert.html">PopupInsert</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -149,6 +150,456 @@
         <div class='vertical-section'>
             <h3 class="title"><span>Methods</span></h3>
             <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="addMovementListener">
+        <a class="href-link" href="#addMovementListener">#</a>
+        
+        <span class="code-name">
+            
+                addMovementListener<span class="signature">(map, callback, thisObj<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;ol.EventsKey>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Bind multiple move listeners with the same callback
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">The openlayers map to which the events are bound</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>callback</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">The callback invoked when a `change:size`, `change:resolution` or a `change:center` event was fired</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>thisObj</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">The object to use as `this` in the event listeners.</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Popup_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Popup_utils.js.html">Popup/utils.js</a>, <a href="Popup_utils.js.html#line21">line 21</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Array of openlayers event keys for unsetting listener events (use with removeMovementListener)</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Array.&lt;ol.EventsKey></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="calculateViewPadding">
+        <a class="href-link" href="#calculateViewPadding">#</a>
+        
+        <span class="code-name">
+            
+                calculateViewPadding<span class="signature">(map, opts)</span><span class="type-signature"> &rarr; {Array}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Calculate bounding box of elements on page with _popup_boundary class and returns padding array excluding area of these elements
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">olMap</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">An instance of an openlayers map</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>opts</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Popup_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Popup_utils.js.html">Popup/utils.js</a>, <a href="Popup_utils.js.html#line209">line 209</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>- Array of view padding pixel numbers: [top, right, bottom, left]</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Array</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
             
                 <div class="member">
 
@@ -297,7 +748,7 @@
         <p class="tag-source">
             <a href="Map_utils.js.html" class="button">View Source</a>
             <span>
-                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line128">line 128</a>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line146">line 146</a>
             </span>
         </p>
     
@@ -368,7 +819,7 @@
     
     
     <div class="description">
-        An HOC designed to automatically pass down an ol.Map from the top-level Map component
+        A wrapper utility function designed to automatically pass down an ol.Map from the top-level Map component
     </div>
     
 
@@ -472,7 +923,7 @@
         <p class="tag-source">
             <a href="Map_utils.js.html" class="button">View Source</a>
             <span>
-                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line52">line 52</a>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line57">line 57</a>
             </span>
         </p>
     
@@ -519,6 +970,1409 @@
                 
         </div>
     </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createMap">
+        <a class="href-link" href="#createMap">#</a>
+        
+        <span class="code-name">
+            
+                createMap<span class="signature">(opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {ol.Map}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Create an openlayers map
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>opts</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Object of optional params</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>target</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">htm id tag that map will into which the map will render</td>
+</tr>
+
+  
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Map_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line26">line 26</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>A newly constructed <a href="https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html">ol.Map</a></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">ol.Map</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createSelectInteraction">
+        <a class="href-link" href="#createSelectInteraction">#</a>
+        
+        <span class="code-name">
+            
+                createSelectInteraction<span class="signature">()</span><span class="type-signature"> &rarr; {ol.interaction.Select}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Create a new openlayers select interaction with default styling
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Map_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line163">line 163</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>https://openlayers.org/en/v4.6.5/apidoc/ol.interaction.Select.html</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">ol.interaction.Select</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getLayersAndFeaturesForEvent">
+        <a class="href-link" href="#getLayersAndFeaturesForEvent">#</a>
+        
+        <span class="code-name">
+            
+                getLayersAndFeaturesForEvent<span class="signature">(event, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Promise>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get all features for a given click event
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>event</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">An object with an `event` and `pixel` property</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">The openlayers map where the layer exists</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>pixel</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;Number></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">An array consisting of `x` and `y` pixel locations</td>
+</tr>
+
+  
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>opts</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Object of optional params</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>hitTolerance</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Number</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          3
+      
+      </td>
+  
+
+  <td class="description last">Additional area around features that is clickable to select them</td>
+</tr>
+
+  
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Popup_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Popup_utils.js.html">Popup/utils.js</a>, <a href="Popup_utils.js.html#line61">line 61</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>An array of promises, each of which resolve to an object `{ layer, features }`</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Array.&lt;Promise></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getPopupPositionFromFeatures">
+        <a class="href-link" href="#getPopupPositionFromFeatures">#</a>
+        
+        <span class="code-name">
+            
+                getPopupPositionFromFeatures<span class="signature">(event, features, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get the best position for the popup to be displayed given features
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>event</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">An object with an `event` and `pixel` property</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">The openlayers map where the layer exists</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>pixel</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;Number></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">An array consisting of `x` and `y` pixel locations</td>
+</tr>
+
+  
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>features</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;ol.Feature></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">An array of features around which the popup should position</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>opts</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"></td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>popupHeight</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Number</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          280
+      
+      </td>
+  
+
+  <td class="description last">The height of the popup</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>popupWidth</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Number</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          280
+      
+      </td>
+  
+
+  <td class="description last">The width of the popup</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>arrowHeight</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Number</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          16
+      
+      </td>
+  
+
+  <td class="description last">The height of the popup's arrow/pointer</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>navbarOffset</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Number</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          55
+      
+      </td>
+  
+
+  <td class="description last">The height of the navbar</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>viewPadding</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;Number></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          [0, 0, 0, 0]
+      
+      </td>
+  
+
+  <td class="description last">An array of padding to apply to the best fit logic in top, right, bottom, left order</td>
+</tr>
+
+  
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Popup_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Popup_utils.js.html">Popup/utils.js</a>, <a href="Popup_utils.js.html#line114">line 114</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>An object containing the arrow/pointer position, pixel location & if the popup will fit properly within the viewport</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Object</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="removeMovementListener">
+        <a class="href-link" href="#removeMovementListener">#</a>
+        
+        <span class="code-name">
+            
+                removeMovementListener<span class="signature">(map, keys)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Remove list of event keys
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>map</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ol.Map</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The openlayers map to which the events are bound</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>keys</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">remove the listeners via an array of event keys</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Popup_utils.js.html" class="button">View Source</a>
+            <span>
+                <a href="Popup_utils.js.html">Popup/utils.js</a>, <a href="Popup_utils.js.html#line45">line 45</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -672,7 +2526,7 @@
         <p class="tag-source">
             <a href="Map_utils.js.html" class="button">View Source</a>
             <span>
-                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line98">line 98</a>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line116">line 116</a>
             </span>
         </p>
     
@@ -872,7 +2726,7 @@
         <p class="tag-source">
             <a href="Map_utils.js.html" class="button">View Source</a>
             <span>
-                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line75">line 75</a>
+                <a href="Map_utils.js.html">Map/utils.js</a>, <a href="Map_utils.js.html#line93">line 93</a>
             </span>
         </p>
     

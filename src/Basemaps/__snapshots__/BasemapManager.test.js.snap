@@ -53,7 +53,7 @@ exports[`<BasemapManager /> should render a basic basemap manager component 1`] 
     [36m</div>[39m
   [36m</div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-AxiKw hpaBKs\\"[39m
+    [33mclass[39m=[32m\\"sc-AxiKw gsIWQk\\"[39m
   [36m>[39m
     [36m<div[39m
       [33mclass[39m=[32m\\"sc-AxhCb ioUkCn _ol_kit_basemapOption\\"[39m
@@ -172,7 +172,7 @@ exports[`<BasemapManager /> should render a single child 1`] = `
     [36m</div>[39m
   [36m</div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-AxiKw hpaBKs\\"[39m
+    [33mclass[39m=[32m\\"sc-AxiKw gsIWQk\\"[39m
   [36m>[39m
     [36m<div[39m
       [33mclass[39m=[32m\\"sc-AxhCb ioUkCn _ol_kit_basemapOption\\"[39m
@@ -296,7 +296,7 @@ exports[`<BasemapManager /> should render an array of children 1`] = `
     [36m</div>[39m
   [36m</div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-AxiKw hpaBKs\\"[39m
+    [33mclass[39m=[32m\\"sc-AxiKw gsIWQk\\"[39m
   [36m>[39m
     [36m<div[39m
       [33mclass[39m=[32m\\"sc-AxhCb ioUkCn _ol_kit_basemapOption\\"[39m

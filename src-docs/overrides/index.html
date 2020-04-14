@@ -2,16 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <meta charset="utf-8">
     <title>ol-kit | Docs</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="icon" href="static/favicon.png" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
     <link type="text/css" rel="stylesheet" href="styles/app.css">
@@ -31,10 +32,10 @@
                         <span aria-hidden="true"></span>
                     </a>
                 </div>
-                 
+
                 <div class="navbar-menu">
                     <div class="navbar-end">
-                    
+
                         <div class="navbar-item">
                             <a href="tutorial-Getting%20Started.html">
                                 Get Started
@@ -46,7 +47,7 @@
                                 Docs
                             </a>
                         </div>
-                    
+
                         <div class="navbar-item">
                             <a href="https://github.com/MonsantoCo/ol-kit">
                                 Github
@@ -54,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </nav>
         </div>
     </div>
@@ -64,12 +65,18 @@
                 <div class="content" id="main-content-wrapper">
     <section>
         <article>
-<p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/">OpenLayers</a> map component toolkit.</p>
+<img src="static/readme-ol-kit-logo.png" />
+<p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/en/v4.6.5/apidoc/">OpenLayers</a> map component toolkit.</p>
+<h2>Prebuilt Map Components</h2>
+<p>Ready to use and <em>just work</em> with the map via a single line drop-in!</p>
+<img src="static/example-screenshot-1.png" />
+<h2>Installation</h2>
+<p>Install ol-kit and its <code>peerDependencies</code></p>
+<code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save</code>
 <h2>Getting Started</h2>
 <p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
 <pre class="prettyprint source lang-javascript"><code>import { Component } from 'react'
-import { Map, Popup, Controls } from 'ol-kit/components'
-import { zoomToExtent } from 'ol-kit/utils'
+import { Map, Controls, zoomToExtent } from '@bayer/ol-kit'
 
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
@@ -92,16 +99,17 @@ class App extends Component {
   render () {
     return (
       &lt;Map onMapInit={this.onMapInit}>
-        &lt;Popup />
         &lt;Controls />
       &lt;/Map>
     )
   }
 }
-</code></pre></article>
+</code></pre>
+<h4><a href="docs.html">Go to docs</a></h4>
+</article>
     </section>
                 </div>
-                
+
 <footer class="footer">
     <div class="content has-text-centered">
         <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">

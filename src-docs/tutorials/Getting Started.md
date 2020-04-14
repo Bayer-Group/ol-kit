@@ -1,6 +1,9 @@
 # Getting Started
 
-Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). Then simply `npm i ol-kit --save` and you're ready to go.
+Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). Then simply `npm i @bayer/ol-kit --save` and you're ready to go. There are a few `peerDependencies` required as well. For a comprehensive install use:
+```
+npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
+```
 
 There are two ways to get started with ol-kit.
 
@@ -58,7 +61,7 @@ In the example below, the `Popup` and `Controls` components will be rendered "wi
 
 ```javascript
 import { Component } from 'react'
-import { Map, Popup, Controls } from '@bayer/ol-kit'
+import { Map, Controls } from '@bayer/ol-kit'
 
 class App extends Component {
   onMapInit = map => {}
@@ -66,7 +69,6 @@ class App extends Component {
   render () {
     return (
       <Map onMapInit={this.onMapInit}>
-        <Popup />
         <Controls />
       </Map>
     )

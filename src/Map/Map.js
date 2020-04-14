@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import debounce from 'lodash.debounce'
+
 import MapLogo from './MapLogo'
-import { createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
+import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
 import ugh from 'ugh'
@@ -56,6 +57,9 @@ class Map extends React.Component {
     // if no map was passed, create the map
     this.map = !passedMap ? createMap({ target: this.target }) : passedMap
 
+    // setup select interactions for the map
+    this.initializeSelect(this.map)
+
     // optionally attach map listener
     if (updateUrlFromView) {
       const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
@@ -77,10 +81,34 @@ class Map extends React.Component {
     }
   }
 
+  initializeSelect = map => {
+    const { selectInteraction } = this.props
+
+    if (selectInteraction) {
+      // if select is passed as a prop always use that one first
+      this.selectInteraction = selectInteraction
+    } else {
+      // otherwise create a new select interaction
+      this.selectInteraction = createSelectInteraction()
+    }
+
+    // check the map to see if select interaction has been added
+    const selectInteractionOnMap = map.getInteractions().getArray().find(interaction => {
+      // this checks if the select interaction created or passed in is the same instance on the map and never double adds
+      return interaction === this.selectInteraction
+    })
+
+    // do not double add the interaction to the map
+    if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
+  }
+
   getContextValue = () => {
+    const { translations } = this.props
+
     return {
       map: this.map,
-      translations: en
+      selectInteraction: this.selectInteraction,
+      translations
     }
   }
 
@@ -116,7 +144,8 @@ Map.defaultProps = {
   updateUrlFromView: true,
   updateViewFromUrl: true,
   urlViewParam: 'view',
-  style: {}
+  style: {},
+  translations: en
 }
 
 Map.propTypes = {
@@ -132,7 +161,7 @@ Map.propTypes = {
   /** optionally pass a custom map */
   map: PropTypes.object,
   /** callback called with initialized map object after optional animations complete
-    note: if a <Promise> is returned from this function, Map will wait for onMapInit to resolve before rendering children
+    note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
   */
   onMapInit: PropTypes.func,
   /** the length of debounce on map movements before the url gets updated */
@@ -143,8 +172,12 @@ Map.propTypes = {
   updateViewFromUrl: PropTypes.bool,
   /** change the url param used to set the map location coords */
   urlViewParam: PropTypes.string,
+  /** an openlayers select interaction passed down to connected components - created internally if not passed as prop */
+  selectInteraction: PropTypes.object,
   /** apply inline styles to the map container */
-  style: PropTypes.object
+  style: PropTypes.object,
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.object
 }
 
 export default Map

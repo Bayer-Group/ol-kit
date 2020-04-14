@@ -10,7 +10,7 @@ import olLayerVector from 'ol/layer/vector'
 const TEXT_IDENTIFIER = 'Stamen Toner Lite'
 
 describe('<StamenTonerLite />', () => {
-  it('should render a basic basemap option component', async () => {
+  it.skip('should render a basic basemap option component', async () => {
     const { container } = render(<Map><StamenTonerLite /></Map>)
 
     // wait for async child render
