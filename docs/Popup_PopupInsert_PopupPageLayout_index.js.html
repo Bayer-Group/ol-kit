@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Map</title>
+    <title>ol-kit | Popup/PopupInsert/PopupPageLayout/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,306 +77,113 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltMap /&gt
-        </h2>
-        
-            <div class="class-description">A Reactified ol.Map wrapper component</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="Map">
-        <a class="href-link" href="#Map">#</a>
-        
-        <span class="code-name">
-            
-                &ltMap <i>children</i> <i>fullScreen</i> <i>logoPosition</i> <i>map</i> <i>onMapInit</i> <i>updateUrlDebounce</i> <i>updateUrlFromView</i> <i>updateViewFromUrl</i> <i>urlViewParam</i> <i>selectInteraction</i> <i>style</i> <i>translations</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            union
-          </td>
-          <td>No</td>
-          <td>any ol-kit children components will automatically be passed a reference to the map object via the `map` prop</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>fullScreen</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>if this is set to false, the map will fill it's parent container</td>
-          <td>false</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>logoPosition</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>place the ol-kit logo on the 'left', 'right', or set to 'none' to hide</td>
-          <td>'left'</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>optionally pass a custom map</td>
-          <td>null</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>onMapInit</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>callback called with initialized map object after optional animations complete
-    note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children</td>
-          <td>() => {}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>updateUrlDebounce</code></td>
-          <td>
-            number
-          </td>
-          <td>No</td>
-          <td>the length of debounce on map movements before the url gets updated</td>
-          <td>400</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>updateUrlFromView</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>add map location coords + zoom level to url as query params</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>updateViewFromUrl</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>update map view based off the url param</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>urlViewParam</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>change the url param used to set the map location coords</td>
-          <td>'view'</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>selectInteraction</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>an openlayers select interaction passed down to connected components - created internally if not passed as prop</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>style</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>apply inline styles to the map container</td>
-          <td>{}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>translations</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>object of string key/values (see: locales)</td>
-          <td>function()</td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Map_Map.js.html" class="button">View Source</a>
-            <span>
-                <a href="Map_Map.js.html">Map/Map.js</a>, <a href="Map_Map.js.html#line22">line 22</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { HeightContainer } from '../styled'
+
+/**
+ * @component
+ * @category Popup
+ * @example ./example.md
+ */
+class PopupPageLayout extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      selectedIdx: props.selectedIdx
+    }
+
+    this.dataProp = this.dataProp.bind(this)
+    this.nextPage = this.nextPage.bind(this)
+    this.prevPage = this.prevPage.bind(this)
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps ({ selectedIdx }) {
+    if (this.state.selectedIdx !== selectedIdx) this.setState({ selectedIdx })
+  }
+
+  // this method returns either the data prop passed to the child or the idx of the child
+  dataProp (idx) {
+    const child = this.props.children[idx]
+
+    return child.props.data || idx
+  }
+
+  prevPage () {
+    const currIdx = this.state.selectedIdx
+    const nextIdx = this.state.selectedIdx - 1
+
+    if (currIdx > 0) {
+      // notify consumers that we're going back to the previous page
+      this.props.onPageChange(this.dataProp(currIdx), this.dataProp(nextIdx))
+
+      this.setState({ selectedIdx: nextIdx })
+    }
+  }
+
+  nextPage () {
+    const currIdx = this.state.selectedIdx
+    const nextIdx = this.state.selectedIdx + 1
+    const childLength = this.props.children.length
+
+    if (nextIdx &lt; childLength) {
+      // notify consumers that we're advancing to the next page
+      this.props.onPageChange(this.dataProp(currIdx), this.dataProp(nextIdx))
+
+      this.setState({ selectedIdx: nextIdx })
+    }
+  }
+
+  render () {
+    const { children } = this.props
+    const { selectedIdx } = this.state
+
+    const childrenWithProps = React.Children.map(children, child =>
+      React.cloneElement(child, {
+        onNextPage: this.nextPage,
+        onPrevPage: this.prevPage,
+        pageCount: Array.isArray(children) ? children.length : 1,
+        currentPage: selectedIdx + 1
+      })
+    )
+
+    return (
+      &lt;HeightContainer data-testid={this.props['data-testid']}>
+        {React.Children.toArray(childrenWithProps)[selectedIdx]}
+      &lt;/HeightContainer>
+    )
+  }
+}
+
+PopupPageLayout.defaultProps = {
+  children: [],
+  'data-testid': undefined,
+  selectedIdx: 0
+}
+
+PopupPageLayout.propTypes = {
+  /** An array of components which are rendered as individual pages */
+  children: PropTypes.node.isRequired,
+
+   /** Internal prop used for testing */
+  'data-testid': PropTypes.string,
+
+  /** The index of the currently shown page */
+  selectedIdx: PropTypes.number,
+
+  /** Callback fired when a user navigates the page layout or closes the popup. The callback is passed the current page index and the next page index or `null` if the popup was closed. If the children of the layout passed a `data` prop, this is passed instead of the index for easier consumption. */
+  onPageChange: PropTypes.func
+}
+
+export default PopupPageLayout
+</code></pre>
+        </article>
+    </section>
 
 
 
