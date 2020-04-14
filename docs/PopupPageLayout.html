@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Map</title>
+    <title>ol-kit | PopupPageLayout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,10 +81,8 @@
 <header>
     
         <h2>
-            &ltMap /&gt
+            &ltPopupPageLayout /&gt
         </h2>
-        
-            <div class="class-description">A Reactified ol.Map wrapper component</div>
         
     
 </header>
@@ -100,12 +98,12 @@
 
 
     
-    <h4 class="name" id="Map">
-        <a class="href-link" href="#Map">#</a>
+    <h4 class="name" id="PopupPageLayout">
+        <a class="href-link" href="#PopupPageLayout">#</a>
         
         <span class="code-name">
             
-                &ltMap <i>children</i> <i>fullScreen</i> <i>logoPosition</i> <i>map</i> <i>onMapInit</i> <i>updateUrlDebounce</i> <i>updateUrlFromView</i> <i>updateViewFromUrl</i> <i>urlViewParam</i> <i>selectInteraction</i> <i>style</i> <i>translations</i> /&gt
+                &ltPopupPageLayout <i>children</i> <i>data-testid</i> <i>selectedIdx</i> <i>onPageChange</i> /&gt
             
         </span>
     </h4>
@@ -140,133 +138,44 @@
         <tr class="deep-level-0">
           <td class="name"><code>children</code></td>
           <td>
-            union
+            node
           </td>
           <td>No</td>
-          <td>any ol-kit children components will automatically be passed a reference to the map object via the `map` prop</td>
-          <td></td>
+          <td>An array of components which are rendered as individual pages</td>
+          <td>[]</td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>fullScreen</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>if this is set to false, the map will fill it's parent container</td>
-          <td>false</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>logoPosition</code></td>
+          <td class="name"><code>data-testid</code></td>
           <td>
             string
           </td>
           <td>No</td>
-          <td>place the ol-kit logo on the 'left', 'right', or set to 'none' to hide</td>
-          <td>'left'</td>
+          <td>Internal prop used for testing</td>
+          <td>function()</td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>optionally pass a custom map</td>
-          <td>null</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>onMapInit</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>callback called with initialized map object after optional animations complete
-    note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children</td>
-          <td>() => {}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>updateUrlDebounce</code></td>
+          <td class="name"><code>selectedIdx</code></td>
           <td>
             number
           </td>
           <td>No</td>
-          <td>the length of debounce on map movements before the url gets updated</td>
-          <td>400</td>
+          <td>The index of the currently shown page</td>
+          <td>0</td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>updateUrlFromView</code></td>
+          <td class="name"><code>onPageChange</code></td>
           <td>
-            bool
+            func
           </td>
           <td>No</td>
-          <td>add map location coords + zoom level to url as query params</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>updateViewFromUrl</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>update map view based off the url param</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>urlViewParam</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>change the url param used to set the map location coords</td>
-          <td>'view'</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>selectInteraction</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>an openlayers select interaction passed down to connected components - created internally if not passed as prop</td>
+          <td>Callback fired when a user navigates the page layout or closes the popup. The callback is passed the current page index and the next page index or `null` if the popup was closed. If the children of the layout passed a `data` prop, this is passed instead of the index for easier consumption.</td>
           <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>style</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>apply inline styles to the map container</td>
-          <td>{}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>translations</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>object of string key/values (see: locales)</td>
-          <td>function()</td>
         </tr>
         
   
@@ -284,9 +193,6 @@
 
     
 
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
     
 
     
@@ -316,9 +222,9 @@
 
     
         <p class="tag-source">
-            <a href="Map_Map.js.html" class="button">View Source</a>
+            <a href="Popup_PopupInsert_PopupPageLayout_index.js.html" class="button">View Source</a>
             <span>
-                <a href="Map_Map.js.html">Map/Map.js</a>, <a href="Map_Map.js.html#line22">line 22</a>
+                <a href="Popup_PopupInsert_PopupPageLayout_index.js.html">Popup/PopupInsert/PopupPageLayout/index.js</a>, <a href="Popup_PopupInsert_PopupPageLayout_index.js.html#line11">line 11</a>
             </span>
         </p>
     
@@ -342,6 +248,22 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    
+        
+
+<div id='cpu9bcgsn8ak905c7hl'></div>
+
+<script>
+  ReactDOM.render(ReactWrapper({
+    example: "./example.md",
+    uniqId: "cpu9bcgsn8ak905c7hl",
+  }), document.getElementById('cpu9bcgsn8ak905c7hl'));
+</script>
+    
 
 
 </div>
