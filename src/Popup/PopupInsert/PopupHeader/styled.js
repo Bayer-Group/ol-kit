@@ -7,8 +7,8 @@ export const Header = styled.div`
 
 
 export const HeaderDetails = styled.div`
-  padding: 32px 20px ${props => props.loading ? '20px' : '0'} 20px;
-  ${props => props.loading ? 'min-height: 105px' : 'min-height: 0px'};
+  padding: 32px 20px ${p => JSON.parse(p.loading) ? '20px' : '0'} 20px;
+  ${p => JSON.parse(p.loading) ? 'min-height: 105px' : 'min-height: 0px'};
   color: #787878;
 `
 
