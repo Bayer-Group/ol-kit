@@ -89,7 +89,7 @@ PopupPageLayout.propTypes = {
   children: PropTypes.node.isRequired,
 
    /** Internal prop used for testing */
-  data-testid: PropTypes.string,
+  'data-testid': PropTypes.string,
 
   /** The index of the currently shown page */
   selectedIdx: PropTypes.number,
