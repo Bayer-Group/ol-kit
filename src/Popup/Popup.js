@@ -151,7 +151,7 @@ class Popup extends Component {
 Popup.defaultProps = {
   featuresFilter: features => features,
   onMapClick: () => {},
-  show: undefined // TODO this might need to be null -- write a test!
+  show: undefined
 }
 
 Popup.propTypes = {

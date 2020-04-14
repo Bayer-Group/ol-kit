@@ -161,7 +161,7 @@ Map.propTypes = {
   /** optionally pass a custom map */
   map: PropTypes.object,
   /** callback called with initialized map object after optional animations complete
-    note: if a <Promise> is returned from this function, Map will wait for onMapInit to resolve before rendering children
+    note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
   */
   onMapInit: PropTypes.func,
   /** the length of debounce on map movements before the url gets updated */

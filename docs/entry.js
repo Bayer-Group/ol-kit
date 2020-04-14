@@ -61,26 +61,23 @@ reactComponents['PopupDataList'] = Component11;
 import Component12 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
 reactComponents['PopupDefaultPage'] = Component12;
 
-import Component13 from '../src/Popup/PopupInsert/PopupInsertDefault.js';
+import Component13 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
 reactComponents['PopupInsert'] = Component13;
 
-import Component14 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
-reactComponents['PopupPageLayout'] = Component14;
+import Component14 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
+reactComponents['PopupPageLayoutChild'] = Component14;
 
-import Component15 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
-reactComponents['PopupPageLayoutChild'] = Component15;
+import Component15 from '../src/Popup/PopupInsert/PopupTabs/index.js';
+reactComponents['PopupTabs'] = Component15;
 
-import Component16 from '../src/Popup/PopupInsert/PopupTabs/index.js';
-reactComponents['PopupTabs'] = Component16;
+import Component16 from '../src/Basemaps/StamenTerrain.js';
+reactComponents['StamenTerrain'] = Component16;
 
-import Component17 from '../src/Basemaps/StamenTerrain.js';
-reactComponents['StamenTerrain'] = Component17;
+import Component17 from '../src/Basemaps/StamenTonerDark.js';
+reactComponents['StamenTonerDark'] = Component17;
 
-import Component18 from '../src/Basemaps/StamenTonerDark.js';
-reactComponents['StamenTonerDark'] = Component18;
+import Component18 from '../src/Basemaps/StamenTonerLite.js';
+reactComponents['StamenTonerLite'] = Component18;
 
-import Component19 from '../src/Basemaps/StamenTonerLite.js';
-reactComponents['StamenTonerLite'] = Component19;
-
-import Component20 from '../src/Controls/ZoomControls.js';
-reactComponents['ZoomControls'] = Component20;
+import Component19 from '../src/Controls/ZoomControls.js';
+reactComponents['ZoomControls'] = Component19;
