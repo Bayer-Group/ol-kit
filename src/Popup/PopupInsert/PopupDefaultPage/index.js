@@ -49,15 +49,15 @@ class PopupDefaultPage extends Component {
     return (
       <HeightContainer>
         <Header>
-          <Close onClick={onClose}><CLOSE /></Close>
+          <Close onClick={onClose}><CLOSE data-testid='popup-page-close' /></Close>
           {pageCount > 1 &&
             <FeatureNavigator>
               <ZmdiButton onClick={onPrevPage}>
-                <LEFT_ARROW />
+                <LEFT_ARROW data-testid='popup-page-left-arrow' />
               </ZmdiButton>
               <FeatureCount>{`${currentPage} / ${pageCount}`}</FeatureCount>
               <ZmdiButton onClick={onNextPage}>
-                <RIGHT_ARROW />
+                <RIGHT_ARROW data-testid='popup-page-right-arrow' />
               </ZmdiButton>
             </FeatureNavigator>
           }
@@ -126,7 +126,7 @@ PopupDefaultPage.propTypes = {
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
     '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
-  }),
+  }).isRequired,
   /** Shows the customize details button in popup details */
   showCustomizeDetails: PropTypes.bool
 }

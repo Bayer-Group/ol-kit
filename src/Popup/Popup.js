@@ -5,7 +5,7 @@ import olInteractionDraw from 'ol/interaction/draw'
 
 import { connectToMap } from 'Map'
 import PopupBase from './PopupBase'
-import PopupInsertDefault from './PopupInsert/PopupInsertDefault'
+import PopupDefaultInsert from './PopupInsert/PopupDefaultInsert'
 import { addMovementListener, getLayersAndFeaturesForEvent, getPopupPositionFromFeatures, removeMovementListener } from './utils'
 
 /**
@@ -129,17 +129,21 @@ class Popup extends Component {
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
     return (
-      ReactDOM.createPortal(
-        <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
-          {children || (
-            <PopupInsertDefault
-              features={features}
-              loading={loading}
-              onClose={this.hidePopup} /> // default ui if no children are passed
-          )}
-        </PopupBase>,
-        map.getTargetElement()
-      )
+      !show
+        ? null
+        : (
+          ReactDOM.createPortal(
+            <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
+              {children || ( // default ui if no children are passed
+                <PopupDefaultInsert
+                  features={features}
+                  loading={loading}
+                  onClose={this.hidePopup} />
+              )}
+            </PopupBase>,
+            map.getTargetElement()
+          )
+        )
     )
   }
 }

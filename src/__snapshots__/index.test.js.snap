@@ -7,7 +7,7 @@ Object {
   "Map": [Function],
   "Popup": [Function],
   "PopupBase": [Function],
-  "PopupInsertDefault": [Function],
+  "PopupDefaultInsert": [Function],
   "VectorLayer": [Function],
   "ZoomControls": [Function],
   "connectToMap": [Function],

@@ -71,7 +71,7 @@ class PopupPageLayout extends Component {
     )
 
     return (
-      <HeightContainer>
+      <HeightContainer data-testid={this.props['data-testid']}>
         {React.Children.toArray(childrenWithProps)[selectedIdx]}
       </HeightContainer>
     )
@@ -80,6 +80,7 @@ class PopupPageLayout extends Component {
 
 PopupPageLayout.defaultProps = {
   children: [],
+  'data-testid': undefined,
   selectedIdx: 0
 }
 

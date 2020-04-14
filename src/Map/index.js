@@ -1,2 +1,2 @@
 export { default } from './Map'
-export { connectToMap, createMap, updateMapFromUrl, updateUrlFromMap } from './utils'
+export { connectToMap, createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'

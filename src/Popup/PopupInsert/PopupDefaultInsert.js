@@ -23,13 +23,24 @@ class PopupInsert extends Component {
     }
   }
 
+  componentDidMount () {
+    const { features } = this.props
+
+    if (features.length) {
+      this.setState({ selectedIdx: 0 })
+      this.selectFeature(features[0])
+    }
+  }
+
   UNSAFE_componentWillReceiveProps (nextProps) { // eslint-disable-line camelcase
-    if (nextProps.selectedIdx !== this.props.selectedIdx) {
+    const selectedIdx = typeof nextProps.selectedIdx === 'number' ? nextProps.selectedIdx : this.state.selectedIdx
+
+    if (selectedIdx !== this.state.selectedIdx) {
       // if props update paging/selected feature, keep state in sync
-      this.onPageChange(this.props.selectedIdx, nextProps.selectedIdx)
+      this.onPageChange(this.state.selectedIdx, selectedIdx)
     }
     if (nextProps.features.length && nextProps.features.length !== this.props.features.length) {
-      this.selectFeature(nextProps.features[nextProps.selectedIdx]) // TODO
+      this.selectFeature(nextProps.features[selectedIdx])
     }
   }
 
@@ -58,11 +69,11 @@ class PopupInsert extends Component {
   }
 
   render () {
-    const { features, loading, onClose, onSettingsClick, propertiesFilter, showSettingsCog } = this.props
-    const { selectedIdx } = this.state // TODO check props
+    const { features, loading, onClose, onSettingsClick, propertiesFilter, showSettingsCog, translations } = this.props
+    const { selectedIdx } = this.state
 
     return (
-      <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange}>
+      <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
         {features.length
           ? features.map((f, i) => (
               <PopupDefaultPage
@@ -70,14 +81,16 @@ class PopupInsert extends Component {
                 title={f.get('title') || `Feature ${i+1}`}
                 loading={loading}
                 onClose={onClose}
-                attributes={propertiesFilter(f.getProperties())}>
+                attributes={propertiesFilter(f.getProperties())}
+                translations={translations}>
                 <div style={{ padding: '10px' }}>No available actions</div>
               </PopupDefaultPage>
             ))
           : <PopupDefaultPage
             title={loading ? 'Loading features' : 'Select a feature'}
             loading={loading}
-            onClose={onClose} />
+            onClose={onClose}
+            translations={translations} />
         }
       </PopupPageLayout>
     )
@@ -90,7 +103,6 @@ PopupInsert.defaultProps = {
   onSelectFeature: () => {},
   onSettingsClick: () => {},
   propertiesFilter: properties => properties,
-  selectedIdx: 0,
   showSettingsCog: false
 }
 
@@ -99,8 +111,6 @@ PopupInsert.propTypes = {
   features: PropTypes.array,
   /** put ui into loading state */
   loading: PropTypes.bool,
-  /** a reference to openlayers map object */
-  map: PropTypes.object.isRequired,
   /** callback fired when popup closed with x button */
   onClose: PropTypes.func,
   /** fired whenever a new feature is selected */
@@ -114,7 +124,13 @@ PopupInsert.propTypes = {
   /** reference to openlayers select interaction which */
   selectInteraction: PropTypes.object.isRequired,
   /** show the settings cog -- use with onSettingsClick */
-  showSettingsCog: PropTypes.bool
+  showSettingsCog: PropTypes.bool,
+  /** object with key/value pairs for translated strings */
+  translations: PropTypes.shape({
+    '_ol_kit.PopupDefaultPage.details': PropTypes.string,
+    '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
+    '_ol_kit.PopupDefaultPage.customize': PropTypes.string
+  }).isRequired
 }
 
 export default connectToMap(PopupInsert)

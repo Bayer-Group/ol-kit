@@ -1,73 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Popup /> should render default insert 1`] = `
-.c1 {
-  position: absolute;
-  width: 22px;
-  bottom: 8px;
-  z-index: 1;
-  cursor: pointer;
-  left: 14px;
-}
-
-.c0 {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-<div
-  class="c0"
-  id="_ol_kit_map_test_id"
->
-  <a
-    class="c1"
-    href="https://ol-kit.com/"
-    target="_blank"
-    title="Powered by ol-kit"
-  >
-    <svg
-      viewBox="0 0 204.76 236.44"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <style>
-          .cls-1
-          {
-          fill:#231f20
-          }
-        </style>
-      </defs>
-      <g
-        id="Layer_2"
-      >
-        <path
-          class="cls-1"
-          d="M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z"
-          id="logo_examples"
-        />
-      </g>
-    </svg>
-  </a>
-  <div
-    class="ol-viewport"
-    data-view="1"
-    style="position: relative; overflow: hidden; width: 100%; height: 100%;"
-  >
-    <canvas
-      class="ol-unselectable"
-      style="width: 100%; height: 100%; display: block;"
-    />
-    <div
-      class="ol-overlaycontainer"
-    />
-    <div
-      class="ol-overlaycontainer-stopevent"
-    />
-  </div>
-</div>
+exports[`<Popup /> should render custom child 1`] = `
+"[36m<div[39m
+  [33mdata-testid[39m=[32m\\"popup-insert-custom\\"[39m
+[36m>[39m
+  [0mthis is a custom popup insert[0m
+[36m</div>[39m"
 `;
