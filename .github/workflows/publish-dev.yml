@@ -22,6 +22,7 @@ jobs:
         run: |
           VERSION=$(node .github/tasks/next-dev-version.js)
           npm --no-git-tag-version version ${VERSION}
-          export SHIP=true && npm run build && npm publish --tag dev
+          npm run build && npm publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          SHIP: true
