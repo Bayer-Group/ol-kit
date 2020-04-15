@@ -25,4 +25,4 @@ jobs:
           npm run build && npm publish --tag dev
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          SHIP: true
+          SHIP: "true"
