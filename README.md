@@ -40,7 +40,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit} >
+      <Map onMapInit={this.onMapInit}>
         <Popup />
         <Controls />
       </Map>
