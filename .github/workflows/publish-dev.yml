@@ -1,11 +1,9 @@
 name: Publish
 
 on:
-  pull_request:
-    branches: [ master ]
-  # push:
-  #   branches:
-  #     - master
+  push:
+    branches:
+      - master
 
 jobs:
   publish-npm-dev:
