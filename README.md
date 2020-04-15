@@ -18,10 +18,11 @@ npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
 It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
 ```javascript
 import React from 'react'
-import { Map, Popup, Controls, zoomToExtent } from '@bayer/ol-kit'
+import { Map, Popup, Controls } from '@bayer/ol-kit'
+import { centerAndZoom } from '@bayer/ol-kit/core/Map/utils'
 
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
+import VectorLayer from 'ol/layer/vector'
+import VectorSource from 'ol/source/vector'
 
 class App extends React.Component {
   onMapInit = map => {
@@ -30,22 +31,24 @@ class App extends React.Component {
         features: [/** get some data and have fun with it */]
       })
     })
-
     // add the data to the map
     map.addLayer(data)
 
     // quickly take the map
-    zoomToExtent([0, 0], 12)
+    centerAndZoom(map, {x: 0, y: 0, zoom: 3})
   }
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit}>
+      <Map onMapInit={this.onMapInit} >
         <Popup />
         <Controls />
       </Map>
     )
   }
+}
+
+export default App;
 ```
 
 ## Documentation
