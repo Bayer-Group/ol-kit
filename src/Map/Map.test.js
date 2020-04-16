@@ -5,7 +5,7 @@ import { prettyDOM } from '@testing-library/dom'
 import olMap from 'ol/map'
 import olView from 'ol/view'
 import olInteractionSelect from 'ol/interaction/select'
-import Map, { createMap } from 'Map'
+import { Map, createMap } from 'Map'
 
 describe('<Map />', () => {
   it('should render with a map prop', (done) => {

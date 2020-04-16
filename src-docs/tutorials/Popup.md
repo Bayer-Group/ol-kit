@@ -18,7 +18,7 @@ const App = () => {
 export default App
 ```
 That will look something like this (minus the data layer):
-![ol-kit logo](../config/jsdoc/template/static/popup-screenshot-1.png)
+![popup screenshot](../config/jsdoc/template/static/popup-screenshot-1.png)
 
 ## Customize
 What you're seeing is the default popup with a [PopupDefaultInsert](../docs/PopupDefaultInsert.html) as its child. To pass different children to the popup or create custom functionality checkout the [docs for popup](../docs/Popup.html).

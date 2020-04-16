@@ -10,7 +10,10 @@ Object {
   "PopupDefaultInsert": [Function],
   "VectorLayer": [Function],
   "ZoomControls": [Function],
+  "centerAndZoom": [Function],
   "connectToMap": [Function],
+  "createMap": [Function],
+  "createSelectInteraction": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }
