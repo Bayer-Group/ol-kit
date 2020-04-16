@@ -14,7 +14,7 @@ import PopupPageLayout from './PopupPageLayout'
  * @component
  * @category Popup
  */
-class PopupInsert extends Component {
+class PopupDefaultInsert extends Component {
   constructor (props) {
     super(props)
 
@@ -97,7 +97,7 @@ class PopupInsert extends Component {
   }
 }
 
-PopupInsert.defaultProps = {
+PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
@@ -106,7 +106,7 @@ PopupInsert.defaultProps = {
   showSettingsCog: false
 }
 
-PopupInsert.propTypes = {
+PopupDefaultInsert.propTypes = {
   /** array from which to select a feature */
   features: PropTypes.array,
   /** put ui into loading state */
@@ -133,4 +133,4 @@ PopupInsert.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupInsert)
+export default connectToMap(PopupDefaultInsert)

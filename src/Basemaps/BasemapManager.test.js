@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
-import Map from '../Map'
+import { Map } from 'Map'
 import BasemapManager from './BasemapManager'
 
 describe('<BasemapManager />', () => {
