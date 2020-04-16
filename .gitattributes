@@ -1,0 +1,3 @@
+docs/** linguist-documentation=true
+src-docs/** linguist-documentation=true
+config/** linguist-detectable=false
