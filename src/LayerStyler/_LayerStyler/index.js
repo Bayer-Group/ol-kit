@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import SelectTabs from 'LayerStyler/_SelectTabs'
 import StyleGroup from './_StyleGroup'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {
   Button,
   ButtonContainer,
@@ -25,7 +26,7 @@ const DEFAULT_STYLE = {
     radius: 4,
     strokeColor: '#000000',
     strokeWidth: 2,
-    wellKnownName: 'circle'
+    wellKnownName: 'Circle'
   }, {
     kind: 'Line',
     color: '#ffffff',
@@ -103,7 +104,7 @@ class LayerStyler extends Component {
               {heading}
               {showNewButtons &&
                 <AddNew onClick={this.createStyleGroup}>
-                  <i className='zmdi zmdi-plus-circle' />
+                  <AddCircleIcon />
                 </AddNew>
               }
               {onDefaultStyleReset && <ResetText onClick={onDefaultStyleReset}>{translations['_ol_kit.LayerStyler.reset']}</ResetText>}

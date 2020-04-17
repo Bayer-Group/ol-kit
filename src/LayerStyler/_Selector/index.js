@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import uuid from 'uuid'
+import nanoid from 'nanoid'
 import { Container, Header, SubHeader, TextInput, Bar, Highlight, Group } from './styled'
 
 class Selector extends Component {
@@ -14,7 +14,7 @@ class Selector extends Component {
       value: props.selected
     }
 
-    this.inputId = uuid.v4()
+    this.inputId = nanoid(6)
   }
 
   formatOptions = (options = []) => {

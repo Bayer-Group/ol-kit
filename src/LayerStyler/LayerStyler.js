@@ -19,8 +19,6 @@ class LayerStyler extends React.Component {
     const { map } = this.props
     const layers = map.getLayers()
 
-    console.log('mount') // eslint-disable-line no-console
-
     // if a layer is added or removed, the list of layers should be updated
     const handleMapChange = (e) => this.forceUpdate()
 
@@ -172,13 +170,15 @@ class LayerStyler extends React.Component {
     const { attributeValues } = this.state
     const { translations } = this.props
 
+    console.log(layers, layers.map(l => l.getDefaultVectorStyles?.())) // eslint-disable-line no-console
+
     return (
       <StyleManager
       layers={layers}
       translations={translations}
-      filters={layers.map(l => l.isGeoserverLayer && l.getWMSFilters()).filter(l => l)}
-      userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles?.().filter(l => l) : l.getUserVectorStyles?.().filter(l => l))}
-      defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles?.().filter(l => l) : l.getDefaultVectorStyles?.().filter(l => l))}
+      filters={layers.map(l => l.isGeoserverLayer && l.getWMSFilters())}
+      userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles() : l.getUserVectorStyles?.())}
+      defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles() : l.getDefaultVectorStyles?.())}
       getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
       getTitleForLayer={this.getTitleForLayer}
       getValuesForAttribute={this.getValuesForAttribute}

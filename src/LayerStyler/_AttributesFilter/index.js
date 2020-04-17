@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import uuid from 'uuid'
+import nanoid from 'nanoid'
 
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import Popover from 'LayerStyler/_Popover'
 import Selector from 'LayerStyler/_Selector'
-import { CloseIcon, ContentContainer, InputContainer, Row, TextContainer, Title } from './styled'
+import { ContentContainer, InputContainer, Row, TextContainer, Title } from './styled'
+import CloseIcon from '@material-ui/icons/Close';
 
 const defaultFilter = {
   logical: 'AND', // determines how to join the filter to other filters
@@ -82,8 +83,8 @@ class AttributesFilter extends React.Component {
           <Title>{translations['olKit.AttributesFilter.filters']}</Title>
           {filters.map((filter, i) => {
             return (
-              <Row key={uuid.v4()}>
-                <CloseIcon className={'zmdi zmdi-hc-lg zmdi-close'} onClick={this.removeFilter.bind(this, i)} />
+              <Row key={nanoid(6)}>
+                <CloseIcon onClick={this.removeFilter.bind(this, i)} />
                 <TextContainer>
                   {getLogicOperator(i, filters)}
                 </TextContainer>

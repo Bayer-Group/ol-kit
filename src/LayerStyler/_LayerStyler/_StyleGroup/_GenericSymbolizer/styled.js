@@ -17,6 +17,7 @@ export const DeleteAll = styled.div`
 
 /** @component */
 export const Half = styled.div`
+  display: flex;
   flex: 1;
 `
 
@@ -24,7 +25,7 @@ export const Half = styled.div`
 export const Fourth = styled.div`
   display: flex;
   flex-direction: column;
-  width: 15%;
+  wtitleth: 15%;
   vertical-align: top;
 `
 

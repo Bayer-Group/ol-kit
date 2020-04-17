@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 /** @component */
 export const AddNewContainer = styled.div`
+  display: flex;
   padding: 15px;
 `
 

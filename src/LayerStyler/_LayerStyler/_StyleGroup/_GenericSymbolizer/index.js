@@ -6,6 +6,7 @@ import { Container, Fourth, Title } from './styled'
 
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import Delete from '@material-ui/icons/Delete'
 
 // the incoming keys are based on the mark (point) symbolizer -- if the UI
 // was based on a different symbolizer then these would have to change
@@ -84,7 +85,7 @@ class GenericSymbolizer extends Component {
         <Fourth>
           <Title>{translations['olKit.GenericSymbolizer.remove']}</Title>
           <Trashcan onClick={this.props.onSymbolizerDelete}>
-            <i className='zmdi zmdi-delete' style={{ verticalAlign: 'top' }} />
+            <Delete style={{ verticalAlign: 'top' }} />
           </Trashcan>
         </Fourth>
       </Container>

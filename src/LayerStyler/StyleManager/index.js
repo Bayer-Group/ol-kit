@@ -73,6 +73,8 @@ class StyleManager extends Component {
     const options = layers.map(getTitleForLayer)
     const activeIdx = options.findIndex(t => t === target.value)
 
+    console.log(activeIdx) // eslint-disable-line no-console
+
     this.setState({ activeIdx })
   }
 
@@ -173,6 +175,8 @@ class StyleManager extends Component {
     const layerTitles = layers.map(getTitleForLayer)
     const layerSelected = activeIdx !== null
 
+    console.log(defaultStyles, activeIdx) // eslint-disable-line no-console
+
     return (
       <div data-testid='StyleManager'>
         <HeaderContainer>
@@ -193,22 +197,12 @@ class StyleManager extends Component {
               </Select>
             </FormControl>
           </InputContainer>
-          <FilterContainer>
-            <AttributesFilter
-              translations={translations}
-              disabled={!layerSelected}
-              filters={filters[activeIdx]}
-              filterConditions={['is']}
-              attributes={getAttributesForLayer(layers[activeIdx])}
-              attributeValues={attributeValues}
-              onUpdateFilters={this.onFilterChange}
-              getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)} />
-          </FilterContainer>
         </HeaderContainer>
         {layerSelected &&
           <SelectTabs>
             <div title={translations['olKit.StyleManager.styleTab']}>
               <LayerStyler
+                id='LayerStyler'
                 translations={translations}
                 heading={`${translations['olKit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
                 showNewButtons={true}
@@ -222,8 +216,9 @@ class StyleManager extends Component {
                 onCollapseToggle={() => this.onCollapseToggle('userCollapsed')}
                 onStylesChange={this.onUserStyleChange} />
               <LayerStyler
+                id='LayerStyler'
                 translations={translations}
-                heading={`${translations['olKit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length})`}
+                heading={`${translations['olKit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}
                 collapsed={defaultCollapsed}
                 attributes={getAttributesForLayer(layers[activeIdx])}
                 styles={groupStyles(defaultStyles[activeIdx])}
@@ -296,7 +291,38 @@ StyleManager.defaultProps = {
     'olKit.StyleManager.styleTab': 'Styles',
     'olKit.StyleManager.labelTab': 'Labels',
     'olKit.StyleManager.customStyles': 'Custom Styles',
-    'olKit.StyleManager.defaultStyles': 'Default Styles'
+    'olKit.StyleManager.defaultStyles': 'Default Styles',
+    'olKit.AttributesFilter.where': 'Where',
+    'olKit.AttributesFilter.AND': 'AND',
+    'olKit.AttributesFilter.OR': 'OR',
+    'olKit.AttributesFilter.filters': 'Filters',
+    'olKit.AttributesFilter.addFilter': 'Add Filter',
+    'olKit.AttributesFilter.attribute': 'value',
+    'olKit.AttributesFilter.condition': 'condition',
+    'olKit.AttributesFilter.value': 'attribute',
+    '_ol_kit.LayerStyler.reset': 'Reset Styles',
+    '_ol_kit.LayerStyler.show': 'Show All',
+    '_ol_kit.LayerStyler.hide': 'Hide All',
+    '_ol_kit.LayerStyler.zoomedIn': 'Zoomed In',
+    '_ol_kit.LayerStyler.zoomedOut': 'Zoomed Out',
+    'olKit.StyleGroup.chooseAttribute': 'Choose an Attribute',
+    'olKit.StyleGroup.delete': 'Delete Style Group',
+    'olKit.StyleGroup.value': 'Value',
+    'olKit.StyleGroup.addValue': 'Add Value',
+    'olKit.GenericSymbolizer.fill': 'Fill',
+    'olKit.GenericSymbolizer.width': 'Width',
+    'olKit.GenericSymbolizer.stroke': 'Stroke',
+    'olKit.GenericSymbolizer.remove': 'Remove',
+    'olKit.LabelStyler.noLabelSupport': 'This layer does not support labelling.',
+    'olKit.LabelStyler.enableSmartLabels': 'Enable smart labels',
+    'olKit.LabelStyler.color': 'Color',
+    'olKit.LabelStyler.outline': 'Outline',
+    'olKit.LabelStyler.textHeight': 'Text Height',
+    'olKit.LabelStyler.textUnits': 'Text Size Units',
+    'olKit.LabelStyler.pixels': 'Pixels',
+    'olKit.LabelStyler.feet': 'Feet',
+    'olKit.LabelStyler.chooseAttrs': 'Choose Attributes to Display',
+    'olKit.LabelStyler.clear': 'Clear All'
   }
 }
 

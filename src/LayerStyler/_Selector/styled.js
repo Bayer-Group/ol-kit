@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 import Select from 'react-select'
 
 /** @component */
@@ -36,7 +36,7 @@ export const Group = styled.div`
   width: 100%;
 `
 
-const inputHighlighter = keyframes`
+const inputHighlighter = css`keyframes
   from { background: #5264AE; }
   to   { width: 0; background: transparent; }
 `

@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Selector from 'LayerStyler/_Selector'
 import GenericSymbolizer from './_GenericSymbolizer'
 import escapeRegExp from 'lodash.escaperegexp'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {
   AddNewContainer,
@@ -104,7 +105,7 @@ class StyleGroup extends Component {
       const att = newStyles[idx].filter[1][1] instanceof Array
         ? newStyles[idx].filter[1][1][1][1] : styles[idx].filter[1][1]
 
-      if (commaDelimitedAttributes.includes(att)) {
+      if (commaDelimitedAttributes?.includes(att)) {
         newStyles[idx].filter[1] = ['||',
           ['*=',
             ['FN_strMatches', att, `.*,( )??${escapeRegExp(val)}( )??$`],
@@ -126,7 +127,7 @@ class StyleGroup extends Component {
 
       onStylesChange(newStyles)
     } catch (e) {
-      throw new Error('The style object\'s filter was not able to be modified', styles)
+      throw new Error('The style object\'s filter was not able to be modified', e)
     }
   }
 
@@ -178,8 +179,8 @@ class StyleGroup extends Component {
                   <Select
                     value={getAttributeValue(styles[0].filter)}
                     onChange={this.debounceAttributeChange}>
-                    {attributes.map(a => {
-                      return <MenuItem key={a} value={a}>{a}</MenuItem>
+                    {attributes.map((a, i) => {
+                      return <MenuItem key={i} value={a}>{a}</MenuItem>
                     })}
                   </Select>
                 </FormControl>
@@ -198,7 +199,7 @@ class StyleGroup extends Component {
             return s.hidden
               ? null
               : (
-                <Fragment>
+                <Fragment key={i}>
                   <StyleContainer key={`${getAttributeValue(s.filter)}-${i}`}>
                     {hasFilter &&
                       <Selector
@@ -210,7 +211,7 @@ class StyleGroup extends Component {
                         onValueChange={(e) => this.debounceValueChange(i, e)} />
                     }
                   </StyleContainer>
-                  <StyleContainer>
+                  <StyleContainer key={i}>
                     <GenericSymbolizer
                       symbolizers={s.symbolizers}
                       translations={translations}
@@ -222,7 +223,8 @@ class StyleGroup extends Component {
           })}
           <AddNewContainer>
             <AddNew onClick={this.onNewStyleValue}>
-              <i className='zmdi zmdi-plus-circle' /> {translations['olKit.StyleGroup.addValue']}
+              <AddCircleIcon />
+              {translations['olKit.StyleGroup.addValue']}
             </AddNew>
           </AddNewContainer>
         </div>

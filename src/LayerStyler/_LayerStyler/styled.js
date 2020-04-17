@@ -19,14 +19,17 @@ export const Button = styled.div`
 
 /** @component */
 export const StyleGroupHeading = styled.span`
+  display: flex;
+  flex-wrap: nowrap;
   font-weight: 500;
   color: #6f6f6f;
   line-height: 32px;
+  align-items: center;
 `
 
 /** @component */
 export const AddNew = styled.div`
-  display: inline-block;
+  display: flex;
   margin: 0 10px;
   color: #152357;
   cursor: pointer;
@@ -54,10 +57,12 @@ export const ResetText = styled.div`
 /** @component */
 export const Half = styled.div`
   flex: 1;
+  display: flex;
 `
 
 /** @component */
 export const CollapseText = styled.div`
+  display: flex;
   flex: 1;
   text-align: right;
   line-height: 32px;
