@@ -1,40 +1,58 @@
-import olFeature from 'ol/feature'
 import olVectorLayer from 'ol/layer/vector'
 import olVectorSource from 'ol/source/vector'
-import olPolygon from 'ol/geom/polygon'
-import olMultiPolygon from 'ol/geom/multipolygon'
 import olStyle from 'ol/style/style'
 import olFill from 'ol/style/fill'
 import olStroke from 'ol/style/stroke'
 import proj from 'ol/proj'
+import GeoJSON from 'ol/format/geojson'
+import KML from 'ol/format/kml'
+import ugh from 'ugh'
 
-import US_STATES from '../../data/us_states.json'
+const getFeatures = arg => {
+  try {
+    const dataSet = require(`../../data/${arg}.json`)
+    const geoJson = new GeoJSON({ featureProjection: 'EPSG:3857' }) // TODO check map projection
+    const features = geoJson.readFeatures(dataSet)
 
-export const createUSStatesLayer = () => {
+    return features
+  } catch (e) {
+    // must not be JSON
+    ugh.error(e)
+  }
+
+  try {
+    const dataSet = require(`../../data/${arg}.xml`)
+    const kml = new KML()
+    const features = kml.readFeatures(dataSet)
+
+    return features
+  } catch (e) {
+    // not kml either
+    ugh.error(e)
+  }
+
+  // all failures, return empty array
+  return []
+}
+
+export const createDataLayer = (arg, styleArg) => {
+  const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...styleArg }
+  const features = getFeatures(arg)
   const layer = new olVectorLayer({ source: new olVectorSource() })
   const source = layer.getSource()
 
-  US_STATES.features.forEach(state => {
-    const { geometry, properties } = state
-    const coords = geometry.type === 'MultiPolygon'
-      ? geometry.coordinates.map(c => c.map(c => c.map(c => proj.fromLonLat(c)))) // eslint-disable-line max-nested-callbacks
-      : geometry.coordinates.map(c => c.map(c => proj.fromLonLat(c)))
-    const olGeom = geometry.type === 'MultiPolygon'
-      ? new olMultiPolygon(coords)
-      : new olPolygon(coords)
-    const feature = new olFeature({ geometry: olGeom })
+  features.forEach((feature, i) => {
+    const { properties } = feature
 
-    layer.setStyle(
-      new olStyle({
-        fill: new olFill({ color: '#7FDBFF33' }),
-        stroke: new olStroke({
-          color: '#0074D9', width: 2
-        })
-      })
-    )
-    feature.setProperties({ ...properties, title: properties.NAME })
     source.addFeature(feature)
   })
+
+  // layer.setStyle(
+  //   new olStyle({
+  //     fill: new olFill(style.fill),
+  //     stroke: new olStroke(style.stroke)
+  //   })
+  // )
 
   return layer
 }
