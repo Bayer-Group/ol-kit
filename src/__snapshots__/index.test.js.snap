@@ -14,6 +14,7 @@ Object {
   "connectToMap": [Function],
   "createMap": [Function],
   "createSelectInteraction": [Function],
+  "createUSStatesLayer": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }
