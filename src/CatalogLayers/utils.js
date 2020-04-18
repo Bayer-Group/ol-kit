@@ -11,7 +11,7 @@ import ugh from 'ugh'
 const getFeatures = arg => {
   try {
     const dataSet = require(`../../data/${arg}.json`)
-    const geoJson = new GeoJSON({ featureProjection: 'EPSG:3857' }) // TODO check map projection
+    const geoJson = new GeoJSON({ featureProjection: 'EPSG:3857'}) // TODO check map projection
     const features = geoJson.readFeatures(dataSet)
 
     return features
@@ -36,7 +36,7 @@ const getFeatures = arg => {
 }
 
 export const createDataLayer = (arg, styleArg) => {
-  const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...styleArg }
+  const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...styleArg}
   const features = getFeatures(arg)
   const layer = new olVectorLayer({ source: new olVectorSource() })
   const source = layer.getSource()
@@ -53,6 +53,12 @@ export const createDataLayer = (arg, styleArg) => {
   //     stroke: new olStroke(style.stroke)
   //   })
   // )
+
+  return layer
+}
+
+export const addDataLayer = async (map, arg, style) => {
+  const layer = createDataLayer()
 
   return layer
 }
