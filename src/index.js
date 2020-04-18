@@ -1,3 +1,4 @@
+export * from './CatalogLayers'
 export * from './Controls'
 export * from './Map'
 export * from './Popup'
