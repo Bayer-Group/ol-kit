@@ -1,5 +1,5 @@
-export * from './CatalogLayers'
 export * from './Controls'
+export * from './DataLayers'
 export * from './Map'
 export * from './Popup'
 export { default as VectorLayer } from './classes/VectorLayer'
