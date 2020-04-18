@@ -8,7 +8,7 @@ import olFill from 'ol/style/fill'
 import olStroke from 'ol/style/stroke'
 import proj from 'ol/proj'
 
-import US_STATES from './data/us_states.json'
+import US_STATES from '../../data/us_states.json'
 
 export const createUSStatesLayer = () => {
   const layer = new olVectorLayer({ source: new olVectorSource() })
