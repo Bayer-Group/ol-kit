@@ -58,11 +58,11 @@ reactComponents['PopupBase'] = Component10;
 import Component11 from '../src/Popup/PopupInsert/PopupDataList/index.js';
 reactComponents['PopupDataList'] = Component11;
 
-import Component12 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
-reactComponents['PopupDefaultPage'] = Component12;
+import Component12 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
+reactComponents['PopupDefaultInsert'] = Component12;
 
-import Component13 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
-reactComponents['PopupInsert'] = Component13;
+import Component13 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
+reactComponents['PopupDefaultPage'] = Component13;
 
 import Component14 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
 reactComponents['PopupPageLayout'] = Component14;

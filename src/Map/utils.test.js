@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import { waitFor } from '@testing-library/react'
 import qs from 'qs'
-import Map from './Map'
-import { connectToMap, createMap, updateMapFromUrl } from './utils'
+import { Map, connectToMap, createMap, updateMapFromUrl } from 'Map'
 
 describe('createMap', () => {
   // jest does not reset the DOM after each test, so we do this manually

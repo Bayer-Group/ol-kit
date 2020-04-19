@@ -14,7 +14,7 @@ import PopupPageLayout from './PopupPageLayout'
  * @component
  * @category Popup
  */
-class PopupInsert extends Component {
+class PopupDefaultInsert extends Component {
   constructor (props) {
     super(props)
 
@@ -75,17 +75,28 @@ class PopupInsert extends Component {
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
         {features.length
-          ? features.map((f, i) => (
-              <PopupDefaultPage
-                key={i}
-                title={f.get('title') || `Feature ${i+1}`}
-                loading={loading}
-                onClose={onClose}
-                attributes={propertiesFilter(f.getProperties())}
-                translations={translations}>
-                <div style={{ padding: '10px' }}>No available actions</div>
-              </PopupDefaultPage>
-            ))
+          ? features.map((f, i) => {
+              // priority: 'title', 'name', then 'Feature x'
+              const attributes = f.getProperties()
+              let title = `Feature ${i+1}`
+
+              for (const key in attributes) {
+                if (key.toLowerCase() === 'name') title = attributes[key]
+                if (key.toLowerCase() === 'title') title = attributes[key]
+              }
+
+              return (
+                <PopupDefaultPage
+                  key={i}
+                  title={title}
+                  loading={loading}
+                  onClose={onClose}
+                  attributes={propertiesFilter(f.getProperties())}
+                  translations={translations}>
+                  <div style={{ padding: '10px' }}>No available actions</div>
+                </PopupDefaultPage>
+              )
+            })
           : <PopupDefaultPage
             title={loading ? 'Loading features' : 'Select a feature'}
             loading={loading}
@@ -97,7 +108,7 @@ class PopupInsert extends Component {
   }
 }
 
-PopupInsert.defaultProps = {
+PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
@@ -106,7 +117,7 @@ PopupInsert.defaultProps = {
   showSettingsCog: false
 }
 
-PopupInsert.propTypes = {
+PopupDefaultInsert.propTypes = {
   /** array from which to select a feature */
   features: PropTypes.array,
   /** put ui into loading state */
@@ -133,4 +144,4 @@ PopupInsert.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupInsert)
+export default connectToMap(PopupDefaultInsert)

@@ -1,5 +1,5 @@
 # connectToMap
-The `connectToMap` component automatically passes an `ol.Map` to its children.
+The `connectToMap` wrapping function that automatically passes an `ol.Map` to its children.
 
 ## How does it work?
 When the `Map` component is constructed, it attaches the OpenLayers map to a [context](https://reactjs.org/docs/context.html). If this context exists (which means `Map` has been constructed), `connectToMap` renders it's child with a prop of `map` from the `Map` parent and also spreads the rest of the inline props. If a `Map` is not mounted, `connectToMap` will just render the child and pass props through without consuming a context.
