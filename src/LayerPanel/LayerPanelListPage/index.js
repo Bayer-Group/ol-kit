@@ -14,6 +14,7 @@ import olSourceVector from 'ol/source/vector'
 import olStyleStyle from 'ol/style/style'
 
 import VectorLayer from 'classes/VectorLayer'
+import { connectToMap } from 'Map'
 
 import isEqual from 'lodash.isequal'
 import { Divider } from '@material-ui/core'
@@ -353,7 +354,7 @@ class LayerPanelListPage extends Component {
     return (
       <LayerPanelPage>
         <LayerPanelHeader
-          title={translations['geokit.LayerPanelListPage.title']}
+          title={translations['_ol_kit.LayerPanelListPage.title']}
           translations={translations}
           handleRemove={this.handleRemove}
           handleExport={this.handleExport}
@@ -370,7 +371,7 @@ class LayerPanelListPage extends Component {
         {enableFilter &&
           <TextField
             id='feature-filter-input'
-            label={translations['geokit.LayerPanelListPage.filterText']}
+            label={translations['_ol_kit.LayerPanelListPage.filterText']}
             type='text'
             style={{ margin: '8px' }}
             fullWidth
@@ -404,7 +405,7 @@ LayerPanelListPage.defaultProps = {
   handleFeatureDoubleClick: () => {},
   handleLayerDoubleClick: () => {},
   menuItems: [],
-  layerFilter: (layers) => layers.filter(layer => !layer.get('_vmf_basemap') && layer.get('name') !== 'unselectable'),
+  layerFilter: (layers) => layers.filter(layer => !layer.get('_ol_kit_basemap') && layer.get('name') !== 'unselectable'),
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   translations: {
@@ -459,4 +460,4 @@ LayerPanelListPage.propTypes = {
   exportFeatures: PropTypes.func
 }
 
-export default LayerPanelListPage
+export default connectToMap(LayerPanelListPage)
