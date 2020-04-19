@@ -114,6 +114,9 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   const layer = new olVectorLayer({ source: new olVectorSource() })
   const source = layer.getSource()
 
+  // set attribute for LayerPanel title
+  layer.set('title', 'Data Layer')
+
   features.forEach((feature, i) => {
     const { properties } = feature
 

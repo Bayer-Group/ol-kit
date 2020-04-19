@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "0.3.0-5",
+  "version": "0.3.0-7",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -63,6 +63,7 @@
     "@turf/helpers": "^6.1.4",
     "geostyler-openlayers-parser": "0.21.0",
     "lodash.debounce": "~4.0.8",
+    "lodash.isequal": "^4.5.0",
     "nanoid": "~2.1.6",
     "prop-types": "~15.7.2",
     "qs": "~6.9.1",
