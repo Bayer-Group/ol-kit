@@ -2,19 +2,27 @@
 
 exports[`ol-kit package should not export undefined 1`] = `
 Object {
+  "BasemapManager": [Function],
+  "BingMaps": [Function],
+  "BlankWhite": [Function],
   "Compass": [Function],
   "Controls": [Function],
   "Map": [Function],
+  "OpenStreetMap": [Function],
   "Popup": [Function],
   "PopupBase": [Function],
   "PopupDefaultInsert": [Function],
+  "StamenTerrain": [Function],
+  "StamenTonerDark": [Function],
+  "StamenTonerLite": [Function],
   "VectorLayer": [Function],
   "ZoomControls": [Function],
   "centerAndZoom": [Function],
   "connectToMap": [Function],
+  "createDataLayer": [Function],
   "createMap": [Function],
   "createSelectInteraction": [Function],
-  "createUSStatesLayer": [Function],
+  "loadDataLayer": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }

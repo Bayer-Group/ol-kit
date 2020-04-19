@@ -1,3 +1,4 @@
+export * from './Basemaps'
 export * from './Controls'
 export * from './DataLayers'
 export * from './Map'

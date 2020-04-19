@@ -1,4 +1,4 @@
-export { default } from './BasemapManager'
+export { default as BasemapManager } from './BasemapManager'
 export { default as OpenStreetMap } from './OpenStreetMap'
 export { default as BlankWhite } from './BlankWhite'
 export { default as StamenTerrain } from './StamenTerrain'
