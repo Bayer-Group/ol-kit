@@ -10,7 +10,6 @@ Object {
   "LayerPanel": [Function],
   "LayerPanelContent": [Function],
   "LayerPanelHeader": [Function],
-  "LayerPanelInsert": [Function],
   "LayerPanelList": [Function],
   "LayerPanelListPage": [Function],
   "LayerPanelPage": [Function],
