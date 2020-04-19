@@ -42,7 +42,7 @@ export default App
 ### Pass a Custom Map
 If you prefer creating your own `ol.Map` you can ignore the `onMapInit` prop and instead pass the `map` prop like so:
 ```javascript
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Map } from '@bayer/ol-kit'
 import olMap from 'ol/map'
 

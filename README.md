@@ -17,13 +17,13 @@ npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
 ## Getting Started
 It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
 ```javascript
-import React from 'react'
+import { Component } from 'react'
 import { Map, Popup, Controls, centerAndZoom } from '@bayer/ol-kit'
 
 import VectorLayer from 'ol/layer/vector'
 import VectorSource from 'ol/source/vector'
 
-class App extends React.Component {
+class App extends Component {
   onMapInit = map => {
     const data = new VectorLayer({
       source: new VectorSource({
