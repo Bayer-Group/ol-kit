@@ -4,6 +4,13 @@ exports[`ol-kit package should not export undefined 1`] = `
 Object {
   "Compass": [Function],
   "Controls": [Function],
+  "LayerPanel": [Function],
+  "LayerPanelContent": [Function],
+  "LayerPanelHeader": [Function],
+  "LayerPanelInsert": [Function],
+  "LayerPanelList": [Function],
+  "LayerPanelListPage": [Function],
+  "LayerPanelPage": [Function],
   "Map": [Function],
   "Popup": [Function],
   "PopupBase": [Function],
