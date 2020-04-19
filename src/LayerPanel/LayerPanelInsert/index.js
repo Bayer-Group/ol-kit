@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import LayerPanel from '../LayerPanel'
 
 import LayerPanelListPage from '../LayerPanelListPage'
+import { connectToMap } from 'Map'
 
 import LayersIcon from '@material-ui/icons/Layers'
 
@@ -122,4 +123,4 @@ LayerPanelInsert.defaultProps = {
   enableFilter: false
 }
 
-export default LayerPanelInsert
+export default connectToMap(LayerPanelInsert)
