@@ -69,7 +69,7 @@ class PopupDefaultInsert extends Component {
   }
 
   render () {
-    const { features, loading, onClose, onSettingsClick, propertiesFilter, showSettingsCog, translations } = this.props
+    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, showSettingsCog, translations } = this.props
     const { selectedIdx } = this.state
 
     return (
@@ -93,7 +93,7 @@ class PopupDefaultInsert extends Component {
                   onClose={onClose}
                   attributes={propertiesFilter(f.getProperties())}
                   translations={translations}>
-                  <div style={{ padding: '10px' }}>No available actions</div>
+                  {!!actions ? actions : <div style={{ padding: '10px' }}>No available actions</div>}
                 </PopupDefaultPage>
               )
             })
@@ -118,6 +118,11 @@ PopupDefaultInsert.defaultProps = {
 }
 
 PopupDefaultInsert.propTypes = {
+  /** components passed to render as actions */
+  actions: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
   /** array from which to select a feature */
   features: PropTypes.array,
   /** put ui into loading state */
