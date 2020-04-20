@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import LayerPanelPage from 'LayerPanel/LayerPanelPage'
-import LayerPanelHeader from 'LayerPanel/LayerPanelHeader'
-import LayerPanelContent from 'LayerPanel/LayerPanelContent'
-import LayerPanelList from 'LayerPanel/LayerPanelList'
+import LayerPanelPage from '../LayerPanelPage'
+import LayerPanelHeader from '../LayerPanelHeader'
+import LayerPanelContent from '../LayerPanelContent'
+import LayerPanelList from '../LayerPanelList'
 
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'

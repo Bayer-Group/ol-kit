@@ -1,68 +1,125 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Tabs, Tab } from './styled'
-// material-ui-icons
+import LayerPanelBase from './LayerPanelBase'
+import LayerPanelListPage from './LayerPanelListPage'
+import { connectToMap } from 'Map'
+
 import LayersIcon from '@material-ui/icons/Layers'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
-/**
- * @component
- * @category Layer Panel
- * @example ./example.md
- */
 class LayerPanel extends Component {
-  constructor (props) {
-    super(props)
+  componentDidMount () {
+    const { maps } = this.props
 
-    this.state = {
-      activeIndex: false,
-      showLayerPanel: false
-    }
-  }
-
-  handleChange = (_, activeIndex) => {
-    const { showLayerPanel } = this.state
-
-    // the first time through the idx is 0 so we need to add 1
-    if (activeIndex === 0) {
-      this.setState({ showLayerPanel: !this.state.showLayerPanel, activeIndex: showLayerPanel ? false : 1 })
-    } else {
-      this.setState({ activeIndex })
-    }
+    maps.forEach(m => m.on(['visible', 'hidden'], () => this.forceUpdate()))
   }
 
   render () {
-    const { inline, children } = this.props
-    const { activeIndex, showLayerPanel } = this.state
+    const {
+      translations,
+      children,
+      map,
+      maps,
+      layerFilter,
+      onFeaturesImport,
+      onManageLayer,
+      onReportLayerBug,
+      menuItems,
+      enableFilter,
+      customActions,
+      handleFeatureDoubleClick,
+      shouldHideFeatures,
+      shouldAllowLayerRemoval,
+      handleLayerDoubleClick
+    } = this.props
+    const olMaps = maps.length ? maps : [map] // this ensures backward compatibility so a single map will still work
+    const returnFirstMap = (index) => index === 0
+    const visibleMaps = olMaps.filter((m, i) =>
+      m.getVisibleState instanceof Function ? m.getVisibleState() : returnFirstMap(i))
+
+    const mapsComps = visibleMaps.map((map, i) => {
+      return <LayerPanelListPage
+        key={i}
+        translations={translations}
+        tabIcon={visibleMaps.length < 2 ? <LayersIcon /> : i + 1}
+        map={map}
+        layerFilter={layerFilter}
+        onFeaturesImport={onFeaturesImport}
+        onManageLayer={onManageLayer}
+        onReportLayerBug={onReportLayerBug}
+        menuItems={menuItems}
+        enableFilter={enableFilter}
+        customActions={customActions}
+        handleFeatureDoubleClick={handleFeatureDoubleClick}
+        shouldHideFeatures={shouldHideFeatures}
+        shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+        handleLayerDoubleClick={handleLayerDoubleClick} />
+    })
+
+    const pages = [
+      ...mapsComps
+    ]
 
     return (
-      <Card open={showLayerPanel} numOfTabs={children.length || 1} inline={inline} className='_popup_boundary' >
-        <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
-          <Tab icon={showLayerPanel ? <ChevronRightIcon /> : <LayersIcon />} />
-          {showLayerPanel &&
-            React.Children.map(children, (child, i) => {
-              if (child) return <Tab key={i} icon={child.props.tabIcon} />
-            })
-          }
-        </Tabs>
-        {React.Children.toArray(children)[activeIndex - 1]}
-      </Card>
+      <LayerPanelBase translations={translations}>
+        {pages.concat(children)}
+      </LayerPanelBase>
     )
   }
 }
 
 LayerPanel.propTypes = {
-  /** An array of openlayers layers */
-  layers: PropTypes.array,
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.object,
 
-  /** Render the component inline (without absolute positioning) */
-  inline: PropTypes.bool,
+  /** An array of Openlayer map objects from which the layer panel will derive its layers  */
+  maps: PropTypes.array,
 
-  /** The content of the layer panel (likely a set of `LayerPanelPage` components) */
-  children: PropTypes.node.isRequired,
+  /**
+   * An Openlayers map object from which the layer panel will derive its layers
+   * @deprecated Use `maps` instead
+   */
+  map: PropTypes.object,
 
-  /** An object of styles spread on the layerpanel */
-  style: PropTypes.object
+  /** A set of prebuilt page components (like `LayerPanelListPage` & `LayerPanelLegendPage`) or custom pages */
+  children: PropTypes.node,
+
+  /** An array of menu items to show for each layer (only applies to default pages) */
+  menuItems: PropTypes.node,
+
+  /** A function which takes in layers & returns a subset of those layers (useful to "hide" certain layers) */
+  layerFilter: PropTypes.func,
+
+  /** A callback function when the "manage layer" action of a layer is selected (with the layer passed in) */
+  onManageLayer: PropTypes.func,
+
+  /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
+  onFeaturesImport: PropTypes.func,
+
+  /** A callback function when the "report layer bug" action of a layer is selected (with the layer passed in) */
+  onReportLayerBug: PropTypes.func,
+
+  /** A boolean which turns on/off filtering of features in the layer panel page */
+  enableFilter: PropTypes.bool,
+
+  /** A callback function fired when a feature list item is double clicked */
+  handleFeatureDoubleClick: PropTypes.func,
+
+  /** A callback function fired when a layer list header is double clicked */
+  handleLayerDoubleClick: PropTypes.func,
+
+  /** An array of components to be rendered in the LayerPanelHeader action menu */
+  customActions: PropTypes.array,
+
+  /** A callback function to determine if a given layer's features should be kept hidden from the panel page display */
+  shouldHideFeatures: PropTypes.func,
+
+  /** A callback function to determine if a given layer should be allowed to be removed from the panel page display */
+  shouldAllowLayerRemoval: PropTypes.func
 }
 
-export default LayerPanel
+LayerPanel.defaultProps = {
+  maps: [],
+  enableFilter: false
+}
+
+export default connectToMap(LayerPanel)

@@ -1,10 +1,6 @@
 import olVectorLayer from 'ol/layer/vector'
 import olVectorSource from 'ol/source/vector'
-import olStyle from 'ol/style/style'
-import olFill from 'ol/style/fill'
-import olStroke from 'ol/style/stroke'
 import Map from 'ol/map'
-import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
 import KML from 'ol/format/kml'
 import ugh from 'ugh'
@@ -51,15 +47,12 @@ const isValidUrl = string => {
 }
 
 export const createDataLayer = (arg, styleArg) => {
-  const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...styleArg }
   const dataSet = getLocalDataSet(arg)
   const features = getFeaturesFromDataSet(dataSet)
   const layer = new olVectorLayer({ source: new olVectorSource() })
   const source = layer.getSource()
 
   features.forEach((feature, i) => {
-    const { properties } = feature
-
     source.addFeature(feature)
   })
 
@@ -115,8 +108,6 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   const source = layer.getSource()
 
   features.forEach((feature, i) => {
-    const { properties } = feature
-
     source.addFeature(feature)
   })
 
