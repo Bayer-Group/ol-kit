@@ -31,8 +31,9 @@ export const Icon = styled.div`
   text-align: center;
   padding-top: 8px;
   transition: all 0.2s;
+  background: white;
   &:hover {
-    color: black;
+    background: #f3f3f3;
   }
 `
 
