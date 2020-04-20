@@ -170,8 +170,6 @@ class LayerStyler extends React.Component {
     const { attributeValues } = this.state
     const { translations } = this.props
 
-    console.log(layers, layers.map(l => l.getDefaultVectorStyles?.())) // eslint-disable-line no-console
-
     return (
       <StyleManager
       layers={layers}

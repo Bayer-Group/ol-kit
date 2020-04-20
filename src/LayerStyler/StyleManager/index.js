@@ -73,8 +73,6 @@ class StyleManager extends Component {
     const options = layers.map(getTitleForLayer)
     const activeIdx = options.findIndex(t => t === target.value)
 
-    console.log(activeIdx) // eslint-disable-line no-console
-
     this.setState({ activeIdx })
   }
 
@@ -174,8 +172,6 @@ class StyleManager extends Component {
     }
     const layerTitles = layers.map(getTitleForLayer)
     const layerSelected = activeIdx !== null
-
-    console.log(defaultStyles, activeIdx) // eslint-disable-line no-console
 
     return (
       <div data-testid='StyleManager'>
