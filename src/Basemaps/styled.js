@@ -10,10 +10,8 @@ export const Container = styled.div`
 
 export const BasemapOption = styled.div`
   cursor: pointer;
-  height: 100%;
-  width: 100%;
-  max-width: 130px;
-  max-height: 120px;
+  width: 130px;
+  height: 120px;
   margin-top: 20px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
