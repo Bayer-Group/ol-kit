@@ -22,7 +22,7 @@ const DEFAULT_OPTS = {
  * @category Basemap
  * @since 0.1.0
  */
-class BingMaps extends React.Component {
+class BasemapBingMaps extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
   }
@@ -70,7 +70,7 @@ class BingMaps extends React.Component {
   }
 }
 
-BingMaps.propTypes = {
+BasemapBingMaps.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
@@ -91,11 +91,11 @@ BingMaps.propTypes = {
   }).isRequired
 }
 
-BingMaps.defaultProps = {
+BasemapBingMaps.defaultProps = {
   onBasemapChanged: () => {},
   layerTypeID: '_ol_kit_basemap',
   thumbnail: '',
   layerID: 'bingAerial'
 }
 
-export default connectToMap(BingMaps)
+export default connectToMap(BasemapBingMaps)
