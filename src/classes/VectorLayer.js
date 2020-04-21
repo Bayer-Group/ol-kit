@@ -148,7 +148,8 @@ class VectorLayer extends olLayerVector {
 
   _setInitialStyle () {
     let style = {}
-    const geomType = this.getSource().getFeatures()[0].getGeometry()
+    const hasFeatures = this.getSource().getFeatures().length
+    const geomType = hasFeatures ? this.getSource().getFeatures()[0].getGeometry() : null
 
     if (geomType instanceof olGeomPoint || geomType instanceof olGeomMultiPoint) {
       style = [new olStyleStyle({

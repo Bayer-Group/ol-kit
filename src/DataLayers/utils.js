@@ -1,12 +1,8 @@
-import olVectorLayer from 'ol/layer/vector'
 import olVectorSource from 'ol/source/vector'
-import olStyle from 'ol/style/style'
-import olFill from 'ol/style/fill'
-import olStroke from 'ol/style/stroke'
 import Map from 'ol/map'
-import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
 import KML from 'ol/format/kml'
+import VectorLayer from 'classes/VectorLayer'
 import ugh from 'ugh'
 
 const getFeaturesFromDataSet = dataSet => {
@@ -42,7 +38,7 @@ const getLocalDataSet = arg => {
 
 const isValidUrl = string => {
   try {
-    new URL(string)
+    new URL(string) // eslint-disable-line no-new
   } catch (_) {
     return false
   }
@@ -88,17 +84,13 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   }
 
   // create the layer and add features
-  const layer = new olVectorLayer({ source: new olVectorSource() })
+  const layer = new VectorLayer({ source: new olVectorSource() })
   const source = layer.getSource()
 
   // set attribute for LayerPanel title
   layer.set('title', 'Data Layer')
 
-  features.forEach((feature, i) => {
-    const { properties } = feature
-
-    source.addFeature(feature)
-  })
+  source.addFeatures(features)
 
   if (opts.addToMap) map.addLayer(layer)
 
