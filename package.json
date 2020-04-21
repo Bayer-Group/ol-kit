@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "0.3.0-11",
+  "version": "0.3.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -53,21 +53,14 @@
     "url": "git@github.com:MonsantoCo/ol-kit.git"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.10",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/styles": "^4.9.10",
-    "@mdi/js": "^5.1.45",
-    "@mdi/react": "^1.4.0",
     "@turf/bbox": "^6.0.1",
     "@turf/centroid": "^6.0.2",
     "@turf/helpers": "^6.1.4",
     "geostyler-openlayers-parser": "0.21.0",
     "lodash.debounce": "~4.0.8",
-    "lodash.isequal": "^4.5.0",
     "nanoid": "~2.1.6",
     "prop-types": "~15.7.2",
-    "qs": "~6.9.1",
-    "react-smooth-dnd": "^0.11.1"
+    "qs": "~6.9.1"
   },
   "devDependencies": {
     "@babel/cli": "~7.4.3",

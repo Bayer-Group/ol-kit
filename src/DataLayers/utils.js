@@ -50,29 +50,6 @@ const isValidUrl = string => {
   return true
 }
 
-export const createDataLayer = (arg, styleArg) => {
-  const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...styleArg }
-  const dataSet = getLocalDataSet(arg)
-  const features = getFeaturesFromDataSet(dataSet)
-  const layer = new olVectorLayer({ source: new olVectorSource() })
-  const source = layer.getSource()
-
-  features.forEach((feature, i) => {
-    const { properties } = feature
-
-    source.addFeature(feature)
-  })
-
-  // layer.setStyle(
-  //   new olStyle({
-  //     fill: new olFill(style.fill),
-  //     stroke: new olStroke(style.stroke)
-  //   })
-  // )
-
-  return layer
-}
-
 /**
  * Async fetch for data layers - supports geojson, kml
  * @function
@@ -122,13 +99,6 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
     source.addFeature(feature)
   })
-
-  // layer.setStyle(
-  //   new olStyle({
-  //     fill: new olFill(style.fill),
-  //     stroke: new olStroke(style.stroke)
-  //   })
-  // )
 
   if (opts.addToMap) map.addLayer(layer)
 
