@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-import { ControlsContainer, IconsContainer } from './styled'
+import { ControlsContainer } from './styled'
 import Compass from './Compass'
 import { connectToMap } from 'Map'
 import ZoomControls from './ZoomControls'
@@ -21,9 +21,7 @@ function Controls (props) {
       <ControlsContainer position={position}>
         {children || (
           <>
-            <IconsContainer>
-              <ZoomControls map={map} />
-            </IconsContainer>
+            <ZoomControls map={map} />
             <Compass map={map} />
           </>
         )
