@@ -83,6 +83,8 @@ class LayerPanelListItem extends Component {
         onClick={this.handleVisibility} checked={true} indeterminate />
       : <Checkbox onClick={this.handleVisibility} checked={layer.getVisible()} />
 
+    console.log(menuItems)
+
     if (children) {
       return (
         <ListItem>
@@ -112,11 +114,10 @@ class LayerPanelListItem extends Component {
                   shouldAllowLayerRemoval={shouldAllowLayerRemoval}
                   map={map}
                   translations={translations}>
-                  {menuItems
-                    ? [...menuItems]
-                    : <><LayerPanelActionRemove />
-                      <LayerPanelActionExtent />
-                      <LayerPanelActionOpacity /></>}
+                  {menuItems ||
+                    [<LayerPanelActionRemove key='removeLayer' />,
+                      <LayerPanelActionExtent key='gotoExtent' />,
+                      <LayerPanelActionOpacity key='layerOpacity' />]}
                 </LayerPanelMenu>
               </div>
             }

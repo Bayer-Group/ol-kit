@@ -57,7 +57,6 @@ class LayerPanelHeader extends Component {
 
     console.log(<LayerPanelMenu />)
 
-
     return (
       <CardHeader
         title={title}

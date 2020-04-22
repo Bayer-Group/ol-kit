@@ -82,7 +82,7 @@ class LayerPanelList extends Component {
             features={features}
             layerId={layer.get('_id')}
             title={layer.get('title') || 'Untitled Layer'}
-            menuItems={getMenuItemsForLayer(layer)}
+            menuItems={getMenuItemsForLayer && getMenuItemsForLayer(layer)}
             defaultCheckboxes={defaultCheckboxes} />
         </Draggable>
       )
