@@ -62,53 +62,10 @@ class LayerPanelActions extends Component {
 
     return (
       <ActionsContainer>
-        <IconButton
-          aria-label='more'
-          aria-haspopup='true'
-          onClick={this.handleMenuClick}
-        >
+        <IconButton aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
           <MoreHorizIcon />
         </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={!!anchorEl}
-          onClose={this.handleMenuClose}
-        >
-          {showDefaultActions && (
-            <div>
-              <MenuItem disbaleGutter={false} disabled={noVisibleLayers} onClick={this.props.handleRemove}>
-                {translations['olKit.LayerPanelActions.remove']}
-              </MenuItem>
-              <MenuItem disbaleGutter={false} onClick={this.handleImport}>
-                <label htmlFor='file-upload'>
-                  {translations['olKit.LayerPanelActions.import']}
-                </label>
-                <UploadInput
-                  value={this.state.value || ''}
-                  type='file'
-                  accept={fileTypes.map(f => f.extension).join(',')}
-                  id='file-upload'
-                  hidden={true}
-                  onChange={(e) => this.onFileChange('file-upload')}
-                  className='zmdi zmdi-upload'
-                />
-              </MenuItem>
-              <MenuItem
-                disbaleGutter={false}
-                disabled={isExportable}
-                onClick={this.exportKmlFile}
-              >
-                {translations['olKit.LayerPanelActions.kml']}
-              </MenuItem>
-              <MenuItem
-                disbaleGutter={false}
-                disabled={isExportable}
-                onClick={this.exportShapefile}
-              >
-                {translations['olKit.LayerPanelActions.shapefile']}
-              </MenuItem>
-            </div>
-          )}
+        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleMenuClose}>
           {this.props.children}
         </Menu>
       </ActionsContainer>

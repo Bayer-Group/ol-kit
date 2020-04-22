@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import LayerPanelBase from './LayerPanelBase'
-import LayerPanelListPage from './LayerPanelListPage'
+import LayerPanelBase from 'LayerPanel/LayerPanelBase'
+import LayerPanelListPage from 'LayerPanel/LayerPanelListPage'
 import { connectToMap } from 'Map'
 
 import LayersIcon from '@material-ui/icons/Layers'
@@ -21,21 +21,21 @@ class LayerPanel extends Component {
       maps,
       layerFilter,
       onFeaturesImport,
-      onManageLayer,
-      onReportLayerBug,
       menuItems,
       enableFilter,
       customActions,
       handleFeatureDoubleClick,
       shouldHideFeatures,
       shouldAllowLayerRemoval,
-      handleLayerDoubleClick
+      handleLayerDoubleClick,
+      getMenuItemsForLayer
     } = this.props
     const olMaps = maps.length ? maps : [map] // this ensures backward compatibility so a single map will still work
     const returnFirstMap = (index) => index === 0
     const visibleMaps = olMaps.filter((m, i) =>
       m.getVisibleState instanceof Function ? m.getVisibleState() : returnFirstMap(i))
 
+    // the filter ensures that older versions of vmf without this function will still work
     const mapsComps = visibleMaps.map((map, i) => {
       return <LayerPanelListPage
         key={i}
@@ -44,24 +44,19 @@ class LayerPanel extends Component {
         map={map}
         layerFilter={layerFilter}
         onFeaturesImport={onFeaturesImport}
-        onManageLayer={onManageLayer}
-        onReportLayerBug={onReportLayerBug}
         menuItems={menuItems}
         enableFilter={enableFilter}
         customActions={customActions}
         handleFeatureDoubleClick={handleFeatureDoubleClick}
         shouldHideFeatures={shouldHideFeatures}
         shouldAllowLayerRemoval={shouldAllowLayerRemoval}
-        handleLayerDoubleClick={handleLayerDoubleClick} />
+        handleLayerDoubleClick={handleLayerDoubleClick}
+        getMenuItemsForLayer={getMenuItemsForLayer} />
     })
-
-    const pages = [
-      ...mapsComps
-    ]
 
     return (
       <LayerPanelBase translations={translations}>
-        {pages.concat(children)}
+        {mapsComps.concat(children)}
       </LayerPanelBase>
     )
   }

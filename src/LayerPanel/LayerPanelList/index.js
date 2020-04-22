@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import List from '@material-ui/core/List'
-import LayerPanelListItem from '../LayerPanelListItem'
+import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
 import { Container, Draggable } from 'react-smooth-dnd'
 
 import PropTypes from 'prop-types'
@@ -56,7 +56,10 @@ class LayerPanelList extends Component {
       getFeaturesForLayer,
       handleLayerCheckbox,
       handleFeatureDoubleClick,
-      handleLayerDoubleClick
+      handleLayerDoubleClick,
+      shouldAllowLayerRemoval,
+      removeLayer,
+      map
     } = this.props
 
     return layers.sort(this.zIndexSort).map(layer => {
@@ -72,10 +75,13 @@ class LayerPanelList extends Component {
             handleLayerCheckbox={handleLayerCheckbox}
             handleFeatureDoubleClick={handleFeatureDoubleClick}
             handleLayerDoubleClick={handleLayerDoubleClick}
+            shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+            removeLayer={removeLayer}
             layer={layer}
+            map={map}
             features={features}
-            layerId={layer.get('_vmf_id')}
-            title={layer.get('_vmf_title') || layer.get('title') || 'Untitled Layer'}
+            layerId={layer.get('_id')}
+            title={layer.get('title') || 'Untitled Layer'}
             menuItems={getMenuItemsForLayer(layer)}
             defaultCheckboxes={defaultCheckboxes} />
         </Draggable>

@@ -16,3 +16,8 @@ export const CardHeader = withStyles(() => ({
     height: '75px'
   }
 }))(MaterialCardHeader)
+
+export const ActionsContainer = styled.div`
+  margin-top: 4px;
+  display: flex;
+`

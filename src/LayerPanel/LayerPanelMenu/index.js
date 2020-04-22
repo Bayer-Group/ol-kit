@@ -9,13 +9,18 @@ import PropTypes from 'prop-types'
  */
 class LayerPanelMenu extends Component {
   render () {
-    const { handleMenuClose, layer, open, anchorEl, materialId, menuItems } = this.props
+    const { handleMenuClose, layer, layers, open, anchorEl, materialId, children } = this.props
 
-    const menuItemsWithProps = React.Children.map(menuItems, item =>
+    console.log(layer, layers)
+
+    const menuItemsWithProps = React.Children.map(children, item =>
       React.cloneElement(item, {
+        ...this.props,
         onClick: () => {
+          const layerCollection = layer || layers
+
           handleMenuClose()
-          item.props.onClick(layer)
+          item.props.onClick(layerCollection)
         }
       })
     )
@@ -46,7 +51,9 @@ LayerPanelMenu.propTypes = {
   layer: PropTypes.object,
 
   /** Callback function called when the 'go to layer extent' menu option is clicked */
-  gotoLayerExtent: PropTypes.func
+  gotoLayerExtent: PropTypes.func,
+  map: PropTypes.object,
+  shouldAllowLayerRemoval: PropTypes.func
 }
 
 export default LayerPanelMenu

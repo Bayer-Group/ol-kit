@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import LayerPanelPage from '../LayerPanelPage'
-import LayerPanelHeader from '../LayerPanelHeader'
-import LayerPanelContent from '../LayerPanelContent'
-import LayerPanelList from '../LayerPanelList'
+import LayerPanelPage from 'LayerPanel/LayerPanelPage'
+import LayerPanelHeader from 'LayerPanel/LayerPanelHeader'
+import LayerPanelContent from 'LayerPanel/LayerPanelContent'
+import LayerPanelList from 'LayerPanel/LayerPanelList'
 
-import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 
 import olObservable from 'ol/observable'
@@ -15,9 +14,11 @@ import olStyleStyle from 'ol/style/style'
 
 import VectorLayer from 'classes/VectorLayer'
 
+import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
+import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
+import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
+
 import isEqual from 'lodash.isequal'
-import { Divider } from '@material-ui/core'
-import { OpacityWrapper, OpacityTitle, Slider } from './styled'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -80,7 +81,7 @@ class LayerPanelListPage extends Component {
   bindFeatureListeners = () => {
     const { layers = [] } = this.state
     const featureListeners = layers.reduce((listeners = [], layer) => {
-      const isVectorLayer = layer instanceof olLayerVector
+      const isVectorLayer = this.isValidVectorLayer(layer)
       const canGetSource = typeof layer.getSource === 'function'
       const hasVectorSource = canGetSource && layer.getSource() instanceof olSourceVector
 
@@ -112,7 +113,7 @@ class LayerPanelListPage extends Component {
     return this.state.layers.filter(layer => layer.getVisible())
   }
 
-  showCatalogLayers = (layers) => {
+  showLayers = (layers) => {
     return layers.map(layer => {
       layer.setVisible(true)
 
@@ -130,14 +131,14 @@ class LayerPanelListPage extends Component {
 
   setVisibilityForAllLayers = (visibility) => {
     const { layers } = this.state
-    const updatedLayers = visibility ? this.showCatalogLayers(layers) : this.hideLayers(layers)
+    const updatedLayers = visibility ? this.showLayers(layers) : this.hideLayers(layers)
 
     layers.forEach(layer => this.setVisibilityForAllFeaturesOfLayer(layer, visibility))
     this.setState({ layers: updatedLayers })
   }
 
   getFeaturesForLayer = (layer) => {
-    if (!(layer instanceof olLayerVector)) return
+    if (!this.isValidVectorLayer(layer)) return
     if (this.props.shouldHideFeatures(layer)) return
 
     return layer.getSource().getFeatures().map(feature => {
@@ -157,11 +158,12 @@ class LayerPanelListPage extends Component {
   }
 
   getVisibleFeaturesForLayer = (layer) => {
-    return layer instanceof olLayerVector ? layer.getSource().getFeatures().filter(feature => feature.get('_feature_visibility')) : []
+    return (this.isValidVectorLayer(layer))
+      ? layer.getSource().getFeatures().filter(feature => feature.get('_feature_visibility')) : []
   }
 
   setVisibilityForAllFeaturesOfLayer = (layer, visibility) => {
-    if (layer instanceof olLayerVector) {
+    if (this.isValidVectorLayer(layer)) {
       layer.getSource().getFeatures().map(feature => {
         feature.set('_feature_visibility', visibility)
         feature.setStyle(feature.get('_feature_style'))
@@ -170,14 +172,14 @@ class LayerPanelListPage extends Component {
   }
 
   // layerpanel header bulk actions
-  handleRemove = () => {
-    this.state.layers.forEach(layer => {
-      if (this.props.shouldAllowLayerRemoval(layer)) {
-        (layer.getVisible() && layer.getVisible() !== INDETERMINATE) && this.props.map.removeLayer(layer)
-        layer instanceof olLayerVector && this.removeFeaturesForLayer(layer)
-      }
-    })
-  }
+  // handleRemove = () => {
+  //   this.state.layers.forEach(layer => {
+  //     if (this.props.shouldAllowLayerRemoval(layer)) {
+  //       (layer.getVisible() && layer.getVisible() !== INDETERMINATE) && this.props.map.removeLayer(layer)
+  //       this.isValidVectorLayer(layer) && this.removeFeaturesForLayer(layer)
+  //     }
+  //   })
+  // }
 
   // remove the layer
   removeLayer = (layer) => {
@@ -194,47 +196,28 @@ class LayerPanelListPage extends Component {
     this.handleLayerCheckbox(layer)
   }
 
-  handleImport = file => {
-    const { map, onFeaturesImport, convertFileToFeatures } = this.props
+  // handleExport = (filetype) => {
+  //   const { onExportFeatures } = this.props
+  //   const exportableFeatures = this.collectExportableFeatures()
 
-    // otherwise, add them to the map ourselves
-    convertFileToFeatures(file, map).then(({ features, name }) => {
-      // if a callback to handle imported features is passed, IAs handle add them to the map
-      if (onFeaturesImport) return onFeaturesImport(features, name)
+  //   onExportFeatures(filetype, exportableFeatures)
+  // }
 
-      // if no onFeaturesImport prop is passed, create a layer, add it and center/zoom the map
-      if (!onFeaturesImport) {
-        const source = new olSourceVector({ features })
-        const layer = new VectorLayer({ title: name, source })
+  // collectExportableFeatures = () => {
+  //   const features = this.getVisibleLayers().filter(layer => this.isValidVectorLayer(layer)).map(layer => {
+  //     return layer.getSource().getFeatures()
+  //   })
 
-        map.addLayer(layer)
-        map.getView().fit(source.getExtent(), map.getSize())
-      }
-    })
-  }
+  //   return features.flat()
+  // }
 
-  handleExport = (filetype) => {
-    const { exportFeatures } = this.props
-    const exportableFeatures = this.collectExportableFeatures()
+  // isExportable = () => {
+  //   const visibleLayers = this.getVisibleLayers()
 
-    exportFeatures(filetype, exportableFeatures)
-  }
-
-  collectExportableFeatures = () => {
-    const features = this.getVisibleLayers().filter(layer => layer instanceof olLayerVector).map(layer => {
-      return layer.getSource().getFeatures()
-    })
-
-    return features.flat()
-  }
-
-  isExportable = () => {
-    const visibleLayers = this.getVisibleLayers()
-
-    return visibleLayers.filter(layer => {
-      return layer instanceof olLayerVector
-    }).length !== visibleLayers.length || visibleLayers.length === 0
-  }
+  //   return visibleLayers.filter(layer => {
+  //     return this.isValidVectorLayer(layer)
+  //   }).length !== visibleLayers.length || visibleLayers.length === 0
+  // }
 
   getLayerExtentProps = (layer) => {
     const extent = (layer => {
@@ -273,7 +256,7 @@ class LayerPanelListPage extends Component {
 
   handleLayerCheckbox = (layer, layerCheckboxClick = false) => {
     const visibleFeatures = this.getVisibleFeaturesForLayer(layer).length
-    const totalFeatures = layer instanceof olLayerVector ? layer.getSource().getFeatures().length : 0
+    const totalFeatures = this.isValidVectorLayer(layer) ? layer.getSource().getFeatures().length : 0
     const layerVisibility = visibleFeatures === totalFeatures && totalFeatures > 0 ? true : visibleFeatures > 0 ? INDETERMINATE : false // eslint-disable-line
 
     if (layerCheckboxClick && layerVisibility === INDETERMINATE) {
@@ -296,57 +279,13 @@ class LayerPanelListPage extends Component {
     this.setState({ filterText })
   }
 
-  renderReportLayerBugModal = (layer) => {
-    this.setState({ showReportLayerBugModal: !this.state.showReportLayerBugModal, currentLayer: layer })
-  }
-
-  getMenuItemsForLayer = (layer) => {
-    const { onManageLayer, menuItems = [] } = this.props
-
-    // we need a no-op function here to prevent clicks from doing anything
-    const opacitySlider = (
-      <MenuItem key={'opacity'} onClick={() => {}}>
-        <OpacityWrapper>
-          <OpacityTitle id='opacity-slider'>
-              Opacity
-          </OpacityTitle>
-          <Slider
-            disabled={false}
-            min={0.1}
-            max={1}
-            step={0.1}
-            defaultValue={layer.getOpacity()}
-            onChangeCommitted={() => this.forceUpdate()}
-            aria-labelledby='opacity-slider'
-            onChange={(e, v) => layer.setOpacity(v) } />
-        </OpacityWrapper>
-      </MenuItem>
-    )
-
-    if (layer.isCatalogLayer || layer.isGeoserverLayer) {
-      return [
-        ...menuItems,
-        <MenuItem key={'remove'} disabled={!this.props.shouldAllowLayerRemoval(layer)} onClick={this.removeLayer}>Remove Layer</MenuItem>, // eslint-disable-line
-        <MenuItem key={'zoom'} onClick={this.gotoLayerExtent}>Zoom to Layer Extent</MenuItem>,
-        <MenuItem key={'manage'} onClick={onManageLayer}>Manage Layer</MenuItem>,
-        <MenuItem key={'bug'} onClick={this.renderReportLayerBugModal}>Report Layer Bug</MenuItem>,
-        <Divider />,
-        opacitySlider
-      ]
-    } else {
-      return [
-        ...menuItems,
-        <MenuItem key={'remove'} disabled={!this.props.shouldAllowLayerRemoval(layer)} onClick={this.removeLayer}>Remove Layer</MenuItem>, // eslint-disable-line
-        <MenuItem key={'zoom'} onClick={this.gotoLayerExtent}>Zoom to Layer Extent</MenuItem>,
-        <Divider />,
-        opacitySlider
-      ]
-    }
+  isValidVectorLayer = (layer) => {
+    return (layer instanceof olLayerVector || layer.isVectorLayer)
   }
 
   render () {
     const { translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick,
-      customActions, enableFilter } = this.props
+      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport } = this.props
     const { layers, masterCheckboxVisibility, filterText } = this.state
     const noVisibleLayers = this.getVisibleLayers().length === 0
 
@@ -355,18 +294,16 @@ class LayerPanelListPage extends Component {
         <LayerPanelHeader
           title={translations['geokit.LayerPanelListPage.title']}
           translations={translations}
-          handleRemove={this.handleRemove}
-          handleExport={this.handleExport}
-          handleImport={this.handleImport}
-          isExportable={this.isExportable()}
-          noVisibleLayers={noVisibleLayers}
+          layers={layers}
           handleMasterCheckbox={this.handleMasterCheckbox}
           masterCheckboxVisibility={masterCheckboxVisibility}
           setVisibilityForAllLayers={this.setVisibilityForAllLayers}
-          defaultCheckboxes={true}
-          defaultActions={true}
-          masterCheckbox={true}
-          customActions={customActions} />
+          customActions={customActions}
+          map={map}>
+          <LayerPanelActionRemove />
+          <LayerPanelActionImport handleImport={onFileImport} />
+          <LayerPanelActionExport />
+        </LayerPanelHeader>
         {enableFilter &&
           <TextField
             id='feature-filter-input'
@@ -386,14 +323,17 @@ class LayerPanelListPage extends Component {
 
               return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
             })}
-            getMenuItemsForLayer={this.getMenuItemsForLayer}
+            getMenuItemsForLayer={getMenuItemsForLayer}
             gotoLayerExtent={this.gotoLayerExtent}
+            removeLayer={this.removeLayer}
             handleMasterCheckbox={this.handleMasterCheckbox}
             getFeaturesForLayer={this.getFeaturesForLayer}
             handleFeatureCheckbox={this.handleFeatureCheckbox}
             handleLayerCheckbox={this.handleLayerCheckbox}
             handleFeatureDoubleClick={handleFeatureDoubleClick}
-            handleLayerDoubleClick={handleLayerDoubleClick} />
+            handleLayerDoubleClick={handleLayerDoubleClick}
+            shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+            map={map} />
         </LayerPanelContent>
       </LayerPanelPage>
     )
@@ -432,14 +372,8 @@ LayerPanelListPage.propTypes = {
   /** A boolean which turns on/off filtering of features in the layer panel page */
   enableFilter: PropTypes.bool,
 
-  /** A callback function when the "manage layer" action of a layer is selected (with the layer passed in) */
-  onManageLayer: PropTypes.func,
-
   /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
   onFeaturesImport: PropTypes.func,
-
-  /** A callback function when the "report layer bug" action of a layer is selected (with the layer passed in) */
-  onReportLayerBug: PropTypes.func,
 
   /** A callback function fired when a feature list item is double clicked */
   handleFeatureDoubleClick: PropTypes.func,
@@ -456,7 +390,8 @@ LayerPanelListPage.propTypes = {
   /** A callback function to determine if a given layer should be allowed to be removed from the panel page display */
   shouldAllowLayerRemoval: PropTypes.func,
   convertFileToFeatures: PropTypes.func,
-  exportFeatures: PropTypes.func
+  exportFeatures: PropTypes.func,
+  getMenuItemsForLayer: PropTypes.func
 }
 
 export default LayerPanelListPage

@@ -1,20 +1,41 @@
 import React, { Component } from 'react'
-import { HeaderContainer, CardHeader } from './styled'
+import { HeaderContainer, CardHeader, ActionsContainer } from './styled'
 import { Checkbox } from '../styled'
-import LayerPanelActions from '../LayerPanelActions'
+import LayerPanelMenu from 'LayerPanel/LayerPanelMenu'
 import PropTypes from 'prop-types'
 
 import Icon from '@mdi/react'
 import { mdiCheckboxBlank } from '@mdi/js'
+import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
+import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
+import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
+
+import IconButton from '@material-ui/core/IconButton'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 /**
  * @component
  * @category vmc
  */
 class LayerPanelHeader extends Component {
+  constructor () {
+    super()
+    this.state = {
+      anchorEl: null
+    }
+  }
+
   setVisibilityForAllLayers = (show) => {
     this.props.setVisibilityForAllLayers(!show)
     this.props.handleMasterCheckbox()
+  }
+
+  handleMenuClick = ({ currentTarget }) => {
+    this.setState({ anchorEl: currentTarget })
+  }
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null })
   }
 
   render () {
@@ -22,45 +43,42 @@ class LayerPanelHeader extends Component {
       translations,
       children,
       title,
-      defaultActions,
-      masterCheckbox,
-      handleExport,
       masterCheckboxVisibility,
-      handleImport,
-      isExportable,
-      noVisibleLayers,
-      hideActions
+      layers,
+      customActions,
+      map
     } = this.props
+    const { anchorEl } = this.state
     const CheckBox = masterCheckboxVisibility === 'indeterminate'
       ? <Checkbox indeterminateIcon={<Icon path={mdiCheckboxBlank} size={1} color='#152357' />}
         onClick={() => this.setVisibilityForAllLayers(false)} checked={masterCheckboxVisibility} indeterminate />
       : <Checkbox onClick={() => this.setVisibilityForAllLayers(masterCheckboxVisibility)}
         checked={masterCheckboxVisibility} />
 
-    if (children) {
-      return <HeaderContainer>{children}</HeaderContainer>
-    } else {
-      return (
-        <CardHeader
-          title={title}
-          avatar={masterCheckbox && CheckBox}
-          action={
-            hideActions ? null : (
-              <LayerPanelActions
-                translations={translations}
-                handleRemove={this.props.handleRemove}
-                handleExport={handleExport}
-                handleImport={handleImport}
-                isExportable={isExportable}
-                noVisibleLayers={noVisibleLayers}
-                showDefaultActions={defaultActions}
-              >
-                {this.props.customActions}
-              </LayerPanelActions>
-            )
-          } />
-      )
-    }
+    console.log(<LayerPanelMenu />)
+
+
+    return (
+      <CardHeader
+        title={title}
+        avatar={CheckBox}
+        action={
+          <ActionsContainer>
+            <IconButton aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
+              <MoreHorizIcon />
+            </IconButton>
+            <LayerPanelMenu
+              anchorEl={anchorEl}
+              open={!!anchorEl}
+              handleMenuClose={this.handleMenuClose}
+              translations={translations}
+              layers={layers}
+              map={map} >
+              {children}
+            </LayerPanelMenu>
+          </ActionsContainer>
+        } />
+    )
   }
 }
 

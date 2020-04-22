@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ListItem, ListItemText } from './styled'
-import LayerPanelMenu from '../LayerPanelMenu'
+import LayerPanelMenu from 'LayerPanel/LayerPanelMenu'
 import PropTypes from 'prop-types'
 import { Checkbox } from '../styled'
 import List from '@material-ui/core/List'
@@ -13,6 +13,9 @@ import ExpandMore from '@material-ui/icons/ChevronRight'
 
 import Icon from '@mdi/react'
 import { mdiCheckboxBlank } from '@mdi/js'
+import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
+import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
+import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
 
 /**
  * @component
@@ -68,7 +71,7 @@ class LayerPanelListItem extends Component {
   render () {
     const { translations, title, defaultCheckboxes, defaultMenu, menuItems,
       children, features, layer, gotoLayerExtent, handleFeatureDoubleClick,
-      handleLayerDoubleClick } = this.props
+      handleLayerDoubleClick, shouldAllowLayerRemoval, removeLayer, map } = this.props
     const { anchorEl, expandedLayer } = this.state
     /** If there are no features then return null otherwise check if the layer is expanded if not return null */
     const arrowButton = !features ? null : expandedLayer // eslint-disable-line
@@ -100,7 +103,21 @@ class LayerPanelListItem extends Component {
                     <MoreVertIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
-                <LayerPanelMenu layer={layer} gotoLayerExtent={gotoLayerExtent} menuItems={menuItems} id='simple-menu' open={Boolean(anchorEl)} anchorEl={anchorEl} handleMenuClose={this.handleMenuClose} />
+                <LayerPanelMenu
+                  layer={layer}
+                  id='simple-menu'
+                  open={Boolean(anchorEl)}
+                  anchorEl={anchorEl}
+                  handleMenuClose={this.handleMenuClose}
+                  shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+                  map={map}
+                  translations={translations}>
+                  {menuItems
+                    ? [...menuItems]
+                    : <><LayerPanelActionRemove />
+                      <LayerPanelActionExtent />
+                      <LayerPanelActionOpacity /></>}
+                </LayerPanelMenu>
               </div>
             }
           </ListItem>
