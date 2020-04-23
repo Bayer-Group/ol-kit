@@ -6,18 +6,20 @@ import olLayerVector from 'ol/layer/vector'
 class LayerPanelActionRemove extends Component {
   // this param of layers is coming from the MenuItem onClick func
   handleRemove = () => {
-    const { layers, layer } = this.props
+    const { layers, layer, map, shouldAllowLayerRemoval, removeFeaturesForLayer, handleMenuClose } = this.props
 
     if (Array.isArray(layers)) {
-      this.props.layers.forEach(layer => {
-        if (this.props.shouldAllowLayerRemoval(layer)) {
-          (layer.getVisible() && layer.getVisible() !== 'indeterminate') && this.props.map.removeLayer(layer)
-          this.isValidVectorLayer(layer) && this.removeFeaturesForLayer(layer)
+      layers.forEach(layer => {
+        if (shouldAllowLayerRemoval(layer)) {
+          (layer.getVisible() && layer.getVisible() !== 'indeterminate') && map.removeLayer(layer)
+          this.isValidVectorLayer(layer) && removeFeaturesForLayer(layer)
         }
       })
     } else if (layer) {
-      this.props.map.removeLayer(layer)
+      map.removeLayer(layer)
     }
+
+    handleMenuClose()
   }
 
   isValidVectorLayer = (layer) => {
@@ -31,8 +33,6 @@ class LayerPanelActionRemove extends Component {
   render () {
     const { translations, layers, layer } = this.props
     const noVisibleLayers = layers && this.getVisibleLayers().length === 0
-
-    console.log('layers from props', layers, layer)
 
     return (
       <MenuItem disbaleGutter={false} disabled={layers && noVisibleLayers} onClick={this.handleRemove}>

@@ -3,11 +3,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 class LayerPanelActionExport extends Component {
   handleExport = (filetype) => {
-    const { onExportFeatures } = this.props
+    const { onExportFeatures, handleMenuClose } = this.props
     const exportableFeatures = this.collectExportableFeatures()
 
     onExportFeatures && onExportFeatures(filetype, exportableFeatures)
-    this.handleMenuClose()
+    handleMenuClose()
   }
 
   collectExportableFeatures = () => {
@@ -34,20 +34,20 @@ class LayerPanelActionExport extends Component {
     const { translations } = this.props
 
     return (
-      <>
-        <MenuItem
-          disbaleGutter={false}
-          disabled={this.isExportable}
-          onClick={() => this.handleExport('kml')} >
-          {translations['olKit.LayerPanelActions.kml'] || 'Export KML'}
-        </MenuItem>
-        <MenuItem
-          disbaleGutter={false}
-          disabled={this.isExportable}
-          onClick={() => this.handleExport('shp')} >
-          {translations['olKit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
-        </MenuItem>
-      </>
+      [<MenuItem
+        key='exportKml'
+        disbaleGutter={false}
+        disabled={this.isExportable}
+        onClick={() => this.handleExport('kml')} >
+        {translations['olKit.LayerPanelActions.kml'] || 'Export KML'}
+      </MenuItem>,
+      <MenuItem
+        key='exportShp'
+        disbaleGutter={false}
+        disabled={this.isExportable}
+        onClick={() => this.handleExport('shp')} >
+        {translations['olKit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
+      </MenuItem>]
     )
   }
 }

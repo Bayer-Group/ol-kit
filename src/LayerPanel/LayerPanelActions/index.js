@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { ActionsContainer, UploadInput } from './styled'
+import { ActionsContainer } from './styled'
 import IconButton from '@material-ui/core/IconButton'
-
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import LayerPanelMenu from 'LayerPanel/LayerPanelMenu'
 
 import PropTypes from 'prop-types'
 
@@ -28,90 +25,26 @@ class LayerPanelActions extends Component {
     this.setState({ anchorEl: null })
   }
 
-  exportShapefile = () => {
-    this.props.handleExport('shp')
-    this.handleMenuClose()
-  }
-
-  exportKmlFile = () => {
-    this.props.handleExport('kml')
-    this.handleMenuClose()
-  }
-
-  onFileChange = (id) => {
-    const file = document.getElementById(id).files[0]
-
-    if (this.validFile(file)) {
-      this.props.handleImport(file)
-      this.handleMenuClose()
-    }
-
-    // clear the file input -- otherwise file with same name as last imported will not trigger event
-    this.setState({ value: null })
-  }
-
-  validFile = (file) => {
-    const { fileTypes } = this.props
-
-    return file && fileTypes.find((type) => file.name.endsWith(type.extension.toLowerCase()))
-  }
-
   render () {
-    const { translations, fileTypes, isExportable, noVisibleLayers, showDefaultActions } = this.props
+    const { icon, children, translations } = this.props
     const { anchorEl } = this.state
 
     return (
       <ActionsContainer>
         <IconButton aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
-          <MoreHorizIcon />
+          {icon}
         </IconButton>
-        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleMenuClose}>
-          {this.props.children}
-        </Menu>
+        <LayerPanelMenu
+          {...this.props}
+          translations={translations}
+          anchorEl={anchorEl}
+          open={!!anchorEl}
+          handleMenuClose={this.handleMenuClose}>
+          {React.Children.map(children, child => child)}
+        </LayerPanelMenu>
       </ActionsContainer>
     )
   }
-}
-
-LayerPanelActions.defaultProps = {
-  fileTypes: [
-    {
-      display: 'KML',
-      extension: '.kml'
-    },
-    {
-      display: 'Compressed KML',
-      extension: '.kmz'
-    },
-    {
-      display: 'GeoJSON',
-      extension: '.geojson'
-    },
-    {
-      display: 'JSON',
-      extension: '.json'
-    },
-    {
-      display: 'WKT',
-      extension: '.wkt'
-    },
-    {
-      display: 'CSV',
-      extension: '.csv'
-    },
-    {
-      display: 'Shapefile ZIP',
-      extension: '.zip'
-    }
-  ],
-  translations: {
-    'olKit.LayerPanelActions.remove': 'Remove',
-    'olKit.LayerPanelActions.import': 'Import',
-    'olKit.LayerPanelActions.kml': 'Export as KML',
-    'olKit.LayerPanelActions.shapefile': 'Export as Shapefile'
-  },
-  children: [],
-  showDefaultActions: true
 }
 
 LayerPanelActions.propTypes = {

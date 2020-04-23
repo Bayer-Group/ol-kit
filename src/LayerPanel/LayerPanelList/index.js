@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import List from '@material-ui/core/List'
-import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
 import { Container, Draggable } from 'react-smooth-dnd'
 
 import PropTypes from 'prop-types'
@@ -44,62 +43,15 @@ class LayerPanelList extends Component {
     this.forceUpdate()
   }
 
-  renderlayers = () => {
-    const {
-      layers,
-      translations,
-      defaultCheckboxes,
-      getMenuItemsForLayer,
-      handleMasterCheckbox,
-      gotoLayerExtent,
-      handleFeatureCheckbox,
-      getFeaturesForLayer,
-      handleLayerCheckbox,
-      handleFeatureDoubleClick,
-      handleLayerDoubleClick,
-      shouldAllowLayerRemoval,
-      removeLayer,
-      map
-    } = this.props
-
-    return layers.sort(this.zIndexSort).map(layer => {
-      const features = getFeaturesForLayer(layer)
-
-      return (
-        <Draggable key={layer.ol_uid}>
-          <LayerPanelListItem
-            translations={translations}
-            gotoLayerExtent={gotoLayerExtent}
-            handleMasterCheckbox={handleMasterCheckbox}
-            handleFeatureCheckbox={handleFeatureCheckbox}
-            handleLayerCheckbox={handleLayerCheckbox}
-            handleFeatureDoubleClick={handleFeatureDoubleClick}
-            handleLayerDoubleClick={handleLayerDoubleClick}
-            shouldAllowLayerRemoval={shouldAllowLayerRemoval}
-            removeLayer={removeLayer}
-            layer={layer}
-            map={map}
-            features={features}
-            layerId={layer.get('_id')}
-            title={layer.get('title') || 'Untitled Layer'}
-            menuItems={getMenuItemsForLayer && getMenuItemsForLayer(layer)}
-            defaultCheckboxes={defaultCheckboxes} />
-        </Draggable>
-      )
-    })
-  }
-
   renderChildren = () => {
     return React.Children.map(this.props.children, child => <Draggable key={child.id}>{child}</Draggable>)
   }
 
   render () {
-    const { children } = this.props
-
     return (
       <List>
         <Container onDrop={this.onDrop}>
-          {children ? this.renderChildren() : this.renderlayers()}
+          {this.renderChildren()}
         </Container>
       </List>
     )

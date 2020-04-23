@@ -4,6 +4,21 @@ import LayerPanelPage from 'LayerPanel/LayerPanelPage'
 import LayerPanelHeader from 'LayerPanel/LayerPanelHeader'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
+import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
+import LayerPanelCheckbox from 'LayerPanel/LayerPanelCheckbox'
+import LayerPanelExpandableList from 'LayerPanel/LayerPanelExpandableList'
+import LayerPanelActions from 'LayerPanel/LayerPanelActions'
+import { ListItem, ListItemText } from 'LayerPanel/LayerPanelListItem/styled'
+import List from '@material-ui/core/List'
+import Collapse from '@material-ui/core/Collapse'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+
+import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
+import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
+import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
 
 import TextField from '@material-ui/core/TextField'
 
@@ -12,9 +27,6 @@ import olLayerVector from 'ol/layer/vector'
 import olSourceVector from 'ol/source/vector'
 import olStyleStyle from 'ol/style/style'
 
-import VectorLayer from 'classes/VectorLayer'
-
-import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
@@ -32,7 +44,8 @@ class LayerPanelListPage extends Component {
       showReportLayerBugModal: false,
       currentLayer: {},
       featureListeners: [],
-      filterText: null
+      filterText: null,
+      expandedLayer: false
     }
   }
 
@@ -129,12 +142,12 @@ class LayerPanelListPage extends Component {
     })
   }
 
-  setVisibilityForAllLayers = (visibility) => {
+  setVisibilityForAllLayers = (_, visibility) => {
     const { layers } = this.state
     const updatedLayers = visibility ? this.showLayers(layers) : this.hideLayers(layers)
 
     layers.forEach(layer => this.setVisibilityForAllFeaturesOfLayer(layer, visibility))
-    this.setState({ layers: updatedLayers })
+    this.setState({ layers: updatedLayers }, () => this.handleMasterCheckbox())
   }
 
   getFeaturesForLayer = (layer) => {
@@ -171,76 +184,12 @@ class LayerPanelListPage extends Component {
     }
   }
 
-  // layerpanel header bulk actions
-  // handleRemove = () => {
-  //   this.state.layers.forEach(layer => {
-  //     if (this.props.shouldAllowLayerRemoval(layer)) {
-  //       (layer.getVisible() && layer.getVisible() !== INDETERMINATE) && this.props.map.removeLayer(layer)
-  //       this.isValidVectorLayer(layer) && this.removeFeaturesForLayer(layer)
-  //     }
-  //   })
-  // }
-
-  // remove the layer
-  removeLayer = (layer) => {
-    const { map } = this.props
-
-    map.removeLayer(layer)
-  }
-
   // remove visible features on the layer
   removeFeaturesForLayer = layer => {
     const removeFeatures = this.getVisibleFeaturesForLayer(layer)
 
     removeFeatures.map(feature => layer.getSource().removeFeature(feature))
     this.handleLayerCheckbox(layer)
-  }
-
-  // handleExport = (filetype) => {
-  //   const { onExportFeatures } = this.props
-  //   const exportableFeatures = this.collectExportableFeatures()
-
-  //   onExportFeatures(filetype, exportableFeatures)
-  // }
-
-  // collectExportableFeatures = () => {
-  //   const features = this.getVisibleLayers().filter(layer => this.isValidVectorLayer(layer)).map(layer => {
-  //     return layer.getSource().getFeatures()
-  //   })
-
-  //   return features.flat()
-  // }
-
-  // isExportable = () => {
-  //   const visibleLayers = this.getVisibleLayers()
-
-  //   return visibleLayers.filter(layer => {
-  //     return this.isValidVectorLayer(layer)
-  //   }).length !== visibleLayers.length || visibleLayers.length === 0
-  // }
-
-  getLayerExtentProps = (layer) => {
-    const extent = (layer => {
-      if (layer.isCatalogLayer) return layer.getSource().getProperties().extent
-      if (layer.isGeoserverLayer) return layer.getWMSLayer().getSource().getExtent()
-
-      return layer.getSource().getExtent && layer.getSource().getExtent()
-    })(layer)
-
-    return {
-      // Find the extent of the clicked layer -- if a source has no getExtent function, see if it's in its properties
-      extent,
-      // Calculate left padding based on the sidebar being open/closed
-      opts: { padding: [0, 0, 0, 320] }
-    }
-  }
-
-  gotoLayerExtent = (layer) => {
-    const { extent, opts } = this.getLayerExtentProps(layer)
-
-    if (extent) {
-      this.props.map.get('view').fit(extent, opts)
-    }
   }
 
   // this is where all of the checkbox magic happens...
@@ -275,34 +224,48 @@ class LayerPanelListPage extends Component {
     this.handleLayerCheckbox(layer)
   }
 
+  handleVisibility = (event, layer) => {
+    event.stopPropagation()
+
+    this.handleMasterCheckbox()
+    this.handleLayerCheckbox(layer, true)
+  }
+
   handleFilter = (filterText) => {
     this.setState({ filterText })
   }
 
   isValidVectorLayer = (layer) => {
-    return (layer instanceof olLayerVector || layer.isVectorLayer)
+    return (layer instanceof olLayerVector || (layer && layer.isVectorLayer))
+  }
+
+  handleExpandedLayer = () => {
+    this.setState(({ expandedLayer: !this.state.expandedLayer }))
   }
 
   render () {
-    const { translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick,
+    const { translations, layerFilter, handleFeatureDoubleClick, handleDoubleClick,
       customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport } = this.props
-    const { layers, masterCheckboxVisibility, filterText } = this.state
-    const noVisibleLayers = this.getVisibleLayers().length === 0
+    const { layers, masterCheckboxVisibility, filterText, expandedLayer } = this.state
 
     return (
       <LayerPanelPage>
         <LayerPanelHeader
           title={translations['geokit.LayerPanelListPage.title']}
           translations={translations}
-          layers={layers}
-          handleMasterCheckbox={this.handleMasterCheckbox}
-          masterCheckboxVisibility={masterCheckboxVisibility}
-          setVisibilityForAllLayers={this.setVisibilityForAllLayers}
-          customActions={customActions}
-          map={map}>
-          <LayerPanelActionRemove />
-          <LayerPanelActionImport handleImport={onFileImport} />
-          <LayerPanelActionExport />
+          avatar={<LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
+          actions={customActions ||
+            <LayerPanelActions
+              icon={<MoreHorizIcon />}
+              translations={translations}
+              layers={layers}
+              handleImport={onFileImport}
+              map={map}
+              removeFeaturesForLayer={this.removeFeaturesForLayer}>
+              <LayerPanelActionRemove />
+              <LayerPanelActionImport />
+              <LayerPanelActionExport />
+            </LayerPanelActions>} >
         </LayerPanelHeader>
         {enableFilter &&
           <TextField
@@ -312,28 +275,58 @@ class LayerPanelListPage extends Component {
             style={{ margin: '8px' }}
             fullWidth
             value={filterText}
-            onChange={(e) => this.handleFilter(e.target.value)}
-          />
+            onChange={(e) => this.handleFilter(e.target.value)} />
         }
         <LayerPanelContent>
-          <LayerPanelList
-            translations={translations}
-            layers={layerFilter(layers).filter((layer) => {
+          <LayerPanelList>
+            {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
               return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
+            }).sort(this.zIndexSort).map(layer => {
+              const features = this.getFeaturesForLayer(layer)
+
+              return (
+                <div key={layer.get('_id')}>
+                  <LayerPanelListItem handleDoubleClick={() => { handleDoubleClick(layer) }}>
+                    {<LayerPanelCheckbox
+                      checkboxState={!layer ? null : layer.getVisible()}
+                      handleClick={(e) => this.handleVisibility(e, layer)} />}
+                    {<LayerPanelExpandableList show={features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
+                    <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
+                    <ListItemSecondaryAction>
+                      <LayerPanelActions
+                        icon={<MoreVertIcon />}
+                        translations={translations}
+                        layer={layer}
+                        map={map}
+                        shouldAllowLayerRemoval={shouldAllowLayerRemoval}>
+                        {getMenuItemsForLayer(layer) ||
+                        [<LayerPanelActionRemove key='removeLayer' />,
+                          <LayerPanelActionExtent key='gotoExtent' />,
+                          <LayerPanelActionOpacity key='layerOpacity' />]}
+                      </LayerPanelActions>
+                    </ListItemSecondaryAction>
+                  </LayerPanelListItem>
+                  { features
+                    ? <Collapse in={expandedLayer} timeout='auto' unmountOnExit>
+                      <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
+                        {features.map((feature, i) => {
+                          return (
+                            <ListItem key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                              <LayerPanelCheckbox
+                                handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
+                                checkboxState={feature.get('_feature_visibility')} />
+                              <ListItemText inset={false} primary={feature.get('_vmf_name') || feature.get('name') || `${translations['olKit.LayerPanelListItem.feature']} ${i}`} />
+                            </ListItem>
+                          )
+                        })}
+                      </List>
+                    </Collapse> : null }
+                </div>
+              )
             })}
-            getMenuItemsForLayer={getMenuItemsForLayer}
-            gotoLayerExtent={this.gotoLayerExtent}
-            removeLayer={this.removeLayer}
-            handleMasterCheckbox={this.handleMasterCheckbox}
-            getFeaturesForLayer={this.getFeaturesForLayer}
-            handleFeatureCheckbox={this.handleFeatureCheckbox}
-            handleLayerCheckbox={this.handleLayerCheckbox}
-            handleFeatureDoubleClick={handleFeatureDoubleClick}
-            handleLayerDoubleClick={handleLayerDoubleClick}
-            shouldAllowLayerRemoval={shouldAllowLayerRemoval}
-            map={map} />
+          </LayerPanelList>
         </LayerPanelContent>
       </LayerPanelPage>
     )

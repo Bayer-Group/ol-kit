@@ -19,6 +19,7 @@ class LayerPanelActionImport extends Component {
 
     // clear the file input -- otherwise file with same name as last imported will not trigger event
     this.setState({ value: null })
+    this.props.handleMenuClose()
   }
 
   validFile = (file) => {

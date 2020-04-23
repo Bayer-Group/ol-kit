@@ -23,6 +23,7 @@ class LayerPanelActionExtent extends Component {
 
     if (extent) {
       this.props.map.get('view').fit(extent, opts)
+      this.props.handleMenuClose()
     }
   }
 

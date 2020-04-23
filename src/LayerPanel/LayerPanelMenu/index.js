@@ -9,21 +9,13 @@ import PropTypes from 'prop-types'
  */
 class LayerPanelMenu extends Component {
   render () {
-    const { handleMenuClose, layer, layers, open, anchorEl, materialId, children } = this.props
-
-    console.log('layerpanelmenu', children)
+    const { handleMenuClose, open, anchorEl, materialId, children } = this.props
 
     const menuItemsWithProps = React.Children.map(children, item =>
       React.cloneElement(item, {
         // we don't wont to spread props.children we overwrite it with the items children
         ...this.props,
-        children: item.props.children,
-        onClick: () => {
-          const layerCollection = layer || layers
-
-          handleMenuClose()
-          item.props.onClick(layerCollection)
-        }
+        children: item.props.children
       })
     )
 

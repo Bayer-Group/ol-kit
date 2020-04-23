@@ -7,8 +7,6 @@ class LayerPanelActionOpacity extends Component {
   render () {
     const { layer } = this.props
 
-    console.log(layer)
-
     return (
       <>
         <Divider />
