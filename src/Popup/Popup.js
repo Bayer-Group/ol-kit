@@ -136,10 +136,10 @@ class Popup extends Component {
             <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
+                  actions={actions}
                   features={features}
                   loading={loading}
-                  onClose={this.hidePopup}
-                  actions={actions} />
+                  onClose={this.hidePopup} />
               )}
             </PopupBase>,
             map.getTargetElement()
