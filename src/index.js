@@ -1,6 +1,5 @@
 export * from './Basemaps'
 export * from './Controls'
-export * from './DataLayers'
 export * from './Map'
 export * from './Popup'
 export * from './classes'

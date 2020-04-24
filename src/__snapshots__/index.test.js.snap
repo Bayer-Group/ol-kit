@@ -21,7 +21,6 @@ Object {
   "connectToMap": [Function],
   "createMap": [Function],
   "createSelectInteraction": [Function],
-  "loadDataLayer": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }
