@@ -12,7 +12,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  * @category Basemap
  * @since 0.1.0
  */
-class StamenTonerDark extends React.Component {
+class BasemapStamenTonerDark extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
   }
@@ -66,7 +66,7 @@ class StamenTonerDark extends React.Component {
   }
 }
 
-StamenTonerDark.propTypes = {
+BasemapStamenTonerDark.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
@@ -81,10 +81,10 @@ StamenTonerDark.propTypes = {
   onBasemapChanged: PropTypes.func
 }
 
-StamenTonerDark.defaultProps = {
+BasemapStamenTonerDark.defaultProps = {
   thumbnail: stamenTonerDark,
   onBasemapChanged: () => {},
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(StamenTonerDark)
+export default connectToMap(BasemapStamenTonerDark)

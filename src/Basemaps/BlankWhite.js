@@ -11,7 +11,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  * @category Basemap
  * @since 0.1.0
  */
-class BlankWhite extends React.Component {
+class BasemapBlankWhite extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
   }
@@ -57,7 +57,7 @@ class BlankWhite extends React.Component {
   }
 }
 
-BlankWhite.propTypes = {
+BasemapBlankWhite.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
@@ -72,10 +72,10 @@ BlankWhite.propTypes = {
   onBasemapChanged: PropTypes.func
 }
 
-BlankWhite.defaultProps = {
+BasemapBlankWhite.defaultProps = {
   thumbnail: '',
   onBasemapChanged: () => {},
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(BlankWhite)
+export default connectToMap(BasemapBlankWhite)
