@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Checkbox } from './styled'
 
 import Icon from '@mdi/react'
@@ -11,7 +12,7 @@ class LayerPanelCheckbox extends Component {
     if (checkboxState === 'indeterminate') {
       return (
         <Checkbox indeterminateIcon={<Icon path={mdiCheckboxBlank} size={1} color={color} />}
-          onClick={(e) => handleClick(false, e)} checked={checkboxState} indeterminate />
+          onClick={(e) => handleClick(e, true)} checked={checkboxState} indeterminate />
       )
     } else {
       return (
@@ -19,6 +20,18 @@ class LayerPanelCheckbox extends Component {
       )
     }
   }
+}
+
+LayerPanelCheckbox.propTypes = {
+  /** checkbox checked state, either string('indeterminate') or bool */
+  checkboxState: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]),
+  /** function that handles the click of checkbox. Returns the event and the state of the checkbox (bool) */
+  handleClick: PropTypes.func.isRequired,
+  /** string for checkbox checked color (hex) */
+  color: PropTypes.string
 }
 
 LayerPanelCheckbox.defaultProps = {

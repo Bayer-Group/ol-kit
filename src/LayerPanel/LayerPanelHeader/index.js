@@ -21,41 +21,15 @@ class LayerPanelHeader extends Component {
 }
 
 LayerPanelHeader.propTypes = {
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object,
-
-  /** A boolean for rendering the default actions of the LayerPanelHeader */
-  defaultActions: PropTypes.bool,
-
-  /** A boolean to show the default checkbox of the LayerPanelHeader */
-  masterCheckbox: PropTypes.bool,
-
-  /** The content of the LayerPanelHeader (likely `CardHeader` components) */
-  children: PropTypes.node,
-
   /** A string for the LayerPanelHeader title */
   title: PropTypes.string,
-
-  /** A boolean that will check the Checkbox */
-  masterCheckboxChecked: PropTypes.bool,
-
-  setVisibilityForAllLayers: PropTypes.func,
-  handleMasterCheckbox: PropTypes.func,
-  handleExport: PropTypes.func,
-  handleImport: PropTypes.func,
-  masterCheckboxVisibility: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string
+  /** array or component to render in the LayerPanelMenu */
+  actions: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.node
   ]),
-  isExportable: PropTypes.bool,
-  noVisibleLayers: PropTypes.bool,
-  handleRemove: PropTypes.func,
-
-  /** components to be rendered in the actions menu */
-  customActions: PropTypes.node,
-
-  /** boolean allowing opt out of drop down menu */
-  hideActions: PropTypes.bool
+  /** component to render on the left side of the title */
+  avatar: PropTypes.node
 }
 
 LayerPanelHeader.defaultProps = {

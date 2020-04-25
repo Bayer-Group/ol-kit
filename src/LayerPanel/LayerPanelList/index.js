@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import List from '@material-ui/core/List'
+import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
 import { Container, Draggable } from 'react-smooth-dnd'
 
 import PropTypes from 'prop-types'
@@ -30,62 +31,87 @@ const applyDrag = (arr, dragResult) => {
  * @category vmc
  */
 class LayerPanelList extends Component {
-  // highest zIndex should be at the front of the list (reverse order of array index)
-  zIndexSort = (a, b) => b.getZIndex() - a.getZIndex()
+  constructor (props) {
+    super(props)
 
-  onDrop = e => {
-    const reorderedLayers = applyDrag(this.props.layers.sort(this.zIndexSort), e)
-
-    // apply the z-index changes down to all layers
-    reorderedLayers.map((l, i) => l.setZIndex(reorderedLayers.length - i))
-
-    // the component is props-based so force a re-render
-    this.forceUpdate()
+    this.state = {
+      items: props.items
+    }
   }
 
-  renderChildren = () => {
-    return React.Children.map(this.props.children, child => <Draggable key={child.id}>{child}</Draggable>)
+  componentDidUpdate (prevProps) {
+    if (prevProps.items[0] !== this.props.items[0]) {
+      console.log(prevProps)
+      this.setState({ items: this.props.items })
+    }
+  }
+
+  makeChildrenSafe = children => {
+    // if children is an array return children if its defined but not an array wrap it otherwise return null
+    return Array.isArray(children) ? children : children ? [children] : null // eslint-disable-line
+  }
+
+  onDrop = e => {
+    const { onSort, onReorderedItems } = this.props
+    const { items } = this.state
+    const reorderedItems = applyDrag(items.sort(onSort), e)
+
+    if (onReorderedItems) {
+      onReorderedItems(reorderedItems)
+    } else {
+      this.setState({ items: reorderedItems })
+    }
   }
 
   render () {
-    return (
-      <List>
-        <Container onDrop={this.onDrop}>
-          {this.renderChildren()}
-        </Container>
-      </List>
-    )
+    const { children, disableDrag } = this.props
+    const { items } = this.state
+    const ItemContainer = disableDrag ? 'div' : Draggable
+
+    if (children) {
+      return (
+        <List>
+          <Container onDrop={this.onDrop}>
+            {React.Children.map(this.props.children, child => <ItemContainer key={child.id}>{child}</ItemContainer>)}
+          </Container>
+        </List>
+      )
+    } else if (items) {
+      return (
+        <List>
+          <Container onDrop={this.onDrop} >
+            {items.map(item => (
+              <ItemContainer key={item}>
+                <LayerPanelListItem>{item}</LayerPanelListItem>
+              </ItemContainer>
+            )
+            )}
+          </Container>
+        </List>
+      )
+    } else {
+      return <div style='color:red;'>Must either pass `children` or a prop of `items` for LayerPanelList to render its list</div>
+    }
   }
 }
 
 LayerPanelList.propTypes = {
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object,
-
-  /** An array of objects that have a title prop */
-  layers: PropTypes.array,
-
   /** The content of the LayerPanelList (likely `LayerPanelListItem` components) */
   children: PropTypes.node,
+  /** callback when item prop is dropped */
+  onSort: PropTypes.func,
+  /** callback with reordered items */
+  onReorderedItems: PropTypes.func,
+  /** array of items to be rendered in the list */
+  items: PropTypes.array,
 
-  /** An array of Menulayers (from `@material-ui-core/Menulayer`) */
-  menuItems: PropTypes.array,
+  /** A boolean to disable the drag event on the LayerPanelList */
+  disableDrag: PropTypes.bool
+}
 
-  /** A boolean that renders the default LayerPanel checkboxes for a Listlayer */
-  defaultCheckboxes: PropTypes.bool,
-
-  /** Callback for getting the features for an OL layer by passing the id of the layer */
-  getFeaturesForLayer: PropTypes.func,
-
-  /** Callback which FIXME */
-  handleMasterCheckbox: PropTypes.func,
-  gotoLayerExtent: PropTypes.func,
-  handleFeatureCheckbox: PropTypes.func,
-  handleLayerCheckbox: PropTypes.func,
-  handleLayerZindex: PropTypes.func,
-  getMenuItemsForLayer: PropTypes.func,
-  handleFeatureDoubleClick: PropTypes.func,
-  handleLayerDoubleClick: PropTypes.func
+LayerPanelList.defaultProps = {
+  onSort: (a, b) => { return a - b },
+  disableDrag: false
 }
 
 export default LayerPanelList

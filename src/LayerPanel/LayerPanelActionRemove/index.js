@@ -31,7 +31,7 @@ class LayerPanelActionRemove extends Component {
   }
 
   render () {
-    const { translations, layers, layer } = this.props
+    const { layers, layer } = this.props
     const noVisibleLayers = layers && this.getVisibleLayers().length === 0
 
     return (
@@ -43,15 +43,31 @@ class LayerPanelActionRemove extends Component {
 }
 
 LayerPanelActionRemove.propTypes = {
+  /** An array of openlayers `ol.layers` */
   layers: PropTypes.array,
+
+  /** An openlayers `ol.layer` object */
   layer: PropTypes.object,
+
+  /** An openlayers `ol.map` object */
   map: PropTypes.object,
+
+  /** An object of translation key/value pairs */
   translations: PropTypes.object,
-  shouldAllowLayerRemoval: PropTypes.func
+
+  /** A callback function that returns openlayers `ol.layer` to check if the `ol.layer` can/should be removed from map */
+  shouldAllowLayerRemoval: PropTypes.func,
+
+  /** A callback function that returns openlayers `ol.layer` for removing `ol.features` */
+  removeFeaturesForLayer: PropTypes.func,
+
+  /** A callback function that closes the `LayerPanelMenu` */
+  handleMenuClose: PropTypes.func
 }
 
 LayerPanelActionRemove.defaultProps = {
-  shouldAllowLayerRemoval: (layer) => true
+  shouldAllowLayerRemoval: (layer) => true,
+  handleMenuClose: () => {}
 }
 
 export default LayerPanelActionRemove

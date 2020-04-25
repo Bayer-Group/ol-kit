@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import MenuItem from '@material-ui/core/MenuItem'
-import Divider from '@material-ui/core/Divider'
+import PropTypes from 'prop-types'
 import { OpacityWrapper, OpacityTitle, Slider } from './styled'
 
 class LayerPanelActionOpacity extends Component {
@@ -8,27 +7,25 @@ class LayerPanelActionOpacity extends Component {
     const { layer } = this.props
 
     return (
-      <>
-        <Divider />
-        <MenuItem key={'opacity'} onClick={() => {}}>
-          <OpacityWrapper>
-            <OpacityTitle id='opacity-slider'>
-                Opacity
-            </OpacityTitle>
-            <Slider
-              disabled={false}
-              min={0.1}
-              max={1}
-              step={0.1}
-              defaultValue={layer.getOpacity()}
-              onChangeCommitted={() => this.forceUpdate()}
-              aria-labelledby='opacity-slider'
-              onChange={(e, v) => layer.setOpacity(v) } />
-          </OpacityWrapper>
-        </MenuItem>
-      </>
+      <OpacityWrapper>
+        <OpacityTitle id='opacity-slider'>Opacity</OpacityTitle>
+        <Slider
+          disabled={false}
+          min={0.1}
+          max={1}
+          step={0.1}
+          defaultValue={layer.getOpacity()}
+          onChangeCommitted={() => this.forceUpdate()}
+          aria-labelledby='opacity-slider'
+          onChange={(e, v) => layer.setOpacity(v) } />
+      </OpacityWrapper>
     )
   }
+}
+
+LayerPanelActionOpacity.propTypes = {
+  /** An openlayers `ol.layer` object */
+  layer: PropTypes.object.isRequired
 }
 
 export default LayerPanelActionOpacity

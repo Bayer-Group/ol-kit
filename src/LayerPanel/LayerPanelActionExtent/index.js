@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 
 class LayerPanelActionExtent extends Component {
@@ -34,6 +35,17 @@ class LayerPanelActionExtent extends Component {
       <MenuItem key={'zoom'} onClick={() => this.gotoLayerExtent(layer)}>Zoom to Layer Extent</MenuItem>
     )
   }
+}
+
+LayerPanelActionExtent.propTypes = {
+  /** An openlayers `ol.map` object */
+  map: PropTypes.object,
+
+  /** An openlayers `ol.layer` */
+  layer: PropTypes.object,
+
+  /** A callback function that closes the `LayerPanelMenu` */
+  handleMenuClose: PropTypes.func
 }
 
 export default LayerPanelActionExtent

@@ -13,6 +13,7 @@ import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import LayersIcon from '@material-ui/icons/Layers'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -34,7 +35,7 @@ import isEqual from 'lodash.isequal'
 
 const INDETERMINATE = 'indeterminate'
 
-class LayerPanelListPage extends Component {
+class LayerPanelLayersPage extends Component {
   constructor (props) {
     super(props)
 
@@ -50,10 +51,10 @@ class LayerPanelListPage extends Component {
   }
 
   componentDidMount = () => {
-    const { map, layerFilter } = this.props
+    const { map, layerFilter, basemapKey } = this.props
     const layers = map.getLayers()
     const handleMapChange = (e) => {
-      const filteredLayers = layerFilter(layers.getArray())
+      const filteredLayers = layerFilter(layers.getArray(), basemapKey)
       const safeFilteredLayersLength = filteredLayers ? filteredLayers.length - 1 : 0
 
       filteredLayers[safeFilteredLayersLength] && filteredLayers[safeFilteredLayersLength].setZIndex(filteredLayers.length) // eslint-disable-line
@@ -243,9 +244,19 @@ class LayerPanelListPage extends Component {
     this.setState(({ expandedLayer: !this.state.expandedLayer }))
   }
 
+  // highest zIndex should be at the front of the list (reverse order of array index)
+  zIndexSort = (a, b) => b.getZIndex() - a.getZIndex()
+
+  reorderLayers = (reorderedLayers) => {
+    // apply the z-index changes down to all layers
+    reorderedLayers.map((l, i) => l.setZIndex(reorderedLayers.length - i))
+
+    this.forceUpdate()
+  }
+
   render () {
-    const { translations, layerFilter, handleFeatureDoubleClick, handleDoubleClick,
-      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport } = this.props
+    const { translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, basemapKey,
+      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayer } = this.state
 
     return (
@@ -259,14 +270,13 @@ class LayerPanelListPage extends Component {
               icon={<MoreHorizIcon />}
               translations={translations}
               layers={layers}
-              handleImport={onFileImport}
-              map={map}
-              removeFeaturesForLayer={this.removeFeaturesForLayer}>
-              <LayerPanelActionRemove />
-              <LayerPanelActionImport />
-              <LayerPanelActionExport />
-            </LayerPanelActions>} >
-        </LayerPanelHeader>
+              map={map}>
+              <LayerPanelActionRemove
+                removeFeaturesForLayer={this.removeFeaturesForLayer}
+                shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+              {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
+              {onExportFeatures && <LayerPanelActionExport onExportFeatures={onExportFeatures} />}
+            </LayerPanelActions>} />
         {enableFilter &&
           <TextField
             id='feature-filter-input'
@@ -278,31 +288,30 @@ class LayerPanelListPage extends Component {
             onChange={(e) => this.handleFilter(e.target.value)} />
         }
         <LayerPanelContent>
-          <LayerPanelList>
-            {layerFilter(layers).filter((layer) => {
+          <LayerPanelList disableDrag={disableDrag} onSort={this.zIndexSort} onReorderedItems={this.reorderLayers} items={layers} >
+            {layerFilter(layers, basemapKey).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
               return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
-            }).sort(this.zIndexSort).map(layer => {
+            }).sort(this.zIndexSort).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
               return (
-                <div key={layer.get('_id')}>
-                  <LayerPanelListItem handleDoubleClick={() => { handleDoubleClick(layer) }}>
+                <div key={i}>
+                  <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={!layer ? null : layer.getVisible()}
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
-                    {<LayerPanelExpandableList show={features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
+                    {<LayerPanelExpandableList show={!!features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
                     <ListItemSecondaryAction>
                       <LayerPanelActions
                         icon={<MoreVertIcon />}
                         translations={translations}
                         layer={layer}
-                        map={map}
-                        shouldAllowLayerRemoval={shouldAllowLayerRemoval}>
+                        map={map} >
                         {getMenuItemsForLayer(layer) ||
-                        [<LayerPanelActionRemove key='removeLayer' />,
+                        [<LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
                           <LayerPanelActionExtent key='gotoExtent' />,
                           <LayerPanelActionOpacity key='layerOpacity' />]}
                       </LayerPanelActions>
@@ -313,11 +322,11 @@ class LayerPanelListPage extends Component {
                       <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
                         {features.map((feature, i) => {
                           return (
-                            <ListItem key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                            <ListItem key={i} hanldeDoubleClick={() => handleFeatureDoubleClick(feature)}>
                               <LayerPanelCheckbox
                                 handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
                                 checkboxState={feature.get('_feature_visibility')} />
-                              <ListItemText inset={false} primary={feature.get('_vmf_name') || feature.get('name') || `${translations['olKit.LayerPanelListItem.feature']} ${i}`} />
+                              <ListItemText inset={false} primary={feature.get('name') || `${translations['olKit.LayerPanelListItem.feature']} ${i}`} />
                             </ListItem>
                           )
                         })}
@@ -333,20 +342,22 @@ class LayerPanelListPage extends Component {
   }
 }
 
-LayerPanelListPage.defaultProps = {
+LayerPanelLayersPage.defaultProps = {
   handleFeatureDoubleClick: () => {},
   handleLayerDoubleClick: () => {},
-  menuItems: [],
-  layerFilter: (layers) => layers.filter(layer => !layer.get('_vmf_basemap') && layer.get('name') !== 'unselectable'),
+  handleDoubleClick: () => {},
+  layerFilter: (layers, basemapKey) => layers.filter(layer => !layer.get(basemapKey) && layer.get('name') !== 'unselectable'),
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
+  getMenuItemsForLayer: () => false,
+  tabIcon: <LayersIcon />,
   translations: {
     'geokit.LayerPanelListPage.title': 'Active Layers',
     'geokit.LayerPanelListPage.filterText': 'Filter Layers'
   }
 }
 
-LayerPanelListPage.propTypes = {
+LayerPanelLayersPage.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object,
 
@@ -355,9 +366,6 @@ LayerPanelListPage.propTypes = {
 
   /** The icon for the page shown in the left side of the layer panel */
   tabIcon: PropTypes.node,
-
-  /** An array of menu items components to show for each layer (only applies to default pages) */
-  menuItems: PropTypes.node,
 
   /** A function which takes in layers & returns a subset of those layers (useful to "hide" certain layers) */
   layerFilter: PropTypes.func,
@@ -382,9 +390,18 @@ LayerPanelListPage.propTypes = {
 
   /** A callback function to determine if a given layer should be allowed to be removed from the panel page display */
   shouldAllowLayerRemoval: PropTypes.func,
-  convertFileToFeatures: PropTypes.func,
-  exportFeatures: PropTypes.func,
-  getMenuItemsForLayer: PropTypes.func
+
+  /** A callback function that returns the file type and the features that are being exported */
+  onExportFeatures: PropTypes.func,
+
+  /** A callback function to set custom Menu Items for a specific layer. Should recieve an array of `@material-ui/core/MenuItem` */
+  getMenuItemsForLayer: PropTypes.func,
+
+  /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
+  onFileImport: PropTypes.func,
+
+  /** A boolean to disable the drag event on the LayerPanelList */
+  disableDrag: PropTypes.bool
 }
 
-export default LayerPanelListPage
+export default LayerPanelLayersPage

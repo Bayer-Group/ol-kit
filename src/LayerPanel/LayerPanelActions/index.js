@@ -48,35 +48,14 @@ class LayerPanelActions extends Component {
 }
 
 LayerPanelActions.propTypes = {
-  /** Object with key/value pairs for translated strings */
+  /** An bject with key/value pairs for translated strings */
   translations: PropTypes.object,
 
-  /** Callback function passed either `kml` or `shp` when an export is performed */
-  handleExport: PropTypes.func.isRequired,
-
-  /** Callback function called when an import is performed & passed a File object */
-  handleImport: PropTypes.func.isRequired,
-
-  /** Array of file types and their corresponding extensions */
-  fileTypes: PropTypes.arrayOf(PropTypes.exact({
-    display: PropTypes.string,
-    extension: PropTypes.string
-  })).isRequired,
-
-  /** A boolean to enable/disable the export button */
-  isExportable: PropTypes.bool,
-
-  /** A boolean which disables the remove button */
-  noVisibleLayers: PropTypes.bool,
-
-  /** Callback function called when the remove button is clicked */
-  handleRemove: PropTypes.func,
-
-  /** components to be displayed below the default MenuItems */
+  /** An array of components to be displayed inside `LayerPanelMenu` (like `@material-ui/core/MenuItems`) */
   children: PropTypes.node,
 
-  /** a boolean which disables the default actions */
-  showDefaultActions: PropTypes.bool
+  /** An icon component for the button to open the `LayerPanelMenu` (like `@material-ui/icons`) */
+  icon: PropTypes.node
 }
 
 export default LayerPanelActions

@@ -56,7 +56,15 @@ LayerPanelActionImport.propTypes = {
     display: PropTypes.string,
     extension: PropTypes.string
   })).isRequired,
-  handleImport: PropTypes.func.isRequired
+
+  /** A callback function that returns the file thats being imported */
+  handleImport: PropTypes.func.isRequired,
+
+  /** A function that closes the `LayerPanelMenu` */
+  handleMenuClose: PropTypes.func,
+
+  /** An object of translation key/value pairs */
+  translations: PropTypes.object
 }
 
 LayerPanelActionImport.defaultProps = {
@@ -89,7 +97,8 @@ LayerPanelActionImport.defaultProps = {
       display: 'Shapefile ZIP',
       extension: '.zip'
     }
-  ]
+  ],
+  handleMenuClose: () => {}
 }
 
 export default LayerPanelActionImport

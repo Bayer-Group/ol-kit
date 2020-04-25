@@ -9,18 +9,22 @@ import PropTypes from 'prop-types'
  */
 class LayerPanelMenu extends Component {
   render () {
-    const { handleMenuClose, open, anchorEl, materialId, children } = this.props
+    const { handleMenuClose, open, anchorEl, children, layer } = this.props
 
     const menuItemsWithProps = React.Children.map(children, item =>
       React.cloneElement(item, {
         // we don't wont to spread props.children we overwrite it with the items children
         ...this.props,
-        children: item.props.children
+        children: item.props.children,
+        onClick: () => {
+          handleMenuClose()
+          item.props.onClick(layer)
+        }
       })
     )
 
     return (
-      <Menu id={materialId} anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
         {menuItemsWithProps}
       </Menu>
     )
@@ -34,20 +38,14 @@ LayerPanelMenu.propTypes = {
   /** A boolean that will show/hide the list item's menu */
   open: PropTypes.bool,
 
-  /** FIXME */
+  /** dom node that is the target of the LayerPanelMenu */
   anchorEl: PropTypes.object,
-  materialId: PropTypes.string,
 
-  /** An array of @material-ui-core/MenuItem */
-  menuItems: PropTypes.array,
+  /** An array of nodes i.e. @material-ui-core/MenuItem */
+  children: PropTypes.array,
 
-  /** Openlayer layer object */
-  layer: PropTypes.object,
-
-  /** Callback function called when the 'go to layer extent' menu option is clicked */
-  gotoLayerExtent: PropTypes.func,
-  map: PropTypes.object,
-  shouldAllowLayerRemoval: PropTypes.func
+  /** An openlayers `ol.layer` */
+  layer: PropTypes.object
 }
 
 export default LayerPanelMenu

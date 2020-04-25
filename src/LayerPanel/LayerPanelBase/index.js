@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Tabs, Tab } from '../styled'
+import { Card, Tabs, Tab } from './styled'
 // material-ui-icons
 import LayersIcon from '@material-ui/icons/Layers'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -32,11 +32,11 @@ class LayerPanelBase extends Component {
   }
 
   render () {
-    const { inline, children } = this.props
+    const { inline, style, children } = this.props
     const { activeIndex, showLayerPanel } = this.state
 
     return (
-      <Card open={showLayerPanel} numOfTabs={children.length || 1} inline={inline} className='_popup_boundary' >
+      <Card open={showLayerPanel} styles={style} numOfTabs={children.length || 1} inline={inline} className='_popup_boundary' >
         <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
           <Tab icon={showLayerPanel ? <ChevronRightIcon /> : <LayersIcon />} />
           {showLayerPanel &&
@@ -52,9 +52,6 @@ class LayerPanelBase extends Component {
 }
 
 LayerPanelBase.propTypes = {
-  /** An array of openlayers layers */
-  layers: PropTypes.array,
-
   /** Render the component inline (without absolute positioning) */
   inline: PropTypes.bool,
 
