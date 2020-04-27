@@ -137,8 +137,6 @@ describe('<LayerStyler />', () => {
 
     await waitFor(() => expect(getByTestId('StyleManager.chooseLayer').value).toBe('Test Data'))
 
-    await waitFor(() => expect(getByText('Test Data')).toBeTruthy())
-
     await waitFor(() => expect(getByText('Default Styles (1)')).toBeTruthy())
 
     await waitFor(() => expect(getByText('Custom Styles (0)')).toBeTruthy())
