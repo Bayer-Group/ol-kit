@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import { UploadInput } from './styled'
+import { connectToMap } from 'Map'
 
 class LayerPanelActionImport extends Component {
   constructor (props) {
@@ -34,7 +35,7 @@ class LayerPanelActionImport extends Component {
     return (
       <MenuItem disbaleGutter={false}>
         <label htmlFor='file-upload'>
-          {translations['olKit.LayerPanelActions.import'] || 'Import File'}
+          {translations['_ol_kit.LayerPanelActions.import'] || 'Import File'}
         </label>
         <UploadInput
           value={this.state.value || ''}
@@ -98,7 +99,8 @@ LayerPanelActionImport.defaultProps = {
       extension: '.zip'
     }
   ],
-  handleMenuClose: () => {}
+  handleMenuClose: () => {},
+  handleImport: () => {}
 }
 
-export default LayerPanelActionImport
+export default connectToMap(LayerPanelActionImport)

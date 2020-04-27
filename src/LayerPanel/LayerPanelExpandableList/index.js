@@ -25,7 +25,7 @@ LayerPanelExpandableList.propTypes = {
   /** boolean to expand/collapse list */
   open: PropTypes.bool,
   /** callback function for onClick */
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func.isRequired
 }
 
 export default LayerPanelExpandableList

@@ -9,9 +9,9 @@ import LayerPanelCheckbox from 'LayerPanel/LayerPanelCheckbox'
 import LayerPanelExpandableList from 'LayerPanel/LayerPanelExpandableList'
 import LayerPanelActions from 'LayerPanel/LayerPanelActions'
 import { ListItem, ListItemText } from 'LayerPanel/LayerPanelListItem/styled'
+import { ListItemSecondaryAction } from './styled'
 import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
 
@@ -156,14 +156,14 @@ class LayerPanelLayersPage extends Component {
     if (this.props.shouldHideFeatures(layer)) return
 
     return layer.getSource().getFeatures().map(feature => {
-      const isVisible = feature.get('_feature_visibility') === undefined ? true : feature.get('_feature_visibility')
-      const iaFeatureStyle = feature.get('_feature_style') || feature.getStyle()
+      const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
+      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle()
       const featureOriginalStyle = isEqual(iaFeatureStyle, new olStyleStyle(null))
         ? feature.setStyle(null) : iaFeatureStyle
       const featureStyle = isVisible ? featureOriginalStyle : new olStyleStyle()
 
-      feature.set('_feature_visibility', isVisible)
-      if (feature.get('_feature_style') === undefined) feature.set('_feature_style', featureStyle)
+      feature.set('_ol_kit_feature_visibility', isVisible)
+      if (feature.get('_ol_kit_feature_style') === undefined) feature.set('_ol_kit_feature_style', featureStyle)
       feature.setStyle(featureStyle)
 
       return feature
@@ -174,14 +174,14 @@ class LayerPanelLayersPage extends Component {
 
   getVisibleFeaturesForLayer = (layer) => {
     return (this.isValidVectorLayer(layer))
-      ? layer.getSource().getFeatures().filter(feature => feature.get('_feature_visibility')) : []
+      ? layer.getSource().getFeatures().filter(feature => feature.get('_ol_kit_feature_visibility')) : []
   }
 
   setVisibilityForAllFeaturesOfLayer = (layer, visibility) => {
     if (this.isValidVectorLayer(layer)) {
       layer.getSource().getFeatures().map(feature => {
-        feature.set('_feature_visibility', visibility)
-        feature.setStyle(feature.get('_feature_style'))
+        feature.set('_ol_kit_feature_visibility', visibility)
+        feature.setStyle(feature.get('_ol_kit_feature_style'))
       })
     }
   }
@@ -222,7 +222,7 @@ class LayerPanelLayersPage extends Component {
   }
 
   handleFeatureCheckbox = (layer, feature) => {
-    feature.set('_feature_visibility', !feature.get('_feature_visibility'))
+    feature.set('_ol_kit_feature_visibility', !feature.get('_ol_kit_feature_visibility'))
     this.handleLayerCheckbox(layer)
   }
 
@@ -265,7 +265,7 @@ class LayerPanelLayersPage extends Component {
     return (
       <LayerPanelPage>
         <LayerPanelHeader
-          title={translations['olKit.LayerPanelLayersPage.title']}
+          title={translations['_ol_kit.LayerPanelLayersPage.title']}
           translations={translations}
           avatar={<LayerPanelCheckbox
             checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
@@ -284,7 +284,7 @@ class LayerPanelLayersPage extends Component {
         {enableFilter &&
           <TextField
             id='feature-filter-input'
-            label={translations['olKit.LayerPanelLayersPage.filterText']}
+            label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
             type='text'
             style={{ margin: '8px' }}
             fullWidth
@@ -315,7 +315,7 @@ class LayerPanelLayersPage extends Component {
                       open={expandedLayer}
                       handleClick={this.handleExpandedLayer} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
-                    <ListItemSecondaryAction>
+                    <ListItemSecondaryAction style={{ right: '0px !important' }}>
                       <LayerPanelActions
                         icon={<MoreVertIcon />}
                         translations={translations}
@@ -336,8 +336,8 @@ class LayerPanelLayersPage extends Component {
                             <ListItem key={i} hanldeDoubleClick={() => handleFeatureDoubleClick(feature)}>
                               <LayerPanelCheckbox
                                 handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
-                                checkboxState={feature.get('_feature_visibility')} />
-                              <ListItemText inset={false} primary={feature.get('name') || `${translations['olKit.LayerPanelListItem.feature']} ${i}`} />
+                                checkboxState={feature.get('_ol_kit_feature_visibility')} />
+                              <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${i}`} />
                             </ListItem>
                           )
                         })}
@@ -361,11 +361,7 @@ LayerPanelLayersPage.defaultProps = {
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
-  tabIcon: <LayersIcon />,
-  translations: {
-    'geokit.LayerPanelListPage.title': 'Active Layers',
-    'geokit.LayerPanelListPage.filterText': 'Filter Layers'
-  }
+  tabIcon: <LayersIcon />
 }
 
 LayerPanelLayersPage.propTypes = {

@@ -2,14 +2,14 @@ The `LayerPanel` is a convenient way to view things that are on the map. The ori
 
 Its as simple as that. This will give you a `LayerPanel` placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.
 ```jsx
-<LayerPanel map={map} />
+<LayerPanel />
 ```
 ![image](https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c)
 
 
 If you want an easy way to add a second page use the `LayerPanelPage` component and give it an icon. We use `@material-ui/icons` most of the time, they work well. This gives you a second page that has it's own tab to toggle through.
 ```jsx
-<LayerPanel map={map}>
+<LayerPanel>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
     <LayerPanelContent>
       Legends Page
@@ -22,7 +22,7 @@ If you want an easy way to add a second page use the `LayerPanelPage` component 
 
 Use a `LayerPanelHeader` to get a nice header at the top. There are several props for the Header component. (title, avatar, and actions)
 ```jsx
-<LayerPanel map={maps[0]}>
+<LayerPanel>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
     <LayerPanelHeader title='Legends Page' />
     <LayerPanelContent>
@@ -36,7 +36,7 @@ Use a `LayerPanelHeader` to get a nice header at the top. There are several prop
 
 The `LayerPanelHeader` can be powerful. If you want actions in your header pass a `LayerPanelActions` component with the actions you want in it. We have built in actions in `ol-kit`. Check out the docs for all of them. In the example we're using `LayerPanelActionRemove` which is from `ol-kit` and the Update Legends `@material-ui/core/MenuItem` is custom. 
 ```jsx
-<LayerPanel map={maps[0]}>
+<LayerPanel>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
     <LayerPanelHeader
       title='Legends Page'
@@ -58,7 +58,7 @@ The `LayerPanelHeader` can be powerful. If you want actions in your header pass 
 
 You can make a list by passing items down. Which should be an array. There's also a built in drag for the `LayerPanelListItem`. You can disable it buy passing the prop `disableDrag` to the `LayerPanelList`.
 ```jsx
-<LayerPanel map={maps[0]}>
+<LayerPanel>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
     <LayerPanelHeader
       title='Legends Page'
@@ -103,7 +103,7 @@ class MyCustomLayerPanelContainer extends React.Component {
     const { legends } = this.state
 
     return (
-      <LayerPanel map={maps[0]}>
+      <LayerPanel>
         <LayerPanelPage tabIcon={<VpnKeyIcon />}>
           <LayerPanelHeader
             title='Legends Page'
@@ -131,7 +131,7 @@ class MyCustomLayerPanelContainer extends React.Component {
 We also have a prebuilt page that ships with the `LayerPanel` called `LayerPanelLayersPage`. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the `LayerPanelLayersPage` to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the `LayerPanelBase` as the parent component) or you can pass the props of the `LayerPanelLayersPage` down through the prebuilt `LayerPanel`.
 ```jsx
 // Passing the props through the LayerPanel component
-<LayerPanel map={maps[0]} handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+<LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
     <LayerPanelHeader
       title='Legends Page'
@@ -143,7 +143,7 @@ We also have a prebuilt page that ships with the `LayerPanel` called `LayerPanel
 </LayerPanel>
 
 // Directly pulling in the LayerPanelLayersPage and passing props through it
-<LayerPanelBase map={maps[0]}>
+<LayerPanelBase>
   <LayerPanelLayersPage handleFeatureDoubleClick={this.onFeatureDoubleClick}>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
     <LayerPanelHeader

@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OpacityWrapper, OpacityTitle, Slider } from './styled'
+import { connectToMap } from 'Map'
 
 class LayerPanelActionOpacity extends Component {
   render () {
-    const { layer } = this.props
+    const { layer, translations } = this.props
 
     return (
       <OpacityWrapper>
-        <OpacityTitle id='opacity-slider'>Opacity</OpacityTitle>
+        <OpacityTitle id='opacity-slider'>{translations['_ol_kit.actions.opacity']}</OpacityTitle>
         <Slider
           disabled={false}
           min={0.1}
@@ -25,7 +26,10 @@ class LayerPanelActionOpacity extends Component {
 
 LayerPanelActionOpacity.propTypes = {
   /** An openlayers `ol.layer` object */
-  layer: PropTypes.object.isRequired
+  layer: PropTypes.object.isRequired,
+
+  /** An object of translation key/value pairs */
+  translations: PropTypes.object
 }
 
-export default LayerPanelActionOpacity
+export default connectToMap(LayerPanelActionOpacity)

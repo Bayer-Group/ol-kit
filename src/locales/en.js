@@ -8,12 +8,12 @@ export default {
   '_ol_kit.PopupDefaultPage.details': 'Details',
   '_ol_kit.PopupDefaultPage.actions': 'Actions',
   '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
-  'olKit.LayerPanelActions.kml': 'KML',
-  'olKit.LayerPanelActions.shapefile': 'Shapefile',
-  'olKit.LayerPanelActions.import': 'Import',
-  'olKit.LayerPanelLayersPage.title': 'Active Layers',
-  'olKit.LayerPanelLayersPage.filterText': 'Filter Layers',
-  'olKit.LayerPanelListItem.feature': 'feature',
-  'olKit.actions.removeLayer': 'Remove Layer',
-  'olKit.actions.removeLayers': 'Remove Layers'
+  '_ol_kit.LayerPanelActions.kml': 'KML',
+  '_ol_kit.LayerPanelActions.shapefile': 'Shapefile',
+  '_ol_kit.LayerPanelActions.import': 'Import',
+  '_ol_kit.LayerPanelLayersPage.title': 'Active Layers',
+  '_ol_kit.LayerPanelLayersPage.filterText': 'Filter Layers',
+  '_ol_kit.LayerPanelListItem.feature': 'feature',
+  '_ol_kit.actions.removeLayer': 'Remove Layer',
+  '_ol_kit.actions.removeLayers': 'Remove Layers'
 }

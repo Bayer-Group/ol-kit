@@ -41,14 +41,8 @@ class LayerPanelList extends Component {
 
   componentDidUpdate (prevProps) {
     if (prevProps.items[0] !== this.props.items[0]) {
-      console.log(prevProps)
       this.setState({ items: this.props.items })
     }
-  }
-
-  makeChildrenSafe = children => {
-    // if children is an array return children if its defined but not an array wrap it otherwise return null
-    return Array.isArray(children) ? children : children ? [children] : null // eslint-disable-line
   }
 
   onDrop = e => {
@@ -90,7 +84,7 @@ class LayerPanelList extends Component {
         </List>
       )
     } else {
-      return <div style='color:red;'>Must either pass `children` or a prop of `items` for LayerPanelList to render its list</div>
+      return <div>Must either pass `children` or a prop of `items` for LayerPanelList to render its list</div>
     }
   }
 }
@@ -98,10 +92,13 @@ class LayerPanelList extends Component {
 LayerPanelList.propTypes = {
   /** The content of the LayerPanelList (likely `LayerPanelListItem` components) */
   children: PropTypes.node,
+
   /** callback when item prop is dropped */
   onSort: PropTypes.func,
+
   /** callback with reordered items */
   onReorderedItems: PropTypes.func,
+
   /** array of items to be rendered in the list */
   items: PropTypes.array,
 

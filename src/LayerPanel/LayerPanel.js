@@ -18,7 +18,7 @@ class LayerPanel extends Component {
 
 LayerPanel.propTypes = {
   /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object,
+  translations: PropTypes.object.isRequired,
 
   /** An Openlayers map object from which the layer panel will derive its layers */
   map: PropTypes.object.isRequired,

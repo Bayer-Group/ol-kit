@@ -32,10 +32,4 @@ LayerPanelHeader.propTypes = {
   avatar: PropTypes.node
 }
 
-LayerPanelHeader.defaultProps = {
-  defaultActions: false,
-  masterCheckbox: false,
-  hideActions: false
-}
-
 export default LayerPanelHeader

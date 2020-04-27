@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
+import { connectToMap } from 'Map'
 
 class LayerPanelActionExtent extends Component {
   getLayerExtentProps = (layer) => {
@@ -29,10 +30,12 @@ class LayerPanelActionExtent extends Component {
   }
 
   render () {
-    const { layer } = this.props
+    const { layer, translations } = this.props
 
     return (
-      <MenuItem key={'zoom'} onClick={() => this.gotoLayerExtent(layer)}>Zoom to Layer Extent</MenuItem>
+      <MenuItem key={'zoom'} onClick={() => this.gotoLayerExtent(layer)}>
+        {translations['_ol_kit.actions.zoomToExtent'] || 'Zoom to Layer Extent'}
+      </MenuItem>
     )
   }
 }
@@ -45,7 +48,14 @@ LayerPanelActionExtent.propTypes = {
   layer: PropTypes.object,
 
   /** A callback function that closes the `LayerPanelMenu` */
-  handleMenuClose: PropTypes.func
+  handleMenuClose: PropTypes.func,
+
+  /** An object of translation key/value pairs */
+  translations: PropTypes.object
 }
 
-export default LayerPanelActionExtent
+LayerPanelActionExtent.defaultProps = {
+  handleMenuClose: () => {}
+}
+
+export default connectToMap(LayerPanelActionExtent)

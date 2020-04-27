@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import olLayerVector from 'ol/layer/vector'
+import { connectToMap } from 'Map'
 
 class LayerPanelActionExport extends Component {
   handleExport = (filetype) => {
@@ -45,14 +46,14 @@ class LayerPanelActionExport extends Component {
         disbaleGutter={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('kml')} >
-        {translations['olKit.LayerPanelActions.kml'] || 'Export KML'}
+        {translations['_ol_kit.LayerPanelActions.kml'] || 'Export KML'}
       </MenuItem>,
       <MenuItem
         key='exportShp'
         disbaleGutter={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('shp')} >
-        {translations['olKit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
+        {translations['_ol_kit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
       </MenuItem>]
     )
   }
@@ -72,4 +73,9 @@ LayerPanelActionExport.propTypes = {
   translations: PropTypes.object
 }
 
-export default LayerPanelActionExport
+LayerPanelActionExport.defaultProps = {
+  onExportFeatures: () => {},
+  handleMenuClose: () => {}
+}
+
+export default connectToMap(LayerPanelActionExport)
