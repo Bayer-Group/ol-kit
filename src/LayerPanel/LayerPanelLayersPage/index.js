@@ -291,7 +291,7 @@ class LayerPanelLayersPage extends Component {
             value={filterText}
             onChange={(e) => this.handleFilter(e.target.value)} />
         }
-        <LayerPanelContent>
+        <LayerPanelContent padding='0px 15px'>
           <LayerPanelList
             disableDrag={disableDrag}
             onSort={this.zIndexSort}

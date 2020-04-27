@@ -11,7 +11,7 @@ class LayerPanelContent extends Component {
     const { children } = this.props
 
     return (
-      <CardContent>
+      <CardContent {...this.props}>
         {children}
       </CardContent>
     )
