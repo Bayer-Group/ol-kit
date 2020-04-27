@@ -18,7 +18,7 @@ const DEFAULT_STYLE = {
   name: 'New Auto Style',
   filter: [
     '&&',
-    ['==', 'choose an attribute', '']
+    ['==', '', '']
   ],
   symbolizers: [{
     kind: 'Mark',
@@ -62,6 +62,7 @@ class LayerStyler extends Component {
     const { styles, onStylesChange } = this.props
     const newStyles = [...styles]
 
+
     // this reverse is done b/c the incoming styles are reversed so
     // the top-most item is actually the last item rendered by GS so it's "on top"
     // in the z index stack
@@ -100,10 +101,12 @@ class LayerStyler extends Component {
       <div>
         <ButtonContainer>
           <Half>
-            <StyleGroupHeading>
+            <StyleGroupHeading id={heading}>
               {heading}
               {showNewButtons &&
-                <AddNew onClick={this.createStyleGroup}>
+                <AddNew
+                  data-testid={'LayerStyler.addStyle'}
+                  onClick={this.createStyleGroup}>
                   <AddCircleIcon />
                 </AddNew>
               }
@@ -120,6 +123,9 @@ class LayerStyler extends Component {
               const mutatedStyleGroup = styleGroup.map(style => ({ ...style, hidden: false }))
 
               return <StyleGroup
+                inputProps={{
+                  'data-testid':'LayerStyler.StyleGroup'
+                }}
                 translations={translations}
                 commaDelimitedAttributes={commaDelimitedAttributes}
                 styles={mutatedStyleGroup}
@@ -224,14 +230,7 @@ LayerStyler.defaultProps = {
   attributes: [],
   collapsed: false,
   isDefaultStyler: false,
-  showNewButtons: false,
-  translations: {
-    '_ol_kit.LayerStyler.reset': 'Reset Styles',
-    '_ol_kit.LayerStyler.show': 'Show All',
-    '_ol_kit.LayerStyler.hide': 'Hide All',
-    '_ol_kit.LayerStyler.zoomedIn': 'Zoomed In',
-    '_ol_kit.LayerStyler.zoomedOut': 'Zoomed Out'
-  }
+  showNewButtons: false
 }
 
 export default LayerStyler

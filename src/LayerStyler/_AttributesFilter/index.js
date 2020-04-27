@@ -19,7 +19,7 @@ const defaultFilter = {
 
 /**
  * @component
- * @category vmc
+ * @category AttributesFilter
  */
 class AttributesFilter extends React.Component {
   addFilter = () => {
@@ -64,23 +64,23 @@ class AttributesFilter extends React.Component {
     const { translations, attributes, attributeValues, disabled, filters, filterConditions } = this.props
 
     const getLogicOperator = (i, filters) => {
-      if (i === 0) return translations['olKit.AttributesFilter.where']
+      if (i === 0) return translations['_ol_kit.AttributesFilter.where']
       if (i > 1) return filters[0].logical
 
       return (
         <Select
           value={filters[0].logical}
           onChange={e => this.updateLogicalOperator(e.target.value)}>
-          <MenuItem key='AND' value='AND'>{translations['olKit.AttributesFilter.AND']}</MenuItem>
-          <MenuItem key='OR'value='OR'>{translations['olKit.AttributesFilter.OR']}</MenuItem>
+          <MenuItem key='AND' value='AND'>{translations['_ol_kit.AttributesFilter.AND']}</MenuItem>
+          <MenuItem key='OR'value='OR'>{translations['_ol_kit.AttributesFilter.OR']}</MenuItem>
         </Select>
       )
     }
 
     return (
-      <Popover title={translations['olKit.AttributesFilter.filters'] + (filters.length ? ` (${filters.length})` : '')} disabled={disabled}>
+      <Popover title={translations['_ol_kit.AttributesFilter.filters'] + (filters.length ? ` (${filters.length})` : '')} disabled={disabled}>
         <ContentContainer>
-          <Title>{translations['olKit.AttributesFilter.filters']}</Title>
+          <Title>{translations['_ol_kit.AttributesFilter.filters']}</Title>
           {filters.map((filter, i) => {
             return (
               <Row key={nanoid(6)}>
@@ -91,21 +91,21 @@ class AttributesFilter extends React.Component {
                 <InputContainer>
                   <Selector
                     options={attributes}
-                    header={`${translations['olKit.AttributesFilter.attribute']} ${i + 1}`}
+                    header={`${translations['_ol_kit.AttributesFilter.attribute']} ${i + 1}`}
                     onValueChange={value => this.handleSelect(value, 'attribute', i)}
                     selected={filter.attribute} />
                 </InputContainer>
                 <InputContainer>
                   <Selector
                     options={filterConditions}
-                    header={`${translations['olKit.AttributesFilter.condition']} ${i + 1}`}
+                    header={`${translations['_ol_kit.AttributesFilter.condition']} ${i + 1}`}
                     onValueChange={value => this.handleSelect(value, 'condition', i)}
                     selected={filter.condition} />
                 </InputContainer>
                 <InputContainer>
                   <Selector
                     options={attributeValues.map(v => `${v}`) /* string interpolation here ensures booleans display properly */}
-                    header={`${translations['olKit.AttributesFilter.value']} ${i + 1}`}
+                    header={`${translations['_ol_kit.AttributesFilter.value']} ${i + 1}`}
                     onValueChange={value => this.handleSelect(value, 'value', i)}
                     selected={filter.value}
                     disabled={!filter.attribute} />
@@ -113,7 +113,7 @@ class AttributesFilter extends React.Component {
               </Row>
             )
           })}
-          <Row><span onClick={this.addFilter}>+ {translations['olKit.AttributesFilter.addFilter']}</span></Row>
+          <Row><span onClick={this.addFilter}>+ {translations['_ol_kit.AttributesFilter.addFilter']}</span></Row>
         </ContentContainer>
       </Popover>
     )
@@ -153,17 +153,7 @@ AttributesFilter.defaultProps = {
   filters: [],
   filterConditions: ['is', 'is not', 'contains'],
   getValuesForAttribute: () => {},
-  onUpdateFilters: () => {},
-  translations: {
-    'olKit.AttributesFilter.where': 'Where',
-    'olKit.AttributesFilter.AND': 'AND',
-    'olKit.AttributesFilter.OR': 'OR',
-    'olKit.AttributesFilter.filters': 'Filters',
-    'olKit.AttributesFilter.addFilter': 'Add Filter',
-    'olKit.AttributesFilter.attribute': 'value',
-    'olKit.AttributesFilter.condition': 'condition',
-    'olKit.AttributesFilter.value': 'attribute'
-  }
+  onUpdateFilters: () => {}
 }
 
 export default AttributesFilter

@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import cloneDeep from 'lodash.clonedeep'
 
+import ugh from 'ugh'
 import AttributesFilter from 'LayerStyler/_AttributesFilter'
 import LabelStyler from 'LayerStyler/_LabelStyler'
 import LayerStyler from 'LayerStyler/_LayerStyler'
@@ -45,7 +46,7 @@ const getLabelStyle = (ss = []) => ss.find(s => s.symbolizers[0].kind === 'Text'
 
 /**
  * @component
- * @category vmc
+ * @category StyleManager
  * @example ./example.md
  */
 class StyleManager extends Component {
@@ -69,6 +70,7 @@ class StyleManager extends Component {
   }
 
   handleLayerChange = ({ target }) => {
+    ugh.log('change', target)
     const { layers, getTitleForLayer } = this.props
     const options = layers.map(getTitleForLayer)
     const activeIdx = options.findIndex(t => t === target.value)
@@ -178,7 +180,7 @@ class StyleManager extends Component {
         <HeaderContainer>
           <InputContainer>
             <FormControl style={{ width: '300px', margin: '20px' }}>
-              <InputLabel htmlFor='layer-selector'>{translations['olKit.StyleManager.chooseLayer']}</InputLabel>
+              <InputLabel htmlFor='layer-selector'>{translations['_ol_kit.StyleManager.chooseLayer']}</InputLabel>
               <Select
                 value={layerTitles[activeIdx] || ''}
                 onChange={this.handleLayerChange}
@@ -196,11 +198,13 @@ class StyleManager extends Component {
         </HeaderContainer>
         {layerSelected &&
           <SelectTabs>
-            <div title={translations['olKit.StyleManager.styleTab']}>
+            <div title={translations['_ol_kit.StyleManager.styleTab']}>
               <LayerStyler
-                id='LayerStyler'
+                inputProps={{
+                  'data-testid':'StyleManager.customStyles'
+                }}
                 translations={translations}
-                heading={`${translations['olKit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
+                heading={`${translations['_ol_kit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
                 showNewButtons={true}
                 collapsed={userCollapsed}
                 getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)}
@@ -212,9 +216,11 @@ class StyleManager extends Component {
                 onCollapseToggle={() => this.onCollapseToggle('userCollapsed')}
                 onStylesChange={this.onUserStyleChange} />
               <LayerStyler
-                id='LayerStyler'
+                inputProps={{
+                  'data-testid':'StyleManager.defaultStyles'
+                }}
                 translations={translations}
-                heading={`${translations['olKit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}
+                heading={`${translations['_ol_kit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}
                 collapsed={defaultCollapsed}
                 attributes={getAttributesForLayer(layers[activeIdx])}
                 styles={groupStyles(defaultStyles[activeIdx])}
@@ -223,8 +229,9 @@ class StyleManager extends Component {
                 onDefaultStyleReset={this.onDefaultStyleReset}
                 isDefaultStyler={true} />
             </div>
-            <div data-testid='StyleManager.labelTab' title={translations['olKit.StyleManager.labelTab']}>
+            <div data-testid={'StyleManager.labelTab'} title={translations['_ol_kit.StyleManager.labelTab']}>
               <LabelStyler
+                translations={translations}
                 style={getLabelStyle(userStyles[activeIdx]) || cloneDeep(DEFAULT_LABEL_STYLE)}
                 attributes={getAttributesForLayer(layers[activeIdx])}
                 onStylesChange={this.onLabelStyleChange} />
@@ -279,47 +286,6 @@ StyleManager.propTypes = {
 
   /** callback invoked which returns attributes on the layer which are comma separated */
   getCommaDelimitedAttributesForLayer: PropTypes.func.isRequired
-}
-
-StyleManager.defaultProps = {
-  translations: {
-    'olKit.StyleManager.chooseLayer': 'Choose a layer to style',
-    'olKit.StyleManager.styleTab': 'Styles',
-    'olKit.StyleManager.labelTab': 'Labels',
-    'olKit.StyleManager.customStyles': 'Custom Styles',
-    'olKit.StyleManager.defaultStyles': 'Default Styles',
-    'olKit.AttributesFilter.where': 'Where',
-    'olKit.AttributesFilter.AND': 'AND',
-    'olKit.AttributesFilter.OR': 'OR',
-    'olKit.AttributesFilter.filters': 'Filters',
-    'olKit.AttributesFilter.addFilter': 'Add Filter',
-    'olKit.AttributesFilter.attribute': 'value',
-    'olKit.AttributesFilter.condition': 'condition',
-    'olKit.AttributesFilter.value': 'attribute',
-    '_ol_kit.LayerStyler.reset': 'Reset Styles',
-    '_ol_kit.LayerStyler.show': 'Show All',
-    '_ol_kit.LayerStyler.hide': 'Hide All',
-    '_ol_kit.LayerStyler.zoomedIn': 'Zoomed In',
-    '_ol_kit.LayerStyler.zoomedOut': 'Zoomed Out',
-    'olKit.StyleGroup.chooseAttribute': 'Choose an Attribute',
-    'olKit.StyleGroup.delete': 'Delete Style Group',
-    'olKit.StyleGroup.value': 'Value',
-    'olKit.StyleGroup.addValue': 'Add Value',
-    'olKit.GenericSymbolizer.fill': 'Fill',
-    'olKit.GenericSymbolizer.width': 'Width',
-    'olKit.GenericSymbolizer.stroke': 'Stroke',
-    'olKit.GenericSymbolizer.remove': 'Remove',
-    'olKit.LabelStyler.noLabelSupport': 'This layer does not support labelling.',
-    'olKit.LabelStyler.enableSmartLabels': 'Enable smart labels',
-    'olKit.LabelStyler.color': 'Color',
-    'olKit.LabelStyler.outline': 'Outline',
-    'olKit.LabelStyler.textHeight': 'Text Height',
-    'olKit.LabelStyler.textUnits': 'Text Size Units',
-    'olKit.LabelStyler.pixels': 'Pixels',
-    'olKit.LabelStyler.feet': 'Feet',
-    'olKit.LabelStyler.chooseAttrs': 'Choose Attributes to Display',
-    'olKit.LabelStyler.clear': 'Clear All'
-  }
 }
 
 export default StyleManager

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ugh from 'ugh'
 
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -48,7 +49,7 @@ class LabelStyler extends Component {
 
       style.symbolizers = [newSymbolizer]
     } catch (err) {
-      console.error(err) // eslint-disable-line
+      ugh.error(err)
 
       throw new Error('Failed to aggregate changes to the style')
     }
@@ -80,7 +81,7 @@ class LabelStyler extends Component {
 
       newStyle.symbolizers[0].label = newLabel
     } catch (err) {
-      console.error(err) // eslint-disable-line
+      ugh.error(err)
 
       throw new Error('Failed to modify the symbolizer label')
     }
@@ -94,7 +95,7 @@ class LabelStyler extends Component {
     try {
       style.symbolizers[0].label = ''
     } catch (err) {
-      console.error(err) // eslint-disable-line
+      ugh.error(err)
 
       throw new Error('There was an issue setting the symbolizer label')
     }
@@ -127,7 +128,7 @@ class LabelStyler extends Component {
     const { uglyChecked } = this.state
     const { translations, attributes, style } = this.props
 
-    if (!style) return <div>{translations['olKit.LabelStyler.noLabelSupport']}</div>
+    if (!style) return <div>{translations['_ol_kit.LabelStyler.noLabelSupport']}</div>
 
     const symbolizer = style.symbolizers[0]
     const checkedAttributes = symbolizer.label.split(DIVIDER)
@@ -137,7 +138,7 @@ class LabelStyler extends Component {
       <div>
         <TopControls>
           <ToggleContainer>
-            <span>{translations['olKit.LabelStyler.enableSmartLabels']}</span>
+            <span>{translations['_ol_kit.LabelStyler.enableSmartLabels']}</span>
             <Switch
               checked={uglyChecked}
               onChange={this.onToggle}
@@ -146,15 +147,15 @@ class LabelStyler extends Component {
           </ToggleContainer>
           <SymbolizerContainer>
             <Color>
-              <Title>{translations['olKit.LabelStyler.color']}</Title>
+              <Title>{translations['_ol_kit.LabelStyler.color']}</Title>
               <ColorPicker handleSelect={(val) => this.aggregateChanges('color', val)} currentColor={symbolizer.color} />
             </Color>
             <Outline>
-              <Title>{translations['olKit.LabelStyler.outline']}</Title>
+              <Title>{translations['_ol_kit.LabelStyler.outline']}</Title>
               <ColorPicker handleSelect={(val) => this.aggregateChanges('haloColor', val)} currentColor={symbolizer.haloColor} />
             </Outline>
             <Size>
-              <Title>{translations['olKit.LabelStyler.textHeight']}</Title>
+              <Title>{translations['_ol_kit.LabelStyler.textHeight']}</Title>
               <Select
                 style={{ marginTop: '10px' }}
                 value={symbolizer.size}
@@ -165,22 +166,22 @@ class LabelStyler extends Component {
               </Select>
             </Size>
             <Unit>
-              <Title>{translations['olKit.LabelStyler.textUnits']}</Title>
+              <Title>{translations['_ol_kit.LabelStyler.textUnits']}</Title>
               <Select
                 style={{ marginTop: '10px' }}
                 value={sizeUnit}
                 onChange={e => this.updateTextSizeUnit(e.target.value)}>
-                <MenuItem key='px' value={'px'}>{translations['olKit.LabelStyler.pixels']}</MenuItem>
-                <MenuItem key='ft' value={'ft'}>{translations['olKit.LabelStyler.feet']}</MenuItem>
+                <MenuItem key='px' value={'px'}>{translations['_ol_kit.LabelStyler.pixels']}</MenuItem>
+                <MenuItem key='ft' value={'ft'}>{translations['_ol_kit.LabelStyler.feet']}</MenuItem>
               </Select>
             </Unit>
           </SymbolizerContainer>
         </TopControls>
         <AttributeHeader>
-          <div>{translations['olKit.LabelStyler.chooseAttrs']}</div>
+          <div>{translations['_ol_kit.LabelStyler.chooseAttrs']}</div>
           {checkedAttributes.length && (
             <Button onClick={this.clearCheckedItems}>
-              <ButtonText>{translations['olKit.LabelStyler.clear']}</ButtonText>
+              <ButtonText>{translations['_ol_kit.LabelStyler.clear']}</ButtonText>
             </Button>
           )}
         </AttributeHeader>
@@ -217,19 +218,7 @@ LabelStyler.propTypes = {
 LabelStyler.defaultProps = {
   style: {},
   attributes: [],
-  onStylesChange: () => {},
-  translations: {
-    'olKit.LabelStyler.noLabelSupport': 'This layer does not support labelling.',
-    'olKit.LabelStyler.enableSmartLabels': 'Enable smart labels',
-    'olKit.LabelStyler.color': 'Color',
-    'olKit.LabelStyler.outline': 'Outline',
-    'olKit.LabelStyler.textHeight': 'Text Height',
-    'olKit.LabelStyler.textUnits': 'Text Size Units',
-    'olKit.LabelStyler.pixels': 'Pixels',
-    'olKit.LabelStyler.feet': 'Feet',
-    'olKit.LabelStyler.chooseAttrs': 'Choose Attributes to Display',
-    'olKit.LabelStyler.clear': 'Clear All'
-  }
+  onStylesChange: () => {}
 }
 
 export default LabelStyler

@@ -63,12 +63,12 @@ class GenericSymbolizer extends Component {
         <Fourth>
           {opacity >= 0.5 &&
           <Fragment>
-            <Title>{translations['olKit.GenericSymbolizer.fill']}</Title>
+            <Title>{translations['_ol_kit.GenericSymbolizer.fill']}</Title>
             <ColorPicker handleSelect={val => this.aggregateChanges('color', val)} currentColor={color} />
           </Fragment>}
         </Fourth>
         <Fourth>
-          <Title>{translations['olKit.GenericSymbolizer.width']}</Title>
+          <Title>{translations['_ol_kit.GenericSymbolizer.width']}</Title>
           <Select
             style={{ padding: 'unset', marginTop: '10px', width: '100%' }}
             value={widthValue}
@@ -79,11 +79,11 @@ class GenericSymbolizer extends Component {
           </Select>
         </Fourth>
         <Fourth>
-          <Title>{translations['olKit.GenericSymbolizer.stroke']}</Title>
+          <Title>{translations['_ol_kit.GenericSymbolizer.stroke']}</Title>
           <ColorPicker handleSelect={val => this.aggregateChanges('strokeColor', val)} currentColor={strokeColor || outlineColor} />
         </Fourth>
         <Fourth>
-          <Title>{translations['olKit.GenericSymbolizer.remove']}</Title>
+          <Title>{translations['_ol_kit.GenericSymbolizer.remove']}</Title>
           <Trashcan onClick={this.props.onSymbolizerDelete}>
             <Delete style={{ verticalAlign: 'top' }} />
           </Trashcan>
@@ -109,13 +109,7 @@ GenericSymbolizer.propTypes = {
 
 GenericSymbolizer.defaultProps = {
   onSymbolizerChange: () => {},
-  onSymbolizerDelete: () => {},
-  translations: {
-    'olKit.GenericSymbolizer.fill': 'Fill',
-    'olKit.GenericSymbolizer.width': 'Width',
-    'olKit.GenericSymbolizer.stroke': 'Stroke',
-    'olKit.GenericSymbolizer.remove': 'Remove'
-  }
+  onSymbolizerDelete: () => {}
 }
 
 export default GenericSymbolizer

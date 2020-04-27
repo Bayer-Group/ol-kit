@@ -4,6 +4,7 @@ exports[`ol-kit package should not export undefined 1`] = `
 Object {
   "Compass": [Function],
   "Controls": [Function],
+  "LayerStyler": [Function],
   "Map": [Function],
   "Popup": [Function],
   "PopupBase": [Function],

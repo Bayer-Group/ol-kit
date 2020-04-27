@@ -5,7 +5,7 @@ import { Flex, TabButton, TabList, TabsContainer, TabSlider } from './styled'
 
 /**
  * @component
- * @category vmc
+ * @category SelectTabs
  */
 class SelectTabs extends Component {
   constructor (props) {

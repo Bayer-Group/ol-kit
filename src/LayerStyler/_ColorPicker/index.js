@@ -30,7 +30,7 @@ const colors = [
 
 /**
  * @component
- * @category vmc
+ * @category ColorPicker
  */
 class ColorPicker extends Component {
   constructor (props) {

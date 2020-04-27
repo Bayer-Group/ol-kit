@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 /**
  * @component
- * @category vmc
+ * @category Popover
  */
 const Popover = withStyles(() => ({
   paper: {
@@ -17,7 +17,7 @@ const Popover = withStyles(() => ({
 
 /**
  * @component
- * @category vmc
+ * @category Popover
  */
 class PopoverBuilder extends React.Component {
   constructor () {

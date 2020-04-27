@@ -2,6 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import StyleManager from 'LayerStyler/StyleManager'
 import olObservable from 'ol/observable'
+import olFormatFilterAnd from 'ol/format/filter/and'
+import olFormatFilterOr from 'ol/format/filter/or'
+import olFormatFilterEqualTo from 'ol/format/filter/equalto'
+import olFormatFilterIsLike from 'ol/format/filter/islike'
+import olFilterFunction from 'classes/FilterFunction'
+import ugh from 'ugh'
+
+import escapeRegExp from 'lodash.escaperegexp'
 
 import { addMovementListener } from './utils'
 
@@ -158,12 +166,11 @@ class LayerStyler extends React.Component {
     })
 
     if (layers.length - validLayers.length > 1) {
-      logger.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer') // eslint-disable-line
+      ugh.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer')
     }
 
     return validLayers
   }
-
 
   render () {
     const layers = this.props.map.getLayers().getArray()
@@ -172,28 +179,28 @@ class LayerStyler extends React.Component {
 
     return (
       <StyleManager
-      layers={layers}
-      translations={translations}
-      filters={layers.map(l => l.isGeoserverLayer && l.getWMSFilters())}
-      userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles() : l.getUserVectorStyles?.())}
-      defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles() : l.getDefaultVectorStyles?.())}
-      getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
-      getTitleForLayer={this.getTitleForLayer}
-      getValuesForAttribute={this.getValuesForAttribute}
-      getAttributesForLayer={this.getAttributesForLayer}
-      attributeValues={attributeValues}
-      onFilterChange={this.onFilterChange}
-      onUserStyleChange={this.onUserStyleChange}
-      onDefaultStyleChange={this.onDefaultStyleChange}
-      onDefaultStyleReset={this.onDefaultStyleReset}
-      {...this.props} />
+        layers={layers}
+        translations={translations}
+        filters={layers.map(l => l.isGeoserverLayer && l.getWMSFilters())}
+        userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles() : l.getUserVectorStyles?.())}
+        defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles() : l.getDefaultVectorStyles?.())}
+        getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
+        getTitleForLayer={this.getTitleForLayer}
+        getValuesForAttribute={this.getValuesForAttribute}
+        getAttributesForLayer={this.getAttributesForLayer}
+        attributeValues={attributeValues}
+        onFilterChange={this.onFilterChange}
+        onUserStyleChange={this.onUserStyleChange}
+        onDefaultStyleChange={this.onDefaultStyleChange}
+        onDefaultStyleReset={this.onDefaultStyleReset}
+        {...this.props} />
     )
   }
 }
 
 LayerStyler.propTypes = {
   /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object,
+  translations: PropTypes.object.isRequired,
 
   /** Openlayers map object */
   map: PropTypes.object.isRequired

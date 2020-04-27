@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce'
+import ugh from 'ugh'
 
 /**
  * Bind multiple move listeners with the same callback
@@ -10,12 +11,11 @@ import debounce from 'lodash.debounce'
  * @returns {ol.EventsKey[]} Array of openlayers event keys for unsetting listener events (See: https://openlayers.org/en/v4.6.5/apidoc/ol.Observable.html#.unByKey)
  */
 export const addMovementListener = (map, callback, thisObj) => {
-    if (typeof callback !== 'function') return console.error('addMovementListener requires a valid openlayers map & callback function') // eslint-disable-line
+  if (typeof callback !== 'function') return ugh.error('addMovementListener requires a valid openlayers map & callback function')
 
   // If performance becomes an issue with catalog layers & far zoom level, these debounce levels can be adjusted
   const slowDebounce = debounce(callback, 0)
   const fastDebounce = debounce(callback, 0)
-
   const keys = [
     map.on('change:size', slowDebounce, thisObj),
     map.getView().on('change:resolution', slowDebounce, thisObj),

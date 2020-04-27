@@ -5,6 +5,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 
+import ugh from 'ugh'
 import Selector from 'LayerStyler/_Selector'
 import GenericSymbolizer from './_GenericSymbolizer'
 import escapeRegExp from 'lodash.escaperegexp'
@@ -74,13 +75,13 @@ class StyleGroup extends Component {
 
       onStylesChange([...styles, styleClone])
     } catch (e) {
-      console.error(e, styles) // eslint-disable-line
+      ugh.error(e, styles)
 
       throw new Error('There was an error trying to clone an existing style')
     }
   }
 
-  debounceAttributeChange = ({ target }) => {
+  debounceAttributeChange = (event) => {
     const { styles, onStylesChange } = this.props
     const newStyles = [...styles]
 
@@ -88,7 +89,7 @@ class StyleGroup extends Component {
       onStylesChange(newStyles.map(s => {
         // styles will look like this ['&&', ['==', 'attribute', 'value'] ...]
         // so to change the attribute we're styling, we need to hit [1][1]
-        s.filter[1][1] = target.value
+        s.filter[1][1] = event.target.value
 
         return s
       }))
@@ -175,8 +176,9 @@ class StyleGroup extends Component {
             {hasFilter &&
               <Half>
                 <FormControl style={{ width: '200px', margin: '15px' }}>
-                  <InputLabel htmlFor='attribute-selector'>{translations['olKit.StyleGroup.chooseAttribute']}</InputLabel>
+                  <InputLabel htmlFor='attribute-selector'>{translations['_ol_kit.StyleGroup.chooseAttribute']}</InputLabel>
                   <Select
+                    inputProps={{ 'data-testid': 'StyleGroup.attributeSelector' }}
                     value={getAttributeValue(styles[0].filter)}
                     onChange={this.debounceAttributeChange}>
                     {attributes.map((a, i) => {
@@ -188,7 +190,7 @@ class StyleGroup extends Component {
             }
             <Half>
               <DeleteGroup>
-                <DeleteGroupText onClick={this.onDeleteStyleGroup}>{translations['olKit.StyleGroup.delete']}</DeleteGroupText>
+                <DeleteGroupText onClick={this.onDeleteStyleGroup}>{translations['_ol_kit.StyleGroup.delete']}</DeleteGroupText>
               </DeleteGroup>
             </Half>
           </AttributeContainer>
@@ -203,8 +205,9 @@ class StyleGroup extends Component {
                   <StyleContainer key={`${getAttributeValue(s.filter)}-${i}`}>
                     {hasFilter &&
                       <Selector
+                        data-testid={'StyleGroup.attributeValueSelector'}
                         style={{ flex: 1 }}
-                        header={translations['olKit.StyleGroup.value']}
+                        header={translations['_ol_kit.StyleGroup.value']}
                         onClick={() => this.props.getValuesForAttribute(getAttributeValue(s.filter))}
                         selected={getSelectedValue(s.filter)}
                         options={attributeValues.map(v => `${v}`) /* string interpolation here ensures booleans display properly */}
@@ -224,7 +227,7 @@ class StyleGroup extends Component {
           <AddNewContainer>
             <AddNew onClick={this.onNewStyleValue}>
               <AddCircleIcon />
-              {translations['olKit.StyleGroup.addValue']}
+              {translations['_ol_kit.StyleGroup.addValue']}
             </AddNew>
           </AddNewContainer>
         </div>
@@ -252,13 +255,7 @@ StyleGroup.propTypes = {
 
 StyleGroup.defaultProps = {
   onStylesChange: () => {},
-  attributeValues: [],
-  translations: {
-    'olKit.StyleGroup.chooseAttribute': 'Choose an Attribute',
-    'olKit.StyleGroup.delete': 'Delete Style Group',
-    'olKit.StyleGroup.value': 'Value',
-    'olKit.StyleGroup.addValue': 'Add Value'
-  }
+  attributeValues: []
 }
 
 export default StyleGroup
