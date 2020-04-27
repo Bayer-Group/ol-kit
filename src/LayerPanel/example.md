@@ -156,7 +156,7 @@ We also have a prebuilt page that ships with the `LayerPanel` called `LayerPanel
 </LayerPanelBase>
 ```
 
-To show you the amount of customization possible with these pages, here's the `LayerPanelListPage`.
+To show you the amount of customization possible with these pages, here's the `LayerPanelLayersPage`.
 ```jsx
 <LayerPanelPage>
   <LayerPanelHeader
