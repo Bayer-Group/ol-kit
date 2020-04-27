@@ -160,7 +160,7 @@ To show you the amount of customization possible with these pages, here's the `L
 ```jsx
 <LayerPanelPage>
   <LayerPanelHeader
-    title={translations['geokit.LayerPanelListPage.title']}
+    title={'Active Layers'}
     translations={translations}
     avatar={<LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
     actions={customActions ||
@@ -178,7 +178,7 @@ To show you the amount of customization possible with these pages, here's the `L
   {enableFilter &&
     <TextField
       id='feature-filter-input'
-      label={translations['geokit.LayerPanelListPage.filterText']}
+      label={'Filter Layers'}
       type='text'
       style={{ margin: '8px' }}
       fullWidth
@@ -224,7 +224,7 @@ To show you the amount of customization possible with these pages, here's the `L
                         <LayerPanelCheckbox
                           handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
                           checkboxState={feature.get('_feature_visibility')} />
-                        <ListItemText inset={false} primary={feature.get('name') || `${translations['olKit.LayerPanelListItem.feature']} ${i}`} />
+                        <ListItemText inset={false} primary={feature.get('name') || `Feature ${i}`} />
                       </ListItem>
                     )
                   })}

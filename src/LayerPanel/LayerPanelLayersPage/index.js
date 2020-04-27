@@ -51,10 +51,10 @@ class LayerPanelLayersPage extends Component {
   }
 
   componentDidMount = () => {
-    const { map, layerFilter, basemapKey } = this.props
+    const { map, layerFilter } = this.props
     const layers = map.getLayers()
     const handleMapChange = (e) => {
-      const filteredLayers = layerFilter(layers.getArray(), basemapKey)
+      const filteredLayers = layerFilter(layers.getArray())
       const safeFilteredLayersLength = filteredLayers ? filteredLayers.length - 1 : 0
 
       filteredLayers[safeFilteredLayersLength] && filteredLayers[safeFilteredLayersLength].setZIndex(filteredLayers.length) // eslint-disable-line
@@ -158,7 +158,8 @@ class LayerPanelLayersPage extends Component {
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_feature_visibility') === undefined ? true : feature.get('_feature_visibility')
       const iaFeatureStyle = feature.get('_feature_style') || feature.getStyle()
-      const featureOriginalStyle = isEqual(iaFeatureStyle, new olStyleStyle(null)) ? feature.setStyle(null) : iaFeatureStyle
+      const featureOriginalStyle = isEqual(iaFeatureStyle, new olStyleStyle(null))
+        ? feature.setStyle(null) : iaFeatureStyle
       const featureStyle = isVisible ? featureOriginalStyle : new olStyleStyle()
 
       feature.set('_feature_visibility', isVisible)
@@ -255,16 +256,19 @@ class LayerPanelLayersPage extends Component {
   }
 
   render () {
-    const { translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, basemapKey,
-      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures } = this.props
+    const {
+      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag,
+      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
+    } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayer } = this.state
 
     return (
       <LayerPanelPage>
         <LayerPanelHeader
-          title={translations['geokit.LayerPanelListPage.title']}
+          title={translations['olKit.LayerPanelLayersPage.title']}
           translations={translations}
-          avatar={<LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
+          avatar={<LayerPanelCheckbox
+            checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
           actions={customActions ||
             <LayerPanelActions
               icon={<MoreHorizIcon />}
@@ -280,7 +284,7 @@ class LayerPanelLayersPage extends Component {
         {enableFilter &&
           <TextField
             id='feature-filter-input'
-            label={translations['geokit.LayerPanelListPage.filterText']}
+            label={translations['olKit.LayerPanelLayersPage.filterText']}
             type='text'
             style={{ margin: '8px' }}
             fullWidth
@@ -288,8 +292,12 @@ class LayerPanelLayersPage extends Component {
             onChange={(e) => this.handleFilter(e.target.value)} />
         }
         <LayerPanelContent>
-          <LayerPanelList disableDrag={disableDrag} onSort={this.zIndexSort} onReorderedItems={this.reorderLayers} items={layers} >
-            {layerFilter(layers, basemapKey).filter((layer) => {
+          <LayerPanelList
+            disableDrag={disableDrag}
+            onSort={this.zIndexSort}
+            onReorderedItems={this.reorderLayers}
+            items={layers} >
+            {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
               return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
@@ -302,7 +310,10 @@ class LayerPanelLayersPage extends Component {
                     {<LayerPanelCheckbox
                       checkboxState={!layer ? null : layer.getVisible()}
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
-                    {<LayerPanelExpandableList show={!!features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
+                    {<LayerPanelExpandableList
+                      show={!!features}
+                      open={expandedLayer}
+                      handleClick={this.handleExpandedLayer} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
                     <ListItemSecondaryAction>
                       <LayerPanelActions
@@ -346,7 +357,7 @@ LayerPanelLayersPage.defaultProps = {
   handleFeatureDoubleClick: () => {},
   handleLayerDoubleClick: () => {},
   handleDoubleClick: () => {},
-  layerFilter: (layers, basemapKey) => layers.filter(layer => !layer.get(basemapKey) && layer.get('name') !== 'unselectable'),
+  layerFilter: (layers) => layers.filter(layer => !layer.get('_ol_kit_basemap') && layer.get('name') !== 'unselectable'),
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
