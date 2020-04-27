@@ -6,7 +6,7 @@ import olFormatFilterAnd from 'ol/format/filter/and'
 import olFormatFilterOr from 'ol/format/filter/or'
 import olFormatFilterEqualTo from 'ol/format/filter/equalto'
 import olFormatFilterIsLike from 'ol/format/filter/islike'
-import olFilterFunction from 'classes/FilterFunction'
+import olFilterFunction from '../classes/FilterFunction'
 import ugh from 'ugh'
 
 import escapeRegExp from 'lodash.escaperegexp'
