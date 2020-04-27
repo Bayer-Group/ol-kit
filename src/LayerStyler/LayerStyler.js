@@ -162,7 +162,7 @@ class LayerStyler extends React.Component {
     const { map } = this.props
     const layers = map.getLayers().getArray()
     const validLayers = layers.filter(layer => {
-      return !layer.get('_vmf_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer)
+      return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer)
     })
 
     if (layers.length - validLayers.length > 1) {
