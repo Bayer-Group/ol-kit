@@ -12,7 +12,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  * @category Basemap
  * @since 0.1.0
  */
-class OpenStreetMap extends React.Component {
+class BasemapOpenStreetMap extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
   }
@@ -66,7 +66,7 @@ class OpenStreetMap extends React.Component {
   }
 }
 
-OpenStreetMap.propTypes = {
+BasemapOpenStreetMap.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
@@ -81,10 +81,10 @@ OpenStreetMap.propTypes = {
   onBasemapChanged: PropTypes.func
 }
 
-OpenStreetMap.defaultProps = {
+BasemapOpenStreetMap.defaultProps = {
   thumbnail: osm,
   onBasemapChanged: () => {},
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(OpenStreetMap)
+export default connectToMap(BasemapOpenStreetMap)
