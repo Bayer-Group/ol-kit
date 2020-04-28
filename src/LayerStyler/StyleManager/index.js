@@ -263,8 +263,7 @@ StyleManager.propTypes = {
   /** array of strings representing values for the selected attribute */
   attributeValues: PropTypes.array.isRequired,
 
-  /** @since 6.6.0
-  callback invoked when the filters change on layer */
+  /** callback invoked when the filters change on layer */
   onFilterChange: PropTypes.func.isRequired,
 
   /** callback invoked when the user styles change */
