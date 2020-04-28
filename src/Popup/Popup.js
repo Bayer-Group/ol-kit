@@ -124,7 +124,7 @@ class Popup extends Component {
   }
 
   render () {
-    const { children, map, show: propShow } = this.props
+    const { actions, children, map, show: propShow } = this.props
     const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
@@ -136,6 +136,7 @@ class Popup extends Component {
             <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
+                  actions={actions}
                   features={features}
                   loading={loading}
                   onClose={this.hidePopup} />
@@ -155,6 +156,11 @@ Popup.defaultProps = {
 }
 
 Popup.propTypes = {
+  /** components passed to PopupDefaultInsert to render as actions */
+  actions: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
   /** Pass components as children of Popup component */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

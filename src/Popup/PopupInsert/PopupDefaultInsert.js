@@ -14,7 +14,7 @@ import PopupPageLayout from './PopupPageLayout'
  * @component
  * @category Popup
  */
-class PopupInsert extends Component {
+class PopupDefaultInsert extends Component {
   constructor (props) {
     super(props)
 
@@ -69,7 +69,7 @@ class PopupInsert extends Component {
   }
 
   render () {
-    const { features, loading, onClose, onSettingsClick, propertiesFilter, showSettingsCog, translations } = this.props
+    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, showSettingsCog, translations } = this.props
     const { selectedIdx } = this.state
 
     return (
@@ -83,7 +83,7 @@ class PopupInsert extends Component {
                 onClose={onClose}
                 attributes={propertiesFilter(f.getProperties())}
                 translations={translations}>
-                <div style={{ padding: '10px' }}>No available actions</div>
+                {!!actions ? actions : <div style={{ padding: '10px' }}>No available actions</div>}
               </PopupDefaultPage>
             ))
           : <PopupDefaultPage
@@ -97,7 +97,7 @@ class PopupInsert extends Component {
   }
 }
 
-PopupInsert.defaultProps = {
+PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
@@ -106,7 +106,12 @@ PopupInsert.defaultProps = {
   showSettingsCog: false
 }
 
-PopupInsert.propTypes = {
+PopupDefaultInsert.propTypes = {
+  /** components passed to render as actions */
+  actions: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
   /** array from which to select a feature */
   features: PropTypes.array,
   /** put ui into loading state */
@@ -133,4 +138,4 @@ PopupInsert.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupInsert)
+export default connectToMap(PopupDefaultInsert)

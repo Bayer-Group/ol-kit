@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import MINUS from 'images/zoom_out_ico.svg'
 import PLUS from 'images/zoom_in_ico.svg'
-import { Icon, IconSeparator } from './styled'
+import { Icon, IconSeparator, IconsContainer } from './styled'
 import { zoomDelta } from './utils'
 import { connectToMap } from 'Map'; // eslint-disable-line
 
@@ -46,7 +46,7 @@ function ZoomControls (props) {
   }
 
   return (
-    <>
+    <IconsContainer>
       <Icon
         id='_ol_kit_zoom_in'
         onMouseDown={() => handleMouseDown('ZOOM_IN')}
@@ -62,7 +62,7 @@ function ZoomControls (props) {
         onMouseUp={() => stopZoom('ZOOM_OUT')}>
         <MINUS />
       </Icon>
-    </>
+    </IconsContainer>
   )
 }
 

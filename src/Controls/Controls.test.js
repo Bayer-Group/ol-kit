@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
 import olMap from 'ol/map'
-import Controls from './Controls'
+import { Controls } from 'Controls'
 
 document.body.innerHTML = `<div id='map' width='1200px' height='800px'></div>`
 const mockMap = new olMap({

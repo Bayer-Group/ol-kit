@@ -5,7 +5,7 @@ import olFeature from 'ol/feature'
 import olVectorLayer from 'ol/layer/vector'
 import olPoint from 'ol/geom/point'
 import olVectorSource from 'ol/source/vector'
-import Map from 'Map'
+import { Map } from 'Map'
 import { Popup } from 'Popup'
 
 describe('<Popup />', () => {
