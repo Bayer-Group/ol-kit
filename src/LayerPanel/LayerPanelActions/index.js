@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ActionsContainer } from './styled'
 import IconButton from '@material-ui/core/IconButton'
 import LayerPanelMenu from 'LayerPanel/LayerPanelMenu'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import PropTypes from 'prop-types'
 
@@ -56,7 +57,11 @@ LayerPanelActions.propTypes = {
   children: PropTypes.node,
 
   /** An icon component for the button to open the `LayerPanelMenu` (like `@material-ui/icons`) */
-  icon: PropTypes.node
+  icon: PropTypes.node.isRequired
+}
+
+LayerPanelActions.defaultProps = {
+  icon: <MoreVertIcon />
 }
 
 export default LayerPanelActions
