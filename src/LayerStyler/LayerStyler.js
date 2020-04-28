@@ -12,6 +12,7 @@ import ugh from 'ugh'
 import escapeRegExp from 'lodash.escaperegexp'
 
 import { addMovementListener } from './utils'
+import { connectToMap } from 'Map'
 
 class LayerStyler extends React.Component {
   constructor (props) {
@@ -206,4 +207,4 @@ LayerStyler.propTypes = {
   map: PropTypes.object.isRequired
 }
 
-export default LayerStyler
+export default connectToMap(LayerStyler)

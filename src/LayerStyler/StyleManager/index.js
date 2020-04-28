@@ -6,12 +6,10 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import cloneDeep from 'lodash.clonedeep'
 
-import ugh from 'ugh'
-import AttributesFilter from 'LayerStyler/_AttributesFilter'
 import LabelStyler from 'LayerStyler/_LabelStyler'
 import LayerStyler from 'LayerStyler/_LayerStyler'
 import SelectTabs from 'LayerStyler/_SelectTabs'
-import { HeaderContainer, InputContainer, FilterContainer } from './styled'
+import { HeaderContainer, InputContainer } from './styled'
 
 const DEFAULT_LABEL_STYLE = {
   name: 'New Label Style',
@@ -70,7 +68,6 @@ class StyleManager extends Component {
   }
 
   handleLayerChange = ({ target }) => {
-    ugh.log('change', target)
     const { layers, getTitleForLayer } = this.props
     const options = layers.map(getTitleForLayer)
     const activeIdx = options.findIndex(t => t === target.value)
