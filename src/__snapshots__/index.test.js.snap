@@ -11,7 +11,6 @@ Object {
   "BasemapStamenTonerLite": [Function],
   "Compass": [Function],
   "Controls": [Function],
-  "LayerStyler": [Function],
   "Map": [Function],
   "Popup": [Function],
   "PopupBase": [Function],
