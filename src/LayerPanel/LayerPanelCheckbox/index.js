@@ -13,7 +13,7 @@ class LayerPanelCheckbox extends Component {
       return (
         <Checkbox data-testid='LayerPanel.indeterminateCheckbox'
           indeterminateIcon={<Icon path={mdiCheckboxBlank} size={1} color={color} />}
-          onClick={(e) => handleClick(e, true)} checked={checkboxState} indeterminate />
+          onClick={(e) => handleClick(e, true)} checked={!!checkboxState} indeterminate />
       )
     } else {
       return (

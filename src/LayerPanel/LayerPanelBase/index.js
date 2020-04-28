@@ -37,7 +37,7 @@ class LayerPanelBase extends Component {
     const { activeIndex, showLayerPanel } = this.state
 
     return (
-      <Card open={showLayerPanel} styles={style} numOfTabs={children.length || 1} inline={inline} className='_popup_boundary' >
+      <Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
         <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
           <Tab icon={showLayerPanel ? <ChevronRightIcon /> : <LayersIcon />} data-testid='LayerPanel.openTab' />
           {showLayerPanel &&

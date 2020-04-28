@@ -7,7 +7,7 @@ import { styled } from '@material-ui/styles'
 
 export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
   maxHeight: '645px',
-  minHeight: props => `${200 + (props.numOfTabs * 40)}px`,
+  minHeight: props => `${200 + (props.numoftabs * 40)}px`,
   width: '400px',
   top: '100px',
   transition: 'all .3s',

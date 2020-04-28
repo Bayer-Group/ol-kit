@@ -48,14 +48,14 @@ class LayerPanelActionExport extends Component {
     return (
       [<MenuItem
         key='exportKml'
-        disbaleGutter={false}
+        disableGutters={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('kml')} >
         {translations['_ol_kit.LayerPanelActions.kml'] || 'Export KML'}
       </MenuItem>,
       <MenuItem
         key='exportShp'
-        disbaleGutter={false}
+        disableGutters={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('shp')} >
         {translations['_ol_kit.LayerPanelActions.shapefile'] || 'Export Shapefile'}

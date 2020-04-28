@@ -338,7 +338,7 @@ class LayerPanelLayersPage extends Component {
                       <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
                         {features.map((feature, i) => {
                           return (
-                            <ListItem key={i} hanldeDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                            <ListItem key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
                               <LayerPanelCheckbox
                                 handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
                                 checkboxState={feature.get('_ol_kit_feature_visibility')} />
