@@ -17,10 +17,6 @@ const defaultFilter = {
   value: ''
 }
 
-/**
- * @component
- * @category AttributesFilter
- */
 class AttributesFilter extends React.Component {
   addFilter = () => {
     this.props.onUpdateFilters([...this.props.filters, defaultFilter])

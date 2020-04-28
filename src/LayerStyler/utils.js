@@ -4,7 +4,6 @@ import ugh from 'ugh'
 /**
  * Bind multiple move listeners with the same callback
  * @function
- * @since 5.0.0
  * @param {ol.Map} map - The openlayers map to which the events are bound
  * @param {Function} callback - The callback invoked when a `change:size`, `change:resolution` or a `change:center` event was fired
  * @param {Object} [thisObj] - The object to use as `this` in the event listeners.

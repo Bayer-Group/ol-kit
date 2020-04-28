@@ -4,10 +4,6 @@ import Button from '@material-ui/core/Button'
 import MaterialPopover from '@material-ui/core/Popover'
 import { withStyles } from '@material-ui/core/styles'
 
-/**
- * @component
- * @category Popover
- */
 const Popover = withStyles(() => ({
   paper: {
     overflowX: 'visible',
@@ -15,10 +11,6 @@ const Popover = withStyles(() => ({
   }
 }))(MaterialPopover)
 
-/**
- * @component
- * @category Popover
- */
 class PopoverBuilder extends React.Component {
   constructor () {
     super()

@@ -28,10 +28,6 @@ const colors = [
   '#ffffff'
 ]
 
-/**
- * @component
- * @category ColorPicker
- */
 class ColorPicker extends Component {
   constructor (props) {
     super(props)

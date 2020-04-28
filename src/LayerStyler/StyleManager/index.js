@@ -42,11 +42,6 @@ const DEFAULT_LABEL_STYLE = {
 const getNonLabelStyles = (ss = []) => ss.filter(s => s.symbolizers[0].kind !== 'Text')
 const getLabelStyle = (ss = []) => ss.find(s => s.symbolizers[0].kind === 'Text')
 
-/**
- * @component
- * @category StyleManager
- * @example ./example.md
- */
 class StyleManager extends Component {
   constructor (props) {
     super(props)

@@ -14,6 +14,10 @@ import escapeRegExp from 'lodash.escaperegexp'
 import { addMovementListener } from './utils'
 import { connectToMap } from 'Map'
 
+/**
+ * @component
+ * @category LayerStyler
+ */
 class LayerStyler extends React.Component {
   constructor (props) {
     super(props)

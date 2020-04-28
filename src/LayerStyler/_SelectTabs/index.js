@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 
 import { Flex, TabButton, TabList, TabsContainer, TabSlider } from './styled'
 
-/**
- * @component
- * @category SelectTabs
- */
 class SelectTabs extends Component {
   constructor (props) {
     super(props)
