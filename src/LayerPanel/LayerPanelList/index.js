@@ -36,19 +36,22 @@ class LayerPanelList extends Component {
     super(props)
 
     this.state = {
-      items: props.items
+      items: props.items.sort(props.onSort)
     }
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.items[0] !== this.props.items[0]) {
-      this.setState({ items: this.props.items })
+    const { items, onSort } = this.props
+
+    if (items && (prevProps.items[0] !== items[0] || prevProps.items.length !== items.length)) {
+      this.setState({ items: items.sort(onSort) })
     }
   }
 
   onDrop = e => {
     const { onSort, onReorderedItems } = this.props
     const { items } = this.state
+
     const reorderedItems = applyDrag(items.sort(onSort), e)
 
     if (onReorderedItems) {

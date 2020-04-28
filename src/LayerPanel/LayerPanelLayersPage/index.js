@@ -257,7 +257,7 @@ class LayerPanelLayersPage extends Component {
     // apply the z-index changes down to all layers
     reorderedLayers.map((l, i) => l.setZIndex(reorderedLayers.length - i))
 
-    this.forceUpdate()
+    this.setState({ layers: reorderedLayers })
   }
 
   render () {
