@@ -53,9 +53,6 @@
     "url": "git@github.com:MonsantoCo/ol-kit.git"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.12",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/styles": "^4.9.10",
     "@mdi/js": "^5.1.45",
     "@mdi/react": "^1.4.0",
     "@turf/bbox": "^6.0.1",
@@ -69,6 +66,9 @@
     "react-smooth-dnd": "^0.11.1"
   },
   "devDependencies": {
+    "@material-ui/core": "^4.9.12",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/styles": "^4.9.10",
     "@babel/cli": "~7.4.3",
     "@babel/core": "~7.7.2",
     "@babel/plugin-proposal-class-properties": "~7.7.0",
@@ -115,6 +115,9 @@
     "ol": "4.6.5",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "styled-components": ">=5.0.0"
+    "styled-components": ">=5.0.0",
+    "@material-ui/core": ">=4.0.0",
+    "@material-ui/icons": ">=4.9.0",
+    "@material-ui/styles": ">=4.9.0"
   }
 }
