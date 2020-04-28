@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import { connectToMap } from 'Map'
 
+/**
+ * @component
+ * @category LayerPanel
+ * @since 0.4.0
+ */
 class LayerPanelActionExtent extends Component {
   getLayerExtentProps = (layer) => {
     const extent = (layer => {

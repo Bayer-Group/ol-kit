@@ -7,7 +7,8 @@ import PropTypes from 'prop-types'
 
 /**
  * @component
- * @category vmc
+ * @category LayerPanel
+ * @since 0.4.0
  */
 class LayerPanelActions extends Component {
   constructor () {
@@ -31,7 +32,7 @@ class LayerPanelActions extends Component {
 
     return (
       <ActionsContainer>
-        <IconButton aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
+        <IconButton data-testid='LayerPanel.actions' aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
           {icon}
         </IconButton>
         <LayerPanelMenu

@@ -4,6 +4,11 @@ import LayerPanelBase from 'LayerPanel/LayerPanelBase'
 import LayerPanelLayersPage from 'LayerPanel/LayerPanelLayersPage'
 import { connectToMap } from 'Map'
 
+/**
+ * @component
+ * @category Layerpanel
+ * @since 0.4.0
+ */
 class LayerPanel extends Component {
   render () {
     const { translations, children, map } = this.props

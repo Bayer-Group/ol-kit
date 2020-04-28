@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 
 /**
  * @component
- * @category vmc
+ * @category LayerPanel
+ * @since 0.4.0
  */
 class LayerPanelMenu extends Component {
   render () {

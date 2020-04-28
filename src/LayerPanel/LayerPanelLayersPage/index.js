@@ -6,7 +6,7 @@ import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
 import LayerPanelCheckbox from 'LayerPanel/LayerPanelCheckbox'
-import LayerPanelExpandableList from 'LayerPanel/LayerPanelExpandableList'
+import LayerPanelExpandableList from 'LayerPanel/_LayerPanelExpandableList'
 import LayerPanelActions from 'LayerPanel/LayerPanelActions'
 import { ListItem, ListItemText } from 'LayerPanel/LayerPanelListItem/styled'
 import { ListItemSecondaryAction } from './styled'
@@ -35,6 +35,11 @@ import isEqual from 'lodash.isequal'
 
 const INDETERMINATE = 'indeterminate'
 
+/**
+ * @component
+ * @category LayerPanel
+ * @since 0.4.0
+ */
 class LayerPanelLayersPage extends Component {
   constructor (props) {
     super(props)
@@ -315,7 +320,7 @@ class LayerPanelLayersPage extends Component {
                       open={expandedLayer}
                       handleClick={this.handleExpandedLayer} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
-                    <ListItemSecondaryAction style={{ right: '0px !important' }}>
+                    <ListItemSecondaryAction style={{ right: '0px !important' }} data-testid='LayerPanel.secondaryAction'>
                       <LayerPanelActions
                         icon={<MoreVertIcon />}
                         translations={translations}

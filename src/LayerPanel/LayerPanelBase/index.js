@@ -8,8 +8,8 @@ import { connectToMap } from 'Map'
 
 /**
  * @component
- * @category Layer Panel
- * @example ./example.md
+ * @category LayerPanel
+ * @since 0.4.0
  */
 class LayerPanelBase extends Component {
   constructor (props) {
@@ -39,7 +39,7 @@ class LayerPanelBase extends Component {
     return (
       <Card open={showLayerPanel} styles={style} numOfTabs={children.length || 1} inline={inline} className='_popup_boundary' >
         <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
-          <Tab icon={showLayerPanel ? <ChevronRightIcon /> : <LayersIcon />} />
+          <Tab icon={showLayerPanel ? <ChevronRightIcon /> : <LayersIcon />} data-testid='LayerPanel.openTab' />
           {showLayerPanel &&
             React.Children.map(children, (child, i) => {
               if (child) return <Tab key={i} icon={child.props.tabIcon} />

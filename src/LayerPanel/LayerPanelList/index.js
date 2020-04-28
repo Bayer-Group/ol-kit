@@ -28,7 +28,8 @@ const applyDrag = (arr, dragResult) => {
 
 /**
  * @component
- * @category vmc
+ * @category LayerPanel
+ * @since 0.4.0
  */
 class LayerPanelList extends Component {
   constructor (props) {

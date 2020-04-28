@@ -4,6 +4,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import olLayerVector from 'ol/layer/vector'
 import { connectToMap } from 'Map'
 
+/**
+ * @component
+ * @category LayerPanel
+ * @since 0.4.0
+ */
 class LayerPanelActionExport extends Component {
   handleExport = (filetype) => {
     const { onExportFeatures, handleMenuClose } = this.props

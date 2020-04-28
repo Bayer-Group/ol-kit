@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import { OpacityWrapper, OpacityTitle, Slider } from './styled'
 import { connectToMap } from 'Map'
 
+/**
+ * @component
+ * @category LayerPanel
+ * @since 0.4.0
+ */
 class LayerPanelActionOpacity extends Component {
   render () {
     const { layer, translations } = this.props

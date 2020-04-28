@@ -9,9 +9,9 @@ class LayerPanelExpandableList extends Component {
 
     if (show) {
       if (open) {
-        return <ExpandLess onClick={handleClick} />
+        return <ExpandLess data-testid='LayerPanel.expandLayer' onClick={handleClick} />
       } else {
-        return <ExpandMore onClick={handleClick} />
+        return <ExpandMore data-testid='LayerPanel.expandLayer' onClick={handleClick} />
       }
     } else {
       return null
@@ -20,11 +20,8 @@ class LayerPanelExpandableList extends Component {
 }
 
 LayerPanelExpandableList.propTypes = {
-  /** boolean for show/hide of icon */
   show: PropTypes.bool,
-  /** boolean to expand/collapse list */
   open: PropTypes.bool,
-  /** callback function for onClick */
   handleClick: PropTypes.func.isRequired
 }
 

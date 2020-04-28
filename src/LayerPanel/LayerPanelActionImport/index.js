@@ -4,6 +4,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { UploadInput } from './styled'
 import { connectToMap } from 'Map'
 
+/**
+ * @component
+ * @category LayerPanel
+ * @since 0.4.0
+ */
 class LayerPanelActionImport extends Component {
   constructor (props) {
     super(props)
