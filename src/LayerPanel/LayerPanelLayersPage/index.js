@@ -47,8 +47,6 @@ class LayerPanelLayersPage extends Component {
     this.state = {
       layers: [],
       masterCheckboxVisibility: true,
-      showReportLayerBugModal: false,
-      currentLayer: {},
       featureListeners: [],
       filterText: null,
       expandedLayer: false
@@ -58,13 +56,17 @@ class LayerPanelLayersPage extends Component {
   componentDidMount = () => {
     const { map, layerFilter } = this.props
     const layers = map.getLayers()
-    const handleMapChange = (e) => {
+    const handleMapChange = (e, add) => {
       const filteredLayers = layerFilter(layers.getArray())
-      const safeFilteredLayersLength = filteredLayers ? filteredLayers.length - 1 : 0
 
-      filteredLayers[safeFilteredLayersLength] && filteredLayers[safeFilteredLayersLength].setZIndex(filteredLayers.length) // eslint-disable-line
+      // if we're adding a layer we want to add it to the top of the list but not update any of the other layers zIndex
+      if (add) {
+        const safeFilteredLayersLength = filteredLayers ? filteredLayers.length - 1 : 0
 
-      this.setState({ layers: filteredLayers }, this.bindFeatureListeners)
+        filteredLayers[safeFilteredLayersLength] && filteredLayers[safeFilteredLayersLength].setZIndex(filteredLayers.length) // eslint-disable-line
+      }
+
+      this.setState({ layers: filteredLayers.sort(this.zIndexSort) }, this.bindFeatureListeners)
     }
 
     // we call this to re-retrieve the layers on mount
@@ -74,7 +76,7 @@ class LayerPanelLayersPage extends Component {
     this.handleMasterCheckbox()
 
     // bind the event listeners
-    this.onAddKey = layers.on('add', handleMapChange)
+    this.onAddKey = layers.on('add', (e) => handleMapChange(e, true))
     this.onRemoveKey = layers.on('remove', handleMapChange)
   }
 
@@ -306,7 +308,7 @@ class LayerPanelLayersPage extends Component {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
               return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
-            }).sort(this.zIndexSort).map((layer, i) => {
+            }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
               return (
