@@ -13,14 +13,14 @@ const applyDrag = (arr, dragResult) => {
 
   const result = [...arr]
 
-  let layerToAdd = payload
+  let itemToAdd = payload
 
   if (removedIndex !== null) {
-    layerToAdd = result.splice(removedIndex, 1)[0]
+    itemToAdd = result.splice(removedIndex, 1)[0]
   }
 
   if (addedIndex !== null) {
-    result.splice(addedIndex, 0, layerToAdd)
+    result.splice(addedIndex, 0, itemToAdd)
   }
 
   return result
@@ -32,38 +32,17 @@ const applyDrag = (arr, dragResult) => {
  * @since 0.4.0
  */
 class LayerPanelList extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      items: props.items.sort(props.onSort)
-    }
-  }
-
-  componentDidUpdate (prevProps) {
-    const { items, onSort } = this.props
-
-    if (items && (prevProps.items[0] !== items[0] || prevProps.items.length !== items.length)) {
-      this.setState({ items: items.sort(onSort) })
-    }
-  }
-
   onDrop = e => {
-    const { onSort, onReorderedItems } = this.props
-    const { items } = this.state
-
+    const { onSort, onReorderedItems, items } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
 
     if (onReorderedItems) {
       onReorderedItems(reorderedItems)
-    } else {
-      this.setState({ items: reorderedItems })
     }
   }
 
   render () {
-    const { children, disableDrag } = this.props
-    const { items } = this.state
+    const { children, disableDrag, items } = this.props
     const ItemContainer = disableDrag ? 'div' : Draggable
 
     if (children) {

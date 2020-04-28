@@ -56,7 +56,7 @@ The `LayerPanelHeader` can be powerful. If you want actions in your header pass 
 ![image](https://github.platforms.engineering/storage/user/2990/files/76f1c900-86d3-11ea-9fd2-cfc39e019e36)
 
 
-You can make a list by passing items down. Which should be an array. There's also a built in drag for the `LayerPanelListItem`. You can disable it buy passing the prop `disableDrag` to the `LayerPanelList`.
+You can make a list by passing items down. Which should be an array. There's also a built in drag for the `LayerPanelListItem`. You can disable it buy passing the prop `disableDrag` to the `LayerPanelList`. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the `LayerPanelList` and update the items in your parent component.
 ```jsx
 <LayerPanel>
   <LayerPanelPage tabIcon={<VpnKeyIcon />}>
@@ -71,7 +71,7 @@ You can make a list by passing items down. Which should be an array. There's als
         </LayerPanelActions>
       } />
     <LayerPanelContent>
-      <LayerPanelList items={legends} />
+      <LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems} />
     </LayerPanelContent>
   </LayerPanelPage>
 </LayerPanel>
