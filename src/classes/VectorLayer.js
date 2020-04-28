@@ -82,7 +82,7 @@ class VectorLayer extends olLayerVector {
    * @since NEXT
    */
   setDefaultVectorStyles () {
-    this.parser.readStyle(this.getStyle()()).then(style => {
+    return this.parser.readStyle(this.getStyle()()).then(style => {
       this._defaultStylesCache = style.rules
       this.defaultStyles = style.rules
     })
