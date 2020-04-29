@@ -19,7 +19,7 @@ import ugh from 'ugh'
  * @returns {ol.EventsKey[]} Array of openlayers event keys for unsetting listener events (use with removeMovementListener)
  */
 export const addMovementListener = (map, callback, thisObj) => {
-  if (typeof callback !== 'function') return ugh.error('addMovementListener requires a valid openlayers map & callback function') // eslint-disable-line
+  if (typeof callback !== 'function') return ugh.error('\'addMovementListener\' requires a valid openlayers map & callback function') // eslint-disable-line
 
   // If performance becomes an issue with catalog layers & far zoom level, these debounce levels can be adjusted
   const slowDebounce = debounce(callback, 0)

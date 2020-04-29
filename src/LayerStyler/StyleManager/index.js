@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import cloneDeep from 'lodash.clonedeep'
 
+import { connectToMap } from 'Map'
 import LabelStyler from 'LayerStyler/_LabelStyler'
 import LayerStyler from 'LayerStyler/_LayerStyler'
 import SelectTabs from 'LayerStyler/_SelectTabs'
@@ -279,4 +280,4 @@ StyleManager.propTypes = {
   getCommaDelimitedAttributesForLayer: PropTypes.func.isRequired
 }
 
-export default StyleManager
+export default connectToMap(StyleManager)

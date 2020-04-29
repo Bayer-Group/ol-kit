@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 
+import CloseIcon from '@material-ui/icons/Close'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
+import { connectToMap } from 'Map'
 import Popover from 'LayerStyler/_Popover'
 import Selector from 'LayerStyler/_Selector'
 import { ContentContainer, InputContainer, Row, TextContainer, Title } from './styled'
-import CloseIcon from '@material-ui/icons/Close';
 
 const defaultFilter = {
   logical: 'AND', // determines how to join the filter to other filters
@@ -152,4 +153,4 @@ AttributesFilter.defaultProps = {
   onUpdateFilters: () => {}
 }
 
-export default AttributesFilter
+export default connectToMap(AttributesFilter)

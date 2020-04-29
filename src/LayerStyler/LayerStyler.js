@@ -11,7 +11,7 @@ import ugh from 'ugh'
 
 import escapeRegExp from 'lodash.escaperegexp'
 
-import { addMovementListener } from './utils'
+import { addMovementListener } from 'Popup'
 import { connectToMap } from 'Map'
 
 /**

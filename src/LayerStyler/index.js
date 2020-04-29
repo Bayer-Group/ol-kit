@@ -1,1 +1,1 @@
-export { default } from './LayerStyler'
+export { default as LayerStyler } from './LayerStyler'

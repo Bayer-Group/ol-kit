@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { connectToMap } from 'Map'
 import SelectTabs from 'LayerStyler/_SelectTabs'
 import StyleGroup from './_StyleGroup'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import {
   Button,
   ButtonContainer,
@@ -233,4 +234,4 @@ LayerStyler.defaultProps = {
   showNewButtons: false
 }
 
-export default LayerStyler
+export default connectToMap(LayerStyler)
