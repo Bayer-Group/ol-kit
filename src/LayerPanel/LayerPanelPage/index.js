@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 /**
  * @component
  * @category LayerPanel
- * @since 0.4.0
+ * @since 0.5.0
  */
 class LayerPanelPage extends Component {
   render () {

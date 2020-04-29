@@ -23,13 +23,14 @@ describe('<LayerPanel />', () => {
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
-
     const source = new olSourceVector({ features })
     const vectorLayer = new olLayerVector({ source })
 
     vectorLayer.set('title', 'My Custom Layer')
     testMap.addLayer(vectorLayer)
-    testMap.getLayers().getArray()[0].set('title', 'My Basemap')
+    const basemap = testMap.getLayers().getArray().find(layer => layer.get('_ol_kit_basemap'))
+
+    basemap.set('title', 'My Basemap')
 
     expect(testMap.getLayers().getArray().length).toBe(2)
 
@@ -78,6 +79,7 @@ describe('<LayerPanel />', () => {
 
     fireEvent.click(checkboxes[1])
 
+    // when we toggle visibility of one but not all layers the mastercheckbox should be indeterminate
     expect(testMap.getLayers().getArray()[0].getVisible()).toBe(true)
     expect(testMap.getLayers().getArray()[1].getVisible()).toBe(true)
     expect(testMap.getLayers().getArray()[2].getVisible()).toBe(false)
@@ -160,6 +162,8 @@ describe('<LayerPanel />', () => {
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265])), new olFeature(new olPoint([-99.75, 35.265]))]
 
+    features[0].set('name', 'My map feature')
+
     const source = new olSourceVector({ features })
     const vectorLayer = new olLayerVector({ source })
 
@@ -168,12 +172,13 @@ describe('<LayerPanel />', () => {
 
     fireEvent.click(getByTestId('LayerPanel.expandLayer'))
 
-    await waitFor(() => expect(getByText('feature 0')).toBeInTheDocument())
+    await waitFor(() => expect(getByText('My map feature')).toBeInTheDocument())
 
     const checkboxes = getAllByTestId('LayerPanel.checkbox')
 
     fireEvent.click(checkboxes[2])
 
+    // when we toggle visibility of one but not all features the mastercheckbox and the layers checkbox should be indeterminate
     expect(getAllByTestId('LayerPanel.indeterminateCheckbox').length).toBe(2)
   })
 })

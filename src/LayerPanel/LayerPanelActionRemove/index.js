@@ -6,7 +6,7 @@ import olLayerVector from 'ol/layer/vector'
 /**
  * @component
  * @category LayerPanel
- * @since 0.4.0
+ * @since 0.5.0
  */
 class LayerPanelActionRemove extends Component {
   // this param of layers is coming from the MenuItem onClick func

@@ -7,7 +7,7 @@ import { connectToMap } from 'Map'
 /**
  * @component
  * @category LayerPanel
- * @since 0.4.0
+ * @since 0.5.0
  */
 class LayerPanelActionExport extends Component {
   handleExport = (filetype) => {

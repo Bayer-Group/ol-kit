@@ -29,7 +29,7 @@ const applyDrag = (arr, dragResult) => {
 /**
  * @component
  * @category LayerPanel
- * @since 0.4.0
+ * @since 0.5.0
  */
 class LayerPanelList extends Component {
   onDrop = e => {

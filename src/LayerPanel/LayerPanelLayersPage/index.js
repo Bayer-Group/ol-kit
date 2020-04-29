@@ -38,7 +38,7 @@ const INDETERMINATE = 'indeterminate'
 /**
  * @component
  * @category LayerPanel
- * @since 0.4.0
+ * @since 0.5.0
  */
 class LayerPanelLayersPage extends Component {
   constructor (props) {
@@ -344,7 +344,7 @@ class LayerPanelLayersPage extends Component {
                               <LayerPanelCheckbox
                                 handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
                                 checkboxState={feature.get('_ol_kit_feature_visibility')} />
-                              <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${i}`} />
+                              <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${i + 1}`} />
                             </ListItem>
                           )
                         })}

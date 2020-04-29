@@ -7,7 +7,7 @@ import { connectToMap } from 'Map'
 /**
  * @component
  * @category Layerpanel
- * @since 0.4.0
+ * @since 0.5.0
  */
 class LayerPanel extends Component {
   render () {

@@ -5,6 +5,11 @@ import { Checkbox } from './styled'
 import Icon from '@mdi/react'
 import { mdiCheckboxBlank } from '@mdi/js'
 
+/**
+ * @component
+ * @category LayerPanel
+ * @since 0.5.0
+ */
 class LayerPanelCheckbox extends Component {
   render () {
     const { checkboxState, handleClick, color } = this.props
