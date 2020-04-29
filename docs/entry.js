@@ -49,38 +49,41 @@ reactComponents['Compass'] = Component7;
 import Component8 from '../src/Controls/Controls.js';
 reactComponents['Controls'] = Component8;
 
-import Component9 from '../src/Map/Map.js';
-reactComponents['Map'] = Component9;
+import Component9 from '../src/LayerStyler/LayerStyler.js';
+reactComponents['LayerStyler'] = Component9;
 
-import Component10 from '../src/Popup/Popup.js';
-reactComponents['Popup'] = Component10;
+import Component10 from '../src/Map/Map.js';
+reactComponents['Map'] = Component10;
 
-import Component11 from '../src/Popup/PopupInsert/PopupActionGroup/index.js';
-reactComponents['PopupActionGroup'] = Component11;
+import Component11 from '../src/Popup/Popup.js';
+reactComponents['Popup'] = Component11;
 
-import Component12 from '../src/Popup/PopupInsert/PopupActionItem/index.js';
-reactComponents['PopupActionItem'] = Component12;
+import Component12 from '../src/Popup/PopupInsert/PopupActionGroup/index.js';
+reactComponents['PopupActionGroup'] = Component12;
 
-import Component13 from '../src/Popup/PopupBase.js';
-reactComponents['PopupBase'] = Component13;
+import Component13 from '../src/Popup/PopupInsert/PopupActionItem/index.js';
+reactComponents['PopupActionItem'] = Component13;
 
-import Component14 from '../src/Popup/PopupInsert/PopupDataList/index.js';
-reactComponents['PopupDataList'] = Component14;
+import Component14 from '../src/Popup/PopupBase.js';
+reactComponents['PopupBase'] = Component14;
 
-import Component15 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
-reactComponents['PopupDefaultInsert'] = Component15;
+import Component15 from '../src/Popup/PopupInsert/PopupDataList/index.js';
+reactComponents['PopupDataList'] = Component15;
 
-import Component16 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
-reactComponents['PopupDefaultPage'] = Component16;
+import Component16 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
+reactComponents['PopupDefaultInsert'] = Component16;
 
-import Component17 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
-reactComponents['PopupPageLayout'] = Component17;
+import Component17 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
+reactComponents['PopupDefaultPage'] = Component17;
 
-import Component18 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
-reactComponents['PopupPageLayoutChild'] = Component18;
+import Component18 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
+reactComponents['PopupPageLayout'] = Component18;
 
-import Component19 from '../src/Popup/PopupInsert/PopupTabs/index.js';
-reactComponents['PopupTabs'] = Component19;
+import Component19 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
+reactComponents['PopupPageLayoutChild'] = Component19;
 
-import Component20 from '../src/Controls/ZoomControls.js';
-reactComponents['ZoomControls'] = Component20;
+import Component20 from '../src/Popup/PopupInsert/PopupTabs/index.js';
+reactComponents['PopupTabs'] = Component20;
+
+import Component21 from '../src/Controls/ZoomControls.js';
+reactComponents['ZoomControls'] = Component21;

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LayerStyler /> should add a label to a layer's style 1`] = `
+Array [
+  Object {
+    "name": "New Label Style",
+    "symbolizers": Array [
+      Object {
+        "LabelPlacement": Array [
+          Object {
+            "PointPlacement": Object {
+              "AnchorPoint": Object {
+                "AnchorPointX": 0.5,
+                "AnchorPointY": 0.5,
+              },
+              "Displacement": Object {
+                "DisplacementX": 0,
+                "DisplacementY": 0,
+              },
+              "Rotation": 0,
+            },
+          },
+        ],
+        "color": "#000",
+        "font": Array [
+          "Arial",
+        ],
+        "fontStyle": "normal",
+        "fontWeight": "bold",
+        "haloColor": "#fff",
+        "haloWidth": 1,
+        "kind": "Text",
+        "label": "{{testData}}",
+        "size": "16px",
+      },
+    ],
+  },
+]
+`;
+
+exports[`<LayerStyler /> should change an ol-kit vector layer's style 1`] = `
+Array [
+  Object {
+    "filter": Array [
+      "&&",
+      Array [
+        "==",
+        "",
+        "",
+      ],
+    ],
+    "name": "New Auto Style",
+    "symbolizers": Array [
+      Object {
+        "color": "#ffffff",
+        "kind": "Mark",
+        "radius": 4,
+        "strokeColor": "#000000",
+        "strokeWidth": 2,
+        "wellKnownName": "Circle",
+      },
+      Object {
+        "color": "#ffffff",
+        "kind": "Line",
+        "width": 7,
+      },
+      Object {
+        "color": "#ffffff",
+        "kind": "Fill",
+        "opacity": 1,
+        "outlineColor": "#000000",
+        "outlineWidth": 4,
+      },
+    ],
+  },
+]
+`;
