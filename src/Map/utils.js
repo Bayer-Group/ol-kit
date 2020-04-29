@@ -25,7 +25,7 @@ import { MapContext } from './Map'
  */
 export function createMap (opts = {}) {
   if (!opts.target) return ugh.throw('You must pass an options object with a DOM target for the map')
-  if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself') // eslint-disable-line no-undef
+  if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself')
 
   // create a new map instance
   const map = new Map({
@@ -62,7 +62,7 @@ export function connectToMap (Component) {
       ? <Component {...props} />
       : (
         <MapContext.Consumer>
-          {providerProps => {
+          {(providerProps = {}) => {
             // if propTypes is not defined on the component just pass all providerProps
             const filteredProviderProps = { ...providerProps }
             const { propTypes } = Component

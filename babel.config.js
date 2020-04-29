@@ -6,6 +6,7 @@ module.exports = {
   'plugins': [
     ['@babel/plugin-proposal-class-properties'],
     ['@babel/plugin-transform-runtime'],
+    ['@babel/plugin-proposal-optional-chaining'],
     ['inline-react-svg'],
     ['module-resolver', {
       'root': [

@@ -25,7 +25,7 @@ class VectorLayer extends olLayerVector {
     this.defaultStyles = []
     this._defaultStylesCache = []
     this.isVectorLayer = true
-    this._setInitialStyle()
+    if (!opts?.style) this._setInitialStyle()
     this.setDefaultVectorStyles()
 
     return this
