@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/Controls.js</title>
+    <title>ol-kit | LayerStyler/_SelectTabs/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,57 +80,75 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import ReactDOM from 'react-dom'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { ControlsContainer } from './styled'
-import Compass from './Compass'
-import { connectToMap } from 'Map'
-import ZoomControls from './ZoomControls'
+import { Flex, TabButton, TabList, TabsContainer, TabSlider } from './styled'
 
-/**
- * A map control container with built-in positioning
- * @component
- * @category Controls
- * @since 0.1.0
- */
-function Controls (props) {
-  const { children, map, position } = props
+class SelectTabs extends Component {
+  constructor (props) {
+    super(props)
 
-  return (
-    ReactDOM.createPortal(
-      &lt;ControlsContainer position={position}>
-        {children || (
-          &lt;>
-            &lt;ZoomControls map={map} />
-            &lt;Compass map={map} />
-          &lt;/>
-        )
-        }
-      &lt;/ControlsContainer>,
-      map.getTargetElement()
+    this.state = {
+      selectedIdx: props.selectedIdx
+    }
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps ({ selectedIdx }) {
+    if (selectedIdx !== this.props.selectedIdx) this.setState({ selectedIdx })
+  }
+
+  onChange (i) {
+    this.setState({ selectedIdx: i })
+
+    if (this.props.onChange) this.props.onChange(i)
+  }
+
+  render () {
+    const { children } = this.props
+    const { selectedIdx } = this.state
+
+    return (
+      &lt;TabsContainer>
+        &lt;TabList>
+          &lt;Flex>
+            {React.Children.map(children, (child, i) => {
+              return (&lt;TabButton
+                key={child.props.title}
+                onClick={this.onChange.bind(this, i)}
+                selected={selectedIdx === i}
+                {...child.props}>
+                {child.props.title}
+                {selectedIdx === i ? &lt;TabSlider /> : null}
+              &lt;/TabButton>)
+            })}
+          &lt;/Flex>
+        &lt;/TabList>
+        &lt;div>
+          {React.Children.toArray(children)[selectedIdx]}
+        &lt;/div>
+      &lt;/TabsContainer>
     )
-  )
+  }
 }
 
-Controls.defaultProps = {
-  position: 'bottom-right'
+SelectTabs.propTypes = {
+  /** Callback fired when the tabs change passed the index of the new tab being shown */
+  onChange: PropTypes.func,
+
+  /** The content to display in the tab */
+  children: PropTypes.node.isRequired,
+
+  /** The index of the currently shown popup */
+  selectedIdx: PropTypes.number
 }
 
-Controls.propTypes = {
-  /** pass child comps to opt out of the default controls */
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
+SelectTabs.defaultProps = {
+  selectedIdx: 0
 }
 
-export default connectToMap(Controls)
+export default SelectTabs
 </code></pre>
         </article>
     </section>

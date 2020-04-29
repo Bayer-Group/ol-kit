@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/Controls.js</title>
+    <title>ol-kit | LayerStyler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,63 +75,192 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+        <h2>
+            &ltLayerStyler /&gt
+        </h2>
+        
+            <div class="class-description">UI to choose color, stroke, fill etc. for styles and labels on layers</div>
+        
+    
+</header>
 
-import { ControlsContainer } from './styled'
-import Compass from './Compass'
-import { connectToMap } from 'Map'
-import ZoomControls from './ZoomControls'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-/**
- * A map control container with built-in positioning
- * @component
- * @category Controls
- * @since 0.1.0
- */
-function Controls (props) {
-  const { children, map, position } = props
 
-  return (
-    ReactDOM.createPortal(
-      &lt;ControlsContainer position={position}>
-        {children || (
-          &lt;>
-            &lt;ZoomControls map={map} />
-            &lt;Compass map={map} />
-          &lt;/>
-        )
-        }
-      &lt;/ControlsContainer>,
-      map.getTargetElement()
-    )
-  )
-}
+    
+    <h4 class="name" id="LayerStyler">
+        <a class="href-link" href="#LayerStyler">#</a>
+        
+        <span class="code-name">
+            
+                &ltLayerStyler <i>map</i> <i>translations</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-Controls.defaultProps = {
-  position: 'bottom-right'
-}
+    
+    
 
-Controls.propTypes = {
-  /** pass child comps to opt out of the default controls */
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
-}
 
-export default connectToMap(Controls)
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+    
+        <h5>PropTypes:</h5>
+        
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>Openlayers map object</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>Object with key/value pairs for translated strings</td>
+          <td></td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LayerStyler_LayerStyler.js.html" class="button">View Source</a>
+            <span>
+                <a href="LayerStyler_LayerStyler.js.html">LayerStyler/LayerStyler.js</a>, <a href="LayerStyler_LayerStyler.js.html#line23">line 23</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

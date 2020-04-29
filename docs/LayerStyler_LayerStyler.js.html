@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Basemaps/BlankWhite.js</title>
+    <title>ol-kit | LayerStyler/LayerStyler.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -82,85 +82,219 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import StyleManager from 'LayerStyler/StyleManager'
+import olObservable from 'ol/observable'
+import olFormatFilterAnd from 'ol/format/filter/and'
+import olFormatFilterOr from 'ol/format/filter/or'
+import olFormatFilterEqualTo from 'ol/format/filter/equalto'
+import olFormatFilterIsLike from 'ol/format/filter/islike'
+import olFilterFunction from '../classes/FilterFunction'
+import ugh from 'ugh'
+
+import escapeRegExp from 'lodash.escaperegexp'
+
+import { addMovementListener } from 'Popup'
+import { connectToMap } from 'Map'
 
 /**
- * Blank white basemap option
+ * UI to choose color, stroke, fill etc. for styles and labels on layers
  * @component
- * @category Basemap
- * @since 0.1.0
+ * @category LayerStyler
  */
-class BasemapBlankWhite extends React.Component {
-  handleLayersChange = () => {
-    this.forceUpdate()
+class LayerStyler extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      attributeValues: [],
+      listeners: []
+    }
   }
 
   componentDidMount () {
-    this.props.map.getLayers().on('change', this.handleLayersChange)
+    const { map } = this.props
+    const layers = map.getLayers()
+
+    // if a layer is added or removed, the list of layers should be updated
+    const handleMapChange = (e) => this.forceUpdate()
+
+    // bind the event listeners
+    this.onAddKey = layers.on('add', handleMapChange)
+    this.onRemoveKey = layers.on('remove', handleMapChange)
+
+    // make sure the attributes get updated each time the view extent changes
+    const listeners = addMovementListener(map, () => this.forceUpdate())
+
+    this.setState({ listeners })
   }
 
   componentWillUnmount () {
-    this.props.map.getLayers().un('change', this.handleLayersChange)
+    const { listeners } = this.state
+
+    listeners.forEach(listener => olObservable.unByKey(listener))
   }
 
-  onClick = () => {
-    const { map, layerTypeID, onBasemapChanged } = this.props
-    const layer = new olLayerVector({
-      [layerTypeID]: 'blankWhite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-      source: new olSourceVector()
-    })
-    const layers = map.getLayers()
-    const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID &amp;&amp; layerArray.length ? layerArray[0].get(layerTypeID) : false
+  getTitleForLayer = (layer) => {
+    return layer?.get?.('title') || layer?.getTypeName?.() || 'untitled layer'
+  }
 
-    if (hasBasemap) {
-      layers.setAt(0, layer)
-    } else {
-      layers.insertAt(0, layer)
+  getAttributesForLayer = layer => {
+    if (layer) {
+      if (layer.isGeoserverLayer) {
+        return layer.getAttributes().sort((a, b) => a.localeCompare(b))
+      } else if (layer.isVectorLayer) {
+        return layer.getAttributes().sort((a, b) => a.localeCompare(b))
+      }
     }
-    layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
-    onBasemapChanged(layer)
+  }
+
+  getValuesForAttribute = async (layer, attribute) => {
+    if (layer) {
+      if (layer.isGeoserverLayer) {
+        const { typeName } = layer
+        const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
+        const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
+        const attributeValues = await layer.fetchValuesForAttribute(this.props.map, attribute, opts)
+
+        this.setState({ attributeValues })
+      } else if (layer.isVectorLayer) {
+        const attributeValues = layer.fetchValuesForAttribute(attribute)
+
+        this.setState({ attributeValues })
+      }
+    }
+  }
+
+  getCommaDelimitedAttributesForLayer = (layer) => {
+    if (layer &amp;&amp; layer.isGeoserverLayer) {
+      const { typeName } = layer
+      const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
+
+      return whitelistedLayer ? whitelistedLayer.commaDelimitedAttributes : []
+    }
+  }
+
+  onFilterChange = (layer, filters) => {
+    if (layer &amp;&amp; layer.isGeoserverLayer) {
+      const { typeName } = layer
+      const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
+      const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
+
+      layer.setWMSFilters(filters, opts)
+      layer.setOlFilters(this.setOlFilters(filters, opts))
+
+      // cause a re-render which will re-hydrate the latest styles
+      this.forceUpdate()
+    }
+  }
+
+  setOlFilters = (filters = [], opts) => {
+    const olFilters = filters.map(({ attribute, value }) => {
+      if (opts.commaDelimitedAttributes &amp;&amp; opts.commaDelimitedAttributes.includes(attribute)) {
+        // this filter is due to commaDelimitedAttributes, we have to make an OR filter with 3 regex filters
+        // the olFilterFunction is our custom filter function due to openlayers not supporting functions as filters
+        return new olFormatFilterOr(
+          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `^${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
+          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `.*,( )??${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
+          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `.*,( )??${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
+          new olFormatFilterEqualTo(attribute, escapeRegExp(value))
+        )
+      } else {
+        return new olFormatFilterEqualTo(attribute, value)
+      }
+    })
+
+    if (filters[0]?.logical === 'AND' &amp;&amp; filters.length > 1) {
+      return new olFormatFilterAnd(...olFilters)
+    } else if (filters[0]?.logical === 'OR' &amp;&amp; filters.length > 1) {
+      return new olFormatFilterOr(...olFilters)
+    } else {
+      return olFilters[0]
+    }
+  }
+
+  onDefaultStyleChange = (layer, styles) => {
+    if (layer &amp;&amp; layer.isGeoserverLayer) {
+      layer.setDefaultWMSStyles(styles)
+    } else {
+      layer.updateDefaultVectorStyles(styles)
+    }
+
+    // cause a re-render which will re-hydrate the latest styles
+    this.forceUpdate()
+  }
+
+  onUserStyleChange = (layer, styles) => {
+    if (layer &amp;&amp; layer.isGeoserverLayer) {
+      layer.setUserWMSStyles(styles)
+    } else if (layer &amp;&amp; layer.isVectorLayer) {
+      layer.setUserVectorStyles(styles)
+    }
+
+    // cause a re-render which will re-hydrate the latest styles
+    this.forceUpdate()
+  }
+
+  onDefaultStyleReset = (layer) => {
+    if (layer &amp;&amp; layer.isGeoserverLayer) {
+      layer.resetDefaultWMSStyles()
+    } else if (layer.isVectorLayer) {
+      layer.resetDefaultVectorStyles()
+    }
+
+    // cause a re-render which will re-hydrate the latest styles
+    this.forceUpdate()
+  }
+
+  getValidLayers = () => {
+    const { map } = this.props
+    const layers = map.getLayers().getArray()
+    const validLayers = layers.filter(layer => {
+      return !layer.get('_ol_kit_basemap') &amp;&amp; (layer.isGeoserverLayer || layer.isVectorLayer)
+    })
+
+    if (layers.length - validLayers.length > 1) {
+      ugh.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer')
+    }
+
+    return validLayers
   }
 
   render () {
-    const { translations, thumbnail, map, layerTypeID } = this.props
-    const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'blankWhite' : false
+    const layers = this.props.map.getLayers().getArray()
+    const { attributeValues } = this.state
+    const { translations } = this.props
 
     return (
-      &lt;BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
-        &lt;BasemapThumbnail thumbnail={thumbnail} />
-        &lt;Label>{translations['_ol_kit.BlankWhite.title']}&lt;/Label>
-      &lt;/BasemapOption>
+      &lt;StyleManager
+        layers={layers}
+        translations={translations}
+        filters={layers.map(l => l.isGeoserverLayer &amp;&amp; l.getWMSFilters())}
+        userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles() : l.getUserVectorStyles?.())}
+        defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles() : l.getDefaultVectorStyles?.())}
+        getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
+        getTitleForLayer={this.getTitleForLayer}
+        getValuesForAttribute={this.getValuesForAttribute}
+        getAttributesForLayer={this.getAttributesForLayer}
+        attributeValues={attributeValues}
+        onFilterChange={this.onFilterChange}
+        onUserStyleChange={this.onUserStyleChange}
+        onDefaultStyleChange={this.onDefaultStyleChange}
+        onDefaultStyleReset={this.onDefaultStyleReset}
+        {...this.props} />
     )
   }
 }
 
-BasemapBlankWhite.propTypes = {
-  /** reference to Openlayers map object */
+LayerStyler.propTypes = {
+  /** Openlayers map object */
   map: PropTypes.object.isRequired,
+  
   /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.BlankWhite.title': PropTypes.string
-  }),
-  /** A string containing an http url or data url to a thumbnail image */
-  thumbnail: PropTypes.string,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.  */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** A callback that is fired when the basemap layer has been changed.  It is called with the updated layer. */
-  onBasemapChanged: PropTypes.func
+  translations: PropTypes.object.isRequired
 }
 
-BasemapBlankWhite.defaultProps = {
-  thumbnail: '',
-  onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
-}
-
-export default connectToMap(BasemapBlankWhite)
+export default connectToMap(LayerStyler)
 </code></pre>
         </article>
     </section>

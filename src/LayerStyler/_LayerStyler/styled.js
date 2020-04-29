@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
-/** @component */
+
 export const ButtonContainer = styled.div`
   padding: 2px 16px;
   margin-top: 10px;
   display: flex;
 `
 
-/** @component */
+
 export const Button = styled.div`
   user-select: none;
   display: inline-block;
@@ -17,7 +17,7 @@ export const Button = styled.div`
   font-size: 12px;
 `
 
-/** @component */
+
 export const StyleGroupHeading = styled.span`
   display: flex;
   flex-wrap: nowrap;
@@ -27,7 +27,7 @@ export const StyleGroupHeading = styled.span`
   align-items: center;
 `
 
-/** @component */
+
 export const AddNew = styled.div`
   display: flex;
   margin: 0 10px;
@@ -54,13 +54,13 @@ export const ResetText = styled.div`
   }
 `
 
-/** @component */
+
 export const Half = styled.div`
   flex: 1;
   display: flex;
 `
 
-/** @component */
+
 export const CollapseText = styled.div`
   display: flex;
   flex: 1;
@@ -68,14 +68,14 @@ export const CollapseText = styled.div`
   line-height: 32px;
 `
 
-/** @component */
+
 export const Fourth = styled.div`
   display: inline-block;
   width: 25%;
   vertical-align: top;
 `
 
-/** @component */
+
 export const Text = styled.div`
   color: #939393;
   margin: auto;
@@ -84,18 +84,18 @@ export const Text = styled.div`
   font-size: 16px;
 `
 
-/** @component */
+
 export const NewStyleGroupContainer = styled.div`
   display: flex;
   margin: 5px;
 `
 
-/** @component */
+
 export const NewStyleGroupIcon = styled.i`
   padding: 0 10px 0 0;
 `
 
-/** @component */
+
 export const NewStyleGroupButton = styled.div`
   flex: 1;
   margin: 0 5px;

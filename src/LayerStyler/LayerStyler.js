@@ -15,6 +15,7 @@ import { addMovementListener } from 'Popup'
 import { connectToMap } from 'Map'
 
 /**
+ * UI to choose color, stroke, fill etc. for styles and labels on layers
  * @component
  * @category LayerStyler
  */
@@ -204,11 +205,11 @@ class LayerStyler extends React.Component {
 }
 
 LayerStyler.propTypes = {
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object.isRequired,
-
   /** Openlayers map object */
-  map: PropTypes.object.isRequired
+  map: PropTypes.object.isRequired,
+
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.object.isRequired
 }
 
 export default connectToMap(LayerStyler)

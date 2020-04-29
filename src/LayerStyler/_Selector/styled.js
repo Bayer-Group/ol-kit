@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components'
 import Select from 'react-select'
 
-/** @component */
+
 export const Container = styled.div`
   background: ${props => props.background ? props.background : 'white'};
   padding: 26px 12px 11px 12px;
 `
 
-/** @component */
+
 export const Header = styled.label`
   color: ${props => props.focus || props.valid || props.disabled ? '#5264AE' : '#8a8a8a'};
   font-size: ${props => props.focus ? '14px' : '0.8em'};
@@ -22,7 +22,7 @@ export const Header = styled.label`
   -webkit-transition: 0.2s ease all;
 `
 
-/** @component */
+
 export const SubHeader = styled.div`
   font-size: .6em;
   line-height: .6em;

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import MaterialSwitch from '@material-ui/core/Switch'
 import { withStyles } from '@material-ui/styles'
 
-/** @component */
+
 export const TopControls = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -13,7 +13,7 @@ export const TopControls = styled.div`
   border-radius: 5px;
 `
 
-/** @component */
+
 export const ToggleContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@ export const ToggleContainer = styled.div`
   color: #6f6f6f;
 `
 
-/** @component */
+
 export const SymbolizerContainer = styled.div`
   width: 290px;
   display: flex;
@@ -35,7 +35,7 @@ export const Title = styled.div`
   text-align: center;
 `
 
-/** @component */
+
 export const Button = styled.div`
   user-select: none;
   display: inline-block;
@@ -44,7 +44,7 @@ export const Button = styled.div`
   font-size: 12px;
 `
 
-/** @component */
+
 export const ButtonText = styled.span`
   color: #152357;
 
@@ -53,7 +53,7 @@ export const ButtonText = styled.span`
   }
 `
 
-/** @component */
+
 export const AttributeHeader = styled.div`
   display: flex;
   margin: 0 20px;
@@ -64,14 +64,14 @@ export const AttributeHeader = styled.div`
   line-height: 32px;
 `
 
-/** @component */
+
 export const AttributeContainer = styled.div`
   margin: 10px;
   display: flex;
   flex-wrap: wrap;
 `
 
-/** @component */
+
 export const AttributeItem = styled.div`
   padding: 5px 10px;
   color: ${props => props.checked ? '#fff' : '#000'};
@@ -86,22 +86,22 @@ export const AttributeItem = styled.div`
   }
 `
 
-/** @component */
+
 export const Color = styled.div`
   width: 30%;
 `
 
-/** @component */
+
 export const Outline = styled.div`
   width: 30%;
 `
 
-/** @component */
+
 export const Size = styled.div`
   width: 40%;
 `
 
-/** @component */
+
 export const Unit = styled.div`
   width: 30%;
 `

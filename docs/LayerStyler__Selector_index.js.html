@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/Controls.js</title>
+    <title>ol-kit | LayerStyler/_Selector/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,57 +80,170 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import ReactDOM from 'react-dom'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import nanoid from 'nanoid'
+import { Container, Header, SubHeader, TextInput, Bar, Highlight, Group } from './styled'
 
-import { ControlsContainer } from './styled'
-import Compass from './Compass'
-import { connectToMap } from 'Map'
-import ZoomControls from './ZoomControls'
+class Selector extends Component {
+  constructor (props) {
+    super(props)
 
-/**
- * A map control container with built-in positioning
- * @component
- * @category Controls
- * @since 0.1.0
- */
-function Controls (props) {
-  const { children, map, position } = props
+    const options = this.formatOptions(props.options)
 
-  return (
-    ReactDOM.createPortal(
-      &lt;ControlsContainer position={position}>
-        {children || (
-          &lt;>
-            &lt;ZoomControls map={map} />
-            &lt;Compass map={map} />
-          &lt;/>
-        )
-        }
-      &lt;/ControlsContainer>,
-      map.getTargetElement()
+    this.state = {
+      options,
+      value: props.selected
+    }
+
+    this.inputId = nanoid(6)
+  }
+
+  formatOptions = (options = []) => {
+    // turn array of strings into array of options objects that react-select can read
+    return options.map(option => ({
+      value: option,
+      label: option
+    }))
+  }
+
+  clickHandler = () => this.forceUpdate() // Force an update to figure out if the component is still focused or not.
+
+  getInputId = () => `${this.inputId}_input` // calculates the input id
+
+  getActiveElementId = () => document.activeElement ? document.activeElement.id : null
+
+  hasFocus = () => this.getActiveElementId() === this.getInputId() // Select.onFocus alone is not sufficient to determine if the component has focus or not so we determine this by querying the document for the active element and comparing it to our component's input id. This could be stored in state but it's not really the state of the component itself but a DOM comparison.
+
+  handleChange = (event, { action }) => {
+    const { onValueChange } = this.props
+    const { value } = event || { value: '' }
+
+    switch (action) {
+      case 'select-option':
+        // fall through
+      case 'set-value':
+        // called when menu item clicked
+        this.setState({ value }, onValueChange(value))
+        break
+      case 'clear':
+        // when user clicks x button
+        this.setState({ value: '' }, onValueChange(''))
+        break
+      case 'input-change':
+        // when user typed a value
+        this.setState({ value: '' }, onValueChange(event))
+        break
+      default:
+        // Do nothing
+    }
+  }
+
+  isMenuOpen = () => {
+    const { value, options = [] } = this.state
+    const hasFocus = this.hasFocus()
+    const noValueSelected = !options.some(thing => thing.value === value)
+
+    return hasFocus &amp;&amp; options.length &amp;&amp; noValueSelected
+  }
+
+  componentDidMount () {
+    document.addEventListener('click', this.clickHandler)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('click', this.clickHandler)
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps (nextProps) {
+    const options = this.formatOptions(nextProps.options)
+
+    if (options &amp;&amp; options !== this.state.options) this.setState({ options })
+
+    // check for selection passed as a prop
+    if (nextProps.selected !== '' &amp;&amp; nextProps.selected !== this.state.value) this.setState({ value: nextProps.selected })
+  }
+
+  render () {
+    const { header, subHeader, disabled, selected, isLoading, styles } = this.props
+    const { value, options = [] } = this.state
+    const hasFocus = this.hasFocus()
+    const isValid = value !== ''
+    const defaultValueProp = {}
+
+    if (options.length) {
+      defaultValueProp.defaultValue = { value: selected, label: selected }
+    } else {
+      defaultValueProp.defaultInputValue = selected
+    }
+
+    const customStyles = {
+      container: (provided, state) => ({ ...provided, fontSize: state.selectProps.isLoading ? '6px !important' : null }),
+      loadingIndicator: provided => ({ ...provided, marginRight: '10px' })
+    }
+
+    return (
+      &lt;Container style={styles} {...this.props}>
+        &lt;Group>
+          &lt;TextInput
+            autoFocus={false /* autoFocus would open the menu on mount which blocks some of the ui */}
+            placeholder={'' /* 'header' serves as the placeholder so we don't want one in the text input */}
+            {...defaultValueProp}
+            inputId={this.getInputId()}
+            options={options}
+            isSearchable={true}
+            isClearable={options.length}
+            isLoading={isLoading}
+            onChange={this.handleChange}
+            onClick={this.props.onClick}
+            isDisabled={disabled}
+            menuPlacement='top'
+            styles={customStyles} />
+          &lt;Bar focus={hasFocus} />
+          &lt;Highlight focus={hasFocus} />
+          {header &amp;&amp; &lt;Header
+            focus={hasFocus}
+            valid={isValid}
+            disabled={disabled}
+            htmlFor={this.getInputId()}>{header}&lt;/Header>}
+          {subHeader &amp;&amp; &lt;SubHeader focus={hasFocus}>{subHeader}&lt;/SubHeader>}
+        &lt;/Group>
+      &lt;/Container>
     )
-  )
+  }
 }
 
-Controls.defaultProps = {
-  position: 'bottom-right'
+Selector.defaultProps = {
+  onValueChange: () => {},
+  onIndexChange: () => {},
+  options: [],
+  selected: '',
+  autocomplete: 'off',
+  disabled: false,
+  isLoading: false
 }
 
-Controls.propTypes = {
-  /** pass child comps to opt out of the default controls */
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+Selector.propTypes = {
+  options: PropTypes.array.isRequired,
+  onValueChange: PropTypes.func,
+  onIndexChange: PropTypes.func,
+  header: PropTypes.string,
+  selected: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
   ]),
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
+  subHeader: PropTypes.string,
+  autocomplete: PropTypes.string,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+
+  /** Show loading indicator on select input */
+  isLoading: PropTypes.bool,
+  styles: PropTypes.object
 }
 
-export default connectToMap(Controls)
+export default Selector
 </code></pre>
         </article>
     </section>

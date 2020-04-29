@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/Controls.js</title>
+    <title>ol-kit | LayerStyler/_Popover/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,56 +81,84 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
+import MaterialPopover from '@material-ui/core/Popover'
+import { withStyles } from '@material-ui/core/styles'
 
-import { ControlsContainer } from './styled'
-import Compass from './Compass'
-import { connectToMap } from 'Map'
-import ZoomControls from './ZoomControls'
+const Popover = withStyles(() => ({
+  paper: {
+    overflowX: 'visible',
+    overflowY: 'visible'
+  }
+}))(MaterialPopover)
 
-/**
- * A map control container with built-in positioning
- * @component
- * @category Controls
- * @since 0.1.0
- */
-function Controls (props) {
-  const { children, map, position } = props
+class PopoverBuilder extends React.Component {
+  constructor () {
+    super()
 
-  return (
-    ReactDOM.createPortal(
-      &lt;ControlsContainer position={position}>
-        {children || (
-          &lt;>
-            &lt;ZoomControls map={map} />
-            &lt;Compass map={map} />
-          &lt;/>
-        )
-        }
-      &lt;/ControlsContainer>,
-      map.getTargetElement()
+    this.state = {
+      open: false
+    }
+  }
+
+  handleClickButton = () => {
+    this.setState({ open: true })
+  }
+
+  handleClose = () => {
+    this.setState({ open: false })
+  }
+
+  render () {
+    const { open } = this.state
+    const { children, disabled, title } = this.props
+
+    return (
+      &lt;React.Fragment>
+        &lt;Button
+          disabled={disabled}
+          buttonRef={node => {
+            this.anchorEl = node
+          }}
+          variant='contained'
+          onClick={this.handleClickButton}>
+          {title}
+        &lt;/Button>
+        &lt;Popover
+          open={open}
+          onClose={this.handleClose}
+          anchorEl={this.anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left'
+          }}>
+          {children}
+        &lt;/Popover>
+      &lt;/React.Fragment>
     )
-  )
+  }
 }
 
-Controls.defaultProps = {
-  position: 'bottom-right'
-}
-
-Controls.propTypes = {
-  /** pass child comps to opt out of the default controls */
+PopoverBuilder.propTypes = {
+  /** Children to be shown inside the popover when open */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
+
+  /** If true the popover button will be disabled */
+  disabled: PropTypes.bool,
+
+  /** Title to show in the button which triggers the popover */
+  title: PropTypes.string
 }
 
-export default connectToMap(Controls)
+export default PopoverBuilder
 </code></pre>
         </article>
     </section>

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/Controls.js</title>
+    <title>ol-kit | LayerStyler/_ColorPicker/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,57 +80,126 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import ReactDOM from 'react-dom'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { BlockPicker } from 'react-color'
+import {
+  Container,
+  ColorPickerPositioner,
+  CurrentColor
+} from './styled'
 
-import { ControlsContainer } from './styled'
-import Compass from './Compass'
-import { connectToMap } from 'Map'
-import ZoomControls from './ZoomControls'
+const colors = [
+  '#f44336',
+  '#9c27b0',
+  '#673ab7',
+  '#3f51b5',
+  '#2196f3',
+  '#03a9f4',
+  '#00bcd4',
+  '#009688',
+  '#4caf50',
+  '#8bc34a',
+  '#cddc39',
+  '#ffeb3b',
+  '#ffc107',
+  '#ff9800',
+  '#795548',
+  '#607d8b',
+  '#000000',
+  '#ffffff'
+]
 
-/**
- * A map control container with built-in positioning
- * @component
- * @category Controls
- * @since 0.1.0
- */
-function Controls (props) {
-  const { children, map, position } = props
+class ColorPicker extends Component {
+  constructor (props) {
+    super(props)
 
-  return (
-    ReactDOM.createPortal(
-      &lt;ControlsContainer position={position}>
-        {children || (
-          &lt;>
-            &lt;ZoomControls map={map} />
-            &lt;Compass map={map} />
-          &lt;/>
-        )
+    this.state = {
+      colorPickerOpen: false,
+      uid: Math.floor((Math.random() * 10000))
+    }
+  }
+
+  handleColorChange = (opts) => {
+    this.props.handleSelect(opts.hex)
+  }
+
+  handleOffClick = e => {
+    if (this.state.colorPickerOpen) {
+      // assume off-click until proven wrong
+      let offClick = true
+
+      // loop through elements in clicked path to determine off-click
+      e.path.forEach(elem => {
+        elem.classList &amp;&amp; elem.classList.forEach(className => {
+          // uid in className avoids bug where two color pickers can be open at once
+          const { uid } = this.state
+
+          // click happened within BlockPicker or CurrentColor so this is not an off-click
+          if (className === 'block-picker' || className === `current-color-${uid}`) offClick = false
+        })
+      })
+      // if off-click occured close color picker
+      if (offClick) this.setState({ colorPickerOpen: false })
+    }
+  }
+
+  componentDidMount () {
+    document.addEventListener('click', this.handleOffClick)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('click', this.handleOffClick)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    // hacky dom manipulations to force styling on the BlockPicker component
+    if (!prevState.colorPickerOpen &amp;&amp; this.state.colorPickerOpen) {
+      // add border to white swatch
+      Array.from(document.querySelectorAll('[title="#ffffff"]')).forEach(elem => {
+        elem.style.border = '1px solid #d8d8d8'
+      })
+      // shrink hex colored header &amp; remove the hex code
+      Array.from(document.getElementsByClassName('block-picker')).forEach(elem => {
+        const header = elem.children[1]
+
+        header.style.height = '12px'
+        header.innerHTML = ''
+      })
+    }
+  }
+
+  render () {
+    const { currentColor } = this.props
+    const { colorPickerOpen, uid } = this.state
+
+    return (
+      &lt;Container>
+        &lt;CurrentColor className={`current-color-${uid}`} color={currentColor} onClick={() => this.setState({ colorPickerOpen: !colorPickerOpen })} />
+        {colorPickerOpen &amp;&amp;
+          &lt;ColorPickerPositioner>
+            &lt;BlockPicker color={currentColor} colors={colors} onChangeComplete={this.handleColorChange} />
+          &lt;/ColorPickerPositioner>
         }
-      &lt;/ControlsContainer>,
-      map.getTargetElement()
+      &lt;/Container>
     )
-  )
+  }
 }
 
-Controls.defaultProps = {
-  position: 'bottom-right'
+ColorPicker.propTypes = {
+  /** The currently selected color */
+  currentColor: PropTypes.string.isRequired,
+
+  /** Callback function which passes the hex value of the color selected */
+  handleSelect: PropTypes.func
 }
 
-Controls.propTypes = {
-  /** pass child comps to opt out of the default controls */
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]),
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
+ColorPicker.defaultProps = {
+  currentColor: '#ffffff',
+  handleSelect: () => {}
 }
 
-export default connectToMap(Controls)
+export default ColorPicker
 </code></pre>
         </article>
     </section>
