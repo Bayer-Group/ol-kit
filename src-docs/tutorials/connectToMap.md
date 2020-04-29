@@ -13,7 +13,7 @@ import { Map, Popup } from '@bayer/ol-kit'
 const App = () => {
   return (
     <Map>
-      <Popup /> {/* This component was automatically given a map prop */}
+      <Popup /> {/* This Popup component was automatically given a map prop when wrapped by connectToMap internally */}
     </Map>
   )
 }
