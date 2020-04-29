@@ -2,7 +2,7 @@
 
 Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these dependencies). For a comprehensive install use:
 ```
-npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
+npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons --save
 ```
 
 ##### _Why ol@4.6.5?_
@@ -15,6 +15,7 @@ There are two ways to get started making a map: let ol-kit generate a default ma
 ### Auto-Generate a Map
 To get started quickly, you can let ol-kit create an `ol.Map` by simply importing & rendering the `Map` component.
 ```javascript
+import React from 'react'
 import { Map } from '@bayer/ol-kit'
 
 const MyApp = () => <Map />

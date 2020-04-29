@@ -79,9 +79,9 @@
 
 <article>
     <h1>connectToMap</h1>
-<p>The <code>connectToMap</code> wrapping function that automatically passes an <code>ol.Map</code> to its children.</p>
+<p>The <code>connectToMap</code> wrapping function that automatically passes a <code>map</code>, <code>translations</code>, and/or <code>selectInteraction</code> prop to its child component.</p>
 <h2>How does it work?</h2>
-<p>When the <code>Map</code> component is constructed, it attaches the OpenLayers map to a <a href="https://reactjs.org/docs/context.html">context</a>. If this context exists (which means <code>Map</code> has been constructed), <code>connectToMap</code> renders it's child with a prop of <code>map</code> from the <code>Map</code> parent and also spreads the rest of the inline props. If a <code>Map</code> is not mounted, <code>connectToMap</code> will just render the child and pass props through without consuming a context.</p>
+<p>When the <code>Map</code> component is constructed, it attaches the OpenLayers map to a <a href="https://reactjs.org/docs/context.html">context</a>. If this context exists (which means <code>Map</code> has been constructed), <code>connectToMap</code> renders its child with a prop of <code>map</code> from the <code>Map</code> parent and also spreads the rest of the inline props. If a <code>Map</code> is not mounted, <code>connectToMap</code> will just render the child and pass props through without consuming a context. <code>translations</code> and <code>selectInteraction</code> will also be passed through from the <code>&lt;Map&gt;</code>'s context. Optimization: if <code>propTypes</code> are defined on the component passed to <code>connectToMap</code>, this util will check the against <code>propTypes</code> and filter out any props mentioned above that are unneeded, if <code>propTypes</code> is not set, all props mentioned above will be passed.</p>
 <h2>Automatic Example</h2>
 <p>All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:</p>
 <pre class="prettyprint source lang-javascript"><code>import React from 'react'
@@ -130,6 +130,22 @@ const CustomMapComponent = props => {
 
 CustomMapComponent.propTypes = {
   map: PropTypes.object.isRequired
+}
+
+export default connectToMap(CustomMapComponent)
+</code></pre>
+<p>The above example filtered out <code>translations</code> &amp; <code>selectInteraction</code>...but if you do not define <code>propTypes</code>:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { connectToMap } from '@bayer/ol-kit'
+
+const CustomMapComponent = props => {
+  const { map, selectInteraction, translations } = props
+
+  // access to all context props from &lt;Map> parent
+
+  return (
+    &lt;div>This component has map, selectInteraction, and translations props!&lt;/div>
+  )
 }
 
 export default connectToMap(CustomMapComponent)

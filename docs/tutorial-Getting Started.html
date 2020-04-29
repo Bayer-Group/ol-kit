@@ -80,7 +80,7 @@
 <article>
     <h1>Getting Started</h1>
 <p>Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like <a href="https://create-react-app.dev/">Create React App</a>. There are a few <code>peerDependencies</code> required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these dependencies). For a comprehensive install use:</p>
-<pre class="prettyprint source"><code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components --save
+<pre class="prettyprint source"><code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons --save
 </code></pre>
 <h5><em>Why ol@4.6.5?</em></h5>
 <p>ol-kit is a byproduct of an internal mapping framework at Bayer Crop Science that is running on an older version of OpenLayers. We would like to get to the latest but it will just take some time and effort- follow <a href="https://github.com/MonsantoCo/ol-kit/issues/44">this issue</a> to stay up to date on the migration.</p>
@@ -89,7 +89,8 @@
 <p>There are two ways to get started making a map: let ol-kit generate a default map for you or pass in a custom <code>ol.Map</code>. (note: the below examples use both classical and functional components from React- ol-kit works with both of these syntaxes.)</p>
 <h3>Auto-Generate a Map</h3>
 <p>To get started quickly, you can let ol-kit create an <code>ol.Map</code> by simply importing &amp; rendering the <code>Map</code> component.</p>
-<pre class="prettyprint source lang-javascript"><code>import { Map } from '@bayer/ol-kit'
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map } from '@bayer/ol-kit'
 
 const MyApp = () => &lt;Map />
 </code></pre>
