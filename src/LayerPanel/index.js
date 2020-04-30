@@ -1,6 +1,7 @@
 export { default as LayerPanel } from './LayerPanel'
 export { default as LayerPanelBase } from './LayerPanelBase'
 export { default as LayerPanelActions } from './LayerPanelActions'
+export { default as LayerPanelCheckbox } from './LayerPanelCheckbox'
 export { default as LayerPanelContent } from './LayerPanelContent'
 export { default as LayerPanelHeader } from './LayerPanelHeader'
 export { default as LayerPanelList } from './LayerPanelList'

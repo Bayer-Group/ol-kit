@@ -19,6 +19,7 @@ Object {
   "LayerPanelActionRemove": [Function],
   "LayerPanelActions": [Function],
   "LayerPanelBase": [Function],
+  "LayerPanelCheckbox": [Function],
   "LayerPanelContent": [Function],
   "LayerPanelHeader": [Function],
   "LayerPanelLayersPage": [Function],
