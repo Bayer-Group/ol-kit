@@ -9,6 +9,7 @@ export default {
   // Popup
   '_ol_kit.PopupDefaultPage.actions': 'Actions',
   '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
+  '_ol_kit.PopupDefaultPage.details': 'Details',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Shapefile',
@@ -18,7 +19,6 @@ export default {
   '_ol_kit.LayerPanelListItem.feature': 'feature',
   '_ol_kit.actions.removeLayer': 'Remove Layer',
   '_ol_kit.actions.removeLayers': 'Remove Layers',
-  '_ol_kit.PopupDefaultPage.details': 'Details',
   // LayerStyler
   '_ol_kit.AttributesFilter.where': 'Where',
   '_ol_kit.AttributesFilter.AND': 'AND',
