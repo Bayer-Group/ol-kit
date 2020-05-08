@@ -87,6 +87,7 @@ import olMap from 'ol/map'
 import olObservable from 'ol/observable'
 import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
+import olLayerVector from 'ol/layer/vector'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -148,9 +149,9 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map &amp; pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    if (layer.getLayerState().managed &amp;&amp; !layer.get('_ol_kit_basemap')) {
+    console.log('wfs', layer, typeof layer, layer instanceof olLayerVector)
+    if (layer.getLayerState().managed &amp;&amp; (layer.isVectorLayer || layer instanceof olLayerVector)) {
       // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
-      // _ol_kit_basemap is set to true on all basemaps from ol-kit
       const features = []
       const sourceFeatures = layer.getSource().getFeatures()
 
@@ -160,6 +161,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
         if (isAtPixel) features.push(sourceFeature)
       })
+      console.log('IF', features)
       const wfsPromise = Promise.resolve({ features, layer })
 
       if (features.length) promises.push(wfsPromise)
