@@ -11,7 +11,7 @@ An easy to use, open source [React](https://github.com/facebook/react) & [OpenLa
 Install `ol-kit` and its `peerDependencies`
 
 ```bash
-npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons --save
+npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
 ```
 
 ## Getting Started
