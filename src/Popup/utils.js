@@ -67,8 +67,8 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    console.log('wfs', layer, typeof layer, layer instanceof olLayerVector)
     if (layer.getLayerState().managed && (layer.isVectorLayer || layer instanceof olLayerVector)) {
+      // this logic handles clicks on vector layers
       // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
       const features = []
       const sourceFeatures = layer.getSource().getFeatures()
@@ -79,10 +79,20 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
         if (isAtPixel) features.push(sourceFeature)
       })
-      console.log('IF', features)
       const wfsPromise = Promise.resolve({ features, layer })
 
       if (features.length) promises.push(wfsPromise)
+    } else if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
+      // this logic handles clicks on GeoserverLayers
+      const parentLayer = layer.get('_ol_kit_parent')
+      const coords = map.getCoordinateFromPixel(pixel)
+      const wmsPromise = new Promise(async resolve => {
+        const features = await parentLayer.fetchFeaturesAtClick(coords, map)
+
+        resolve({ features, layer })
+      })
+
+      promises.push(wmsPromise)
     }
   }
 
@@ -90,6 +100,8 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
     hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
   })
+
+  console.log('FEATURES AT CLICK', featuresAtPixel)
 
   // if there's features at click, loop through the layers to find corresponding layer & features
   if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)

@@ -133,7 +133,7 @@ class Popup extends Component {
         ? null
         : (
           ReactDOM.createPortal(
-            <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
+            <PopupBase arrow={arrow} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
                   actions={actions}
