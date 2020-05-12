@@ -82,15 +82,18 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       const wfsPromise = Promise.resolve({ features, layer })
 
       if (features.length) promises.push(wfsPromise)
-    } else if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
+    }
+  }
+  const wmsSelector = layer => {
+    if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
       // this logic handles clicks on GeoserverLayers
-      const parentLayer = layer.get('_ol_kit_parent')
+      const geoserverLayer = layer.get('_ol_kit_parent')
       const coords = map.getCoordinateFromPixel(pixel)
-      const wmsPromise = new Promise(async resolve => {
-        const features = await parentLayer.fetchFeaturesAtClick(coords, map)
+      const wmsPromise = async () => {
+        const features = await geoserverLayer.fetchFeaturesAtClick(coords, map)
 
-        resolve({ features, layer })
-      })
+        return { features, layer }
+      }
 
       promises.push(wmsPromise)
     }
@@ -101,10 +104,11 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
   })
 
-  console.log('FEATURES AT CLICK', featuresAtPixel)
-
   // if there's features at click, loop through the layers to find corresponding layer & features
   if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
+
+  // this check is for wms features
+  map.forEachLayerAtPixel(pixel, wmsSelector)
 
   return promises
 }

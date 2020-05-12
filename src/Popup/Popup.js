@@ -97,7 +97,7 @@ class Popup extends Component {
 
     const parsedFeatures = layers.reduce((acc, { features, layer }) => {
       const layerFeatures = features.map(feature => {
-        feature.set('_ol_kit_parent', layer)
+        feature.set('_ol_kit_parent', layer.get('_ol_kit_parent'))
 
         return feature
       })
