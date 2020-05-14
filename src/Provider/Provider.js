@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import en from 'locales/en'
 import ugh from 'ugh'
 
-// context should only be created when <Provider> is mounted (see constructor), otherwise it's null so vmc child comps don't use context
+// context should only be created when <Provider> is mounted (see constructor), otherwise it's null so ol-kit child comps don't use context
 export let ProviderContext = null
 
 /**
@@ -19,7 +19,7 @@ class Provider extends React.Component {
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
     this.state = {}
 
-    // create a provider context to manage/persist state of vmc children (only if <Provider> is mounted)
+    // create a provider context to manage/persist state of ol-kit children (only if <Provider> is mounted)
     ProviderContext = React.createContext()
   }
 
@@ -43,9 +43,9 @@ class Provider extends React.Component {
     return {
       map,
       maps,
-      translations,
       persistedState: this.state,
       persistState: this.persistState,
+      translations,
       ...contextProps
     }
   }
@@ -71,7 +71,7 @@ Provider.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  /** Add any custom props to context and they will be passed to any component wrapped by connectToContext */
+  /** Add any custom props to context and they will be passed to all components wrapped by connectToContext */
   contextProps: PropTypes.object,
   /** OL map object (required if maps array is not passed) */
   map: PropTypes.object,

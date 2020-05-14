@@ -7,10 +7,8 @@ import MapLogo from './MapLogo'
 import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
+import Provider, { ProviderContext } from 'Provider/Provider'
 import ugh from 'ugh'
-
-// context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
-export let MapContext = null
 
 /**
  * A Reactified ol.Map wrapper component
@@ -29,8 +27,8 @@ class Map extends React.Component {
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
 
-    // create a map context
-    MapContext = React.createContext()
+    // setup a boolean to tell this component to render a Provider wrapper if one is not mounted as a parent
+    this.noProviderMounted = !!ProviderContext
   }
 
   componentDidMount () {
@@ -103,6 +101,7 @@ class Map extends React.Component {
   }
 
   getContextValue = () => {
+    // TODO need to add props created here to the ProviderContext
     const { translations } = this.props
 
     return {
@@ -115,22 +114,24 @@ class Map extends React.Component {
   render () {
     const { children, fullScreen, logoPosition, style } = this.props
     const { mapInitialized } = this.state
+    // if a Provider is not mounted, wrap map with a Provider to allow context to exist either way
+    const ContextWrapper = this.noProviderMounted ? React.Fragment : Provider
 
     return (
-      <>
+      <ContextWrapper>
         <StyledMap
           id={this.target}
           fullScreen={fullScreen}
           style={style}>
           <MapLogo logoPosition={logoPosition} />
         </StyledMap>
-        <MapContext.Provider value={this.getContextValue()}>
+        <>
           {mapInitialized // wait for map to initialize before rendering children
             ? children
             : null
           }
-        </MapContext.Provider>
-      </>
+        </>
+      </ContextWrapper>
     )
   }
 }
