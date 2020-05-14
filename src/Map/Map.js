@@ -7,7 +7,8 @@ import MapLogo from './MapLogo'
 import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
-import Provider, { ProviderContext } from 'Provider/Provider'
+import { Provider, connectToContext } from 'Provider'
+import { ProviderContext } from 'Provider/Provider'
 import ugh from 'ugh'
 
 /**
@@ -118,7 +119,7 @@ class Map extends React.Component {
     const ContextWrapper = this.noProviderMounted ? React.Fragment : Provider
 
     return (
-      <ContextWrapper>
+      <ContextWrapper map={this.map}>
         <StyledMap
           id={this.target}
           fullScreen={fullScreen}
@@ -181,4 +182,4 @@ Map.propTypes = {
   translations: PropTypes.object
 }
 
-export default Map
+export default connectToContext(Map)
