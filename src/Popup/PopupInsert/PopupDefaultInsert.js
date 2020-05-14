@@ -69,7 +69,7 @@ class PopupDefaultInsert extends Component {
   }
 
   render () {
-    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, showCustomizeDetails, translations } = this.props
+    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations } = this.props
     const { selectedIdx } = this.state
 
     return (
@@ -82,7 +82,6 @@ class PopupDefaultInsert extends Component {
                 loading={loading}
                 onClose={onClose}
                 onSettingsClick={onSettingsClick}
-                showCustomizeDetails={showCustomizeDetails}
                 title={f.get('title') || `Feature ${i+1}`}
                 translations={translations}>
                 {!!actions ? actions : <div style={{ padding: '10px' }}>No available actions</div>}
@@ -124,8 +123,6 @@ PopupDefaultInsert.propTypes = {
   onSettingsClick: PropTypes.func,
   /** filter properties displayed for a feature */
   propertiesFilter: PropTypes.func,
-  /** show the settings cog -- use with onSettingsClick */
-  showCustomizeDetails: PropTypes.bool,
   /** index of currently selected page in popup */
   selectedIdx: PropTypes.number,
   /** reference to openlayers select interaction which */

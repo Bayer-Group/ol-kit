@@ -31,6 +31,7 @@ class PopupDefaultPage extends Component {
       pageCount,
       currentPage,
       onClose,
+      onSettingsClick,
       showCustomizeDetails
     } = this.props
 
@@ -73,8 +74,8 @@ class PopupDefaultPage extends Component {
             <Body>
               <PopupTabs selectedIdx={currentTab}>
                 <div title={translations['_ol_kit.PopupDefaultPage.details']} style={{ height: '170px', overflowY: 'scroll' }}>
-                  { showCustomizeDetails &&
-                    <AttributeSettings onClick={this.props.onSettingsClick}>
+                  {onSettingsClick &&
+                    <AttributeSettings onClick={onSettingsClick}>
                       <i className='zmdi zmdi-settings'></i>
                       <p style={{ fontSize: 'smaller', padding: '0px 5px', margin: 0 }}>{translations['_ol_kit.PopupDefaultPage.customize']}</p>
                     </AttributeSettings>
@@ -115,7 +116,7 @@ PopupDefaultPage.propTypes = {
   onNextPage: PropTypes.func,
   /** (passed by `PopupPageLayout`) Callback invoked when the previous page should be shown */
   onPrevPage: PropTypes.func,
-  /** Opens up the settings modal */
+  /** Set this callback to show settings cog */
   onSettingsClick: PropTypes.func,
   /** (passed by `PopupPageLayout`) Total number of pages */
   pageCount: PropTypes.number,
@@ -126,9 +127,7 @@ PopupDefaultPage.propTypes = {
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
     '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
-  }).isRequired,
-  /** Shows the customize details button in popup details */
-  showCustomizeDetails: PropTypes.bool
+  }).isRequired
 }
 
 PopupDefaultPage.defaultProps = {
@@ -136,8 +135,7 @@ PopupDefaultPage.defaultProps = {
   children: [],
   loading: false,
   currentTab: 0,
-  attributes: {},
-  showCustomizeDetails: false
+  attributes: {}
 }
 
 export default connectToMap(PopupDefaultPage)
