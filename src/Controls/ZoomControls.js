@@ -21,10 +21,10 @@ function ZoomControls (props) {
   let mouseDownTimeout
 
   let repeatTimeout
-  const zoom = direction => {
+  const zoom = (direction, duration = 350) => {
     const delta = direction === 'ZOOM_IN' ? 0.1 : -0.1
 
-    zoomDelta(map, delta, 350)
+    zoomDelta(map, delta, duration)
   }
   const repeatZoom = direction => {
     zoom(direction)
@@ -50,16 +50,16 @@ function ZoomControls (props) {
       <Icon
         id='_ol_kit_zoom_in'
         onMouseDown={() => handleMouseDown('ZOOM_IN')}
-        onMouseOut={() => stopZoom('ZOOM_IN')}
-        onMouseUp={() => stopZoom('ZOOM_IN')}>
+        onMouseUp={() => stopZoom('ZOOM_IN')}
+        onClick={() => zoom('ZOOM_IN', 50)}>
         <PLUS />
       </Icon>
       <IconSeparator />
       <Icon
         id='_ol_kit_zoom_out'
         onMouseDown={() => handleMouseDown('ZOOM_OUT')}
-        onMouseOut={() => stopZoom('ZOOM_OUT')}
-        onMouseUp={() => stopZoom('ZOOM_OUT')}>
+        onMouseUp={() => stopZoom('ZOOM_OUT')}
+        onClick={() => zoom('ZOOM_IN', 50)}>
         <MINUS />
       </Icon>
     </IconsContainer>

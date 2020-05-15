@@ -83,7 +83,7 @@ class PopupDefaultInsert extends Component {
                 onClose={onClose}
                 attributes={propertiesFilter(f.getProperties())}
                 translations={translations}>
-                {!!actions ? actions : <div style={{ padding: '10px' }}>No available actions</div>}
+                {!!actions ? React.Children.map(actions, c => React.cloneElement(c, { feature: f })) : <div style={{ padding: '10px' }}>No available actions</div>}
               </PopupDefaultPage>
             ))
           : <PopupDefaultPage

@@ -10,6 +10,9 @@ export default {
   '_ol_kit.PopupDefaultPage.actions': 'Actions',
   '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
   '_ol_kit.PopupDefaultPage.details': 'Details',
+  // Popup Actions
+  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy WKT to clipboard',
+  '_ol_kit.PopupActionWkt.copySuccess': 'WKT copied to clipboard successfully',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Shapefile',
