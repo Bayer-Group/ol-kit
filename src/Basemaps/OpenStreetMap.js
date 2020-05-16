@@ -36,7 +36,7 @@ class BasemapOpenStreetMap extends React.Component {
     const layer = new olLayerTile({
       preload: Infinity,
       extent: undefined,
-      [layerTypeID]: 'osm', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
+      [layerTypeID]: 'openStreetMap', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
     const layers = map.getLayers()
@@ -55,12 +55,12 @@ class BasemapOpenStreetMap extends React.Component {
   render () {
     const { translations, thumbnail, map, layerTypeID } = this.props
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'osm' : false
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'openStreetMap' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{translations['_ol_kit.OpenStreetMap.title']}</Label>
+        <Label>{'OpenStreetMap'}</Label>
       </BasemapOption>
     )
   }

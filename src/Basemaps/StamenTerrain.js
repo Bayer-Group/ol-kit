@@ -60,7 +60,7 @@ class BasemapStamenTerrain extends React.Component {
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{translations['_ol_kit.StamenTerrain.title']}</Label>
+        <Label>{'StamenTerrain'}</Label>
       </BasemapOption>
     )
   }
