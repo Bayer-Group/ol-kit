@@ -48,7 +48,7 @@ class BasemapContainer extends Component {
 
       if (showBasemaps) {
         return (
-          <BasemapSliderContainer zIndex={zIndex} left={0} bottom={50 + (i * 110)} key={i}>
+          <BasemapSliderContainer zIndex={zIndex} left={0} bottom={14 + (i * 90)} key={i}>
             {React.cloneElement(basemap, { onBasemapChanged: (layer) => this.onBasemapChanged(layer) })}
           </BasemapSliderContainer>
         )

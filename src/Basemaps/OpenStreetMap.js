@@ -5,6 +5,7 @@ import olSourceOSM from 'ol/source/osm'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
 import { connectToMap } from 'Map'; // eslint-disable-line
+import translations from 'locales/en'
 
 /**
  * OSM basemap option
@@ -60,7 +61,7 @@ class BasemapOpenStreetMap extends React.Component {
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{'OpenStreetMap'}</Label>
+        <Label>{translations['_ol_kit.OpenStreetMap.title']}</Label>
       </BasemapOption>
     )
   }
@@ -84,7 +85,8 @@ BasemapOpenStreetMap.propTypes = {
 BasemapOpenStreetMap.defaultProps = {
   thumbnail: osm,
   onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
+  layerTypeID: '_ol_kit_basemap',
+  translations: translations
 }
 
 export default connectToMap(BasemapOpenStreetMap)

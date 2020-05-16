@@ -10,10 +10,10 @@ export const Container = styled.div`
 
 export const BasemapSliderContainer = styled.div`
   position: absolute;
-  bottom: ${props => props.bottom ? `${props.bottom}px` : '50px'};
-  left: ${props => props.left ? `${props.left}px` : '20px'};
-  width: 100px;
-  height: 100px;
+  bottom: ${props => props.bottom ? `${props.bottom}px` : '14px'};
+  left: ${props => props.left ? `${props.left}px` : '14px'};
+  width: 75px;
+  height: 75px;
   border-radius: 4px;
   border: 3px solid white;
   box-shadow: 1px 2px 5px #757575;
@@ -45,7 +45,7 @@ export const Label = styled.label`
   bottom: 0;
   width: 100%;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: white;
   text-shadow:
@@ -53,4 +53,5 @@ export const Label = styled.label`
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
+  font-family: Roboto, Arial, sans-serif;
 `
