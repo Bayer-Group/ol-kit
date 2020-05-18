@@ -46,7 +46,8 @@ export function createMap (opts = {}) {
 }
 
 /**
- * A wrapper utility function designed to automatically pass down an ol.Map from the top-level Map component
+ * DEPREACTED - use 'connectToContext' instead
+ * @deprecated
  * @function
  * @category Map
  * @since 0.1.0

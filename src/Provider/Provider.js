@@ -6,6 +6,8 @@ import ugh from 'ugh'
 // context should only be created when <Provider> is mounted (see constructor), otherwise it's null so ol-kit child comps don't use context
 export let ProviderContext = null
 
+export const setProviderContext = context => { ProviderContext = context }
+
 /**
  * @component
  * @category Provider
@@ -17,7 +19,9 @@ class Provider extends React.Component {
     super(props)
 
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
-    this.state = {}
+    this.state = {
+      contextProps: {}
+    }
 
     // create a provider context to manage/persist state of ol-kit children (only if <Provider> is mounted)
     ProviderContext = React.createContext()
@@ -29,10 +33,15 @@ class Provider extends React.Component {
     this.setState({ [persistedStateKey]: persistedState })
   }
 
-  getContextValue = () => {
-    const { contextProps, map: mapProp, maps: mapsProp, translations } = this.props
+  setContextProps = contextProps => {
+    this.setState({ contextProps })
+  }
 
-    if (!mapProp && !mapsProp.length) return ugh.throw('Provider requires either a \'map\' or \'maps\' prop to work!')
+  getContextValue = () => {
+    const props = { ...this.props, ...this.state.contextProps }
+    const { map: mapProp, maps: mapsProp, translations } = props
+
+    // if (!mapProp && !mapsProp.length) return ugh.throw('Provider requires either a \'map\' or \'maps\' prop to work!')
 
     // support multi-map components
     // default map reference to zeroith map from mapsProp if an array of maps has been passed
@@ -45,6 +54,7 @@ class Provider extends React.Component {
       maps,
       persistedState: this.state,
       persistState: this.persistState,
+      setContextProps: this.setContextProps,
       translations,
       ...contextProps
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 import ugh from 'ugh'
-import { ProviderContext } from './Provider'
+import { ProviderContext } from 'Provider'
 
 /**
  * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
@@ -13,6 +13,7 @@ import { ProviderContext } from './Provider'
 export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
+  console.log('WRAPPED?', !!ProviderContext, Component.name)
   return props => ( // eslint-disable-line react/display-name
     !ProviderContext
       ? <Component {...props} />

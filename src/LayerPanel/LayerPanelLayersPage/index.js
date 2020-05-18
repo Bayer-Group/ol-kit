@@ -32,6 +32,7 @@ import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 import isEqual from 'lodash.isequal'
+import { connectToContext } from 'Provider'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -417,4 +418,4 @@ LayerPanelLayersPage.propTypes = {
   disableDrag: PropTypes.bool
 }
 
-export default LayerPanelLayersPage
+export default connectToContext(LayerPanelLayersPage)
