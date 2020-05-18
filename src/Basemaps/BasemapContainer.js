@@ -16,13 +16,15 @@ class BasemapContainer extends Component {
 
     this.state = {
       showBasemaps: false,
-      basemapOptions: props.baseMapOptions
+      basemapOptions: props.basemapOptions
     }
   }
 
-  componentDidMount () {
-    if (this.state.showBasemaps) {
+  componentDidUpdate (_, prevState) {
+    if (prevState.showBasemaps !== this.state.showBasemaps && this.state.showBasemaps === true) {
       this.props.map.on('click', () => this.setState({ showBasemaps: false }))
+    } else {
+      this.props.map.un('click', () => this.setState({ showBasemaps: false }))
     }
   }
 
@@ -37,19 +39,32 @@ class BasemapContainer extends Component {
 
   render () {
     const { showBasemaps, basemapOptions } = this.state
+    const { variation, style } = this.props
 
     return basemapOptions.map((basemap, i) => {
       const zIndex = basemapOptions.length - i
 
       if (showBasemaps) {
         return (
-          <BasemapSliderContainer zIndex={zIndex} left={0} bottom={14 + (i * 90)} key={i}>
+          <BasemapSliderContainer
+            variation={variation}
+            style={style}
+            zIndex={zIndex}
+            left={0}
+            bottom={14 + (i * 90)}
+            key={i}>
             {React.cloneElement(basemap, { onBasemapChanged: (layer) => this.onBasemapChanged(layer) })}
           </BasemapSliderContainer>
         )
       } else {
         return (
-          <BasemapSliderContainer zIndex={zIndex} onClick={() => this.setState({ showBasemaps: true })} key={i}>
+          <BasemapSliderContainer
+            variation={variation}
+            style={style}
+            zIndex={zIndex}
+            onClick={() => this.setState({ showBasemaps: true })}
+            key={i}
+            noBoxShadow={i !== 0}>
             {basemap}
           </BasemapSliderContainer>
         )
@@ -60,12 +75,14 @@ class BasemapContainer extends Component {
 
 BasemapContainer.propTypes = {
   map: PropTypes.object,
-  baseMapOptions: PropTypes.basemapOptions
+  basemapOptions: PropTypes.array,
+  variation: PropTypes.string,
+  style: PropTypes.object
 }
 
 BasemapContainer.defaultProps = {
   basemapOptions: [
-    <OpenStreetMap key='openStreetMap' layerTypeID={LAYER_TYPE_ID} />,
+    <OpenStreetMap key='osm' layerTypeID={LAYER_TYPE_ID} />,
     <StamenTerrain key='stamenTerrain' layerTypeID={LAYER_TYPE_ID} />,
     <StamenTonerDark key='stamenTonerDark' layerTypeID={LAYER_TYPE_ID} />,
     <StamenTonerLite key='stamenTonerLite' layerTypeID={LAYER_TYPE_ID} />,

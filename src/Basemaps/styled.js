@@ -15,8 +15,8 @@ export const BasemapSliderContainer = styled.div`
   width: 75px;
   height: 75px;
   border-radius: 4px;
-  border: 3px solid white;
-  box-shadow: 1px 2px 5px #757575;
+  border: ${props => props.variation === 'dark' ? '3px solid #4d4d4d' : '3px solid white'};
+  box-shadow: ${props => props.noBoxShadow ? 'none' : '1px 2px 5px #757575'};
   transition: .2s;
   z-index: ${props => props.zIndex ? `${props.zIndex}` : '5'};
   ${props => props.style};
