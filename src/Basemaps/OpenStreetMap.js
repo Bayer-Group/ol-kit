@@ -4,8 +4,7 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceOSM from 'ol/source/osm'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
-import { connectToMap } from 'Map'; // eslint-disable-line
-import translations from 'locales/en'
+import { connectToMap } from 'Map'
 
 /**
  * OSM basemap option
@@ -85,8 +84,7 @@ BasemapOpenStreetMap.propTypes = {
 BasemapOpenStreetMap.defaultProps = {
   thumbnail: osm,
   onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap',
-  translations: translations
+  layerTypeID: '_ol_kit_basemap'
 }
 
 export default connectToMap(BasemapOpenStreetMap)

@@ -4,8 +4,7 @@ import olLayerTile from 'ol/layer/tile'
 import olSourceStamen from 'ol/source/stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTerrain } from './thumbnails'
-import { connectToMap } from 'Map'; // eslint-disable-line
-import translations from 'locales/en'
+import { connectToMap } from 'Map'
 
 /**
  * Stamen terrain basemap option
@@ -85,8 +84,7 @@ BasemapStamenTerrain.propTypes = {
 BasemapStamenTerrain.defaultProps = {
   thumbnail: stamenTerrain,
   onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap',
-  translations
+  layerTypeID: '_ol_kit_basemap'
 }
 
 export default connectToMap(BasemapStamenTerrain)
