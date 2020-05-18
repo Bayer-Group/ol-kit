@@ -8,7 +8,7 @@ export const Logo = styled.a.attrs(props => ({
   bottom: 8px;
   z-index: 1;
   cursor: pointer;
-  ${p => p.position === 'left' ? 'left: 14px;' : 'right: 14px;'}
+  ${p => p.position === 'left' ? 'left: 104px;' : 'right: 14px;'}
 `
 
 export const StyledMap = styled.div`

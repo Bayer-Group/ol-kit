@@ -5,6 +5,7 @@ import olSourceStamen from 'ol/source/stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTonerDark } from './thumbnails'
 import { connectToMap } from 'Map'; // eslint-disable-line
+import translations from 'locales/en'
 
 /**
  * Stamen toner dark basemap option
@@ -84,7 +85,8 @@ BasemapStamenTonerDark.propTypes = {
 BasemapStamenTonerDark.defaultProps = {
   thumbnail: stamenTonerDark,
   onBasemapChanged: () => {},
-  layerTypeID: '_ol_kit_basemap'
+  layerTypeID: '_ol_kit_basemap',
+  translations
 }
 
 export default connectToMap(BasemapStamenTonerDark)
