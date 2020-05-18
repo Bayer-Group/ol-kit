@@ -124,8 +124,9 @@ class Popup extends Component {
   }
 
   render () {
-    const { actions, children, map } = this.props
-    const { features, loading, popupPosition: { arrow, pixel }, show } = this.state
+    const { actions, children, map, show: propShow } = this.props
+    const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
+    const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
     return (
       !show
