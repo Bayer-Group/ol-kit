@@ -12,8 +12,8 @@ export const BasemapSliderContainer = styled.div`
   position: absolute;
   bottom: ${props => props.bottom ? `${props.bottom}px` : '50px'};
   left: ${props => props.left ? `${props.left}px` : '20px'};
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   border-radius: 4px;
   border: 3px solid white;
   box-shadow: 1px 2px 5px #757575;

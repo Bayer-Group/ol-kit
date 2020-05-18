@@ -4,6 +4,7 @@ exports[`ol-kit package should not export undefined 1`] = `
 Object {
   "BasemapBingMaps": [Function],
   "BasemapBlankWhite": [Function],
+  "BasemapContainer": [Function],
   "BasemapManager": [Function],
   "BasemapOpenStreetMap": [Function],
   "BasemapStamenTerrain": [Function],
