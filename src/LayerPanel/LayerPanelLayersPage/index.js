@@ -269,8 +269,6 @@ class LayerPanelLayersPage extends Component {
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayer } = this.state
 
-    console.log('layers', layers)
-
     return (
       <LayerPanelPage>
         <LayerPanelHeader
