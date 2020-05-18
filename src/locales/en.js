@@ -1,11 +1,11 @@
 export default {
   // Bsasemaps
   '_ol_kit.BingMaps.title': 'Bing Maps',
-  '_ol_kit.BlankWhite.title': 'Blank White',
-  '_ol_kit.OpenStreetMap.title': 'Open Street Map',
-  '_ol_kit.StamenTerrain.title': 'Stamen Terrain',
-  '_ol_kit.StamenTonerDark.title': 'Stamen Toner Dark',
-  '_ol_kit.StamenTonerLite.title': 'Stamen Toner Lite',
+  '_ol_kit.blankWhite.title': 'Blank White',
+  '_ol_kit.osm.title': 'Open Street Map',
+  '_ol_kit.stamenTerrain.title': 'Stamen Terrain',
+  '_ol_kit.stamenTonerDark.title': 'Stamen Toner Dark',
+  '_ol_kit.stamenTonerLite.title': 'Stamen Toner Lite',
   // Popup
   '_ol_kit.PopupDefaultPage.actions': 'Actions',
   '_ol_kit.PopupDefaultPage.customize': 'Customize Details',

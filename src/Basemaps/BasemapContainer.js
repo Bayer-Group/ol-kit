@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { BasemapSliderContainer } from './styled'
+import { BasemapThumbnail, Label, BasemapSliderContainer } from './styled'
+import { stamenTerrain, osm, stamenTonerDark, stamenTonerLite } from './thumbnails'
 import OpenStreetMap from './OpenStreetMap'
 import BlankWhite from './BlankWhite'
 import StamenTerrain from './StamenTerrain'
 import StamenTonerDark from './StamenTonerDark'
 import StamenTonerLite from './StamenTonerLite'
 import { connectToMap } from 'Map'
+import translations from 'locales/en'
 
 const LAYER_TYPE_ID = '_ol_kit_basemap'
 
@@ -34,12 +36,22 @@ class BasemapContainer extends Component {
     const newIndexOfBasemap = clonedBasemapOptions.indexOf(newBasemap)
     const selectedBasemap = clonedBasemapOptions.splice(newIndexOfBasemap, 1)
 
+    console.log('hitting this function')
+
     this.setState({ showBasemaps: false, basemapOptions: [...selectedBasemap, ...clonedBasemapOptions] })
+  }
+
+  openBasemaps = (e) => {
+    e.stopPropagation()
+
+    this.setState({ showBasemaps: true })
   }
 
   render () {
     const { showBasemaps, basemapOptions } = this.state
-    const { variation, style } = this.props
+    const { variation, style, translations } = this.props
+
+    console.log(translations)
 
     return basemapOptions.map((basemap, i) => {
       const zIndex = basemapOptions.length - i
@@ -62,10 +74,11 @@ class BasemapContainer extends Component {
             variation={variation}
             style={style}
             zIndex={zIndex}
-            onClick={() => this.setState({ showBasemaps: true })}
+            onClick={(e) => this.openBasemaps(e)}
             key={i}
             noBoxShadow={i !== 0}>
-            {basemap}
+            <BasemapThumbnail thumbnail={basemap.props.title} />
+            <Label>{translations[`_ol_kit.${basemap.key}.title`]}</Label>
           </BasemapSliderContainer>
         )
       }
@@ -77,17 +90,19 @@ BasemapContainer.propTypes = {
   map: PropTypes.object,
   basemapOptions: PropTypes.array,
   variation: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  translations: PropTypes.object
 }
 
 BasemapContainer.defaultProps = {
   basemapOptions: [
-    <OpenStreetMap key='osm' layerTypeID={LAYER_TYPE_ID} />,
-    <StamenTerrain key='stamenTerrain' layerTypeID={LAYER_TYPE_ID} />,
-    <StamenTonerDark key='stamenTonerDark' layerTypeID={LAYER_TYPE_ID} />,
-    <StamenTonerLite key='stamenTonerLite' layerTypeID={LAYER_TYPE_ID} />,
+    <OpenStreetMap key='osm' title={osm} layerTypeID={LAYER_TYPE_ID} />,
+    <StamenTerrain key='stamenTerrain' title={stamenTerrain} layerTypeID={LAYER_TYPE_ID} />,
+    <StamenTonerDark key='stamenTonerDark' title={stamenTonerDark} layerTypeID={LAYER_TYPE_ID} />,
+    <StamenTonerLite key='stamenTonerLite' title={stamenTonerLite} layerTypeID={LAYER_TYPE_ID} />,
     <BlankWhite key='blankWhite' layerTypeID={LAYER_TYPE_ID} />
-  ]
+  ],
+  translations
 }
 
 export default connectToMap(BasemapContainer)
