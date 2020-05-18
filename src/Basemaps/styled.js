@@ -19,6 +19,7 @@ export const BasemapSliderContainer = styled.div`
   box-shadow: 1px 2px 5px #757575;
   transition: .2s;
   z-index: ${props => props.zIndex ? `${props.zIndex}` : `5`};
+  ${props => props.style};
 `
 
 export const BasemapOption = styled.div`

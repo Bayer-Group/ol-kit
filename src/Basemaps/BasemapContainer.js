@@ -14,30 +14,25 @@ class BasemapContainer extends Component {
   constructor (props) {
     super(props)
 
-    this.BASEMAP_OPTIONS = [
-      <OpenStreetMap key='openStreetMap' layerTypeID={LAYER_TYPE_ID} map={props.map} />,
-      <StamenTerrain key='stamenTerrain' layerTypeID={LAYER_TYPE_ID} map={props.map} />,
-      <StamenTonerDark key='stamenTonerDark' layerTypeID={LAYER_TYPE_ID} map={props.map} />,
-      <StamenTonerLite key='stamenTonerLite' layerTypeID={LAYER_TYPE_ID} map={props.map} />,
-      <BlankWhite key='blankWhite' layerTypeID={LAYER_TYPE_ID} map={props.map} />
-    ]
-
     this.state = {
       showBasemaps: false,
-      basemapOptions: this.BASEMAP_OPTIONS
+      basemapOptions: props.baseMapOptions
     }
   }
 
   componentDidMount () {
-    this.props.map.on('click', () => this.setState({ showBasemaps: false }))
+    if (this.state.showBasemaps) {
+      this.props.map.on('click', () => this.setState({ showBasemaps: false }))
+    }
   }
 
   onBasemapChanged = (layer) => {
-    const newBasemap = this.state.basemapOptions.find(basemap => basemap.key === layer.get('_ol_kit_basemap'))
-    const newIndexOfBasemap = this.state.basemapOptions.indexOf(newBasemap)
-    const selectedBasemap = this.state.basemapOptions.splice(newIndexOfBasemap, 1)
+    const clonedBasemapOptions = [...this.state.basemapOptions]
+    const newBasemap = clonedBasemapOptions.find(basemap => basemap.key === layer.get('_ol_kit_basemap'))
+    const newIndexOfBasemap = clonedBasemapOptions.indexOf(newBasemap)
+    const selectedBasemap = clonedBasemapOptions.splice(newIndexOfBasemap, 1)
 
-    this.setState({ showBasemaps: false, basemapOptions: [...selectedBasemap, ...this.state.basemapOptions] })
+    this.setState({ showBasemaps: false, basemapOptions: [...selectedBasemap, ...clonedBasemapOptions] })
   }
 
   render () {
@@ -64,7 +59,18 @@ class BasemapContainer extends Component {
 }
 
 BasemapContainer.propTypes = {
-  map: PropTypes.object
+  map: PropTypes.object,
+  baseMapOptions: PropTypes.basemapOptions
+}
+
+BasemapContainer.defaultProps = {
+  basemapOptions: [
+    <OpenStreetMap key='openStreetMap' layerTypeID={LAYER_TYPE_ID} />,
+    <StamenTerrain key='stamenTerrain' layerTypeID={LAYER_TYPE_ID} />,
+    <StamenTonerDark key='stamenTonerDark' layerTypeID={LAYER_TYPE_ID} />,
+    <StamenTonerLite key='stamenTonerLite' layerTypeID={LAYER_TYPE_ID} />,
+    <BlankWhite key='blankWhite' layerTypeID={LAYER_TYPE_ID} />
+  ]
 }
 
 export default connectToMap(BasemapContainer)
