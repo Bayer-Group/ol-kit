@@ -6,6 +6,7 @@ import olObservable from 'ol/observable'
 import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
 import olLayerVector from 'ol/layer/vector'
+import olVectorTile from 'ol/layer/vectortile'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -67,7 +68,9 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    if (layer.getLayerState().managed && (layer.isVectorLayer || layer instanceof olLayerVector)) {
+    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
+
+    if (layer.getLayerState().managed && allowedLayerType) {
       // this logic handles clicks on vector layers
       // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
       const features = []
