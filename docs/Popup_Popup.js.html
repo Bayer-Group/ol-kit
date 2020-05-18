@@ -171,9 +171,10 @@ class Popup extends Component {
 
   getNewFeatures = async (e, promises) => {
     const { featuresFilter, onMapClick } = this.props // eslint-disable-line no-unused-vars
+    const popupPositionWhileLoading = getPopupPositionFromFeatures(e)
 
     // show popup in loading state while before resolving
-    this.setState({ show: true, loading: true }, () => onMapClick(this.state))
+    this.setState({ show: true, loading: true, popupPosition: popupPositionWhileLoading }, () => onMapClick(this.state))
 
     const layers = await Promise.all(promises)
 

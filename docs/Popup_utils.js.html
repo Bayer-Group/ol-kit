@@ -211,7 +211,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
  * @param {Number[]} [opts.viewPadding = [0, 0, 0, 0]] - An array of padding to apply to the best fit logic in top, right, bottom, left order
  * @returns {Object} An object containing the arrow/pointer position, pixel location &amp; if the popup will fit properly within the viewport
  */
-export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
+export const getPopupPositionFromFeatures = (event, features = [], opts = {}) => {
   if (typeof event !== 'object' || !Array.isArray(features)) return ugh.error('getPopupPositionFromFeatures first arg must be an object &amp; second arg array of features')
   const { map, pixel = [0, 0] } = event
 
