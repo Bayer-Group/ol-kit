@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import olSelect from 'ol/interaction/select'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olCircle from 'ol/style/circle'
-import olFill from 'ol/style/fill'
+
+import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 
 import { connectToMap } from 'Map'
 import PopupDefaultPage from './PopupDefaultPage'
@@ -58,7 +56,7 @@ class PopupDefaultInsert extends Component {
     this.props.onSelectFeature(feature, this.state.selectedIdx)
   }
 
-  onPageChange = (currIdx, nextIdx) => {
+  onPageChange = (_, nextIdx) => {
     const { features } = this.props
 
     if (features.length) {
@@ -72,6 +70,12 @@ class PopupDefaultInsert extends Component {
     const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations } = this.props
     const { selectedIdx } = this.state
 
+    const getChildren = feature => {
+      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />]
+
+      return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
+    }
+
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
         {features.length
@@ -84,7 +88,7 @@ class PopupDefaultInsert extends Component {
                 onSettingsClick={onSettingsClick}
                 title={f.get('title') || `Feature ${i+1}`}
                 translations={translations}>
-                {!!actions ? actions : <div style={{ padding: '10px' }}>No available actions</div>}
+                {getChildren(f)}
               </PopupDefaultPage>
             ))
           : <PopupDefaultPage
