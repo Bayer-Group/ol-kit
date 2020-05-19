@@ -10,10 +10,10 @@ import { Item, Action } from './styled'
  */
 class PopupActionItem extends Component {
   render () {
-    const { children, title, disabled, feature, onClick, style } = this.props
+    const { children, title, disabled, onClick, style } = this.props
 
     return (
-      <Action role='button' onClick={disabled ? () => {} : () => onClick(feature)}>
+      <Action role='button' onClick={disabled ? () => {} : onClick}>
         {title ? <Item disabled={disabled} style={style}>{title}</Item> : children}
       </Action>
     )
@@ -30,7 +30,7 @@ PopupActionItem.propTypes = {
   /** Determines if the action item should be disabled */
   disabled: PropTypes.bool,
 
-  /** Callback fired on click and passed the layer and feature currently displayed in the popup */
+  /** Callback fired when the action item is clicked */
   onClick: PropTypes.func,
 
   /** Styles applied to <Item> */
