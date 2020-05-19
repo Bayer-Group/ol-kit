@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connectToMap } from 'Map'
-import PopupActionItem from 'Popup/PopupInsert/PopupActionItem'
+import { PopupActionItem } from 'Popup'
 
 import { copyWktToClipbard } from './utils'
 
@@ -18,16 +18,16 @@ const PopupActionCopyWkt = ({ feature, translations, decimalPlaces = 5 }) => (
 )
 
 PopupActionCopyWkt.propTypes = {
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.shape({
-    '_ol_kit.PopupActionWkt.copyToClipboard': PropTypes.string
-  }).isRequired,
+  /** The number of decimal places in the output WKT coords */
+  decimalPlaces: PropTypes.number,
 
   /** The OpenLayers feature of the current popup page */
   feature: PropTypes.object,
-
-  /** The number of decimal places in the output WKT coords */
-  decimalPlaces: PropTypes.number
+  
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.shape({
+    '_ol_kit.PopupActionWkt.copyToClipboard': PropTypes.string
+  }).isRequired
 }
 
 export default connectToMap(PopupActionCopyWkt)
