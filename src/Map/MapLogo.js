@@ -4,7 +4,7 @@ import { LogoContainer, Logo, LogoText } from './styled'
 import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 import OL_KIT_MARK_BLACK from 'images/ol_kit_mark_black.svg'
 
-function MapLogo (props) {
+export default function MapLogo (props) {
   const { logoPosition, translations } = props
   const [isHovered, setHovered] = useState(false)
 
@@ -38,5 +38,3 @@ MapLogo.propTypes = {
   logoPosition: PropTypes.string,
   translations: PropTypes.object
 }
-
-export default MapLogo
