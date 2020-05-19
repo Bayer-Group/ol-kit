@@ -2,6 +2,7 @@
 
 exports[`<Controls /> should shallow controls default position 1`] = `
 <Controls
+  logoPosition="right"
   map={
     _ol_Map_ {
       "animationDelayKey_": 1,
@@ -1881,6 +1882,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
 
 exports[`<Controls /> should shallow controls in bottom left 1`] = `
 <Controls
+  logoPosition="right"
   map={
     _ol_Map_ {
       "animationDelayKey_": 1,
@@ -3760,6 +3762,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
 
 exports[`<Controls /> should shallow controls in top left 1`] = `
 <Controls
+  logoPosition="right"
   map={
     _ol_Map_ {
       "animationDelayKey_": 1,
@@ -5639,6 +5642,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
 
 exports[`<Controls /> should shallow controls in top right 1`] = `
 <Controls
+  logoPosition="right"
   map={
     _ol_Map_ {
       "animationDelayKey_": 1,
