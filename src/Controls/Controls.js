@@ -16,8 +16,6 @@ import ZoomControls from './ZoomControls'
 function Controls (props) {
   const { children, map, position, logoPosition } = props
 
-  console.log(props)
-
   return (
     ReactDOM.createPortal(
       <ControlsContainer position={position} logoPosition={logoPosition}>

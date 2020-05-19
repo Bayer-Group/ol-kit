@@ -27,19 +27,24 @@ class BasemapContainer extends Component {
 
   componentDidUpdate (_, prevState) {
     if (prevState.showBasemaps !== this.state.showBasemaps && this.state.showBasemaps === true) {
-      this.props.map.on('click', () => this.setState({ showBasemaps: false }))
+      this.props.map.on('click', this.hideBasemaps)
     } else {
-      this.props.map.un('click', () => this.setState({ showBasemaps: false }))
+      this.props.map.un('click', this.hideBasemaps)
     }
   }
 
   onBasemapChanged = (layer) => {
+    const { layerTypeID } = this.props
     const clonedBasemapOptions = [...this.state.basemapOptions]
-    const newBasemap = clonedBasemapOptions.find(basemap => basemap.key === layer.get('_ol_kit_basemap'))
+    const newBasemap = clonedBasemapOptions.find(basemap => basemap.key === layer.get(layerTypeID))
     const newIndexOfBasemap = clonedBasemapOptions.indexOf(newBasemap)
     const selectedBasemap = clonedBasemapOptions.splice(newIndexOfBasemap, 1)
 
     this.setState({ showBasemaps: false, basemapOptions: [...selectedBasemap, ...clonedBasemapOptions] })
+  }
+
+  hideBasemaps = () => {
+    this.setState({ showBasemaps: false })
   }
 
   render () {
@@ -47,10 +52,15 @@ class BasemapContainer extends Component {
     const { variation, style, translations, logoPosition } = this.props
     const bottomStartingPoint = logoPosition === 'left' ? 25 : 14
 
-    console.log(logoPosition)
-
     return basemapOptions.map((basemap, i) => {
       const zIndex = basemapOptions.length - i
+      const translationKey = (key) => {
+        if (key === 'osm') {
+          return 'OpenStreetMap'
+        } else {
+          return key[0].toUpperCase() + key.slice(1)
+        }
+      }
 
       if (showBasemaps) {
         return (
@@ -76,7 +86,7 @@ class BasemapContainer extends Component {
             bottom={bottomStartingPoint}>
             <BasemapOption>
               <BasemapThumbnail thumbnail={basemap.props.thumbnail} />
-              <Label>{translations[`_ol_kit.${basemap.key}.title`]}</Label>
+              <Label>{translations[`_ol_kit.${translationKey(basemap.key)}.title`]}</Label>
             </BasemapOption>
           </BasemapSliderContainer>
         )
@@ -97,7 +107,9 @@ BasemapContainer.propTypes = {
   /** object of string key/values (see: locales) */
   translations: PropTypes.object,
   /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
-  logoPosition: PropTypes.string
+  logoPosition: PropTypes.string,
+  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
+  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string])
 }
 
 BasemapContainer.defaultProps = {
@@ -108,7 +120,8 @@ BasemapContainer.defaultProps = {
     <StamenTonerLite key='stamenTonerLite' thumbnail={stamenTonerLite} />,
     <BlankWhite key='blankWhite' />
   ],
-  logoPosition: 'right'
+  logoPosition: 'right',
+  layerTypeID: '_ol_kit_basemap'
 }
 
 export default connectToMap(BasemapContainer)

@@ -3,8 +3,15 @@ import PropTypes from 'prop-types'
 import { LogoContainer, Logo, LogoText } from './styled'
 import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 import OL_KIT_MARK_BLACK from 'images/ol_kit_mark_black.svg'
+import { connectToMap } from 'Map'; // eslint-disable-line
 
-export default function MapLogo (props) {
+/**
+ * A map control container with built-in positioning
+ * @component
+ * @category Controls
+ * @since 0.1.0
+ */
+function MapLogo (props) {
   const { logoPosition, translations } = props
   const [isHovered, setHovered] = useState(false)
 
@@ -38,3 +45,5 @@ MapLogo.propTypes = {
   logoPosition: PropTypes.string,
   translations: PropTypes.object
 }
+
+export default MapLogo
