@@ -7,7 +7,6 @@ import { connectToMap } from 'Map'
 import PopupBase from './PopupBase'
 import PopupDefaultInsert from './PopupInsert/PopupDefaultInsert'
 import { addMovementListener, getLayersAndFeaturesForEvent, getPopupPositionFromFeatures, removeMovementListener } from './utils'
-import PopupActionWkt from './PopupActions/PopupActionWkt'
 
 /**
  * @component
@@ -137,7 +136,7 @@ class Popup extends Component {
             <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
-                  actions={actions || [<PopupActionWkt key={'wkt'} />]}
+                  actions={actions}
                   features={features}
                   loading={loading}
                   onClose={this.hidePopup} />
