@@ -5,10 +5,10 @@ export const Logo = styled.a.attrs(props => ({
 }))`
   position: absolute;
   width: 22px;
-  top: 7px;
+  bottom: 14px;
   z-index: 1;
   cursor: pointer;
-  ${p => p.position === 'left' ? 'left: 7px;' : 'right: 7px;'}
+  ${p => p.position === 'left' ? 'left: 14px;' : 'right: 14px;'}
 `
 
 export const StyledMap = styled.div`
