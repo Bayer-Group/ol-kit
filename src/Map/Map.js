@@ -103,18 +103,20 @@ class OlKitMap extends React.Component {
   }
 
   getContextValue = () => {
-    const { translations } = this.props
+    const { translations, logoPosition } = this.props
 
     return {
       map: this.map,
       selectInteraction: this.selectInteraction,
-      translations
+      translations,
+      logoPosition
     }
   }
 
   render () {
-    const { children, fullScreen, logoPosition, style } = this.props
+    const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
+    console.log(this.getContextValue())
 
     return (
       <>
@@ -122,7 +124,7 @@ class OlKitMap extends React.Component {
           id={this.target}
           fullScreen={fullScreen}
           style={style}>
-          <MapLogo logoPosition={logoPosition} />
+          <MapLogo logoPosition={logoPosition} translations={translations} />
         </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
           {mapInitialized // wait for map to initialize before rendering children
@@ -137,7 +139,7 @@ class OlKitMap extends React.Component {
 
 OlKitMap.defaultProps = {
   fullScreen: false,
-  logoPosition: 'left',
+  logoPosition: 'right',
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,

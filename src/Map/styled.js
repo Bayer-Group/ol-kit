@@ -1,14 +1,30 @@
 import styled from 'styled-components'
 
+export const LogoContainer = styled.div.attrs(props => ({
+   // eslint-disable-line
+}))`
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: ${props => props.position === 'right' ? 'flex-end' : 'flex-start'};
+  align-items: flex-end;
+  bottom: 1px;
+  z-index: 1;
+`
+
 export const Logo = styled.a.attrs(props => ({
   title: props.title
 }))`
-  position: absolute;
-  width: 22px;
-  bottom: 14px;
-  z-index: 1;
+  width: 15px;
+  height: 15px;
+  padding: 2px;
   cursor: pointer;
-  ${p => p.position === 'left' ? 'left: 14px;' : 'right: 14px;'}
+`
+
+export const LogoText = styled.p`
+  font-size: 11px;
+  font-family: Roboto,Arial,sans-serif;
+  padding-left: 2px;
 `
 
 export const StyledMap = styled.div`

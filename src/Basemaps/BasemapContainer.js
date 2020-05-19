@@ -9,6 +9,12 @@ import StamenTonerDark from './StamenTonerDark'
 import StamenTonerLite from './StamenTonerLite'
 import { connectToMap } from 'Map'
 
+/**
+ * A basemap container that slides options up
+ * @component
+ * @category Basemaps
+ * @since 0.6.0
+ */
 class BasemapContainer extends Component {
   constructor (props) {
     super(props)
@@ -38,7 +44,10 @@ class BasemapContainer extends Component {
 
   render () {
     const { showBasemaps, basemapOptions } = this.state
-    const { variation, style, translations } = this.props
+    const { variation, style, translations, logoPosition } = this.props
+    const bottomStartingPoint = logoPosition === 'left' ? 25 : 14
+
+    console.log(logoPosition)
 
     return basemapOptions.map((basemap, i) => {
       const zIndex = basemapOptions.length - i
@@ -50,7 +59,7 @@ class BasemapContainer extends Component {
             style={style}
             zIndex={zIndex}
             left={0}
-            bottom={14 + (i * 90)}
+            bottom={bottomStartingPoint + (i * 90)}
             key={i}>
             {React.cloneElement(basemap, { onBasemapChanged: (layer) => this.onBasemapChanged(layer) })}
           </BasemapSliderContainer>
@@ -63,7 +72,8 @@ class BasemapContainer extends Component {
             zIndex={zIndex}
             onClick={() => this.setState({ showBasemaps: true })}
             key={i}
-            noBoxShadow={i !== 0}>
+            noBoxShadow={i !== 0}
+            bottom={bottomStartingPoint}>
             <BasemapOption>
               <BasemapThumbnail thumbnail={basemap.props.thumbnail} />
               <Label>{translations[`_ol_kit.${basemap.key}.title`]}</Label>
@@ -76,11 +86,18 @@ class BasemapContainer extends Component {
 }
 
 BasemapContainer.propTypes = {
+  /** reference to Openlayers map object */
   map: PropTypes.object,
+  /** array of basemaps i.e. BasemapOpenStreetMap, BasemapStamenTerrain */
   basemapOptions: PropTypes.array,
+  /** light or dark variation for styling */
   variation: PropTypes.string,
+  /** apply inline styles to the map container */
   style: PropTypes.object,
-  translations: PropTypes.object
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.object,
+  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
+  logoPosition: PropTypes.string
 }
 
 BasemapContainer.defaultProps = {
@@ -90,7 +107,8 @@ BasemapContainer.defaultProps = {
     <StamenTonerDark key='stamenTonerDark' thumbnail={stamenTonerDark} />,
     <StamenTonerLite key='stamenTonerLite' thumbnail={stamenTonerLite} />,
     <BlankWhite key='blankWhite' />
-  ]
+  ],
+  logoPosition: 'right'
 }
 
 export default connectToMap(BasemapContainer)

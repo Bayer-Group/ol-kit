@@ -55,5 +55,7 @@ export default {
   '_ol_kit.StyleManager.customStyles': 'Custom Styles',
   '_ol_kit.StyleManager.defaultStyles': 'Default Styles',
   '_ol_kit.StyleManager.labelTab': 'Labels',
-  '_ol_kit.StyleManager.styleTab': 'Styles'
+  '_ol_kit.StyleManager.styleTab': 'Styles',
+  // Logo
+  '_ol_kit.logo.title': 'Powered by ol-kit'
 }
