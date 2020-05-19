@@ -17,7 +17,7 @@ export default function MapLogo (props) {
           <Logo
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            title={translations['_ol_kit.logo.title']}
+            title={translations['_ol_kit.MapLogo.title']}
             href='https://ol-kit.com/'
             target='_blank'>
             {isHovered

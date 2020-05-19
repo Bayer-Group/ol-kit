@@ -57,5 +57,5 @@ export default {
   '_ol_kit.StyleManager.labelTab': 'Labels',
   '_ol_kit.StyleManager.styleTab': 'Styles',
   // Logo
-  '_ol_kit.logo.title': 'Powered by ol-kit'
+  '_ol_kit.MapLogo.title': 'Powered by ol-kit'
 }
