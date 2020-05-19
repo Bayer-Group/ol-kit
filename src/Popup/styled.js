@@ -20,7 +20,7 @@ export const Container = styled.div`
   background-color: #FFFFFF;
   font-family: 'ArialMT', 'Arial';
   font-weight: 400;
-  z-index: 90;
+  z-index: 99;
   width: ${p => p.width}px;
   height: ${p => p.height}px;
   left: ${({ arrow, height, pixel, width }) => positionContainer(arrow, pixel, width, height).left}px;

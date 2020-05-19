@@ -67,12 +67,12 @@ class PopupDefaultInsert extends Component {
   }
 
   render () {
-    const { actions, features, loading, onClose, propertiesFilter, translations } = this.props
+    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations } = this.props
     const { selectedIdx } = this.state
 
-    const getChildren = feature => {      
+    const getChildren = feature => {
       const defaultActions = [<PopupActionCopyWkt key={'wkt'} />]
-      
+
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
 
@@ -81,11 +81,12 @@ class PopupDefaultInsert extends Component {
         {features.length
           ? features.map((f, i) => (
               <PopupDefaultPage
+                attributes={propertiesFilter(f.getProperties())}
                 key={i}
-                title={f.get('title') || `Feature ${i+1}`}
                 loading={loading}
                 onClose={onClose}
-                attributes={propertiesFilter(f.getProperties())}
+                onSettingsClick={onSettingsClick}
+                title={f.get('title') || `Feature ${i+1}`}
                 translations={translations}>
                 {getChildren(f)}
               </PopupDefaultPage>
@@ -105,9 +106,7 @@ PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
-  onSettingsClick: () => {},
-  propertiesFilter: properties => properties,
-  showSettingsCog: false
+  propertiesFilter: properties => properties
 }
 
 PopupDefaultInsert.propTypes = {
@@ -132,8 +131,6 @@ PopupDefaultInsert.propTypes = {
   selectedIdx: PropTypes.number,
   /** reference to openlayers select interaction which */
   selectInteraction: PropTypes.object.isRequired,
-  /** show the settings cog -- use with onSettingsClick */
-  showSettingsCog: PropTypes.bool,
   /** object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
