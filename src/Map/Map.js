@@ -18,7 +18,7 @@ export let MapContext = null
  * @category Map
  * @since 0.1.0
  */
-class Map extends React.Component {
+class OlKitMap extends React.Component {
   constructor (props) {
     super(props)
 
@@ -135,7 +135,7 @@ class Map extends React.Component {
   }
 }
 
-Map.defaultProps = {
+OlKitMap.defaultProps = {
   fullScreen: false,
   logoPosition: 'left',
   map: null,
@@ -148,7 +148,7 @@ Map.defaultProps = {
   translations: en
 }
 
-Map.propTypes = {
+OlKitMap.propTypes = {
   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -180,4 +180,4 @@ Map.propTypes = {
   translations: PropTypes.object
 }
 
-export default Map
+export default OlKitMap

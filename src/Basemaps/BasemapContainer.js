@@ -8,9 +8,6 @@ import StamenTerrain from './StamenTerrain'
 import StamenTonerDark from './StamenTonerDark'
 import StamenTonerLite from './StamenTonerLite'
 import { connectToMap } from 'Map'
-import translations from 'locales/en'
-
-const LAYER_TYPE_ID = '_ol_kit_basemap'
 
 class BasemapContainer extends Component {
   constructor (props) {
@@ -36,22 +33,12 @@ class BasemapContainer extends Component {
     const newIndexOfBasemap = clonedBasemapOptions.indexOf(newBasemap)
     const selectedBasemap = clonedBasemapOptions.splice(newIndexOfBasemap, 1)
 
-    console.log('hitting this function')
-
     this.setState({ showBasemaps: false, basemapOptions: [...selectedBasemap, ...clonedBasemapOptions] })
-  }
-
-  openBasemaps = (e) => {
-    e.stopPropagation()
-
-    this.setState({ showBasemaps: true })
   }
 
   render () {
     const { showBasemaps, basemapOptions } = this.state
     const { variation, style, translations } = this.props
-
-    console.log(translations)
 
     return basemapOptions.map((basemap, i) => {
       const zIndex = basemapOptions.length - i
@@ -74,10 +61,10 @@ class BasemapContainer extends Component {
             variation={variation}
             style={style}
             zIndex={zIndex}
-            onClick={(e) => this.openBasemaps(e)}
+            onClick={() => this.setState({ showBasemaps: true })}
             key={i}
             noBoxShadow={i !== 0}>
-            <BasemapThumbnail thumbnail={basemap.props.title} />
+            <BasemapThumbnail thumbnail={basemap.props.thumbnail} />
             <Label>{translations[`_ol_kit.${basemap.key}.title`]}</Label>
           </BasemapSliderContainer>
         )
@@ -96,13 +83,12 @@ BasemapContainer.propTypes = {
 
 BasemapContainer.defaultProps = {
   basemapOptions: [
-    <OpenStreetMap key='osm' title={osm} layerTypeID={LAYER_TYPE_ID} />,
-    <StamenTerrain key='stamenTerrain' title={stamenTerrain} layerTypeID={LAYER_TYPE_ID} />,
-    <StamenTonerDark key='stamenTonerDark' title={stamenTonerDark} layerTypeID={LAYER_TYPE_ID} />,
-    <StamenTonerLite key='stamenTonerLite' title={stamenTonerLite} layerTypeID={LAYER_TYPE_ID} />,
-    <BlankWhite key='blankWhite' layerTypeID={LAYER_TYPE_ID} />
-  ],
-  translations
+    <OpenStreetMap key='osm' thumbnail={osm} />,
+    <StamenTerrain key='stamenTerrain' thumbnail={stamenTerrain} />,
+    <StamenTonerDark key='stamenTonerDark' thumbnail={stamenTonerDark} />,
+    <StamenTonerLite key='stamenTonerLite' thumbnail={stamenTonerLite} />,
+    <BlankWhite key='blankWhite' />
+  ]
 }
 
 export default connectToMap(BasemapContainer)
