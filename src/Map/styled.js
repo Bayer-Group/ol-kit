@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
-export const LogoContainer = styled.div.attrs(props => ({
-   // eslint-disable-line
-}))`
+export const LogoContainer = styled.div`
   width: 100%;
   position: absolute;
   display: flex;
