@@ -7,8 +7,9 @@ import PopupActionItem from 'Popup/PopupInsert/PopupActionItem'
 import { copyWktToClipbard } from './utils'
 
 /**
+ * Popup action item to copy geometry as WKT to clipboard
  * @component
- * @category PopupActions
+ * @category PopupActionCopyWkt
  */
 const PopupActionCopyWkt = ({ feature, translations, decimalPlaces = 5 }) => (
   <PopupActionItem
