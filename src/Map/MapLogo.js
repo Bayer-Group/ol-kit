@@ -13,7 +13,7 @@ export default function MapLogo (props) {
       ? null
       : (
         <LogoContainer position={logoPosition}>
-          <LogoText>{translations['_ol_kit.logo.title']}</LogoText>
+          <LogoText>{translations['_ol_kit.MapLogo.title']}</LogoText>
           <Logo
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
