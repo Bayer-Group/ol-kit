@@ -5,6 +5,8 @@ import olMap from 'ol/map'
 import olObservable from 'ol/observable'
 import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
+import olLayerVector from 'ol/layer/vector'
+import olVectorTile from 'ol/layer/vectortile'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -66,9 +68,11 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    if (layer.getLayerState().managed && !layer.get('_ol_kit_basemap')) {
+    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
+
+    if (layer.getLayerState().managed && allowedLayerType) {
+      // this logic handles clicks on vector layers
       // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
-      // _ol_kit_basemap is set to true on all basemaps from ol-kit
       const features = []
       const sourceFeatures = layer.getSource().getFeatures()
 
@@ -83,6 +87,20 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       if (features.length) promises.push(wfsPromise)
     }
   }
+  const wmsSelector = layer => {
+    if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
+      // this logic handles clicks on GeoserverLayers
+      const geoserverLayer = layer.get('_ol_kit_parent')
+      const coords = map.getCoordinateFromPixel(pixel)
+      const wmsPromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+        const features = await geoserverLayer.fetchFeaturesAtClick(coords, map)
+
+        resolve({ features, layer })
+      })
+
+      promises.push(wmsPromise)
+    }
+  }
 
   // check for featuresAtPixel to account for hitTolerance
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
@@ -91,6 +109,9 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   // if there's features at click, loop through the layers to find corresponding layer & features
   if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
+
+  // this check is for wms features
+  map.forEachLayerAtPixel(pixel, wmsSelector)
 
   return promises
 }
@@ -111,7 +132,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
  * @param {Number[]} [opts.viewPadding = [0, 0, 0, 0]] - An array of padding to apply to the best fit logic in top, right, bottom, left order
  * @returns {Object} An object containing the arrow/pointer position, pixel location & if the popup will fit properly within the viewport
  */
-export const getPopupPositionFromFeatures = (event, features, opts = {}) => {
+export const getPopupPositionFromFeatures = (event, features = [], opts = {}) => {
   if (typeof event !== 'object' || !Array.isArray(features)) return ugh.error('getPopupPositionFromFeatures first arg must be an object & second arg array of features')
   const { map, pixel = [0, 0] } = event
 

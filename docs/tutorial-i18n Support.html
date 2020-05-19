@@ -82,7 +82,7 @@
 <p>Out of the box, ol-kit ships with English strings but makes it easy to override strings or add other langauges. Localization of numbers, dates etc. is something we would like to add in the future; you can follow the progress <a href="https://github.com/MonsantoCo/ol-kit/issues/17">here</a>.</p>
 <h3>Override strings</h3>
 <p>To override the default strings, extend the base translation files (see <code>src/locales</code>) and override only the appropriate keys.</p>
-<pre class="prettyprint source lang-javascript"><code>import en from '@bayer/ol-kit/locales/en.js'
+<pre class="prettyprint source lang-javascript"><code>import en from '@bayer/ol-kit/core/locales/en.js'
 
 // spread the english strings & override one of the keys
 const translations = { ...en, '_ol_kit.BingMaps.title': 'My Custom BingMaps Title' }
