@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import olSelect from 'ol/interaction/select'
 
-import PopupActionCopyWkt from 'Popup/PopupActions/PopupActionCopyWkt'
+import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 
 import { connectToMap } from 'Map'
 import PopupDefaultPage from './PopupDefaultPage'

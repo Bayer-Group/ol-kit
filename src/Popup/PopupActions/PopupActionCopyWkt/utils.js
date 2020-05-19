@@ -1,14 +1,12 @@
 import wktFormat from 'ol/format/wkt'
 
-export const copyWktToClipbard = (feature, decimalPlaces) => {
+export const convertFeatureToWkt = (feature, decimalPlaces) => {
   const format = new wktFormat()
-  const output = format.writeFeature(feature, {
+  return format.writeFeature(feature, {
     dataProjection: 'EPSG:4326',
     featureProjection: 'EPSG:3857',
     decimals: decimalPlaces
   })
-
-  copyTextToClipboard(output)
 }
 
 export const copyTextToClipboard = text => {
@@ -20,3 +18,6 @@ export const copyTextToClipboard = text => {
   document.body.removeChild(el)
 }
 
+export const copyWktToClipbard = (feature, decimalPlaces) => {
+  copyTextToClipboard(convertFeatureToWkt(feature, decimalPlaces))
+}
