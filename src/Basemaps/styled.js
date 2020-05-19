@@ -14,7 +14,7 @@ export const BasemapSliderContainer = styled.div`
   left: ${props => props.left ? `${props.left}px` : '14px'};
   width: 75px;
   height: 75px;
-  border-radius: 4px;
+  border-radius: 3px;
   border: ${props => props.variation === 'dark' ? '3px solid #4d4d4d' : '3px solid white'};
   box-shadow: ${props => props.noBoxShadow ? 'none' : '1px 2px 5px #757575'};
   transition: .2s;

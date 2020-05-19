@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { BasemapThumbnail, Label, BasemapSliderContainer } from './styled'
+import { BasemapThumbnail, Label, BasemapSliderContainer, BasemapOption } from './styled'
 import { stamenTerrain, osm, stamenTonerDark, stamenTonerLite } from './thumbnails'
 import OpenStreetMap from './OpenStreetMap'
 import BlankWhite from './BlankWhite'
@@ -64,8 +64,10 @@ class BasemapContainer extends Component {
             onClick={() => this.setState({ showBasemaps: true })}
             key={i}
             noBoxShadow={i !== 0}>
-            <BasemapThumbnail thumbnail={basemap.props.thumbnail} />
-            <Label>{translations[`_ol_kit.${basemap.key}.title`]}</Label>
+            <BasemapOption>
+              <BasemapThumbnail thumbnail={basemap.props.thumbnail} />
+              <Label>{translations[`_ol_kit.${basemap.key}.title`]}</Label>
+            </BasemapOption>
           </BasemapSliderContainer>
         )
       }
