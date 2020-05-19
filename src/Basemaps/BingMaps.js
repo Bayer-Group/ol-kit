@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import olLayerTile from 'ol/layer/tile'
 import olSourceBingMaps from 'ol/source/bingmaps'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'
+import { connectToMap } from 'Map'; // eslint-disable-line
 
 const DEFAULT_OPTS = {
   thumbnail: '',

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { LogoContainer, Logo, LogoText } from './styled'
 import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 import OL_KIT_MARK_BLACK from 'images/ol_kit_mark_black.svg'
-import { connectToMap } from 'Map'; // eslint-disable-line
 
 /**
  * A map control container with built-in positioning

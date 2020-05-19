@@ -5,7 +5,7 @@ import MINUS from 'images/zoom_out_ico.svg'
 import PLUS from 'images/zoom_in_ico.svg'
 import { Icon, IconSeparator, IconsContainer } from './styled'
 import { zoomDelta } from './utils'
-import { connectToMap } from 'Map'
+import { connectToMap } from 'Map'; // eslint-disable-line
 
 /**
  * A simple map zoom control
