@@ -12,7 +12,7 @@ import { connectToMap } from 'Map'
 /**
  * A basemap container that slides options up
  * @component
- * @category Basemaps
+ * @category Basemap
  * @since 0.7.0
  */
 class BasemapContainer extends Component {
