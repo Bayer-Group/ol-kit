@@ -103,13 +103,12 @@ class Map extends React.Component {
   }
 
   getContextValue = () => {
-    const { translations, logoPosition } = this.props
+    const { translations } = this.props
 
     return {
       map: this.map,
       selectInteraction: this.selectInteraction,
-      translations,
-      logoPosition
+      translations
     }
   }
 
@@ -126,7 +125,6 @@ class Map extends React.Component {
           <MapLogo logoPosition={logoPosition} translations={translations} />
         </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
-          {/* <MapLogo logoPosition={logoPosition} /> */}
           {mapInitialized // wait for map to initialize before rendering children
             ? children
             : null
