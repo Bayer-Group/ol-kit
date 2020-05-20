@@ -88,7 +88,7 @@ class Popup extends Component {
   }
 
   getNewFeatures = async (e, promises) => {
-    const { featuresFilter, onMapClick } = this.props // eslint-disable-line no-unused-vars
+    const { onMapClick } = this.props
     const popupPositionWhileLoading = getPopupPositionFromFeatures(e)
 
     // show popup in loading state while before resolving
@@ -154,7 +154,6 @@ class Popup extends Component {
 }
 
 Popup.defaultProps = {
-  featuresFilter: features => features,
   onMapClick: () => {},
   show: undefined
 }
@@ -170,8 +169,6 @@ Popup.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  /** return a filtered array of features */
-  featuresFilter: PropTypes.func,
   /** a reference to openlayers map object */
   map: PropTypes.object.isRequired,
   /** callback fired on map clicks with state object:

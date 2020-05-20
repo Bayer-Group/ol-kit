@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import MaterialCardHeader from '@material-ui/core/CardHeader'
 
 export const HeaderContainer = styled.div`
-  height: 75px;
+  height: 50px;
 `
 
 export const CardHeader = withStyles(() => ({
@@ -13,7 +13,7 @@ export const CardHeader = withStyles(() => ({
   },
   root: {
     background: '#ededed',
-    height: '75px'
+    height: '50px'
   }
 }))(MaterialCardHeader)
 

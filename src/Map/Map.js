@@ -113,7 +113,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, logoPosition, style } = this.props
+    const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -122,7 +122,7 @@ class Map extends React.Component {
           id={this.target}
           fullScreen={fullScreen}
           style={style}>
-          <MapLogo logoPosition={logoPosition} />
+          <MapLogo logoPosition={logoPosition} translations={translations} />
         </StyledMap>
         <MapContext.Provider value={this.getContextValue()}>
           {mapInitialized // wait for map to initialize before rendering children
@@ -137,7 +137,7 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   fullScreen: false,
-  logoPosition: 'left',
+  logoPosition: 'right',
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,

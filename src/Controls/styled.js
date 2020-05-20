@@ -21,7 +21,7 @@ export const ControlsContainer = styled.div`
   top: ${p => p.position.includes('top') ? '14px' : 'unset'};
   z-index: 95;
   width: 34px;
-  margin: 0 6px 12px 6px;
+  margin: 0 6px 18px 6px;
 `
 
 export const Icon = styled.div`
