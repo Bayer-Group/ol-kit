@@ -1,17 +1,11 @@
 export default {
-  // Bsasemaps
+  // Basemap
   '_ol_kit.BingMaps.title': 'Bing Maps',
   '_ol_kit.BlankWhite.title': 'Blank White',
   '_ol_kit.OpenStreetMap.title': 'Open Street Map',
   '_ol_kit.StamenTerrain.title': 'Stamen Terrain',
   '_ol_kit.StamenTonerDark.title': 'Stamen Toner Dark',
   '_ol_kit.StamenTonerLite.title': 'Stamen Toner Lite',
-  // Popup
-  '_ol_kit.PopupDefaultPage.actions': 'Actions',
-  '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
-  '_ol_kit.PopupDefaultPage.details': 'Details',
-  // Popup Actions
-  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy WKT to clipboard',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Shapefile',
@@ -58,6 +52,12 @@ export default {
   '_ol_kit.StyleManager.defaultStyles': 'Default Styles',
   '_ol_kit.StyleManager.labelTab': 'Labels',
   '_ol_kit.StyleManager.styleTab': 'Styles',
-  // Logo
-  '_ol_kit.MapLogo.title': 'Powered by ol-kit'
+  // MapLogo
+  '_ol_kit.MapLogo.title': 'Powered by ol-kit',
+  // Popup
+  '_ol_kit.PopupDefaultPage.actions': 'Actions',
+  '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
+  '_ol_kit.PopupDefaultPage.details': 'Details',
+  // Popup Actions
+  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy WKT to clipboard'
 }
