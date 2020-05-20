@@ -92,7 +92,7 @@ import StamenTonerLite from './StamenTonerLite'
 import { connectToMap } from 'Map'
 
 /**
- * A basemap container that slides options up
+ * A floating basemap selector that slides options up to toggle basemap
  * @component
  * @category Basemap
  * @since 0.7.0
@@ -105,6 +105,10 @@ class BasemapContainer extends Component {
       showBasemaps: false,
       basemapOptions: props.basemapOptions
     }
+  }
+
+  hideBasemaps = () => {
+    this.setState({ showBasemaps: false })
   }
 
   componentDidUpdate (_, prevState) {
@@ -123,10 +127,6 @@ class BasemapContainer extends Component {
     const selectedBasemap = clonedBasemapOptions.splice(newIndexOfBasemap, 1)
 
     this.setState({ showBasemaps: false, basemapOptions: [...selectedBasemap, ...clonedBasemapOptions] })
-  }
-
-  hideBasemaps = () => {
-    this.setState({ showBasemaps: false })
   }
 
   render () {
@@ -175,21 +175,6 @@ class BasemapContainer extends Component {
   }
 }
 
-BasemapContainer.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object,
-  /** array of basemaps i.e. BasemapOpenStreetMap, BasemapStamenTerrain */
-  basemapOptions: PropTypes.array,
-  /** light or dark variation for styling */
-  variation: PropTypes.string,
-  /** apply inline styles to the map container */
-  style: PropTypes.object,
-  /** object of string key/values (see: locales) */
-  translations: PropTypes.object,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string])
-}
-
 BasemapContainer.defaultProps = {
   basemapOptions: [
     &lt;OpenStreetMap key='osm' thumbnail={osm} />,
@@ -199,6 +184,28 @@ BasemapContainer.defaultProps = {
     &lt;BlankWhite key='blankWhite' />
   ],
   layerTypeID: '_ol_kit_basemap'
+}
+
+BasemapContainer.propTypes = {
+  /** array of basemaps i.e. BasemapOpenStreetMap, BasemapStamenTerrain */
+  basemapOptions: PropTypes.array,
+  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
+  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
+  /** reference to Openlayers map object */
+  map: PropTypes.object.isRequired,
+  /** apply inline styles to the map container */
+  style: PropTypes.object,
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.shape({
+    '_ol_kit.BingMaps.title': PropTypes.string,
+    '_ol_kit.BlankWhite.title': PropTypes.string,
+    '_ol_kit.OpenStreetMap.title': PropTypes.string,
+    '_ol_kit.StamenTerrain.title': PropTypes.string,
+    '_ol_kit.StamenTonerDark.title': PropTypes.string,
+    '_ol_kit.StamenTonerLite.title': PropTypes.string
+  }).isRequired,
+  /** light or dark variation for styling */
+  variation: PropTypes.string
 }
 
 export default connectToMap(BasemapContainer)

@@ -84,7 +84,7 @@
             &ltBasemapContainer /&gt
         </h2>
         
-            <div class="class-description">A basemap container that slides options up</div>
+            <div class="class-description">A floating basemap selector that slides options up to toggle basemap</div>
         
     
 </header>
@@ -105,7 +105,7 @@
         
         <span class="code-name">
             
-                &ltBasemapContainer <i>map</i> <i>basemapOptions</i> <i>variation</i> <i>style</i> <i>translations</i> <i>layerTypeID</i> /&gt
+                &ltBasemapContainer <i>basemapOptions</i> <i>layerTypeID</i> <i>map</i> <i>style</i> <i>translations</i> <i>variation</i> /&gt
             
         </span>
     </h4>
@@ -138,17 +138,6 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>reference to Openlayers map object</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
           <td class="name"><code>basemapOptions</code></td>
           <td>
             array
@@ -166,12 +155,23 @@
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>variation</code></td>
+          <td class="name"><code>layerTypeID</code></td>
           <td>
-            string
+            union
           </td>
           <td>No</td>
-          <td>light or dark variation for styling</td>
+          <td>A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.</td>
+          <td>'_ol_kit_basemap'</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>reference to Openlayers map object</td>
           <td></td>
         </tr>
         
@@ -190,22 +190,22 @@
         <tr class="deep-level-0">
           <td class="name"><code>translations</code></td>
           <td>
-            object
+            shape
           </td>
-          <td>No</td>
+          <td>Yes</td>
           <td>object of string key/values (see: locales)</td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>layerTypeID</code></td>
+          <td class="name"><code>variation</code></td>
           <td>
-            union
+            string
           </td>
           <td>No</td>
-          <td>A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.</td>
-          <td>'_ol_kit_basemap'</td>
+          <td>light or dark variation for styling</td>
+          <td></td>
         </tr>
         
   

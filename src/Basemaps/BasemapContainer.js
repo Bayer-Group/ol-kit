@@ -93,21 +93,6 @@ class BasemapContainer extends Component {
   }
 }
 
-BasemapContainer.propTypes = {
-  /** array of basemaps i.e. BasemapOpenStreetMap, BasemapStamenTerrain */
-  basemapOptions: PropTypes.array,
-  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
-  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
-  /** reference to Openlayers map object */
-  map: PropTypes.object,
-  /** apply inline styles to the map container */
-  style: PropTypes.object,
-  /** object of string key/values (see: locales) */
-  translations: PropTypes.object,
-  /** light or dark variation for styling */
-  variation: PropTypes.string
-}
-
 BasemapContainer.defaultProps = {
   basemapOptions: [
     <OpenStreetMap key='osm' thumbnail={osm} />,
@@ -117,6 +102,28 @@ BasemapContainer.defaultProps = {
     <BlankWhite key='blankWhite' />
   ],
   layerTypeID: '_ol_kit_basemap'
+}
+
+BasemapContainer.propTypes = {
+  /** array of basemaps i.e. BasemapOpenStreetMap, BasemapStamenTerrain */
+  basemapOptions: PropTypes.array,
+  /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
+  layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string]),
+  /** reference to Openlayers map object */
+  map: PropTypes.object.isRequired,
+  /** apply inline styles to the map container */
+  style: PropTypes.object,
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.shape({
+    '_ol_kit.BingMaps.title': PropTypes.string,
+    '_ol_kit.BlankWhite.title': PropTypes.string,
+    '_ol_kit.OpenStreetMap.title': PropTypes.string,
+    '_ol_kit.StamenTerrain.title': PropTypes.string,
+    '_ol_kit.StamenTonerDark.title': PropTypes.string,
+    '_ol_kit.StamenTonerLite.title': PropTypes.string
+  }).isRequired,
+  /** light or dark variation for styling */
+  variation: PropTypes.string
 }
 
 export default connectToMap(BasemapContainer)
