@@ -5,7 +5,7 @@ Out of the box, ol-kit ships with English strings but makes it easy to override 
 To override the default strings, extend the base translation files (see `src/locales`) and override only the appropriate keys.
 
 ```javascript
-import en from '@bayer/ol-kit/locales/en.js'
+import en from '@bayer/ol-kit/core/locales/en.js'
 
 // spread the english strings & override one of the keys
 const translations = { ...en, '_ol_kit.BingMaps.title': 'My Custom BingMaps Title' }

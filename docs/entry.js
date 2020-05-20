@@ -106,32 +106,35 @@ reactComponents['Map'] = Component26;
 import Component27 from '../src/Popup/Popup.js';
 reactComponents['Popup'] = Component27;
 
-import Component28 from '../src/Popup/PopupInsert/PopupActionGroup/index.js';
-reactComponents['PopupActionGroup'] = Component28;
+import Component28 from '../src/Popup/PopupActions/PopupActionCopyWkt/PopupActionCopyWkt.js';
+reactComponents['PopupActionCopyWkt'] = Component28;
 
-import Component29 from '../src/Popup/PopupInsert/PopupActionItem/index.js';
-reactComponents['PopupActionItem'] = Component29;
+import Component29 from '../src/Popup/PopupInsert/PopupActionGroup/index.js';
+reactComponents['PopupActionGroup'] = Component29;
 
-import Component30 from '../src/Popup/PopupBase.js';
-reactComponents['PopupBase'] = Component30;
+import Component30 from '../src/Popup/PopupInsert/PopupActionItem/index.js';
+reactComponents['PopupActionItem'] = Component30;
 
-import Component31 from '../src/Popup/PopupInsert/PopupDataList/index.js';
-reactComponents['PopupDataList'] = Component31;
+import Component31 from '../src/Popup/PopupBase.js';
+reactComponents['PopupBase'] = Component31;
 
-import Component32 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
-reactComponents['PopupDefaultInsert'] = Component32;
+import Component32 from '../src/Popup/PopupInsert/PopupDataList/index.js';
+reactComponents['PopupDataList'] = Component32;
 
-import Component33 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
-reactComponents['PopupDefaultPage'] = Component33;
+import Component33 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
+reactComponents['PopupDefaultInsert'] = Component33;
 
-import Component34 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
-reactComponents['PopupPageLayout'] = Component34;
+import Component34 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
+reactComponents['PopupDefaultPage'] = Component34;
 
-import Component35 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
-reactComponents['PopupPageLayoutChild'] = Component35;
+import Component35 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
+reactComponents['PopupPageLayout'] = Component35;
 
-import Component36 from '../src/Popup/PopupInsert/PopupTabs/index.js';
-reactComponents['PopupTabs'] = Component36;
+import Component36 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
+reactComponents['PopupPageLayoutChild'] = Component36;
 
-import Component37 from '../src/Controls/ZoomControls.js';
-reactComponents['ZoomControls'] = Component37;
+import Component37 from '../src/Popup/PopupInsert/PopupTabs/index.js';
+reactComponents['PopupTabs'] = Component37;
+
+import Component38 from '../src/Controls/ZoomControls.js';
+reactComponents['ZoomControls'] = Component38;
