@@ -13,7 +13,7 @@ import { connectToMap } from 'Map'
  * A basemap container that slides options up
  * @component
  * @category Basemaps
- * @since 0.6.0
+ * @since 0.7.0
  */
 class BasemapContainer extends Component {
   constructor (props) {
@@ -49,8 +49,7 @@ class BasemapContainer extends Component {
 
   render () {
     const { showBasemaps, basemapOptions } = this.state
-    const { variation, style, translations, logoPosition } = this.props
-    const bottomStartingPoint = logoPosition === 'left' ? 25 : 14
+    const { variation, style, translations } = this.props
 
     return basemapOptions.map((basemap, i) => {
       const zIndex = basemapOptions.length - i
@@ -69,7 +68,7 @@ class BasemapContainer extends Component {
             style={style}
             zIndex={zIndex}
             left={0}
-            bottom={bottomStartingPoint + (i * 90)}
+            bottom={14 + (i * 90)}
             key={i}>
             {React.cloneElement(basemap, { onBasemapChanged: (layer) => this.onBasemapChanged(layer) })}
           </BasemapSliderContainer>
@@ -82,8 +81,7 @@ class BasemapContainer extends Component {
             zIndex={zIndex}
             onClick={() => this.setState({ showBasemaps: true })}
             key={i}
-            noBoxShadow={i !== 0}
-            bottom={bottomStartingPoint}>
+            noBoxShadow={i !== 0}>
             <BasemapOption>
               <BasemapThumbnail thumbnail={basemap.props.thumbnail} />
               <Label>{translations[`_ol_kit.${translationKey(basemap.key)}.title`]}</Label>
@@ -106,8 +104,6 @@ BasemapContainer.propTypes = {
   style: PropTypes.object,
   /** object of string key/values (see: locales) */
   translations: PropTypes.object,
-  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
-  logoPosition: PropTypes.string,
   /** A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers. */
   layerTypeID: PropTypes.oneOfType([PropTypes.symbol, PropTypes.string])
 }
@@ -120,7 +116,6 @@ BasemapContainer.defaultProps = {
     <StamenTonerLite key='stamenTonerLite' thumbnail={stamenTonerLite} />,
     <BlankWhite key='blankWhite' />
   ],
-  logoPosition: 'right',
   layerTypeID: '_ol_kit_basemap'
 }
 

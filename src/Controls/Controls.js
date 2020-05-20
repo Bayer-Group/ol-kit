@@ -14,11 +14,11 @@ import ZoomControls from './ZoomControls'
  * @since 0.1.0
  */
 function Controls (props) {
-  const { children, map, position, logoPosition } = props
+  const { children, map, position } = props
 
   return (
     ReactDOM.createPortal(
-      <ControlsContainer position={position} logoPosition={logoPosition}>
+      <ControlsContainer position={position}>
         {children || (
           <>
             <ZoomControls map={map} />
@@ -33,8 +33,7 @@ function Controls (props) {
 }
 
 Controls.defaultProps = {
-  position: 'bottom-right',
-  logoPosition: 'right'
+  position: 'bottom-right'
 }
 
 Controls.propTypes = {
@@ -46,9 +45,7 @@ Controls.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left']),
-  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
-  logoPosition: PropTypes.string
+  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
 }
 
 export default connectToMap(Controls)
