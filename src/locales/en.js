@@ -59,5 +59,5 @@ export default {
   '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
   '_ol_kit.PopupDefaultPage.details': 'Details',
   // Popup Actions
-  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy WKT to clipboard'
+  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy Geometry as Coordinates'
 }
