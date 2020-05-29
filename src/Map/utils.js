@@ -180,6 +180,8 @@ export function createSelectInteraction () {
 
   return new olInteractionSelect({
     hitTolerance: 3,
-    style: [DEFAULT_SELECT_STYLE]
+    condition: () => false,
+    toggleCondition: () => false,
+    style: DEFAULT_SELECT_STYLE
   })
 }

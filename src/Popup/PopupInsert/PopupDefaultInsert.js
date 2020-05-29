@@ -45,12 +45,12 @@ class PopupDefaultInsert extends Component {
   selectFeature = feature => {
     const { selectInteraction } = this.props
     const deselected = selectInteraction.getFeatures().getArray()
-    const selected = [feature]
+    const selected = feature ? [feature] : []
     const event = new olSelect.Event('select', selected, deselected)
 
     // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
     selectInteraction.getFeatures().clear()
-    selectInteraction.getFeatures().push(feature)
+    if (feature) selectInteraction.getFeatures().push(feature)
     selectInteraction.dispatchEvent(event)
 
     this.props.onSelectFeature(feature, this.state.selectedIdx)
@@ -59,9 +59,9 @@ class PopupDefaultInsert extends Component {
   onPageChange = (_, nextIdx) => {
     const { features } = this.props
 
+    this.selectFeature(features[nextIdx])
     if (features.length) {
       // select new feature when paging & update state
-      this.selectFeature(features[nextIdx])
       this.setState({ selectedIdx: nextIdx })
     }
   }
