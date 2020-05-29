@@ -22,12 +22,18 @@ class PopupDefaultInsert extends Component {
   }
 
   componentDidMount () {
-    const { features } = this.props
+    const { features, selectInteraction } = this.props
+
+    if (!selectInteraction.getMap()) map.addInteraction(selectInteraction)
 
     if (features.length) {
       this.setState({ selectedIdx: 0 })
       this.selectFeature(features[0])
     }
+  }
+
+  componentWillUnmount () {
+    this.props.selectInteraction.getFeatures()?.clear()
   }
 
   UNSAFE_componentWillReceiveProps (nextProps) { // eslint-disable-line camelcase
@@ -106,7 +112,28 @@ PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
-  propertiesFilter: properties => properties
+  propertiesFilter: properties => properties,
+  selectInteraction: new olSelect({
+    hitTolerance: 3,
+    condition: () => false,
+    toggleCondition: () => false,
+    style: new olStyle({
+      stroke: new olStroke({
+        color: 'cyan',
+        width: 3
+      }),
+      image: new olCircle({
+        radius: 5,
+        fill: new olFill({
+          color: 'white'
+        }),
+        stroke: new olStroke({
+          color: 'cyan',
+          width: 2
+        })
+      })
+    })
+  })
 }
 
 PopupDefaultInsert.propTypes = {
@@ -130,7 +157,7 @@ PopupDefaultInsert.propTypes = {
   /** index of currently selected page in popup */
   selectedIdx: PropTypes.number,
   /** reference to openlayers select interaction which */
-  selectInteraction: PropTypes.object.isRequired,
+  selectInteraction: PropTypes.object,
   /** object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
