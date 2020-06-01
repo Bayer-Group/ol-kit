@@ -63,10 +63,11 @@ function GooglePlacesSearch (props) {
         } else if (json.status === 'REQUEST_DENIED') {
           throw new Error('The provided API key is invalid')
         } else {
-          return { 
+          return {
             x: json.candidates[0].geometry.location.lng,
             y: json.candidates[0].geometry.location.lat,
-            formatted_address: json.candidates[0].formatted_address }
+            formatted_address: json.candidates[0].formatted_address
+          }
         }
       })
   }
@@ -136,6 +137,8 @@ function GooglePlacesSearch (props) {
 GooglePlacesSearch.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
+  /*Note that you will need to create an account with Google and get an API key. Be sure to turn on all location based permissions.
+   You can find instructions on how to do that here https://developers.google.com/places/web-service/intro */ 
   apiKey: PropTypes.string.isRequired
 }
 
