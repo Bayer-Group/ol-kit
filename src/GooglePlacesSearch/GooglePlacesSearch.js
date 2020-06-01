@@ -54,8 +54,8 @@ function GooglePlacesSearch (props) {
   const [errorMessage, setError] = useState(null)
   const classes = useStyles()
 
-  const DataLoader = (searchString) => {
-    return fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${searchString}&inputtype=textquery&fields=geometry&key=${apiKey}`)
+  const dataLoader = (searchString) => {
+    return fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${searchString}&inputtype=textquery&fields=geometry,formatted_address&key=${apiKey}`)
       .then(response => response.json())
       .then(json => {
         if (json.status === 'ZERO_RESULTS') {
@@ -63,23 +63,26 @@ function GooglePlacesSearch (props) {
         } else if (json.status === 'REQUEST_DENIED') {
           throw new Error('The provided API key is invalid')
         } else {
-          return { x: json.candidates[0].geometry.location.lng, y: json.candidates[0].geometry.location.lat }
+          return { 
+            x: json.candidates[0].geometry.location.lng,
+            y: json.candidates[0].geometry.location.lat,
+            formatted_address: json.candidates[0].formatted_address }
         }
       })
   }
 
   const onSubmit = async (data) => {
     try {
-      const location = await DataLoader(data.searchPlace)
+      const location = await dataLoader(data.searchPlace)
       const source = new olVectorSource({ features: new olCollection() })
-      const vectorLayer = new VectorLayer({ source, title: 'LocationSearch' })
+      const vectorLayer = new VectorLayer({ source, title: 'Google Places Search' })
       const coords = proj.fromLonLat([location.x, location.y])
       const feature = new olFeature(new olPoint(coords))
       const radius = 15
       const color = 'blue'
 
       map.addLayer(vectorLayer)
-      feature.setProperties({ title: `Location: ${location.x} ${location.y}` })
+      feature.setProperties({ title: location.formatted_address })
       feature.setStyle(
         new olStyle({
           image: new olCircleStyle({
