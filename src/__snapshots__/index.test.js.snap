@@ -12,6 +12,7 @@ Object {
   "BasemapStamenTonerLite": [Function],
   "Compass": [Function],
   "Controls": [Function],
+  "GooglePlacesSearch": [Function],
   "LayerPanel": [Function],
   "LayerPanelActionExport": [Function],
   "LayerPanelActionExtent": [Function],
