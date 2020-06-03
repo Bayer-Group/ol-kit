@@ -26,6 +26,10 @@ describe('loadDataLayer', () => {
     expect(dataLayer instanceof VectorLayer).toBe(true)
     // data layer should be added to map
     expect(layers[1]).toBe(dataLayer)
+    // 52 us states/territories
+    expect(layers[1].getSource().getFeatures().length).toBe(52)
+    // properties should be passed to features (there are 6 from the geoJson)
+    expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(6)
   })
 
   it('loadDataLayer should load valid geoJson file, but not add to the map', async () => {
@@ -40,6 +44,10 @@ describe('loadDataLayer', () => {
     expect(dataLayer instanceof VectorLayer).toBe(true)
     // data layer should NOT be added to map
     expect(layers[0]).not.toBe(dataLayer)
+    // 52 us states/territories
+    expect(dataLayer.getSource().getFeatures().length).toBe(52)
+    // properties should be passed to features (there are 6 from the geoJson)
+    expect(Object.keys(dataLayer.getSource().getFeatures()[0].getProperties()).length).toBe(6)
   })
 
   it.skip('loadDataLayer should load valid kml file', async () => {
