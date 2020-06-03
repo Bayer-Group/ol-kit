@@ -1,6 +1,9 @@
 import { loadDataLayer } from './utils'
 import { VectorLayer } from 'classes'
 import { createMap } from 'Map'
+import proj from 'ol/proj'
+
+const STL_COORD = proj.fromLonLat([-90.4994, 38.6270])
 
 describe('loadDataLayer', () => {
   global.document.body.innerHTML = '<div id="map"></div>'
@@ -30,6 +33,9 @@ describe('loadDataLayer', () => {
     expect(layers[1].getSource().getFeatures().length).toBe(52)
     // properties should be passed to features (there are 6 from the geoJson)
     expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(6)
+    // get missouri feature
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
   })
 
   it('loadDataLayer should load valid geoJson file, but not add to the map', async () => {
@@ -48,6 +54,9 @@ describe('loadDataLayer', () => {
     expect(dataLayer.getSource().getFeatures().length).toBe(52)
     // properties should be passed to features (there are 6 from the geoJson)
     expect(Object.keys(dataLayer.getSource().getFeatures()[0].getProperties()).length).toBe(6)
+    // get missouri feature
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
   })
 
   it.skip('loadDataLayer should load valid kml file', async () => {

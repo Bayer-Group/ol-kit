@@ -10,7 +10,7 @@ import ugh from 'ugh'
 
 const getFeaturesFromDataSet = (map, dataSet) => {
   try {
-    const geoJson = new GeoJSON({ featureProjection: 'EPSG:3857' }) // TODO check map projection
+    const geoJson = new GeoJSON({ featureProjection: map.getView().getProjection() })
     const features = geoJson.readFeatures(dataSet)
 
     return features
