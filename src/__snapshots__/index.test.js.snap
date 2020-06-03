@@ -54,6 +54,7 @@ Object {
   "createSelectInteraction": [Function],
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
+  "loadDataLayer": [Function],
   "removeMovementListener": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],

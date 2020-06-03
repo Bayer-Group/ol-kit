@@ -1,10 +1,8 @@
-import olVectorLayer from 'ol/layer/vector'
 import olVectorSource from 'ol/source/vector'
 import olStyle from 'ol/style/style'
 import olFill from 'ol/style/fill'
 import olStroke from 'ol/style/stroke'
 import Map from 'ol/map'
-import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
 import KML from 'ol/format/kml'
 import { VectorLayer } from 'classes'
@@ -30,7 +28,7 @@ const getFeaturesFromDataSet = (map, dataSet) => {
 
 const isValidUrl = string => {
   try {
-    new URL(string)
+    new URL(string) // eslint-disable-line no-new
   } catch (_) {
     return false
   }
@@ -53,23 +51,20 @@ const isValidUrl = string => {
 export const loadDataLayer = async (map, query, optsArg = {}) => {
   if (!(map instanceof Map)) return ugh.throw('\'loadDataLayer\' requires a valid openlayers map as the first argument')
   const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...optsArg.style }
-  const opts = { addToMap: true, ...optsArg, style }
+  const opts = { addToMap: true, ...optsArg }
 
-  let features = []
-  const featuresFromQuery = getFeaturesFromDataSet(map, query) // returns empty array if query is unsupported data type
+  // getFeaturesFromDataSet returns empty array if query arg is not a supported data type (ex. url)
+  let features = getFeaturesFromDataSet(map, query)
 
-  if (featuresFromQuery.length) {
-    // query passed is valid data file
-    features = featuresFromQuery
-  } else if (isValidUrl(query)) {
+  if (!features.length && isValidUrl(query)) {
     // query is an endpoint to fetch valid data set
     const request = await fetch(query)
     const dataSet = await request.json()
 
     features = getFeaturesFromDataSet(map, dataSet)
-  } else {
+  } else if (!features.length) {
     // catch malformed queries here
-    return ugh.throw('Pass a valid query to \'loadDataLayer\' as second argument')
+    return ugh.throw(`'loadDataLayer' recieved invalid query: '${query}' as second argument`)
   }
 
   // create the layer and add features
@@ -79,18 +74,15 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   // set attribute for LayerPanel title
   layer.set('title', 'Data Layer')
 
-  features.forEach((feature, i) => {
-    const { properties } = feature
+  source.addFeatures(features)
 
-    source.addFeature(feature)
-  })
-
-  // layer.setStyle(
-  //   new olStyle({
-  //     fill: new olFill(style.fill),
-  //     stroke: new olStroke(style.stroke)
-  //   })
-  // )
+  // style based on opts
+  layer.setStyle(
+    new olStyle({
+      fill: new olFill(style.fill),
+      stroke: new olStroke(style.stroke)
+    })
+  )
 
   // conditinally add this new layer to the map
   if (opts.addToMap) map.addLayer(layer)
