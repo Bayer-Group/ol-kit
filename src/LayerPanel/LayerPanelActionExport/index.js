@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import olLayerVector from 'ol/layer/vector'
 import { connectToMap } from 'Map'
+import { exportFeatures } from './utils'
 
 /**
  * @component
@@ -59,7 +60,14 @@ class LayerPanelActionExport extends Component {
         disabled={this.isExportable()}
         onClick={() => this.handleExport('shp')} >
         {translations['_ol_kit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
-      </MenuItem>]
+      </MenuItem>,
+      <MenuItem
+      key='exportGeoJSON'
+      disableGutters={false}
+      disabled={this.isExportable()}
+      onClick={() => this.handleExport('geojson')} >
+      {translations['_ol_kit.LayerPanelActions.geojson'] || 'Export GeoJSON'}
+    </MenuItem>]
     )
   }
 }
@@ -80,7 +88,8 @@ LayerPanelActionExport.propTypes = {
 
 LayerPanelActionExport.defaultProps = {
   onExportFeatures: () => {},
-  handleMenuClose: () => {}
+  handleMenuClose: () => {},
+  onExportFeatures: exportFeatures
 }
 
 export default connectToMap(LayerPanelActionExport)
