@@ -59,6 +59,25 @@ describe('loadDataLayer', () => {
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
   })
 
+  it.skip('loadDataLayer should load valid geoJson endpoint', async () => {
+    const map = createMap({ target: 'map' })
+    const dataLayer = await loadDataLayer(map, 'https://opendata.arcgis.com/datasets/628578697fb24d8ea4c32fa0c5ae1843_0.geojson')
+    const layers = map.getLayers().getArray()
+
+    expect(layers.length).toBe(2)
+    // should return a VectorLayer
+    expect(dataLayer instanceof VectorLayer).toBe(true)
+    // data layer should be added to map
+    expect(layers[1]).toBe(dataLayer)
+    // 52 us states/territories
+    expect(layers[1].getSource().getFeatures().length).toBe(52)
+    // properties should be passed to features (there are 6 from the geoJson)
+    expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(6)
+    // get missouri feature
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
+  })
+
   it.skip('loadDataLayer should load valid kml file', async () => {
     const map = createMap({ target: 'map' })
     // need to allow import of kml files via babel

@@ -9,8 +9,10 @@ import { VectorLayer } from 'classes'
 import ugh from 'ugh'
 
 const getFeaturesFromDataSet = (map, dataSet) => {
+  const mapProjection = map.getView().getProjection().getCode()
+
   try {
-    const geoJson = new GeoJSON({ featureProjection: map.getView().getProjection() })
+    const geoJson = new GeoJSON({ featureProjection: mapProjection })
     const features = geoJson.readFeatures(dataSet)
 
     return features
@@ -50,7 +52,7 @@ const isValidUrl = string => {
  */
 export const loadDataLayer = async (map, query, optsArg = {}) => {
   if (!(map instanceof Map)) return ugh.throw('\'loadDataLayer\' requires a valid openlayers map as the first argument')
-  const style = { fill: { color: '#7FDBFF33' }, stroke: { color: '#0074D9', width: 2 }, ...optsArg.style }
+  const style = { fill: { color: '#fefefe91' }, stroke: { color: '#3399cd', width: 2 }, ...optsArg.style }
   const opts = { addToMap: true, ...optsArg }
 
   // getFeaturesFromDataSet returns empty array if query arg is not a supported data type (ex. url)
@@ -69,7 +71,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
   // create the layer and add features
   const source = new olVectorSource()
-  const layer = new VectorLayer({ source })
+  const layer = new VectorLayer({ renderMode: 'image', source })
 
   // set attribute for LayerPanel title
   layer.set('title', 'Data Layer')
