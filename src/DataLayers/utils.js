@@ -75,7 +75,6 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
       const parser = new DOMParser()
 
       dataSet = parser.parseFromString(response, 'text/xml')
-      console.log('KML', dataSet)
     }
 
     features = getFeaturesFromDataSet(map, dataSet)
