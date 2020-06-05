@@ -48,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+/** A search input to look up and label locations via Google Places API
+ * @component
+ * @category GooglePlacesSearch
+ * @since 0.8.0
+ */
 function GooglePlacesSearch (props) {
   const { map, apiKey } = props
   const { handleSubmit, register } = useForm()
