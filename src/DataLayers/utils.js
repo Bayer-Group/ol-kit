@@ -1,6 +1,4 @@
-import xml2js from 'xml2js'
 import olVectorSource from 'ol/source/vector'
-import olFeature from 'ol/feature'
 import olStyle from 'ol/style/style'
 import olCircleStyle from 'ol/style/circle'
 import olFill from 'ol/style/fill'
@@ -66,23 +64,19 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
     // query is an endpoint to fetch valid data set
     const request = await fetch(query)
     const response = await request.text() // either xml or json
-    const xmlParser = new xml2js.Parser()
-    const parser = new DOMParser()
-    const data = parser.parseFromString(response, 'text/xml')
-    let dataSet = data
 
-    console.log('data', data)
+    let dataSet
 
-    // try {
-    //   // geojson
-    //   dataSet = await JSONresponse
-    // } catch (e) {
-    //   console.log('catch', e, request)
-    //   // kml
-    //   dataSet = await request.text()
-    // }
-    //
-    // console.log('redi', request, dataSet)
+    try {
+      // geojson
+      dataSet = JSON.parse(response)
+    } catch (e) {
+      // kml
+      const parser = new DOMParser()
+
+      dataSet = parser.parseFromString(response, 'text/xml')
+      console.log('KML', dataSet)
+    }
 
     features = getFeaturesFromDataSet(map, dataSet)
   } else if (!features.length) {

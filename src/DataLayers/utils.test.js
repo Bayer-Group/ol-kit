@@ -2,6 +2,8 @@ import { loadDataLayer } from './utils'
 import { VectorLayer } from 'classes'
 import { createMap } from 'Map'
 import proj from 'ol/proj'
+import { NASA_RESPONSE, POLYGON_KML } from './__test_data__'
+import US_STATES from './__test_data__/us_states.json'
 
 const STL_COORD = proj.fromLonLat([-90.4994, 38.6270])
 
@@ -59,8 +61,15 @@ describe('loadDataLayer', () => {
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
   })
 
-  it.skip('loadDataLayer should load valid geoJson endpoint', async () => {
+  it('loadDataLayer should load valid geoJson endpoint', async () => {
+    // need jest to mock this endpoint response for this one to work
     const map = createMap({ target: 'map' })
+
+    // need jest to mock fetch + response
+    const mockFetchPromise = Promise.resolve({ text: () => JSON.stringify(US_STATES) })
+
+    jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise)
+
     const dataLayer = await loadDataLayer(map, 'https://opendata.arcgis.com/datasets/628578697fb24d8ea4c32fa0c5ae1843_0.geojson')
     const layers = map.getLayers().getArray()
 
@@ -79,9 +88,14 @@ describe('loadDataLayer', () => {
   })
 
   it.skip('loadDataLayer should load valid kml file', async () => {
+    // need jest to have a valid DOMParser for this one to work
     const map = createMap({ target: 'map' })
+    const parser = new DOMParser()
+    const kmlData = parser.parseFromString(POLYGON_KML, 'text/xml')
+
+    console.log('kmlData', kmlData)
     // need to allow import of kml files via babel
-    const dataLayer = await loadDataLayer(map, require('./__test_data__/polygon.kml'))
+    const dataLayer = await loadDataLayer(map, kmlData)
     const layers = map.getLayers().getArray()
 
     expect(layers.length).toBe(2)
@@ -94,18 +108,26 @@ describe('loadDataLayer', () => {
   })
 
   it.skip('loadDataLayer should load valid kml endpoint', async () => {
+    // need jest to mock DOMParser response document accurately for this one to work
     const map = createMap({ target: 'map' })
-    const data = 'https://bloomington.in.gov/geoserver/publicgis/wms/kml?layers=publicgis:TrailsAndPaths'
-    // need jest to allow fetch
+
+    // need jest to mock fetch + response
+    const mockFetchPromise = Promise.resolve({ text: () => NASA_RESPONSE })
+
+    jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise)
+
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
     const layers = map.getLayers().getArray()
+
+    console.log('features endpoint', dataLayer.getSource().getFeatures())
 
     expect(layers.length).toBe(2)
     // should return a VectorLayer
     expect(dataLayer instanceof VectorLayer).toBe(true)
     // data layer should be added to map
     expect(layers[1]).toBe(dataLayer)
-
-    console.log('data:', dataLayer)
+    // get north america feature
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
+    expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('name')).toBe('United States of America')
   })
 })
