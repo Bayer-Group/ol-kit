@@ -4,6 +4,8 @@
 
 An easy to use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
 
+Checkout the [demo site here!](https://demo.ol-kit.com/)
+
 ## Prebuilt Map Components
 ![ol-kit logo](./config/jsdoc/template/static/example-screenshot-1.png)
 
@@ -18,30 +20,27 @@ npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core
 It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
 ```javascript
 import React from 'react'
-import { Map, Popup, Controls, centerAndZoom } from '@bayer/ol-kit'
-
-import VectorLayer from 'ol/layer/vector'
-import VectorSource from 'ol/source/vector'
+import { Map, Controls, LayerPanel, Popup, loadDataLayer } from '@bayer/ol-kit'
 
 class App extends React.Component {
-  onMapInit = map => {
-    const data = new VectorLayer({
-      source: new VectorSource({
-        features: [/** get some data and have fun with it */]
-      })
-    })
-    // add the data to the map
-    map.addLayer(data)
+  onMapInit = async map => {
+    console.log('we got a map!', map)
+    // nice to have map set on the window while debugging
+    window.map = map
 
-    // quickly take the map
-    centerAndZoom(map, {x: 0, y: 0, zoom: 3})
+    // find a geojson or kml dataset (url or file) to load on the map
+    const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
+    const dataLayer = await loadDataLayer(map, data)
+
+    console.log('data layer:', dataLayer)
   }
 
   render () {
     return (
       <Map onMapInit={this.onMapInit}>
-        <Popup />
         <Controls />
+        <LayerPanel />
+        <Popup />
       </Map>
     )
   }

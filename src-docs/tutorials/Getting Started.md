@@ -21,7 +21,7 @@ import { Map } from '@bayer/ol-kit'
 const MyApp = () => <Map />
 ```
 
-Without a reference to the map ol-kit created, you can't do anything useful. You can get around this by passing the `onMapInit` prop. This callback is called with one argument: an `ol.Map` instance created by ol-kit. Your application should save this for later interaction with the map and other OpenLayers APIs. (note: the map can also be passed implicitly by wrapping components with `connectToMap` util- learn about [how that works](../docs/tutorial-connectToMap.html))
+Without a reference to the map ol-kit created, you can't do anything useful. You can get around this by passing the `onMapInit` prop. This callback is called with one argument: an `ol.Map` instance created by ol-kit. Your application should save this for later interaction with the map and other OpenLayers APIs. (note: the map can also be passed implicitly by wrapping components with `connectToMap` util- learn about [how that works](../tutorial-connectToMap.html))
 ```javascript
 import React from 'react'
 import { Map } from '@bayer/ol-kit'
@@ -41,7 +41,7 @@ export default App
 
 
 ### Pass a Custom Map
-If you prefer creating your own `ol.Map` you can ignore the `onMapInit` prop and instead pass the `map` prop like so:
+If you prefer creating your own `ol.Map` (see: [how to create a custom map](https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html)) you can ignore the `onMapInit` prop and instead pass the `map` prop like so:
 ```javascript
 import React, { Component } from 'react'
 import { Map } from '@bayer/ol-kit'

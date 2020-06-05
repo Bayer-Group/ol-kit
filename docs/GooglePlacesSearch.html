@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanelHeader</title>
+    <title>ol-kit | GooglePlacesSearch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,7 +81,7 @@
 <header>
     
         <h2>
-            &ltLayerPanelHeader /&gt
+            &ltGooglePlacesSearch /&gt
         </h2>
         
     
@@ -98,18 +98,22 @@
 
 
     
-    <h4 class="name" id="LayerPanelHeader">
-        <a class="href-link" href="#LayerPanelHeader">#</a>
+    <h4 class="name" id="GooglePlacesSearch">
+        <a class="href-link" href="#GooglePlacesSearch">#</a>
         
         <span class="code-name">
             
-                &ltLayerPanelHeader <i>title</i> <i>actions</i> <i>avatar</i> /&gt
+                &ltGooglePlacesSearch <i>map</i> <i>apiKey</i> /&gt
             
         </span>
     </h4>
     
 
     
+    
+    <div class="description">
+        A search input to look up and label locations via Google Places API
+    </div>
     
 
 
@@ -136,34 +140,23 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>reference to Openlayers map object</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>apiKey</code></td>
           <td>
             string
           </td>
-          <td>No</td>
-          <td>A string for the LayerPanelHeader title</td>
+          <td>Yes</td>
           <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>actions</code></td>
-          <td>
-            union
-          </td>
-          <td>No</td>
-          <td>array or component to render in the LayerPanelMenu</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>avatar</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>component to render on the left side of the title</td>
           <td></td>
         </tr>
         
@@ -184,7 +177,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.5.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>0.8.0</li></ul></dd>
     
 
     
@@ -214,9 +207,9 @@
 
     
         <p class="tag-source">
-            <a href="LayerPanel_LayerPanelHeader_index.js.html" class="button">View Source</a>
+            <a href="GooglePlacesSearch_GooglePlacesSearch.js.html" class="button">View Source</a>
             <span>
-                <a href="LayerPanel_LayerPanelHeader_index.js.html">LayerPanel/LayerPanelHeader/index.js</a>, <a href="LayerPanel_LayerPanelHeader_index.js.html#line10">line 10</a>
+                <a href="GooglePlacesSearch_GooglePlacesSearch.js.html">GooglePlacesSearch/GooglePlacesSearch.js</a>, <a href="GooglePlacesSearch_GooglePlacesSearch.js.html#line56">line 56</a>
             </span>
         </p>
     

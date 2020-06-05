@@ -1,5 +1,8 @@
+import xml2js from 'xml2js'
 import olVectorSource from 'ol/source/vector'
+import olFeature from 'ol/feature'
 import olStyle from 'ol/style/style'
+import olCircleStyle from 'ol/style/circle'
 import olFill from 'ol/style/fill'
 import olStroke from 'ol/style/stroke'
 import Map from 'ol/map'
@@ -10,16 +13,17 @@ import ugh from 'ugh'
 
 const getFeaturesFromDataSet = (map, dataSet) => {
   const mapProjection = map.getView().getProjection().getCode()
+  const opts = { featureProjection: mapProjection }
 
   try {
-    const geoJson = new GeoJSON({ featureProjection: mapProjection })
+    const geoJson = new GeoJSON(opts)
     const features = geoJson.readFeatures(dataSet)
 
     return features
   } catch (e) { /* must not be JSON */ }
   try {
-    const kml = new KML()
-    const features = kml.readFeatures(dataSet)
+    const kml = new KML({ extractStyles: false })
+    const features = kml.readFeatures(dataSet, opts)
 
     return features
   } catch (e) { /* must not be KML */ }
@@ -61,7 +65,24 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   if (!features.length && isValidUrl(query)) {
     // query is an endpoint to fetch valid data set
     const request = await fetch(query)
-    const dataSet = await request.json()
+    const response = await request.text() // either xml or json
+    const xmlParser = new xml2js.Parser()
+    const parser = new DOMParser()
+    const data = parser.parseFromString(response, 'text/xml')
+    let dataSet = data
+
+    console.log('data', data)
+
+    // try {
+    //   // geojson
+    //   dataSet = await JSONresponse
+    // } catch (e) {
+    //   console.log('catch', e, request)
+    //   // kml
+    //   dataSet = await request.text()
+    // }
+    //
+    // console.log('redi', request, dataSet)
 
     features = getFeaturesFromDataSet(map, dataSet)
   } else if (!features.length) {
@@ -82,7 +103,12 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   layer.setStyle(
     new olStyle({
       fill: new olFill(style.fill),
-      stroke: new olStroke(style.stroke)
+      stroke: new olStroke(style.stroke),
+      image: new olCircleStyle({
+        radius: 4,
+        fill: new olFill(style.fill),
+        stroke: new olStroke(style.stroke)
+      })
     })
   )
 

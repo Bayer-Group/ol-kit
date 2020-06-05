@@ -95,6 +95,7 @@ describe('loadDataLayer', () => {
 
   it.skip('loadDataLayer should load valid kml endpoint', async () => {
     const map = createMap({ target: 'map' })
+    const data = 'https://bloomington.in.gov/geoserver/publicgis/wms/kml?layers=publicgis:TrailsAndPaths'
     // need jest to allow fetch
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
     const layers = map.getLayers().getArray()

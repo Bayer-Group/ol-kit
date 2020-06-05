@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanelHeader</title>
+    <title>ol-kit | DataLayers/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,204 +77,131 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltLayerPanelHeader /&gt
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="LayerPanelHeader">
-        <a class="href-link" href="#LayerPanelHeader">#</a>
-        
-        <span class="code-name">
-            
-                &ltLayerPanelHeader <i>title</i> <i>actions</i> <i>avatar</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>A string for the LayerPanelHeader title</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>actions</code></td>
-          <td>
-            union
-          </td>
-          <td>No</td>
-          <td>array or component to render in the LayerPanelMenu</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>avatar</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>component to render on the left side of the title</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.5.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="LayerPanel_LayerPanelHeader_index.js.html" class="button">View Source</a>
-            <span>
-                <a href="LayerPanel_LayerPanelHeader_index.js.html">LayerPanel/LayerPanelHeader/index.js</a>, <a href="LayerPanel_LayerPanelHeader_index.js.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import xml2js from 'xml2js'
+import olVectorSource from 'ol/source/vector'
+import olFeature from 'ol/feature'
+import olStyle from 'ol/style/style'
+import olCircleStyle from 'ol/style/circle'
+import olFill from 'ol/style/fill'
+import olStroke from 'ol/style/stroke'
+import Map from 'ol/map'
+import GeoJSON from 'ol/format/geojson'
+import KML from 'ol/format/kml'
+import { VectorLayer } from 'classes'
+import ugh from 'ugh'
+
+const getFeaturesFromDataSet = (map, dataSet) => {
+  const mapProjection = map.getView().getProjection().getCode()
+  const opts = { featureProjection: mapProjection }
+
+  try {
+    const geoJson = new GeoJSON(opts)
+    const features = geoJson.readFeatures(dataSet)
+
+    return features
+  } catch (e) { /* must not be JSON */ }
+  try {
+    const kml = new KML({ extractStyles: false })
+    const features = kml.readFeatures(dataSet, opts)
+
+    return features
+  } catch (e) { /* must not be KML */ }
+
+  // not a supported data format, return empty features array
+  return []
+}
+
+const isValidUrl = string => {
+  try {
+    new URL(string) // eslint-disable-line no-new
+  } catch (_) {
+    return false
+  }
+
+  return true
+}
+
+/**
+ * Async fetch for data layers - supports geojson, kml
+ * @function
+ * @category DataLayers
+ * @since 0.8.0
+ * @param {ol.Map} map - reference to the openlayer map object
+ * @param {String} query - url string pointing to geojson/kml file or the geojson/kml file itself
+ * @param {Object} [opts] - Object of optional params
+ * @param {Boolean} [opts.addToMap] - opt out of adding the layer to the map (default true)
+ * @param {String} [opts.style] - style object used to apply styles to the layer
+ * @returns {ol.Layer} Promise that resolves with the newly created data layer
+ */
+export const loadDataLayer = async (map, query, optsArg = {}) => {
+  if (!(map instanceof Map)) return ugh.throw('\'loadDataLayer\' requires a valid openlayers map as the first argument')
+  const style = { fill: { color: '#fefefe91' }, stroke: { color: '#3399cd', width: 2 }, ...optsArg.style }
+  const opts = { addToMap: true, ...optsArg }
+
+  // getFeaturesFromDataSet returns empty array if query arg is not a supported data type (ex. url)
+  let features = getFeaturesFromDataSet(map, query)
+
+  if (!features.length &amp;&amp; isValidUrl(query)) {
+    // query is an endpoint to fetch valid data set
+    const request = await fetch(query)
+    const response = await request.text() // either xml or json
+    const xmlParser = new xml2js.Parser()
+    const parser = new DOMParser()
+    const data = parser.parseFromString(response, 'text/xml')
+    let dataSet = data
+
+    console.log('data', data)
+
+    // try {
+    //   // geojson
+    //   dataSet = await JSONresponse
+    // } catch (e) {
+    //   console.log('catch', e, request)
+    //   // kml
+    //   dataSet = await request.text()
+    // }
+    //
+    // console.log('redi', request, dataSet)
+
+    features = getFeaturesFromDataSet(map, dataSet)
+  } else if (!features.length) {
+    // catch malformed queries here
+    return ugh.throw(`'loadDataLayer' recieved invalid query: '${query}' as second argument`)
+  }
+
+  // create the layer and add features
+  const source = new olVectorSource()
+  const layer = new VectorLayer({ renderMode: 'image', source })
+
+  // set attribute for LayerPanel title
+  layer.set('title', 'Data Layer')
+
+  source.addFeatures(features)
+
+  // style based on opts
+  layer.setStyle(
+    new olStyle({
+      fill: new olFill(style.fill),
+      stroke: new olStroke(style.stroke),
+      image: new olCircleStyle({
+        radius: 4,
+        fill: new olFill(style.fill),
+        stroke: new olStroke(style.stroke)
+      })
+    })
+  )
+
+  // conditinally add this new layer to the map
+  if (opts.addToMap) map.addLayer(layer)
+
+  return layer
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
