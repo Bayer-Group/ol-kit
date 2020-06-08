@@ -1,5 +1,7 @@
 export * from './Basemaps'
 export * from './Controls'
+export * from './DataLayers'
+export * from './GooglePlacesSearch'
 export * from './LayerStyler'
 export * from './Map'
 export * from './Popup'
