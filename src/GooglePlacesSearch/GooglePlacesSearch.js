@@ -20,6 +20,10 @@ import proj from 'ol/proj'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'absolute',
+    top: '15px',
+    left: '15px',
+    fontSize: '17px',
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
@@ -27,7 +31,18 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
+    fontSize: '17px',
+    border: '0px',
+    '&:focus': {
+      outline: 'none',
+      backgroundColor: 'white !important',
+      fontSize: '17px'
+    },
+    '&:-internal-autofill-selected': {
+      backgroundColor: 'white !important',
+      fontSize: '17px'
+    }
   },
   iconButton: {
     padding: 10
@@ -38,13 +53,16 @@ const useStyles = makeStyles((theme) => ({
   },
   'search-bar-container': {
     width: '90%',
-    'max-width': '500px',
+    maxWidth: '500px',
     position: 'absolute',
     left: '100px',
-    top: '50px'
-  },
-  'input:focus textarea:focus': {
+    top: '50px',
     outline: 'none'
+  },
+  alert: {
+    position: 'absolute',
+    top: '70px',
+    left: '30px'
   }
 }))
 
@@ -131,7 +149,7 @@ function GooglePlacesSearch (props) {
         </Paper>
       </form>
       {
-        errorMessage ? <Alert severity='error' onClose={handleClose}>
+        errorMessage ? <Alert className={classes.alert} severity='error' onClose={handleClose}>
           {errorMessage}
         </Alert> : null
       }
