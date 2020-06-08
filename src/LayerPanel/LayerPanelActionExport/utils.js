@@ -1,6 +1,7 @@
 import olFormatGeoJSON from 'ol/format/geojson'
 import olFormatKml from 'ol/format/kml'
 import shpwrite from 'shp-write' // mapbox shapefile writer
+import olFeature from 'ol/feature'
 
 export function groupBy (list, getGroupName) {
   return list.reduce((groups, item) => {
@@ -76,13 +77,60 @@ export function saveAs (blob, filename) {
   document.body.removeChild(a)
 }
 
+export function flattenFeatures (features) {
+  return features.reduce((acc, feature) => {
+    const geom = feature.getGeometry()
+    const type = geom.getType()
+    switch (type) {
+      default:
+        acc.push(feature)
+        break
+      case 'MultiPoint': {
+        const featureProps = feature.getProperties()
+        geom.getPoints().forEach(point => {
+          acc.push(new olFeature({ ...featureProps, geometry: point }))
+        })
+        break
+      }
+      case 'MultiLineString': {
+        const featureProps = feature.getProperties()
+        geom.getLineStrings().forEach(lineString => {
+          acc.push(new olFeature({ ...featureProps, geometry: lineString }))
+        })
+        break
+      }
+      case 'MultiPolygon': {
+        const featureProps = feature.getProperties()
+        geom.getPolygons().forEach(polygon => {
+          acc.push(new olFeature({ ...featureProps, geometry: polygon }))
+        })
+        break
+      }
+      case 'GeometryCollection': {
+        const featureProps = feature.getProperties()
+        const spreadFeatures = geom.getGeometriesArray().map(g => new olFeature({ ...featureProps, geometry: g }))
+        const flattenedFeatures = flattenFeatures(spreadFeatures) // GeometryCollections can contain Multi geometries so we call flattenFeatures recusively
+
+        flattenedFeatures.forEach(f => {
+          acc.push(f)
+        })
+        break
+      }
+    }
+
+    return acc
+  }, [])
+}
+
 export function exportShapefile ({ format, visibleFeatures, sourceProjection, targetProjection = 'EPSG:4326', filename = 'export.zip' }) {
-  const featureCollection = format.writeFeaturesObject(visibleFeatures, {
+  const flattenedFeatures = flattenFeatures(visibleFeatures) // as of writing this shpwrite is bugged and can't handle multi geometries or GeometryCollections so we flatten these into their constituent parts.
+  const featureCollection = format.writeFeaturesObject(flattenedFeatures, {
     dataProjection: targetProjection,
     featureProjection: sourceProjection
   })
+
   const types = Array.from(new Set(featureCollection.features.map(feature => feature.geometry.type)))
-  const options = { folder: filename, types }
+  const options = { folder: filename, types  }
 
   return shpwrite.download(featureCollection, options)
 }
@@ -139,19 +187,5 @@ export function smoothFeatureAttributes (geojsonFeatures) {
     })
 
     return feature
-  })
-}
-
-export function groupGeoJsonByType (featuresArray) {
-  const groupedFeatures = groupBy(featuresArray, feature => feature.geometry.type)
-
-  return Object.keys(groupedFeatures).map(geomType => {
-    return {
-      name: geomType,
-      json: {
-        type: 'FeatureCollection',
-        features: smoothFeatureAttributes(groupedFeatures[geomType])
-      }
-    }
   })
 }
