@@ -2,9 +2,9 @@
 
 ![npm version](https://img.shields.io/npm/v/@bayer/ol-kit)
 
-An easy to use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
+An easy-to-use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
 
-Checkout the [demo site here!](https://demo.ol-kit.com/)
+Check out the [demo site here!](https://demo.ol-kit.com/)
 
 ## Prebuilt Map Components
 ![ol-kit logo](./config/jsdoc/template/static/example-screenshot-1.png)
@@ -17,7 +17,7 @@ npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core
 ```
 
 ## Getting Started
-It's easy to start building map apps with ol-kit. For simple projects the following will get you started:
+It's easy to start building map apps with ol-kit. For simple projects, the following will get you started:
 ```javascript
 import React from 'react'
 import { Map, Controls, LayerPanel, Popup, loadDataLayer } from '@bayer/ol-kit'
