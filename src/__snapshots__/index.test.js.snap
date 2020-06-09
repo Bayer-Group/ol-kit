@@ -53,6 +53,7 @@ Object {
   "copyWktToClipbard": [Function],
   "createMap": [Function],
   "createSelectInteraction": [Function],
+  "exportFeatures": [Function],
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
   "loadDataLayer": [Function],
