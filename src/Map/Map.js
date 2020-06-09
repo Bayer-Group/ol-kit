@@ -7,7 +7,7 @@ import MapLogo from './MapLogo'
 import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
-import { Provider, ProviderContext, connectToContext, setProviderContext } from 'Provider'
+import { connectToContext, ProviderContext } from 'Provider'
 import ugh from 'ugh'
 
 /**
@@ -27,11 +27,7 @@ class Map extends React.Component {
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
 
-    // setup a boolean to tell this component to render a Provider wrapper if one is not mounted as a parent
-    this.noProviderMounted = !ProviderContext
-
-    // set the Provider context in the case that a <Provider> is not mounted
-    if (this.noProviderMounted) setProviderContext(React.createContext())
+    console.log('constructor', props)
   }
 
   componentDidMount () {
@@ -61,7 +57,7 @@ class Map extends React.Component {
     // setup select interactions for the map
     this.initializeSelect(this.map)
 
-    // callback for <Provider> if it's not mounted
+    // callback for <Provider> if it is mounted as hoc
     this.props.setContextProps(this.getContextProps())
 
     // optionally attach map listener
@@ -107,26 +103,21 @@ class Map extends React.Component {
   }
 
   getContextProps = () => {
-    const { translations } = this.props
-
-    // do not pass unnecessary props to a Fragment
-    return !this.noProviderMounted
-      ? null
-      : {
-        map: this.map,
-        selectInteraction: this.selectInteraction,
-        translations
-      }
+    // props created in this comp, set on ProviderContext
+    return {
+      map: this.map,
+      mapId: this.target,
+      selectInteraction: this.selectInteraction
+    }
   }
 
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
-    // if a Provider is not mounted, wrap map with a Provider to allow context to exist either way
-    const ContextWrapper = this.noProviderMounted ? Provider : React.Fragment
+    console.log('render', this.props)
 
     return (
-      <ContextWrapper {...this.getContextProps()}>
+      <>
         <StyledMap
           id={this.target}
           fullScreen={fullScreen}
@@ -139,7 +130,7 @@ class Map extends React.Component {
             : null
           }
         </>
-      </ContextWrapper>
+      </>
     )
   }
 }
@@ -149,11 +140,12 @@ Map.defaultProps = {
   logoPosition: 'right',
   map: null,
   onMapInit: () => {},
+  ProviderContext: ProviderContext,
   updateUrlDebounce: 400,
   updateUrlFromView: true,
   updateViewFromUrl: true,
   urlViewParam: 'view',
-  // setContextProps: () => {},
+  setContextProps: () => {},
   style: {},
   translations: en
 }
@@ -174,6 +166,8 @@ Map.propTypes = {
     note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
   */
   onMapInit: PropTypes.func,
+  /** reference to the context initialized by <Provider> */
+  ProviderContext: PropTypes.object,
   /** the length of debounce on map movements before the url gets updated */
   updateUrlDebounce: PropTypes.number,
   /** add map location coords + zoom level to url as query params */

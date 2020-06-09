@@ -3,16 +3,14 @@ import PropTypes from 'prop-types'
 import en from 'locales/en'
 import ugh from 'ugh'
 
-// context should only be created when <Provider> is mounted (see constructor), otherwise it's null so ol-kit child comps don't use context
-export let ProviderContext = null
-
-export const setProviderContext = context => { ProviderContext = context }
+// context is always created but works without requiring a mounted <Provider>
+export const ProviderContext = React.createContext()
 
 /**
  * @component
  * @category Provider
  * @example ./example.md
- * @since 0.7.0
+ * @since 0.10.0
  */
 class Provider extends React.Component {
   constructor (props) {
@@ -22,9 +20,6 @@ class Provider extends React.Component {
     this.state = {
       contextProps: {}
     }
-
-    // create a provider context to manage/persist state of ol-kit children (only if <Provider> is mounted)
-    ProviderContext = React.createContext()
   }
 
   persistState = (persistedState, persistedStateKey) => {
@@ -54,6 +49,7 @@ class Provider extends React.Component {
       maps,
       persistedState: this.state,
       persistState: this.persistState,
+      ProviderContext,
       setContextProps: this.setContextProps,
       translations,
       ...contextProps
