@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanel/LayerPanelBase/index.js</title>
+    <title>ol-kit | LayerPanel/LayerPanelActionExport/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,72 +80,182 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Card, Tabs, Tab } from './styled'
-// material-ui-icons
-import LayersIcon from '@material-ui/icons/Layers'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { connectToMap } from 'Map'
+            <pre class="prettyprint source linenums"><code>import olFormatGeoJSON from 'ol/format/geojson'
+import olFormatKml from 'ol/format/kml'
+import shpwrite from 'shp-write' // mapbox shapefile writer
+import olFeature from 'ol/feature'
+import ugh from 'ugh'
+
+const fs = require('fs') // fs is used to test downloads with jest in a node env
+
+export function groupBy (list, getGroupName) {
+  return list.reduce((groups, item) => {
+    const val = getGroupName(item)
+
+    groups[val] = groups[val] || []
+    groups[val].push(item)
+
+    return groups
+  }, {})
+}
 
 /**
- * @component
- * @category LayerPanel
- * @since 0.5.0
+ * Exports the passed features as a file of the desired type.
+ * @function exportFeatures
+ * @since 
+ * @param {String} [type] - The desired file type ('shp' or 'kml').
+ * @param {Object[]} [features] - An array of the features to be included in the generated file.
  */
-class LayerPanelBase extends Component {
-  constructor (props) {
-    super(props)
+export function exportFeatures (type, features, opts) {
+  const visibleFeatures = features.map(feature => {
+    const clone = feature.clone()
 
-    this.state = {
-      activeIndex: false,
-      showLayerPanel: false
-    }
-  }
+    // this removes a ref to _ol_kit_parent to solve circularJSON bug
+    clone.set('_ol_kit_parent', null)
+    clone.setId(feature.getId())
 
-  handleChange = (_, activeIndex) => {
-    const { showLayerPanel } = this.state
+    return clone
+  }).filter(feature => feature.get('_ol_kit_feature_visibility'))
 
-    // the first time through the idx is 0 so we need to add 1
-    if (activeIndex === 0) {
-      this.setState({ showLayerPanel: !this.state.showLayerPanel, activeIndex: showLayerPanel ? false : 1 })
-    } else {
-      this.setState({ activeIndex })
-    }
-  }
-
-  render () {
-    const { inline, style, children } = this.props
-    const { activeIndex, showLayerPanel } = this.state
-
-    return (
-      &lt;Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
-        &lt;Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
-          &lt;Tab icon={showLayerPanel ? &lt;ChevronRightIcon /> : &lt;LayersIcon />} data-testid='LayerPanel.openTab' />
-          {showLayerPanel &amp;&amp;
-            React.Children.map(children, (child, i) => {
-              if (child) return &lt;Tab key={i} icon={child.props.tabIcon} />
-            })
-          }
-        &lt;/Tabs>
-        {React.Children.toArray(children)[activeIndex - 1]}
-      &lt;/Card>
-    )
+  switch (type) {
+    case 'shp':
+      return exportShapefile({
+        format: new olFormatGeoJSON(),
+        visibleFeatures,
+        sourceProjection: 'EPSG:3857',
+        ...opts
+      })
+    case 'kml':
+      return exportKml({
+        format: new olFormatKml(),
+        visibleFeatures,
+        sourceProjection: 'EPSG:3857',
+        targetProjection: 'EPSG:4326',
+        ...opts
+      })
+    default:
+      return exportGeoJSON({
+        format: new olFormatGeoJSON(),
+        visibleFeatures,
+        sourceProjection: 'EPSG:3857',
+        ...opts
+      })
   }
 }
 
-LayerPanelBase.propTypes = {
-  /** Render the component inline (without absolute positioning) */
-  inline: PropTypes.bool,
-
-  /** The content of the layer panel (likely a set of `LayerPanelPage` components) */
-  children: PropTypes.node.isRequired,
-
-  /** An object of styles spread on the layerpanel */
-  style: PropTypes.object
+export function saveAs (blob, filename) {
+  try {
+    // create an &lt;a> element
+    const a = document.createElement('a')
+    // create an object URL from our blob
+    const url = URL.createObjectURL(blob)
+    // set our element properties
+    a['data-testid'] = 'Export.download'
+    a.href = url
+    a.download = filename
+    a.style = 'display: none;'
+    // append to the document so we can click it
+    document.body.appendChild(a)
+    // download the file
+    a.click()
+    // clean-up
+    URL.revokeObjectURL(url)
+    document.body.removeChild(a)
+  } catch (err) {
+    ugh.error(`There was a problem downloading the exported file: ${err.message}`)
+  }
 }
 
-export default connectToMap(LayerPanelBase)
+export function flattenFeatures (features) {
+  return features.reduce((acc, feature) => {
+    const geom = feature.getGeometry()
+    const type = geom.getType()
+    switch (type) {
+      default:
+        acc.push(feature)
+        break
+      case 'MultiPoint': {
+        const featureProps = feature.getProperties()
+        geom.getPoints().forEach(point => {
+          acc.push(new olFeature({ ...featureProps, geometry: point }))
+        })
+        break
+      }
+      case 'MultiLineString': {
+        const featureProps = feature.getProperties()
+        geom.getLineStrings().forEach(lineString => {
+          acc.push(new olFeature({ ...featureProps, geometry: lineString }))
+        })
+        break
+      }
+      case 'MultiPolygon': {
+        const featureProps = feature.getProperties()
+        geom.getPolygons().forEach(polygon => {
+          acc.push(new olFeature({ ...featureProps, geometry: polygon }))
+        })
+        break
+      }
+      case 'GeometryCollection': {
+        const featureProps = feature.getProperties()
+        const spreadFeatures = geom.getGeometriesArray().map(g => new olFeature({ ...featureProps, geometry: g }))
+        const flattenedFeatures = flattenFeatures(spreadFeatures) // GeometryCollections can contain Multi geometries so we call flattenFeatures recusively
+
+        flattenedFeatures.forEach(f => {
+          acc.push(f)
+        })
+        break
+      }
+    }
+
+    return acc
+  }, [])
+}
+
+export function exportShapefile ({ format, visibleFeatures, sourceProjection, targetProjection = 'EPSG:4326', filename = 'export.zip' }) {
+  const flattenedFeatures = flattenFeatures(visibleFeatures) // as of writing this shpwrite is bugged and can't handle multi geometries or GeometryCollections so we flatten these into their constituent parts.
+  const featureCollection = format.writeFeaturesObject(flattenedFeatures, {
+    dataProjection: targetProjection,
+    featureProjection: sourceProjection
+  })
+
+  const types = Array.from(new Set(featureCollection.features.map(feature => feature.geometry.type)))
+  const options = { folder: filename, types  }
+
+  return shpwrite.download(featureCollection, options)
+}
+
+export function exportGeoJSON ({ format, visibleFeatures, sourceProjection, targetProjection = 'EPSG:4326', filename = 'export.geojson' }) {
+  const featureCollection = format.writeFeaturesObject(visibleFeatures, {
+    dataProjection: targetProjection,
+    featureProjection: sourceProjection
+  })
+  const jsonString = JSON.stringify(featureCollection)
+
+  // download the file for testing in a node env
+  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' })
+
+  return saveAs(new Blob([jsonString], {type: "octet/stream"}), filename)
+}
+
+export function exportKml (args) {
+  const {
+    format,
+    visibleFeatures,
+    sourceProjection,
+    targetProjection = 'EPSG:4326',
+    filename = 'export.kml'
+  } = args
+  const source = format.writeFeatures(visibleFeatures, {
+    dataProjection: targetProjection,
+    featureProjection: sourceProjection
+  })
+  const blob = new Blob([source], { type: 'kml' })
+
+  // download the file for testing in a node env
+  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // fs is used for testing the download in node
+
+  return saveAs(blob, filename)
+}
 </code></pre>
         </article>
     </section>
