@@ -6,7 +6,10 @@ import ugh from 'ugh'
 // context is always created but works without requiring a mounted <Provider>
 export const ProviderContext = React.createContext()
 
-/**
+// closure for <Map> components to check against
+export let isProviderMounted = false
+
+/** A higher order component that provides context to connectToContext wrapped children
  * @component
  * @category Provider
  * @example ./example.md
@@ -20,6 +23,9 @@ class Provider extends React.Component {
     this.state = {
       contextProps: {}
     }
+
+    // toggle this closure when <Provider> is in component tree
+    isProviderMounted = true
   }
 
   persistState = (persistedState, persistedStateKey) => {
@@ -28,7 +34,7 @@ class Provider extends React.Component {
     this.setState({ [persistedStateKey]: persistedState })
   }
 
-  setContextProps = contextProps => {
+  addMapToContext = contextProps => {
     this.setState({ contextProps })
   }
 
@@ -44,12 +50,12 @@ class Provider extends React.Component {
     const maps = mapsProp.length ? mapsProp : [mapProp]
 
     return {
+      ProviderContext,
+      addMapToContext: this.addMapToContext,
       map,
       maps,
       persistedState: this.state,
       persistState: this.persistState,
-      ProviderContext,
-      setContextProps: this.setContextProps,
       translations,
       ...this.state.contextProps,
       ...contextProps

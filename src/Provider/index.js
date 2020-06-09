@@ -1,2 +1,2 @@
-export { default as Provider, ProviderContext, setProviderContext } from './Provider'
+export { default as Provider, ProviderContext, isProviderMounted } from './Provider'
 export * from './utils'

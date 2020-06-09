@@ -6,8 +6,8 @@ import debounce from 'lodash.debounce'
 import MapLogo from './MapLogo'
 import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
+import { connectToContext } from 'Provider'
 import en from 'locales/en'
-import { connectToContext, Provider, ProviderContext } from 'Provider'
 import ugh from 'ugh'
 
 /**
@@ -32,6 +32,7 @@ class Map extends React.Component {
 
   componentDidMount () {
     const {
+      addMapToContext,
       map: passedMap,
       onMapInit,
       updateUrlDebounce,
@@ -58,7 +59,13 @@ class Map extends React.Component {
     this.initializeSelect(this.map)
 
     // callback for <Provider> if it is mounted as hoc
-    this.props.setContextProps(this.getContextProps())
+    const contextProps = {
+      map: this.map,
+      mapId: this.target,
+      selectInteraction: this.selectInteraction
+    }
+
+    addMapToContext(contextProps)
 
     // optionally attach map listener
     if (updateUrlFromView) {
@@ -102,24 +109,13 @@ class Map extends React.Component {
     if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
   }
 
-  getContextProps = () => {
-    // props created in this comp, set on ProviderContext
-    return {
-      map: this.map,
-      mapId: this.target,
-      selectInteraction: this.selectInteraction
-    }
-  }
-
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
-    // if a Provider is not mounted, wrap map with a Provider to allow context to exist either way
-    const ContextWrapper = this.noProviderMounted ? Provider : React.Fragment
-    console.log('render', this.props)
+    console.log('Map render', this.props)
 
     return (
-      <ContextWrapper {...this.getContextProps()}>
+      <>
         <StyledMap
           id={this.target}
           fullScreen={fullScreen}
@@ -132,27 +128,28 @@ class Map extends React.Component {
             : null
           }
         </>
-      </ContextWrapper>
+      </>
     )
   }
 }
 
 Map.defaultProps = {
+  addMapToContext: () => {},
   fullScreen: false,
   logoPosition: 'right',
   map: null,
   onMapInit: () => {},
-  ProviderContext: ProviderContext,
   updateUrlDebounce: 400,
   updateUrlFromView: true,
   updateViewFromUrl: true,
   urlViewParam: 'view',
-  setContextProps: () => {},
   style: {},
   translations: en
 }
 
 Map.propTypes = {
+  /** callback passed by a <Provider> parent to attach props from this <Map> (map, selectInteraction, etc.) to context */
+  addMapToContext: PropTypes.func,
   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -168,8 +165,6 @@ Map.propTypes = {
     note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
   */
   onMapInit: PropTypes.func,
-  /** reference to the context initialized by <Provider> */
-  ProviderContext: PropTypes.object,
   /** the length of debounce on map movements before the url gets updated */
   updateUrlDebounce: PropTypes.number,
   /** add map location coords + zoom level to url as query params */
@@ -180,8 +175,6 @@ Map.propTypes = {
   urlViewParam: PropTypes.string,
   /** an openlayers select interaction passed down to connected components - created internally if not passed as prop */
   selectInteraction: PropTypes.object,
-  /** callback passed by a <Provider> parent to attach props from this <Map> (map, selectInteraction, etc.) to context */
-  setContextProps: PropTypes.func,
   /** apply inline styles to the map container */
   style: PropTypes.object,
   /** object of string key/values (see: locales) */
