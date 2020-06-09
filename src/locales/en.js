@@ -7,8 +7,9 @@ export default {
   '_ol_kit.StamenTonerDark.title': 'Stamen Toner Dark',
   '_ol_kit.StamenTonerLite.title': 'Stamen Toner Lite',
   // LayerPanel
-  '_ol_kit.LayerPanelActions.kml': 'KML',
-  '_ol_kit.LayerPanelActions.shapefile': 'Shapefile',
+  '_ol_kit.LayerPanelActions.kml': 'Export KML',
+  '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',
+  '_ol_kit.LayerPanelActions.geojson': 'Export GeoJSON',
   '_ol_kit.LayerPanelActions.import': 'Import',
   '_ol_kit.LayerPanelLayersPage.title': 'Active Layers',
   '_ol_kit.LayerPanelLayersPage.filterText': 'Filter Layers',
