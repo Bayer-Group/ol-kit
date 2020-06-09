@@ -49,6 +49,7 @@ class LayerPanelActionExport extends Component {
     return (
       [<MenuItem
         key='exportKml'
+        data-testid='LayerPanel.exportKML'
         disableGutters={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('kml')} >
@@ -56,6 +57,7 @@ class LayerPanelActionExport extends Component {
       </MenuItem>,
       <MenuItem
         key='exportShp'
+        data-testid='LayerPanel.exportShapefile'
         disableGutters={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('shp')} >
@@ -63,6 +65,7 @@ class LayerPanelActionExport extends Component {
       </MenuItem>,
       <MenuItem
       key='exportGeoJSON'
+      data-testid='LayerPanel.exportGeoJSON'
       disableGutters={false}
       disabled={this.isExportable()}
       onClick={() => this.handleExport('geojson')} >

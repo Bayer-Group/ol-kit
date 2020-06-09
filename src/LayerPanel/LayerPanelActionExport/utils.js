@@ -2,6 +2,9 @@ import olFormatGeoJSON from 'ol/format/geojson'
 import olFormatKml from 'ol/format/kml'
 import shpwrite from 'shp-write' // mapbox shapefile writer
 import olFeature from 'ol/feature'
+import ugh from 'ugh'
+
+const fs = require('fs') // fs is used to test downloads with jest in a node env
 
 export function groupBy (list, getGroupName) {
   return list.reduce((groups, item) => {
@@ -59,22 +62,26 @@ export function exportFeatures (type, features, opts) {
 }
 
 export function saveAs (blob, filename) {
-  // create an <a> element
-  const a = document.createElement('a')
-  // create an object URL from our blob
-  const url = URL.createObjectURL(blob)
-
-  // set our element properties
-  a.href = url
-  a.download = filename
-  a.style = 'display: none;'
-  // append to the document so we can click it
-  document.body.appendChild(a)
-  // download the file
-  a.click()
-  // clean-up
-  URL.revokeObjectURL(url)
-  document.body.removeChild(a)
+  try {
+    // create an <a> element
+    const a = document.createElement('a')
+    // create an object URL from our blob
+    const url = URL.createObjectURL(blob)
+    // set our element properties
+    a['data-testid'] = 'Export.download'
+    a.href = url
+    a.download = filename
+    a.style = 'display: none;'
+    // append to the document so we can click it
+    document.body.appendChild(a)
+    // download the file
+    a.click()
+    // clean-up
+    URL.revokeObjectURL(url)
+    document.body.removeChild(a)
+  } catch (err) {
+    ugh.error(`There was a problem downloading the exported file: ${err.message}`)
+  }
 }
 
 export function flattenFeatures (features) {
@@ -140,8 +147,12 @@ export function exportGeoJSON ({ format, visibleFeatures, sourceProjection, targ
     dataProjection: targetProjection,
     featureProjection: sourceProjection
   })
+  const jsonString = JSON.stringify(featureCollection)
 
-  return saveAs(new Blob([JSON.stringify(featureCollection)], {type: "octet/stream"}), filename)
+  // download the file for testing in a node env
+  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' })
+
+  return saveAs(new Blob([jsonString], {type: "octet/stream"}), filename)
 }
 
 export function exportKml (args) {
@@ -149,43 +160,17 @@ export function exportKml (args) {
     format,
     visibleFeatures,
     sourceProjection,
-    targetProjection = 'EPSG:4326'
+    targetProjection = 'EPSG:4326',
+    filename = 'export.kml'
   } = args
   const source = format.writeFeatures(visibleFeatures, {
     dataProjection: targetProjection,
     featureProjection: sourceProjection
   })
   const blob = new Blob([source], { type: 'kml' })
-  const filename = 'export.kml'
+
+  // download the file for testing in a node env
+  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // fs is used for testing the download in node
 
   return saveAs(blob, filename)
-}
-
-export function smoothFeatureAttributes (geojsonFeatures) {
-  let allProps = {}
-
-  // create an object of props as keys (since it takes care of dupes) & then grab just the keys
-  geojsonFeatures.forEach(feature => {
-    if (!feature.properties) feature.properties = {}
-    Object.keys(feature.properties).forEach(function (prop) { allProps[prop] = true })
-  })
-  allProps = Object.keys(allProps)
-
-  // for each feature determine if the prop should be removed or set to ''
-  // an empty string corresponds to a null value in the output shapefile
-  return geojsonFeatures.map(feature => {
-    allProps.forEach(prop => {
-      const hasProp = feature.properties.hasOwnProperty(prop)
-      const propIsNull = feature.properties[prop] === null
-      const isVmfProp = prop.startsWith('_vmf_')
-
-      if (isVmfProp) {
-        delete feature.properties[prop]
-      } else if (!hasProp || (hasProp && propIsNull)) {
-        feature.properties[prop] = ''
-      }
-    })
-
-    return feature
-  })
 }
