@@ -286,7 +286,7 @@ class LayerPanelLayersPage extends Component {
                 removeFeaturesForLayer={this.removeFeaturesForLayer}
                 shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
               {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
-              <LayerPanelActionExport />
+              <LayerPanelActionExport onExportFeatures={onExportFeatures} />
             </LayerPanelActions>} />
         {enableFilter &&
           <TextField
