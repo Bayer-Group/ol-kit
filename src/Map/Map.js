@@ -7,7 +7,7 @@ import MapLogo from './MapLogo'
 import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
-import { connectToContext, ProviderContext } from 'Provider'
+import { connectToContext, Provider, ProviderContext } from 'Provider'
 import ugh from 'ugh'
 
 /**
@@ -114,10 +114,12 @@ class Map extends React.Component {
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
+    // if a Provider is not mounted, wrap map with a Provider to allow context to exist either way
+    const ContextWrapper = this.noProviderMounted ? Provider : React.Fragment
     console.log('render', this.props)
 
     return (
-      <>
+      <ContextWrapper {...this.getContextProps()}>
         <StyledMap
           id={this.target}
           fullScreen={fullScreen}
@@ -130,7 +132,7 @@ class Map extends React.Component {
             : null
           }
         </>
-      </>
+      </ContextWrapper>
     )
   }
 }
