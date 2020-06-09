@@ -33,7 +33,7 @@ export function exportFeatures (type, features, opts) {
     clone.setId(feature.getId())
 
     return clone
-  }).filter(feature => feature.get('_vmf_visible') || feature.get('_ol_kit_feature_visibility'))
+  }).filter(feature => feature.get('_ol_kit_feature_visibility'))
 
   switch (type) {
     case 'shp':
