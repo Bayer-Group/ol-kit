@@ -26,8 +26,6 @@ class Map extends React.Component {
 
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
-
-    console.log('constructor', props)
   }
 
   componentDidMount () {
@@ -112,7 +110,6 @@ class Map extends React.Component {
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
-    console.log('Map render', this.props)
 
     return (
       <>

@@ -13,8 +13,6 @@ import { ProviderContext } from 'Provider'
 export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
-  console.log('WRAPPED?', !!ProviderContext, Component.name)
-
   return props => ( // eslint-disable-line react/display-name
     !ProviderContext
       ? <Component {...props} />
