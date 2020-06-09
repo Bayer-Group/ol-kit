@@ -69,7 +69,7 @@ class LayerPanelActionExport extends Component {
       disableGutters={false}
       disabled={this.isExportable()}
       onClick={() => this.handleExport('geojson')} >
-      {translations['_ol_kit.LayerPanelActions.geojson'] || 'Export GeoJSON'}
+      {translations['_ol_kit.LayerPanelActions.geojson']}
     </MenuItem>]
     )
   }
