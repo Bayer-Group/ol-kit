@@ -120,7 +120,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, logoPosition, style } = this.props
+    const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
     // if a Provider is not mounted, wrap map with a Provider to allow context to exist either way
     const ContextWrapper = this.noProviderMounted ? Provider : React.Fragment
@@ -131,7 +131,7 @@ class Map extends React.Component {
           id={this.target}
           fullScreen={fullScreen}
           style={style}>
-          <MapLogo logoPosition={logoPosition} />
+          <MapLogo logoPosition={logoPosition} translations={translations} />
         </StyledMap>
         <>
           {mapInitialized // wait for map to initialize before rendering children
@@ -146,7 +146,7 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   fullScreen: false,
-  logoPosition: 'left',
+  logoPosition: 'right',
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,

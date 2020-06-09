@@ -179,7 +179,7 @@ class LayerStyler extends React.Component {
   }
 
   render () {
-    const layers = this.props.map.getLayers().getArray()
+    const layers = this.getValidLayers()
     const { attributeValues } = this.state
     const { translations } = this.props
 

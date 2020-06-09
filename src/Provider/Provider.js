@@ -39,7 +39,7 @@ class Provider extends React.Component {
 
   getContextValue = () => {
     const props = { ...this.props, ...this.state.contextProps }
-    const { map: mapProp, maps: mapsProp, translations } = props
+    const { contextProps, map: mapProp, maps: mapsProp, translations } = props
 
     // if (!mapProp && !mapsProp.length) return ugh.throw('Provider requires either a \'map\' or \'maps\' prop to work!')
 

@@ -1,6 +1,7 @@
 module.exports = {
   'testEnvironment': 'jest-environment-jsdom-global',
   'verbose': true,
+  'automock': false,
   'unmockedModulePathPatterns': [
     '<rootDir>/node_modules/react/',
     '<rootDir>/node_modules/react-dom/',

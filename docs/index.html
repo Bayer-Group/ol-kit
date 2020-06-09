@@ -67,6 +67,7 @@
         <article>
 <img src="static/readme-ol-kit-logo.png" />
 <p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/en/v4.6.5/apidoc/">OpenLayers</a> map component toolkit.</p>
+<p>Checkout the <a href='https://demo.ol-kit.com/'>demo site here!</a></p>
 <h2>Prebuilt Map Components</h2>
 <p>Ready to use and <em>just work</em> with the map via a single line drop-in!</p>
 <img src="static/example-screenshot-1.png" />
@@ -75,35 +76,35 @@
 <code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save</code>
 <h2>Getting Started</h2>
 <p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
-<pre class="prettyprint source lang-javascript"><code>import React, { Component } from 'react'
-import { Map, Controls, zoomToExtent } from '@bayer/ol-kit'
+<pre class="prettyprint source lang-javascript"><code>
+  import React from 'react'
+  import { Map, Controls, LayerPanel, Popup, loadDataLayer } from '@bayer/ol-kit'
 
-import VectorLayer from 'ol/layer/vector'
-import VectorSource from 'ol/source/vector'
+  class App extends React.Component {
+    onMapInit = async map => {
+      console.log('we got a map!', map)
+      // nice to have map set on the window while debugging
+      window.map = map
 
-class App extends Component {
-  onMapInit = map => {
-    const data = new VectorLayer({
-      source: new VectorSource({
-        features: [/** Get some data and have fun with it */]
-      })
-    })
+      // find a geojson or kml dataset (url or file) to load on the map
+      const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
+      const dataLayer = await loadDataLayer(map, data)
 
-    // add the data to the map
-    map.addLayer(data)
+      console.log('data layer:', dataLayer)
+    }
 
-    // quickly take the map
-    zoomToExtent([0, 0], 12)
+    render () {
+      return (
+        &lt;Map onMapInit={this.onMapInit}>
+          &lt;Controls />
+          &lt;LayerPanel />
+          &lt;Popup />
+        &lt;/Map>
+      )
+    }
   }
 
-  render () {
-    return (
-      &lt;Map onMapInit={this.onMapInit}>
-        &lt;Controls />
-      &lt;/Map>
-    )
-  }
-}
+  export default App
 </code></pre>
 <h4><a href="docs.html">Go to docs</a></h4>
 </article>

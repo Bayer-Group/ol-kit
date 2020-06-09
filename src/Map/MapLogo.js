@@ -1,37 +1,40 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Logo } from './styled'
+import { LogoContainer, Logo, LogoText } from './styled'
 import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 import OL_KIT_MARK_BLACK from 'images/ol_kit_mark_black.svg'
 
 export default function MapLogo (props) {
-  const { logoPosition } = props
+  const { logoPosition, translations } = props
   const [isHovered, setHovered] = useState(false)
 
   return (
     logoPosition === 'none'
       ? null
       : (
-        <Logo
-          position={logoPosition}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          title='Powered by ol-kit'
-          href='https://ol-kit.com/'
-          target='_blank'>
-          {isHovered
-            ? <OL_KIT_MARK />
-            : <OL_KIT_MARK_BLACK />
-          }
-        </Logo>
+        <LogoContainer position={logoPosition}>
+          <LogoText>{translations['_ol_kit.MapLogo.title']}</LogoText>
+          <Logo
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            title={translations['_ol_kit.MapLogo.title']}
+            href='https://ol-kit.com/'
+            target='_blank'>
+            {isHovered
+              ? <OL_KIT_MARK />
+              : <OL_KIT_MARK_BLACK />
+            }
+          </Logo>
+        </LogoContainer>
       )
   )
 }
 
 MapLogo.defaultProps = {
-  logoPosition: 'left'
+  logoPosition: 'right'
 }
 
 MapLogo.propTypes = {
-  logoPosition: PropTypes.string
+  logoPosition: PropTypes.string,
+  translations: PropTypes.object
 }

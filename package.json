@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -53,6 +53,7 @@
     "url": "git@github.com:MonsantoCo/ol-kit.git"
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.54",
     "@mdi/js": "~5.1.45",
     "@mdi/react": "1.4.0",
     "@turf/bbox": "~6.0.1",
@@ -67,14 +68,12 @@
     "prop-types": "~15.7.2",
     "qs": "~6.9.3",
     "react-color": "~2.18.0",
+    "react-hook-form": "^5.7.2",
     "react-select": "~3.1.0",
     "react-smooth-dnd": "~0.11.1",
     "uuid": "~7.0.3"
   },
   "devDependencies": {
-    "@material-ui/core": "~4.9.12",
-    "@material-ui/icons": "~4.9.1",
-    "@material-ui/styles": "~4.9.10",
     "@babel/cli": "~7.4.3",
     "@babel/core": "~7.7.7",
     "@babel/plugin-proposal-class-properties": "~7.7.4",
@@ -84,6 +83,9 @@
     "@babel/preset-env": "~7.7.1",
     "@babel/preset-react": "~7.7.0",
     "@babel/runtime": "~7.7.2",
+    "@material-ui/core": "~4.9.12",
+    "@material-ui/icons": "~4.9.1",
+    "@material-ui/styles": "~4.9.10",
     "@testing-library/dom": "~7.0.4",
     "@testing-library/jest-dom": "~5.5.0",
     "@testing-library/react": "~10.0.1",
@@ -103,12 +105,13 @@
     "eslint-plugin-node": "~11.0.0",
     "eslint-plugin-promise": "~3.5.0",
     "eslint-plugin-react": "~7.19.0",
-    "eslint-plugin-react-hooks": "~3.0.0",
     "eslint-plugin-standard": "~4.0.1",
     "husky": "~4.2.5",
     "jest": "~25.4.0",
     "jest-canvas-mock": "~2.2.0",
-    "jest-environment-jsdom-global": "~1.2.1",
+    "jest-environment-jsdom": "^26.0.1",
+    "jest-environment-jsdom-global": "^2.0.2",
+    "jest-fetch-mock": "^3.0.3",
     "jest-styled-components": "~7.0.2",
     "jsdoc": "3.6.3",
     "ol": "4.6.5",

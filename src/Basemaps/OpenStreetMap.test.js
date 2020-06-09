@@ -7,7 +7,7 @@ import OpenStreetMap from './OpenStreetMap'
 import olMap from 'ol/map'
 import olLayerVector from 'ol/layer/vector'
 
-const TEXT_IDENTIFIER = 'OpenStreetMap'
+const TEXT_IDENTIFIER = 'Open Street Map'
 
 describe('<OpenStreetMap />', () => {
   it.skip('should render a basic basemap option component', async () => {

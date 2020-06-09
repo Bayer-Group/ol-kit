@@ -88,16 +88,20 @@ class Popup extends Component {
   }
 
   getNewFeatures = async (e, promises) => {
-    const { featuresFilter, onMapClick } = this.props // eslint-disable-line no-unused-vars
+    const { onMapClick } = this.props
+    const popupPositionWhileLoading = getPopupPositionFromFeatures(e)
 
     // show popup in loading state while before resolving
-    this.setState({ show: true, loading: true }, () => onMapClick(this.state))
+    this.setState({ show: true, loading: true, popupPosition: popupPositionWhileLoading }, () => onMapClick(this.state))
 
     const layers = await Promise.all(promises)
 
     const parsedFeatures = layers.reduce((acc, { features, layer }) => {
       const layerFeatures = features.map(feature => {
-        feature.set('_ol_kit_parent', layer)
+        const parentLayer = layer.get('_ol_kit_parent')
+        const parent = parentLayer || layer
+
+        feature.set('_ol_kit_parent', parent)
 
         return feature
       })
@@ -133,7 +137,7 @@ class Popup extends Component {
         ? null
         : (
           ReactDOM.createPortal(
-            <PopupBase pixel={pixel} arrow={arrow} {...this.props} show={show}>
+            <PopupBase arrow={arrow} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
                   actions={actions}
@@ -150,7 +154,6 @@ class Popup extends Component {
 }
 
 Popup.defaultProps = {
-  featuresFilter: features => features,
   onMapClick: () => {},
   show: undefined
 }
@@ -166,8 +169,6 @@ Popup.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  /** return a filtered array of features */
-  featuresFilter: PropTypes.func,
   /** a reference to openlayers map object */
   map: PropTypes.object.isRequired,
   /** callback fired on map clicks with state object:
