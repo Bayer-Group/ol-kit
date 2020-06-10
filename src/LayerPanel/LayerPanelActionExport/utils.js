@@ -4,7 +4,13 @@ import shpwrite from 'shp-write' // mapbox shapefile writer
 import olFeature from 'ol/feature'
 import ugh from 'ugh'
 
-const fs = require('fs') // fs is used to test downloads with jest in a node env
+let fs
+
+try {
+  fs = require('fs') // fs is used to test downloads with jest in a node env
+} catch (e) {
+  // do nothing
+}
 
 function groupBy (list, getGroupName) {
   return list.reduce((groups, item) => {
