@@ -252,14 +252,9 @@ class LayerPanelLayersPage extends Component {
     const clonedExpandedLayers = [...this.state.expandedLayers]
     const index = clonedExpandedLayers.indexOf(layer.ol_uid)
 
-    if (index > -1) {
-      clonedExpandedLayers.splice(index, 1)
-      this.setState({ expandedLayers: clonedExpandedLayers })
-    } else {
-      clonedExpandedLayers.push(layer.ol_uid)
+    index > -1 ? clonedExpandedLayers.splice(index, 1) : clonedExpandedLayers.push(layer.ol_uid)
 
-      this.setState(({ expandedLayers: clonedExpandedLayers }))
-    }
+    this.setState({ expandedLayers: clonedExpandedLayers })
   }
 
   // highest zIndex should be at the front of the list (reverse order of array index)
