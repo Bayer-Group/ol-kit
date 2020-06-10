@@ -4,7 +4,7 @@ import { Card, Tabs, Tab } from './styled'
 // material-ui-icons
 import LayersIcon from '@material-ui/icons/Layers'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * @component
@@ -63,4 +63,4 @@ LayerPanelBase.propTypes = {
   style: PropTypes.object
 }
 
-export default connectToMap(LayerPanelBase)
+export default connectToContext(LayerPanelBase)

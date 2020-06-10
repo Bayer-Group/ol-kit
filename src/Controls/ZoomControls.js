@@ -5,7 +5,7 @@ import MINUS from 'images/zoom_out_ico.svg'
 import PLUS from 'images/zoom_in_ico.svg'
 import { Icon, IconSeparator, IconsContainer } from './styled'
 import { zoomDelta } from './utils'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { connectToContext } from 'Provider'; // eslint-disable-line
 
 /**
  * A simple map zoom control
@@ -71,4 +71,4 @@ ZoomControls.propTypes = {
   map: PropTypes.object.isRequired
 }
 
-export default connectToMap(ZoomControls)
+export default connectToContext(ZoomControls)

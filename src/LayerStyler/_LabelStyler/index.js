@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import ugh from 'ugh'
 import ColorPicker from 'LayerStyler/_ColorPicker'
 
@@ -222,4 +222,4 @@ LabelStyler.defaultProps = {
   onStylesChange: () => {}
 }
 
-export default connectToMap(LabelStyler)
+export default connectToContext(LabelStyler)

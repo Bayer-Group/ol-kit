@@ -4,7 +4,7 @@ import olSelect from 'ol/interaction/select'
 
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
@@ -139,4 +139,4 @@ PopupDefaultInsert.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupDefaultInsert)
+export default connectToContext(PopupDefaultInsert)

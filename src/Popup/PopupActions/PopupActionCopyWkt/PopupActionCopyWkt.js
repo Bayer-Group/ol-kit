@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import { PopupActionItem } from 'Popup'
 
 import { copyWktToClipbard } from './utils'
@@ -30,4 +30,4 @@ PopupActionCopyWkt.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupActionCopyWkt)
+export default connectToContext(PopupActionCopyWkt)

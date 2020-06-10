@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import Popover from 'LayerStyler/_Popover'
 import Selector from 'LayerStyler/_Selector'
 import { ContentContainer, InputContainer, Row, TextContainer, Title } from './styled'
@@ -153,4 +153,4 @@ AttributesFilter.defaultProps = {
   onUpdateFilters: () => {}
 }
 
-export default connectToMap(AttributesFilter)
+export default connectToContext(AttributesFilter)

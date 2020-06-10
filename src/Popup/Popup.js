@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import olInteractionDraw from 'ol/interaction/draw'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import PopupBase from './PopupBase'
 import PopupDefaultInsert from './PopupInsert/PopupDefaultInsert'
 import { addMovementListener, getLayersAndFeaturesForEvent, getPopupPositionFromFeatures, removeMovementListener } from './utils'
@@ -188,4 +188,4 @@ Popup.propTypes = {
   show: PropTypes.bool
 }
 
-export default connectToMap(Popup)
+export default connectToContext(Popup)

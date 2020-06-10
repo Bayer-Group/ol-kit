@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import Alert from '@material-ui/lab/Alert'
-import { connectToMap, centerAndZoom } from 'Map'
+import { centerAndZoom } from 'Map'
+import { connectToContext } from 'Provider'
 import VectorLayer from '../classes/VectorLayer'
 import olCollection from 'ol/collection'
 import olVectorSource from 'ol/source/vector'
@@ -147,4 +148,4 @@ GooglePlacesSearch.propTypes = {
   apiKey: PropTypes.string.isRequired
 }
 
-export default connectToMap(GooglePlacesSearch)
+export default connectToContext(GooglePlacesSearch)

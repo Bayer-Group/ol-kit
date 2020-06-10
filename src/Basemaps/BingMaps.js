@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import olLayerTile from 'ol/layer/tile'
 import olSourceBingMaps from 'ol/source/bingmaps'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 const DEFAULT_OPTS = {
   thumbnail: '',
@@ -98,4 +98,4 @@ BasemapBingMaps.defaultProps = {
   layerID: 'bingAerial'
 }
 
-export default connectToMap(BasemapBingMaps)
+export default connectToContext(BasemapBingMaps)

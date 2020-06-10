@@ -12,7 +12,7 @@ import ugh from 'ugh'
 import escapeRegExp from 'lodash.escaperegexp'
 
 import { addMovementListener } from 'Popup'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * UI to choose color, stroke, fill etc. for styles and labels on layers
@@ -212,4 +212,4 @@ LayerStyler.propTypes = {
   translations: PropTypes.object.isRequired
 }
 
-export default connectToMap(LayerStyler)
+export default connectToContext(LayerStyler)

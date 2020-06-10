@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { ControlsContainer } from './styled'
 import Compass from './Compass'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import ZoomControls from './ZoomControls'
 
 /**
@@ -48,4 +48,4 @@ Controls.propTypes = {
   position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
 }
 
-export default connectToMap(Controls)
+export default connectToContext(Controls)
