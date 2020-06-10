@@ -18,8 +18,8 @@ export const Slider = withStyles(() => ({
 }))(MateriaSlider)
 
 export const OpacityWrapper = styled.div`
-  width: 100%;
+  width: auto;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px 15px;
+  padding: 5px 15px;
 `

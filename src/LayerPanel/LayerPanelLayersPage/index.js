@@ -49,7 +49,7 @@ class LayerPanelLayersPage extends Component {
       masterCheckboxVisibility: true,
       featureListeners: [],
       filterText: null,
-      expandedLayer: false
+      expandedLayers: []
     }
   }
 
@@ -248,8 +248,22 @@ class LayerPanelLayersPage extends Component {
     return (layer instanceof olLayerVector || (layer && layer.isVectorLayer))
   }
 
-  handleExpandedLayer = () => {
-    this.setState(({ expandedLayer: !this.state.expandedLayer }))
+  handleExpandedLayer = (layer) => {
+    const clonedExpandedLayers = [...this.state.expandedLayers]
+    const foundLayer = this.state.expandedLayers.find(expandedLayerTitle => layer.ol_uid === expandedLayerTitle)
+
+    if (foundLayer) {
+      const index = clonedExpandedLayers.indexOf(foundLayer)
+
+      if (index > -1) {
+        clonedExpandedLayers.splice(index, 1)
+        this.setState({ expandedLayers: clonedExpandedLayers })
+      }
+    } else {
+      clonedExpandedLayers.push(layer.ol_uid)
+
+      this.setState(({ expandedLayers: clonedExpandedLayers }))
+    }
   }
 
   // highest zIndex should be at the front of the list (reverse order of array index)
@@ -267,7 +281,10 @@ class LayerPanelLayersPage extends Component {
       translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag,
       customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
     } = this.props
-    const { layers, masterCheckboxVisibility, filterText, expandedLayer } = this.state
+    const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
+    const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerTitle => expandedLayerTitle === layer.ol_uid)
+
+    console.log(expandedLayers)
 
     return (
       <LayerPanelPage>
@@ -319,8 +336,8 @@ class LayerPanelLayersPage extends Component {
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
-                      open={expandedLayer}
-                      handleClick={this.handleExpandedLayer} />}
+                      open={isExpandedLayer(layer)}
+                      handleClick={() => this.handleExpandedLayer(layer)} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
                     <ListItemSecondaryAction style={{ right: '0px !important' }} data-testid='LayerPanel.secondaryAction'>
                       <LayerPanelActions
@@ -336,7 +353,7 @@ class LayerPanelLayersPage extends Component {
                     </ListItemSecondaryAction>
                   </LayerPanelListItem>
                   { features
-                    ? <Collapse in={expandedLayer} timeout='auto' unmountOnExit>
+                    ? <Collapse in={isExpandedLayer(layer)} timeout='auto' unmountOnExit>
                       <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
                         {features.map((feature, i) => {
                           return (
