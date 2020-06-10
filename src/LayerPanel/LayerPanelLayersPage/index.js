@@ -281,8 +281,6 @@ class LayerPanelLayersPage extends Component {
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerTitle => expandedLayerTitle === layer.ol_uid)
 
-    console.log(expandedLayers)
-
     return (
       <LayerPanelPage>
         <LayerPanelHeader
