@@ -173,6 +173,16 @@ class VectorLayer extends olLayerVector {
 
     this.setStyle(() => style)
   }
+
+  getTimeAttribute () {
+    console.log('time', this.get('_ol_kit_time_attribute'))
+
+    return this.get('_ol_kit_time_attribute')
+  }
+
+  setTimeAttribute (attribute) {
+    this.set('_ol_kit_time_attribute', attribute)
+  }
 }
 
 export default VectorLayer

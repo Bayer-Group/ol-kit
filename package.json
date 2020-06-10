@@ -53,7 +53,9 @@
     "url": "git@github.com:MonsantoCo/ol-kit.git"
   },
   "dependencies": {
+    "@date-io/moment": "^2.6.0",
     "@material-ui/lab": "^4.0.0-alpha.54",
+    "@material-ui/pickers": "^3.2.10",
     "@mdi/js": "~5.1.45",
     "@mdi/react": "1.4.0",
     "@turf/bbox": "~6.0.1",
@@ -64,6 +66,7 @@
     "lodash.debounce": "~4.0.8",
     "lodash.escaperegexp": "~4.1.2",
     "lodash.isequal": "~4.5.0",
+    "moment": "^2.26.0",
     "nanoid": "~2.1.11",
     "prop-types": "~15.7.2",
     "qs": "~6.9.3",
