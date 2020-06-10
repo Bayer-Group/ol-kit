@@ -250,8 +250,7 @@ class LayerPanelLayersPage extends Component {
 
   handleExpandedLayer = (layer) => {
     const clonedExpandedLayers = [...this.state.expandedLayers]
-    const foundLayer = this.state.expandedLayers.find(expandedLayerTitle => layer.ol_uid === expandedLayerTitle)
-    const index = clonedExpandedLayers.indexOf(foundLayer)
+    const index = clonedExpandedLayers.indexOf(layer.ol_uid)
 
     if (index > -1) {
       clonedExpandedLayers.splice(index, 1)
