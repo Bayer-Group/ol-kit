@@ -273,7 +273,7 @@ class LayerPanelLayersPage extends Component {
       customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
-    const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerTitle => expandedLayerTitle === layer.ol_uid)
+    const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
 
     return (
       <LayerPanelPage>
