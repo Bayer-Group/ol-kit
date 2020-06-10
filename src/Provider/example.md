@@ -1,4 +1,4 @@
-The Provider component should wrap your entire application and never be unmounted. It will automatically interface with any ol-kit children within the component tree and persist their state before they unmount; a drop-in state management tool!
+The Provider component should wrap your entire application and never be unmounted. It will automatically interface with any ol-kit children within the component tree and give them access to props they need like `map`, `selectInteraction`, `translations`, etc.
 
 Fully integrated example:
 ```javascript static

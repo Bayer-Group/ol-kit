@@ -33,6 +33,7 @@ class Map extends React.Component {
       addMapToContext,
       map: passedMap,
       onMapInit,
+      translations,
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
@@ -57,13 +58,14 @@ class Map extends React.Component {
     this.initializeSelect(this.map)
 
     // callback for <Provider> if it is mounted as hoc
-    const contextProps = {
+    const mapContext = {
       map: this.map,
       mapId: this.target,
-      selectInteraction: this.selectInteraction
+      selectInteraction: this.selectInteraction,
+      translations // this can be hoisted to <Provider> only in the future
     }
 
-    addMapToContext(contextProps)
+    addMapToContext(mapContext)
 
     // optionally attach map listener
     if (updateUrlFromView) {

@@ -18,10 +18,10 @@ class Provider extends React.Component {
 
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
     this.state = {
-      contextProps: {}
+      mapContext: {}
     }
 
-    // create context when <Provider> is mounted in component tree
+    // create context when <Provider> is included in component tree
     ProviderContext = React.createContext()
   }
 
@@ -31,8 +31,8 @@ class Provider extends React.Component {
     this.setState({ [persistedStateKey]: persistedState })
   }
 
-  addMapToContext = contextProps => {
-    this.setState({ contextProps })
+  addMapToContext = mapContext => {
+    this.setState({ mapContext })
   }
 
   getContextValue = () => {
@@ -53,7 +53,7 @@ class Provider extends React.Component {
       persistedState: this.state,
       persistState: this.persistState,
       translations,
-      ...this.state.contextProps,
+      ...this.state.mapContext,
       ...contextProps
     }
   }
