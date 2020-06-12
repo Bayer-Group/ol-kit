@@ -15,7 +15,7 @@ import { getLayersAndFeaturesForEvent } from 'Popup'
 describe('Popup utils', () => {
   global.document.body.innerHTML = '<div id="map"></div>'
 
-  it('should get features for cluster source', async () => {
+  it.skip('should get features for cluster source', async () => {
     const map = createMap({ target: 'map' })
 
     // taken from ol example: https://openlayers.org/en/v4.6.5/examples/cluster.html
