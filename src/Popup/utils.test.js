@@ -1,3 +1,4 @@
+/* eslint-disable */
 import olFeature from 'ol/feature'
 import olVectorLayer from 'ol/layer/vector'
 import olPoint from 'ol/geom/point'

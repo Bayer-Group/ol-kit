@@ -69,7 +69,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
   const wfsSelector = layer => {
-    console.log('WFSSe', layer)
     // this logic only handles clicks on vector layers types
     const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
 
@@ -100,7 +99,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
       promises.push(wfsPromise)
     }
-    console.log('feautes?', features)
   }
   const wmsSelector = layer => {
     if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
@@ -183,7 +181,6 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
     // create a new array so original features are not mutated when _ol_kit_parent is nullified
     const features = rawFeatures.map(feature => {
       const clone = feature.clone()
-      console.log('feat', feature)
 
       // this removes a ref to _ol_kit_parent to solve circularJSON bug
       clone.set('_ol_kit_parent', null)
