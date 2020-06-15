@@ -68,8 +68,24 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
+  const setParentLayer = ({ features, layer }) => {
+    return new Promise(resolve => {
+      const parentLayer = layer.get('_ol_kit_parent')
+      const parent = parentLayer || layer
+
+      features.forEach((feature, i) => {
+        // true makes this performant with a silent trigger: https://openlayers.org/en/v4.6.5/apidoc/ol.Feature.html#set
+        feature.set('_ol_kit_parent', parent, true)
+
+        return feature
+      })
+
+      resolve({ features, layer })
+    })
+  }
+
   const wfsSelector = layer => {
-    // this logic only handles clicks on vector layers types
+    // this logic only handles clicks on vector layer types
     const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
 
     // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
@@ -95,7 +111,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     }
 
     if (features.length) {
-      const wfsPromise = Promise.resolve({ features, layer })
+      const wfsPromise = setParentLayer({ features, layer })
 
       promises.push(wfsPromise)
     }
@@ -106,7 +122,8 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       const geoserverLayer = layer.get('_ol_kit_parent')
       const coords = map.getCoordinateFromPixel(pixel)
       const wmsPromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-        const features = await geoserverLayer.fetchFeaturesAtClick(coords, map)
+        const rawFeatures = await geoserverLayer.fetchFeaturesAtClick(coords, map)
+        const { features } = await setParentLayer({ features: rawFeatures, layer })
 
         resolve({ features, layer })
       })

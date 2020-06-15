@@ -95,23 +95,12 @@ class Popup extends Component {
     this.setState({ show: true, loading: true, popupPosition: popupPositionWhileLoading }, () => onMapClick(this.state))
 
     const layers = await Promise.all(promises)
-
-    const parsedFeatures = layers.reduce((acc, { features, layer }) => {
-      const layerFeatures = features.map(feature => {
-        const parentLayer = layer.get('_ol_kit_parent')
-        const parent = parentLayer || layer
-
-        feature.set('_ol_kit_parent', parent)
-
-        return feature
-      })
-
-      return [...acc, ...layerFeatures]
+    const parsedFeatures = layers.reduce((acc, { features }) => {
+      return [...acc, ...features]
     }, [])
 
     // ol returns these in reverse z-index order
     const features = parsedFeatures.reverse()
-
     const popupPosition = getPopupPositionFromFeatures(e, features)
 
     this.setState({ features, loading: false, popupPosition }, () => onMapClick(this.state))
