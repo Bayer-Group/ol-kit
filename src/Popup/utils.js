@@ -7,6 +7,7 @@ import proj from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
 import olLayerVector from 'ol/layer/vector'
 import olVectorTile from 'ol/layer/vectortile'
+import olSourceCluster from 'ol/source/cluster'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -67,14 +68,40 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
+  const setParentLayer = ({ features, layer }) => {
+    return new Promise(resolve => {
+      const parentLayer = layer.get('_ol_kit_parent')
+      const parent = parentLayer || layer
+
+      features.forEach((feature, i) => {
+        // true makes this performant with a silent trigger: https://openlayers.org/en/v4.6.5/apidoc/ol.Feature.html#set
+        feature.set('_ol_kit_parent', parent, true)
+
+        return feature
+      })
+
+      resolve({ features, layer })
+    })
+  }
+
   const wfsSelector = layer => {
+    // this logic only handles clicks on vector layer types
     const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
 
-    if (layer.getLayerState().managed && allowedLayerType) {
-      // this logic handles clicks on vector layers
-      // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
-      const features = []
-      const sourceFeatures = layer.getSource().getFeatures()
+    // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
+    if (!layer.getLayerState().managed || !allowedLayerType) return // do nothing with these layer types
+
+    let features = []
+    const source = layer.getSource()
+
+    if (source instanceof olSourceCluster) {
+      // support for clustered feature clicks
+      const clickCoordinate = map.getCoordinateFromPixel(pixel)
+      const clusteredFeatures = source.getClosestFeatureToCoordinate(clickCoordinate).get('features')
+
+      features = clusteredFeatures
+    } else {
+      const sourceFeatures = source.getFeatures()
 
       sourceFeatures.forEach(sourceFeature => {
         // check if any feature on layer source is also at click location
@@ -82,9 +109,12 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
         if (isAtPixel) features.push(sourceFeature)
       })
-      const wfsPromise = Promise.resolve({ features, layer })
+    }
 
-      if (features.length) promises.push(wfsPromise)
+    if (features.length) {
+      const wfsPromise = setParentLayer({ features, layer })
+
+      promises.push(wfsPromise)
     }
   }
   const wmsSelector = layer => {
@@ -93,7 +123,8 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       const geoserverLayer = layer.get('_ol_kit_parent')
       const coords = map.getCoordinateFromPixel(pixel)
       const wmsPromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-        const features = await geoserverLayer.fetchFeaturesAtClick(coords, map)
+        const rawFeatures = await geoserverLayer.fetchFeaturesAtClick(coords, map)
+        const { features } = await setParentLayer({ features: rawFeatures, layer })
 
         resolve({ features, layer })
       })
@@ -171,6 +202,7 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
 
       // this removes a ref to _ol_kit_parent to solve circularJSON bug
       clone.set('_ol_kit_parent', null)
+      clone.set('features', null)
 
       return clone
     })
