@@ -92,15 +92,16 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     if (!layer.getLayerState().managed || !allowedLayerType) return // do nothing with these layer types
 
     let features = []
+    const source = layer.getSource()
 
-    if (layer.getSource() instanceof olSourceCluster) {
+    if (source instanceof olSourceCluster) {
       // support for clustered feature clicks
       const clickCoordinate = map.getCoordinateFromPixel(pixel)
-      const clusteredFeatures = layer.getSource().getClosestFeatureToCoordinate(clickCoordinate).get('features')
+      const clusteredFeatures = source.getClosestFeatureToCoordinate(clickCoordinate).get('features')
 
       features = clusteredFeatures
     } else {
-      const sourceFeatures = layer.getSource().getFeatures()
+      const sourceFeatures = source.getFeatures()
 
       sourceFeatures.forEach(sourceFeature => {
         // check if any feature on layer source is also at click location
