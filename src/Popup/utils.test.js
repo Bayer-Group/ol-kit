@@ -25,7 +25,8 @@ describe('Popup utils', () => {
     var features = new Array(count)
     var e = 4500000
     for (var i = 0; i < count; ++i) {
-      var coordinates = [2 * e * Math.random() - e, 2 * e * Math.random() - e]
+      const random = i+ 1
+      var coordinates = [2 * e * random - e, 2 * e * random - e]
       features[i] = new olFeature(new olPoint(coordinates))
     }
     var source = new olVectorSource({
@@ -70,10 +71,15 @@ describe('Popup utils', () => {
 
     map.addLayer(clusters)
 
-    console.log(clusters.getSource().get('features'))
+    const featureCoords = clusters.getSource().getSource().getFeatures()[0].getGeometry().getCoordinates()
+    const clickPixel = map.getPixelFromCoordinate(featureCoords)
+
+    console.log('[ 179941500000, 179941500000 ]', featureCoords, map.getView().getProjection())
 
     const event = { map, pixel: [0,0] }
     const promises = await getLayersAndFeaturesForEvent(event)
+
+    console.log('promises', promises.length)
 
     expect(2).toBe(1)
   })
