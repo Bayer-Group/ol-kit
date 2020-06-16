@@ -24,8 +24,8 @@ describe('<Popup />', () => {
     testMap.dispatchEvent({ type: 'click', map: testMap, pixel: [20, 20] })
 
     const hidePopupEvent = {
-      clickPixel: [0, 0],
       clickCoordinate: [0, 0],
+      clickPixel: [0, 0],
       features: [],
       loading: false,
       popupPosition: { arrow: 'none', pixel: [0, 0], fits: false },
