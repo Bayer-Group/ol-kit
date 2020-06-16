@@ -58,6 +58,7 @@ Object {
   "getPopupPositionFromFeatures": [Function],
   "loadDataLayer": [Function],
   "removeMovementListener": [Function],
+  "sanitizeProperties": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }

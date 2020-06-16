@@ -297,3 +297,25 @@ export const calculateViewPadding = (map, opts = {}) => {
 
   return viewPadding
 }
+
+/**
+ * Remove blacklisted attributes (geom & geometry & _ol_kit*) from an object
+ * @function
+ * @since 0.11.0
+ * @param {Object} properties - A feature attribute object
+ * @returns {Object} A filtered attribute object
+ */
+export const sanitizeProperties = properties => {
+  const blacklist = ['geom', 'geometry']
+  const sanitized = {}
+
+  for (const key in properties) {
+    const keyLower = key.toLowerCase()
+
+    if (!blacklist.includes(keyLower) && !keyLower.includes('_ol_kit')) {
+      sanitized[key] = properties[key]
+    }
+  }
+
+  return sanitized
+}
