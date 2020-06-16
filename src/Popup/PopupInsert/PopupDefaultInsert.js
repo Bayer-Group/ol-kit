@@ -5,7 +5,7 @@ import olSelect from 'ol/interaction/select'
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 
 import { connectToMap } from 'Map'
-import { sanitizeProperties } from 'Popup'
+import { sanitizeProperties } from '../utils'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
@@ -107,7 +107,7 @@ PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
-  propertiesFilter: properties => sanitizeProperties(properties)
+  propertiesFilter: sanitizeProperties
 }
 
 PopupDefaultInsert.propTypes = {
