@@ -10,7 +10,7 @@ import olFill from 'ol/style/fill'
 import olStroke from 'ol/style/stroke'
 import olCircle from 'ol/style/circle'
 import { createMap } from 'Map'
-import { getLayersAndFeaturesForEvent } from 'Popup'
+import { getLayersAndFeaturesForEvent, sanitizeProperties } from 'Popup'
 
 describe('Popup utils', () => {
   global.document.body.innerHTML = '<div id="map"></div>'
@@ -82,5 +82,28 @@ describe('Popup utils', () => {
     console.log('promises', promises.length)
 
     expect(2).toBe(1)
+  })
+
+  it('should sanitize properties', () => {
+    const properties = {
+      key: 'value',
+      _ol_kit_key: 'this should not show up',
+      geom: {},
+      geometry: () => {},
+      goodKey: 'goodValue',
+      boolean: true,
+      falsy: null,
+      _ol_kit_ignore: null,
+      coordinates: 'x: -10129853.25, y: 5312160.22'
+    }
+    const expected = {
+      key: 'value',
+      goodKey: 'goodValue',
+      boolean: true,
+      coordinates: 'x: -10129853.25, y: 5312160.22',
+      falsy: null
+    }
+
+    expect(sanitizeProperties(properties)).toEqual(expected)
   })
 })
