@@ -301,6 +301,7 @@ export const calculateViewPadding = (map, opts = {}) => {
 /**
  * Remove blacklisted attributes (geom & geometry & _ol_kit*) from an object
  * @function
+ * @category Popup
  * @since 0.11.0
  * @param {Object} properties - A feature attribute object
  * @returns {Object} A filtered attribute object
