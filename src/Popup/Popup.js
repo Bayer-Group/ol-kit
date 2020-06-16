@@ -18,8 +18,8 @@ class Popup extends Component {
     super(props)
 
     this.state = {
-      clickPixel: [0, 0],
       clickCoordinate: [0, 0],
+      clickPixel: [0, 0],
       features: [],
       loading: false,
       popupPosition: {
@@ -166,8 +166,8 @@ Popup.propTypes = {
   map: PropTypes.object.isRequired,
   /** callback fired on map clicks with state object:
     {
-      clickPixel: [0, 0],
       clickCoordinate: [0, 0],
+      clickPixel: [0, 0],
       features: [],
       loading: false, // true after click before layers/features load
       popupPosition: {
