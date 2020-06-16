@@ -324,7 +324,7 @@ class TimeSliderBase extends React.Component {
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <div id='ContainerNode' ref={node => { this.containerNode = node }}>
-          {false ? (
+          {tooManyDates ? (
             <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
           ) : (
             <React.Fragment>
