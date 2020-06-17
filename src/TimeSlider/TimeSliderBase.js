@@ -8,11 +8,20 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
 
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 import SyncIcon from '@material-ui/icons/Sync'
 
 import { connectToMap } from 'Map'
 import {
+  Container,
+  LayerTitle,
   DateContainer,
   MarkContainer,
   TimesliderBar,
@@ -34,6 +43,29 @@ const datesDiffDay = (first, second) => !datesSameDay(first, second)
 
 const MAX_DATES = 300
 
+function TabPanel (props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <Typography
+      component='div'
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  )
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  value: PropTypes.number,
+  index: PropTypes.number
+}
+
 class TimeSliderBase extends React.Component {
   constructor (props) {
     super(props)
@@ -47,7 +79,8 @@ class TimeSliderBase extends React.Component {
       rangeMin: 0,
       rangeMax: 0,
       isMouseDown: false,
-      firstDayOfFirstMonth: undefined
+      firstDayOfFirstMonth: undefined,
+      idx: 0
     }
 
     // these refs are used to increase performance & calculcate offsets
@@ -61,9 +94,9 @@ class TimeSliderBase extends React.Component {
   }
 
   componentDidMount () {
-    console.log('DID MOUNT')
+    console.log('DID MOUNT BASE')
     this.props.map.on('moveend', debounce(this.moveHandler, 1000))
-    this.props.layer.on('filter:change', this.moveHandler)
+    // this.props.layer.on('filter:change', this.moveHandler)
 
     // this listener allows the user to go next/back through the data via arrow keys
     document.addEventListener('keydown', this.keydownHandler)
@@ -74,36 +107,36 @@ class TimeSliderBase extends React.Component {
 
   componentWillUnmount () {
     this.props.map.un('moveend', this.moveHandler)
-    this.props.layer.un('filter:change', this.moveHandler)
+    // this.props.layer.un('filter:change', this.moveHandler)
     document.removeEventListener('keydown', this.keydownHandler)
   }
 
   fetchFeaturesForCurrentExtent = () => {
-    const { map, layer } = this.props
-    const extent = map.getView().calculateExtent()
+    // const { map, layer } = this.props
+    // const extent = map.getView().calculateExtent()
 
-    // use the geoserver methods to request intersection features -- then pull their dates off them
-    layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] }).then(res => {
-      if (res.length < MAX_DATES) {
-        const dates = res
-          .map(f => new Date(f.get(layer.getTimeAttribute()))) /* we convert all dates to JS dates for easier use */
-          .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
-          .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+    // // use the geoserver methods to request intersection features -- then pull their dates off them
+    // layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] }).then(res => {
+    //   if (res.length < MAX_DATES) {
+    //     const dates = res
+    //       .map(f => new Date(f.get(layer.getTimeAttribute()))) /* we convert all dates to JS dates for easier use */
+    //       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
+    //       .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
 
-        const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
+    //     const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
 
-        this.setState({
-          dates,
-          tooManyDates: false,
-          selectedDate: null,
-          selectedDateRange: [],
-          firstDayOfFirstMonth: firstDayOfFirstMonth,
-          numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
-        })
-      } else {
-        this.setState({ tooManyDates: true })
-      }
-    })
+    //     this.setState({
+    //       dates,
+    //       tooManyDates: false,
+    //       selectedDate: null,
+    //       selectedDateRange: [],
+    //       firstDayOfFirstMonth: firstDayOfFirstMonth,
+    //       numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
+    //     })
+    //   } else {
+    //     this.setState({ tooManyDates: true })
+    //   }
+    // })
   }
 
   calculateLeftPlacement = (date, elementWidth, containerWidth, padding = 24) => {
@@ -309,8 +342,12 @@ class TimeSliderBase extends React.Component {
     return thingy
   }
 
+  onTabClicked = (_, idx) => {
+    this.setState({ idx })
+  }
+
   render () {
-    const { translations } = this.props
+    const { layers, translations } = this.props
     const {
       tooManyDates,
       dates,
@@ -318,80 +355,107 @@ class TimeSliderBase extends React.Component {
       selectedDateRange,
       firstDayOfFirstMonth,
       rangeMin,
-      rangeMax
+      rangeMax,
+      idx
     } = this.state
 
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <div id='ContainerNode' ref={node => { this.containerNode = node }}>
-          {tooManyDates ? (
-            <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
-          ) : (
-            <React.Fragment>
-              <DateContainer ref={n => { this.dateContainerDiv = n }}>
-                {this.renderLabels(dates, firstDayOfFirstMonth)}
-              </DateContainer>
-              <BarContainer
-                onMouseDown={this.handleMouseDown}
-                onMouseUp={this.handleMouseUp}
-                onMouseMove={this.handleMouseMove}>
-                <TimesliderBar barPlacement={16} barHeight={2} />
-                <MarkContainer
-                  ref={n => { this.markContainer = n }}>
-                  {this.renderMarks()}
-                </MarkContainer>
-                <HighlightedRange
-                  style={{ display: rangeMin || rangeMax ? 'block' : 'none' }}
-                  left={rangeMin}
-                  right={rangeMax}
-                  width={rangeMax - rangeMin}
-                  ref={n => { this.highlightDiv = n }} />
-              </BarContainer>
-            </React.Fragment>
-          )}
-          <BottomContainer>
-            {translations['advancedTimeSlider.dateRange'] || 'Date Range'}
-            <DatePicker
-              disableFuture
-              variant='inline'
-              format='DD/MM/YYYY'
-              value={selectedDateRange.length ? selectedDateRange[0] : dates[0]}
-              onChange={date => {
-                this.calculateDateSliderPosition()
-                const { width } = this.containerNode.getBoundingClientRect()
+          <Container>
+            <Grid container justify='center'>
+              <Card style={{ width: '100%', paddingTop: '4px' }}>
+                <Tabs
+                  style={{ marginRight: '60px' }}
+                  indicatorColor='primary'
+                  value={idx}
+                  onChange={this.onTabClicked}
+                  aria-label='simple tabs example'
+                  variant='scrollable'
+                  scrollButtons='auto'>
+                  {layers.map((l, i) => (
+                    <Tab label={`Layer ${i + 1}`} key={i} />
+                  ))}
+                </Tabs>
+                {tooManyDates ? (
+                  <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
+                ) : (
+                  <React.Fragment>
+                    {layers.map((l, i) => (
+                      <TabPanel value={idx} key={i}>
+                        <LayerTitle>{`Layer ${i + 1} - ${l.get('title')}`}</LayerTitle>
+                        <DateContainer ref={n => { this.dateContainerDiv = n }}>
+                          {this.renderLabels(dates, firstDayOfFirstMonth)}
+                        </DateContainer>
+                        <BarContainer
+                          onMouseDown={this.handleMouseDown}
+                          onMouseUp={this.handleMouseUp}
+                          onMouseMove={this.handleMouseMove}>
+                          <TimesliderBar barPlacement={16} barHeight={2} />
+                          <MarkContainer
+                            ref={n => { this.markContainer = n }}>
+                            {this.renderMarks()}
+                          </MarkContainer>
+                          <HighlightedRange
+                            style={{ display: rangeMin || rangeMax ? 'block' : 'none' }}
+                            left={rangeMin}
+                            right={rangeMax}
+                            width={rangeMax - rangeMin}
+                            ref={n => { this.highlightDiv = n }} />
+                        </BarContainer>
+                      </TabPanel>
+                    ))}
+                  </React.Fragment>
+                )}
+                <BottomContainer>
+                  {translations['advancedTimeSlider.dateRange'] || 'Date Range'}
+                  <DatePicker
+                    disableFuture
+                    variant='inline'
+                    format='DD/MM/YYYY'
+                    value={selectedDateRange.length ? selectedDateRange[0] : dates[0]}
+                    onChange={date => {
+                      this.calculateDateSliderPosition()
+                      const { width } = this.containerNode.getBoundingClientRect()
 
-                this.setState({
-                  selectedDateRange: [date, selectedDateRange[1]],
-                  rangeMin: this.calculateLeftPlacement(date, 1, width, 24)
-                })
-              }} />
-            {` ${translations['advancedTimeSlider.to'] || 'To'} `}
-            <DatePicker
-              disableFuture
-              variant='inline'
-              format='DD/MM/YYYY'
-              value={selectedDateRange.length ? selectedDateRange[1] : dates[dates.length - 1]}
-              onChange={date => {
-                this.calculateDateSliderPosition()
-                const { width } = this.containerNode.getBoundingClientRect()
+                      this.setState({
+                        selectedDateRange: [date, selectedDateRange[1]],
+                        rangeMin: this.calculateLeftPlacement(date, 1, width, 24)
+                      })
+                    }} />
+                  {` ${translations['advancedTimeSlider.to'] || 'To'} `}
+                  <DatePicker
+                    disableFuture
+                    variant='inline'
+                    format='DD/MM/YYYY'
+                    value={selectedDateRange.length ? selectedDateRange[1] : dates[dates.length - 1]}
+                    onChange={date => {
+                      this.calculateDateSliderPosition()
+                      const { width } = this.containerNode.getBoundingClientRect()
 
-                this.setState({
-                  selectedDateRange: [selectedDateRange[0], date],
-                  rangeMax: this.calculateLeftPlacement(date, 1, width, 24)
-                })
-              }} />
+                      this.setState({
+                        selectedDateRange: [selectedDateRange[0], date],
+                        rangeMax: this.calculateLeftPlacement(date, 1, width, 24)
+                      })
+                    }} />
 
-            <Button disabled={!selectedDate} onClick={() => this.cycleDates('ArrowLeft')} variant='contained' color='primary' style={{ marginRight: '5px' }}>
-              {translations['advancedTimeSlider.previous']}
-            </Button>
-            <Button disabled={datesSameDay(selectedDate, dates[dates.length - 1])} onClick={() => this.cycleDates('ArrowRight')} variant='contained' color='primary'>
-              {translations['advancedTimeSlider.next']}
-            </Button>
+                  <Button disabled={!selectedDate} onClick={() => this.cycleDates('ArrowLeft')} variant='contained' color='primary' style={{ marginRight: '5px' }}>
+                    {translations['advancedTimeSlider.previous']}
+                  </Button>
+                  <Button disabled={datesSameDay(selectedDate, dates[dates.length - 1])} onClick={() => this.cycleDates('ArrowRight')} variant='contained' color='primary'>
+                    {translations['advancedTimeSlider.next']}
+                  </Button>
 
-            <IconButton onClick={this.resetState}>
-              <SyncIcon color='primary' />
-            </IconButton>
-          </BottomContainer>
+                  <IconButton onClick={this.resetState}>
+                    <SyncIcon color='primary' />
+                  </IconButton>
+                </BottomContainer>
+                <IconButton onClick={this.onCloseClicked} style={{ position: 'absolute', top: '5px', right: '5px' }} aria-label='delete'>
+                  <CloseIcon />
+                </IconButton>
+              </Card>
+            </Grid>
+          </Container>
         </div>
       </MuiPickersUtilsProvider>
     )
