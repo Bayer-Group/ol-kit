@@ -369,7 +369,7 @@ class TimeSliderBase extends React.Component {
                     {groups.map((group, i) => (
                       <TabPanel value={idx} key={i}>
                         <LayerTitle>{group.title}</LayerTitle>
-                        <DateContainer ref={n => { this.dateContainerDiv = n }}>
+                        <DateContainer ref={node => { this.dateContainerDiv = node }}>
                           {this.renderLabels(dates, firstDayOfFirstMonth)}
                         </DateContainer>
                         <BarContainer
@@ -378,7 +378,7 @@ class TimeSliderBase extends React.Component {
                           onMouseMove={this.handleMouseMove}>
                           <TimesliderBar barPlacement={16} barHeight={2} />
                           <MarkContainer
-                            ref={n => { console.log('REF', n) }}>
+                            ref={node => { console.log('REF', node) /* this.markContainer = n */ }}>
                             {this.renderMarks()}
                           </MarkContainer>
                           <HighlightedRange

@@ -39,7 +39,10 @@ class PopupDefaultInsert extends Component {
       this.onPageChange(this.state.selectedIdx, selectedIdx)
     }
     if (nextProps.features.length && nextProps.features.length !== this.props.features.length) {
-      this.selectFeature(nextProps.features[selectedIdx])
+      const correctedSelectIdx = selectedIdx > nextProps.features.length ? 0 : selectedIdx
+      console.log('props', this.state.selectedIdx, correctedSelectIdx)
+      this.setState({selectedIdx: correctedSelectIdx})
+      this.selectFeature(nextProps.features[correctedSelectIdx])
     }
   }
 

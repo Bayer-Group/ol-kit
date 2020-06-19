@@ -26,11 +26,11 @@ class TimeSlider extends React.Component {
     }
 
     // kicks off the process of fetching features for the current extent
-    this.fetchFeaturesForCurrentExtent()
+    // this.fetchFeaturesForCurrentExtent()
 
     // bind the event listener
     this.layerListener = layers.on('change:length', handleLayerChange)
-    this.props.map.on('moveend', debounce(this.moveHandler, 1000))
+    // this.props.map.on('moveend', debounce(this.moveHandler, 1000))
   }
 
   componentWillUnmount = () => {
@@ -39,33 +39,33 @@ class TimeSlider extends React.Component {
     this.props.map.un('moveend', this.moveHandler)
   }
 
-  fetchFeaturesForCurrentExtent = () => {
-    const { map, layer } = this.props
-    const extent = map.getView().calculateExtent()
+  // fetchFeaturesForCurrentExtent = () => {
+  //   const { map, layer } = this.props
+  //   const extent = map.getView().calculateExtent()
 
-    // use the geoserver methods to request intersection features -- then pull their dates off them
-    layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] }).then(res => {
-      if (res.length < MAX_DATES) {
-        const dates = res
-          .map(f => new Date(f.get(layer.getTimeAttribute()))) /* we convert all dates to JS dates for easier use */
-          .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
-          .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+  //   // use the geoserver methods to request intersection features -- then pull their dates off them
+  //   layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] }).then(res => {
+  //     if (res.length < MAX_DATES) {
+  //       const dates = res
+  //         .map(f => new Date(f.get(layer.getTimeAttribute()))) /* we convert all dates to JS dates for easier use */
+  //         .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
+  //         .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
 
-        const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
+  //       const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
 
-        this.setState({
-          dates,
-          tooManyDates: false,
-          selectedDate: null,
-          selectedDateRange: [],
-          firstDayOfFirstMonth: firstDayOfFirstMonth,
-          numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
-        })
-      } else {
-        this.setState({ tooManyDates: true })
-      }
-    })
-  }
+  //       this.setState({
+  //         dates,
+  //         tooManyDates: false,
+  //         selectedDate: null,
+  //         selectedDateRange: [],
+  //         firstDayOfFirstMonth: firstDayOfFirstMonth,
+  //         numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
+  //       })
+  //     } else {
+  //       this.setState({ tooManyDates: true })
+  //     }
+  //   })
+  // }
 
   onFilterChange = filter => {
     console.log('onFilterChange', filter)
