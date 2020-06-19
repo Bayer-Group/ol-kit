@@ -1,7 +1,6 @@
 import moment from 'moment'
 import React from 'react'
 import PropTypes from 'prop-types'
-import debounce from 'lodash.debounce'
 // update to @material-ui/pickers v4 when they add range support:
 // https://github.com/mui-org/material-ui-pickers/issues/364#issuecomment-575697596
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
@@ -89,54 +88,37 @@ class TimeSliderBase extends React.Component {
     this.dateContainerDiv = null
     this.markContainer = null
 
-    this.moveHandler = e => this.fetchFeaturesForCurrentExtent()
     this.keydownHandler = e => this.cycleDates(e.key)
   }
 
   componentDidMount () {
-    console.log('DID MOUNT BASE')
-    this.props.map.on('moveend', debounce(this.moveHandler, 1000))
+    this.createDateTicks(this.props.groups[0])
     // this.props.layer.on('filter:change', this.moveHandler)
 
     // this listener allows the user to go next/back through the data via arrow keys
     document.addEventListener('keydown', this.keydownHandler)
-
-    // kicks off the process of fetching features for the current extent
-    this.fetchFeaturesForCurrentExtent()
   }
 
   componentWillUnmount () {
-    this.props.map.un('moveend', this.moveHandler)
     // this.props.layer.un('filter:change', this.moveHandler)
     document.removeEventListener('keydown', this.keydownHandler)
   }
 
-  fetchFeaturesForCurrentExtent = () => {
-    // const { map, layer } = this.props
-    // const extent = map.getView().calculateExtent()
+  createDateTicks = group => {
+    const dates = group.dates
+      .map(date => new Date(date)) /* we convert all dates to JS dates for easier use */
+      .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
+      .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+    const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
 
-    // // use the geoserver methods to request intersection features -- then pull their dates off them
-    // layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] }).then(res => {
-    //   if (res.length < MAX_DATES) {
-    //     const dates = res
-    //       .map(f => new Date(f.get(layer.getTimeAttribute()))) /* we convert all dates to JS dates for easier use */
-    //       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
-    //       .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
-
-    //     const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
-
-    //     this.setState({
-    //       dates,
-    //       tooManyDates: false,
-    //       selectedDate: null,
-    //       selectedDateRange: [],
-    //       firstDayOfFirstMonth: firstDayOfFirstMonth,
-    //       numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
-    //     })
-    //   } else {
-    //     this.setState({ tooManyDates: true })
-    //   }
-    // })
+    this.setState({
+      dates,
+      tooManyDates: false,
+      selectedDate: null,
+      selectedDateRange: [],
+      firstDayOfFirstMonth,
+      numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
+    })
   }
 
   calculateLeftPlacement = (date, elementWidth, containerWidth, padding = 24) => {
@@ -276,6 +258,7 @@ class TimeSliderBase extends React.Component {
       selectedDate: null,
       selectedDateRange: []
     })
+  
 
     // update the layer to reflect the time extent selected
     this.props.layer.getWMSLayer().getSource().updateParams({
@@ -323,6 +306,7 @@ class TimeSliderBase extends React.Component {
   renderMarks = () => {
     const { dates, selectedDate } = this.state
     const padding = 24
+    console.log('renderMarks', dates.length, this.markContainer)
 
     if (!this.markContainer) return
     const { width: containerWidth } = this.markContainer.getBoundingClientRect()
@@ -347,7 +331,7 @@ class TimeSliderBase extends React.Component {
   }
 
   render () {
-    const { layers, translations } = this.props
+    const { groups, layers, translations } = this.props
     const {
       tooManyDates,
       dates,
@@ -358,6 +342,7 @@ class TimeSliderBase extends React.Component {
       rangeMax,
       idx
     } = this.state
+    console.log('groups', this.props.groups, this.state)
 
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -373,7 +358,7 @@ class TimeSliderBase extends React.Component {
                   aria-label='simple tabs example'
                   variant='scrollable'
                   scrollButtons='auto'>
-                  {layers.map((l, i) => (
+                  {groups.map((group, i) => (
                     <Tab label={`Layer ${i + 1}`} key={i} />
                   ))}
                 </Tabs>
@@ -381,9 +366,9 @@ class TimeSliderBase extends React.Component {
                   <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
                 ) : (
                   <React.Fragment>
-                    {layers.map((l, i) => (
+                    {groups.map((group, i) => (
                       <TabPanel value={idx} key={i}>
-                        <LayerTitle>{`Layer ${i + 1} - ${l.get('title')}`}</LayerTitle>
+                        <LayerTitle>{group.title}</LayerTitle>
                         <DateContainer ref={n => { this.dateContainerDiv = n }}>
                           {this.renderLabels(dates, firstDayOfFirstMonth)}
                         </DateContainer>
@@ -393,7 +378,7 @@ class TimeSliderBase extends React.Component {
                           onMouseMove={this.handleMouseMove}>
                           <TimesliderBar barPlacement={16} barHeight={2} />
                           <MarkContainer
-                            ref={n => { this.markContainer = n }}>
+                            ref={n => { console.log('REF', n) }}>
                             {this.renderMarks()}
                           </MarkContainer>
                           <HighlightedRange
@@ -465,7 +450,6 @@ class TimeSliderBase extends React.Component {
 TimeSliderBase.propTypes = {
   map: PropTypes.object.isRequired,
   layer: PropTypes.object.isRequired,
-  sidebarOpen: PropTypes.bool,
   translations: PropTypes.object
 }
 
