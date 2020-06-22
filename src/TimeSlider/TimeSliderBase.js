@@ -377,7 +377,7 @@ class TimeSliderBase extends React.Component {
                   ))}
                 </Tabs>
                 {tooManyDates ? (
-                  <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
+                  <TooManyForPreview>{translations['_ol_kit_.TimeSliderBase.tooMany']}</TooManyForPreview>
                 ) : (
                   groups.map((group, i) => (
                     <TabPanel value={index} index={index} key={i}>
@@ -406,7 +406,7 @@ class TimeSliderBase extends React.Component {
                   ))
                 )}
                 <BottomContainer>
-                  {translations['advancedTimeSlider.dateRange'] || 'Date Range'}
+                  {translations['_ol_kit_.TimeSliderBase.dateRange'] || 'Date Range'}
                   <DatePicker
                     disableFuture
                     variant='inline'
@@ -421,7 +421,7 @@ class TimeSliderBase extends React.Component {
                         rangeMin: this.calculateLeftPlacement(date, 1, width, 24)
                       })
                     }} />
-                  {` ${translations['advancedTimeSlider.to'] || 'To'} `}
+                  {` ${translations['_ol_kit_.TimeSliderBase.to'] || 'To'} `}
                   <DatePicker
                     disableFuture
                     variant='inline'
@@ -438,10 +438,10 @@ class TimeSliderBase extends React.Component {
                     }} />
 
                   <Button disabled={!selectedDate} onClick={() => this.cycleDates('ArrowLeft')} variant='contained' color='primary' style={{ marginRight: '5px' }}>
-                    {translations['advancedTimeSlider.previous']}
+                    {translations['_ol_kit_.TimeSliderBase.previous']}
                   </Button>
                   <Button disabled={datesSameDay(selectedDate, dates[dates.length - 1])} onClick={() => this.cycleDates('ArrowRight')} variant='contained' color='primary'>
-                    {translations['advancedTimeSlider.next']}
+                    {translations['_ol_kit_.TimeSliderBase.next']}
                   </Button>
 
                   <IconButton onClick={this.resetState}>
@@ -461,6 +461,7 @@ class TimeSliderBase extends React.Component {
 }
 
 TimeSliderBase.defaultProps = {
+  onDateChange: () => {},
   onTabChange: () => {}
 }
 
@@ -470,7 +471,13 @@ TimeSliderBase.propTypes = {
     title: PropTypes.string
   })),
   onTabChange: PropTypes.func,
-  translations: PropTypes.object
+  translations: PropTypes.shape({
+    '_ol_kit_.TimeSliderBase.next': PropTypes.string,
+    '_ol_kit_.TimeSliderBase.previous': PropTypes.string,
+    '_ol_kit_.TimeSliderBase.selectedEndDate': PropTypes.string,
+    '_ol_kit_.TimeSliderBase.selectedStartDate': PropTypes.string,
+    '_ol_kit_.TimeSliderBase.tooMany': PropTypes.string
+  })
 }
 
 export default connectToMap(TimeSliderBase)
