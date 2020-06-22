@@ -44,7 +44,6 @@ const MAX_DATES = 300
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
-  console.log('TabPa', props)
 
   return (
     <Typography
@@ -80,7 +79,7 @@ class TimeSliderBase extends React.Component {
       rangeMax: 0,
       isMouseDown: false,
       firstDayOfFirstMonth: undefined,
-      idx: 0
+      index: 0
     }
 
     // these refs are used to increase performance & calculcate offsets
@@ -93,7 +92,9 @@ class TimeSliderBase extends React.Component {
   }
 
   componentDidMount () {
-    this.createDateTicks(this.props.groups[0])
+    const { groups } = this.props
+
+    groups.length && this.createDateTicks(groups[0])
     // this.props.layer.on('filter:change', this.moveHandler)
 
     // this listener allows the user to go next/back through the data via arrow keys
@@ -105,7 +106,12 @@ class TimeSliderBase extends React.Component {
     document.removeEventListener('keydown', this.keydownHandler)
   }
 
+  UNSAFE_componentWillReceiveProps (nextProps) {
+    if (nextProps.groups.length) this.createDateTicks(nextProps.groups[0])
+  }
+
   createDateTicks = group => {
+    console.log('createDateTicks', group)
     const dates = group.dates
       .map(date => new Date(date)) /* we convert all dates to JS dates for easier use */
       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
@@ -152,9 +158,10 @@ class TimeSliderBase extends React.Component {
         selectedDateRange: [leftDate, rightDate],
         selectedDate: null
       })
-      this.props.layer.getWMSLayer().getSource().updateParams({
-        TIME: `${(new Date(leftDate)).toISOString().split('T')[0]}/${(new Date(rightDate)).toISOString().split('T')[0]}`
-      })
+      this.props.onFilterChange(this.state)
+      // this.props.layer.getWMSLayer().getSource().updateParams({
+      //   TIME: `${(new Date(leftDate)).toISOString().split('T')[0]}/${(new Date(rightDate)).toISOString().split('T')[0]}`
+      // })
     } else {
       this.setState({
         selectedDateRange: [dates[0], dates[dates.length - 1]]
@@ -195,16 +202,22 @@ class TimeSliderBase extends React.Component {
   }
 
   setSelectedDate = selectedDate => {
+    const selectedDateRange = []
+
     // if a single date is selected, you cannot also have a date range selected
     this.setState({
       selectedDate,
-      selectedDateRange: []
+      selectedDateRange
+    })
+    this.props.onDatesChange({
+      selectedDate,
+      selectedDateRange
     })
 
-    // update the layer to reflect the time extent selected
-    this.props.layer.getWMSLayer().getSource().updateParams({
-      TIME: `${(new Date(selectedDate)).toISOString().split('T')[0]}/${(new Date(selectedDate)).toISOString().split('T')[0]}`
-    })
+    // // update the layer to reflect the time extent selected
+    // this.props.layer.getWMSLayer().getSource().updateParams({
+    //   TIME: `${(new Date(selectedDate)).toISOString().split('T')[0]}/${(new Date(selectedDate)).toISOString().split('T')[0]}`
+    // })
   }
 
   updateSelectedRange (first, second) {
@@ -307,7 +320,6 @@ class TimeSliderBase extends React.Component {
   renderMarks = ({ dates }) => {
     const { selectedDate } = this.state
     const padding = 24
-    console.log('renderMarks', dates.length, this.markContainer, this.dateContainerDiv)
 
     if (!this.markContainer) return
     const { width: containerWidth } = this.markContainer.getBoundingClientRect()
@@ -327,17 +339,13 @@ class TimeSliderBase extends React.Component {
     return ticks
   }
 
-  onTabClicked = (_, idx) => {
-    this.setState({ idx })
-  }
-
-  setMarkContainerRef = node => {
-    console.log('setMark', node)
-    this.markContainer = node
+  onTabClicked = (_, index) => {
+    this.setState({ index })
+    this.props.onTabChange(index)
   }
 
   render () {
-    const { groups, layers, translations } = this.props
+    const { groups, translations } = this.props
     const {
       tooManyDates,
       dates,
@@ -346,7 +354,7 @@ class TimeSliderBase extends React.Component {
       firstDayOfFirstMonth,
       rangeMin,
       rangeMax,
-      idx
+      index
     } = this.state
     console.log('groups', this.props.groups, this.state)
 
@@ -359,7 +367,7 @@ class TimeSliderBase extends React.Component {
                 <Tabs
                   style={{ marginRight: '60px' }}
                   indicatorColor='primary'
-                  value={idx}
+                  value={index}
                   onChange={this.onTabClicked}
                   aria-label='simple tabs example'
                   variant='scrollable'
@@ -372,7 +380,7 @@ class TimeSliderBase extends React.Component {
                   <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
                 ) : (
                   groups.map((group, i) => (
-                    <TabPanel value={idx} index={idx} key={i}>
+                    <TabPanel value={index} index={index} key={i}>
                       <LayerTitle>{group.title}</LayerTitle>
                       <DateContainer ref={node => { this.dateContainerDiv = node }}>
                         {this.renderLabels(dates, firstDayOfFirstMonth)}
@@ -384,7 +392,7 @@ class TimeSliderBase extends React.Component {
                         <TimesliderBar barPlacement={16} barHeight={2} />
                         <MarkContainer
                           id={`markContainer_${i}`}
-                          ref={node => this.markContainer = node}>
+                          ref={node => { this.markContainer = node }}>
                           {this.renderMarks(group)}
                         </MarkContainer>
                         <HighlightedRange
@@ -452,11 +460,16 @@ class TimeSliderBase extends React.Component {
   }
 }
 
+TimeSliderBase.defaultProps = {
+  onTabChange: () => {}
+}
+
 TimeSliderBase.propTypes = {
   groups: PropTypes.arrayOf(PropTypes.shape({
     dates: PropTypes.array,
     title: PropTypes.string
   })),
+  onTabChange: PropTypes.func,
   translations: PropTypes.object
 }
 

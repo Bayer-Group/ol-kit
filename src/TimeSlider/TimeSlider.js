@@ -6,91 +6,119 @@ import olObservable from 'ol/observable'
 import TimeSliderBase from './TimeSliderBase'
 import { connectToMap } from 'Map'
 
+// these are faster and more native than using momentjs
+const datesSameDay = (first, second) =>
+  (!first || !second) ? false : (
+    first.getFullYear() === second.getFullYear() &&
+  first.getMonth() === second.getMonth() &&
+  first.getDate() === second.getDate())
+const datesDiffDay = (first, second) => !datesSameDay(first, second)
+
 class TimeSlider extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      idx: 0,
+      groups: [],
+      index: 0,
       open: true
     }
 
-    this.moveHandler = e => this.fetchFeaturesForCurrentExtent()
+    this.moveHandler = debounce(e => this.setGroupsFromExtent(), 1000)
   }
 
   componentDidMount = () => {
     const { map } = this.props
     const layers = map.getLayers()
-    const handleLayerChange = e => {
-      this.forceUpdate() // force a re-render if layers are added or removed
-    }
 
     // kicks off the process of fetching features for the current extent
-    // this.fetchFeaturesForCurrentExtent()
+    this.setGroupsFromExtent()
 
     // bind the event listener
-    this.layerListener = layers.on('change:length', handleLayerChange)
-    // this.props.map.on('moveend', debounce(this.moveHandler, 1000))
+    this.layerListener = layers.on('change:length', this.moveHandler)
+    map.on('moveend', this.moveHandler)
   }
 
   componentWillUnmount = () => {
+    const { map } = this.props
+
     // unbind the listener
     olObservable.unByKey(this.layerListener)
-    this.props.map.un('moveend', this.moveHandler)
+    map.un('moveend', this.moveHandler)
   }
 
-  // fetchFeaturesForCurrentExtent = () => {
-  //   const { map, layer } = this.props
-  //   const extent = map.getView().calculateExtent()
+  fetchFeaturesForCurrentExtent = async layer => {
+    const { map } = this.props
+    const extent = map.getView().calculateExtent()
+    let dates = []
 
-  //   // use the geoserver methods to request intersection features -- then pull their dates off them
-  //   layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] }).then(res => {
-  //     if (res.length < MAX_DATES) {
-  //       const dates = res
-  //         .map(f => new Date(f.get(layer.getTimeAttribute()))) /* we convert all dates to JS dates for easier use */
-  //         .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
-  //         .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+    if (layer.isGeoserverLayer && !!layer.getTimeAttribute()) {
+      // use the geoserver methods to request intersection features -- then pull their dates off them
+      const res = await layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] })
+      
+      // we convert all dates to JS dates for easier use
+      dates = res.map(f => new Date(f.get(layer.getTimeAttribute())))
+    } else if (!!layer.get('timeEnabledKey')) {
+      // this key must be set on a layer to enable time slider
+      const source = layer.getSource()
+      const featuresInExtent = source?.getFeaturesInExtent(extent) || []
+      
+      // we convert all dates to JS dates for easier use
+      dates = featuresInExtent.map(f => new Date(f.get(layer.get('timeEnabledKey'))))
+    }
 
-  //       const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
+    const sortedDates = dates
+      .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
+      .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+    
+    return sortedDates
+  }
 
-  //       this.setState({
-  //         dates,
-  //         tooManyDates: false,
-  //         selectedDate: null,
-  //         selectedDateRange: [],
-  //         firstDayOfFirstMonth: firstDayOfFirstMonth,
-  //         numOfDays: moment(dates[dates.length - 1]).diff(moment(dates[0]), 'days', true)
-  //       })
-  //     } else {
-  //       this.setState({ tooManyDates: true })
-  //     }
-  //   })
-  // }
+  setGroupsFromExtent = async () => {
+    const { map } = this.props
+    const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('timeEnabledKey') || (l.isGeoserverLayer && !!l.getTimeAttribute()))
+    const groups = []
+    
+    await timeEnabledLayers.forEach(async layer => {
+      const dates = await this.fetchFeaturesForCurrentExtent(layer)
+
+      groups.push({ 
+        dates,
+        id: layer.ol_uid,
+        title: layer.get('title')
+      })
+    })
+
+    this.setState({ groups })
+  }
 
   onFilterChange = filter => {
     console.log('onFilterChange', filter)
   }
 
-  render () {
-    const { map, translations } = this.props
-    const { idx, open } = this.state
-    const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('timeEnabledKey'))
-    const groups = timeEnabledLayers.map(l => (
-      { 
-        dates: l.getSource().getFeatures().map(f => f.get(l.get('timeEnabledKey'))),
-        title: l.get('title')
-      }
-    ))
-    const geoserverTimeEnabledLayers = map.getLayers().getArray().filter(l => l.isGeoserverLayer && !!l.getTimeAttribute()) // eslint-disable-line
+  onDatesChange = dates => {
 
-    console.log('timeEnabledLayers', timeEnabledLayers)
+    // update the layer to reflect the time extent selected
+    // this.props.layer.getWMSLayer().getSource().updateParams({
+    //   TIME: `${(new Date(selectedDate)).toISOString().split('T')[0]}/${(new Date(selectedDate)).toISOString().split('T')[0]}`
+    // })
+  }
+
+  onTabChange = index => {
+    this.setState({ index })
+  }
+
+  render () {
+    const { translations } = this.props
+    const { index, open, groups } = this.state
+
     return (
       <TimeSliderBase
         groups={groups}
-        layers={timeEnabledLayers}
         onFilterChange={this.onFilterChange}
         translations={translations}
-        show={true} />
+        show={true}
+        {...this.props} />
     )
   }
 }
