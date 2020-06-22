@@ -210,6 +210,7 @@ class TimeSliderBase extends React.Component {
       selectedDateRange
     })
     this.props.onDatesChange({
+      id: this.props.groups[0].id,
       selectedDate,
       selectedDateRange
     })
@@ -461,7 +462,7 @@ class TimeSliderBase extends React.Component {
 }
 
 TimeSliderBase.defaultProps = {
-  onDateChange: () => {},
+  onDatesChange: () => {},
   onTabChange: () => {}
 }
 

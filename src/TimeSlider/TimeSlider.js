@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 import olObservable from 'ol/observable'
+import olSelect from 'ol/interaction/select'
 
 import TimeSliderBase from './TimeSliderBase'
 import { connectToMap } from 'Map'
@@ -96,7 +97,24 @@ class TimeSlider extends React.Component {
     console.log('onFilterChange', filter)
   }
 
-  onDatesChange = dates => {
+  onDatesChange = e => {
+    if (e.selectedDate) {
+      // select the date selected
+      const { map, selectInteraction } = this.props
+      const deselected = selectInteraction.getFeatures().getArray()
+      const layer = map.getLayers().getArray().find(l => l.ol_uid === e.id)
+      const source = layer?.getSource()
+      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), e.selectedDate))
+      const selected = [...features]
+      const event = new olSelect.Event('select', selected, deselected)
+  
+      // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
+      selectInteraction.getFeatures().clear()
+      features.forEach(feature => selectInteraction.getFeatures().push(feature))
+      selectInteraction.dispatchEvent(event)
+    } else if (e.selectedDateRange) {
+      // logic for drag select
+    }
 
     // update the layer to reflect the time extent selected
     // this.props.layer.getWMSLayer().getSource().updateParams({
@@ -116,6 +134,7 @@ class TimeSlider extends React.Component {
       <TimeSliderBase
         groups={groups}
         onFilterChange={this.onFilterChange}
+        onDatesChange={this.onDatesChange}
         translations={translations}
         show={true}
         {...this.props} />
@@ -125,6 +144,7 @@ class TimeSlider extends React.Component {
 
 TimeSlider.propTypes = {
   map: PropTypes.object.isRequired,
+  selectInteraction: PropTypes.object,
   translations: PropTypes.object
 }
 
