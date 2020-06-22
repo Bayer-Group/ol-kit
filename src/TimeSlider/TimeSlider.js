@@ -5,15 +5,8 @@ import olObservable from 'ol/observable'
 import olSelect from 'ol/interaction/select'
 
 import TimeSliderBase from './TimeSliderBase'
+import { datesDiffDay, datesSameDay } from './utils'
 import { connectToMap } from 'Map'
-
-// these are faster and more native than using momentjs
-const datesSameDay = (first, second) =>
-  (!first || !second) ? false : (
-    first.getFullYear() === second.getFullYear() &&
-  first.getMonth() === second.getMonth() &&
-  first.getDate() === second.getDate())
-const datesDiffDay = (first, second) => !datesSameDay(first, second)
 
 class TimeSlider extends React.Component {
   constructor (props) {
@@ -25,7 +18,7 @@ class TimeSlider extends React.Component {
       open: true
     }
 
-    this.moveHandler = debounce(e => this.setGroupsFromExtent(), 1000)
+    this.moveHandler = debounce(e => this.setGroupsFromExtent(), 500)
   }
 
   componentDidMount = () => {
