@@ -44,6 +44,7 @@ const MAX_DATES = 300
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
+  console.log('TabPa', props)
 
   return (
     <Typography
@@ -303,15 +304,15 @@ class TimeSliderBase extends React.Component {
   }
 
   // loops through the captured data and displays a mark for each image
-  renderMarks = () => {
-    const { dates, selectedDate } = this.state
+  renderMarks = ({ dates }) => {
+    const { selectedDate } = this.state
     const padding = 24
-    console.log('renderMarks', dates.length, this.markContainer)
+    console.log('renderMarks', dates.length, this.markContainer, this.dateContainerDiv)
 
     if (!this.markContainer) return
     const { width: containerWidth } = this.markContainer.getBoundingClientRect()
 
-    const thingy = dates.map((date, i) => {
+    const ticks = dates.map((date, i) => {
       const leftPosition = this.calculateLeftPlacement(date, 4, containerWidth, padding)
 
       return (
@@ -323,11 +324,16 @@ class TimeSliderBase extends React.Component {
       )
     })
 
-    return thingy
+    return ticks
   }
 
   onTabClicked = (_, idx) => {
     this.setState({ idx })
+  }
+
+  setMarkContainerRef = node => {
+    console.log('setMark', node)
+    this.markContainer = node
   }
 
   render () {
@@ -365,32 +371,31 @@ class TimeSliderBase extends React.Component {
                 {tooManyDates ? (
                   <TooManyForPreview>{translations['advancedTimeSlider.tooMany']}</TooManyForPreview>
                 ) : (
-                  <React.Fragment>
-                    {groups.map((group, i) => (
-                      <TabPanel value={idx} key={i}>
-                        <LayerTitle>{group.title}</LayerTitle>
-                        <DateContainer ref={node => { this.dateContainerDiv = node }}>
-                          {this.renderLabels(dates, firstDayOfFirstMonth)}
-                        </DateContainer>
-                        <BarContainer
-                          onMouseDown={this.handleMouseDown}
-                          onMouseUp={this.handleMouseUp}
-                          onMouseMove={this.handleMouseMove}>
-                          <TimesliderBar barPlacement={16} barHeight={2} />
-                          <MarkContainer
-                            ref={node => { console.log('REF', node) /* this.markContainer = n */ }}>
-                            {this.renderMarks()}
-                          </MarkContainer>
-                          <HighlightedRange
-                            style={{ display: rangeMin || rangeMax ? 'block' : 'none' }}
-                            left={rangeMin}
-                            right={rangeMax}
-                            width={rangeMax - rangeMin}
-                            ref={n => { this.highlightDiv = n }} />
-                        </BarContainer>
-                      </TabPanel>
-                    ))}
-                  </React.Fragment>
+                  groups.map((group, i) => (
+                    <TabPanel value={idx} index={idx} key={i}>
+                      <LayerTitle>{group.title}</LayerTitle>
+                      <DateContainer ref={node => { this.dateContainerDiv = node }}>
+                        {this.renderLabels(dates, firstDayOfFirstMonth)}
+                      </DateContainer>
+                      <BarContainer
+                        onMouseDown={this.handleMouseDown}
+                        onMouseUp={this.handleMouseUp}
+                        onMouseMove={this.handleMouseMove}>
+                        <TimesliderBar barPlacement={16} barHeight={2} />
+                        <MarkContainer
+                          id={`markContainer_${i}`}
+                          ref={node => this.markContainer = node}>
+                          {this.renderMarks(group)}
+                        </MarkContainer>
+                        <HighlightedRange
+                          style={{ display: rangeMin || rangeMax ? 'block' : 'none' }}
+                          left={rangeMin}
+                          right={rangeMax}
+                          width={rangeMax - rangeMin}
+                          ref={node => { this.highlightDiv = node }} />
+                      </BarContainer>
+                    </TabPanel>
+                  ))
                 )}
                 <BottomContainer>
                   {translations['advancedTimeSlider.dateRange'] || 'Date Range'}
@@ -448,8 +453,10 @@ class TimeSliderBase extends React.Component {
 }
 
 TimeSliderBase.propTypes = {
-  map: PropTypes.object.isRequired,
-  layer: PropTypes.object.isRequired,
+  groups: PropTypes.arrayOf(PropTypes.shape({
+    dates: PropTypes.array,
+    title: PropTypes.string
+  })),
   translations: PropTypes.object
 }
 

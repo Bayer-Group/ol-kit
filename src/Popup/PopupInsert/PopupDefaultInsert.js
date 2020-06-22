@@ -39,10 +39,11 @@ class PopupDefaultInsert extends Component {
       this.onPageChange(this.state.selectedIdx, selectedIdx)
     }
     if (nextProps.features.length && nextProps.features.length !== this.props.features.length) {
-      const correctedSelectIdx = selectedIdx > nextProps.features.length ? 0 : selectedIdx
-      console.log('props', this.state.selectedIdx, correctedSelectIdx)
-      this.setState({selectedIdx: correctedSelectIdx})
-      this.selectFeature(nextProps.features[correctedSelectIdx])
+      // safeSelectIdx prevents a bug of setting an index out of range of the features available to select
+      const safeSelectIdx = selectedIdx > nextProps.features.length ? 0 : selectedIdx
+
+      this.setState({selectedIdx: safeSelectIdx})
+      this.selectFeature(nextProps.features[safeSelectIdx])
     }
   }
 
