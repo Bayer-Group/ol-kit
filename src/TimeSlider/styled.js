@@ -37,10 +37,9 @@ export const ScrollContainer = styled.div`
 
 export const BarContainer = styled.div`
   width: 100%;
-  height: 35px;
+  height: 38px;
   position: relative;
   overflow: hidden;
-  margin-bottom: 15px;
 
   &:hover {
     cursor: col-resize;
@@ -74,7 +73,6 @@ export const DateMark = styled.div`
 `
 
 export const BottomContainer = styled.div`
-  margin-top: 25px;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
@@ -92,12 +90,13 @@ export const TimesliderBar = styled.div`
 
 export const Tickmark = styled.div`
   height: 30px;
-  background: ${props => props.selected ? '#000000' : '#1440ce'};
+  background: ${props => props.selected ? 'white' : props.tickColor || '#1440ce'};
   position: absolute;
   top: 2px;
-  width: 4px;
+  width: 3px;
   border-radius: 5px;
-  border: 1px solid ${props => props.selected ? '#000000' : '#ffffff'};
+  z-index: ${props => props.selected ? '99' : '98'};
+  border: solid ${props => props.selected ? '2px cyan' : '1px #ffffff'};
 `
 
 export const TimeSliderControls = styled.div`

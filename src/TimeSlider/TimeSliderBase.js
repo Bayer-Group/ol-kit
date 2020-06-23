@@ -33,12 +33,12 @@ import {
 } from './styled'
 import { datesDiffDay, datesSameDay } from './utils'
 
-const MAX_DATES = 300
+// const MAX_DATES = 300
 
 function TabPanel (props) {
-  const { children, value, index, ...other } = props
+  const { children, value, index } = props
 
-  return value === index && <Box p={3}>{children}</Box>
+  return value === index && <Box p={3} style={{ padding: '10px 24px' }}>{children}</Box>
 }
 
 TabPanel.propTypes = {
@@ -88,12 +88,11 @@ class TimeSliderBase extends React.Component {
     document.removeEventListener('keydown', this.keydownHandler)
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) { // eslint-disable-line camelcase
     if (nextProps.groups.length) this.createDateTicks(nextProps.groups[0])
   }
 
   createDateTicks = group => {
-    console.log('createDateTicks', group)
     const dates = group.dates
       .map(date => new Date(date)) /* we convert all dates to JS dates for easier use */
       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
@@ -135,18 +134,24 @@ class TimeSliderBase extends React.Component {
     const { leftDate, rightDate } = this.setDatesForCalendar(rangeMin, rangeMax)
 
     if (rangeMax - rangeMin !== 0) {
+      const selectedDateRange = [leftDate, rightDate]
+
       this.setState({
         isMouseDown: false,
-        selectedDateRange: [leftDate, rightDate],
+        selectedDateRange,
         selectedDate: null
       })
-      this.props.onFilterChange(this.state)
-      // this.props.layer.getWMSLayer().getSource().updateParams({
-      //   TIME: `${(new Date(leftDate)).toISOString().split('T')[0]}/${(new Date(rightDate)).toISOString().split('T')[0]}`
-      // })
+      this.props.onDatesChange({
+        id: this.props.groups[0].id,
+        selectedDateRange
+      })
     } else {
-      this.setState({
-        selectedDateRange: [dates[0], dates[dates.length - 1]]
+      const selectedDateRange = [dates[0], dates[dates.length - 1]]
+
+      this.setState({ selectedDateRange })
+      this.props.onDatesChange({
+        id: this.props.groups[0].id,
+        selectedDateRange
       })
     }
   }
@@ -196,11 +201,6 @@ class TimeSliderBase extends React.Component {
       selectedDate,
       selectedDateRange
     })
-
-    // // update the layer to reflect the time extent selected
-    // this.props.layer.getWMSLayer().getSource().updateParams({
-    //   TIME: `${(new Date(selectedDate)).toISOString().split('T')[0]}/${(new Date(selectedDate)).toISOString().split('T')[0]}`
-    // })
   }
 
   updateSelectedRange (first, second) {
@@ -251,18 +251,15 @@ class TimeSliderBase extends React.Component {
   }
 
   resetState = () => {
-    this.setState({
-      selectedDate: null,
-      selectedDateRange: []
-    })
+    const selectedDate = null
+    const selectedDateRange = []
 
-    // update the layer to reflect the time extent selected
-    this.props.layer.getWMSLayer().getSource().updateParams({
-      TIME: null
+    this.setState({ selectedDate, selectedDateRange })
+    this.props.onDatesChange({
+      id: this.props.groups[0].id,
+      selectedDate,
+      selectedDateRange
     })
-
-    // refresh the layer source to update the map
-    this.props.layer.getWMSLayer().getSource().refresh()
   }
 
   // loops through the date range and renders the dates on the top of the timeslider
@@ -299,7 +296,7 @@ class TimeSliderBase extends React.Component {
   }
 
   // loops through the captured data and displays a mark for each image
-  renderMarks = ({ dates }) => {
+  renderMarks = ({ dates, tickColor }) => {
     const { selectedDate } = this.state
     const padding = 24
 
@@ -313,7 +310,8 @@ class TimeSliderBase extends React.Component {
         <Tickmark
           key={i}
           selected={moment(dates[i]).isSame(selectedDate)}
-          style={{ left: `${leftPosition}px` }}>
+          style={{ left: `${leftPosition}px` }}
+          tickColor={tickColor}>
         </Tickmark>
       )
     })
@@ -375,7 +373,6 @@ class TimeSliderBase extends React.Component {
                           onMouseMove={this.handleMouseMove}>
                           <TimesliderBar barPlacement={16} barHeight={2} />
                           <MarkContainer
-                            id={`markContainer_${i}`}
                             ref={node => { this.markContainer = node }}>
                             {this.renderMarks(group)}
                           </MarkContainer>
@@ -446,22 +443,33 @@ class TimeSliderBase extends React.Component {
 }
 
 TimeSliderBase.defaultProps = {
-  // onClose: () => {},
+  onClose: () => {},
   onDatesChange: () => {},
   onTabChange: () => {}
 }
 
 TimeSliderBase.propTypes = {
+  /** separates tabs + corresponding dates into groups */
   groups: PropTypes.arrayOf(PropTypes.shape({
     dates: PropTypes.array,
+    id: PropTypes.string,
+    tickColor: PropTypes.string,
     title: PropTypes.string
   })),
+  /** callback fired when TimeSliderBase 'x' is clicked  */
+  onClose: PropTypes.func,
+  /** callback fired when date selection or range is changed */
+  onDatesChange: PropTypes.func,
+  /** callback fired when a new tab is clicked */
   onTabChange: PropTypes.func,
+  /** object with key/value pairs for translated strings */
   translations: PropTypes.shape({
+    '_ol_kit_.TimeSliderBase.dateRange': PropTypes.string,
     '_ol_kit_.TimeSliderBase.next': PropTypes.string,
     '_ol_kit_.TimeSliderBase.previous': PropTypes.string,
     '_ol_kit_.TimeSliderBase.selectedEndDate': PropTypes.string,
     '_ol_kit_.TimeSliderBase.selectedStartDate': PropTypes.string,
+    '_ol_kit_.TimeSliderBase.to': PropTypes.string,
     '_ol_kit_.TimeSliderBase.tooMany': PropTypes.string
   })
 }

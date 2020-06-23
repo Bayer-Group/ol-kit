@@ -76,10 +76,12 @@ class TimeSlider extends React.Component {
 
     await timeEnabledLayers.forEach(async layer => {
       const dates = await this.fetchFeaturesForCurrentExtent(layer)
+      const tickColor = null // fetch style off layer: layer.getStyle()
 
       groups.push({
         dates,
         id: layer.ol_uid,
+        tickColor,
         title: layer.get('title')
       })
     })
@@ -91,14 +93,15 @@ class TimeSlider extends React.Component {
     console.log('onFilterChange', filter)
   }
 
-  onDatesChange = e => {
-    if (e.selectedDate) {
+  onDatesChange = ({ id, selectedDate, selectedDateRange }) => {
+    const { map, selectInteraction } = this.props
+    const layer = map.getLayers().getArray().find(l => l.ol_uid === id)
+
+    if (selectedDate) {
       // select the date selected
-      const { map, selectInteraction } = this.props
       const deselected = selectInteraction.getFeatures().getArray()
-      const layer = map.getLayers().getArray().find(l => l.ol_uid === e.id)
       const source = layer?.getSource()
-      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), e.selectedDate))
+      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), selectedDate))
       const selected = [...features]
       const event = new olSelect.Event('select', selected, deselected)
 
@@ -106,18 +109,34 @@ class TimeSlider extends React.Component {
       selectInteraction.getFeatures().clear()
       features.forEach(feature => selectInteraction.getFeatures().push(feature))
       selectInteraction.dispatchEvent(event)
-    } else if (e.selectedDateRange) {
+
+      if (layer.isGeoserverLayer) {
+        // update the layer to reflect the time extent selected
+        layer.getWMSLayer().getSource().updateParams({
+          TIME: `${(new Date(selectedDate)).toISOString().split('T')[0]}/${(new Date(selectedDate)).toISOString().split('T')[0]}`
+        })
+      }
+    } else if (selectedDateRange && selectedDateRange.length) {
       // logic for drag select
+
+      if (layer.isGeoserverLayer) {
+        layer.getWMSLayer().getSource().updateParams({
+          TIME: `${(new Date(selectedDateRange[0])).toISOString().split('T')[0]}/${(new Date(selectedDateRange[1])).toISOString().split('T')[0]}`
+        })
+      }
+    } else if (!selectedDate) {
+      // reset filter
+
+      // clear select
+      selectInteraction.getFeatures().clear()
+
+      if (layer.isGeoserverLayer) {
+        // update the layer to reflect the time extent selected
+        layer.getWMSLayer().getSource().updateParams({ TIME: null })
+        // refresh the layer source to update the map
+        layer.getWMSLayer().getSource().refresh()
+      }
     }
-
-    // update the layer to reflect the time extent selected
-    // this.props.layer.getWMSLayer().getSource().updateParams({
-    //   TIME: `${(new Date(selectedDate)).toISOString().split('T')[0]}/${(new Date(selectedDate)).toISOString().split('T')[0]}`
-    // })
-  }
-
-  onTabChange = index => {
-    this.setState({ index })
   }
 
   onClose = () => {
@@ -150,11 +169,14 @@ TimeSlider.defaultProps = {
 }
 
 TimeSlider.propTypes = {
+  /** callback fired when TimeSlider 'x' is clicked */
+  onClose: PropTypes.func,
+  /** a reference to openlayers map object */
   map: PropTypes.object.isRequired,
+  /** reference to openlayers select interaction */
   selectInteraction: PropTypes.object,
   /** boolean that is respected over internal state */
-  show: PropTypes.bool,
-  translations: PropTypes.object
+  show: PropTypes.bool
 }
 
 export default connectToMap(TimeSlider)
