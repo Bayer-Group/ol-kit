@@ -1,6 +1,6 @@
-import moment from 'moment'
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 // update to @material-ui/pickers v4 when they add range support:
 // https://github.com/mui-org/material-ui-pickers/issues/364#issuecomment-575697596
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
@@ -337,13 +337,11 @@ class TimeSliderBase extends React.Component {
       index
     } = this.state
 
-    console.log('groups', this.props.groups, this.state)
-
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <div id='ContainerNode' ref={node => { this.containerNode = node }}>
+        <div id='ContainerNode'>
           <Typography>
-            <Container>
+            <Container ref={node => { this.containerNode = node }}>
               <Grid container justify='center'>
                 <Card style={{ width: '100%', paddingTop: '4px' }}>
                   <Tabs

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 import debounce from 'lodash.debounce'
 import olObservable from 'ol/observable'
 import olSelect from 'ol/interaction/select'
@@ -95,12 +96,13 @@ class TimeSlider extends React.Component {
 
   onDatesChange = ({ id, selectedDate, selectedDateRange }) => {
     const { map, selectInteraction } = this.props
+    const extent = map.getView().calculateExtent()
     const layer = map.getLayers().getArray().find(l => l.ol_uid === id)
+    const source = layer?.getSource()
 
     if (selectedDate) {
       // select the date selected
       const deselected = selectInteraction.getFeatures().getArray()
-      const source = layer?.getSource()
       const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), selectedDate))
       const selected = [...features]
       const event = new olSelect.Event('select', selected, deselected)
@@ -118,11 +120,24 @@ class TimeSlider extends React.Component {
       }
     } else if (selectedDateRange && selectedDateRange.length) {
       // logic for drag select
-
       if (layer.isGeoserverLayer) {
         layer.getWMSLayer().getSource().updateParams({
           TIME: `${(new Date(selectedDateRange[0])).toISOString().split('T')[0]}/${(new Date(selectedDateRange[1])).toISOString().split('T')[0]}`
         })
+      } else {
+        const allFeatures = source.getFeaturesInExtent(extent)
+        const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('timeEnabledKey')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
+        const deselected = selectInteraction.getFeatures().getArray()
+        const selected = [...features]
+        const event = new olSelect.Event('select', selected, deselected)
+
+        // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
+        selectInteraction.getFeatures().clear()
+        features.forEach(feature => selectInteraction.getFeatures().push(feature))
+        selectInteraction.dispatchEvent(event)
+
+        // features.forEach(f => f.setGeometry(null))
+        console.log('update date RANGE', selectedDateRange, allFeatures.length, features.length, features)
       }
     } else if (!selectedDate) {
       // reset filter
