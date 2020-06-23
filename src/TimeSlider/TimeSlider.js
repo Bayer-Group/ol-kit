@@ -15,7 +15,7 @@ class TimeSlider extends React.Component {
     this.state = {
       groups: [],
       index: 0,
-      open: true
+      show: true
     }
 
     this.moveHandler = debounce(e => this.setGroupsFromExtent(), 100)
@@ -120,25 +120,40 @@ class TimeSlider extends React.Component {
     this.setState({ index })
   }
 
+  onClose = () => {
+    this.setState({ show: false })
+    this.props.onClose()
+  }
+
   render () {
-    const { translations } = this.props
-    const { index, open, groups } = this.state
+    const { show: propShow } = this.props
+    const { groups, show: stateShow } = this.state
+    const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
     return (
-      <TimeSliderBase
-        groups={groups}
-        onFilterChange={this.onFilterChange}
-        onDatesChange={this.onDatesChange}
-        translations={translations}
-        show={true}
-        {...this.props} />
+      !show
+        ? null
+        : (
+          <TimeSliderBase
+            groups={groups}
+            onClose={this.onClose}
+            onFilterChange={this.onFilterChange}
+            onDatesChange={this.onDatesChange} />
+        )
     )
   }
+}
+
+TimeSlider.defaultProps = {
+  onClose: () => {},
+  show: undefined
 }
 
 TimeSlider.propTypes = {
   map: PropTypes.object.isRequired,
   selectInteraction: PropTypes.object,
+  /** boolean that is respected over internal state */
+  show: PropTypes.bool,
   translations: PropTypes.object
 }
 

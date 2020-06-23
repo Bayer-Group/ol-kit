@@ -432,7 +432,7 @@ class TimeSliderBase extends React.Component {
                       <SyncIcon color='primary' />
                     </IconButton>
                   </BottomContainer>
-                  <IconButton onClick={this.onCloseClicked} style={{ position: 'absolute', top: '5px', right: '5px' }} aria-label='delete'>
+                  <IconButton onClick={this.props.onClose} style={{ position: 'absolute', top: '5px', right: '5px' }} aria-label='delete'>
                     <CloseIcon />
                   </IconButton>
                 </Card>
@@ -446,6 +446,7 @@ class TimeSliderBase extends React.Component {
 }
 
 TimeSliderBase.defaultProps = {
+  // onClose: () => {},
   onDatesChange: () => {},
   onTabChange: () => {}
 }
