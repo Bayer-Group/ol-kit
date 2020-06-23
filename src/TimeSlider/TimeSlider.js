@@ -19,7 +19,7 @@ class TimeSlider extends React.Component {
       show: true
     }
 
-    this.moveHandler = debounce(e => this.setGroupsFromExtent(), 100)
+    this.moveHandler = debounce(e => this.state.show && this.setGroupsFromExtent(), 100)
   }
 
   componentDidMount = () => {
@@ -90,10 +90,6 @@ class TimeSlider extends React.Component {
     this.setState({ groups })
   }
 
-  onFilterChange = filter => {
-    console.log('onFilterChange', filter)
-  }
-
   onDatesChange = ({ id, selectedDate, selectedDateRange }) => {
     const { map, selectInteraction } = this.props
     const extent = map.getView().calculateExtent()
@@ -135,9 +131,6 @@ class TimeSlider extends React.Component {
         selectInteraction.getFeatures().clear()
         features.forEach(feature => selectInteraction.getFeatures().push(feature))
         selectInteraction.dispatchEvent(event)
-
-        // features.forEach(f => f.setGeometry(null))
-        console.log('update date RANGE', selectedDateRange, allFeatures.length, features.length, features)
       }
     } else if (!selectedDate) {
       // reset filter
@@ -171,7 +164,6 @@ class TimeSlider extends React.Component {
           <TimeSliderBase
             groups={groups}
             onClose={this.onClose}
-            onFilterChange={this.onFilterChange}
             onDatesChange={this.onDatesChange} />
         )
     )
