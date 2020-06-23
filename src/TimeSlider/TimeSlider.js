@@ -18,7 +18,7 @@ class TimeSlider extends React.Component {
       open: true
     }
 
-    this.moveHandler = debounce(e => this.setGroupsFromExtent(), 500)
+    this.moveHandler = debounce(e => this.setGroupsFromExtent(), 100)
   }
 
   componentDidMount = () => {
@@ -44,19 +44,20 @@ class TimeSlider extends React.Component {
   fetchFeaturesForCurrentExtent = async layer => {
     const { map } = this.props
     const extent = map.getView().calculateExtent()
+
     let dates = []
 
     if (layer.isGeoserverLayer && !!layer.getTimeAttribute()) {
       // use the geoserver methods to request intersection features -- then pull their dates off them
       const res = await layer.fetchFeaturesIntersectingExtent(extent, { featureTypes: [] })
-      
+
       // we convert all dates to JS dates for easier use
       dates = res.map(f => new Date(f.get(layer.getTimeAttribute())))
-    } else if (!!layer.get('timeEnabledKey')) {
+    } else if (layer.get('timeEnabledKey')) {
       // this key must be set on a layer to enable time slider
       const source = layer.getSource()
       const featuresInExtent = source?.getFeaturesInExtent(extent) || []
-      
+
       // we convert all dates to JS dates for easier use
       dates = featuresInExtent.map(f => new Date(f.get(layer.get('timeEnabledKey'))))
     }
@@ -64,7 +65,7 @@ class TimeSlider extends React.Component {
     const sortedDates = dates
       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
       .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
-    
+
     return sortedDates
   }
 
@@ -72,11 +73,11 @@ class TimeSlider extends React.Component {
     const { map } = this.props
     const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('timeEnabledKey') || (l.isGeoserverLayer && !!l.getTimeAttribute()))
     const groups = []
-    
+
     await timeEnabledLayers.forEach(async layer => {
       const dates = await this.fetchFeaturesForCurrentExtent(layer)
 
-      groups.push({ 
+      groups.push({
         dates,
         id: layer.ol_uid,
         title: layer.get('title')
@@ -100,7 +101,7 @@ class TimeSlider extends React.Component {
       const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), e.selectedDate))
       const selected = [...features]
       const event = new olSelect.Event('select', selected, deselected)
-  
+
       // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
       selectInteraction.getFeatures().clear()
       features.forEach(feature => selectInteraction.getFeatures().push(feature))

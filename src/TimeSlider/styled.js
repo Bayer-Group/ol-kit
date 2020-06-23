@@ -75,6 +75,7 @@ export const DateMark = styled.div`
 
 export const BottomContainer = styled.div`
   margin-top: 25px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
