@@ -39,6 +39,8 @@
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
+    "app": "webpack --config app/webpack.config.js",
+    "app:watch": "webpack-dev-server --hot --inline --config app/webpack.config.js",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
     "lint": "eslint src/**/*.js",
     "lint:fix": "npm run lint -- --fix",

@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
-import Alert from '@material-ui/lab/Alert'
 import { connectToMap, centerAndZoom } from 'Map'
 import VectorLayer from '../classes/VectorLayer'
 import olCollection from 'ol/collection'
@@ -17,54 +13,7 @@ import olCircleStyle from 'ol/style/circle'
 import olPoint from 'ol/geom/point'
 import { useForm } from 'react-hook-form'
 import proj from 'ol/proj'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    top: '15px',
-    left: '15px',
-    fontSize: '17px',
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
-    fontSize: '17px',
-    border: '0px',
-    '&:focus': {
-      outline: 'none',
-      backgroundColor: 'white !important',
-      fontSize: '17px'
-    },
-    '&:-internal-autofill-selected': {
-      backgroundColor: 'white !important',
-      fontSize: '17px'
-    }
-  },
-  iconButton: {
-    padding: 10
-  },
-  divider: {
-    height: 30,
-    margin: 4
-  },
-  'search-bar-container': {
-    width: '90%',
-    maxWidth: '500px',
-    position: 'absolute',
-    left: '100px',
-    top: '50px',
-    outline: 'none'
-  },
-  alert: {
-    position: 'absolute',
-    top: '70px',
-    left: '30px'
-  }
-}))
+import { Paper, IconButton, Input, SearchBarContainer, Alert } from './styled'
 
 /** A search input to look up and label locations via Google Places API
  * @component
@@ -75,7 +24,6 @@ function GooglePlacesSearch (props) {
   const { map, apiKey } = props
   const { handleSubmit, register } = useForm()
   const [errorMessage, setError] = useState(null)
-  const classes = useStyles()
 
   const dataLoader = (searchString) => {
     return fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${searchString}&inputtype=textquery&fields=geometry,formatted_address&key=${apiKey}`)
@@ -133,27 +81,25 @@ function GooglePlacesSearch (props) {
   }
 
   return (
-    <div className='search-bar-container'>
+    <SearchBarContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Paper className={classes.root} >
-          <input
-            className={classes.input}
+        <Paper>
+          <Input
             type='text'
             name='searchPlace'
-            placeholder='Search Google Maps'
-            ref={register}
-          />
-          <IconButton type='submit' className={classes.iconButton} aria-label='search' >
+            placeholder='Search Google Places'
+            ref={register} />
+          <IconButton type='submit' aria-label='search' >
             <SearchIcon />
           </IconButton>
         </Paper>
       </form>
       {
-        errorMessage ? <Alert className={classes.alert} severity='error' onClose={handleClose}>
+        errorMessage ? <Alert severity='error' onClose={handleClose}>
           {errorMessage}
         </Alert> : null
       }
-    </div>
+    </SearchBarContainer>
   )
 }
 
