@@ -27,8 +27,8 @@ jobs:
 
     - name: Build the static site
       run: |
-        npm run build
+        npm run app:build
 
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync . s3://ol-kit-demo
+        aws s3 sync ./app s3://ol-kit-demo

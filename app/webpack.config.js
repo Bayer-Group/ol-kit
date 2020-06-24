@@ -51,7 +51,8 @@ module.exports = {
     // Injects path.appSrc into public/index.html
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'index.html')
+      template: path.resolve(__dirname, 'index.html'),
+      favicon: path.resolve(__dirname, 'favicon.ico')
     }),
 
     // Do not emit compiled assets that include errors
