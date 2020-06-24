@@ -1,15 +1,15 @@
 import React from 'react'
-import Map from 'Map'
-import LayerPanel from 'LayerPanel'
-import Controls from 'Controls'
-import Popup from 'Popup'
-import BasemapContainer from 'BasemapContainer'
-import LayerStyler from 'LayerStyler'
-import LayerPanelPage from 'LayerPanelPage'
-import LayerPanelContent from 'LayerPanelContent'
-import VectorLayer from 'VectorLayer'
-import GooglePlacesSearch from 'GooglePlacesSearch'
+import { Map } from 'Map'
+import { LayerPanel } from 'LayerPanel'
+import { Controls } from 'Controls'
+import { Popup } from 'Popup'
+import BasemapContainer from 'Basemaps/BasemapContainer'
+import { LayerStyler } from 'LayerStyler'
+import LayerPanelPage from 'LayerPanel/LayerPanelPage'
+import LayerPanelContent from 'LayerPanel/LayerPanelContent'
+import VectorLayer from 'classes/VectorLayer'
 import { loadDataLayer } from 'DataLayers'
+import { GooglePlacesSearch } from 'GooglePlacesSearch'
 import PaletteIcon from '@material-ui/icons/Palette'
 import olSourceVector from 'ol/source/vector'
 import olFeature from 'ol/feature'
@@ -25,7 +25,8 @@ class App extends React.Component {
           feature_type: ['the lake house'],
           title: 'the lake house',
           name: 'the lake house',
-          geometry: new olGeomPoint(olProj.fromLonLat([-89.940598,38.923107])) })]
+          geometry: new olGeomPoint(olProj.fromLonLat([-89.940598, 38.923107]))
+        })]
       })
     })
 
@@ -40,7 +41,6 @@ class App extends React.Component {
   render () {
     return (
       <Map onMapInit={this.onMapInit} fullScreen>
-        <GooglePlacesSearch apiKey='AIzaSyDMoOv97jMcJwwAQGe5KBiHDSMxXNwKJPM' />
         <Popup />
         <LayerPanel>
           <LayerPanelPage tabIcon={<PaletteIcon />}>

@@ -144,7 +144,7 @@ function exportShapefile ({ format, visibleFeatures, sourceProjection, targetPro
   })
 
   const types = Array.from(new Set(featureCollection.features.map(feature => feature.geometry.type)))
-  const options = { folder: filename, types  }
+  const options = { folder: filename, types }
 
   return shpwrite.download(featureCollection, options)
 }

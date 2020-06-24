@@ -23,6 +23,7 @@ export const LogoText = styled.p`
   font-size: 11px;
   font-family: Roboto,Arial,sans-serif;
   padding-left: 2px;
+  margin: 0px;
 `
 
 export const StyledMap = styled.div`

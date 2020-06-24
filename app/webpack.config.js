@@ -20,17 +20,16 @@ module.exports = {
   // single mapping per line. Original source (lines only)
   devtool: 'cheap-module-source-map',
 
+  resolve: {
+    // Create aliases to import or require certain modules more easily
+    alias: {
+      // these ensure we don't have duplicate versions on the same page
+      'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom'),
+    }
+  },
+
   module: {
     rules: [
-      // Critial to run lint prior to compilation
-      {
-        enforce: 'pre',
-        test: /\.(js|jsx)$/,
-        loader: 'eslint-loader',
-        options: {
-          emitWarning: true
-        }
-      },
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
@@ -52,7 +51,7 @@ module.exports = {
     // Injects path.appSrc into public/index.html
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'index.html'),
+      template: path.resolve(__dirname, 'index.html')
     }),
 
     // Do not emit compiled assets that include errors
@@ -60,18 +59,10 @@ module.exports = {
   ],
 
   devServer: {
-    hot: true,
     port: 3000,
     clientLogLevel: 'none',
-    publicPath: path.resolve('/map'),
-    contentBase: path.resolve(__dirname, '../', 'build'),
-    before: (app, server) => {
-      // fake an HTML response so we don't have 404 warnings in the console
-      app.get('/profile/search/*', (req, res) => {
-        return res.send('<html>Hello world</html>')
-      })
-      // attach Phoenix service bindings (so the navbar & other stuff works)
-      app.use('/map/phoenix/service-bindings', require('@monsantoit/phoenix-service-bindings-middleware')())
-    }
-  }
+    publicPath: path.resolve('/'),
+    contentBase: path.resolve(__dirname, '../', 'build')
+  },
+  node: { fs: 'empty' }
 }
