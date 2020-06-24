@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "0.8.0-0",
+  "version": "0.11.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -73,6 +73,7 @@
     "react-hook-form": "^5.7.2",
     "react-select": "~3.1.0",
     "react-smooth-dnd": "~0.11.1",
+    "shp-write": "^0.3.2",
     "uuid": "~7.0.3"
   },
   "devDependencies": {

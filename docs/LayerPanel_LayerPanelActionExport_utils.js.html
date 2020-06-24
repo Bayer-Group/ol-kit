@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | BasemapStamenTerrain</title>
+    <title>ol-kit | LayerPanel/LayerPanelActionExport/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,228 +77,195 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltBasemapStamenTerrain /&gt
-        </h2>
-        
-            <div class="class-description">Stamen terrain basemap option</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="BasemapStamenTerrain">
-        <a class="href-link" href="#BasemapStamenTerrain">#</a>
-        
-        <span class="code-name">
-            
-                &ltBasemapStamenTerrain <i>map</i> <i>translations</i> <i>thumbnail</i> <i>layerTypeID</i> <i>onBasemapChanged</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>Yes</td>
-          <td>reference to Openlayers map object</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>translations</code></td>
-          <td>
-            shape
-          </td>
-          <td>No</td>
-          <td>Object with key/value pairs for translated strings</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>thumbnail</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>A string containing an http url or data url to a thumbnail image</td>
-          <td>function()</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>layerTypeID</code></td>
-          <td>
-            union
-          </td>
-          <td>No</td>
-          <td>A unique string or symbol property name that will be set directly on the layer when it is created with a value containing a string identifying the type of basemap layer (e.g. '_ol_kit_basemap': 'osm').  This property should be a shared ID used to identify individual layers as 'basemap' layers.</td>
-          <td>'_ol_kit_basemap'</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>onBasemapChanged</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>A callback that is fired when the basemap layer has been changed.  It is called with the updated layer.</td>
-          <td>() => {}</td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Basemaps_StamenTerrain.js.html" class="button">View Source</a>
-            <span>
-                <a href="Basemaps_StamenTerrain.js.html">Basemaps/StamenTerrain.js</a>, <a href="Basemaps_StamenTerrain.js.html#line15">line 15</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import olFormatGeoJSON from 'ol/format/geojson'
+import olFormatKml from 'ol/format/kml'
+import shpwrite from 'shp-write' // mapbox shapefile writer
+import olFeature from 'ol/feature'
+import ugh from 'ugh'
+
+let fs
+
+try {
+  fs = require('fs') // fs is used to test downloads with jest in a node env
+} catch (e) {
+  // do nothing
+}
+
+function groupBy (list, getGroupName) {
+  return list.reduce((groups, item) => {
+    const val = getGroupName(item)
+
+    groups[val] = groups[val] || []
+    groups[val].push(item)
+
+    return groups
+  }, {})
+}
+
+/**
+ * Exports the passed features as a file of the desired type.
+ * @category LayerPanel
+ * @function
+ * @since 0.9.0
+ * @param {String} [type] - The desired file type ('shp' or 'kml').
+ * @param {Object[]} [features] - An array of the features to be included in the generated file.
+ */
+export function exportFeatures (type, features, opts) {
+  const visibleFeatures = features.map(feature => {
+    const clone = feature.clone()
+
+    // this removes a ref to _ol_kit_parent to solve circularJSON bug
+    clone.set('_ol_kit_parent', null)
+    clone.setId(feature.getId())
+
+    return clone
+  }).filter(feature => feature.get('_ol_kit_feature_visibility'))
+
+  switch (type) {
+    case 'shp':
+      return exportShapefile({
+        format: new olFormatGeoJSON(),
+        visibleFeatures,
+        sourceProjection: 'EPSG:3857',
+        ...opts
+      })
+    case 'kml':
+      return exportKml({
+        format: new olFormatKml(),
+        visibleFeatures,
+        sourceProjection: 'EPSG:3857',
+        targetProjection: 'EPSG:4326',
+        ...opts
+      })
+    default:
+      return exportGeoJSON({
+        format: new olFormatGeoJSON(),
+        visibleFeatures,
+        sourceProjection: 'EPSG:3857',
+        ...opts
+      })
+  }
+}
+
+function saveAs (blob, filename) {
+  try {
+    // create an &lt;a> element
+    const a = document.createElement('a')
+    // create an object URL from our blob
+    const url = URL.createObjectURL(blob)
+    // set our element properties
+    a['data-testid'] = 'Export.download'
+    a.href = url
+    a.download = filename
+    a.style = 'display: none;'
+    // append to the document so we can click it
+    document.body.appendChild(a)
+    // download the file
+    a.click()
+    // clean-up
+    URL.revokeObjectURL(url)
+    document.body.removeChild(a)
+  } catch (err) {
+    ugh.error(`There was a problem downloading the exported file: ${err.message}`)
+  }
+}
+
+function flattenFeatures (features) {
+  return features.reduce((acc, feature) => {
+    const geom = feature.getGeometry()
+    const type = geom.getType()
+    switch (type) {
+      default:
+        acc.push(feature)
+        break
+      case 'MultiPoint': {
+        const featureProps = feature.getProperties()
+        geom.getPoints().forEach(point => {
+          acc.push(new olFeature({ ...featureProps, geometry: point }))
+        })
+        break
+      }
+      case 'MultiLineString': {
+        const featureProps = feature.getProperties()
+        geom.getLineStrings().forEach(lineString => {
+          acc.push(new olFeature({ ...featureProps, geometry: lineString }))
+        })
+        break
+      }
+      case 'MultiPolygon': {
+        const featureProps = feature.getProperties()
+        geom.getPolygons().forEach(polygon => {
+          acc.push(new olFeature({ ...featureProps, geometry: polygon }))
+        })
+        break
+      }
+      case 'GeometryCollection': {
+        const featureProps = feature.getProperties()
+        const spreadFeatures = geom.getGeometriesArray().map(g => new olFeature({ ...featureProps, geometry: g }))
+        const flattenedFeatures = flattenFeatures(spreadFeatures) // GeometryCollections can contain Multi geometries so we call flattenFeatures recusively
+
+        flattenedFeatures.forEach(f => {
+          acc.push(f)
+        })
+        break
+      }
+    }
+
+    return acc
+  }, [])
+}
+
+function exportShapefile ({ format, visibleFeatures, sourceProjection, targetProjection = 'EPSG:4326', filename = 'export.zip' }) {
+  const flattenedFeatures = flattenFeatures(visibleFeatures) // as of writing this shpwrite is bugged and can't handle multi geometries or GeometryCollections so we flatten these into their constituent parts.
+  const featureCollection = format.writeFeaturesObject(flattenedFeatures, {
+    dataProjection: targetProjection,
+    featureProjection: sourceProjection
+  })
+
+  const types = Array.from(new Set(featureCollection.features.map(feature => feature.geometry.type)))
+  const options = { folder: filename, types  }
+
+  return shpwrite.download(featureCollection, options)
+}
+
+function exportGeoJSON ({ format, visibleFeatures, sourceProjection, targetProjection = 'EPSG:4326', filename = 'export.geojson' }) {
+  const featureCollection = format.writeFeaturesObject(visibleFeatures, {
+    dataProjection: targetProjection,
+    featureProjection: sourceProjection
+  })
+  const jsonString = JSON.stringify(featureCollection)
+
+  // download the file for testing in a node env
+  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' })
+
+  return saveAs(new Blob([jsonString], {type: "octet/stream"}), filename)
+}
+
+function exportKml (args) {
+  const {
+    format,
+    visibleFeatures,
+    sourceProjection,
+    targetProjection = 'EPSG:4326',
+    filename = 'export.kml'
+  } = args
+  const source = format.writeFeatures(visibleFeatures, {
+    dataProjection: targetProjection,
+    featureProjection: sourceProjection
+  })
+  const blob = new Blob([source], { type: 'kml' })
+
+  // download the file for testing in a node env
+  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // fs is used for testing the download in node
+
+  return saveAs(blob, filename)
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
