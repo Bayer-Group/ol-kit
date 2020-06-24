@@ -12,7 +12,7 @@ try {
   // do nothing
 }
 
-function groupBy (list, getGroupName) {
+function groupBy (list, getGroupName) { // eslint-disable-line
   return list.reduce((groups, item) => {
     const val = getGroupName(item)
 

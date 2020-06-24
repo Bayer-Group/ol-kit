@@ -24,7 +24,7 @@ module.exports = {
     // Create aliases to import or require certain modules more easily
     alias: {
       // these ensure we don't have duplicate versions on the same page
-      'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom'),
+      'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
     }
   },
 
