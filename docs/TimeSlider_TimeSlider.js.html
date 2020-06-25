@@ -101,12 +101,12 @@ class TimeSlider extends React.Component {
     super(props)
 
     this.state = {
-      groups: [],
+      tabs: [],
       index: 0,
       show: true
     }
 
-    this.moveHandler = debounce(e => this.state.show &amp;&amp; this.setGroupsFromExtent(), 100)
+    this.moveHandler = debounce(e => this.state.show &amp;&amp; this.setTabsFromExtent(), 100)
   }
 
   componentDidMount = () => {
@@ -114,7 +114,7 @@ class TimeSlider extends React.Component {
     const layers = map.getLayers()
 
     // kicks off the process of fetching features for the current extent
-    this.setGroupsFromExtent()
+    this.setTabsFromExtent()
 
     // bind the event listener
     this.layerListener = layers.on('change:length', this.moveHandler)
@@ -141,13 +141,13 @@ class TimeSlider extends React.Component {
 
       // we convert all dates to JS dates for easier use
       dates = res.map(f => new Date(f.get(layer.getTimeAttribute())))
-    } else if (layer.get('timeEnabledKey')) {
+    } else if (layer.get('_ol_kit_time_key')) {
       // this key must be set on a layer to enable time slider
       const source = layer.getSource()
       const featuresInExtent = source?.getFeaturesInExtent(extent) || []
 
       // we convert all dates to JS dates for easier use
-      dates = featuresInExtent.map(f => new Date(f.get(layer.get('timeEnabledKey'))))
+      dates = featuresInExtent.map(f => new Date(f.get(layer.get('_ol_kit_time_key'))))
     }
 
     const sortedDates = dates
@@ -157,16 +157,16 @@ class TimeSlider extends React.Component {
     return sortedDates
   }
 
-  setGroupsFromExtent = async () => {
+  setTabsFromExtent = async () => {
     const { map } = this.props
-    const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('timeEnabledKey') || (l.isGeoserverLayer &amp;&amp; !!l.getTimeAttribute()))
-    const groups = []
+    const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('_ol_kit_time_key') || (l.isGeoserverLayer &amp;&amp; !!l.getTimeAttribute()))
+    const tabs = []
 
     await timeEnabledLayers.forEach(async layer => {
       const dates = await this.fetchFeaturesForCurrentExtent(layer)
       const tickColor = null // fetch style off layer: layer.getStyle()
 
-      groups.push({
+      tabs.push({
         dates,
         id: layer.ol_uid,
         tickColor,
@@ -174,7 +174,7 @@ class TimeSlider extends React.Component {
       })
     })
 
-    this.setState({ groups })
+    this.setState({ tabs })
   }
 
   onDatesChange = ({ id, selectedDate, selectedDateRange }) => {
@@ -186,7 +186,7 @@ class TimeSlider extends React.Component {
     if (selectedDate) {
       // select the date selected
       const deselected = selectInteraction.getFeatures().getArray()
-      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), selectedDate))
+      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('_ol_kit_time_key'))), selectedDate))
       const selected = [...features]
       const event = new olSelect.Event('select', selected, deselected)
 
@@ -209,7 +209,7 @@ class TimeSlider extends React.Component {
         })
       } else {
         const allFeatures = source.getFeaturesInExtent(extent)
-        const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('timeEnabledKey')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
+        const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('_ol_kit_time_key')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
         const deselected = selectInteraction.getFeatures().getArray()
         const selected = [...features]
         const event = new olSelect.Event('select', selected, deselected)
@@ -241,7 +241,7 @@ class TimeSlider extends React.Component {
 
   render () {
     const { show: propShow } = this.props
-    const { groups, show: stateShow } = this.state
+    const { show: stateShow, tabs } = this.state
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
     return (
@@ -249,9 +249,9 @@ class TimeSlider extends React.Component {
         ? null
         : (
           &lt;TimeSliderBase
-            groups={groups}
             onClose={this.onClose}
-            onDatesChange={this.onDatesChange} />
+            onDatesChange={this.onDatesChange}
+            tabs={tabs} />
         )
     )
   }
