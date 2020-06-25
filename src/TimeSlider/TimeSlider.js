@@ -9,6 +9,11 @@ import TimeSliderBase from './TimeSliderBase'
 import { datesDiffDay, datesSameDay } from './utils'
 import { connectToMap } from 'Map'
 
+/** TimeSlider component used to display/filter data with time attributes
+ * @component
+ * @category TimeSlider
+ * @since 0.12.0
+ */
 class TimeSlider extends React.Component {
   constructor (props) {
     super(props)
@@ -54,13 +59,13 @@ class TimeSlider extends React.Component {
 
       // we convert all dates to JS dates for easier use
       dates = res.map(f => new Date(f.get(layer.getTimeAttribute())))
-    } else if (layer.get('timeEnabledKey')) {
+    } else if (layer.get('_ol_kit_time_key')) {
       // this key must be set on a layer to enable time slider
       const source = layer.getSource()
       const featuresInExtent = source?.getFeaturesInExtent(extent) || []
 
       // we convert all dates to JS dates for easier use
-      dates = featuresInExtent.map(f => new Date(f.get(layer.get('timeEnabledKey'))))
+      dates = featuresInExtent.map(f => new Date(f.get(layer.get('_ol_kit_time_key'))))
     }
 
     const sortedDates = dates
@@ -72,7 +77,7 @@ class TimeSlider extends React.Component {
 
   setGroupsFromExtent = async () => {
     const { map } = this.props
-    const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('timeEnabledKey') || (l.isGeoserverLayer && !!l.getTimeAttribute()))
+    const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('_ol_kit_time_key') || (l.isGeoserverLayer && !!l.getTimeAttribute()))
     const groups = []
 
     await timeEnabledLayers.forEach(async layer => {
@@ -99,7 +104,7 @@ class TimeSlider extends React.Component {
     if (selectedDate) {
       // select the date selected
       const deselected = selectInteraction.getFeatures().getArray()
-      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('timeEnabledKey'))), selectedDate))
+      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('_ol_kit_time_key'))), selectedDate))
       const selected = [...features]
       const event = new olSelect.Event('select', selected, deselected)
 
@@ -122,7 +127,7 @@ class TimeSlider extends React.Component {
         })
       } else {
         const allFeatures = source.getFeaturesInExtent(extent)
-        const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('timeEnabledKey')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
+        const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('_ol_kit_time_key')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
         const deselected = selectInteraction.getFeatures().getArray()
         const selected = [...features]
         const event = new olSelect.Event('select', selected, deselected)

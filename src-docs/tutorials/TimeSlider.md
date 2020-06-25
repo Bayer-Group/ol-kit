@@ -26,21 +26,21 @@ const App = () => {
     const source = new olVectorSource({ features })
     // set key so that layer.get('_ol_kit_time_key') will point to
     // the feature's time identifier
-    const layer = new VectorLayer({ source, _ol_kit_time_key: 'start_date' })
+    const layer = new VectorLayer({ source, _ol_kit_time_key: 'start_date' }) // HERE'S THE MAGIC
 
     map.addLayer(layer)
   }
 
   return (
     <Map onMapInit={onMapInit}>
-      <TimeSlider />
+      <TimeSlider /> {/* be sure to set the _ol_kit_time_key on desired layers (see onMapInit) */}
     </Map>
   )
 }
 
 export default App
 ```
-Here is an example a dataset with ticks across a TimeSlider (green highlight is selection reflected by cyan points to the map):
+Here is an example dataset with ticks across a TimeSlider (green highlight is selection reflected by cyan points to the map):
 ![popup screenshot](./static/timeslider-screenshot.png)
 
 [See the docs for TimeSlider](./TimeSlider.html)

@@ -47,6 +47,11 @@ TabPanel.propTypes = {
   index: PropTypes.number
 }
 
+/** TimeSliderBase component ui used by TimeSlider
+ * @component
+ * @category TimeSlider
+ * @since 0.12.0
+ */
 class TimeSliderBase extends React.Component {
   constructor (props) {
     super(props)

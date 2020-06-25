@@ -142,5 +142,11 @@ reactComponents['PopupPageLayoutChild'] = Component38;
 import Component39 from '../src/Popup/PopupInsert/PopupTabs/index.js';
 reactComponents['PopupTabs'] = Component39;
 
-import Component40 from '../src/Controls/ZoomControls.js';
-reactComponents['ZoomControls'] = Component40;
+import Component40 from '../src/TimeSlider/TimeSlider.js';
+reactComponents['TimeSlider'] = Component40;
+
+import Component41 from '../src/TimeSlider/TimeSliderBase.js';
+reactComponents['TimeSliderBase'] = Component41;
+
+import Component42 from '../src/Controls/ZoomControls.js';
+reactComponents['ZoomControls'] = Component42;
