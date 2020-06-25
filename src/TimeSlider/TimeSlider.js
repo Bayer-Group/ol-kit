@@ -19,12 +19,12 @@ class TimeSlider extends React.Component {
     super(props)
 
     this.state = {
-      groups: [],
+      tabs: [],
       index: 0,
       show: true
     }
 
-    this.moveHandler = debounce(e => this.state.show && this.setGroupsFromExtent(), 100)
+    this.moveHandler = debounce(e => this.state.show && this.setTabsFromExtent(), 100)
   }
 
   componentDidMount = () => {
@@ -32,7 +32,7 @@ class TimeSlider extends React.Component {
     const layers = map.getLayers()
 
     // kicks off the process of fetching features for the current extent
-    this.setGroupsFromExtent()
+    this.setTabsFromExtent()
 
     // bind the event listener
     this.layerListener = layers.on('change:length', this.moveHandler)
@@ -75,16 +75,16 @@ class TimeSlider extends React.Component {
     return sortedDates
   }
 
-  setGroupsFromExtent = async () => {
+  setTabsFromExtent = async () => {
     const { map } = this.props
     const timeEnabledLayers = map.getLayers().getArray().filter(l => !!l.get('_ol_kit_time_key') || (l.isGeoserverLayer && !!l.getTimeAttribute()))
-    const groups = []
+    const tabs = []
 
     await timeEnabledLayers.forEach(async layer => {
       const dates = await this.fetchFeaturesForCurrentExtent(layer)
       const tickColor = null // fetch style off layer: layer.getStyle()
 
-      groups.push({
+      tabs.push({
         dates,
         id: layer.ol_uid,
         tickColor,
@@ -92,7 +92,7 @@ class TimeSlider extends React.Component {
       })
     })
 
-    this.setState({ groups })
+    this.setState({ tabs })
   }
 
   onDatesChange = ({ id, selectedDate, selectedDateRange }) => {
@@ -159,7 +159,7 @@ class TimeSlider extends React.Component {
 
   render () {
     const { show: propShow } = this.props
-    const { groups, show: stateShow } = this.state
+    const { show: stateShow, tabs } = this.state
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
     return (
@@ -167,9 +167,9 @@ class TimeSlider extends React.Component {
         ? null
         : (
           <TimeSliderBase
-            groups={groups}
             onClose={this.onClose}
-            onDatesChange={this.onDatesChange} />
+            onDatesChange={this.onDatesChange}
+            tabs={tabs} />
         )
     )
   }
