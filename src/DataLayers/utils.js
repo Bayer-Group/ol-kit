@@ -62,7 +62,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
   if (!features.length && isValidUrl(query)) {
     // query is an endpoint to fetch valid data set
-    let request = ''
+    let request = '' // eslint-disable-line
     let response = ''
 
     try {
