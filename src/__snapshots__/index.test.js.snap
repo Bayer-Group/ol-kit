@@ -42,6 +42,8 @@ Object {
   "PopupPageLayout": [Function],
   "PopupPageLayoutChild": [Function],
   "PopupTabs": [Function],
+  "TimeSlider": [Function],
+  "TimeSliderBase": [Function],
   "VectorLayer": [Function],
   "ZoomControls": [Function],
   "addMovementListener": [Function],
