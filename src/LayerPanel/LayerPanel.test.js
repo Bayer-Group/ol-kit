@@ -106,7 +106,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
@@ -134,7 +134,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
@@ -188,7 +188,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
@@ -244,7 +244,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265])), new olFeature(new olPoint([-99.75, 35.265]))]
@@ -283,7 +283,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     const vectorSource = new olSourceVector({
       features: (new olFormatGeoJSON()).readFeatures(testGeoJSONData)
@@ -324,7 +324,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     const vectorSource = new olSourceVector({
       features: (new olFormatGeoJSON()).readFeatures(testGeoJSONData)

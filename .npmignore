@@ -7,6 +7,7 @@ src-docs/
 src/
 static/
 tutorials/
+build/
 .jest
 .huskyrc
 .babelrc
