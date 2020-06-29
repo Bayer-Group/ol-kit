@@ -12,7 +12,7 @@ try {
   // do nothing
 }
 
-function groupBy (list, getGroupName) {
+function groupBy (list, getGroupName) { // eslint-disable-line
   return list.reduce((groups, item) => {
     const val = getGroupName(item)
 
@@ -144,7 +144,7 @@ function exportShapefile ({ format, visibleFeatures, sourceProjection, targetPro
   })
 
   const types = Array.from(new Set(featureCollection.features.map(feature => feature.geometry.type)))
-  const options = { folder: filename, types  }
+  const options = { folder: filename, types }
 
   return shpwrite.download(featureCollection, options)
 }
@@ -157,9 +157,9 @@ function exportGeoJSON ({ format, visibleFeatures, sourceProjection, targetProje
   const jsonString = JSON.stringify(featureCollection)
 
   // download the file for testing in a node env
-  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' })
+  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' }) // eslint-disable-line
 
-  return saveAs(new Blob([jsonString], {type: "octet/stream"}), filename)
+  return saveAs(new Blob([jsonString], { type: 'octet/stream' }), filename)
 }
 
 function exportKml (args) {
@@ -177,7 +177,8 @@ function exportKml (args) {
   const blob = new Blob([source], { type: 'kml' })
 
   // download the file for testing in a node env
-  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // fs is used for testing the download in node
+  // fs is used for testing the download in node
+  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // eslint-disable-line
 
   return saveAs(blob, filename)
 }

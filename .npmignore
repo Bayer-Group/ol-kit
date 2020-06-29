@@ -1,11 +1,13 @@
 # Project
 __tests__
 __test_data__
+app/
 docs/
 src-docs/
 src/
 static/
 tutorials/
+build/
 .jest
 .huskyrc
 .babelrc
