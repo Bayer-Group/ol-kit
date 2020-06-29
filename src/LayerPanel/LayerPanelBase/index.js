@@ -35,11 +35,16 @@ class LayerPanelBase extends Component {
   render () {
     const { inline, style, children } = this.props
     const { activeIndex, showLayerPanel } = this.state
+    const tabDataTestId = showLayerPanel ? 'LayerPanel.close' : 'LayerPanel.open'
 
     return (
       <Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
         <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
-          <Tab icon={showLayerPanel ? <ChevronRightIcon /> : <LayersIcon />} data-testid='LayerPanel.openTab' />
+          <Tab icon={
+            showLayerPanel
+              ? <ChevronRightIcon data-testid={tabDataTestId} />
+              : <LayersIcon data-testid={tabDataTestId} />
+          } data-testid={tabDataTestId} />
           {showLayerPanel &&
             React.Children.map(children, (child, i) => {
               if (child) return <Tab key={i} icon={child.props.tabIcon} />

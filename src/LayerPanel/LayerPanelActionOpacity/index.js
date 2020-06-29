@@ -16,6 +16,7 @@ class LayerPanelActionOpacity extends Component {
       <OpacityWrapper>
         <OpacityTitle id='opacity-slider'>{translations['_ol_kit.actions.opacity']}</OpacityTitle>
         <Slider
+          data-testid='LayerPanelAction.opacity'
           disabled={false}
           min={0.1}
           max={1}
