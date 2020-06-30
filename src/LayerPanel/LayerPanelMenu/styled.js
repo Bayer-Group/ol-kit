@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles'
 import MaterialTypography from '@material-ui/core/Typography'
 import MateriaSlider from '@material-ui/core/Slider'
+import { connectToMap } from 'Map'
 
 export const OpacityTitle = withStyles(() => ({
   root: {
@@ -15,7 +16,7 @@ export const Slider = withStyles(() => ({
   root: {
     padding: '0'
   }
-}))(MateriaSlider)
+}))(connectToMap(MateriaSlider))
 
 export const OpacityWrapper = styled.div`
   width: 100%;

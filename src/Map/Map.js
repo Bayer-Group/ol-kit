@@ -8,6 +8,7 @@ import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap 
 import { StyledMap } from './styled'
 import en from 'locales/en'
 import ugh from 'ugh'
+import { createMuiTheme } from '@material-ui/core/styles'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
 export let MapContext = null
@@ -108,6 +109,7 @@ class Map extends React.Component {
     return {
       map: this.map,
       selectInteraction: this.selectInteraction,
+      theme: this.props.theme,
       translations
     }
   }
@@ -145,7 +147,8 @@ Map.defaultProps = {
   updateViewFromUrl: true,
   urlViewParam: 'view',
   style: {},
-  translations: en
+  translations: en,
+  theme: createMuiTheme({})
 }
 
 Map.propTypes = {
@@ -177,7 +180,9 @@ Map.propTypes = {
   /** apply inline styles to the map container */
   style: PropTypes.object,
   /** object of string key/values (see: locales) */
-  translations: PropTypes.object
+  translations: PropTypes.object,
+  /** material-ui theme object */
+  theme: PropTypes.object
 }
 
 export default Map

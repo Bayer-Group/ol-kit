@@ -11,7 +11,7 @@ import { connectToMap } from 'Map'
  */
 class LayerPanel extends Component {
   render () {
-    const { translations, children, map } = this.props
+    const { translations, children, theme, map } = this.props
 
     return (
       <LayerPanelBase translations={translations}>

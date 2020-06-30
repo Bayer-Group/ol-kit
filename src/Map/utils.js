@@ -13,6 +13,7 @@ import qs from 'qs'
 
 import ugh from 'ugh'
 import { MapContext } from './Map'
+import ThemeProvider from '@material-ui/styles/ThemeProvider'
 
 /**
  * Create an openlayers map
@@ -74,7 +75,9 @@ export function connectToMap (Component) {
               })
             }
 
-            return <Component {...filteredProviderProps} {...props} />
+            return <ThemeProvider theme={props.theme || providerProps.theme}>
+              <Component {...filteredProviderProps} {...props} />
+            </ThemeProvider>
           }}
         </MapContext.Consumer>
       )

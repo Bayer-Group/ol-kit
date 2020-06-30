@@ -27,7 +27,7 @@ const colors = {
  * @since 0.1.0
  */
 function Compass (props) {
-  const { map, variation } = props
+  const { map } = props
   const [radians, setRadians] = useState(map.getView().getRotation())
 
   useEffect(() => {
@@ -58,6 +58,8 @@ function Compass (props) {
   }
   const degrees = radians * 57.296 // the number of degrees per radian
 
+  const variation = props.variation || props.theme.palette.type || 'light'
+
   return (
     <CompassContainer background={colors[variation].background}>
       <svg width='48px' height='48px' viewBox='0 0 48 48' version='1.1' xmlns='http://www.w3.org/2000/svg'>
@@ -78,15 +80,13 @@ function Compass (props) {
   )
 }
 
-Compass.defaultProps = {
-  variation: 'light'
-}
-
 Compass.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** light or dark variation for styling */
-  variation: PropTypes.oneOf(['light', 'dark'])
+  variation: PropTypes.oneOf(['light', 'dark']),
+  /** material-ui theme object to default variation */
+  theme: PropTypes.object
 }
 
 export default connectToMap(Compass)

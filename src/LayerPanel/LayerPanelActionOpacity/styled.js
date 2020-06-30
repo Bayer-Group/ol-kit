@@ -6,8 +6,7 @@ import MateriaSlider from '@material-ui/core/Slider'
 export const OpacityTitle = withStyles(() => ({
   root: {
     fontSize: '12px',
-    paddingTop: '0.3rem',
-    color: '#868686'
+    paddingTop: '0.3rem'
   }
 }))(MaterialTypography)
 
