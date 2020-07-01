@@ -4,20 +4,21 @@ import MaterialTabs from '@material-ui/core/Tabs'
 import MaterialTab from '@material-ui/core/Tab'
 import MaterialCheckbox from '@material-ui/core/Checkbox'
 import { connectToMap } from 'Map'
-import { styled, ThemeProvider } from '@material-ui/styles'
+import { styled } from '@material-ui/core/styles'
 
-export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
+export const Card = connectToMap(({ theme, ...props }) => <StyledCard theme={theme} {...props} />)
+const StyledCard = styled(({ theme, ...props }) => <MaterialCard {...props} />)({
   maxHeight: '645px',
   minHeight: props => `${200 + (props.numoftabs * 40)}px`,
   width: '400px',
   top: '100px',
   transition: 'all .3s',
+  background: props => props.theme.palette.background.default,
   position: props => props.inline ? 'inline' : 'absolute',
   right: props => props.open ? '0px' : '-400px'
 })
 
 export const Tabs = connectToMap(({ theme, ...props }) => <StyledTab theme={theme} orientation='vertical' {...props} />)
-
 export const StyledTab = styled(({ theme, ...props }) => 
   <MaterialTabs orientation='vertical' {...props} />
 )({

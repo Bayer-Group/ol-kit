@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import MINUS from 'images/zoom_out_ico.svg'
-import PLUS from 'images/zoom_in_ico.svg'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 import { Icon, IconSeparator, IconsContainer } from './styled'
 import { zoomDelta } from './utils'
 import { connectToMap } from 'Map'; // eslint-disable-line
@@ -52,7 +52,7 @@ function ZoomControls (props) {
         onMouseDown={() => handleMouseDown('ZOOM_IN')}
         onMouseOut={() => stopZoom('ZOOM_IN')}
         onMouseUp={() => stopZoom('ZOOM_IN')}>
-        <PLUS />
+        <AddIcon color={'action'} />
       </Icon>
       <IconSeparator />
       <Icon
@@ -60,7 +60,7 @@ function ZoomControls (props) {
         onMouseDown={() => handleMouseDown('ZOOM_OUT')}
         onMouseOut={() => stopZoom('ZOOM_OUT')}
         onMouseUp={() => stopZoom('ZOOM_OUT')}>
-        <MINUS />
+        <RemoveIcon color={'action'} />
       </Icon>
     </IconsContainer>
   )

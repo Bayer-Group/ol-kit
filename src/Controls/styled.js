@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 export const CompassContainer = styled.div`
   cursor: pointer;
@@ -24,30 +25,30 @@ export const ControlsContainer = styled.div`
   margin: 0 6px 18px 6px;
 `
 
-export const Icon = styled.div`
+export const Icon = connectToMap(styled.div`
   cursor: pointer;
   width: 33px;
   height: 26px;
   text-align: center;
-  padding-top: 8px;
+  padding-top: 5px;
   transition: all 0.2s;
-  background: white;
+  background: ${p => p.theme.palette.background.default};
   &:hover {
-    background: #f3f3f3;
+    background: ${p => p.theme.palette.action.hover};
   }
-`
+`)
 
-export const IconSeparator = styled.div`
+export const IconSeparator = connectToMap(styled.div`
   width: 50%;
-  background: rgb(211, 211, 211);
+  background: ${p => p.theme.palette.divider};
   height: 1px;
   margin: auto;
-`
+`)
 
-export const IconsContainer = styled.div`
-  background: white;
+export const IconsContainer = connectToMap(styled.div`
+  background: ${p => p.theme.palette.background.default};
   border-radius: 2px;
   box-shadow: 1px 2px 5px #757575;
   width: 34px;
   margin: 0 6px 12px 0px;
-`
+`)
