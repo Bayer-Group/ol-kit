@@ -11,6 +11,6 @@ export const Item = connectToMap(styled.div`
   color: ${props => props.disabled ? props.theme.palette.text.disabled : props.theme.palette.text.primary};
 
   &:hover {
-    background: ${props => props.theme.palette.text.secondary};
+    background: ${props => props.theme.palette.action.hover};
   }
 `)
