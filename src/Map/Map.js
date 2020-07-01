@@ -109,7 +109,7 @@ class Map extends React.Component {
     return {
       map: this.map,
       selectInteraction: this.selectInteraction,
-      theme: this.props.theme,
+      theme: this.props.theme || createMuiTheme({}),
       translations
     }
   }
@@ -148,7 +148,7 @@ Map.defaultProps = {
   urlViewParam: 'view',
   style: {},
   translations: en,
-  theme: createMuiTheme({})
+  theme: createMuiTheme({palette: {primary: {main: '#152357'}, secondary: {main: '#152357'}}})
 }
 
 Map.propTypes = {

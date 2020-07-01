@@ -90,6 +90,7 @@
     "@material-ui/core": "~4.9.12",
     "@material-ui/icons": "~4.9.1",
     "@material-ui/styles": "~4.9.10",
+    "@material-ui/utils": "^4.10.2",
     "@testing-library/dom": "~7.0.4",
     "@testing-library/jest-dom": "~5.5.0",
     "@testing-library/react": "~10.0.1",
