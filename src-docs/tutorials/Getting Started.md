@@ -89,5 +89,8 @@ function App () {
 export default App
 ```
 
+## Internal App
+To run our internal app inside `ol-kit` make sure to `npm install` and then run the command `npm run app` which will start the server on port 3000.
+
 ## Next Steps
 Now that you have a map rendered, you probably want to make it awesome. Check out the components and tutorials provided by ol-kit that make it easy to add info popups, layer management, drawing capability, URI location tracking and much more.

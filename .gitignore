@@ -3,6 +3,7 @@ dist/
 .jest/
 /lib
 core/
+build/
 node_modules/
 *.log
 .env
