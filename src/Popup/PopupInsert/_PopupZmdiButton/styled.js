@@ -1,7 +1,8 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 
-export const Icon = styled.button`
+export const Icon = connectToMap(styled.button`
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -10,9 +11,9 @@ export const Icon = styled.button`
   border: 10px;
   background: none;
   font-size: 1.2em;
-  vertical-align: inherit;
+  vertical-align: top;
   color: ${props => props.hover
-    ? '#7a736b'
-    : '#787878'
+    ? props.theme.palette.text.secondary
+    : props.theme.palette.text.primary
 }
-`
+`)

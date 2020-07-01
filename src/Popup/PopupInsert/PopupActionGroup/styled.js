@@ -1,7 +1,8 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 
-export const Container = styled.span`
+export const Container = connectToMap(styled.span`
     display: flex;
     position: relative;
     border: 10px;
@@ -12,14 +13,14 @@ export const Container = styled.span`
     outline: none;
     font-size: 15px;
     font-weight: inherit;
-    color: rgba(0, 0, 0, 0.87);
+    color: ${props => props.theme.palette.text.primary};
     line-height: 32px;
     transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     min-height: 32px;
     white-space: nowrap;
     user-select: none;
-    background-color: ${props => props.hover ? '#f2f2f2' : 'white'};
-`
+    background-color: ${props => props.hover ? props.theme.palette.action.hover : props.theme.palette.background.default};
+`)
 
 export const ActionIcon = styled.div`
     display: inline-flex;
@@ -31,7 +32,7 @@ export const ActionIcon = styled.div`
     margin: 0 5px;
 `
 
-export const Flyout = styled.div.attrs({
+export const Flyout = connectToMap(styled.div.attrs({
   style: ({ left, top, showFlyout }) => ({
     left: `${left}px`,
     top: `${top}px`,
@@ -39,10 +40,10 @@ export const Flyout = styled.div.attrs({
   })
 })`
   position: fixed;
-  background-color: white;
+  background-color: ${props => props.theme.palette.background.default};
   width: 192px;
   z-index: 2;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-`
+`)
 
 export const Title = styled.span``

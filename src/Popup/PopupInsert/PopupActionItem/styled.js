@@ -1,15 +1,16 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 export const Action = styled.div`
   cursor: pointer;
 `
 
-export const Item = styled.div`
+export const Item = connectToMap(styled.div`
   padding: 12px 15px;
   font-size: 15px;
-  color: ${props => props.disabled ? 'gray' : 'black'};
+  color: ${props => props.disabled ? props.theme.palette.text.disabled : props.theme.palette.text.primary};
 
   &:hover {
-    background: #f2f2f2;
+    background: ${props => props.theme.palette.text.secondary};
   }
-`
+`)

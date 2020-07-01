@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connectToMap } from 'Map'
-import CLOSE from 'images/close_icon.svg'
-import LEFT_ARROW from 'images/left_arrow.svg'
-import RIGHT_ARROW from 'images/right_arrow.svg'
+import CloseIcon from '@material-ui/icons/Close';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { HeightContainer, AttributeSettings } from '../styled'
 import ZmdiButton from '../_PopupZmdiButton'
 import LoadingSpinner from '../_LoadingSpinner'
@@ -32,6 +32,7 @@ class PopupDefaultPage extends Component {
       currentPage,
       onClose,
       onSettingsClick,
+      theme,
       showCustomizeDetails
     } = this.props
 
@@ -50,15 +51,15 @@ class PopupDefaultPage extends Component {
     return (
       <HeightContainer>
         <Header>
-          <Close onClick={onClose}><CLOSE data-testid='popup-page-close' /></Close>
+          <Close onClick={onClose}><CloseIcon data-testid='popup-page-close' /></Close>
           {pageCount > 1 &&
             <FeatureNavigator>
               <ZmdiButton onClick={onPrevPage}>
-                <LEFT_ARROW data-testid='popup-page-left-arrow' />
+                <ChevronLeftIcon fontSize='small' data-testid='popup-page-left-arrow' />
               </ZmdiButton>
               <FeatureCount>{`${currentPage} / ${pageCount}`}</FeatureCount>
               <ZmdiButton onClick={onNextPage}>
-                <RIGHT_ARROW data-testid='popup-page-right-arrow' />
+                <ChevronRightIcon fontSize='small' data-testid='popup-page-right-arrow' />
               </ZmdiButton>
             </FeatureNavigator>
           }
