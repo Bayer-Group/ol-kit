@@ -3,7 +3,7 @@ import { connectToMap } from 'Map'
 
 
 export const Header = connectToMap(styled.div`
-  background-color: ${props => props.theme.palette.background.paper};
+  background-color: ${props => props.theme.palette.divider};
 `)
 
 

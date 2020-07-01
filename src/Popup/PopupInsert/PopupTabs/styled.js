@@ -3,7 +3,7 @@ import { connectToMap } from 'Map'
 
 
 export const TabsContainer = connectToMap(styled.div`
-  color: ${p => p.theme.palette.divider};
+  color: ${p => p.theme.palette.text.secondary};
   height: 100%;
   width: 100%;
   display: flex;
@@ -17,7 +17,7 @@ export const TabList = connectToMap(styled.div`
   display: inline-block;
   position: relative;
   white-space: nowrap;
-  background-color: ${p => p.theme.palette.background.paper};
+  background-color: ${p => p.theme.palette.divider};
   width: 100%;
   overflow-x: hidden;
   margin-bottom: 0;
