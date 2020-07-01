@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { connectToMap } from 'Map'
 
 export const Container = styled.div`
   position: relative;
@@ -13,11 +13,11 @@ export const Container = styled.div`
 `
 
 
-export const Row = styled.div`
-  color: #787878;
+export const Row = connectToMap(styled.div`
+  color: ${p => p.theme.palette.text.secondary};
   margin: 0 0 15px 0;
   max-height: 200px;
-`
+`)
 
 
 export const Key = styled.div`

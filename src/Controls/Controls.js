@@ -45,9 +45,7 @@ Controls.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left']),
-  /** material ui theme object */
-  theme: PropTypes.object
+  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
 }
 
 export default connectToMap(Controls)
