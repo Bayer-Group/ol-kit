@@ -1,8 +1,8 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
-
-export const TabsContainer = styled.div`
-  color: #333333;
+export const TabsContainer = connectToMap(styled.div`
+  color: ${p => p.theme.palette.text.primary};
   height: 100%;
   width: 100%;
   display: flex;
@@ -10,18 +10,18 @@ export const TabsContainer = styled.div`
   box-sizing: border-box;
   flex-shrink: 0;
   flex-direction: column;
-`
+`)
 
-export const TabList = styled.div`
+export const TabList = connectToMap(styled.div`
   display: inline-block;
   position: relative;
   white-space: nowrap;
-  background-color: #ededed;
+  background-color: ${p => p.theme.palette.divider};
   width: 100%;
   overflow-x: hidden;
   margin-bottom: 0;
   min-height: 50px;
-`
+`)
 
 export const Flex = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ export const FlexContainer = styled.div`
   right: 0;
 `
 
-export const TabButton = styled.button`
+export const TabButton = connectToMap(styled.button`
     flex: none;
     flex-grow: 1;
     height: 50px;
@@ -62,15 +62,15 @@ export const TabButton = styled.button`
     background-color: transparent;
     -webkit-appearance: none;
     -webkit-tap-highlight-color: transparent;
-    color: ${props => props.selected ? 'inherit' : 'rgba(0, 0, 0, 0.38)'};
-`
+    color: ${props => props.selected ? props.theme.palette.text.primary : props.theme.palette.text.secondary};
+`)
 
 
-export const TabSlider = styled.span`
-  background-color: #152357;
+export const TabSlider = connectToMap(styled.span`
+  background-color: ${p => p.theme.palette.secondary.main};
   width: 100%;
   height: 3px;
   bottom: 0;
   position: absolute;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-`
+`)

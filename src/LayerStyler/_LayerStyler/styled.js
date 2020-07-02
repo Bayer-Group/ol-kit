@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 
 export const ButtonContainer = styled.div`
@@ -8,51 +9,56 @@ export const ButtonContainer = styled.div`
 `
 
 
-export const Button = styled.div`
+export const Button = connectToMap(styled.div`
   user-select: none;
   display: inline-block;
-  color: #152357;
+  color: ${p => p.theme.palette.secondary.main};
   cursor: pointer;
   width: 25%;
   font-size: 12px;
-`
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    color: ${p => p.theme.palette.secondary.dark};
+  }
+`)
 
 
-export const StyleGroupHeading = styled.span`
+export const StyleGroupHeading = connectToMap(styled.span`
   display: flex;
   flex-wrap: nowrap;
   font-weight: 500;
-  color: #6f6f6f;
+  color: ${p => p.theme.palette.action.active};
   line-height: 32px;
   align-items: center;
-`
+`)
 
 
-export const AddNew = styled.div`
+export const AddNew = connectToMap(styled.div`
   display: flex;
   margin: 0 10px;
-  color: #152357;
+  color: ${p => p.theme.palette.secondary.main};
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: #054d94;
+    color: ${p => p.theme.palette.secondary.dark};
   }
-`
+`)
 
-export const ResetText = styled.div`
+export const ResetText = connectToMap(styled.div`
   display: inline;
   font-weight: 400;
   font-size: 12px;
   padding-left: 15px;
-  color: #152357;
+  color: ${p => p.theme.palette.secondary.main};
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: #054d94;
+    color: ${p => p.theme.palette.secondary.dark};
   }
-`
+`)
 
 
 export const Half = styled.div`
@@ -76,13 +82,13 @@ export const Fourth = styled.div`
 `
 
 
-export const Text = styled.div`
-  color: #939393;
+export const Text = connectToMap(styled.div`
+  color: ${p => p.theme.palette.text.active};
   margin: auto;
   margin-top: 40px;
   text-align: center;
   font-size: 16px;
-`
+`)
 
 
 export const NewStyleGroupContainer = styled.div`
@@ -96,10 +102,10 @@ export const NewStyleGroupIcon = styled.i`
 `
 
 
-export const NewStyleGroupButton = styled.div`
+export const NewStyleGroupButton = connectToMap(styled.div`
   flex: 1;
   margin: 0 5px;
-  background: #f0f0f0;
+  background: ${p => p.theme.palette.background.paper};
   border-radius: 10px;
   padding: 12px 8px;
   font-size: 15px;
@@ -111,6 +117,6 @@ export const NewStyleGroupButton = styled.div`
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    background: #d8d8d8;
+    background: ${p => p.theme.palette.action.hover};
   }
-`
+`)

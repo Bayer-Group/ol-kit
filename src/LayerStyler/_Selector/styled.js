@@ -1,15 +1,16 @@
 import styled, { css } from 'styled-components'
 import Select from 'react-select'
+import { connectToMap } from 'Map'
 
 
-export const Container = styled.div`
-  background: ${props => props.background ? props.background : 'white'};
+export const Container = connectToMap(styled.div`
+  background: ${props => props.background ? props.background : props.theme.palette.background.default};
   padding: 26px 12px 11px 12px;
-`
+`)
 
 
-export const Header = styled.label`
-  color: ${props => props.focus || props.valid || props.disabled ? '#5264AE' : '#8a8a8a'};
+export const Header = connectToMap(styled.label`
+  color: ${props => props.focus || props.valid || props.disabled ? props.theme.palette.text.primary : props.theme.palette.text.secondary};
   font-size: ${props => props.focus ? '14px' : '0.8em'};
   line-height: 0.8em;
   font-weight: normal;
@@ -20,15 +21,15 @@ export const Header = styled.label`
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
-`
+`)
 
 
-export const SubHeader = styled.div`
+export const SubHeader = connectToMap(styled.div`
   font-size: .6em;
   line-height: .6em;
   margin-top: 6px;
-  color: #8a8a8a;
-`
+  color: ${p => p.theme.palette.text.secondary};
+`)
 
 export const Group = styled.div`
   position: relative;
@@ -36,10 +37,10 @@ export const Group = styled.div`
   width: 100%;
 `
 
-const inputHighlighter = css`keyframes
-  from { background: #5264AE; }
+const inputHighlighter = connectToMap(css`keyframes
+  from { background: ${p => p.theme.palette.background.default}; }
   to   { width: 0; background: transparent; }
-`
+`)
 
 export const Highlight = styled.span`
   position: absolute;

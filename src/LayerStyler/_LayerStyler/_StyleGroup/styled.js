@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 
 export const AddNewContainer = styled.div`
@@ -7,24 +8,24 @@ export const AddNewContainer = styled.div`
 `
 
 
-export const AddNew = styled.span`
-  color: #152357;
+export const AddNew = connectToMap(styled.span`
+  color: ${p => p.theme.palette.secondary.main};
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: #054d94;
+    color: ${p => p.theme.palette.secondary.dark};
   }
-`
+`)
 
 
-export const Card = styled.div`
+export const Card = connectToMap(styled.div`
   margin: 10px;
   padding: 10px 0;
   border-radius: 5px;
-  background: #ffffff;
+  background: ${p => p.theme.palette.background.paper};
   box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.04), 0px 5px 10px rgba(0,0,0,0.1);
-`
+`)
 
 
 export const StyleContainer = styled.div`
@@ -51,20 +52,20 @@ export const DeleteGroup = styled.div`
 `
 
 
-export const DeleteGroupText = styled.span`
+export const DeleteGroupText = connectToMap(styled.span`
   cursor: pointer;
-  color: #1b78d2;
+  color: ${p => p.theme.palette.secondary.main};
   font-size: 14px;
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: #054d94;
+    color: ${p => p.theme.palette.secondary.dark};
   }
-`
+`)
 
 
-export const Trashcan = styled.div`
-  color: #c3c3c3;
+export const Trashcan = connectToMap(styled.div`
+  color: ${p => p.theme.palette.text.secondary};
   font-size: 1.5em;
   vertical-align: top;
   display: flex;
@@ -74,6 +75,6 @@ export const Trashcan = styled.div`
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: #9a9a9a;
+    color: ${p => p.theme.palette.text.primary};
   }
-`
+`)

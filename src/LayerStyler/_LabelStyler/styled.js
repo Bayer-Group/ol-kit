@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
 import MaterialSwitch from '@material-ui/core/Switch'
 import { withStyles } from '@material-ui/styles'
+import { connectToMap } from 'Map'
 
 
 export const TopControls = styled.div`
@@ -14,13 +16,13 @@ export const TopControls = styled.div`
 `
 
 
-export const ToggleContainer = styled.div`
+export const ToggleContainer = connectToMap(styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   font-weight: 500;
-  color: #6f6f6f;
-`
+  color: ${p => p.theme.palette.text.secondary};
+`)
 
 
 export const SymbolizerContainer = styled.div`
@@ -28,12 +30,12 @@ export const SymbolizerContainer = styled.div`
   display: flex;
 `
 
-export const Title = styled.div`
+export const Title = connectToMap(styled.div`
   font-size: 10px;
   /* text-transform: uppercase; */
-  color: ${props => props.color ? props.color : '#ccc'};
+  color: ${props => props.color ? props.color : props.theme.palette.text.primary};
   text-align: center;
-`
+`)
 
 
 export const Button = styled.div`
@@ -45,24 +47,24 @@ export const Button = styled.div`
 `
 
 
-export const ButtonText = styled.span`
-  color: #152357;
+export const ButtonText = connectToMap(styled.span`
+  color: ${p => p.theme.palette.secondary.main};
 
   &:hover {
-    color: #0053a5;
+    color: ${p => p.theme.palette.secondary.dark};
   }
-`
+`)
 
 
-export const AttributeHeader = styled.div`
+export const AttributeHeader = connectToMap(styled.div`
   display: flex;
   margin: 0 20px;
   justify-content: space-between;
   text-align: right;
   font-weight: 500;
-  color: #6f6f6f;
+  color: ${p => p.theme.palette.text.primary};
   line-height: 32px;
-`
+`)
 
 
 export const AttributeContainer = styled.div`
@@ -72,19 +74,19 @@ export const AttributeContainer = styled.div`
 `
 
 
-export const AttributeItem = styled.div`
+export const AttributeItem = connectToMap(styled.div`
   padding: 5px 10px;
-  color: ${props => props.checked ? '#fff' : '#000'};
-  background: ${props => props.checked ? '#979797' : '#f5f5f5'};
+  color: ${p => p.theme.palette.text.secondary};
+  background: ${props => props.checked ? props.theme.palette.primary.main : props.theme.palette.background.paper};
   margin: 5px;
   border-radius: 30px;
 
   &:hover {
     cursor: pointer;
-    color: #000000;
-    background: ${props => props.checked ? '#979797' : '#f5f5f5'};
+    color: ${p => p.theme.palette.text.primary};
+    background: ${props => props.checked ? props.theme.palette.action.selected : props.theme.palette.action.hover};
   }
-`
+`)
 
 
 export const Color = styled.div`
@@ -106,16 +108,17 @@ export const Unit = styled.div`
   width: 30%;
 `
 
-export const Switch = withStyles(() => ({
+export const Switch = connectToMap(({ theme, ...props }) => <StyledSwitch theme={theme} {...props} />)
+const StyledSwitch = withStyles({
   switchBase: {
-    color: '#152457',
+    color: props => props.theme.palette.divider,
     '&$checked': {
-      color: '#152457'
+      color: props => props.theme.palette.secondary.main
     },
     '&$checked + $track': {
-      backgroundColor: '#152457'
+      backgroundColor: props => props.theme.palette.secondary.main
     }
   },
   checked: {},
   track: {}
-}))(MaterialSwitch)
+})(MaterialSwitch)

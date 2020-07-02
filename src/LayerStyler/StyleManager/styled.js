@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = connectToMap(styled.div`
   padding-top: 15px;
-  background: #eeeeee;
-`
+  background: ${p => p.theme.palette.divider};
+`)
 
 export const InputContainer = styled.div`
   display: inline-block;

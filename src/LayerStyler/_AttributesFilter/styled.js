@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { connectToMap } from 'Map'
 
 export const CloseIcon = styled.i`
   margin-right: 10px;
@@ -16,15 +17,15 @@ export const InputContainer = styled.div`
   width: 180px;
 `
 
-export const Row = styled.div`
+export const Row = connectToMap(styled.div`
   margin: 10px 0px;
   width: 100%;
 
   span {
-    color: #1b75d3;
+    color: ${p => p.theme.palette.secondary.light};
     cursor: pointer;
   }
-`
+`)
 
 export const TextContainer = styled.div`
   display: inline-block;
@@ -33,7 +34,7 @@ export const TextContainer = styled.div`
   width: 60px;
 `
 
-export const Title = styled.h4`
-  color: #939393;
+export const Title = connectToMap(styled.h4`
+  color: ${p => p.theme.palette.text.primary};
   font-size: 1em;
-`
+`)
