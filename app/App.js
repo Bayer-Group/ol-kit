@@ -1,8 +1,13 @@
 import React from 'react'
+
+import { ApolloProvider } from '@apollo/react-hooks'
+import ApolloClient from 'apollo-boost'
+
 import { Map } from 'Map'
 import { LayerPanel } from 'LayerPanel'
 import { Controls } from 'Controls'
 import { Popup } from 'Popup'
+import { TimeSlider } from 'TimeSlider'
 import BasemapContainer from 'Basemaps/BasemapContainer'
 import { LayerStyler } from 'LayerStyler'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
@@ -15,32 +20,42 @@ import olFeature from 'ol/feature'
 import olGeomPoint from 'ol/geom/point'
 import olProj from 'ol/proj'
 
-class App extends React.Component {
-  onMapInit = async (map) => {
-    const layer = new VectorLayer({
-      title: 'Diltz\' House',
-      source: new olSourceVector({
-        features: [new olFeature({
-          feature_type: ['the lake house'],
-          title: 'the lake house',
-          name: 'the lake house',
-          geometry: new olGeomPoint(olProj.fromLonLat([-89.940598, 38.923107]))
-        })]
-      })
-    })
+import ISS from './ISS'
+import SpaceX from './SpaceX'
 
-    map.addLayer(layer)
-    // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
+const client = new ApolloClient({
+  uri: 'https://api.spacex.land/graphql/'
+})
 
-    const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
-
-    dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+function App (props) {
+  const onMapInit = async (map) => {
+    window.map = map
+    // const layer = new VectorLayer({
+    //   title: 'Diltz\' House',
+    //   source: new olSourceVector({
+    //     features: [new olFeature({
+    //       feature_type: ['the lake house'],
+    //       title: 'the lake house',
+    //       name: 'the lake house',
+    //       geometry: new olGeomPoint(olProj.fromLonLat([-89.940598, 38.923107]))
+    //     })]
+    //   })
+    // })
+    //
+    // map.addLayer(layer)
+    // // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
+    //
+    // const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
+    //
+    // dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
   }
 
-  render () {
-    return (
-      <Map onMapInit={this.onMapInit} fullScreen>
+  return (
+    <ApolloProvider client={client}>
+      <Map onMapInit={onMapInit} fullScreen>
         <Popup />
+        <SpaceX />
+        <ISS />
         <LayerPanel>
           <LayerPanelPage tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
@@ -51,8 +66,8 @@ class App extends React.Component {
         <Controls variation={'dark'} />
         <BasemapContainer />
       </Map>
-    )
-  }
+    </ApolloProvider>
+  )
 }
 
 export default App
