@@ -5,6 +5,7 @@ import { Controls } from 'Controls'
 import { Popup } from 'Popup'
 import BasemapContainer from 'Basemaps/BasemapContainer'
 import { LayerStyler } from 'LayerStyler'
+import { ContextMenu } from 'ContextMenu'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import VectorLayer from 'classes/VectorLayer'
@@ -48,6 +49,7 @@ class App extends React.Component {
             </LayerPanelContent>
           </LayerPanelPage>
         </LayerPanel>
+        <ContextMenu />
         <Controls variation={'dark'} />
         <BasemapContainer />
       </Map>

@@ -6,6 +6,9 @@ export default {
   '_ol_kit.StamenTerrain.title': 'Stamen Terrain',
   '_ol_kit.StamenTonerDark.title': 'Stamen Toner Dark',
   '_ol_kit.StamenTonerLite.title': 'Stamen Toner Lite',
+  // ContextMenu
+  '_ol_kit_.ContextMenuCoords.lat': 'latitude',
+  '_ol_kit_.ContextMenuCoords.long': 'longitude',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'Export KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',
