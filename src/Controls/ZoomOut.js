@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import MINUS from 'images/zoom_out_ico.svg'
-import PLUS from 'images/zoom_in_ico.svg'
-import { Icon, IconSeparator, IconsContainer } from './styled'
+import RemoveIcon from '@material-ui/icons/Remove'
+import IconButton from '@material-ui/core/IconButton'
 import { zoomDelta } from './utils'
 import { connectToMap } from 'Map'; // eslint-disable-line
 
@@ -15,6 +14,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  */
 function ZoomControls (props) {
   const { map } = props
+  const view = map.getView()
 
   let mouseDownTime
 
@@ -22,13 +22,13 @@ function ZoomControls (props) {
 
   let repeatTimeout
   const zoom = direction => {
-    const delta = direction === 'ZOOM_IN' ? 0.1 : -0.1
+    const delta = direction === 'ZOOM_IN' ? 0.5 : -0.5
 
-    zoomDelta(map, delta, 350)
+    zoomDelta(map, delta, 50)
   }
   const repeatZoom = direction => {
     zoom(direction)
-    repeatTimeout = setTimeout(() => repeatZoom(direction), 350)
+    repeatTimeout = setTimeout(() => repeatZoom(direction), 100)
   }
   const handleMouseDown = direction => {
     mouseDownTime = Date.now()
@@ -46,23 +46,11 @@ function ZoomControls (props) {
   }
 
   return (
-    <IconsContainer>
-      <Icon
-        id='_ol_kit_zoom_in'
-        onMouseDown={() => handleMouseDown('ZOOM_IN')}
-        onMouseOut={() => stopZoom('ZOOM_IN')}
-        onMouseUp={() => stopZoom('ZOOM_IN')}>
-        <PLUS />
-      </Icon>
-      <IconSeparator />
-      <Icon
-        id='_ol_kit_zoom_out'
-        onMouseDown={() => handleMouseDown('ZOOM_OUT')}
-        onMouseOut={() => stopZoom('ZOOM_OUT')}
-        onMouseUp={() => stopZoom('ZOOM_OUT')}>
-        <MINUS />
-      </Icon>
-    </IconsContainer>
+    <IconButton
+      id='_ol_kit_zoom_out'
+      onClick={() => view.animate({ zoom: view.getZoom() - 1, duration: 200 })}>
+      <RemoveIcon />
+    </IconButton>
   )
 }
 

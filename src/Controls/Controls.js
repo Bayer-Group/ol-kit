@@ -3,9 +3,15 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { ControlsContainer } from './styled'
-import Compass from './Compass'
 import { connectToMap } from 'Map'
-import ZoomControls from './ZoomControls'
+import Compass from './Compass'
+import ControlBar from './ControlBar'
+import HomeIcon from '@material-ui/icons/Home'
+import IconButton from '@material-ui/core/IconButton'
+import CurrentLocation from './CurrentLocation'
+
+import ZoomIn from './ZoomIn'
+import ZoomOut from './ZoomOut'
 
 /**
  * A map control container with built-in positioning
@@ -14,14 +20,22 @@ import ZoomControls from './ZoomControls'
  * @since 0.1.0
  */
 function Controls (props) {
-  const { children, map, position } = props
+  const { children, map, position, orientation } = props
 
   return (
     ReactDOM.createPortal(
-      <ControlsContainer position={position}>
+      <ControlsContainer position={position} orientation={orientation}>
         {children || (
           <>
-            <ZoomControls map={map} />
+            <ControlBar orientation={orientation}>
+              <IconButton><HomeIcon /></IconButton>
+              <CurrentLocation map={map} />
+            </ControlBar>
+            <ControlBar map={map} orientation={orientation}>
+              <ZoomIn map={map} />
+              <ZoomOut map={map} />
+            </ControlBar>
+
             <Compass map={map} />
           </>
         )
@@ -33,7 +47,8 @@ function Controls (props) {
 }
 
 Controls.defaultProps = {
-  position: 'bottom-right'
+  position: 'bottom-right',
+  orientation: 'horizontal'
 }
 
 Controls.propTypes = {
@@ -45,7 +60,9 @@ Controls.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** render controls in a position relative to the map  */
-  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left'])
+  position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left']),
+  /** render controls in a position relative to the map  */
+  orientation: PropTypes.oneOf(['vertical', 'horizontal'])
 }
 
 export default connectToMap(Controls)
