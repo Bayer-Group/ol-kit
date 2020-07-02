@@ -1,16 +1,18 @@
+import React from 'react'
 import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles'
 import MaterialTypography from '@material-ui/core/Typography'
 import MateriaSlider from '@material-ui/core/Slider'
 import { connectToMap } from 'Map'
 
-export const OpacityTitle = withStyles(() => ({
+export const OpacityTitle = connectToMap(({ theme, ...props }) => <StyledOpacityTitle theme={theme} {...props} />)
+const StyledOpacityTitle = withStyles({
   root: {
     fontSize: '12px',
     paddingTop: '0.3rem',
-    color: '#868686'
+    color: props => props.theme.palette.background.default
   }
-}))(MaterialTypography)
+})(MaterialTypography)
 
 export const Slider = withStyles(() => ({
   root: {

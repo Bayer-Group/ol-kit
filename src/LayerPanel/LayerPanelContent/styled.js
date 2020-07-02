@@ -5,7 +5,7 @@ import { connectToMap } from 'Map'
 
 export const CardContent = connectToMap(styled(({ ...props }) => <MaterialCardContent {...props} />)({
   maxHeight: '565px',
-  overflow: 'scroll',
+  overflow: 'hidden',
   padding: props => props.padding ? props.padding : '10px 15px',
   marginBottom: '5px'
 }))
