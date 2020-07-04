@@ -75,6 +75,7 @@ function saveAs (blob, filename) {
     // create an object URL from our blob
     const url = URL.createObjectURL(blob)
     // set our element properties
+
     a['data-testid'] = 'Export.download'
     a.href = url
     a.download = filename
@@ -95,12 +96,14 @@ function flattenFeatures (features) {
   return features.reduce((acc, feature) => {
     const geom = feature.getGeometry()
     const type = geom.getType()
+
     switch (type) {
       default:
         acc.push(feature)
         break
       case 'MultiPoint': {
         const featureProps = feature.getProperties()
+
         geom.getPoints().forEach(point => {
           acc.push(new olFeature({ ...featureProps, geometry: point }))
         })
@@ -108,6 +111,7 @@ function flattenFeatures (features) {
       }
       case 'MultiLineString': {
         const featureProps = feature.getProperties()
+
         geom.getLineStrings().forEach(lineString => {
           acc.push(new olFeature({ ...featureProps, geometry: lineString }))
         })
@@ -115,6 +119,7 @@ function flattenFeatures (features) {
       }
       case 'MultiPolygon': {
         const featureProps = feature.getProperties()
+
         geom.getPolygons().forEach(polygon => {
           acc.push(new olFeature({ ...featureProps, geometry: polygon }))
         })

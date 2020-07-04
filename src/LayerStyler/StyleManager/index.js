@@ -121,7 +121,6 @@ class StyleManager extends Component {
   render () {
     const {
       translations,
-      filters,
       layers,
       userStyles,
       defaultStyles,
@@ -155,6 +154,7 @@ class StyleManager extends Component {
 
       const dedup = {}
 
+      // eslint-disable-next-line
       styles?.forEach((s, i) => {
         const key = JSON.stringify(trimFilters(s.filter))
         const val = dedup[key] ? [...dedup[key], { ...s, _index: i }] : [{ ...s, _index: i }]
@@ -194,7 +194,7 @@ class StyleManager extends Component {
             <div title={translations['_ol_kit.StyleManager.styleTab']}>
               <LayerStyler
                 inputProps={{
-                  'data-testid':'StyleManager.customStyles'
+                  'data-testid': 'StyleManager.customStyles'
                 }}
                 translations={translations}
                 heading={`${translations['_ol_kit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
@@ -210,7 +210,7 @@ class StyleManager extends Component {
                 onStylesChange={this.onUserStyleChange} />
               <LayerStyler
                 inputProps={{
-                  'data-testid':'StyleManager.defaultStyles'
+                  'data-testid': 'StyleManager.defaultStyles'
                 }}
                 translations={translations}
                 heading={`${translations['_ol_kit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}

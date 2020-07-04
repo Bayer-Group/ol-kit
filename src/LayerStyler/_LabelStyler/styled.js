@@ -4,7 +4,6 @@ import MaterialSwitch from '@material-ui/core/Switch'
 import { withStyles } from '@material-ui/styles'
 import { connectToMap } from 'Map'
 
-
 export const TopControls = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -15,7 +14,6 @@ export const TopControls = styled.div`
   border-radius: 5px;
 `
 
-
 export const ToggleContainer = connectToMap(styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +21,6 @@ export const ToggleContainer = connectToMap(styled.div`
   font-weight: 500;
   color: ${p => p.theme.palette.text.secondary};
 `)
-
 
 export const SymbolizerContainer = styled.div`
   width: 290px;
@@ -37,7 +34,6 @@ export const Title = connectToMap(styled.div`
   text-align: center;
 `)
 
-
 export const Button = styled.div`
   user-select: none;
   display: inline-block;
@@ -46,7 +42,6 @@ export const Button = styled.div`
   font-size: 12px;
 `
 
-
 export const ButtonText = connectToMap(styled.span`
   color: ${p => p.theme.palette.secondary.main};
 
@@ -54,7 +49,6 @@ export const ButtonText = connectToMap(styled.span`
     color: ${p => p.theme.palette.secondary.dark};
   }
 `)
-
 
 export const AttributeHeader = connectToMap(styled.div`
   display: flex;
@@ -66,13 +60,11 @@ export const AttributeHeader = connectToMap(styled.div`
   line-height: 32px;
 `)
 
-
 export const AttributeContainer = styled.div`
   margin: 10px;
   display: flex;
   flex-wrap: wrap;
 `
-
 
 export const AttributeItem = connectToMap(styled.div`
   padding: 5px 10px;
@@ -88,21 +80,17 @@ export const AttributeItem = connectToMap(styled.div`
   }
 `)
 
-
 export const Color = styled.div`
   width: 30%;
 `
-
 
 export const Outline = styled.div`
   width: 30%;
 `
 
-
 export const Size = styled.div`
   width: 40%;
 `
-
 
 export const Unit = styled.div`
   width: 30%;

@@ -65,7 +65,6 @@ export const TabButton = connectToMap(styled.button`
     color: ${props => props.selected ? props.theme.palette.text.primary : props.theme.palette.text.secondary};
 `)
 
-
 export const TabSlider = connectToMap(styled.span`
   background-color: ${p => p.theme.palette.secondary.main};
   width: 100%;

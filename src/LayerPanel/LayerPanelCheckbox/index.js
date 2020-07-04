@@ -36,7 +36,7 @@ LayerPanelCheckbox.propTypes = {
     PropTypes.bool
   ]),
   /** function that handles the click of checkbox. Returns the event and the state of the checkbox (bool) */
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired
 }
 
 export default LayerPanelCheckbox

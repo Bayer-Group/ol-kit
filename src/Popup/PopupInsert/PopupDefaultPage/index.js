@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connectToMap } from 'Map'
-import CloseIcon from '@material-ui/icons/Close';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import CloseIcon from '@material-ui/icons/Close'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { HeightContainer, AttributeSettings } from '../styled'
 import ZmdiButton from '../_PopupZmdiButton'
 import LoadingSpinner from '../_LoadingSpinner'
@@ -31,8 +31,7 @@ class PopupDefaultPage extends Component {
       pageCount,
       currentPage,
       onClose,
-      onSettingsClick,
-      showCustomizeDetails
+      onSettingsClick
     } = this.props
 
     const isReactFragment = child => {

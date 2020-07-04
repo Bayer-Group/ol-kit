@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles'
 import MaterialCardHeader from '@material-ui/core/CardHeader'
 import { connectToMap } from 'Map'
-import {  } from '@material-ui/styles'
 
 export const HeaderContainer = styled.div`
   height: 50px;

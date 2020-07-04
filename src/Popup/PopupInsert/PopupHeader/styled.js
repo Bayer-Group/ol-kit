@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 import { connectToMap } from 'Map'
 
-
 export const Header = connectToMap(styled.div`
   background-color: ${props => props.theme.palette.divider};
 `)
-
 
 export const HeaderDetails = connectToMap(styled.div`
   padding: 32px 20px ${p => JSON.parse(p.loading) ? '20px' : '0'} 20px;
@@ -13,11 +11,9 @@ export const HeaderDetails = connectToMap(styled.div`
   color: ${props => props.theme.palette.text.secondary}#787878;
 `)
 
-
 export const Body = styled.div`
   height: 100%;
 `
-
 
 export const Frame = connectToMap(styled.div`
   height: ${props => props.height}px;
@@ -42,7 +38,6 @@ export const Frame = connectToMap(styled.div`
   }
 `)
 
-
 export const Title = connectToMap(styled.div`
   font-size: 17px;
   font-style: normal;
@@ -54,7 +49,6 @@ export const Title = connectToMap(styled.div`
   padding: 2px 0;
   text-align: center;
 `)
-
 
 export const FeatureNavigator = connectToMap(styled.div`
   display: inline-block;
@@ -69,14 +63,12 @@ export const FeatureNavigator = connectToMap(styled.div`
   left: 4px;
 `)
 
-
 export const FeatureCount = styled.div`
   display: inline-block;
   vertical-align: inherit;
   line-height: 1px;
   user-select: none;
 `
-
 
 export const Close = connectToMap(styled.button`
   display: block;

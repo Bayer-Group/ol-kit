@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import { withStyles } from '@material-ui/core/styles'
-import MaterialTooltip from '@material-ui/core/Tooltip'
 
 export const UploadLabel = styled.label`
   cursor: pointer;

@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { connectToMap } from 'Map'
 
-
 export const Container = connectToMap(styled.span`
     display: flex;
     position: relative;

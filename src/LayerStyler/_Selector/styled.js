@@ -2,12 +2,10 @@ import styled, { css } from 'styled-components'
 import Select from 'react-select'
 import { connectToMap } from 'Map'
 
-
 export const Container = connectToMap(styled.div`
   background: ${props => props.background ? props.background : props.theme.palette.background.default};
   padding: 26px 12px 11px 12px;
 `)
-
 
 export const Header = connectToMap(styled.label`
   color: ${props => props.focus || props.valid || props.disabled ? props.theme.palette.text.primary : props.theme.palette.text.secondary};
@@ -22,7 +20,6 @@ export const Header = connectToMap(styled.label`
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
 `)
-
 
 export const SubHeader = connectToMap(styled.div`
   font-size: .6em;

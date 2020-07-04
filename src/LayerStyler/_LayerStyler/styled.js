@@ -1,13 +1,11 @@
 import styled from 'styled-components'
 import { connectToMap } from 'Map'
 
-
 export const ButtonContainer = styled.div`
   padding: 2px 16px;
   margin-top: 10px;
   display: flex;
 `
-
 
 export const Button = connectToMap(styled.div`
   user-select: none;
@@ -23,7 +21,6 @@ export const Button = connectToMap(styled.div`
   }
 `)
 
-
 export const StyleGroupHeading = connectToMap(styled.span`
   display: flex;
   flex-wrap: nowrap;
@@ -32,7 +29,6 @@ export const StyleGroupHeading = connectToMap(styled.span`
   line-height: 32px;
   align-items: center;
 `)
-
 
 export const AddNew = connectToMap(styled.div`
   display: flex;
@@ -60,12 +56,10 @@ export const ResetText = connectToMap(styled.div`
   }
 `)
 
-
 export const Half = styled.div`
   flex: 1;
   display: flex;
 `
-
 
 export const CollapseText = styled.div`
   display: flex;
@@ -74,13 +68,11 @@ export const CollapseText = styled.div`
   line-height: 32px;
 `
 
-
 export const Fourth = styled.div`
   display: inline-block;
   width: 25%;
   vertical-align: top;
 `
-
 
 export const Text = connectToMap(styled.div`
   color: ${p => p.theme.palette.text.active};
@@ -90,17 +82,14 @@ export const Text = connectToMap(styled.div`
   font-size: 16px;
 `)
 
-
 export const NewStyleGroupContainer = styled.div`
   display: flex;
   margin: 5px;
 `
 
-
 export const NewStyleGroupIcon = styled.i`
   padding: 0 10px 0 0;
 `
-
 
 export const NewStyleGroupButton = connectToMap(styled.div`
   flex: 1;

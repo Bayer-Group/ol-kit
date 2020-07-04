@@ -9,15 +9,15 @@ import { PopupDefaultInsert } from 'Popup'
 describe('<PopupDefaultInsert />', () => {
   it('should handle select change when paging', async () => {
     const selectInteraction = createSelectInteraction()
-    const feature0 = new olFeature(new olPoint([0,0]))
-    const feature1 = new olFeature(new olPoint([10,10]))
-    const feature2 = new olFeature(new olPoint([20,20]))
+    const feature0 = new olFeature(new olPoint([0, 0]))
+    const feature1 = new olFeature(new olPoint([10, 10]))
+    const feature2 = new olFeature(new olPoint([20, 20]))
 
     feature2.setProperties({ title: 'custom title', property: 'custom property' })
     const features = [feature0, feature1, feature2]
     const onClose = jest.fn()
 
-    const { container, getByTestId, getAllByText, getByText, unmount } = render(
+    const { getByTestId, getAllByText, getByText, unmount } = render(
       <PopupDefaultInsert
         features={features}
         selectInteraction={selectInteraction}
@@ -26,7 +26,9 @@ describe('<PopupDefaultInsert />', () => {
     )
 
     let title = await getByText('Feature 1')
+
     let pageCount = await getByText('1 / 3')
+
     let rightArrow = await getByTestId('popup-page-right-arrow')
 
     // feature 0 should render with a default title
@@ -50,9 +52,10 @@ describe('<PopupDefaultInsert />', () => {
     fireEvent.click(rightArrow)
 
     title = await getAllByText('custom title')
-    let property = await getByText('custom property')
+    const property = await getByText('custom property')
+
     pageCount = await getByText('3 / 3')
-    let leftArrow = await getByTestId('popup-page-left-arrow')
+    const leftArrow = await getByTestId('popup-page-left-arrow')
 
     // feature 2 should render with a default title
     expect(title).toBeTruthy()
@@ -65,7 +68,7 @@ describe('<PopupDefaultInsert />', () => {
 
     title = await getByText('Feature 2')
     pageCount = await getByText('2 / 3')
-    let closeButton = await getByTestId('popup-page-close')
+    const closeButton = await getByTestId('popup-page-close')
 
     // feature 1 should render with a default title
     expect(title).toBeTruthy()

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import { connectToMap } from 'Map'
 
 export const Container = styled.div`
   display: flex;
@@ -7,20 +7,17 @@ export const Container = styled.div`
   justify-content: flex-end;
 `
 
-
-export const DeleteAll = styled.div`
+export const DeleteAll = connectToMap(styled.div`
   font-size: 10px;
-  color: #152357;
+  color: ${p => p.theme.palette.secondary.main};
   text-align: center;
   cursor: pointer;
-`
-
+`)
 
 export const Half = styled.div`
   display: flex;
   flex: 1;
 `
-
 
 export const Fourth = styled.div`
   display: flex;
@@ -29,10 +26,9 @@ export const Fourth = styled.div`
   vertical-align: top;
 `
 
-
-export const Title = styled.div`
+export const Title = connectToMap(styled.div`
   font-size: 10px;
   /* text-transform: uppercase; */
-  color: ${props => props.color ? props.color : '#ccc'};
+  color: ${props => props.color ? props.color : props.theme.palette.text.secondary};
   text-align: center;
-`
+`)

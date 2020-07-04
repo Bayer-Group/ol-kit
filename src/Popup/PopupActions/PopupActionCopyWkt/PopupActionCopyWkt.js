@@ -23,7 +23,7 @@ PopupActionCopyWkt.propTypes = {
 
   /** The OpenLayers feature of the current popup page */
   feature: PropTypes.object,
-  
+
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupActionWkt.copyToClipboard': PropTypes.string

@@ -42,7 +42,7 @@ class PopupDefaultInsert extends Component {
       // safeSelectIdx prevents a bug of setting an index out of range of the features available to select
       const safeSelectIdx = selectedIdx > nextProps.features.length ? 0 : selectedIdx
 
-      this.setState({selectedIdx: safeSelectIdx})
+      this.setState({ selectedIdx: safeSelectIdx })
       this.selectFeature(nextProps.features[safeSelectIdx])
     }
   }
@@ -85,17 +85,17 @@ class PopupDefaultInsert extends Component {
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
         {features.length
           ? features.map((f, i) => (
-              <PopupDefaultPage
-                attributes={propertiesFilter(f.getProperties())}
-                key={i}
-                loading={loading}
-                onClose={onClose}
-                onSettingsClick={onSettingsClick}
-                title={f.get('title') || `Feature ${i+1}`}
-                translations={translations}>
-                {getChildren(f)}
-              </PopupDefaultPage>
-            ))
+            <PopupDefaultPage
+              attributes={propertiesFilter(f.getProperties())}
+              key={i}
+              loading={loading}
+              onClose={onClose}
+              onSettingsClick={onSettingsClick}
+              title={f.get('title') || `Feature ${i + 1}`}
+              translations={translations}>
+              {getChildren(f)}
+            </PopupDefaultPage>
+          ))
           : <PopupDefaultPage
             title={loading ? 'Loading features' : 'Select a feature'}
             loading={loading}

@@ -148,7 +148,7 @@ Map.defaultProps = {
   urlViewParam: 'view',
   style: {},
   translations: en,
-  theme: createMuiTheme({palette: {primary: {main: '#152357'}, secondary: {main: '#152357'}}})
+  theme: createMuiTheme({ palette: { primary: { main: '#152357' }, secondary: { main: '#152357' } } })
 }
 
 Map.propTypes = {

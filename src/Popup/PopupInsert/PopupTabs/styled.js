@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { connectToMap } from 'Map'
 
-
 export const TabsContainer = connectToMap(styled.div`
   color: ${p => p.theme.palette.text.secondary};
   height: 100%;
@@ -66,7 +65,6 @@ export const TabButton = connectToMap(styled.button`
     transition: .1s;
     color: ${props => props.selected ? props.theme.palette.text.primary : props.theme.palette.text.secondary};
 `)
-
 
 export const TabSlider = connectToMap(styled.span`
   background-color: ${p => p.theme.palette.secondary.main};

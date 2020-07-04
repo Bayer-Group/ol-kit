@@ -19,7 +19,7 @@ const StyledCard = styled(({ theme, ...props }) => <MaterialCard {...props} />)(
 })
 
 export const Tabs = connectToMap(({ theme, ...props }) => <StyledTab theme={theme} orientation='vertical' {...props} />)
-export const StyledTab = styled(({ theme, ...props }) => 
+export const StyledTab = styled(({ theme, ...props }) =>
   <MaterialTabs orientation='vertical' {...props} />
 )({
   width: '50px',

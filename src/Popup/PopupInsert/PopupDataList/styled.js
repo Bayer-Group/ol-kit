@@ -12,18 +12,15 @@ export const Container = styled.div`
   }
 `
 
-
 export const Row = connectToMap(styled.div`
   color: ${p => p.theme.palette.text.secondary};
   margin: 0 0 15px 0;
   max-height: 200px;
 `)
 
-
 export const Key = styled.div`
   display: block;
 `
-
 
 export const Value = styled.div`
   display: -webkit-box;

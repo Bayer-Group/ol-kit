@@ -4,12 +4,13 @@ import wktFormat from 'ol/format/wkt'
  * Convert a feature to a WKT string
  * @function
  * @category PopupActionCopyWkt
- * @param {Object} feature - An ol/feature 
+ * @param {Object} feature - An ol/feature
  * @param {Number} [decimalPlaces] - the number of decimal places in the output coordinates
  * @returns {String} The WKT string of the feature passed
  */
 export const convertFeatureToWkt = (feature, decimalPlaces) => {
   const format = new wktFormat()
+
   return format.writeFeature(feature, {
     dataProjection: 'EPSG:4326',
     featureProjection: 'EPSG:3857',
@@ -25,6 +26,7 @@ export const convertFeatureToWkt = (feature, decimalPlaces) => {
  */
 export const copyTextToClipboard = text => {
   const el = document.createElement('textarea')
+
   el.value = text
   document.body.appendChild(el)
   el.select()
@@ -36,7 +38,7 @@ export const copyTextToClipboard = text => {
  * Given an ol/feature, copy its WKT string to the system clipboard
  * @function
  * @category PopupActionCopyWkt
- * @param {Object} feature - An ol/feature 
+ * @param {Object} feature - An ol/feature
  * @param {Number} [decimalPlaces] - the number of decimal places in the output coordinates
  */
 export const copyWktToClipbard = (feature, decimalPlaces) => {

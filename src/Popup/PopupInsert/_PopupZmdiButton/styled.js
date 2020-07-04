@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { connectToMap } from 'Map'
 
-
 export const Icon = connectToMap(styled.button`
   display: inline-block;
   position: relative;
