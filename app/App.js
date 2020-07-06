@@ -51,6 +51,7 @@ function App (props) {
     
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
     dataLayer.set('title', 'NASA Geopolitcal Boundaries')
+    dataLayer.set('visible', false)
   }
 
   return (
