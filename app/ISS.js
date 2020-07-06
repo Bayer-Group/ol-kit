@@ -15,7 +15,7 @@ function ISS (props) {
   const { map } = props
 
   const layer = new VectorLayer({
-    title: 'ISS',
+    title: 'ISS Tracker',
     source: new olSourceVector({ features: [] }),
     _ol_kit_time_key: 'time'
   })

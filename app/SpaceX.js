@@ -99,7 +99,6 @@ function SpaceX (props) {
   }
 
   if (!loadingFlights && !!flightsData && !loadingLaunch && !!launchData) {
-    console.log('flightsData', flightsData, launchData)
     const features = flightsData.launchesPastResult.data.map(flight => {
       const iconStyle = new olStyle({
         stroke: new olStroke(),

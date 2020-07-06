@@ -1,24 +1,26 @@
 import React from 'react'
-
+import PaletteIcon from '@material-ui/icons/Palette'
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 
-import { Map } from 'Map'
-import { LayerPanel } from 'LayerPanel'
-import { Controls } from 'Controls'
-import { Popup } from 'Popup'
-import { TimeSlider } from 'TimeSlider'
-import BasemapContainer from 'Basemaps/BasemapContainer'
-import { LayerStyler } from 'LayerStyler'
-import LayerPanelPage from 'LayerPanel/LayerPanelPage'
-import LayerPanelContent from 'LayerPanel/LayerPanelContent'
-import VectorLayer from 'classes/VectorLayer'
-import { loadDataLayer } from 'DataLayers'
-import PaletteIcon from '@material-ui/icons/Palette'
 import olSourceVector from 'ol/source/vector'
 import olFeature from 'ol/feature'
 import olGeomPoint from 'ol/geom/point'
 import olProj from 'ol/proj'
+
+import {
+  BasemapContainer,
+  Controls,
+  LayerPanel,
+  LayerPanelContent,
+  LayerPanelPage,
+  LayerStyler,
+  Map,
+  Popup,
+  TimeSlider,
+  // VectorLayer,
+  loadDataLayer
+} from '../src' // replace this with '@bayer/ol-kit' in the wild
 
 import ISS from './ISS'
 import SpaceX from './SpaceX'
@@ -44,16 +46,18 @@ function App (props) {
     //
     // map.addLayer(layer)
     // // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
-    //
-    // const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
-    //
-    // dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+    
+    const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
+    
+    dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+    dataLayer.set('title', 'NASA Geopolitcal Boundaries')
   }
 
   return (
     <ApolloProvider client={client}>
       <Map onMapInit={onMapInit} fullScreen>
         <Popup />
+        {/* <TimeSlider /> */}
         <SpaceX />
         <ISS />
         <LayerPanel>
