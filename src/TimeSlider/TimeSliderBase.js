@@ -101,7 +101,7 @@ class TimeSliderBase extends React.Component {
     const dates = tab.dates
       .map(date => new Date(date)) /* we convert all dates to JS dates for easier use */
       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
-      // .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+      .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
     const firstDayOfFirstMonth = moment(dates[0]).startOf('month')
 
     this.setState({
@@ -347,8 +347,6 @@ class TimeSliderBase extends React.Component {
       rangeMax,
       index
     } = this.state
-
-    console.log('dates', dates)
 
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>

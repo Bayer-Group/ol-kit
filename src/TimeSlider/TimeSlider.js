@@ -70,7 +70,7 @@ class TimeSlider extends React.Component {
 
     const sortedDates = dates
       .sort((a, b) => a - b) /* the sort must happen before the filter in order to remove dup dates */
-      // .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
+      .filter((d, i, a) => datesDiffDay(a[i], a[i - 1])) /* this removes dup dates (precision is down to the day) */
 
     return sortedDates
   }
@@ -104,7 +104,7 @@ class TimeSlider extends React.Component {
     if (selectedDate) {
       // select the date selected
       const deselected = selectInteraction.getFeatures().getArray()
-      const features = source.getFeatures().filter(f => new Date(f.get(layer.get('_ol_kit_time_key'))), selectedDate)
+      const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('_ol_kit_time_key'))), selectedDate))
       const selected = [...features]
       const event = new olSelect.Event('select', selected, deselected)
 
