@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import { connectToMap } from 'Map'
@@ -64,11 +64,13 @@ const GET_LAUNCHPADS = gql`
 
 function SpaceX (props) {
   const { map } = props
+  const [padsOnMap, setPadsOnMap] = useState(false)
+  const [flightsOnMap, setFlightsOnMap] = useState(false)
   const { loading: loadingPads, data: padsData } = useQuery(GET_PADS)
   const { loading: loadingFlights, data: flightsData } = useQuery(GET_FLIGHTS)
   const { loading: loadingLaunch, data: launchData } = useQuery(GET_LAUNCHPADS)
 
-  if (!loadingPads && !!padsData) {
+  if (!padsOnMap && !loadingPads && !!padsData) {
     const features = padsData.landpads.map(pad => {
       const iconStyle = new olStyle({
         stroke: new olStroke(),
@@ -96,9 +98,10 @@ function SpaceX (props) {
 
 
     map.addLayer(layer)
+    setPadsOnMap(true)
   }
 
-  if (!loadingFlights && !!flightsData && !loadingLaunch && !!launchData) {
+  if (!flightsOnMap && !loadingFlights && !!flightsData) {
     const features = flightsData.launchesPastResult.data.map(flight => {
       const iconStyle = new olStyle({
         stroke: new olStroke(),
@@ -127,6 +130,7 @@ function SpaceX (props) {
 
 
     map.addLayer(layer)
+    setFlightsOnMap(true)
   }
 
 
