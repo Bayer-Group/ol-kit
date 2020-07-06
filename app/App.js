@@ -57,7 +57,7 @@ function App (props) {
     <ApolloProvider client={client}>
       <Map onMapInit={onMapInit} fullScreen>
         <Popup />
-        {/* <TimeSlider /> */}
+        <TimeSlider />
         <SpaceX />
         <ISS />
         <LayerPanel>
