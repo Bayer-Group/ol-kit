@@ -44,7 +44,7 @@ class LayerPanelBase extends Component {
             showLayerPanel
               ? <ChevronRightIcon data-testid={tabDataTestId} />
               : <LayersIcon data-testid={tabDataTestId} />
-          } data-testid={tabDataTestId} />
+          } />
           {showLayerPanel &&
             React.Children.map(children, (child, i) => {
               if (child) return <Tab key={i} icon={child.props.tabIcon} />
