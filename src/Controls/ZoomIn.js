@@ -7,10 +7,10 @@ import { zoomDelta } from './utils'
 import { connectToMap } from 'Map'; // eslint-disable-line
 
 /**
- * A simple map zoom control
+ * A simple map zoom in control
  * @component
  * @category Controls
- * @since 0.1.0
+ * @since NEXT
  */
 function ZoomIn (props) {
   const { map } = props
@@ -22,29 +22,33 @@ function ZoomIn (props) {
 
   let repeatTimeout
 
-  const zoom = direction => {
-    const delta = direction === 'ZOOM_IN' ? 0.5 : -0.5
+  const repeatZoom = () => {
+    zoomDelta(map, 0.5, 50)
+    repeatTimeout = setTimeout(() => repeatZoom(), 100)
+  }
 
-    zoomDelta(map, delta, 50)
-  }
-  const repeatZoom = direction => {
-    zoom(direction)
-    repeatTimeout = setTimeout(() => repeatZoom(direction), 100)
-  }
-  const handleMouseDown = direction => {
+  const handleMouseDown = () => {
     mouseDownTime = Date.now()
-    zoom(direction)
+    zoomDelta(map, 0.5, 50)
     mouseDownTimeout = setTimeout(() => {
-      repeatZoom(direction)
+      repeatZoom()
     }, 200)
+  }
+
+  const stopZoom = () => {
+    if (Date.now() - mouseDownTime < 150) {
+      zoomDelta(map, 0.5, 350)
+      clearTimeout(mouseDownTimeout)
+    }
+    clearTimeout(repeatTimeout)
   }
 
   return (
     <IconButton
       id='_ol_kit_zoom_in'
       onClick={() => view.animate({ zoom: view.getZoom() + 1, duration: 200 })}
-      onMouseDown={() => handleMouseDown('ZOOM_IN')}
-      onMouseUp={() => {}}>
+      onMouseDown={() => handleMouseDown()}
+      onMouseUp={() => stopZoom()}>
       <AddIcon />
     </IconButton>
   )

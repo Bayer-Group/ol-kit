@@ -9,7 +9,7 @@ import { connectToMap, centerAndZoom } from 'Map'
  * A simple map zoom control
  * @component
  * @category Controls
- * @since 0.1.0
+ * @since NEXT
  */
 class CurrentLocation extends React.Component {
   gotoCurrentLocation = () => {
@@ -19,16 +19,9 @@ class CurrentLocation extends React.Component {
       const opts = {
         x: position.coords.longitude,
         y: position.coords.latitude,
-        zoom: 13
-        // renderPointIcon: true
+        zoom: 13,
+        showPointIcon: true
       }
-
-      // this.setCurrentPosition({
-      //   coords: {
-      //     longitude: opts.x,
-      //     latitude: opts.y
-      //   }
-      // })
 
       centerAndZoom(map, opts)
     })

@@ -9,12 +9,12 @@ import ZoomOut from './ZoomOut'
 import CurrentLocation from './CurrentLocation'
 
 /**
- * A map control container with built-in positioning
+ * A map control container with built-in orientations
  * @component
  * @category Controls
  * @since NEXT
  */
-function ControlBar (props) {
+function ControlGroup (props) {
   const { children, map, orientation } = props
   const controlChildren = children ? React.Children.toArray(children) : [
     <CurrentLocation key={'currentLocation'} map={map} />,
@@ -33,11 +33,11 @@ function ControlBar (props) {
   )
 }
 
-ControlBar.defaultProps = {
+ControlGroup.defaultProps = {
   orientation: 'vertical'
 }
 
-ControlBar.propTypes = {
+ControlGroup.propTypes = {
   /** pass child comps to opt out of the default controls */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -51,4 +51,4 @@ ControlBar.propTypes = {
   orientation: PropTypes.oneOf(['vertical', 'horizontal'])
 }
 
-export default connectToMap(ControlBar)
+export default connectToMap(ControlGroup)
