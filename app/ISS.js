@@ -45,45 +45,6 @@ function ISS (props) {
     layer.getSource().addFeature(feature)
   }, 2000)
 
-  // const styleFunc = feature => {
-  //   console.log('feat?', feature)
-  //   if (!feature) return []
-  //
-  //   const geometry = feature.getGeometry()
-  //   const styles = [
-  //     new olStyle({
-  //       stroke: new Stroke({
-  //         color: 'red',
-  //         width: 2
-  //       })
-  //     })
-  //   ]
-  //
-  //   geometry.forEachSegment(function(start, end) {
-  //     if (geometry.length === styles.length + 1) {
-  //       // add ISS for end of segments
-  //       styles.push(new olStyle({
-  //         geometry: new olGeomPoint(end),
-  //         image: new olIcon({
-  //           opacity: 1,
-  //           src: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/International_Space_Station.svg',
-  //           scale: .05
-  //         })
-  //       }));
-  //     } else {
-  //       styles.push(new olStyle({
-  //         stroke: new Stroke({
-  //           color: 'red',
-  //           width: 2
-  //         })
-  //       }))
-  //     }
-  //   });
-  //
-  //   return styles;
-  // }
-
-
   map.addLayer(layer)
 
   return null

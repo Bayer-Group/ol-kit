@@ -11,7 +11,7 @@ import olStyle from 'ol/style/style'
 import olStroke from 'ol/style/stroke'
 import olIcon from 'ol/style/icon'
 
-const GET_PADS = gql`
+const GET_LANDPADS = gql`
 {
   landpads {
     location {
@@ -66,7 +66,7 @@ function SpaceX (props) {
   const { map } = props
   const [padsOnMap, setPadsOnMap] = useState(false)
   const [flightsOnMap, setFlightsOnMap] = useState(false)
-  const { loading: loadingPads, data: padsData } = useQuery(GET_PADS)
+  const { loading: loadingPads, data: padsData } = useQuery(GET_LANDPADS)
   const { loading: loadingFlights, data: flightsData } = useQuery(GET_FLIGHTS)
   const { loading: loadingLaunch, data: launchData } = useQuery(GET_LAUNCHPADS)
 
