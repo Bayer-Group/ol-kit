@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { ControlsContainer } from './styled'
 import { connectToMap } from 'Map'
 import Compass from './Compass'
-import ControlBar from './ControlBar'
+import ControlGroup from './ControlGroup'
 import HomeIcon from '@material-ui/icons/Home'
 import IconButton from '@material-ui/core/IconButton'
 import CurrentLocation from './CurrentLocation'
@@ -27,14 +27,14 @@ function Controls (props) {
       <ControlsContainer position={position} orientation={orientation}>
         {children || (
           <>
-            <ControlBar orientation={orientation}>
+            <ControlGroup orientation={orientation}>
               <IconButton><HomeIcon /></IconButton>
               <CurrentLocation map={map} />
-            </ControlBar>
-            <ControlBar map={map} orientation={orientation}>
+            </ControlGroup>
+            <ControlGroup map={map} orientation={orientation}>
               <ZoomIn map={map} />
               <ZoomOut map={map} />
-            </ControlBar>
+            </ControlGroup>
 
             <Compass map={map} />
           </>
