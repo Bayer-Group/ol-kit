@@ -4,7 +4,7 @@ const { assertWithInfo } = require('./pupp-utils')
 
 ;(async () => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     slowMo: 250
   })
   const page = await browser.newPage()

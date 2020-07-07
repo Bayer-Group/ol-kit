@@ -1,5 +1,13 @@
+const colors = require('colors')
 
 // puppeteer helpers
+module.exports.waitAndClick = async function waitAndClick (page, datatestid) {
+  await page.waitForSelector(`[data-testid="${datatestid}"]`)
+  await page.waitFor(500)
+  console.info(` - clicking data-testid ${datatestid}`.blue) // eslint-disable-line no-console
+  await page.click(`[data-testid="${datatestid}"]`)
+}
+
 module.exports.assertWithInfo = function assertWithInfo (msg, assertion, ...args) {
   try {
     assertion(...args)
