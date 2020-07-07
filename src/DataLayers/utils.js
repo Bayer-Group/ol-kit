@@ -69,7 +69,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
       request = await fetch(query)
       response = await request.text() // either xml or json
     } catch (e) {
-      console.log(e)
+      ugh.throw(e)
     }
 
     let dataSet

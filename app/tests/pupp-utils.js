@@ -1,25 +1,5 @@
-const colors = require('colors')
 
 // puppeteer helpers
-module.exports.openSidebar = async function openSidebar (page) {
-  await page.waitForSelector('[data-testid="app"]')
-  await page.click('[data-testid="geokit-sidebar-toggle"]')
-}
-
-module.exports.navigateSidebar = async function navigateSidebar (page, datatestid) {
-  if (!datatestid) return console.warn('You must" provide the data-testid of the sliding level to open as the second argument to navigateSidebar') // eslint-disable-line no-console
-
-  await page.waitForSelector('[data-testid="geokit-sidebar"]')
-  await page.click(`[data-testid="${datatestid}"]`)
-}
-
-const waitAndClick = module.exports.waitAndClick = async function waitAndClick (page, datatestid) {
-  await page.waitForSelector(`[data-testid="${datatestid}"]`)
-  await page.waitFor(500)
-  console.info(` - clicking data-testid ${datatestid}`.blue) // eslint-disable-line no-console
-  await page.click(`[data-testid="${datatestid}"]`)
-}
-
 module.exports.assertWithInfo = function assertWithInfo (msg, assertion, ...args) {
   try {
     assertion(...args)
@@ -27,7 +7,6 @@ module.exports.assertWithInfo = function assertWithInfo (msg, assertion, ...args
   } catch (err) {
     console.info(`    x asserting ${msg}`.red) // eslint-disable-line no-console
     process.exit()
-    throw err
   }
 }
 
@@ -53,13 +32,6 @@ module.exports.drawPolygon = async function drawPolygon (page, map = 0, start = 
   await page.mouse.up()
 
   await page.mouse.click(start[0], start[1], { clickCount: 2 })
-}
-
-module.exports.loadProject = function loadProject (browser, page, id) {
-  return new Promise(async (resolve, reject) => {
-    browser.on('targetcreated', resolve)
-    await waitAndClick(page, id)
-  })
 }
 
 module.exports.addDebugCSS = async function (page) {
