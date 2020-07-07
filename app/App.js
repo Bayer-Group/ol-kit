@@ -37,8 +37,6 @@ class App extends React.Component {
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
 
     window.map = map
-
-    document.body.addEventListener('click', (e) => console.log(e.target))
   }
 
   render () {
