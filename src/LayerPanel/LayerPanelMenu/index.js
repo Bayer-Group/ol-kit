@@ -25,7 +25,7 @@ class LayerPanelMenu extends Component {
     )
 
     return (
-      <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
+      <Menu data-testid='LayerPanel.menu' anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
         {menuItemsWithProps}
       </Menu>
     )

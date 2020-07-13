@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -42,6 +42,7 @@
     "app:build": "webpack --config app/webpack.config.js",
     "app": "webpack-dev-server --hot --inline --config app/webpack.config.js",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
+    "integrations": "./app/integration.sh",
     "lint": "eslint src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
     "prepublishOnly": "run preventPublish",
@@ -123,10 +124,12 @@
     "jest-environment-jsdom": "~26.0.1",
     "jest-environment-jsdom-global": "~2.0.2",
     "jest-fetch-mock": "~3.0.3",
+    "jest-puppeteer": "~4.4.0",
     "jest-styled-components": "~7.0.2",
     "jsdoc": "3.6.3",
     "ol": "4.6.5",
     "parcel": "2.0.0-alpha.3.2",
+    "puppeteer": "^4.0.1",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-hot-loader": "~4.12.21",
