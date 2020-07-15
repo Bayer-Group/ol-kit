@@ -1,23 +1,27 @@
 import React from 'react'
-import { Map } from 'Map'
-import { LayerPanel } from 'LayerPanel'
-import { Controls } from 'Controls'
-import { Popup } from 'Popup'
-import BasemapContainer from 'Basemaps/BasemapContainer'
-import { LayerStyler } from 'LayerStyler'
-import { ContextMenu } from 'ContextMenu'
-import LayerPanelPage from 'LayerPanel/LayerPanelPage'
-import LayerPanelContent from 'LayerPanel/LayerPanelContent'
-import VectorLayer from 'classes/VectorLayer'
-import { loadDataLayer } from 'DataLayers'
+import {
+  Map,
+  Popup,
+  LayerPanel,
+  Controls,
+  ContextMenu,
+  loadDataLayer,
+  LayerStyler,
+  LayerPanelPage,
+  LayerPanelContent,
+  BasemapContainer,
+  VectorLayer
+} from '@bayer/ol-kit'
+
 import PaletteIcon from '@material-ui/icons/Palette'
-import olSourceVector from 'ol/source/vector'
+import olProj from 'ol/proj'
 import olFeature from 'ol/feature'
 import olGeomPoint from 'ol/geom/point'
-import olProj from 'ol/proj'
+import olSourceVector from 'ol/source/vector'
 
 class App extends React.Component {
   onMapInit = async (map) => {
+    // create a vector layer and add to the map
     const layer = new VectorLayer({
       title: 'Diltz\' House',
       source: new olSourceVector({
@@ -52,7 +56,7 @@ class App extends React.Component {
           </LayerPanelPage>
         </LayerPanel>
         <ContextMenu />
-        <Controls variation={'dark'} />
+        <Controls />
         <BasemapContainer />
       </Map>
     )
