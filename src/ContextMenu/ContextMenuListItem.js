@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 
 import { ListItem } from './styled'
 
+/** A context menu list item with a title and click handler
+ * @component
+ * @category ContextMenu
+ * @since 0.15.0
+ */
 class ContextMenuListItem extends React.PureComponent {
   render () {
     const { title, disabled, onClick } = this.props

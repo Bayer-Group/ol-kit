@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | PopupActionGroup</title>
+    <title>ol-kit | ContextMenuListItem</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,8 +81,10 @@
 <header>
     
         <h2>
-            &ltPopupActionGroup /&gt
+            &ltContextMenuListItem /&gt
         </h2>
+        
+            <div class="class-description">A context menu list item with a title and click handler</div>
         
     
 </header>
@@ -98,12 +100,12 @@
 
 
     
-    <h4 class="name" id="PopupActionGroup">
-        <a class="href-link" href="#PopupActionGroup">#</a>
+    <h4 class="name" id="ContextMenuListItem">
+        <a class="href-link" href="#ContextMenuListItem">#</a>
         
         <span class="code-name">
             
-                &ltPopupActionGroup <i>children</i> <i>title</i> /&gt
+                &ltContextMenuListItem <i>title</i> <i>onClick</i> <i>disabled</i> /&gt
             
         </span>
     </h4>
@@ -136,24 +138,35 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
+          <td class="name"><code>title</code></td>
           <td>
-            node
+            string
           </td>
           <td>Yes</td>
-          <td>An array of items rendered as a flyout</td>
+          <td>Title text which is shown for the list item</td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
+          <td class="name"><code>onClick</code></td>
           <td>
-            union
+            func
           </td>
           <td>Yes</td>
-          <td>Title of the action group to display on the root level</td>
+          <td>A callback function when the menu item is clicked</td>
           <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>disabled</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td>Indicates if the context menu item is clickable</td>
+          <td>false</td>
         </tr>
         
   
@@ -171,6 +184,9 @@
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.15.0</li></ul></dd>
     
 
     
@@ -200,9 +216,9 @@
 
     
         <p class="tag-source">
-            <a href="Popup_PopupInsert_PopupActionGroup_index.js.html" class="button">View Source</a>
+            <a href="ContextMenu_ContextMenuListItem.js.html" class="button">View Source</a>
             <span>
-                <a href="Popup_PopupInsert_PopupActionGroup_index.js.html">Popup/PopupInsert/PopupActionGroup/index.js</a>, <a href="Popup_PopupInsert_PopupActionGroup_index.js.html#line12">line 12</a>
+                <a href="ContextMenu_ContextMenuListItem.js.html">ContextMenu/ContextMenuListItem.js</a>, <a href="ContextMenu_ContextMenuListItem.js.html#line11">line 11</a>
             </span>
         </p>
     
@@ -226,22 +242,6 @@
 
 
 
-
-
-    <h5>Example</h5>
-    
-    
-        
-
-<div id='omocpcg3ldgkcntp9ky'></div>
-
-<script>
-  ReactDOM.render(ReactWrapper({
-    example: "./example.md",
-    uniqId: "omocpcg3ldgkcntp9ky",
-  }), document.getElementById('omocpcg3ldgkcntp9ky'));
-</script>
-    
 
 
 </div>

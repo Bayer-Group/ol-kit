@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | PopupActionGroup</title>
+    <title>ol-kit | ContextMenuCoords</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,8 +81,10 @@
 <header>
     
         <h2>
-            &ltPopupActionGroup /&gt
+            &ltContextMenuCoords /&gt
         </h2>
+        
+            <div class="class-description">A context menu coordinate display and copy/paste header</div>
         
     
 </header>
@@ -98,12 +100,12 @@
 
 
     
-    <h4 class="name" id="PopupActionGroup">
-        <a class="href-link" href="#PopupActionGroup">#</a>
+    <h4 class="name" id="ContextMenuCoords">
+        <a class="href-link" href="#ContextMenuCoords">#</a>
         
         <span class="code-name">
             
-                &ltPopupActionGroup <i>children</i> <i>title</i> /&gt
+                &ltContextMenuCoords <i>map</i> <i>pixel</i> <i>coords</i> <i>features</i> <i>closeContextMenu</i> <i>translations</i> /&gt
             
         </span>
     </h4>
@@ -136,24 +138,71 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
+          <td class="name"><code>map</code></td>
           <td>
-            node
+            object
           </td>
           <td>Yes</td>
-          <td>An array of items rendered as a flyout</td>
+          <td>A map which is passed through to the handler function (passed automatically by ContextMenu)</td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
+          <td class="name"><code>pixel</code></td>
           <td>
-            union
+            shape
           </td>
           <td>Yes</td>
-          <td>Title of the action group to display on the root level</td>
+          <td>The pixel location of the click (passed automatically by ContextMenu)</td>
           <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>coords</code></td>
+          <td>
+            shape
+          </td>
+          <td>Yes</td>
+          <td>The coords of the click (passed automatically by ContextMenu)</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>features</code></td>
+          <td>
+            array
+          </td>
+          <td>Yes</td>
+          <td>The features at the location of the click (passed automatically by ContextMenu)</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>closeContextMenu</code></td>
+          <td>
+            func
+          </td>
+          <td>Yes</td>
+          <td>A function which called when the context menu item is finished</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>{
+  '_ol_kit_.ContextMenuCoords.lat': 'latitude',
+  '_ol_kit_.ContextMenuCoords.long': 'longitude'
+}</td>
         </tr>
         
   
@@ -171,6 +220,9 @@
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.15.0</li></ul></dd>
     
 
     
@@ -200,9 +252,9 @@
 
     
         <p class="tag-source">
-            <a href="Popup_PopupInsert_PopupActionGroup_index.js.html" class="button">View Source</a>
+            <a href="ContextMenu_ContextMenuCoords.js.html" class="button">View Source</a>
             <span>
-                <a href="Popup_PopupInsert_PopupActionGroup_index.js.html">Popup/PopupInsert/PopupActionGroup/index.js</a>, <a href="Popup_PopupInsert_PopupActionGroup_index.js.html#line12">line 12</a>
+                <a href="ContextMenu_ContextMenuCoords.js.html">ContextMenu/ContextMenuCoords.js</a>, <a href="ContextMenu_ContextMenuCoords.js.html#line13">line 13</a>
             </span>
         </p>
     
@@ -226,22 +278,6 @@
 
 
 
-
-
-    <h5>Example</h5>
-    
-    
-        
-
-<div id='omocpcg3ldgkcntp9ky'></div>
-
-<script>
-  ReactDOM.render(ReactWrapper({
-    example: "./example.md",
-    uniqId: "omocpcg3ldgkcntp9ky",
-  }), document.getElementById('omocpcg3ldgkcntp9ky'));
-</script>
-    
 
 
 </div>

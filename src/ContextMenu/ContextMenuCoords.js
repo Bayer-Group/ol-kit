@@ -5,6 +5,11 @@ import { connectToMap } from 'Map'
 
 import { CoordWrapper, CoordGroup, CoordTitle, CoordRaw } from './styled'
 
+/** A context menu coordinate display and copy/paste header
+ * @component
+ * @category ContextMenu
+ * @since 0.15.0
+ */
 class ContextMenuCoords extends React.PureComponent {
   componentDidMount () {
     const { closeContextMenu, coords, translations } = this.props

@@ -134,18 +134,11 @@ ContextMenu.propTypes = {
   /** A set of components (like `ContextMenuCoords` or custom items made with `ContextMenuListItem`) which perform actions when clicked */
   children: PropTypes.node,
 
-  /** A client created by a call to `createClient()` using @monsantoit/preferences-client used by ContextMenuHomeLocation */
-  preferences: PropTypes.object,
-
-  /** A boolean to indicate if the context menu should show during a draw session */
-  disableDuringDraw: PropTypes.bool,
-
   /** A boolean to indicate if the default context menu items should be left and custom items appended only */
   keepDefaults: PropTypes.bool
 }
 
 ContextMenu.defaultProps = {
-  disableDuringDraw: true,
   keepDefaults: false
 }
 

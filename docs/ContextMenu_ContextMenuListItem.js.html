@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | PopupActionGroup</title>
+    <title>ol-kit | ContextMenu/ContextMenuListItem.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,206 +77,50 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltPopupActionGroup /&gt
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="PopupActionGroup">
-        <a class="href-link" href="#PopupActionGroup">#</a>
-        
-        <span class="code-name">
-            
-                &ltPopupActionGroup <i>children</i> <i>title</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            node
-          </td>
-          <td>Yes</td>
-          <td>An array of items rendered as a flyout</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
-          <td>
-            union
-          </td>
-          <td>Yes</td>
-          <td>Title of the action group to display on the root level</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Popup_PopupInsert_PopupActionGroup_index.js.html" class="button">View Source</a>
-            <span>
-                <a href="Popup_PopupInsert_PopupActionGroup_index.js.html">Popup/PopupInsert/PopupActionGroup/index.js</a>, <a href="Popup_PopupInsert_PopupActionGroup_index.js.html#line12">line 12</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        
-
-<div id='omocpcg3ldgkcntp9ky'></div>
-
-<script>
-  ReactDOM.render(ReactWrapper({
-    example: "./example.md",
-    uniqId: "omocpcg3ldgkcntp9ky",
-  }), document.getElementById('omocpcg3ldgkcntp9ky'));
-</script>
-    
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import PropTypes from 'prop-types'
+
+import { ListItem } from './styled'
+
+/** A context menu list item with a title and click handler
+ * @component
+ * @category ContextMenu
+ * @since 0.15.0
+ */
+class ContextMenuListItem extends React.PureComponent {
+  render () {
+    const { title, disabled, onClick } = this.props
+
+    return (
+      &lt;ListItem disabled={disabled} onClick={e => !disabled ? onClick(e) : null}>
+        {title}
+      &lt;/ListItem>
+    )
+  }
+}
+
+ContextMenuListItem.propTypes = {
+  /** Title text which is shown for the list item */
+  title: PropTypes.string.isRequired,
+
+  /** A callback function when the menu item is clicked */
+  onClick: PropTypes.func.isRequired,
+
+  /** Indicates if the context menu item is clickable */
+  disabled: PropTypes.bool.isRequired
+}
+
+ContextMenuListItem.defaultProps = {
+  disabled: false
+}
+
+export default ContextMenuListItem
+</code></pre>
+        </article>
+    </section>
 
 
 

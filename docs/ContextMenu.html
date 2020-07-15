@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | PopupActionGroup</title>
+    <title>ol-kit | ContextMenu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,8 +81,10 @@
 <header>
     
         <h2>
-            &ltPopupActionGroup /&gt
+            &ltContextMenu /&gt
         </h2>
+        
+            <div class="class-description">A context menu component useful for contextual geospatial actions</div>
         
     
 </header>
@@ -98,12 +100,12 @@
 
 
     
-    <h4 class="name" id="PopupActionGroup">
-        <a class="href-link" href="#PopupActionGroup">#</a>
+    <h4 class="name" id="ContextMenu">
+        <a class="href-link" href="#ContextMenu">#</a>
         
         <span class="code-name">
             
-                &ltPopupActionGroup <i>children</i> <i>title</i> /&gt
+                &ltContextMenu <i>map</i> <i>children</i> <i>keepDefaults</i> /&gt
             
         </span>
     </h4>
@@ -136,24 +138,35 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
+          <td class="name"><code>map</code></td>
           <td>
-            node
+            object
           </td>
           <td>Yes</td>
-          <td>An array of items rendered as a flyout</td>
+          <td>A map which is used to compute the click location</td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
+          <td class="name"><code>children</code></td>
           <td>
-            union
+            node
           </td>
-          <td>Yes</td>
-          <td>Title of the action group to display on the root level</td>
+          <td>No</td>
+          <td>A set of components (like `ContextMenuCoords` or custom items made with `ContextMenuListItem`) which perform actions when clicked</td>
           <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>keepDefaults</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td>A boolean to indicate if the default context menu items should be left and custom items appended only</td>
+          <td>false</td>
         </tr>
         
   
@@ -171,6 +184,9 @@
 
     
 
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.15.0</li></ul></dd>
     
 
     
@@ -200,9 +216,9 @@
 
     
         <p class="tag-source">
-            <a href="Popup_PopupInsert_PopupActionGroup_index.js.html" class="button">View Source</a>
+            <a href="ContextMenu_ContextMenu.js.html" class="button">View Source</a>
             <span>
-                <a href="Popup_PopupInsert_PopupActionGroup_index.js.html">Popup/PopupInsert/PopupActionGroup/index.js</a>, <a href="Popup_PopupInsert_PopupActionGroup_index.js.html#line12">line 12</a>
+                <a href="ContextMenu_ContextMenu.js.html">ContextMenu/ContextMenu.js</a>, <a href="ContextMenu_ContextMenu.js.html#line16">line 16</a>
             </span>
         </p>
     
@@ -226,22 +242,6 @@
 
 
 
-
-
-    <h5>Example</h5>
-    
-    
-        
-
-<div id='omocpcg3ldgkcntp9ky'></div>
-
-<script>
-  ReactDOM.render(ReactWrapper({
-    example: "./example.md",
-    uniqId: "omocpcg3ldgkcntp9ky",
-  }), document.getElementById('omocpcg3ldgkcntp9ky'));
-</script>
-    
 
 
 </div>
