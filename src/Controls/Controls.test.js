@@ -77,19 +77,21 @@ describe('Zoom control interactions', () => {
 
     expect(initialZoom).toBe(5)
     // click + zoom in button
-    wrapper.find('#_ol_kit_zoom_in').first().simulate('mousedown')
+    wrapper.find('[data-test-id="ol_kit_zoom_in"]').first().simulate('mousedown')
+    wrapper.find('[data-test-id="ol_kit_zoom_in"]').first().simulate('mouseup')
     expect(mockMap.getView().getZoom()).toBe(5.1)
   })
+
   it('should zoom map out', () => {
     const wrapper = mount(<Controls map={mockMap} />)
     const initialZoom = mockMap.getView().getZoom()
 
     expect(initialZoom).not.toBe(5)
     // click - zoom out button
-    wrapper.find('#_ol_kit_zoom_out').first().simulate('mousedown')
+    wrapper.find('[data-test-id="ol_kit_zoom_out').first().simulate('mousedown')
     expect(mockMap.getView().getZoom()).toBe(5)
     // click - zoom out button
-    wrapper.find('#_ol_kit_zoom_out').first().simulate('mousedown')
+    wrapper.find('[data-test-id="ol_kit_zoom_out').first().simulate('mousedown')
     expect(mockMap.getView().getZoom()).toBe(4.9)
   })
 })

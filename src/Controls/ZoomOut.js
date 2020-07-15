@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import RemoveIcon from '@material-ui/icons/Remove'
-import IconButton from '@material-ui/core/IconButton'
+import ControlGroupButton from './ControlGroupButton'
 import { zoomDelta } from './utils'
 import { connectToMap } from 'Map'; // eslint-disable-line
 
@@ -14,7 +14,6 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  */
 function ZoomControls (props) {
   const { map } = props
-  const view = map.getView()
 
   let mouseDownTime
 
@@ -23,32 +22,31 @@ function ZoomControls (props) {
   let repeatTimeout
 
   const repeatZoom = () => {
-    zoomDelta(map, -0.5, 50)
-    repeatTimeout = setTimeout(() => repeatZoom(), 100)
+    zoomDelta(map, -0.2, 300)
+    repeatTimeout = setTimeout(() => repeatZoom(), 300)
   }
   const handleMouseDown = () => {
     mouseDownTime = Date.now()
-    zoomDelta(map, -0.5, 50)
     mouseDownTimeout = setTimeout(() => {
       repeatZoom()
-    }, 200)
+    }, 150)
   }
   const stopZoom = () => {
     if (Date.now() - mouseDownTime < 150) {
-      zoomDelta(map, -0.5, 350)
+      zoomDelta(map, -0.5, 150)
       clearTimeout(mouseDownTimeout)
     }
     clearTimeout(repeatTimeout)
   }
 
   return (
-    <IconButton
+    <ControlGroupButton
       id='_ol_kit_zoom_out'
+      data-test-id='_ol_kit_zoom_out'
       onMouseUp={() => stopZoom()}
-      onMouseDown={() => handleMouseDown()}
-      onClick={() => view.animate({ zoom: view.getZoom() - 1, duration: 200 })}>
+      onMouseDown={() => handleMouseDown()}>
       <RemoveIcon />
-    </IconButton>
+    </ControlGroupButton>
   )
 }
 

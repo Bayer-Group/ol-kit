@@ -1875,6 +1875,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="bottom-right"
 />
 `;
@@ -3754,6 +3755,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="bottom-left"
 />
 `;
@@ -5633,6 +5635,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="top-left"
 />
 `;
@@ -7512,6 +7515,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="top-right"
 />
 `;

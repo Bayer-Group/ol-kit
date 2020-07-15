@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import AddIcon from '@material-ui/icons/Add'
-import IconButton from '@material-ui/core/IconButton'
+import ControlGroupButton from './ControlGroupButton'
 import { zoomDelta } from './utils'
 import { connectToMap } from 'Map'; // eslint-disable-line
 
@@ -14,7 +14,6 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  */
 function ZoomIn (props) {
   const { map } = props
-  const view = map.getView()
 
   let mouseDownTime
 
@@ -23,34 +22,33 @@ function ZoomIn (props) {
   let repeatTimeout
 
   const repeatZoom = () => {
-    zoomDelta(map, 0.5, 50)
-    repeatTimeout = setTimeout(() => repeatZoom(), 100)
+    // since this is a repeated zoom we want tiny increments over longs times = slow
+    zoomDelta(map, 0.2, 300)
+    repeatTimeout = setTimeout(() => repeatZoom(), 300)
   }
 
   const handleMouseDown = () => {
     mouseDownTime = Date.now()
-    zoomDelta(map, 0.5, 50)
     mouseDownTimeout = setTimeout(() => {
       repeatZoom()
-    }, 200)
+    }, 150)
   }
 
   const stopZoom = () => {
     if (Date.now() - mouseDownTime < 150) {
-      zoomDelta(map, 0.5, 350)
+      zoomDelta(map, 0.5, 150)
       clearTimeout(mouseDownTimeout)
     }
     clearTimeout(repeatTimeout)
   }
 
   return (
-    <IconButton
+    <ControlGroupButton
       id='_ol_kit_zoom_in'
-      onClick={() => view.animate({ zoom: view.getZoom() + 1, duration: 200 })}
+      data-test-id='ol_kit_zoom_in'
+      icon={<AddIcon />}
       onMouseDown={() => handleMouseDown()}
-      onMouseUp={() => stopZoom()}>
-      <AddIcon />
-    </IconButton>
+      onMouseUp={() => stopZoom()} />
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { ControlBarContainer, IconWrapper } from './styled'
+import { ControlGroupContainer } from './styled'
 import { connectToMap } from 'Map'
 
 import ZoomIn from './ZoomIn'
@@ -14,22 +14,17 @@ import CurrentLocation from './CurrentLocation'
  * @category Controls
  * @since NEXT
  */
-function ControlGroup (props) {
-  const { children, map, orientation } = props
-  const controlChildren = children ? React.Children.toArray(children) : [
+function ControlGroup ({ children, map, orientation }) {
+  const controlChildren = children || [
     <CurrentLocation key={'currentLocation'} map={map} />,
     <ZoomIn key={'zoomIn'} map={map} />,
     <ZoomOut key={'zoomOut'} map={map} />
   ]
 
-  // this adds a separator between each controls
-  // this .map() is safe b/c of the toArray(children) call above
-  const separatedControls = controlChildren.map((c, i) => <IconWrapper key={i}>{c}</IconWrapper>)
-
   return (
-    <ControlBarContainer orientation={orientation}>
-      {separatedControls}
-    </ControlBarContainer>
+    <ControlGroupContainer orientation={orientation}>
+      {controlChildren}
+    </ControlGroupContainer>
   )
 }
 

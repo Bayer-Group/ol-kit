@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import IconButton from '@material-ui/core/IconButton'
+import ControlGroupButton from './ControlGroupButton'
 import GpsFixedIcon from '@material-ui/icons/GpsFixed'
 import { connectToMap, centerAndZoom } from 'Map'
 
@@ -29,9 +29,9 @@ class CurrentLocation extends React.Component {
 
   render () {
     return (
-      <IconButton onClick={this.gotoCurrentLocation} aria-label='gps'>
-        <GpsFixedIcon />
-      </IconButton>
+      <ControlGroupButton onClick={this.gotoCurrentLocation} aria-label='gps'>
+        <GpsFixedIcon style={{ fontSize: '1.2rem' }} />
+      </ControlGroupButton>
     )
   }
 }

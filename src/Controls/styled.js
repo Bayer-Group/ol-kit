@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const CompassContainer = styled.div`
   cursor: pointer;
   opacity: 0.75;
-  width: 48px;
-  height: 48px;
-  border-radius: 55px;
+  width: ${props => props.size};
+  height: ${props => props.size};
+  border-radius: ${props => props.size};
   background: ${props => props.background};
   z-index: 1;
   margin: 10px;
@@ -34,11 +34,11 @@ export const ControlsContainer = styled.div`
   justify-content: center;
 `
 
-export const ControlBarContainer = styled.div`
+export const ControlGroupContainer = styled.div`
   opacity: 0.75;
   position: relative;
   margin: 8px;
-  padding: 2px;
+  padding: 3px;
   background: white;
   border-radius: 30px;
   overflow: hidden;

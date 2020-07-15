@@ -1,5 +1,6 @@
 export { default as Controls } from './Controls'
 export { default as ControlGroup } from './ControlGroup'
+export { default as ControlGroupButton } from './ControlGroupButton'
 export { default as ZoomControls } from './ZoomControls'
 
 export { default as Compass } from './Compass'
