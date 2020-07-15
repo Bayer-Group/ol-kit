@@ -51,6 +51,7 @@ Object {
   "centerAndZoom": [Function],
   "connectToMap": [Function],
   "convertFeatureToWkt": [Function],
+  "convertXYtoLatLong": [Function],
   "copyTextToClipboard": [Function],
   "copyWktToClipbard": [Function],
   "createMap": [Function],
