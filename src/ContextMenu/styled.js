@@ -11,25 +11,34 @@ export const Container = styled.div`
   background: #fff;
   border-radius: 3px;
   box-shadow: 3px 3px 15px 3px rgba(0, 0, 0, 0.15);
+  font-family: sans-serif;
+  overflow: hidden;
+  color: #494949;
 `
 
 export const ListItem = styled.div`
-  padding: 5px 10px;
+  padding: 10px;
   cursor: ${props => props.disabled ? 'default' : 'pointer'};
   color: ${props => props.disabled ? '#ccc' : '#000'};
+  border-top: 1px solid #ebebeb;
+  transition: all 0.15s ease-in;
 
   &:hover {
     color: ${props => props.disabled ? '#ccc' : '#fff'};
     background: ${props => props.disabled ? '#fff' : '#3f51b5'};
+    transition: all 0.15s ease-out;
   }
 `
 
 export const CoordWrapper = styled.div`
-  border-bottom: 1px solid #c6c6c6;
-  
+  padding: 5px 0;
+  font-size: 14px;
+  transition: all 0.15s ease-in;
+
   &:hover {
     color: #fff;
     background: #3f51b5;
+    transition: all 0.15s ease-out;
   }
 `
 
@@ -42,6 +51,8 @@ export const CoordGroup = styled.div`
 export const CoordTitle = styled.div`
   float: left;
   text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   margin-right: 10px;
 `
 

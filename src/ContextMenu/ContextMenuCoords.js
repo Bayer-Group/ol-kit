@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connectToMap } from 'Map'
 
 import { CoordWrapper, CoordGroup, CoordTitle, CoordRaw } from './styled'
-import { ContextMenu } from '.'
 
 class ContextMenuCoords extends React.PureComponent {
   componentDidMount () {
@@ -31,7 +30,7 @@ class ContextMenuCoords extends React.PureComponent {
   renderCoord (text, coord) {
     return (
       <CoordGroup>
-        <CoordTitle>{text}:</CoordTitle><CoordRaw>{coord}</CoordRaw>
+        <CoordTitle>{text}</CoordTitle><CoordRaw>{coord}</CoordRaw>
       </CoordGroup>
     )
   }

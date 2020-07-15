@@ -3,18 +3,14 @@ import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
 import { connectToMap, convertXYtoLatLong } from 'Map'
-// import Snackbar from 'components/Snackbar'
-// import ContextMenuCopy from './ContextMenuCopy'
-// import ContextMenuPaste from './ContextMenuPaste'
 import ContextMenuCoordinateGroup from './ContextMenuCoords'
-// import ContextMenuHomeLocation from './ContextMenuHomeLocation'
 
 import { Container } from './styled'
 
-/** TimeSlider component used to display/filter data with time attributes
+/** A context menu component useful for contextual geospatial actions
  * @component
- * @category TimeSlider
- * @since 0.12.0
+ * @category ContextMenu
+ * @since 0.15.0
  */
 class ContextMenu extends React.Component {
   constructor (props) {
@@ -102,17 +98,14 @@ class ContextMenu extends React.Component {
   }
 
   render () {
-    const { children, map, keepDefaults, preferences } = this.props
-    const { show, copiedFeatures, showSnackbar, snackbarMessage, features, pixel, coords } = this.state
+    const { children, map, keepDefaults } = this.props
+    const { show, pixel, features, coords } = this.state
 
     // we render children if passed; otherwise, we default to a helpful context menu
     const getChildren = () => {
       const props = { map, pixel, coords, features, closeContextMenu: this.closeContextMenu }
       const defaults = [
-        <ContextMenuCoordinateGroup {...props} />,
-        // <ContextMenuCopy onCopy={this.onCopy} {...props} />,
-        // <ContextMenuPaste copiedFeatures={copiedFeatures} {...props} />,
-        // we only render the set home context menu option if a preferences object was passed
+        <ContextMenuCoordinateGroup key={'coordgroup'} {...props} />
       ]
       // this logic allows defaults, custom or a mix (defaults render on top & custom below)
       const contents = children ? [...(keepDefaults ? defaults : []), ...children] : defaults
