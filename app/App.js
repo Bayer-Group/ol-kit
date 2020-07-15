@@ -41,6 +41,8 @@ class App extends React.Component {
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+
+    window.map = map
   }
 
   render () {

@@ -33,7 +33,7 @@ class LayerPanelActions extends Component {
 
     return (
       <ActionsContainer>
-        <IconButton data-testid='LayerPanel.actions' aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
+        <IconButton data-testid='LayerPanel.actionsButton' aria-label='more' aria-haspopup='true' onClick={this.handleMenuClick}>
           {icon}
         </IconButton>
         <LayerPanelMenu
