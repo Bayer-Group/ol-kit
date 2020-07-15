@@ -160,8 +160,8 @@ reactComponents['TimeSliderBase'] = Component44;
 import Component45 from '../src/Controls/ZoomControls.js';
 reactComponents['ZoomControls'] = Component45;
 
-import Component46 from '../src/Controls/ZoomOut.js';
-reactComponents['ZoomControls'] = Component46;
+import Component46 from '../src/Controls/ZoomIn.js';
+reactComponents['ZoomIn'] = Component46;
 
-import Component47 from '../src/Controls/ZoomIn.js';
-reactComponents['ZoomIn'] = Component47;
+import Component47 from '../src/Controls/ZoomOut.js';
+reactComponents['ZoomOut'] = Component47;

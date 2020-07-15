@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanel/LayerPanelList/index.js</title>
+    <title>ol-kit | ZoomOut</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,165 +75,186 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
+        <h2>
+            &ltZoomOut /&gt
+        </h2>
+        
+    
+</header>
 
-import List from '@material-ui/core/List'
-import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
-import nanoid from 'nanoid'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-import PropTypes from 'prop-types'
 
-const applyDrag = (arr, dragResult) => {
-  const { removedIndex, addedIndex, payload } = dragResult
+    
+    <h4 class="name" id="ZoomOut">
+        <a class="href-link" href="#ZoomOut">#</a>
+        
+        <span class="code-name">
+            
+                &ltZoomOut <i>map</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-  if (removedIndex === null &amp;&amp; addedIndex === null) return arr
+    
+    
+    <div class="description">
+        A simple map zoom out control
+    </div>
+    
 
-  const result = [...arr]
 
-  let itemToAdd = payload
 
-  if (removedIndex !== null) {
-    itemToAdd = result.splice(removedIndex, 1)[0]
-  }
 
-  if (addedIndex !== null) {
-    result.splice(addedIndex, 0, itemToAdd)
-  }
 
-  return result
-}
 
-/**
- * @component
- * @category LayerPanel
- * @since 0.5.0
- */
-class LayerPanelList extends Component {
-  handleDrop = e => {
-    const { onSort, onReorderedItems, items } = this.props
-    const reorderedItems = applyDrag(items.sort(onSort), e)
 
-    if (onReorderedItems) {
-      onReorderedItems(reorderedItems)
-    }
-  }
+    
+        <h5>PropTypes:</h5>
+        
 
-  onDragOver = e => {
-    e.preventDefault()
-    e.dataTransfer.dropEffect = 'move'
-    let dropNode = e.target
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
 
-    do {
-      if (dropNode.className === 'dropzone') {
-        this.displaced = dropNode.firstChild
-        this.dragTarget.parentNode.replaceChild(dropNode.firstChild, this.dragTarget)
-        dropNode.appendChild(this.dragTarget)
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>reference to Openlayers map object</td>
+          <td></td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
 
-        break
-      }
-    }
-    while (dropNode = dropNode.parentNode, (dropNode.id !== '_ol_kit_layer_panel_drag_container' &amp;&amp; dropNode.id !== this.dragTarget.id))
-  }
 
-  onDragStart = e => {
-    e.dataTransfer.dropEffect = 'move'
-    this.dragTarget = e.target
-    e.target.style.opacity = '0.25'
-  }
 
-  onDragEnd = e => {
-    e.preventDefault()
-    let dropNode = e.target
 
-    do {
-      if (dropNode.className === 'draggable') {
-        const removedIndex = this.dragTarget.id[0]
-        const addedIndex = this.displaced.id[0]
-        const payload = this.dragTarget
 
-        this.handleDrop({ ...e, removedIndex, addedIndex, payload })
 
-        break
-      }
-    }
-    while (dropNode = dropNode.parentNode, dropNode.id !== '_ol_kit_layer_panel_drag_container')
 
-    this.dragTarget.style.opacity = '1'
-  }
+<dl class="details">
 
-  render () {
-    const { children, disableDrag, items } = this.props
+    
 
-    if (children) {
-      return (
-        &lt;List>
-          &lt;div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
-            {React.Children.map(this.props.children, (child, i) => {
-              const id = `${i}_${nanoid(6)}`
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>0.14.0</li></ul></dd>
+    
 
-              return (
-                &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id}>
-                  &lt;div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>{child}&lt;/div>
-                &lt;/div>
-              )
-            })}
-          &lt;/div>
-        &lt;/List>
-      )
-    } else if (items) {
-      return (
-        &lt;List>
-          &lt;div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
-            {items.map((item, i) => {
-              const id = `${i}_${nanoid(6)}`
+    
 
-              return (
-                &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
-                  &lt;div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>
-                    &lt;LayerPanelListItem>{item}&lt;/LayerPanelListItem>
-                  &lt;/div>
-                &lt;/div>
-              )
-            }
-            )}
-          &lt;/div>
-        &lt;/List>
-      )
-    } else {
-      return &lt;div>Must either pass `children` or a prop of `items` for LayerPanelList to render its list&lt;/div>
-    }
-  }
-}
+    
 
-LayerPanelList.propTypes = {
-  /** The content of the LayerPanelList (likely `LayerPanelListItem` components) */
-  children: PropTypes.node,
+    
 
-  /** callback when item prop is dropped */
-  onSort: PropTypes.func,
+    
 
-  /** callback with reordered items */
-  onReorderedItems: PropTypes.func,
+    
 
-  /** array of items to be rendered in the list */
-  items: PropTypes.array,
+    
 
-  /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool
-}
+    
 
-LayerPanelList.defaultProps = {
-  onSort: (a, b) => { return a - b },
-  disableDrag: false
-}
+    
 
-export default LayerPanelList
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Controls_ZoomOut.js.html" class="button">View Source</a>
+            <span>
+                <a href="Controls_ZoomOut.js.html">Controls/ZoomOut.js</a>, <a href="Controls_ZoomOut.js.html#line15">line 15</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
