@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import List from '@material-ui/core/List'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
-import { Container, Draggable } from 'react-smooth-dnd'
+import nanoid from 'nanoid'
 
 import PropTypes from 'prop-types'
 
@@ -32,7 +32,7 @@ const applyDrag = (arr, dragResult) => {
  * @since 0.5.0
  */
 class LayerPanelList extends Component {
-  onDrop = e => {
+  handleDrop = e => {
     const { onSort, onReorderedItems, items } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
 
@@ -41,29 +41,85 @@ class LayerPanelList extends Component {
     }
   }
 
+  onDragOver = e => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+    let dropNode = e.target
+
+    do {
+      if (dropNode.className === 'dropzone') {
+        this.displaced = dropNode.firstChild
+        this.dragTarget.parentNode.replaceChild(dropNode.firstChild, this.dragTarget)
+        dropNode.appendChild(this.dragTarget)
+
+        break
+      }
+    }
+    while (dropNode = dropNode.parentNode, (dropNode.id !== '_ol_kit_layer_panel_drag_container' && dropNode.id !== this.dragTarget.id))
+  }
+
+  onDragStart = e => {
+    e.dataTransfer.dropEffect = 'move'
+    this.dragTarget = e.target
+    e.target.style.opacity = '0.25'
+  }
+
+  onDragEnd = e => {
+    e.preventDefault()
+    let dropNode = e.target
+
+    do {
+      if (dropNode.className === 'draggable') {
+        const removedIndex = this.dragTarget.id[0]
+        const addedIndex = this.displaced.id[0]
+        const payload = this.dragTarget
+
+        this.handleDrop({ ...e, removedIndex, addedIndex, payload })
+
+        break
+      }
+    }
+    while (dropNode = dropNode.parentNode, dropNode.id !== '_ol_kit_layer_panel_drag_container')
+
+    this.dragTarget.style.opacity = '1'
+  }
+
   render () {
     const { children, disableDrag, items } = this.props
-    const ItemContainer = disableDrag ? 'div' : Draggable
 
     if (children) {
       return (
         <List>
-          <Container onDrop={this.onDrop}>
-            {React.Children.map(this.props.children, child => <ItemContainer key={child.id}>{child}</ItemContainer>)}
-          </Container>
+          <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
+            {React.Children.map(this.props.children, (child, i) => {
+              const id = `${i}_${nanoid(6)}`
+
+              return (
+                <div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id}>
+                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>{child}</div>
+                </div>
+              )
+            })}
+          </div>
         </List>
       )
     } else if (items) {
       return (
         <List>
-          <Container onDrop={this.onDrop} >
-            {items.map(item => (
-              <ItemContainer key={item}>
-                <LayerPanelListItem>{item}</LayerPanelListItem>
-              </ItemContainer>
-            )
+          <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
+            {items.map((item, i) => {
+              const id = `${i}_${nanoid(6)}`
+
+              return (
+                <div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
+                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>
+                    <LayerPanelListItem>{item}</LayerPanelListItem>
+                  </div>
+                </div>
+              )
+            }
             )}
-          </Container>
+          </div>
         </List>
       )
     } else {

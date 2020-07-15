@@ -62,8 +62,15 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
   if (!features.length && isValidUrl(query)) {
     // query is an endpoint to fetch valid data set
-    const request = await fetch(query)
-    const response = await request.text() // either xml or json
+    let response
+
+    try {
+      const request = await fetch(query)
+      
+      response = await request.text() // either xml or json
+    } catch (e) {
+      return ugh.throw(`'loadDataLayer' error when making network request:`, e)
+    }
 
     let dataSet
 
