@@ -10,7 +10,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  * A simple map zoom out control
  * @component
  * @category Controls
- * @since NEXT
+ * @since 0.14.0
  */
 function ZoomControls (props) {
   const { map } = props
@@ -42,7 +42,7 @@ function ZoomControls (props) {
   return (
     <ControlGroupButton
       id='_ol_kit_zoom_out'
-      data-test-id='_ol_kit_zoom_out'
+      data-testid='_ol_kit_zoom_out'
       onMouseUp={() => stopZoom()}
       onMouseDown={() => handleMouseDown()}>
       <RemoveIcon />

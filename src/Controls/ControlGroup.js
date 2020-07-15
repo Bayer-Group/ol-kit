@@ -12,7 +12,7 @@ import CurrentLocation from './CurrentLocation'
  * A map control container with built-in orientations
  * @component
  * @category Controls
- * @since NEXT
+ * @since 0.14.0
  */
 function ControlGroup ({ children, map, orientation }) {
   const controlChildren = children || [

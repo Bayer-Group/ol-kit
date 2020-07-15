@@ -10,7 +10,7 @@ import { IconWrapper } from './styled'
  * A control group button wrapper using a Material IconButton
  * @component
  * @category Controls
- * @since NEXT
+ * @since 0.14.0
  */
 function ControlGroupButton (props) {
   return (

@@ -9,7 +9,7 @@ import { connectToMap, centerAndZoom } from 'Map'
  * A simple map zoom control
  * @component
  * @category Controls
- * @since NEXT
+ * @since 0.14.0
  */
 class CurrentLocation extends React.Component {
   gotoCurrentLocation = () => {
@@ -29,7 +29,9 @@ class CurrentLocation extends React.Component {
 
   render () {
     return (
-      <ControlGroupButton onClick={this.gotoCurrentLocation} aria-label='gps'>
+      <ControlGroupButton
+        onClick={this.gotoCurrentLocation}
+        data-testid='_ol_kit_current_location'>
         <GpsFixedIcon style={{ fontSize: '1.2rem' }} />
       </ControlGroupButton>
     )

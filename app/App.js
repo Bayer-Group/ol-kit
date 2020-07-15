@@ -13,6 +13,7 @@ import {
   VectorLayer
 } from '@bayer/ol-kit'
 
+
 import PaletteIcon from '@material-ui/icons/Palette'
 import olProj from 'ol/proj'
 import olFeature from 'ol/feature'
@@ -21,6 +22,7 @@ import olSourceVector from 'ol/source/vector'
 
 class App extends React.Component {
   onMapInit = async (map) => {
+    // create a vector layer and add to the map
     const layer = new VectorLayer({
       title: 'Diltz\' House',
       source: new olSourceVector({
