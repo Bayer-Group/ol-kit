@@ -55,11 +55,10 @@ class LayerPanelList extends Component {
         break
       }
     }
-    while (dropNode = dropNode.parentNode, (dropNode.id !== 'dragContainer' && dropNode.id !== this.dragTarget.id))
+    while (dropNode = dropNode.parentNode, (dropNode.id !== '_ol_kit_layer_panel_drag_container' && dropNode.id !== this.dragTarget.id))
   }
 
   onDragStart = e => {
-    e.preventDefault()
     e.dataTransfer.dropEffect = 'move'
     this.dragTarget = e.target
     e.target.style.opacity = '0.25'
@@ -80,7 +79,7 @@ class LayerPanelList extends Component {
         break
       }
     }
-    while (dropNode = dropNode.parentNode, dropNode.id !== 'dragContainer')
+    while (dropNode = dropNode.parentNode, dropNode.id !== '_ol_kit_layer_panel_drag_container')
 
     this.dragTarget.style.opacity = '1'
   }
@@ -91,13 +90,13 @@ class LayerPanelList extends Component {
     if (children) {
       return (
         <List>
-          <div id='dragContainer' onDragEnd={this.onDragEnd}>
+          <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
             {React.Children.map(this.props.children, (child, i) => {
               const id = `${i}_${nanoid(6)}`
 
               return (
                 <div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id}>
-                  <div id={id} className={'draggable'} draggable={disableDrag ? 'false' : 'true'} onDragStart={this.onDragStart}>{child}</div>
+                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>{child}</div>
                 </div>
               )
             })}
@@ -107,13 +106,13 @@ class LayerPanelList extends Component {
     } else if (items) {
       return (
         <List>
-          <div id='dragContainer' onDragEnd={this.onDragEnd}>
+          <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
             {items.map((item, i) => {
               const id = `${i}_${nanoid(6)}`
 
               return (
                 <div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
-                  <div id={id} className={'draggable'} draggable={disableDrag ? 'false' : 'true'} onDragStart={this.onDragStart}>
+                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>
                     <LayerPanelListItem>{item}</LayerPanelListItem>
                   </div>
                 </div>
