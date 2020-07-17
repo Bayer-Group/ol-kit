@@ -13,7 +13,7 @@ export const CardHeader = withStyles(() => ({
   },
   root: {
     background: '#ededed',
-    height: '50px'
+    height: '75px'
   }
 }))(MaterialCardHeader)
 
