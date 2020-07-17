@@ -12,7 +12,7 @@ class LayerPanelPage extends Component {
     const { children } = this.props
 
     return (
-      <LayerPanelPageContainer data-testid='LayerPanel.page'>
+      <LayerPanelPageContainer label={this.props.label} data-testid='LayerPanel.page'>
         {children}
       </LayerPanelPageContainer>
     )

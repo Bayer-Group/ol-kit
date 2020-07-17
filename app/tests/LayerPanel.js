@@ -1,13 +1,14 @@
 const puppeteer = require('puppeteer')
 const assert = require('assert')
-const { assertWithInfo } = require('./pupp-utils')
+const { assertWithInfo, addDebugCSS } = require('./pupp-utils')
 
 ;(async () => {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     slowMo: 250
   })
   const page = await browser.newPage()
+  await addDebugCSS(page)
 
   await page.goto('http://localhost:3000/?view=-7.156636,-112.500000,1.00,0.00')
 

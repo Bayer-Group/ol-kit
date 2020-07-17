@@ -275,25 +275,11 @@ class LayerPanelLayersPage extends Component {
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
 
+    console.log(layerFilter, layers)
+
     return (
-      <LayerPanelPage>
-        <LayerPanelHeader
-          title={translations['_ol_kit.LayerPanelLayersPage.title']}
-          translations={translations}
-          avatar={<LayerPanelCheckbox
-            checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
-          actions={customActions ||
-            <LayerPanelActions
-              icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
-              translations={translations}
-              layers={layers}
-              map={map}>
-              <LayerPanelActionRemove
-                removeFeaturesForLayer={this.removeFeaturesForLayer}
-                shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-              {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
-              <LayerPanelActionExport onExportFeatures={onExportFeatures} />
-            </LayerPanelActions>} />
+      <LayerPanelPage label={'Layers'}>
+        
         {enableFilter &&
           <TextField
             id='feature-filter-input'
@@ -310,6 +296,25 @@ class LayerPanelLayersPage extends Component {
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
             items={layers} >
+            <LayerPanelListItem
+              title={translations['_ol_kit.LayerPanelLayersPage.title']}
+              translations={translations} >
+              <LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />
+              <ListItemText primary={'All Layers'} />
+              <ListItemSecondaryAction style={{ right: '0px !important' }}>
+                <LayerPanelActions
+                  icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
+                  translations={translations}
+                  layers={layers}
+                  map={map}>
+                  <LayerPanelActionRemove
+                    removeFeaturesForLayer={this.removeFeaturesForLayer}
+                    shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+                  {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
+                  <LayerPanelActionExport onExportFeatures={onExportFeatures} />
+                </LayerPanelActions>
+              </ListItemSecondaryAction>
+            </LayerPanelListItem>
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
