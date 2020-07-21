@@ -44,7 +44,7 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <LayerPanel>
-          <LayerPanelPage tabIcon={<PaletteIcon />}>
+          <LayerPanelPage label='Layer Styler' tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
             </LayerPanelContent>

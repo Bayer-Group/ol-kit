@@ -15,7 +15,7 @@ class LayerPanel extends Component {
 
     return (
       <LayerPanelBase translations={translations}>
-        {[<LayerPanelLayersPage {...this.props} key='layerPanelLayersPage' map={map} />].concat(children)}
+        {[<LayerPanelLayersPage label='Layers' {...this.props} key='layerPanelLayersPage' map={map} />].concat(children)}
       </LayerPanelBase>
     )
   }

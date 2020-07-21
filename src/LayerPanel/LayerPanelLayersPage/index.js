@@ -278,8 +278,7 @@ class LayerPanelLayersPage extends Component {
     console.log(layerFilter, layers)
 
     return (
-      <LayerPanelPage label={'Layers'}>
-        
+      <LayerPanelPage>
         {enableFilter &&
           <TextField
             id='feature-filter-input'
