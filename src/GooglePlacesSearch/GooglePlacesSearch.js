@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
-import Alert from '@material-ui/lab/Alert'
 import { connectToMap, centerAndZoom } from 'Map'
 import VectorLayer from '../classes/VectorLayer'
 import olCollection from 'ol/collection'
@@ -130,11 +129,6 @@ function GooglePlacesSearch (props) {
           </IconButton>
         </Paper>
       </form>
-      {
-        errorMessage ? <Alert severity='error' onClose={handleClose}>
-          {errorMessage}
-        </Alert> : null
-      }
     </div>
   )
 }
