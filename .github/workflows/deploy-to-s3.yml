@@ -31,4 +31,4 @@ jobs:
 
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync ./app s3://ol-kit-demo
+        aws s3 sync ./build s3://ol-kit-demo
