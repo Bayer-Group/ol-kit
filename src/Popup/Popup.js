@@ -31,7 +31,7 @@ class Popup extends Component {
     }
 
     this.timer = 0
-    this.prevent = false
+    this.isDoubleClick = false
     this.defaultState = this.state
   }
 
@@ -52,13 +52,13 @@ class Popup extends Component {
 
   mapDoubleClickHandler = () => {
     clearTimeout(this.timer)
-    this.prevent = true
+    this.isDoubleClick = true
     this.hidePopup()
   }
 
   mapClickHandler = e => {
     this.timer = setTimeout(() => {
-      if (!this.prevent) {
+      if (!this.isDoubleClick) {
         // Get the interactions from the map as an array.
         const interactions = e.map.getInteractions().getArray()
 
@@ -66,7 +66,7 @@ class Popup extends Component {
         if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return this.hidePopup()
         this.checkForFeaturesAtClick(e)
       }
-      this.prevent = false
+      this.isDoubleClick = false
     }, 300)
   }
 
