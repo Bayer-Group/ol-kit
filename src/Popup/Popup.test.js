@@ -32,7 +32,7 @@ describe('<Popup />', () => {
       show: false
     }
 
-    expect(onMapClick).toHaveBeenCalledWith(hidePopupEvent)
+    setTimeout(() => expect(onMapClick).toHaveBeenCalledWith(hidePopupEvent), 300)
 
     const defaultInsert = await getByTestId('popup-insert-default')
 
