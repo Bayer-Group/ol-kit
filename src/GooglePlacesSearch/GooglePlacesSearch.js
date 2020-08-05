@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 function GooglePlacesSearch (props) {
   const { map, apiKey } = props
   const { handleSubmit, register } = useForm()
-  const [errorMessage, setError] = useState(null) // eslint-disable-line
+  const [_, setError] = useState(null) // eslint-disable-line
   const classes = useStyles()
 
   const dataLoader = (searchString) => {
