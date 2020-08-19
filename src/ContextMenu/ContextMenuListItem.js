@@ -6,7 +6,7 @@ import { ListItem } from './styled'
 /** A context menu list item with a title and click handler
  * @component
  * @category ContextMenu
- * @since 0.15.0
+ * @since 0.16.0
  */
 class ContextMenuListItem extends React.PureComponent {
   render () {

@@ -8,7 +8,7 @@ import { CoordWrapper, CoordGroup, CoordTitle, CoordRaw } from './styled'
 /** A context menu coordinate display and copy/paste header
  * @component
  * @category ContextMenu
- * @since 0.15.0
+ * @since 0.16.0
  */
 class ContextMenuCoords extends React.PureComponent {
   componentDidMount () {

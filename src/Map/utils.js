@@ -157,7 +157,7 @@ export function centerAndZoom (map, opts = {}) {
  * Convert an XY pair to lat/long
  * @function
  * @category Map
- * @since NEXT
+ * @since 0.16.0
  * @param {ol.Map} map - reference to the openlayer map object
  * @param {Number} x - the x coordinate
  * @param {Number} y - the x coordinate

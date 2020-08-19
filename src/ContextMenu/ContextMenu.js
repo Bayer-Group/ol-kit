@@ -10,7 +10,7 @@ import { Container } from './styled'
 /** A context menu component useful for contextual geospatial actions
  * @component
  * @category ContextMenu
- * @since 0.15.0
+ * @since 0.16.0
  */
 class ContextMenu extends React.Component {
   constructor (props) {
