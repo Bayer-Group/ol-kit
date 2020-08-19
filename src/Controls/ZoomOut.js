@@ -12,7 +12,7 @@ import { connectToMap } from 'Map'; // eslint-disable-line
  * @category Controls
  * @since 0.14.0
  */
-function ZoomControls (props) {
+function ZoomOut (props) {
   const { map } = props
 
   let mouseDownTime
@@ -50,9 +50,9 @@ function ZoomControls (props) {
   )
 }
 
-ZoomControls.propTypes = {
+ZoomOut.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired
 }
 
-export default connectToMap(ZoomControls)
+export default connectToMap(ZoomOut)
