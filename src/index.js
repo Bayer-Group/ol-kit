@@ -1,4 +1,5 @@
 export * from './Basemaps'
+export * from './ContextMenu'
 export * from './Controls'
 export * from './DataLayers'
 export * from './GooglePlacesSearch'

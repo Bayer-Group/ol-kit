@@ -4,7 +4,7 @@ import {
   Popup,
   LayerPanel,
   Controls,
-  ZoomControls,
+  ContextMenu,
   loadDataLayer,
   LayerStyler,
   LayerPanelPage,
@@ -12,7 +12,6 @@ import {
   BasemapContainer,
   VectorLayer
 } from '@bayer/ol-kit'
-
 
 import PaletteIcon from '@material-ui/icons/Palette'
 import olProj from 'ol/proj'
@@ -56,6 +55,7 @@ class App extends React.Component {
             </LayerPanelContent>
           </LayerPanelPage>
         </LayerPanel>
+        <ContextMenu />
         <Controls />
         <BasemapContainer />
       </Map>
