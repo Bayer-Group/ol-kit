@@ -664,13 +664,15 @@ exports.publish = function(taffyData, opts, tutorials) {
             addAttribs(doclet);
             doclet.kind = 'member';
         }
+
+        if (fs.existsSync(doclet.meta.path + '/example.md')) console.log('we made it')
     });
 
     members = helper.getMembers(data);
     members.tutorials = tutorials.children;
     members.components = helper.find(data, {kind: 'class', component: {isUndefined: false}})
     members.classes = helper.find(data, {kind: 'class', component: {isUndefined: true}})
-
+    
     // output pretty-printed source files by default
     outputSourceFiles = conf.default && conf.default.outputSourceFiles !== false;
 
