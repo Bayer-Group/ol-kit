@@ -58,7 +58,7 @@ export const ArrowBox = styled.div`
     margin-${props => props.position === 'top' || props.position === 'bottom' ? 'left' : 'top'}: -17px;
   }
 `
-export const HandIcon = styled.div`
+export const DragHandleIcon = styled.div`
   height: 25px;
   width: 70px;
   ${props => !props.inline && `left: 50vw`};

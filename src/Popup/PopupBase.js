@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Draggable from 'react-draggable'
 import { ArrowBox, Container } from './styled'
-import Hand from './Hand'
+import DragHandle from './DragHandle'
 
 /**
  * @component
@@ -13,51 +13,49 @@ class PopupBase extends Component {
   state = {
     dragged: false,
     pinnned: false,
-    pinnedPixel: [0, 0],
-    transparent: false,
-    x: 0,
-    y: 0
+    pinnedPixel: this.props.pixel,
+    transparent: false
   }
 
   onStart = () => {
-    const { onPopupDragStart, transparentDuringDrag } = this.props
+    const { arrow, onPopupDragStart, pixel, transparentDuringDrag } = this.props
+    // this hard sets the arrow direction at the time of initial drag
+    const lastArrow = !this.state.dragged ? arrow : this.state.lastArrow
+    const pinnedPixel = !this.state.dragged ? pixel : this.state.pinnedPixel
 
     this.setState({
       dragged: true,
-      pinnedPixel: this.props.pixel,
+      lastArrow,
+      pinnedPixel,
       transparent: transparentDuringDrag
     })
     onPopupDragStart()
   }
 
-  onStop = (e) => {
-    this.props.onPopupDragEnd(e)
+  onStop = e => {
     this.setState({
-      pinnedPixel: this.props.pixel,
       transparent: false
     })
+    this.props.onPopupDragEnd(e)
   }
 
-  handleDrag = (e, ui) => {
-    this.setState(state => ({
-      pinnedPixel: this.props.pixel,
-      x: e.x,
-      y: e.y
-    }))
+  handleDrag = e => {
     this.props.onPopupDrag(e)
   }
 
   render () {
-    const { arrow, show, width, height, inline, pixel: pixelProp, children } = this.props
-    const { dragged, pinned, pinnedPixel, transparent } = this.state
+    const { arrow: arrowProp, draggable, show, width, height, inline, pixel: pixelProp, children } = this.props
+    const { dragged, lastArrow, pinned, pinnedPixel, transparent } = this.state
     const arrowTranslator = {
       top: 'bottom',
       bottom: 'top',
       left: 'right',
-      right: 'left'
+      right: 'left',
+      none: 'none'
     }
     const unsnapped = dragged || pinned
     const pixel = unsnapped ? pinnedPixel : pixelProp
+    const arrow = unsnapped ? lastArrow : arrowProp
 
     return (
       <Draggable
@@ -74,10 +72,10 @@ class PopupBase extends Component {
           pixel={pixel}
           show={show}
           transparent={transparent}
+          unsnapped={unsnapped}
           width={width}>
-          <Hand />
-          <ArrowBox unset={unsnapped} position={arrowTranslator[arrow]}>
-          </ArrowBox>
+          {draggable ? <DragHandle /> : null}
+          <ArrowBox unset={unsnapped} position={arrowTranslator[arrow]} />
           {children}
         </Container>
       </Draggable>

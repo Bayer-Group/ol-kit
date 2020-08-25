@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { HandIcon } from './styled'
+import { DragHandleIcon } from './styled'
 
-export default function Hand (props) {
+export default function DragHandle (props) {
   const { color, height, inline } = props
 
   return (
-    <HandIcon height={height} color={color} inline={inline} className='handle'>
+    <DragHandleIcon height={height} color={color} inline={inline} className='handle'>
       <svg width='65px' height='7px' viewBox='0 0 32 7' version='1.1' xmlns='http://www.w3.org/2000/svg' >
         <title>Drag icon</title>
         <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
@@ -22,11 +22,11 @@ export default function Hand (props) {
           </g>
         </g>
       </svg>
-    </HandIcon>
+    </DragHandleIcon>
   )
 }
 
-Hand.defaultProps = {
+DragHandle.defaultProps = {
   color: 'grey',
   height: '7px',
   inline: true
