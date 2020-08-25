@@ -676,6 +676,16 @@ exports.publish = function(taffyData, opts, tutorials) {
     // output pretty-printed source files by default
     outputSourceFiles = conf.default && conf.default.outputSourceFiles !== false;
 
+    members.components.forEach(c => {
+        const exists = fs.existsSync(c.meta.path + '/example.md')
+        if (exists) {
+            console.log(c.meta.path + '/example.md' + ' exists')
+            const fileContents = fs.readFileSync(c.meta.path + '/example.md', 'utf8')
+            var parsed = markdown.getParser()(fileContents)
+            c.component.example = parsed
+        }
+    })
+
     // add template helpers
     view.find = find;
     view.linkto = linkto;
