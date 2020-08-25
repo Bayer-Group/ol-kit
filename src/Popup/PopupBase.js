@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Draggable from 'react-draggable'
-import { ArrowBox, Container } from './styled'
+
 import DragHandle from './DragHandle'
+import { ArrowBox, Container } from './styled'
 
 /**
  * @component
@@ -12,7 +13,6 @@ import DragHandle from './DragHandle'
 class PopupBase extends Component {
   state = {
     dragged: false,
-    pinnned: false,
     pinnedPixel: this.props.pixel,
     transparent: false
   }
@@ -44,8 +44,8 @@ class PopupBase extends Component {
   }
 
   render () {
-    const { arrow: arrowProp, draggable, show, width, height, inline, pixel: pixelProp, children } = this.props
-    const { dragged, lastArrow, pinned, pinnedPixel, transparent } = this.state
+    const { arrow: arrowProp, children, draggable, height, inline, pixel: pixelProp, show, width } = this.props
+    const { dragged, lastArrow, pinnedPixel, transparent } = this.state
     const arrowTranslator = {
       top: 'bottom',
       bottom: 'top',
@@ -53,18 +53,17 @@ class PopupBase extends Component {
       right: 'left',
       none: 'none'
     }
-    const unsnapped = dragged || pinned
-    const pixel = unsnapped ? pinnedPixel : pixelProp
-    const arrow = unsnapped ? lastArrow : arrowProp
+    const pixel = dragged ? pinnedPixel : pixelProp
+    const arrow = dragged ? lastArrow : arrowProp
 
     return (
       <Draggable
         axis='both'
         bounds='parent'
         handle='.handle'
+        onDrag={this.handleDrag}
         onStart={this.onStart}
-        onStop={this.onStop}
-        onDrag={this.handleDrag}>
+        onStop={this.onStop}>
         <Container
           arrow={arrow}
           height={height}
@@ -72,10 +71,9 @@ class PopupBase extends Component {
           pixel={pixel}
           show={show}
           transparent={transparent}
-          unsnapped={unsnapped}
           width={width}>
           {draggable ? <DragHandle /> : null}
-          <ArrowBox unset={unsnapped} position={arrowTranslator[arrow]} />
+          <ArrowBox hide={dragged} position={arrowTranslator[arrow]} />
           {children}
         </Container>
       </Draggable>
@@ -110,13 +108,17 @@ PopupBase.propTypes = {
   height: PropTypes.number,
   /** Render the component inline (without absolute positioning) */
   inline: PropTypes.bool,
+  /** Callback fired during drags when draggable is true */
   onPopupDrag: PropTypes.func,
+  /** Callback fired after a drag when draggable is true */
   onPopupDragEnd: PropTypes.func,
+  /** Callback fired at the beginning of a drag when draggable is true */
   onPopupDragStart: PropTypes.func,
   /** The pixel coordinate where the popup should render */
   pixel: PropTypes.array,
   /** Show/hide the popup */
   show: PropTypes.bool,
+  /** Set PopupBase to see-through during a drag when draggable is true */
   transparentDuringDrag: PropTypes.bool,
   /** The width of the popup */
   width: PropTypes.number

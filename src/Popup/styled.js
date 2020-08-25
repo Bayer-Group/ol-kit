@@ -9,7 +9,7 @@ const positionContainer = (arrowDirection, [x, y], width, height) => {
     return { top: y - height - 16, left: x - width / 2 }
   } else if (arrowDirection === 'left') {
     return { top: y - height / 2, left: x + 16 }
-  } else if (arrowDirection === 'none') {
+  } else {
     return { top: y, left: x }
   }
 }
@@ -32,7 +32,7 @@ export const Container = styled.div`
 `
 
 export const ArrowBox = styled.div`
-  display: ${p => p.unset ? 'none' : 'block'};
+  display: ${p => p.hide ? 'none' : 'block'};
   &::after, &::before {
     ${props => props.position === 'click' ? 'right' : props.position}: 100%;
     ${props => props.position === 'top' || props.position === 'bottom' ? 'left' : 'top'}: 50%;
@@ -61,15 +61,13 @@ export const ArrowBox = styled.div`
 export const DragHandleIcon = styled.div`
   height: 25px;
   width: 70px;
-  ${props => !props.inline && `left: 50vw`};
-  ${props => props.inline && `transform: translateY(-100%); margin: auto`};
   cursor: pointer;
   color: ${props => props.color || `#fff`};
-  outline:none;
   padding: 3px;
   z-index: 100;
   position: absolute;
-  top: 30px;
+  margin: auto;
+  top: 0;
   left: 0;
   right: 0;
 `
