@@ -266,14 +266,14 @@
     
         
 
-<div id='2wli944yvo3kea74dzm'></div>
+<div id='qt7jd8vbs8keadzmuo'></div>
 <p>hello world</p>
 
 <script>
   ReactDOM.render(ReactWrapper({
     example: "./example.md",
-    uniqId: "2wli944yvo3kea74dzm",
-  }), document.getElementById('2wli944yvo3kea74dzm'));
+    uniqId: "qt7jd8vbs8keadzmuo",
+  }), document.getElementById('qt7jd8vbs8keadzmuo'));
 </script>
     
 
@@ -305,6 +305,37 @@
 
     
 
+    
+
+    
+        <div>
+            <br/>
+            <h2 class="title">Examples</h2>
+            <div class="example">
+                <p>A <code>PopupActionItem</code> is a list item which renders within a popup. You can pass <code>PopupActionItem</code> a simple string <code>title</code> and bind an <code>onClick</code> to do whatever you wish when a user selects the item. If an item should be disabled, pass <code>disabled={true}</code> and your <code>onClick</code> won't be called when the item is clicked.</p>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;Popup show={true} pixel={[50, 10]} inline={true}>
+    &lt;PopupActionItem title=&quot;My Action&quot; />
+    &lt;PopupActionItem disabled={true} title=&quot;Disabled Action&quot; />
+  &lt;/Popup>
+)
+</code></pre>
+<p>If you desire to completely customize your action item, pass a child component into the <code>PopupActionItem</code> to render a completely custom item.</p>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;Popup show={true} pixel={[50, 10]} inline={true}>
+    &lt;PopupActionItem title=&quot;My Action&quot; />
+    &lt;PopupActionItem>
+      &lt;div style={{background: '#ec0000', padding: '20px', color: 'white'}}>
+        &lt;i className=&quot;zmdi zmdi-delete&quot; style={{ paddingRight: '20px'}}>&lt;/i>
+        Custom Danger Action
+      &lt;/div>
+    &lt;/PopupActionItem>
+  &lt;/Popup>
+)
+</code></pre>
+            </div>
+        </div>
+    
     
 </article>
 

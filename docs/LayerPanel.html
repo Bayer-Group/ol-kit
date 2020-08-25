@@ -270,6 +270,133 @@
     
 
     
+
+    
+        <div>
+            <br/>
+            <h2 class="title">Examples</h2>
+            <div class="example">
+                <p>The <code>LayerPanel</code> is a convenient way to view things that are on the map. The original intent is to view layers but with this <code>LayerPanel</code> you can view whatever you want. Build pages into the <code>LayerPanel</code> that will show up in their own tabs to make whatever customization you want. Another common page that works well with the <code>LayerPanel</code> is a Legends page which you can make with a <code>LayerPanelPage</code> component.</p>
+<p>Its as simple as that. This will give you a <code>LayerPanel</code> placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.</p>
+<pre class="prettyprint source lang-jsx"><code>return &lt;LayerPanel />
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c" alt="image"></p>
+<p>We also have a prebuilt page that ships with the <code>LayerPanel</code> called <code>LayerPanelLayersPage</code>. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the <code>LayerPanelLayersPage</code> to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the <code>LayerPanelBase</code> as the parent component) or you can pass the props of the <code>LayerPanelLayersPage</code> down through the prebuilt <code>LayerPanel</code>.</p>
+<pre class="prettyprint source lang-jsx"><code>// Passing the props through the LayerPanel component
+return (
+  &lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />} />
+      &lt;LayerPanelContent>
+        Hello world
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+
+// Directly pulling in the LayerPanelLayersPage and passing props through it
+return (
+  &lt;LayerPanelBase>
+    &lt;LayerPanelLayersPage handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />} />
+      &lt;LayerPanelContent>
+        Hello world
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanelBase>
+)
+</code></pre>
+<p>To show you the amount of customization possible with these pages, here's the <code>LayerPanelLayersPage</code>.</p>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;LayerPanelPage>
+    &lt;LayerPanelHeader
+      title={'Active Layers'}
+      translations={translations}
+      avatar={&lt;LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
+      actions={customActions ||
+        &lt;LayerPanelActions
+          icon={&lt;MoreHorizIcon />}
+          translations={translations}
+          layers={layers}
+          map={map}>
+          &lt;LayerPanelActionRemove
+            removeFeaturesForLayer={this.removeFeaturesForLayer}
+            shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+          {onFileImport && &lt;LayerPanelActionImport handleImport={onFileImport} />}
+          {onExportFeatures && &lt;LayerPanelActionExport onExportFeatures={onExportFeatures} />}
+        &lt;/LayerPanelActions>} />
+    {enableFilter &&
+      &lt;TextField
+        id='feature-filter-input'
+        label={'Filter Layers'}
+        type='text'
+        style={{ margin: '8px' }}
+        fullWidth
+        value={filterText}
+        onChange={(e) => this.handleFilter(e.target.value)} />
+    }
+    &lt;LayerPanelContent>
+      &lt;LayerPanelList disableDrag={disableDrag} onSort={this.zIndexSort} onReorderedItems={this.reorderLayers} items={layers} >
+        {layerFilter(layers).filter((layer) => {
+          const filteredFeatures = this.getFeaturesForLayer(layer)
+
+          return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
+        }).sort(this.zIndexSort).map((layer, i) => {
+          const features = this.getFeaturesForLayer(layer)
+
+          return (
+            &lt;div key={i}>
+              &lt;LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
+                {&lt;LayerPanelCheckbox
+                  checkboxState={!layer ? null : layer.getVisible()}
+                  handleClick={(e) => this.handleVisibility(e, layer)} />}
+                {&lt;LayerPanelExpandableList show={!!features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
+                &lt;ListItemText primary={layer.get('title') || 'Untitled Layer'} />
+                &lt;ListItemSecondaryAction>
+                  &lt;LayerPanelActions
+                    icon={&lt;MoreVertIcon />}
+                    translations={translations}
+                    layer={layer}
+                    map={map} >
+                    {getMenuItemsForLayer(layer) ||
+                    [&lt;LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
+                      &lt;LayerPanelActionExtent key='gotoExtent' />,
+                      &lt;LayerPanelActionOpacity key='layerOpacity' />]}
+                  &lt;/LayerPanelActions>
+                &lt;/ListItemSecondaryAction>
+              &lt;/LayerPanelListItem>
+              { features
+                ? &lt;Collapse in={expandedLayer} timeout='auto' unmountOnExit>
+                  &lt;List component='div' disablePadding style={{ paddingLeft: '36px' }}>
+                    {features.map((feature, i) => {
+                      return (
+                        &lt;ListItem key={i} hanldeDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                          &lt;LayerPanelCheckbox
+                            handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
+                            checkboxState={feature.get('_feature_visibility')} />
+                          &lt;ListItemText inset={false} primary={feature.get('name') || `Feature ${i}`} />
+                        &lt;/ListItem>
+                      )
+                    })}
+                  &lt;/List>
+                &lt;/Collapse> : null }
+            &lt;/div>
+          )
+        })}
+      &lt;/LayerPanelList>
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+)
+</code></pre>
+            </div>
+        </div>
+    
+    
 </article>
 
 </section>

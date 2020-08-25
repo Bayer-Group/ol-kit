@@ -372,6 +372,108 @@
     
 
     
+
+    
+        <div>
+            <br/>
+            <h2 class="title">Examples</h2>
+            <div class="example">
+                <h1>Map</h1>
+<p>The <code>&lt;Map&gt;</code> component will either create an <a href="https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html">OpenLayers map</a> for you or take a prebuilt map as a prop. A reference to this map will be passed down via props to ol-kit child components of <code>&lt;Map&gt;</code> via <a href="../connectToMap/example.md"><code>connectToMap</code></a>.</p>
+<h2>Drop-in example:</h2>
+<p>This one-liner will create a map + div with the id of <code>_ol_kit_map_{uuid}</code> &amp; render the map into that div.</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map } from '@bayer/ol-kit'
+
+const App = () => {
+  return (
+    &lt;Map />
+  )
+}
+
+export default App
+</code></pre>
+<h2>Callback example:</h2>
+<p><code>onMapInit</code> is not required but it will be called on <a href="https://reactjs.org/docs/react-component.html#componentdidmount"><code>componentDidMount</code></a> and return a reference to the newly created OpenLayers map (in case you want to manipulate it).</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map } from '@bayer/ol-kit'
+
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+
+class App extends React.Component {
+  onMapInit = map => {
+    const data = new VectorLayer({
+      source: new VectorSource({
+        features: [/** Get some data and have fun with it */]
+      })
+    })
+
+    // add the data to the map
+    map.addLayer(data)
+  }
+
+  render () {
+    return (
+      &lt;Map onMapInit={this.onMapInit} />
+    )
+  }
+}
+
+export default App
+</code></pre>
+<h2>Prop example:</h2>
+<p>Make sure the passed map is created before <code>&lt;Map&gt;</code> is mounted; if the <code>map</code> prop is falsey on mount, <code>&lt;Map&gt;</code> will create it's own map instead (and return it via <code>onMapInit</code>).</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup, Controls } from '@bayer/ol-kit'
+
+import Map from 'ol/Map'
+import View from 'ol/View'
+import TileLayer from 'ol/layer/Tile'
+import OSM from 'ol/source/OSM'
+
+class App extends React.Component {
+  constructor () {
+    super()
+
+    // create new openlayers map
+    const map = new Map({
+      view: new View({
+        center: [0, 0],
+        zoom: 5
+      }),
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        })
+      ],
+      target: 'map'
+    })
+
+    this.state = {
+      map
+    }
+  }
+
+  render () {
+    const { map } = this.state
+
+    // create a div for the map to render into with an id matching the target
+    return (
+      &lt;React.Fragment>
+        &lt;div id='map'>&lt;/div>
+        &lt;Map map={map} />
+      &lt;/React.Fragment>
+    )
+  }
+}
+
+export default App
+</code></pre>
+            </div>
+        </div>
+    
+    
 </article>
 
 </section>

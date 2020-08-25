@@ -270,6 +270,50 @@
     
 
     
+
+    
+        <div>
+            <br/>
+            <h2 class="title">Examples</h2>
+            <div class="example">
+                <p>Use a <code>LayerPanelHeader</code> to get a nice header at the top. There are several props for the Header component. (title, avatar, and actions)</p>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader title='Legends Page' />
+      &lt;LayerPanelContent>
+        Place your legend images here...
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/0e0a5100-86d3-11ea-8e23-738dd4d92d57" alt="image"></p>
+<p>The <code>LayerPanelHeader</code> can be powerful. If you want actions in your header pass a <code>LayerPanelActions</code> component with the actions you want in it. We have built in actions in <code>ol-kit</code>. Check out the docs for all of them. In the example we're using <code>LayerPanelActionRemove</code> which is from <code>ol-kit</code> and the Update Legends <code>@material-ui/core/MenuItem</code> is custom.</p>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />}
+        actions={
+          &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+            &lt;LayerPanelActionRemove />
+            &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+          &lt;/LayerPanelActions>
+        } />
+      &lt;LayerPanelContent>
+        Place your legend images here...
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/76f1c900-86d3-11ea-9fd2-cfc39e019e36" alt="image"></p>
+            </div>
+        </div>
+    
+    
 </article>
 
 </section>

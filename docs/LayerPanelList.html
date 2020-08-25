@@ -292,6 +292,86 @@
     
 
     
+
+    
+        <div>
+            <br/>
+            <h2 class="title">Examples</h2>
+            <div class="example">
+                <p>You can make a list by passing items down. Which should be an array. There's also a built in drag for the <code>LayerPanelListItem</code>. You can disable it buy passing the prop <code>disableDrag</code> to the <code>LayerPanelList</code>. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the <code>LayerPanelList</code> and update the items in your parent component.</p>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />}
+        actions={
+          &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+            &lt;LayerPanelActionRemove />
+            &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+            &lt;MenuItem onClick={this.setLegendsToOriginalOrder}>Original Order Legends&lt;/MenuItem>
+          &lt;/LayerPanelActions>
+        } />
+      &lt;LayerPanelContent>
+        &lt;LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems} />
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/cf28cb00-86d3-11ea-850b-a33275dd4c1c" alt="image"></p>
+<p>Below you can see how we add custom actions to our <code>LayerPanel</code> and also that you can render an array of <code>LayerPanelListItem</code>'s in your <code>LayerPanelList</code>. Also the list is draggable and has a callback to allow you to reorder the items however you want. Theres an <code>onSort</code> prop that receives a Javascript Sort function to customize the way the items get sorted.</p>
+<pre class="prettyprint source lang-jsx"><code>class MyCustomLayerPanelContainer extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = { legends: ['First Legend', 'Second Legend', 'Third Legend'] }
+
+    this.updateLegends = this.updateLegends.bind(this)
+    this.handleReorderedItems = this.handleReorderedItems.bind(this)
+  }
+
+  updateLegends () {
+    console.log('updated my legends')
+  }
+
+  handleReorderedItems (newItems) {
+    this.setState({ legends: newItems })
+  }
+
+  render () {
+    const { maps } = this.props
+    const { legends } = this.state
+
+    return (
+      &lt;LayerPanel>
+        &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+          &lt;LayerPanelHeader
+            title='Legends Page'
+            avatar={&lt;VpnKeyIcon />}
+            actions={
+              &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+                &lt;LayerPanelActionRemove />
+                &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+              &lt;/LayerPanelActions>
+            } />
+          &lt;LayerPanelContent>
+            &lt;LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems}>
+              {legends.map(legend => {
+                return &lt;LayerPanelListItem>{legend}&lt;/LayerPanelListItem>
+              })}
+            &lt;/LayerPanelList>
+          &lt;/LayerPanelContent>
+        &lt;/LayerPanelPage>
+      &lt;/LayerPanel>
+    )
+  }
+}
+</code></pre>
+            </div>
+        </div>
+    
+    
 </article>
 
 </section>

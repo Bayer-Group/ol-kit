@@ -1,22 +1,24 @@
 You can make a list by passing items down. Which should be an array. There's also a built in drag for the `LayerPanelListItem`. You can disable it buy passing the prop `disableDrag` to the `LayerPanelList`. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the `LayerPanelList` and update the items in your parent component.
 ```jsx
-<LayerPanel>
-  <LayerPanelPage tabIcon={<VpnKeyIcon />}>
-    <LayerPanelHeader
-      title='Legends Page'
-      avatar={<VpnKeyIcon />}
-      actions={
-        <LayerPanelActions icon={<MoreHorizIcon />}>
-          <LayerPanelActionRemove />
-          <MenuItem onClick={this.updateLegends}>Update Legends</MenuItem>
-          <MenuItem onClick={this.setLegendsToOriginalOrder}>Original Order Legends</MenuItem>
-        </LayerPanelActions>
-      } />
-    <LayerPanelContent>
-      <LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems} />
-    </LayerPanelContent>
-  </LayerPanelPage>
-</LayerPanel>
+return (
+  <LayerPanel>
+    <LayerPanelPage tabIcon={<VpnKeyIcon />}>
+      <LayerPanelHeader
+        title='Legends Page'
+        avatar={<VpnKeyIcon />}
+        actions={
+          <LayerPanelActions icon={<MoreHorizIcon />}>
+            <LayerPanelActionRemove />
+            <MenuItem onClick={this.updateLegends}>Update Legends</MenuItem>
+            <MenuItem onClick={this.setLegendsToOriginalOrder}>Original Order Legends</MenuItem>
+          </LayerPanelActions>
+        } />
+      <LayerPanelContent>
+        <LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems} />
+      </LayerPanelContent>
+    </LayerPanelPage>
+  </LayerPanel>
+)
 ```
 ![image](https://github.platforms.engineering/storage/user/2990/files/cf28cb00-86d3-11ea-850b-a33275dd4c1c)
 
