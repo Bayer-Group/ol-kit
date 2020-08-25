@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title>ol-kit | Docs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" href="static/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <div class="content" id="main-content-wrapper">
+    <section>
+        <article>
+<img src="static/readme-ol-kit-logo.png" />
+<p>An easy to use, open source <a href="https://reactjs.org/">React</a> & <a href="https://openlayers.org/en/v4.6.5/apidoc/">OpenLayers</a> map component toolkit.</p>
+<p>Checkout the <a href='https://demo.ol-kit.com/'>demo site here!</a></p>
+<h2>Prebuilt Map Components</h2>
+<p>Ready to use and <em>just work</em> with the map via a single line drop-in!</p>
+<img src="static/example-screenshot-1.png" />
+<h2>Installation</h2>
+<p>Install ol-kit and its <code>peerDependencies</code></p>
+<code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save</code>
+<h2>Getting Started</h2>
+<p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
+<pre class="prettyprint source lang-javascript"><code>
+  import React from 'react'
+  import { Map, Controls, LayerPanel, Popup, loadDataLayer } from '@bayer/ol-kit'
+
+  class App extends React.Component {
+    onMapInit = async map => {
+      console.log('we got a map!', map)
+      // nice to have map set on the window while debugging
+      window.map = map
+
+      // find a geojson or kml dataset (url or file) to load on the map
+      const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
+      const dataLayer = await loadDataLayer(map, data)
+
+      console.log('data layer:', dataLayer)
+    }
+
+    render () {
+      return (
+        &lt;Map onMapInit={this.onMapInit}>
+          &lt;Controls />
+          &lt;LayerPanel />
+          &lt;Popup />
+        &lt;/Map>
+      )
+    }
+  }
+
+  export default App
+</code></pre>
+<h4><a href="docs.html">Go to docs</a></h4>
+</article>
+    </section>
+                </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

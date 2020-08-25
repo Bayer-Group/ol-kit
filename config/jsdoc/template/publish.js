@@ -664,8 +664,6 @@ exports.publish = function(taffyData, opts, tutorials) {
             addAttribs(doclet);
             doclet.kind = 'member';
         }
-
-        if (fs.existsSync(doclet.meta.path + '/example.md')) console.log('we made it')
     });
 
     members = helper.getMembers(data);

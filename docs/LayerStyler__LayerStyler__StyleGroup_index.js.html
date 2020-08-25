@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | LayerStyler/_LayerStyler/_StyleGroup/index.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToMap.html">connectToMap</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#connectToMap">connectToMap</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+
+import ugh from 'ugh'
+import { connectToMap } from 'Map'
+import Selector from 'LayerStyler/_Selector'
+import GenericSymbolizer from './_GenericSymbolizer'
+import escapeRegExp from 'lodash.escaperegexp'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+
+import {
+  AddNewContainer,
+  AddNew,
+  Card,
+  AttributeContainer,
+  StyleContainer,
+  Half,
+  DeleteGroup,
+  DeleteGroupText
+} from './styled'
+
+class StyleGroup extends Component {
+  componentDidMount () {
+    const { styles } = this.props
+
+    styles.map(style => {
+      if (style.name === 'New Auto Style') {
+        const attributeValue = style.filter[1][1] instanceof Array
+          ? style.filter[1][1][1][1]
+          : style.filter[1][1]
+
+        this.props.getValuesForAttribute(attributeValue)
+      }
+    })
+  }
+
+  onSymbolizerChange = (symbolizers, index) => {
+    const { styles, onStylesChange } = this.props
+    const newStyles = styles.map((style, i) => {
+      return i === index ? { ...style, symbolizers } : style
+    })
+
+    onStylesChange(newStyles)
+  }
+
+  onSymbolizerDelete = (idx) => {
+    const { styles, onStylesChange } = this.props
+    const newStyles = styles.filter((s, i) => i !== idx)
+
+    onStylesChange(newStyles)
+  }
+
+  onDeleteStyleGroup = () => {
+    const { onStylesChange } = this.props
+
+    onStylesChange([])
+  }
+
+  onNewStyleValue = () => {
+    const { styles, onStylesChange } = this.props
+
+    try {
+      // we do this stringify/parse here to perform a quick &amp; dirty deep clone
+      const styleClone = JSON.parse(JSON.stringify(styles[0]))
+
+      if (styleClone.filter[1][1] instanceof Array) {
+        styleClone.filter[1][1][1][2] = ''
+        styleClone.filter[1][2][1][2] = ''
+      } else {
+        styleClone.filter[1][2] = ''
+      } // remove the cloned style value since we're adding a new value
+
+      onStylesChange([...styles, styleClone])
+    } catch (e) {
+      ugh.error(e, styles)
+
+      throw new Error('There was an error trying to clone an existing style')
+    }
+  }
+
+  debounceAttributeChange = (event) => {
+    const { styles, onStylesChange } = this.props
+    const newStyles = [...styles]
+
+    try {
+      onStylesChange(newStyles.map(s => {
+        // styles will look like this ['&amp;&amp;', ['==', 'attribute', 'value'] ...]
+        // so to change the attribute we're styling, we need to hit [1][1]
+        s.filter[1][1] = event.target.value
+
+        return s
+      }))
+    } catch (e) {
+      throw new Error('The style object\'s filter was not able to be modified')
+    }
+  }
+
+  debounceValueChange = (idx, val) => {
+    const { styles, onStylesChange, commaDelimitedAttributes } = this.props
+    const newStyles = [...styles]
+
+    try {
+      const att = newStyles[idx].filter[1][1] instanceof Array
+        ? newStyles[idx].filter[1][1][1][1] : styles[idx].filter[1][1]
+
+      if (commaDelimitedAttributes?.includes(att)) {
+        newStyles[idx].filter[1] = ['||',
+          ['*=',
+            ['FN_strMatches', att, `.*,( )??${escapeRegExp(val)}( )??$`],
+            true
+          ],
+          ['*=',
+            ['FN_strMatches', att, `.*,( )??${escapeRegExp(val)}( )??,.*`],
+            true
+          ],
+          ['*=',
+            ['FN_strMatches', att, `^${escapeRegExp(val)}( )??,.*`],
+            true
+          ],
+          ['==', att, val]
+        ]
+      } else {
+        newStyles[idx].filter[1][2] = val
+      }
+
+      onStylesChange(newStyles)
+    } catch (e) {
+      throw new Error('The style object\'s filter was not able to be modified', e)
+    }
+  }
+
+  trimValue = (regExp) => {
+    // when values are added in they are an empty string, if they are empty we don't need to trim
+    if (regExp) {
+      const removedFirstHalf = regExp.slice(8)
+      const nextStartToRemove = removedFirstHalf.indexOf('(')
+      const value = removedFirstHalf.slice(0, nextStartToRemove)
+
+      return value
+    } else {
+      return regExp
+    }
+  }
+
+  render () {
+    const { translations, styles, attributes, attributeValues } = this.props
+    // since styles are grouped, if the first doesn't have filter, neither will the others
+    const hasFilter = styles[0].filter
+
+    // filters can have 3 different levels of nesting -- these two funcs handle all three cases
+    const getAttributeValue = (filter = []) => {
+      if (!filter || !filter.length) return ''
+
+      // these checks see if the item at index 1 is a string (meaning no more nesting)
+      if (typeof filter[1] === 'string') return filter[1]
+      if (typeof filter[1][1] === 'string') return filter[1][1]
+      if (typeof filter[1][1][1][1] === 'string') return filter[1][1][1][1]
+    }
+
+    const getSelectedValue = (filter = []) => {
+      if (!filter || !filter.length) return ''
+
+      // these checks see if the item at index 2 is a string (meaning no more nesting)
+      if (typeof filter[2] === 'string') return filter[2]
+      if (typeof filter[1][2] === 'string') return filter[1][2]
+      if (typeof filter[1][1][1][2] === 'string') return this.trimValue(filter[1][1][1][2])
+    }
+
+    return (
+      &lt;Card>
+        {styles.length &amp;&amp;
+          &lt;AttributeContainer>
+            {hasFilter &amp;&amp;
+              &lt;Half>
+                &lt;FormControl style={{ width: '200px', margin: '15px' }}>
+                  &lt;InputLabel htmlFor='attribute-selector'>{translations['_ol_kit.StyleGroup.chooseAttribute']}&lt;/InputLabel>
+                  &lt;Select
+                    inputProps={{ 'data-testid': 'StyleGroup.attributeSelector' }}
+                    value={getAttributeValue(styles[0].filter)}
+                    onChange={this.debounceAttributeChange}>
+                    {attributes.map((a, i) => {
+                      return &lt;MenuItem key={i} value={a}>{a}&lt;/MenuItem>
+                    })}
+                  &lt;/Select>
+                &lt;/FormControl>
+              &lt;/Half>
+            }
+            &lt;Half>
+              &lt;DeleteGroup>
+                &lt;DeleteGroupText onClick={this.onDeleteStyleGroup}>{translations['_ol_kit.StyleGroup.delete']}&lt;/DeleteGroupText>
+              &lt;/DeleteGroup>
+            &lt;/Half>
+          &lt;/AttributeContainer>
+        }
+        &lt;div>
+          {styles.map((s, i) => {
+            // some styles are hidden when displaying zoomed in/out stylings
+            return s.hidden
+              ? null
+              : (
+                &lt;Fragment key={i}>
+                  &lt;StyleContainer key={`${getAttributeValue(s.filter)}-${i}`}>
+                    {hasFilter &amp;&amp;
+                      &lt;Selector
+                        data-testid={'StyleGroup.attributeValueSelector'}
+                        style={{ flex: 1 }}
+                        header={translations['_ol_kit.StyleGroup.value']}
+                        onClick={() => this.props.getValuesForAttribute(getAttributeValue(s.filter))}
+                        selected={getSelectedValue(s.filter)}
+                        options={attributeValues.map(v => `${v}`) /* string interpolation here ensures booleans display properly */}
+                        onValueChange={(e) => this.debounceValueChange(i, e)} />
+                    }
+                  &lt;/StyleContainer>
+                  &lt;StyleContainer key={i}>
+                    &lt;GenericSymbolizer
+                      symbolizers={s.symbolizers}
+                      translations={translations}
+                      onSymbolizerChange={(s) => this.onSymbolizerChange(s, i)}
+                      onSymbolizerDelete={(s) => this.onSymbolizerDelete(i)} />
+                  &lt;/StyleContainer>
+                &lt;/Fragment>
+              )
+          })}
+          &lt;AddNewContainer>
+            &lt;AddNew onClick={this.onNewStyleValue}>
+              &lt;AddCircleIcon />
+              {translations['_ol_kit.StyleGroup.addValue']}
+            &lt;/AddNew>
+          &lt;/AddNewContainer>
+        &lt;/div>
+      &lt;/Card>
+    )
+  }
+}
+
+StyleGroup.propTypes = {
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.object,
+
+  /**  */
+  styles: PropTypes.array,
+
+  /** */
+  attributes: PropTypes.array,
+
+  /** */
+  onStylesChange: PropTypes.func.isRequired,
+  getValuesForAttribute: PropTypes.func,
+  attributeValues: PropTypes.array,
+  commaDelimitedAttributes: PropTypes.array
+}
+
+StyleGroup.defaultProps = {
+  onStylesChange: () => {},
+  attributeValues: []
+}
+
+export default connectToMap(StyleGroup)
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
