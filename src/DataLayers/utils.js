@@ -66,7 +66,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
     try {
       const request = await fetch(query)
-      
+
       response = await request.text() // either xml or json
     } catch (e) {
       return ugh.throw(`'loadDataLayer' error when making network request:`, e)

@@ -13,7 +13,7 @@ import olGeomMultiLinestring from 'ol/geom/multilinestring'
  * VectorLayer class extends olLayerVector {@link https://openlayers.org/en/v4.6.5/apidoc/ol.layer.Vector.html}
  * @function
  * @category Classes
- * @since NEXT
+ * @since 0.1.0
  * @param {Object} [opts] - Object of optional params for olLayerVector
  */
 class VectorLayer extends olLayerVector {
@@ -34,7 +34,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that returns the VectorLayers attributes
    * @function
-   * @since NEXT
+   * @since 0.1.0
    * @returns {Array} VectorLayer attributes
    */
   getAttributes () {
@@ -44,7 +44,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that returns the VectorLayers values of a specific attribute
    * @function
-   * @since NEXT
+   * @since 0.1.0
    * @param {String} - olFeature property
    * @returns {Array} VectorLayer values of a specific attribute
    */
@@ -57,7 +57,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that sets custom styles from ManageLayer
    * @function
-   * @since NEXT
+   * @since 0.1.0
    * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
    */
   setUserVectorStyles (styles) {
@@ -69,7 +69,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that returns the VectorLayers custom user styles
    * @function
-   * @since NEXT
+   * @since 0.1.0
    * @returns {Object} Geostyler rules object
    */
   getUserVectorStyles () {
@@ -79,7 +79,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that sets default styles of a VectorLayer
    * @function
-   * @since NEXT
+   * @since 0.1.0
    */
   setDefaultVectorStyles () {
     return this.parser.readStyle(this.getStyle()()).then(style => {
@@ -91,7 +91,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that returns the VectorLayers default VectorLayer styles
    * @function
-   * @since NEXT
+   * @since 0.1.0
    * @returns {Object} Geostyler rules object
    */
   getDefaultVectorStyles () {
@@ -101,7 +101,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that updates default styles of a VectorLayer
    * @function
-   * @since NEXT
+   * @since 0.1.0
    * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
    */
   updateDefaultVectorStyles (styles) {
@@ -113,7 +113,7 @@ class VectorLayer extends olLayerVector {
   /**
    * A function that resets default styles of a VectorLayer back to its original default
    * @function
-   * @since NEXT
+   * @since 0.1.0
    */
   resetDefaultVectorStyles () {
     this.defaultStyles = this._defaultStylesCache

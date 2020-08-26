@@ -29,6 +29,9 @@ class Popup extends Component {
       },
       show: false
     }
+
+    this.timer = 0
+    this.isDoubleClick = false
     this.defaultState = this.state
   }
 
@@ -37,21 +40,34 @@ class Popup extends Component {
 
     // bind to map click events
     map.on('click', this.mapClickHandler)
+    map.on('dblclick', this.mapDoubleClickHandler)
   }
 
   componentWillUnmount () {
     const { map } = this.props
 
     map.un('click', this.mapClickHandler)
+    map.un('dblclick', this.mapDoubleClickHandler)
+  }
+
+  mapDoubleClickHandler = () => {
+    clearTimeout(this.timer)
+    this.isDoubleClick = true
+    this.hidePopup()
   }
 
   mapClickHandler = e => {
-    // Get the interactions from the map as an array.
-    const interactions = e.map.getInteractions().getArray()
+    this.timer = setTimeout(() => {
+      if (!this.isDoubleClick) {
+        // Get the interactions from the map as an array.
+        const interactions = e.map.getInteractions().getArray()
 
-    // This checks to see if there is an active Draw interaction on the map and prevents the popup showing if it returns true.
-    if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return this.hidePopup()
-    this.checkForFeaturesAtClick(e)
+        // This checks to see if there is an active Draw interaction on the map and prevents the popup showing if it returns true.
+        if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return this.hidePopup()
+        this.checkForFeaturesAtClick(e)
+      }
+      this.isDoubleClick = false
+    }, 300)
   }
 
   checkForFeaturesAtClick = e => {

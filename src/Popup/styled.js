@@ -21,6 +21,7 @@ export const Container = styled.div`
   font-family: 'ArialMT', 'Arial';
   font-weight: 400;
   z-index: 99;
+  opacity: ${p => p.transparent ? 0.8 : 1};
   width: ${p => p.width}px;
   height: ${p => p.height}px;
   left: ${({ arrow, height, pixel, width }) => positionContainer(arrow, pixel, width, height).left}px;
@@ -31,6 +32,7 @@ export const Container = styled.div`
 `
 
 export const ArrowBox = styled.div`
+  display: ${p => p.hide ? 'none' : 'block'};
   &::after, &::before {
     ${props => props.position === 'click' ? 'right' : props.position}: 100%;
     ${props => props.position === 'top' || props.position === 'bottom' ? 'left' : 'top'}: 50%;
@@ -55,4 +57,17 @@ export const ArrowBox = styled.div`
     border-width: 17px;
     margin-${props => props.position === 'top' || props.position === 'bottom' ? 'left' : 'top'}: -17px;
   }
+`
+export const DragHandleIcon = styled.div`
+  height: 25px;
+  width: 70px;
+  cursor: pointer;
+  color: ${props => props.color || `#fff`};
+  padding: 3px;
+  z-index: 100;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
 `

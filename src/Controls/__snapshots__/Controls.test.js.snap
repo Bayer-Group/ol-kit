@@ -1691,7 +1691,6 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -1770,7 +1769,6 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -1850,7 +1848,6 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -1875,6 +1872,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="bottom-right"
 />
 `;
@@ -1883,7 +1881,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
 <Controls
   map={
     _ol_Map_ {
-      "animationDelayKey_": 1,
+      "animationDelayKey_": 4,
       "animationDelay_": [Function],
       "controls": _ol_Collection_ {
         "array_": Array [],
@@ -1918,7 +1916,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             },
           ],
         },
-        "ol_uid": 15,
+        "ol_uid": 63,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -1954,7 +1952,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "lastAngle_": undefined,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 2,
+            "ol_uid": 50,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -1970,7 +1968,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 3,
+            "ol_uid": 51,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "values_": Object {
@@ -1998,7 +1996,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "noKinetic_": false,
-            "ol_uid": 4,
+            "ol_uid": 52,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -2020,7 +2018,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "lastAngle_": undefined,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 5,
+            "ol_uid": 53,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "rotating_": false,
@@ -2047,7 +2045,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "lastScaleDelta_": 1,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 6,
+            "ol_uid": 54,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -2064,7 +2062,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 7,
+            "ol_uid": 55,
             "pendingRemovals_": Object {},
             "pixelDelta_": 128,
             "revision_": 0,
@@ -2080,7 +2078,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 8,
+            "ol_uid": 56,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "values_": Object {
@@ -2097,7 +2095,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "mode_": undefined,
-            "ol_uid": 9,
+            "ol_uid": 57,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "startTime_": undefined,
@@ -2136,7 +2134,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "minArea_": 64,
-            "ol_uid": 10,
+            "ol_uid": 58,
             "out_": false,
             "pendingRemovals_": Object {},
             "revision_": 0,
@@ -2179,7 +2177,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             },
           ],
         },
-        "ol_uid": 1,
+        "ol_uid": 49,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -2200,7 +2198,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           >
             <div
               class="ol-viewport"
-              data-view="14"
+              data-view="62"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -2229,7 +2227,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           >
             <div
               class="ol-viewport"
-              data-view="14"
+              data-view="62"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -2288,7 +2286,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                       },
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 61,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -2329,7 +2327,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                       [Circular],
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 61,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -2377,7 +2375,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                 [Circular],
               ],
             },
-            "ol_uid": 12,
+            "ol_uid": 60,
             "pendingRemovals_": Object {},
             "revision_": 1,
             "state_": Object {
@@ -2418,7 +2416,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 61,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -2474,7 +2472,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                       },
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 61,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -2515,7 +2513,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                       [Circular],
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 61,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -2563,7 +2561,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                 },
               ],
             },
-            "ol_uid": 12,
+            "ol_uid": 60,
             "pendingRemovals_": Object {},
             "revision_": 1,
             "state_": Object {
@@ -2604,7 +2602,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 61,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -2816,7 +2814,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "dispatching_": Object {},
           "element_": <div
             class="ol-viewport"
-            data-view="14"
+            data-view="62"
             style="position: relative; overflow: hidden; width: 100%; height: 100%;"
           >
             <canvas
@@ -2893,7 +2891,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "dispatching_": Object {},
             "element_": <div
               class="ol-viewport"
-              data-view="14"
+              data-view="62"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -2965,7 +2963,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             "dispatching_": Object {},
             "element_": <div
               class="ol-viewport"
-              data-view="14"
+              data-view="62"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -3072,7 +3070,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           },
         ],
       },
-      "ol_uid": 11,
+      "ol_uid": 59,
       "overlayContainerStopEvent_": <div
         class="ol-overlaycontainer-stopevent"
       />,
@@ -3113,7 +3111,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             },
           ],
         },
-        "ol_uid": 16,
+        "ol_uid": 64,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -3338,7 +3336,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 61,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -3379,7 +3377,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                     [Circular],
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 61,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -3434,7 +3432,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
               },
             ],
           },
-          "ol_uid": 12,
+          "ol_uid": 60,
           "pendingRemovals_": Object {},
           "revision_": 1,
           "state_": Object {
@@ -3475,7 +3473,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
                   },
                 ],
               },
-              "ol_uid": 13,
+              "ol_uid": 61,
               "pendingRemovals_": Object {},
               "revision_": 0,
               "unique_": true,
@@ -3540,7 +3538,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
               },
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 62,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -3570,7 +3568,6 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -3619,7 +3616,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
               },
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 62,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -3649,7 +3646,6 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -3699,7 +3695,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
               [Circular],
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 62,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -3729,7 +3725,6 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -3738,7 +3733,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
       },
       "viewport_": <div
         class="ol-viewport"
-        data-view="14"
+        data-view="62"
         style="position: relative; overflow: hidden; width: 100%; height: 100%;"
       >
         <canvas
@@ -3754,6 +3749,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="bottom-left"
 />
 `;
@@ -3762,7 +3758,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
 <Controls
   map={
     _ol_Map_ {
-      "animationDelayKey_": 1,
+      "animationDelayKey_": 2,
       "animationDelay_": [Function],
       "controls": _ol_Collection_ {
         "array_": Array [],
@@ -3797,7 +3793,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             },
           ],
         },
-        "ol_uid": 15,
+        "ol_uid": 31,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -3833,7 +3829,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "lastAngle_": undefined,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 2,
+            "ol_uid": 18,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -3849,7 +3845,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 3,
+            "ol_uid": 19,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "values_": Object {
@@ -3877,7 +3873,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "noKinetic_": false,
-            "ol_uid": 4,
+            "ol_uid": 20,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -3899,7 +3895,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "lastAngle_": undefined,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 5,
+            "ol_uid": 21,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "rotating_": false,
@@ -3926,7 +3922,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "lastScaleDelta_": 1,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 6,
+            "ol_uid": 22,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -3943,7 +3939,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 7,
+            "ol_uid": 23,
             "pendingRemovals_": Object {},
             "pixelDelta_": 128,
             "revision_": 0,
@@ -3959,7 +3955,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 8,
+            "ol_uid": 24,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "values_": Object {
@@ -3976,7 +3972,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "mode_": undefined,
-            "ol_uid": 9,
+            "ol_uid": 25,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "startTime_": undefined,
@@ -4015,7 +4011,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "minArea_": 64,
-            "ol_uid": 10,
+            "ol_uid": 26,
             "out_": false,
             "pendingRemovals_": Object {},
             "revision_": 0,
@@ -4058,7 +4054,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             },
           ],
         },
-        "ol_uid": 1,
+        "ol_uid": 17,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -4079,7 +4075,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           >
             <div
               class="ol-viewport"
-              data-view="14"
+              data-view="30"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -4108,7 +4104,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           >
             <div
               class="ol-viewport"
-              data-view="14"
+              data-view="30"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -4167,7 +4163,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                       },
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 29,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -4208,7 +4204,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                       [Circular],
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 29,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -4256,7 +4252,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                 [Circular],
               ],
             },
-            "ol_uid": 12,
+            "ol_uid": 28,
             "pendingRemovals_": Object {},
             "revision_": 1,
             "state_": Object {
@@ -4297,7 +4293,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 29,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -4353,7 +4349,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                       },
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 29,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -4394,7 +4390,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                       [Circular],
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 29,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -4442,7 +4438,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                 },
               ],
             },
-            "ol_uid": 12,
+            "ol_uid": 28,
             "pendingRemovals_": Object {},
             "revision_": 1,
             "state_": Object {
@@ -4483,7 +4479,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 29,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -4695,7 +4691,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "dispatching_": Object {},
           "element_": <div
             class="ol-viewport"
-            data-view="14"
+            data-view="30"
             style="position: relative; overflow: hidden; width: 100%; height: 100%;"
           >
             <canvas
@@ -4772,7 +4768,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "dispatching_": Object {},
             "element_": <div
               class="ol-viewport"
-              data-view="14"
+              data-view="30"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -4844,7 +4840,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             "dispatching_": Object {},
             "element_": <div
               class="ol-viewport"
-              data-view="14"
+              data-view="30"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -4951,7 +4947,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           },
         ],
       },
-      "ol_uid": 11,
+      "ol_uid": 27,
       "overlayContainerStopEvent_": <div
         class="ol-overlaycontainer-stopevent"
       />,
@@ -4992,7 +4988,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             },
           ],
         },
-        "ol_uid": 16,
+        "ol_uid": 32,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -5217,7 +5213,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 29,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -5258,7 +5254,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                     [Circular],
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 29,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -5313,7 +5309,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
               },
             ],
           },
-          "ol_uid": 12,
+          "ol_uid": 28,
           "pendingRemovals_": Object {},
           "revision_": 1,
           "state_": Object {
@@ -5354,7 +5350,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
                   },
                 ],
               },
-              "ol_uid": 13,
+              "ol_uid": 29,
               "pendingRemovals_": Object {},
               "revision_": 0,
               "unique_": true,
@@ -5419,7 +5415,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
               },
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 30,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -5449,7 +5445,6 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -5498,7 +5493,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
               },
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 30,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -5528,7 +5523,6 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -5578,7 +5572,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
               [Circular],
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 30,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -5608,7 +5602,6 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -5617,7 +5610,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
       },
       "viewport_": <div
         class="ol-viewport"
-        data-view="14"
+        data-view="30"
         style="position: relative; overflow: hidden; width: 100%; height: 100%;"
       >
         <canvas
@@ -5633,6 +5626,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="top-left"
 />
 `;
@@ -5641,7 +5635,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
 <Controls
   map={
     _ol_Map_ {
-      "animationDelayKey_": 1,
+      "animationDelayKey_": 3,
       "animationDelay_": [Function],
       "controls": _ol_Collection_ {
         "array_": Array [],
@@ -5676,7 +5670,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             },
           ],
         },
-        "ol_uid": 15,
+        "ol_uid": 47,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -5712,7 +5706,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "lastAngle_": undefined,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 2,
+            "ol_uid": 34,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -5728,7 +5722,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 3,
+            "ol_uid": 35,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "values_": Object {
@@ -5756,7 +5750,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "noKinetic_": false,
-            "ol_uid": 4,
+            "ol_uid": 36,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -5778,7 +5772,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "lastAngle_": undefined,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 5,
+            "ol_uid": 37,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "rotating_": false,
@@ -5805,7 +5799,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "lastScaleDelta_": 1,
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 6,
+            "ol_uid": 38,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "targetPointers": Array [],
@@ -5822,7 +5816,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 7,
+            "ol_uid": 39,
             "pendingRemovals_": Object {},
             "pixelDelta_": 128,
             "revision_": 0,
@@ -5838,7 +5832,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "handleEvent": [Function],
             "listeners_": Object {},
             "map_": [Circular],
-            "ol_uid": 8,
+            "ol_uid": 40,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "values_": Object {
@@ -5855,7 +5849,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "mode_": undefined,
-            "ol_uid": 9,
+            "ol_uid": 41,
             "pendingRemovals_": Object {},
             "revision_": 0,
             "startTime_": undefined,
@@ -5894,7 +5888,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "listeners_": Object {},
             "map_": [Circular],
             "minArea_": 64,
-            "ol_uid": 10,
+            "ol_uid": 42,
             "out_": false,
             "pendingRemovals_": Object {},
             "revision_": 0,
@@ -5937,7 +5931,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             },
           ],
         },
-        "ol_uid": 1,
+        "ol_uid": 33,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -5958,7 +5952,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           >
             <div
               class="ol-viewport"
-              data-view="14"
+              data-view="46"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -5987,7 +5981,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           >
             <div
               class="ol-viewport"
-              data-view="14"
+              data-view="46"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -6046,7 +6040,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                       },
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 45,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -6087,7 +6081,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                       [Circular],
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 45,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -6135,7 +6129,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                 [Circular],
               ],
             },
-            "ol_uid": 12,
+            "ol_uid": 44,
             "pendingRemovals_": Object {},
             "revision_": 1,
             "state_": Object {
@@ -6176,7 +6170,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 45,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -6232,7 +6226,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                       },
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 45,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -6273,7 +6267,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                       [Circular],
                     ],
                   },
-                  "ol_uid": 13,
+                  "ol_uid": 45,
                   "pendingRemovals_": Object {},
                   "revision_": 0,
                   "unique_": true,
@@ -6321,7 +6315,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                 },
               ],
             },
-            "ol_uid": 12,
+            "ol_uid": 44,
             "pendingRemovals_": Object {},
             "revision_": 1,
             "state_": Object {
@@ -6362,7 +6356,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 45,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -6574,7 +6568,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "dispatching_": Object {},
           "element_": <div
             class="ol-viewport"
-            data-view="14"
+            data-view="46"
             style="position: relative; overflow: hidden; width: 100%; height: 100%;"
           >
             <canvas
@@ -6651,7 +6645,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "dispatching_": Object {},
             "element_": <div
               class="ol-viewport"
-              data-view="14"
+              data-view="46"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -6723,7 +6717,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             "dispatching_": Object {},
             "element_": <div
               class="ol-viewport"
-              data-view="14"
+              data-view="46"
               style="position: relative; overflow: hidden; width: 100%; height: 100%;"
             >
               <canvas
@@ -6830,7 +6824,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           },
         ],
       },
-      "ol_uid": 11,
+      "ol_uid": 43,
       "overlayContainerStopEvent_": <div
         class="ol-overlaycontainer-stopevent"
       />,
@@ -6871,7 +6865,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             },
           ],
         },
-        "ol_uid": 16,
+        "ol_uid": 48,
         "pendingRemovals_": Object {},
         "revision_": 0,
         "unique_": false,
@@ -7096,7 +7090,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                     },
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 45,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -7137,7 +7131,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                     [Circular],
                   ],
                 },
-                "ol_uid": 13,
+                "ol_uid": 45,
                 "pendingRemovals_": Object {},
                 "revision_": 0,
                 "unique_": true,
@@ -7192,7 +7186,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
               },
             ],
           },
-          "ol_uid": 12,
+          "ol_uid": 44,
           "pendingRemovals_": Object {},
           "revision_": 1,
           "state_": Object {
@@ -7233,7 +7227,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
                   },
                 ],
               },
-              "ol_uid": 13,
+              "ol_uid": 45,
               "pendingRemovals_": Object {},
               "revision_": 0,
               "unique_": true,
@@ -7298,7 +7292,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
               },
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 46,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -7328,7 +7322,6 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -7377,7 +7370,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
               },
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 46,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -7407,7 +7400,6 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -7457,7 +7449,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
               [Circular],
             ],
           },
-          "ol_uid": 14,
+          "ol_uid": 46,
           "options_": Object {},
           "pendingRemovals_": Object {},
           "projection_": Object {
@@ -7487,7 +7479,6 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "updateAnimations_": [Function],
           "values_": Object {
             "center": null,
-            "resolution": 4891.96981025128,
             "rotation": 0,
           },
           "zoomFactor_": 2,
@@ -7496,7 +7487,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
       },
       "viewport_": <div
         class="ol-viewport"
-        data-view="14"
+        data-view="46"
         style="position: relative; overflow: hidden; width: 100%; height: 100%;"
       >
         <canvas
@@ -7512,6 +7503,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
       </div>,
     }
   }
+  orientation="horizontal"
   position="top-right"
 />
 `;
