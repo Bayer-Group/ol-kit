@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "0.16.0",
+  "version": "0.17.2",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -77,6 +77,7 @@
     "prop-types": "~15.7.2",
     "qs": "~6.9.3",
     "react-color": "~2.18.0",
+    "react-draggable": "^4.4.3",
     "react-hook-form": "~5.7.2",
     "react-select": "~3.1.0",
     "shp-write": "~0.3.2",
