@@ -26,6 +26,9 @@ class Map extends React.Component {
       mapInitialized: false
     }
 
+    // map is passed as a prop- use this flag to determine whether a map/portal should be created
+    this.passedMap = props.map
+
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
 
@@ -55,7 +58,7 @@ class Map extends React.Component {
     }
 
     // if no map was passed, create the map
-    this.map = !passedMap ? createMap({ target: this.target }) : passedMap
+    this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
 
     // setup select interactions for the map
     this.initializeSelect(this.map)
@@ -118,12 +121,14 @@ class Map extends React.Component {
 
     return (
       <>
-        <StyledMap
-          id={this.target}
-          fullScreen={fullScreen}
-          style={style}>
-          <MapLogo logoPosition={logoPosition} translations={translations} />
-        </StyledMap>
+        {!this.passedMap &&
+          <StyledMap
+            id={this.target}
+            fullScreen={fullScreen}
+            style={style}>
+            <MapLogo logoPosition={logoPosition} translations={translations} />
+          </StyledMap>
+        }
         <MapContext.Provider value={this.getContextValue()}>
           {mapInitialized // wait for map to initialize before rendering children
             ? children
