@@ -80,11 +80,16 @@
 <article>
     <p>The <code>LayerPanel</code> is a convenient way to view things that are on the map. The original intent is to view layers but with this <code>LayerPanel</code> you can view whatever you want. Build pages into the <code>LayerPanel</code> that will show up in their own tabs to make whatever customization you want. Another common page that works well with the <code>LayerPanel</code> is a Legends page which you can make with a <code>LayerPanelPage</code> component.</p>
 <p>Its as simple as that. This will give you a <code>LayerPanel</code> placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.</p>
-<pre class="prettyprint source lang-jsx"><code>return &lt;LayerPanel />
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel } from '@bayer/ol-kit'
+
+return &lt;LayerPanel />
 </code></pre>
 <p><img src="https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c" alt="image"></p>
 <p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
   &lt;LayerPanel>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelContent>
@@ -96,7 +101,14 @@
 </code></pre>
 <p><img src="https://github.platforms.engineering/storage/user/2990/files/59702f80-86d2-11ea-8633-e35602cec3c5" alt="image"></p>
 <p>Use a <code>LayerPanelHeader</code> to get a nice header at the top. There are several props for the Header component. (title, avatar, and actions)</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
   &lt;LayerPanel>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelHeader title='Legends Page' />
@@ -109,7 +121,18 @@
 </code></pre>
 <p><img src="https://github.platforms.engineering/storage/user/2990/files/0e0a5100-86d3-11ea-8e23-738dd4d92d57" alt="image"></p>
 <p>The <code>LayerPanelHeader</code> can be powerful. If you want actions in your header pass a <code>LayerPanelActions</code> component with the actions you want in it. We have built in actions in <code>ol-kit</code>. Check out the docs for all of them. In the example we're using <code>LayerPanelActionRemove</code> which is from <code>ol-kit</code> and the Update Legends <code>@material-ui/core/MenuItem</code> is custom.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+return (
   &lt;LayerPanel>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelHeader
@@ -130,7 +153,19 @@
 </code></pre>
 <p><img src="https://github.platforms.engineering/storage/user/2990/files/76f1c900-86d3-11ea-9fd2-cfc39e019e36" alt="image"></p>
 <p>You can make a list by passing items down. Which should be an array. There's also a built in drag for the <code>LayerPanelListItem</code>. You can disable it buy passing the prop <code>disableDrag</code> to the <code>LayerPanelList</code>. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the <code>LayerPanelList</code> and update the items in your parent component.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove,
+  LayerPanelList } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+return (
   &lt;LayerPanel>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelHeader
@@ -152,7 +187,19 @@
 </code></pre>
 <p><img src="https://github.platforms.engineering/storage/user/2990/files/cf28cb00-86d3-11ea-850b-a33275dd4c1c" alt="image"></p>
 <p>Below you can see how we add custom actions to our <code>LayerPanel</code> and also that you can render an array of <code>LayerPanelListItem</code>'s in your <code>LayerPanelList</code>. Also the list is draggable and has a callback to allow you to reorder the items however you want. Theres an <code>onSort</code> prop that receives a Javascript Sort function to customize the way the items get sorted.</p>
-<pre class="prettyprint source lang-jsx"><code>class MyCustomLayerPanelContainer extends React.Component {
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove,
+  LayerPanelList } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+class MyCustomLayerPanelContainer extends React.Component {
   constructor (props) {
     super(props)
 
@@ -200,7 +247,10 @@
 }
 </code></pre>
 <p>We also have a prebuilt page that ships with the <code>LayerPanel</code> called <code>LayerPanelLayersPage</code>. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the <code>LayerPanelLayersPage</code> to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the <code>LayerPanelBase</code> as the parent component) or you can pass the props of the <code>LayerPanelLayersPage</code> down through the prebuilt <code>LayerPanel</code>.</p>
-<pre class="prettyprint source lang-jsx"><code>// Passing the props through the LayerPanel component
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelHeader, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+// Passing the props through the LayerPanel component
 &lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
   &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
     &lt;LayerPanelHeader
@@ -226,7 +276,22 @@
 &lt;/LayerPanelBase>
 </code></pre>
 <p>To show you the amount of customization possible with these pages, here's the <code>LayerPanelLayersPage</code>.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelCheckbox,
+  LayerPanelActionRemove,
+  LayerPanelActionImport,
+  LayerPanelActionExport,
+  LayerPanelList,
+  LayerPanelListItem } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+
+return (
   &lt;LayerPanelPage>
     &lt;LayerPanelHeader
       title={'Active Layers'}

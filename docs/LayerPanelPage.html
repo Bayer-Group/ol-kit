@@ -255,7 +255,10 @@
             <h2 class="title">Examples</h2>
             <div class="example">
                 <p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
   &lt;LayerPanel>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelContent>

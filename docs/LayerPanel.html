@@ -278,11 +278,16 @@
             <div class="example">
                 <p>The <code>LayerPanel</code> is a convenient way to view things that are on the map. The original intent is to view layers but with this <code>LayerPanel</code> you can view whatever you want. Build pages into the <code>LayerPanel</code> that will show up in their own tabs to make whatever customization you want. Another common page that works well with the <code>LayerPanel</code> is a Legends page which you can make with a <code>LayerPanelPage</code> component.</p>
 <p>Its as simple as that. This will give you a <code>LayerPanel</code> placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.</p>
-<pre class="prettyprint source lang-jsx"><code>return &lt;LayerPanel />
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel } from '@bayer/ol-kit'
+
+return &lt;LayerPanel />
 </code></pre>
 <p><img src="https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c" alt="image"></p>
 <p>We also have a prebuilt page that ships with the <code>LayerPanel</code> called <code>LayerPanelLayersPage</code>. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the <code>LayerPanelLayersPage</code> to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the <code>LayerPanelBase</code> as the parent component) or you can pass the props of the <code>LayerPanelLayersPage</code> down through the prebuilt <code>LayerPanel</code>.</p>
-<pre class="prettyprint source lang-jsx"><code>// Passing the props through the LayerPanel component
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelHeader, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+// Passing the props through the LayerPanel component
 return (
   &lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
@@ -312,7 +317,22 @@ return (
 )
 </code></pre>
 <p>To show you the amount of customization possible with these pages, here's the <code>LayerPanelLayersPage</code>.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelCheckbox,
+  LayerPanelActionRemove,
+  LayerPanelActionImport,
+  LayerPanelActionExport,
+  LayerPanelList,
+  LayerPanelListItem } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+
+return (
   &lt;LayerPanelPage>
     &lt;LayerPanelHeader
       title={'Active Layers'}
