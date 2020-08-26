@@ -1,5 +1,17 @@
 You can make a list by passing items down. Which should be an array. There's also a built in drag for the `LayerPanelListItem`. You can disable it buy passing the prop `disableDrag` to the `LayerPanelList`. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the `LayerPanelList` and update the items in your parent component.
 ```jsx
+import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove,
+  LayerPanelList } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
 return (
   <LayerPanel>
     <LayerPanelPage tabIcon={<VpnKeyIcon />}>
@@ -24,6 +36,18 @@ return (
 
 Below you can see how we add custom actions to our `LayerPanel` and also that you can render an array of `LayerPanelListItem`'s in your `LayerPanelList`. Also the list is draggable and has a callback to allow you to reorder the items however you want. Theres an `onSort` prop that receives a Javascript Sort function to customize the way the items get sorted.
 ```jsx
+import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove,
+  LayerPanelList } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
 class MyCustomLayerPanelContainer extends React.Component {
   constructor (props) {
     super(props)

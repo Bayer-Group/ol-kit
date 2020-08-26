@@ -1,5 +1,12 @@
 Use a `LayerPanelHeader` to get a nice header at the top. There are several props for the Header component. (title, avatar, and actions)
 ```jsx
+import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
 return (
   <LayerPanel>
     <LayerPanelPage tabIcon={<VpnKeyIcon />}>
@@ -15,6 +22,17 @@ return (
 
 The `LayerPanelHeader` can be powerful. If you want actions in your header pass a `LayerPanelActions` component with the actions you want in it. We have built in actions in `ol-kit`. Check out the docs for all of them. In the example we're using `LayerPanelActionRemove` which is from `ol-kit` and the Update Legends `@material-ui/core/MenuItem` is custom. 
 ```jsx
+import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
 return (
   <LayerPanel>
     <LayerPanelPage tabIcon={<VpnKeyIcon />}>

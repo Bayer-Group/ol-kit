@@ -244,14 +244,13 @@
     
         
 
-<div id='n0ijpk22h3keafgfgu'></div>
-<p>hello world</p>
+<div id='rntmhzygy4kkebkj3rq'></div>
 
 <script>
   ReactDOM.render(ReactWrapper({
     example: "./example.md",
-    uniqId: "n0ijpk22h3keafgfgu",
-  }), document.getElementById('n0ijpk22h3keafgfgu'));
+    uniqId: "rntmhzygy4kkebkj3rq",
+  }), document.getElementById('rntmhzygy4kkebkj3rq'));
 </script>
     
 
@@ -291,31 +290,35 @@
             <h2 class="title">Examples</h2>
             <div class="example">
                 <p>The <code>PopupTabs</code> component makes it easy to create a tabbed layout within a popup.</p>
-<pre class="prettyprint source lang-jsx"><code>&lt;Popup show={true} pixel={[150, 310]} arrow={'bottom'} inline={true}>
-  &lt;PopupTabs>
-    &lt;div title='details'>
-      details could go here
-    &lt;/div>
-    &lt;div title='actions'>
-      actions could go here
-    &lt;/div>
-  &lt;/PopupTabs>
-&lt;/Popup>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;Popup show={true} pixel={[150, 310]} arrow={'bottom'} inline={true}>
+    &lt;PopupTabs>
+      &lt;div title='details'>
+        details could go here
+      &lt;/div>
+      &lt;div title='actions'>
+        actions could go here
+      &lt;/div>
+    &lt;/PopupTabs>
+  &lt;/Popup>
+)
 </code></pre>
 <p>You can create as many tabs as you wish and the popup can be any size.</p>
-<pre class="prettyprint source lang-jsx"><code>&lt;Popup show={true} width={400} height={300} pixel={[50, 150]} arrow={'left'} inline={true}>
-  &lt;PopupTabs>
-    &lt;div title='Current Weather'>
-      The current temperature is not 50 degrees :D
-    &lt;/div>
-    &lt;div title='3-Day Forcast'>
-      Monday - 30 | Tuesday - 40 | Wednesday - 50
-    &lt;/div>
-    &lt;div title='Settings'>
-      You can adjust the weather settings here
-    &lt;/div>
-  &lt;/PopupTabs>
-&lt;/Popup>
+<pre class="prettyprint source lang-jsx"><code>return (
+  &lt;Popup show={true} width={400} height={300} pixel={[50, 150]} arrow={'left'} inline={true}>
+    &lt;PopupTabs>
+      &lt;div title='Current Weather'>
+        The current temperature is not 50 degrees :D
+      &lt;/div>
+      &lt;div title='3-Day Forcast'>
+        Monday - 30 | Tuesday - 40 | Wednesday - 50
+      &lt;/div>
+      &lt;div title='Settings'>
+        You can adjust the weather settings here
+      &lt;/div>
+    &lt;/PopupTabs>
+  &lt;/Popup>
+)
 </code></pre>
             </div>
         </div>

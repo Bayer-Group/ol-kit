@@ -2,12 +2,17 @@ The `LayerPanel` is a convenient way to view things that are on the map. The ori
 
 Its as simple as that. This will give you a `LayerPanel` placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.
 ```jsx
+import { LayerPanel } from '@bayer/ol-kit'
+
 return <LayerPanel />
 ```
 ![image](https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c)
 
 We also have a prebuilt page that ships with the `LayerPanel` called `LayerPanelLayersPage`. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the `LayerPanelLayersPage` to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the `LayerPanelBase` as the parent component) or you can pass the props of the `LayerPanelLayersPage` down through the prebuilt `LayerPanel`.
 ```jsx
+import { LayerPanel, LayerPanelPage, LayerPanelHeader, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
 // Passing the props through the LayerPanel component
 return (
   <LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
@@ -40,6 +45,21 @@ return (
 
 To show you the amount of customization possible with these pages, here's the `LayerPanelLayersPage`.
 ```jsx
+import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelCheckbox,
+  LayerPanelActionRemove,
+  LayerPanelActionImport,
+  LayerPanelActionExport,
+  LayerPanelList,
+  LayerPanelListItem } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+
 return (
   <LayerPanelPage>
     <LayerPanelHeader

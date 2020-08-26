@@ -2,12 +2,18 @@ The `LayerPanel` is a convenient way to view things that are on the map. The ori
 
 Its as simple as that. This will give you a `LayerPanel` placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.
 ```jsx
+import { LayerPanel } from '@bayer/ol-kit'
+
 return <LayerPanel />
 ```
 ![image](https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c)
 
 
 If you want an easy way to add a second page use the `LayerPanelPage` component and give it an icon. We use `@material-ui/icons` most of the time, they work well. This gives you a second page that has it's own tab to toggle through.
+```jsx
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+```
+
 ```jsx
 return (
   <LayerPanel>
