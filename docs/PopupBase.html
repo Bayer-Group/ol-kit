@@ -103,7 +103,7 @@
         
         <span class="code-name">
             
-                &ltPopupBase <i>arrow</i> <i>children</i> <i>height</i> <i>inline</i> <i>pixel</i> <i>show</i> <i>width</i> /&gt
+                &ltPopupBase <i>arrow</i> <i>children</i> <i>draggable</i> <i>height</i> <i>inline</i> <i>onPopupDrag</i> <i>onPopupDragEnd</i> <i>onPopupDragStart</i> <i>pixel</i> <i>show</i> <i>transparentDuringDrag</i> <i>width</i> /&gt
             
         </span>
     </h4>
@@ -158,6 +158,17 @@
         
   
         <tr class="deep-level-0">
+          <td class="name"><code>draggable</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>true</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
           <td class="name"><code>height</code></td>
           <td>
             number
@@ -180,6 +191,39 @@
         
   
         <tr class="deep-level-0">
+          <td class="name"><code>onPopupDrag</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>Callback fired during drags when draggable is true</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onPopupDragEnd</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>Callback fired after a drag when draggable is true</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onPopupDragStart</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>Callback fired at the beginning of a drag when draggable is true</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
           <td class="name"><code>pixel</code></td>
           <td>
             array
@@ -198,6 +242,17 @@
           <td>No</td>
           <td>Show/hide the popup</td>
           <td>false</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>transparentDuringDrag</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td>Set PopupBase to see-through during a drag when draggable is true</td>
+          <td>true</td>
         </tr>
         
   
@@ -260,7 +315,7 @@
         <p class="tag-source">
             <a href="Popup_PopupBase.js.html" class="button">View Source</a>
             <span>
-                <a href="Popup_PopupBase.js.html">Popup/PopupBase.js</a>, <a href="Popup_PopupBase.js.html#line10">line 10</a>
+                <a href="Popup_PopupBase.js.html">Popup/PopupBase.js</a>, <a href="Popup_PopupBase.js.html#line13">line 13</a>
             </span>
         </p>
     
