@@ -21,6 +21,7 @@ export const Container = styled.div`
   font-family: 'ArialMT', 'Arial';
   font-weight: 400;
   z-index: 99;
+  overflow: hidden;
   opacity: ${p => p.transparent ? 0.8 : 1};
   width: ${p => p.width}px;
   height: ${p => p.height}px;
@@ -61,7 +62,7 @@ export const ArrowBox = styled.div`
 export const DragHandleIcon = styled.div`
   height: 25px;
   width: 70px;
-  cursor: pointer;
+  cursor: move;
   color: ${props => props.color || `#fff`};
   padding: 3px;
   z-index: 100;
