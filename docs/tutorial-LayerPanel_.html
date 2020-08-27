@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanelList</title>
+    <title>ol-kit | LayerPanel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -71,234 +71,88 @@
             </div>
             <div class="column is-9-desktop" id="main-content-wrapper">
                 <div class="content">
-                    
-
-
-
-
-<section>
+                    <section>
 
 <header>
-    
-        <h2>
-            &ltLayerPanelList /&gt
-        </h2>
-        
     
 </header>
 
 <article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="LayerPanelList">
-        <a class="href-link" href="#LayerPanelList">#</a>
-        
-        <span class="code-name">
-            
-                &ltLayerPanelList <i>children</i> <i>onSort</i> <i>onReorderedItems</i> <i>items</i> <i>disableDrag</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>The content of the LayerPanelList (likely `LayerPanelListItem` components)</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>onSort</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>callback when item prop is dropped</td>
-          <td>(a, b) => { return a - b }</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>onReorderedItems</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>callback with reordered items</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>items</code></td>
-          <td>
-            array
-          </td>
-          <td>No</td>
-          <td>array of items to be rendered in the list</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>disableDrag</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>A boolean to disable the drag event on the LayerPanelList</td>
-          <td>false</td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.5.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="LayerPanel_LayerPanelList_index.js.html" class="button">View Source</a>
-            <span>
-                <a href="LayerPanel_LayerPanelList_index.js.html">LayerPanel/LayerPanelList/index.js</a>, <a href="LayerPanel_LayerPanelList_index.js.html#line34">line 34</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <p>You can make a list by passing items down. Which should be an array. There's also a built in drag for the <code>LayerPanelListItem</code>. You can disable it buy passing the prop <code>disableDrag</code> to the <code>LayerPanelList</code>. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the <code>LayerPanelList</code> and update the items in your parent component.</p>
+    <p>The <code>LayerPanel</code> is a convenient way to view things that are on the map. The original intent is to view layers but with this <code>LayerPanel</code> you can view whatever you want. Build pages into the <code>LayerPanel</code> that will show up in their own tabs to make whatever customization you want. Another common page that works well with the <code>LayerPanel</code> is a Legends page which you can make with a <code>LayerPanelPage</code> component.</p>
+<p>Its as simple as that. This will give you a <code>LayerPanel</code> placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.</p>
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel } from '@bayer/ol-kit'
+
+return &lt;LayerPanel />
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c" alt="image"></p>
+<p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through.</p>
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelContent>
+        Legends Page
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/59702f80-86d2-11ea-8633-e35602cec3c5" alt="image"></p>
+<p>Use a <code>LayerPanelHeader</code> to get a nice header at the top. There are several props for the Header component. (title, avatar, and actions)</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader title='Legends Page' />
+      &lt;LayerPanelContent>
+        Place your legend images here...
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/0e0a5100-86d3-11ea-8e23-738dd4d92d57" alt="image"></p>
+<p>The <code>LayerPanelHeader</code> can be powerful. If you want actions in your header pass a <code>LayerPanelActions</code> component with the actions you want in it. We have built in actions in <code>ol-kit</code>. Check out the docs for all of them. In the example we're using <code>LayerPanelActionRemove</code> which is from <code>ol-kit</code> and the Update Legends <code>@material-ui/core/MenuItem</code> is custom.</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />}
+        actions={
+          &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+            &lt;LayerPanelActionRemove />
+            &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+          &lt;/LayerPanelActions>
+        } />
+      &lt;LayerPanelContent>
+        Place your legend images here...
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/76f1c900-86d3-11ea-9fd2-cfc39e019e36" alt="image"></p>
+<p>You can make a list by passing items down. Which should be an array. There's also a built in drag for the <code>LayerPanelListItem</code>. You can disable it buy passing the prop <code>disableDrag</code> to the <code>LayerPanelList</code>. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the <code>LayerPanelList</code> and update the items in your parent component.</p>
 <pre class="prettyprint source lang-jsx"><code>import {
   LayerPanel,
   LayerPanelPage,
@@ -392,16 +246,136 @@ class MyCustomLayerPanelContainer extends React.Component {
   }
 }
 </code></pre>
-            </div>
-        </div>
-    
-    
+<p>We also have a prebuilt page that ships with the <code>LayerPanel</code> called <code>LayerPanelLayersPage</code>. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the <code>LayerPanelLayersPage</code> to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the <code>LayerPanelBase</code> as the parent component) or you can pass the props of the <code>LayerPanelLayersPage</code> down through the prebuilt <code>LayerPanel</code>.</p>
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelHeader, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+// Passing the props through the LayerPanel component
+&lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+  &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+    &lt;LayerPanelHeader
+      title='Legends Page'
+      avatar={&lt;VpnKeyIcon />} />
+    &lt;LayerPanelContent>
+      Hello world
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+&lt;/LayerPanel>
+
+// Directly pulling in the LayerPanelLayersPage and passing props through it
+&lt;LayerPanelBase>
+  &lt;LayerPanelLayersPage handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+  &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+    &lt;LayerPanelHeader
+      title='Legends Page'
+      avatar={&lt;VpnKeyIcon />} />
+    &lt;LayerPanelContent>
+      Hello world
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+&lt;/LayerPanelBase>
+</code></pre>
+<p>To show you the amount of customization possible with these pages, here's the <code>LayerPanelLayersPage</code>.</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelCheckbox,
+  LayerPanelActionRemove,
+  LayerPanelActionImport,
+  LayerPanelActionExport,
+  LayerPanelList,
+  LayerPanelListItem } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+
+return (
+  &lt;LayerPanelPage>
+    &lt;LayerPanelHeader
+      title={'Active Layers'}
+      translations={translations}
+      avatar={&lt;LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
+      actions={customActions ||
+        &lt;LayerPanelActions
+          icon={&lt;MoreHorizIcon />}
+          translations={translations}
+          layers={layers}
+          map={map}>
+          &lt;LayerPanelActionRemove
+            removeFeaturesForLayer={this.removeFeaturesForLayer}
+            shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+          {onFileImport && &lt;LayerPanelActionImport handleImport={onFileImport} />}
+          {onExportFeatures && &lt;LayerPanelActionExport onExportFeatures={onExportFeatures} />}
+        &lt;/LayerPanelActions>} />
+    {enableFilter &&
+      &lt;TextField
+        id='feature-filter-input'
+        label={'Filter Layers'}
+        type='text'
+        style={{ margin: '8px' }}
+        fullWidth
+        value={filterText}
+        onChange={(e) => this.handleFilter(e.target.value)} />
+    }
+    &lt;LayerPanelContent>
+      &lt;LayerPanelList disableDrag={disableDrag} onSort={this.zIndexSort} onReorderedItems={this.reorderLayers} items={layers} >
+        {layerFilter(layers).filter((layer) => {
+          const filteredFeatures = this.getFeaturesForLayer(layer)
+
+          return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
+        }).sort(this.zIndexSort).map((layer, i) => {
+          const features = this.getFeaturesForLayer(layer)
+
+          return (
+            &lt;div key={i}>
+              &lt;LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
+                {&lt;LayerPanelCheckbox
+                  checkboxState={!layer ? null : layer.getVisible()}
+                  handleClick={(e) => this.handleVisibility(e, layer)} />}
+                {&lt;LayerPanelExpandableList show={!!features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
+                &lt;ListItemText primary={layer.get('title') || 'Untitled Layer'} />
+                &lt;ListItemSecondaryAction>
+                  &lt;LayerPanelActions
+                    icon={&lt;MoreVertIcon />}
+                    translations={translations}
+                    layer={layer}
+                    map={map} >
+                    {getMenuItemsForLayer(layer) ||
+                    [&lt;LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
+                      &lt;LayerPanelActionExtent key='gotoExtent' />,
+                      &lt;LayerPanelActionOpacity key='layerOpacity' />]}
+                  &lt;/LayerPanelActions>
+                &lt;/ListItemSecondaryAction>
+              &lt;/LayerPanelListItem>
+              { features
+                ? &lt;Collapse in={expandedLayer} timeout='auto' unmountOnExit>
+                  &lt;List component='div' disablePadding style={{ paddingLeft: '36px' }}>
+                    {features.map((feature, i) => {
+                      return (
+                        &lt;ListItem key={i} hanldeDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                          &lt;LayerPanelCheckbox
+                            handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
+                            checkboxState={feature.get('_feature_visibility')} />
+                          &lt;ListItemText inset={false} primary={feature.get('name') || `Feature ${i}`} />
+                        &lt;/ListItem>
+                      )
+                    })}
+                  &lt;/List>
+                &lt;/Collapse> : null }
+            &lt;/div>
+          )
+        })}
+      &lt;/LayerPanelList>
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+)
+</code></pre>
+<p><a href="./LayerPanel.html">See the docs for LayerPanel</a></p>
 </article>
 
 </section>
-
-
-
 
                 </div>
             </div>
