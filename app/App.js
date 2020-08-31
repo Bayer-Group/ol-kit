@@ -10,9 +10,7 @@ import {
   LayerPanelPage,
   LayerPanelContent,
   BasemapContainer,
-  VectorLayer,
-  PopupActionGroup,
-  PopupActionItem
+  VectorLayer
 } from '@bayer/ol-kit'
 
 import PaletteIcon from '@material-ui/icons/Palette'
