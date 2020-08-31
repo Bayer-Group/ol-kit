@@ -21,7 +21,6 @@ export const Container = styled.div`
   font-family: 'ArialMT', 'Arial';
   font-weight: 400;
   z-index: 99;
-  overflow: hidden;
   opacity: ${p => p.transparent ? 0.8 : 1};
   width: ${p => p.width}px;
   height: ${p => p.height}px;

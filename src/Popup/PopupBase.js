@@ -33,10 +33,12 @@ class PopupBase extends Component {
   }
 
   onStop = e => {
+    const { pinnedPixel } = this.state
+
     this.setState({
       transparent: false
     })
-    this.props.onPopupDragEnd(e)
+    this.props.onPopupDragEnd({ ...e, pinnedPixel })
   }
 
   handleDrag = e => {

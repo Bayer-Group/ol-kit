@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { Container, ActionIcon, Flyout, Title } from './styled'
@@ -35,11 +36,15 @@ class PopupActionGroup extends Component {
             <i className='zmdi zmdi-caret-right'></i>
           </ActionIcon>
         </Container>
-        <Flyout left={right} top={top} showFlyout={this.state.showFlyout}
-          onMouseEnter={() => this.onHover(true)}
-          onMouseLeave={() => this.onHover(false)} >
-          {children}
-        </Flyout>
+        {this.state.showFlyout &&
+          ReactDOM.createPortal(
+            <Flyout left={right} top={top} showFlyout={this.state.showFlyout}
+              onMouseEnter={() => this.onHover(true)}
+              onMouseLeave={() => this.onHover(false)} >
+              {children}
+            </Flyout>,
+            document.body)
+        }
       </div>
     )
   }
