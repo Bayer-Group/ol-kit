@@ -5,7 +5,8 @@ import MaterialTooltip from '@material-ui/core/Tooltip'
 
 export const Container = withStyles({
   root: {
-    padding: '15px 0px'
+    padding: '15px 0px',
+    maxWidth: '100%'
   }
 })(MaterialContainer)
 

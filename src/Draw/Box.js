@@ -26,6 +26,7 @@ class Box extends Component {
     return (
       <Tooltip title={tooltipTitle}>
         <IconButton
+          data-testid='Draw.box'
           size='small'
           onClick={() => addInteraction(BOX_CONFIG)}>
           <CropSquareSharpIcon size={1} htmlColor={this.isBoxDraw() ? '#1976D2' : '#656565'} />

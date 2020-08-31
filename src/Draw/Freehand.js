@@ -14,6 +14,7 @@ class Freehand extends Component {
     return (
       <Tooltip title={tooltipTitle}>
         <IconButton
+          data-testid='Draw.freehand'
           size='small'
           onClick={() => addInteraction({ type: 'LineString', freehand: true })}>
           <GestureOutlinedIcon size={1} htmlColor={type === 'LineString' && freehand ? '#1976D2' : '#656565'} />

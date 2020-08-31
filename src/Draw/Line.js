@@ -14,6 +14,7 @@ class Line extends Component {
     return (
       <Tooltip title={tooltipTitle}>
         <IconButton
+          data-testid='Draw.line'
           size='small'
           onClick={() => addInteraction({ type: 'LineString' })}>
           <TimelineOutlinedIcon size={1.35} rotate={30} htmlColor={type === 'LineString' && !freehand ? '#1976D2' : '#656565'} />

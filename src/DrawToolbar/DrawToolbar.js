@@ -66,7 +66,7 @@ export class DrawToolbar extends React.Component {
           <ButtonCardActions>
             <LeftCard>
               <Button color='secondary' onClick={onCancel}>
-                {translations['olKit.DrawToolbar.cancel']}
+                {translations['_ol_kit.DrawToolbar.cancel']}
               </Button>
             </LeftCard>
             <CenterCard style={{ paddingLeft: '20px', marginLeft: '0px' }}>
@@ -79,12 +79,12 @@ export class DrawToolbar extends React.Component {
                     color='primary'
                   />
                 }
-                label={translations['olKit.DrawToolbar.showMeasurements']}
+                label={translations['_ol_kit.DrawToolbar.showMeasurements']}
               />
             </CenterCard>
             <RightCard>
               <Button color='primary' onClick={onFinish}>
-                {translations['olKit.DrawToolbar.finish']}
+                {translations['_ol_kit.DrawToolbar.finish']}
               </Button>
             </RightCard>
           </ButtonCardActions>
@@ -104,9 +104,9 @@ DrawToolbar.propTypes = {
 
 DrawToolbar.defaultProps = {
   translations: {
-    'olKit.DrawToolbar.cancel': 'Cancel [ESC]',
-    'olKit.DrawToolbar.finish': 'Finish',
-    'olKit.DrawToolbar.showMeasurements': 'Show measurements'
+    '_ol_kit.DrawToolbar.cancel': 'Cancel [ESC]',
+    '_ol_kit.DrawToolbar.finish': 'Finish',
+    '_ol_kit.DrawToolbar.showMeasurements': 'Show measurements'
   }
 }
 

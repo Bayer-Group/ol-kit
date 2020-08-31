@@ -13,7 +13,8 @@ class Point extends Component {
 
     return (
       <Tooltip title={tooltipTitle}>
-        <IconButton
+        <IconButton 
+          data-testid='Draw.point'
           size='small'
           onClick={() => addInteraction({ type: 'Point' })}>
           <PlaceIcon size={0.5} htmlColor={type === 'Point' ? '#1976D2' : '#656565'} />

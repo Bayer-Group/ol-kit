@@ -18,10 +18,9 @@ import olGeomCircle from 'ol/geom/circle'
 import olGeomPolygon from 'ol/geom/polygon'
 import olCollection from 'ol/collection'
 import { connectToMap } from 'Map'
+import { getStyledFeatures } from './utils'
 
 const OL_DRAW_TYPES = [...Object.values(olGeomTypes)]
-
-console.log(DrawToolbar) // eslint-disable-line no-console
 
 /**
  * @component
@@ -192,7 +191,7 @@ class Draw extends React.Component {
     const { translations } = this.props
 
     return (
-      <div data-testid='geokit-draw'>
+      <div data-testid='Draw.container'>
         {this.props.children
           ? React.Children.map(this.props.children, child => {
             return React.cloneElement(child, { addInteraction: this.addInteraction, type, freehand, geometryFunction })
@@ -200,17 +199,17 @@ class Draw extends React.Component {
           : <Container>
             <ButtonContainer>
               <Point addInteraction={this.addInteraction} type={type}
-                tooltipTitle={translations['geokit.draw.pointTooltip']} />
+                tooltipTitle={translations['_ol_kit.draw.pointTooltip']} />
               <Line addInteraction={this.addInteraction} type={type}
-                freehand={freehand} tooltipTitle={translations['geokit.draw.lineTooltip']} />
+                freehand={freehand} tooltipTitle={translations['_ol_kit.draw.lineTooltip']} />
               <Polygon addInteraction={this.addInteraction} type={type}
-                tooltipTitle={translations['geokit.draw.polygonTooltip']} />
+                tooltipTitle={translations['_ol_kit.draw.polygonTooltip']} />
               <Circle addInteraction={this.addInteraction} type={type}
-                geometryFunction={geometryFunction} tooltipTitle={translations['geokit.draw.circleTooltip']} />
+                geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.circleTooltip']} />
               <Box addInteraction={this.addInteraction} type={type}
-                geometryFunction={geometryFunction} tooltipTitle={translations['geokit.draw.boxTooltip']} />
+                geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.boxTooltip']} />
               <Freehand addInteraction={this.addInteraction} type={type} freehand={freehand}
-                tooltipTitle={translations['geokit.draw.freehandTooltip']} />
+                tooltipTitle={translations['_ol_kit.draw.freehandTooltip']} />
             </ButtonContainer>
           </Container>}
         {
@@ -270,17 +269,24 @@ Draw.propTypes = {
 
 Draw.defaultProps = {
   translations: {
-    'geokit.Measurement.distance': 'Distance: ',
-    'geokit.Measurement.area': 'Area: ',
-    'geokit.units.feet': 'Feet',
-    'geokit.units.yards': 'Yards',
-    'geokit.units.miles': 'Miles',
-    'geokit.units.acres': 'Acres',
-    'geokit.units.nauticalmiles': 'Nautical miles',
-    'geokit.units.meters': 'Meters',
-    'geokit.units.kilometers': 'Kilometers',
-    'geokit.units.hectares': 'Hectares'
+    '_ol_kit.Measurement.distance': 'Distance: ',
+    '_ol_kit.Measurement.area': 'Area: ',
+    '_ol_kit.units.feet': 'Feet',
+    '_ol_kit.units.yards': 'Yards',
+    '_ol_kit.units.miles': 'Miles',
+    '_ol_kit.units.acres': 'Acres',
+    '_ol_kit.units.nauticalmiles': 'Nautical miles',
+    '_ol_kit.units.meters': 'Meters',
+    '_ol_kit.units.kilometers': 'Kilometers',
+    '_ol_kit.units.hectares': 'Hectares',
+    '_ol_kit.draw.pointTooltip': 'Point',
+    '_ol_kit.draw.lineTooltip': 'Line',
+    '_ol_kit.draw.polygonTooltip': 'Polygon',
+    '_ol_kit.draw.circleTooltip': 'Circle',
+    '_ol_kit.draw.boxTooltip': 'Box',
+    '_ol_kit.draw.freehandTooltip': 'Freehand'
   },
+  getStyledFeatures,
   drawOpts: {},
   source: new olSourceVector(),
   snapOpts: {},

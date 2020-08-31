@@ -14,8 +14,8 @@ class Polygon extends Component {
     return (
       <Tooltip title={tooltipTitle}>
         <IconButton
+          data-testid='Draw.polygon'
           size='small'
-          data-testid='geokit-draw-polygon'
           onClick={() => addInteraction({ type: 'Polygon' })}>
           <ChangeHistoryOutlinedIcon size={1} htmlColor={type === 'Polygon' ? '#1976D2' : '#656565'} />
         </IconButton>
