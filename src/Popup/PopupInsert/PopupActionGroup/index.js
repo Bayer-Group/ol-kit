@@ -38,9 +38,12 @@ class PopupActionGroup extends Component {
         </Container>
         {this.state.showFlyout &&
           ReactDOM.createPortal(
-            <Flyout left={right} top={top} showFlyout={this.state.showFlyout}
+            <Flyout
+              left={right}
+              top={top}
+              showFlyout={this.state.showFlyout}
               onMouseEnter={() => this.onHover(true)}
-              onMouseLeave={() => this.onHover(false)} >
+              onMouseLeave={() => this.onHover(false)}>
               {children}
             </Flyout>,
             document.body)

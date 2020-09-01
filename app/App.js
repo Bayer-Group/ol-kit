@@ -10,9 +10,7 @@ import {
   LayerPanelPage,
   LayerPanelContent,
   BasemapContainer,
-  VectorLayer,
-  PopupActionGroup,
-  PopupActionItem
+  VectorLayer
 } from '@bayer/ol-kit'
 
 import PaletteIcon from '@material-ui/icons/Palette'
@@ -49,12 +47,7 @@ class App extends React.Component {
   render () {
     return (
       <Map onMapInit={this.onMapInit} fullScreen>
-        <Popup actions={
-          <PopupActionGroup title={'Create'}>
-            <PopupActionItem title="New Production Field" />
-            <PopupActionItem title="Site Boundary" />
-          </PopupActionGroup>
-        } />
+        <Popup />
         <LayerPanel>
           <LayerPanelPage tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>

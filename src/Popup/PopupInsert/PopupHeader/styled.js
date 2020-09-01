@@ -20,7 +20,7 @@ export const Body = styled.div`
 
 export const Frame = styled.div`
   height: ${props => props.height}px;
-  overflow-y: scroll;
+  overflow: scroll;
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;

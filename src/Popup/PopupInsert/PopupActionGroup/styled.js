@@ -35,6 +35,7 @@ export const Flyout = styled.div`
   position: absolute;
   background-color: white;
   width: 192px;
+  font-family: 'ArialMT','Arial';
   z-index: 2;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   left: ${p => p.left}px;
