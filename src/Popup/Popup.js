@@ -138,12 +138,12 @@ class Popup extends Component {
 
   onDragEnd = e => {
     // if drag occurs in PopupBase, update pixel in state here
-    this.setState({
-      popupPosition: {
-        ...this.state.popupPosition,
-        pixel: e.pinnedPixel
-      }
-    })
+    // this.setState({
+    //   popupPosition: {
+    //     ...this.state.popupPosition,
+    //     pixel: e.pinnedPixel
+    //   }
+    // })
   }
 
   render () {

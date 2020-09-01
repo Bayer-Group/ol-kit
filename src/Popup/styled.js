@@ -21,7 +21,6 @@ export const Container = styled.div`
   font-family: 'ArialMT', 'Arial';
   font-weight: 400;
   z-index: 99;
-  overflow: hidden;
   opacity: ${p => p.transparent ? 0.8 : 1};
   width: ${p => p.width}px;
   height: ${p => p.height}px;
@@ -33,7 +32,6 @@ export const Container = styled.div`
 `
 
 export const ArrowBox = styled.div`
-  display: ${p => p.hide ? 'none' : 'block'};
   &::after, &::before {
     ${props => props.position === 'click' ? 'right' : props.position}: 100%;
     ${props => props.position === 'top' || props.position === 'bottom' ? 'left' : 'top'}: 50%;
