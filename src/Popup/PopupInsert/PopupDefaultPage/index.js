@@ -86,7 +86,7 @@ class PopupDefaultPage extends Component {
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
                     {children}
                   </Frame>
-                  : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px' }}>
+                  : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px', overflowY: 'scroll' }}>
                     {children}
                   </div>
                 }
