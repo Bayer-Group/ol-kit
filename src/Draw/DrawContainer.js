@@ -69,6 +69,7 @@ class DrawContainer extends React.Component {
   render () {
     return (
       <Draw
+        {...this.props}
         onDrawFinish={this.onDrawEnd}
         onDrawBegin={this.onDrawStart}
         onInteractionAdded={this.onInteractionAdded}
