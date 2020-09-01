@@ -1,26 +1,23 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
-// import nanoid from 'nanoid'
-// import debounce from 'lodash.debounce'
+import PropTypes from 'prop-types'
+import nanoid from 'nanoid'
+import debounce from 'lodash.debounce'
 
-// import MapLogo from './MapLogo'
-// //import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
-// import { StyledMap } from './styled'
-// import en from 'locales/en'
-// import ugh from 'ugh'
+import MapLogo from './MapLogo'
+//import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
+import { StyledMap } from './styled'
+import en from 'locales/en'
+import ugh from 'ugh'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
-// export let MapContext = null
+export let MapContext = null
 
-module.exports = function () {
-  return <div>WORK!</div>
-}
 /**
  * A Reactified ol.Map wrapper component
  * @component
  * @category Map
  * @since 0.1.0
- 
+ */
 class Map extends React.Component {
   constructor (props) {
     super(props)
@@ -156,36 +153,36 @@ Map.defaultProps = {
   translations: en
 }
 
-// Map.propTypes = {
-//   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
-//   children: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.node),
-//     PropTypes.node
-//   ]),
-//   /** if this is set to false, the map will fill it's parent container */
-//   fullScreen: PropTypes.bool,
-//   /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
-//   logoPosition: PropTypes.string,
-//   /** optionally pass a custom map */
-//   map: PropTypes.object,
-//   /** callback called with initialized map object after optional animations complete
-//     note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
-//   */
-//   onMapInit: PropTypes.func,
-//   /** the length of debounce on map movements before the url gets updated */
-//   updateUrlDebounce: PropTypes.number,
-//   /** add map location coords + zoom level to url as query params */
-//   updateUrlFromView: PropTypes.bool,
-//   /** update map view based off the url param */
-//   updateViewFromUrl: PropTypes.bool,
-//   /** change the url param used to set the map location coords */
-//   urlViewParam: PropTypes.string,
-//   /** an openlayers select interaction passed down to connected components - created internally if not passed as prop */
-//   selectInteraction: PropTypes.object,
-//   /** apply inline styles to the map container */
-//   style: PropTypes.object,
-//   /** object of string key/values (see: locales) */
-//   translations: PropTypes.object
-// }
+Map.propTypes = {
+  /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  /** if this is set to false, the map will fill it's parent container */
+  fullScreen: PropTypes.bool,
+  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
+  logoPosition: PropTypes.string,
+  /** optionally pass a custom map */
+  map: PropTypes.object,
+  /** callback called with initialized map object after optional animations complete
+    note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
+  */
+  onMapInit: PropTypes.func,
+  /** the length of debounce on map movements before the url gets updated */
+  updateUrlDebounce: PropTypes.number,
+  /** add map location coords + zoom level to url as query params */
+  updateUrlFromView: PropTypes.bool,
+  /** update map view based off the url param */
+  updateViewFromUrl: PropTypes.bool,
+  /** change the url param used to set the map location coords */
+  urlViewParam: PropTypes.string,
+  /** an openlayers select interaction passed down to connected components - created internally if not passed as prop */
+  selectInteraction: PropTypes.object,
+  /** apply inline styles to the map container */
+  style: PropTypes.object,
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.object
+}
 
-
+export default Map

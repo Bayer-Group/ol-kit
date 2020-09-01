@@ -1,11 +1,11 @@
 import { loadDataLayer } from './utils'
 import { VectorLayer } from 'classes'
 import { createMap } from 'Map'
-import proj from 'ol/proj'
+import { fromLonLat } from 'ol/proj'
 import { NASA_RESPONSE, POLYGON_KML } from './__test_data__'
 import US_STATES from './__test_data__/us_states.json'
 
-const STL_COORD = proj.fromLonLat([-90.4994, 38.6270])
+const STL_COORD = fromLonLat([-90.4994, 38.6270])
 
 describe('loadDataLayer', () => {
   global.document.body.innerHTML = '<div id="map"></div>'

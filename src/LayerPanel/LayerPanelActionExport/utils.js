@@ -1,7 +1,7 @@
 import olFormatGeoJSON from 'ol/format/geojson'
 import olFormatKml from 'ol/format/kml'
 import shpwrite from 'shp-write' // mapbox shapefile writer
-import olFeature from 'ol/feature'
+import olFeature from 'ol/Feature'
 import ugh from 'ugh'
 
 let fs

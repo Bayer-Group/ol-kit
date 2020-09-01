@@ -23,10 +23,10 @@ import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
 
 import TextField from '@material-ui/core/TextField'
 
-import olObservable from 'ol/observable'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import olStyleStyle from 'ol/style/style'
+import olObservable from 'ol/Observable'
+import olLayerVector from 'ol/layer/Vector'
+import olSourceVector from 'ol/source/Vector'
+import olStyleStyle from 'ol/style/Style'
 
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'

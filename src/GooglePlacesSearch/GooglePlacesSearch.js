@@ -6,16 +6,16 @@ import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
 import { connectToMap, centerAndZoom } from 'Map'
 import VectorLayer from '../classes/VectorLayer'
-import olCollection from 'ol/collection'
-import olVectorSource from 'ol/source/vector'
-import olFeature from 'ol/feature'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olFill from 'ol/style/fill'
-import olCircleStyle from 'ol/style/circle'
-import olPoint from 'ol/geom/point'
+import olCollection from 'ol/Collection'
+import olVectorSource from 'ol/source/Vector'
+import olFeature from 'ol/Feature'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
+import olFill from 'ol/style/Fill'
+import olCircleStyle from 'ol/style/Circle'
+import olPoint from 'ol/geom/Point'
 import { useForm } from 'react-hook-form'
-import proj from 'ol/proj'
+import { fromLonLat } from 'ol/proj'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +81,7 @@ function GooglePlacesSearch (props) {
       const location = await dataLoader(data.searchPlace)
       const source = new olVectorSource({ features: new olCollection() })
       const vectorLayer = new VectorLayer({ source, title: 'Google Places Search' })
-      const coords = proj.fromLonLat([location.x, location.y])
+      const coords = fromLonLat([location.x, location.y])
       const feature = new olFeature(new olPoint(coords))
       const radius = 15
       const color = 'blue'

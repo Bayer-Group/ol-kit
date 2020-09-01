@@ -1,12 +1,12 @@
 import bboxTurf from '@turf/bbox'
 import { lineString } from '@turf/helpers'
 import centroid from '@turf/centroid'
-import olMap from 'ol/map'
-import olObservable from 'ol/observable'
-import proj from 'ol/proj'
+import olMap from 'ol/Map'
+import olObservable from 'ol/Observable'
+import { fromLonLat } from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
-import olLayerVector from 'ol/layer/vector'
-import olVectorTile from 'ol/layer/vectortile'
+import olLayerVector from 'ol/layer/Vector'
+import olVectorTile from 'ol/layer/Vectortile'
 import olSourceCluster from 'ol/source/cluster'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
@@ -219,7 +219,7 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
 
   const getMidPixel = lineCoords => {
     const centerFeature = centroid(lineString(lineCoords))
-    const coords = proj.fromLonLat(centerFeature.geometry.coordinates)
+    const coords = fromLonLat(centerFeature.geometry.coordinates)
 
     return map.getPixelFromCoordinate(coords)
   }

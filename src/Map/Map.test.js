@@ -2,9 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
-import olMap from 'ol/map'
-import olView from 'ol/view'
-import olInteractionSelect from 'ol/interaction/select'
+import olMap from 'ol/Map'
+import olView from 'ol/View'
+import olInteractionSelect from 'ol/interaction/Select'
 import { Map, createMap } from 'Map'
 
 describe('<Map />', () => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import olInteractionDraw from 'ol/interaction/draw'
+import olInteractionDraw from 'ol/interaction/Draw'
 
 import { connectToMap } from 'Map'
 import PopupBase from './PopupBase'

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import olSelect from 'ol/interaction/select'
+import olSelect from 'ol/interaction/Select'
 
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 

@@ -4,8 +4,8 @@ import { fireEvent, render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
 import { Map } from 'Map'
 import BingMaps from './BingMaps'
-import olMap from 'ol/map'
-import olLayerVector from 'ol/layer/vector'
+import olMap from 'ol/Map'
+import olLayerVector from 'ol/layer/Vector'
 
 const TEXT_IDENTIFIER = 'Bing Maps'
 const mockSourceOpts = {

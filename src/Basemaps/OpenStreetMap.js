@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import olLayerTile from 'ol/layer/tile'
-import olSourceOSM from 'ol/source/osm'
+import olSourceOSM from 'ol/source/OSM'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
 import { connectToMap } from 'Map'; // eslint-disable-line

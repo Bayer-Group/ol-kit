@@ -1,13 +1,13 @@
-import olLayerVector from 'ol/layer/vector'
+import olLayerVector from 'ol/layer/Vector'
 import OpenLayersParser from 'geostyler-openlayers-parser'
-import olStyleStyle from 'ol/style/style'
-import olStyleFill from 'ol/style/fill'
-import olStyleStroke from 'ol/style/stroke'
-import olStyleCircle from 'ol/style/circle'
-import olGeomPoint from 'ol/geom/point'
-import olGeomLinestring from 'ol/geom/linestring'
-import olGeomMultiPoint from 'ol/geom/multipoint'
-import olGeomMultiLinestring from 'ol/geom/multilinestring'
+import olStyleStyle from 'ol/style/Style'
+import olStyleFill from 'ol/style/Fill'
+import olStyleStroke from 'ol/style/Stroke'
+import olStyleCircle from 'ol/style/Circle'
+import olGeomPoint from 'ol/geom/Point'
+import olGeomLinestring from 'ol/geom/LineString'
+import olGeomMultiPoint from 'ol/geom/MultiPoint'
+import olGeomMultiLinestring from 'ol/geom/MultiLineString'
 
 /**
  * VectorLayer class extends olLayerVector {@link https://openlayers.org/en/v4.6.5/apidoc/ol.layer.Vector.html}
@@ -20,7 +20,7 @@ class VectorLayer extends olLayerVector {
   constructor (opts) {
     super(opts)
 
-    this.parser = new OpenLayersParser()
+    this.parser = {} //new OpenLayersParser()
     this.userStyles = []
     this.defaultStyles = []
     this._defaultStylesCache = []
@@ -129,6 +129,9 @@ class VectorLayer extends olLayerVector {
 
       return attributeValue !== ''
     })
+
+    console.log(...this.getDefaultVectorStyles())
+    console.log(...filteredUserStyles)
 
     const style = {
       name: this.get('title') || 'Custom Vector Style',

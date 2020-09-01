@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
-import olLayerVector from 'ol/layer/vector'
+import olLayerVector from 'ol/layer/Vector'
 import { connectToMap } from 'Map'
 import { exportFeatures } from './utils'
 

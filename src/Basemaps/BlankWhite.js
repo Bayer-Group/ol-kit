@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
+import olLayerVector from 'ol/layer/Vector'
+import olSourceVector from 'ol/source/Vector'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { connectToMap } from 'Map'; // eslint-disable-line
 

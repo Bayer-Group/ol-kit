@@ -1,14 +1,14 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
 import translations from 'locales/en'
-import olMap from 'ol/map'
+import olMap from 'ol/Map'
 import LayerStyler from './LayerStyler'
 import VectorLayer from '../classes/VectorLayer'
-import olVectorSource from 'ol/source/vector'
+import olVectorSource from 'ol/source/Vector'
 import olStyle from 'ol/style/style'
 import olStroke from 'ol/style/stroke'
 import olFill from 'ol/style/fill'
-import olCircleStyle from 'ol/style/circle'
+import olCircleStyle from 'ol/style/Circle'
 import olFormatGeoJSON from 'ol/format/geojson'
 
 const geojsonObject = {
