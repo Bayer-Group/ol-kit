@@ -136,16 +136,6 @@ class Popup extends Component {
     this.setState({ ...this.defaultState }, () => onMapClick(this.state))
   }
 
-  onDragEnd = e => {
-    // if drag occurs in PopupBase, update pixel in state here
-    // this.setState({
-    //   popupPosition: {
-    //     ...this.state.popupPosition,
-    //     pixel: e.pinnedPixel
-    //   }
-    // })
-  }
-
   render () {
     const { actions, children, map, show: propShow } = this.props
     const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
@@ -156,7 +146,7 @@ class Popup extends Component {
         ? null
         : (
           ReactDOM.createPortal(
-            <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
+            <PopupBase arrow={arrow} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
                   actions={actions}
