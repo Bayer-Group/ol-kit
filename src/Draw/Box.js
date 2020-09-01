@@ -50,4 +50,8 @@ Box.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
+Box.defaultProps = {
+  tooltipTitle: 'Box'
+}
+
 export default Box

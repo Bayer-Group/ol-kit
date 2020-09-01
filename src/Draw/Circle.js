@@ -38,4 +38,8 @@ Circle.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
+Circle.defaultProps = {
+  tooltipTitle: 'Circle'
+}
+
 export default Circle

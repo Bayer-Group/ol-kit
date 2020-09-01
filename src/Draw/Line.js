@@ -38,4 +38,8 @@ Line.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
+Line.defaultProps = {
+  tooltipTitle: 'Line'
+}
+
 export default Line

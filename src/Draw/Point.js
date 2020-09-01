@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, IconButton } from './styled'
-import PlaceIcon from '@material-ui/icons/Place'
+import LensIcon from '@material-ui/icons/Lens'
 
 /**
  * @component
@@ -17,7 +17,7 @@ class Point extends Component {
           data-testid='Draw.point'
           size='small'
           onClick={() => addInteraction({ type: 'Point' })}>
-          <PlaceIcon size={0.5} htmlColor={type === 'Point' ? '#1976D2' : '#656565'} />
+          <LensIcon fontSize={'small'} size={0.5} htmlColor={type === 'Point' ? '#1976D2' : '#656565'} />
         </IconButton>
       </Tooltip>
     )
@@ -33,6 +33,10 @@ Point.propTypes = {
 
   /** a title for the tooltip */
   tooltipTitle: PropTypes.string
+}
+
+Point.defaultProps = {
+  tooltipTitle: 'Point'
 }
 
 export default Point

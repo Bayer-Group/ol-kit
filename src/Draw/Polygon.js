@@ -35,4 +35,8 @@ Polygon.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
+Polygon.defaultProps = {
+  tooltipTitle: 'Polygon'
+}
+
 export default Polygon
