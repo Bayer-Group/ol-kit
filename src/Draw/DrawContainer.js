@@ -1,6 +1,7 @@
 import React from 'react'
 import olLayerVector from 'ol/layer/vector'
-import { Draw, connectToMap } from '@bayer/ol-kit'
+import Draw from './Draw'
+import { connectToMap } from 'Map'
 import olSourceVector from 'ol/source/vector'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
