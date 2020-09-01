@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles'
 import MaterialIconButton from '@material-ui/core/IconButton'
 import MaterialContainer from '@material-ui/core/Container'
@@ -30,3 +31,11 @@ export const Tooltip = withStyles({
     fontSize: '15px'
   }
 })(MaterialTooltip)
+
+/** @component */
+export const ProgressWrapper = styled.div`
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+`

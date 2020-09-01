@@ -38,8 +38,4 @@ Freehand.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-Freehand.defaultProps = {
-  tooltipTitle: 'Freehand'
-}
-
 export default Freehand

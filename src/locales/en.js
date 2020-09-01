@@ -71,5 +71,24 @@ export default {
   '_ol_kit_.TimeSliderBase.selectedEndDate': 'Selected End Date',
   '_ol_kit_.TimeSliderBase.selectedStartDate': 'Selected Start Date:',
   '_ol_kit_.TimeSliderBase.to': 'To',
-  '_ol_kit_.TimeSliderBase.tooMany': 'Too many features to show preview. Use the date pickers below to filter by date.'
+  '_ol_kit_.TimeSliderBase.tooMany': 'Too many features to show preview. Use the date pickers below to filter by date.',
+  // Measure
+  '_ol_kit.Measurement.distance': 'Distance: ',
+  '_ol_kit.Measurement.area': 'Area: ',
+  '_ol_kit.units.feet': 'Feet',
+  '_ol_kit.units.yards': 'Yards',
+  '_ol_kit.units.miles': 'Miles',
+  '_ol_kit.units.acres': 'Acres',
+  '_ol_kit.units.nauticalmiles': 'Nautical miles',
+  '_ol_kit.units.meters': 'Meters',
+  '_ol_kit.units.kilometers': 'Kilometers',
+  '_ol_kit.units.hectares': 'Hectares',
+  '_ol_kit.measurement.toggleLabel': 'Enable Measurements',
+  // Draw
+  '_ol_kit.draw.pointTooltip': 'Point',
+  '_ol_kit.draw.lineTooltip': 'Line',
+  '_ol_kit.draw.polygonTooltip': 'Polygon',
+  '_ol_kit.draw.circleTooltip': 'Circle',
+  '_ol_kit.draw.boxTooltip': 'Box',
+  '_ol_kit.draw.freehandTooltip': 'Freehand'
 }

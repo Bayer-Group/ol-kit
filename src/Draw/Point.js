@@ -35,8 +35,4 @@ Point.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-Point.defaultProps = {
-  tooltipTitle: 'Point'
-}
-
 export default Point

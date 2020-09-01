@@ -5,22 +5,79 @@ import { connectToMap } from 'Map'
 import olSourceVector from 'ol/source/vector'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
+import { Container, ProgressWrapper } from './styled'
+import { styleMeasure } from './utils'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import olDrawInteraction from 'ol/interaction/draw'
+import { SnapPreference, CoordinateLabelPreference } from 'Preferences'
+import { Measure } from 'Measure'
+
+class MockPreferences {
+  constructor () {
+    this.state = {}
+  }
+
+  get (key) {
+    return this.state[key]
+  }
+
+  async put (key, val) {
+    this.state = { ...this.state, [key]: val }
+    return val
+  }
+}
 
 class DrawContainer extends React.Component {
   constructor () {
     super()
 
-    this.state = {
-      measureFeature: false
-    }
+    this.state = {}
 
     this.onDrawStart = this.onDrawStart.bind(this)
     this.onDrawCancel = this.onDrawCancel.bind(this)
     this.onDrawEnd = this.onDrawEnd.bind(this)
+    this.renderMeasure = this.renderMeasure.bind(this)
+  }
+
+  safeGetPreference = (key) => this.props.preferences?.payload?.get?.(key)
+
+  getUoms = () => {
+    const uom = this.safeGetPreference('_UOM') || 'imperial'
+    const distanceUOM = this.safeGetPreference('_DISTANCE_LABEL_UOM')
+    const areaUOM = this.safeGetPreference('_AREA_LABEL_UOM')
+
+    return {
+      uomType: uom,
+      distanceUOM: distanceUOM || (uom === 'imperial' ? 'feet' : 'meters'),
+      areaUOM: areaUOM || (uom === 'imperial' ? 'acres' : 'hectares')
+    }
+  }
+
+  updateMeasureStyle = (newValues = this.getUoms()) => {
+    const { map } = this.props
+    const { feature } = this.state
+    const { distanceUOM, areaUOM } = newValues
+    const isLegacyMeasure = feature?.get('_vmf_type') === '_vmf_measurement'
+    const needsAreaLabels = feature?.get('_ol_kit_area_labels')
+    const needsDistanceLabels = feature?.get('_ol_kit_distance_labels')
+    const isMeasure = isLegacyMeasure || needsAreaLabels || needsDistanceLabels
+
+    this.setState(newValues)
+
+    if (isMeasure) {
+      const styleFunc = styleMeasure.bind(this,
+        map,
+        feature,
+        map.getView().getResolution(),
+        { distanceUOM, areaUOM, map })
+
+      feature.setStyle(styleFunc)
+    }
   }
 
   getLayer () {
-    const title = this.state.measureFeature ? 'Measurements Layer' : 'Annotations Layer'
+    const { feature } = this.state
+    const title = feature.get('_vmf_type') === '_vmf_measurement' ? 'Measurements Layer' : 'Annotations Layer'
     const layers = this.props.map.getLayers().getArray()
     const exists = layers.find(l => l.get('_vmf_title') === title)
 
@@ -50,11 +107,37 @@ class DrawContainer extends React.Component {
     feature.set('_ol_kit_annotation', true)
     feature.set('_vmf_id', nanoid())
 
-    this.setState({ measureFeature: false })
+    this.setState({ feature: null })
   }
 
-  onDrawStart (feature) {
-    this.setState({ measureFeature: feature.get('_vmf_type') === '_vmf_measurement' })
+  onDrawStart (feature, { target }) {
+    const { distanceUOM, areaUOM } = this.getUoms()
+    const pointLabels = this.safeGetPreference('_POINT_LABELS_ENABLED')
+    const distanceLabelsEnabled = this.safeGetPreference('_DISTANCE_LABEL_ENABLED')
+    const areaLabelsEnabled = this.safeGetPreference('_AREA_LABEL_ENABLED')
+    const opts = { distanceUOM, areaUOM, map }
+    const isBoxDraw = target.geometryFunction_?.toString() === olDrawInteraction.createBox().toString()
+    const drawMode = isBoxDraw ? 'Box' : target.mode_
+    const isFreehand = target.freehand_
+
+    if (distanceLabelsEnabled) feature.set('_ol_kit_distance_labels', true)
+    if (areaLabelsEnabled) feature.set('_ol_kit_area_labels', true)
+    if (pointLabels && !isFreehand) feature.set('_ol_kit_coordinate_labels', true)
+    if (drawMode === 'Circle') {
+      feature.set('_ol_kit_draw_mode', 'circle')
+
+      if (pointLabels) {
+        feature.set('_ol_kit_needs_centroid_label', true)
+        feature.set('_ol_kit_coordinate_labels', false) // To prevent all needVertexLabels for running in styles.js
+      }
+    }
+    const styleFunc = distanceLabelsEnabled || areaLabelsEnabled || pointLabels
+      ? styleMeasure.bind(this, map, feature, map.getView().getResolution(), opts)
+      : undefined
+
+    feature.setStyle(styleFunc)
+
+    this.setState({ feature, drawMode })
     console.debug('%cDrawStart', 'color: magenta; font-style: italic;') // eslint-disable-line
   }
 
@@ -64,18 +147,95 @@ class DrawContainer extends React.Component {
 
   onDrawCancel (interaction) {
     console.debug('%cDrawCancel', 'color: white; background-color: red; border-radius: 4px; font-style: italic;', interaction) // eslint-disable-line
-    this.setState({ measureFeature: false })
+    this.setState({ feature: null })
+  }
+
+  handleUomChange = () => {
+    this.updateMeasureStyle()
+  }
+
+  selectedFeature = (feature) => {
+    this.setState({ feature })
+    this.props.selectedFeature(feature)
+  }
+
+  renderPreferences = () => {
+    const { translations, preferences } = this.props
+    const { status, payload } = preferences
+
+    switch (status) {
+      case 'loading':
+        return (
+          <ProgressWrapper>
+            <CircularProgress color={'primary'} />
+          </ProgressWrapper>
+        )
+      case 'success':
+        return (
+          <React.Fragment>
+            <SnapPreference
+              translations={translations}
+              preferences={payload}
+              onChange={this.forceUpdate}
+              compact={false} />
+          </React.Fragment>
+        )
+      default:
+        return null
+    }
+  }
+
+  renderMeasure = () => {
+    const { uom, translations, showCoordinateLabels, preferences } = this.props
+    const { feature, geometryType, drawMode } = this.state
+    const { status, payload } = preferences
+
+    switch (status) {
+      case 'loading':
+        return (
+          <ProgressWrapper>
+            <CircularProgress color={'primary'} />
+          </ProgressWrapper>
+        )
+      case 'success':
+        return (
+          <React.Fragment>
+            {
+              showCoordinateLabels &&
+              <CoordinateLabelPreference
+                compact={true}
+                translations={translations}
+                preferences={payload}
+                onChange={this.forceUpdate} />
+            }
+            <Measure
+              {...this.props}
+              feature={feature}
+              uom={uom || payload?.get?.('_UOM')}
+              onUomChange={this.handleUomChange}
+              geometryType={geometryType}
+              preferences={payload}
+              drawMode={drawMode} />
+          </React.Fragment>
+        )
+      default:
+        return null
+    }
   }
 
   render () {
+    const { showMeasurements } = this.props
     return (
-      <Draw
-        {...this.props}
-        onDrawFinish={this.onDrawEnd}
-        onDrawBegin={this.onDrawStart}
-        onInteractionAdded={this.onInteractionAdded}
-        onDrawCancel={this.onDrawCancel}
-        selectInteraction={this.props.selectInteraction} />
+      <Container>
+        { showMeasurements && this.renderMeasure() }
+        <Draw
+          {...this.props}
+          onDrawFinish={this.onDrawEnd}
+          onDrawBegin={this.onDrawStart}
+          onInteractionAdded={this.onInteractionAdded}
+          onDrawCancel={this.onDrawCancel}
+          selectInteraction={this.props.selectInteraction} />
+      </Container>
     )
   }
 }
@@ -84,7 +244,34 @@ DrawContainer.propTypes = {
   /** openlayers map */
   map: PropTypes.object.isRequired,
   /** reference to openlayers select interaction which can optionally be managed by IA */
-  selectInteraction: PropTypes.object
+  selectInteraction: PropTypes.object,
+  /** an object with `get` and `put` methods to handle measure state */
+  preferences: PropTypes.object.isRequired,
+  /** pheonix translations object */
+  translations: PropTypes.object,
+  /** boolean for enabling snap interaction */
+  snap: PropTypes.bool,
+  /** openlayers snap options */
+  snapOpts: PropTypes.object,
+  /** boolean enabling the measurement component */
+  showMeasurements: PropTypes.bool,
+  /** boolean enabling the coordinate labels component */
+  showCoordinateLabels: PropTypes.bool,
+  /** velocity preference of either imperial or metric */
+  uom: PropTypes.string,
+  /** openlayers draw interaction constructor props */
+  drawOpts: PropTypes.object,
+  /** callback that returns the selected openlayers feature from the map */
+  selectedFeature: PropTypes.func,
+}
+
+DrawContainer.defaultProps = {
+  drawOpts: {},
+  snap: true,
+  showMeasurements: true,
+  showCoordinateLabels: true,
+  preferences: { status: 'success', payload: new MockPreferences() },
+  selectedFeature: () => {}
 }
 
 export default connectToMap(DrawContainer)
