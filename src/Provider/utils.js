@@ -6,7 +6,7 @@ import { ProviderContext } from 'Provider'
  * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
  * @function
  * @category Provider
- * @since 0.10.0
+ * @since 0.20.0
  * @param {Component} component - A React component you want wrapped
  * @returns {Component} A wrapped React component which will automatically be passed a reference to provider context
  */
