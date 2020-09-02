@@ -10,7 +10,6 @@ export class SnapPreference extends React.Component {
       snappingEnabled: props.preferences.get('_SNAPPING_ENABLED') || false,
       snappingTolerance: props.preferences.get('_SNAPPING_TOLERANCE') || 5
     }
-    this.updateSnapEnable = this.updateSnapEnable.bind(this)
   }
 
   updateSnapEnable = () => {
@@ -36,11 +35,11 @@ export class SnapPreference extends React.Component {
 
     return (
       <div>
-        {!compact && <h5><b>{translations['settings.snapping.title']}</b></h5>}
-        {!compact && <p>{translations['settings.snapping.description']}</p>}
+        { !compact ? (<h5><b>{translations['_ol_kit.settings.snapping.title']}</b></h5>) : null }
+        { !compact ? (<p>{translations['_ol_kit.settings.snapping.description']}</p>) : null }
         <FormControlWrapper>
           <SwitchContainer compact={compact ? true : undefined} id='snapBuffer'>
-            <SwitchLabel compact={compact ? true : undefined} htmlFor='snapBuffer'>{compact ? translations['settings.snapping.title'] : translations['settings.turnOnOff']}</SwitchLabel>
+            <SwitchLabel compact={compact ? true : undefined} htmlFor='snapBuffer'>{compact ? translations['_ol_kit.settings.snapping.title'] : translations['_ol_kit.settings.turnOnOff']}</SwitchLabel>
             <Switch color='primary'
               checked={snappingEnabled}
               onChange={this.updateSnapEnable.bind(this)}

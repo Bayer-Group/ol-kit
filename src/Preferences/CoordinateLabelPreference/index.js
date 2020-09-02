@@ -9,7 +9,6 @@ export class CoordinateLabelPreference extends React.Component {
     this.state = {
       pointLabelsEnabled: props.preferences.get('_POINT_LABELS_ENABLED') || false
     }
-    this.updatePointLabelEnable = this.updatePointLabelEnable.bind(this)
   }
 
   updatePointLabelEnable = () => {
@@ -25,14 +24,14 @@ export class CoordinateLabelPreference extends React.Component {
 
     return (
       <div>
-        {!compact && <h5><b>{translations['settings.coordinateLabels.toggleLabel']}</b></h5>}
-        {!compact && <p>{translations['settings.coordinateLabels.description']}</p>}
+        {!compact && <h5><b>{translations['_ol_kit.settings.coordinateLabels.toggleLabel']}</b></h5>}
+        {!compact && <p>{translations['_ol_kit.settings.coordinateLabels.description']}</p>}
         <FormControlWrapper>
           <SwitchContainer compact={compact ? true : undefined} id='_POINT_LABELS_ENABLED'>
-            <SwitchLabel compact={compact ? true : undefined} htmlFor='_POINT_LABELS_ENABLED'>{compact ? translations['settings.coordinateLabels.toggleLabel'] : translations['settings.turnOnOff']}</SwitchLabel>
+            <SwitchLabel compact={compact ? true : undefined} htmlFor='_POINT_LABELS_ENABLED'>{compact ? translations['_ol_kit.settings.coordinateLabels.toggleLabel'] : translations['settings.turnOnOff']}</SwitchLabel>
             <Switch color='primary'
               checked={pointLabelsEnabled}
-              onChange={this.updatePointLabelEnable}
+              onChange={this.updatePointLabelEnable.bind(this)}
               value={pointLabelsEnabled}/>
           </SwitchContainer>
         </FormControlWrapper>

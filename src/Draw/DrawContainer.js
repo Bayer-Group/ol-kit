@@ -159,6 +159,10 @@ class DrawContainer extends React.Component {
     this.props.selectedFeature(feature)
   }
 
+  handleToggle = () => {
+    this.forceUpdate()
+  }
+
   renderPreferences = () => {
     const { translations, preferences } = this.props
     const { status, payload } = preferences
@@ -176,7 +180,7 @@ class DrawContainer extends React.Component {
             <SnapPreference
               translations={translations}
               preferences={payload}
-              onChange={this.forceUpdate}
+              onChange={this.handleToggle}
               compact={false} />
           </React.Fragment>
         )
@@ -206,7 +210,7 @@ class DrawContainer extends React.Component {
                 compact={true}
                 translations={translations}
                 preferences={payload}
-                onChange={this.forceUpdate} />
+                onChange={this.handleToggle} />
             }
             <Measure
               {...this.props}
@@ -235,6 +239,7 @@ class DrawContainer extends React.Component {
           onInteractionAdded={this.onInteractionAdded}
           onDrawCancel={this.onDrawCancel}
           selectInteraction={this.props.selectInteraction} />
+        { this.renderPreferences() }
       </Container>
     )
   }

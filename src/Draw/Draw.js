@@ -196,8 +196,7 @@ class Draw extends React.Component {
           ? React.Children.map(this.props.children, child => {
             return React.cloneElement(child, { addInteraction: this.addInteraction, type, freehand, geometryFunction })
           })
-          : <Container>
-            <ButtonContainer>
+          : <ButtonContainer>
               <Point addInteraction={this.addInteraction} type={type}
                 tooltipTitle={translations['_ol_kit.draw.pointTooltip']} />
               <Line addInteraction={this.addInteraction} type={type}
@@ -210,10 +209,9 @@ class Draw extends React.Component {
                 geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.boxTooltip']} />
               <Freehand addInteraction={this.addInteraction} type={type} freehand={freehand}
                 tooltipTitle={translations['_ol_kit.draw.freehandTooltip']} />
-            </ButtonContainer>
-          </Container>}
+            </ButtonContainer>}
         {
-          Array.isArray(interactions) && interactions.length && (<DrawToolbar onFinish={this.handleDrawFinish} onCancel={this.handleDrawCancel} />)
+          (Array.isArray(interactions) && interactions.length) ? (<DrawToolbar onFinish={this.handleDrawFinish} onCancel={this.handleDrawCancel} />) : null
         }
       </div>
     )

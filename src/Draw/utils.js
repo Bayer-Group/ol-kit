@@ -13,6 +13,7 @@ import olFormatGeoJson from 'ol/format/geojson'
 import olCollection from 'ol/collection'
 import olSphere from 'ol/sphere'
 import olGeomPolygon from 'ol/geom/polygon'
+import olGeomMultiPoint from 'ol/geom/multipoint'
 
 const EPSG = 'EPSG:4326'
 
@@ -458,6 +459,58 @@ export function getStyledFeatures (layers, resolution) {
   const featureStyles = featuresAndStyles.reduce(featuresReducer, [])
 
   return featureStyles
+}
+
+function getVertices (args) {
+  const { feature } = resolveStyleFunctionArgs(args)
+  const geometry = feature.getGeometry()
+
+  switch (geometry.getType()) {
+    case 'MultiPolygon': {
+      const polygons = geometry.getPolygons()
+      const vertexArray = polygons.map(polygon => pointsFromVertices(polygon))
+      const vertices = vertexArray.reduce((acc, val) => acc.concat(val), [])
+
+      return new olGeomMultiPoint(vertices)
+    }
+    case 'GeometryCollection': {
+      const deepCoords = getCoordinates(geometry)
+      const flatCoords = flatten(deepCoords)
+      const pairedCoords = pairCoords(flatCoords)
+
+      return new olGeomMultiPoint(pairedCoords)
+    }
+    default:
+      return new olGeomMultiPoint(pointsFromVertices(geometry))
+  }
+}
+
+function pointsFromVertices (geometry) {
+  const featureType = geometry.getType()
+  const coordinates = getCoordinates(geometry, true)
+
+  if (featureType === 'Polygon' || featureType === 'MultiLineString') {
+    return [].concat(...coordinates)
+  } else if (featureType === 'LineString' || featureType === 'MultiPoint') {
+    return coordinates
+  } else if (featureType === 'Point' || featureType === 'Circle') {
+    return [coordinates]
+  } else {
+    logger.warn('Geometries of type %s are not supported', featureType)
+
+    return coordinates
+  }
+}
+
+function pairCoords (flatCoords) {
+  const pairedCoords = []
+
+  for (let i = 0; i < flatCoords.length - 1;) {
+    pairedCoords.push([flatCoords[i], flatCoords[i + 1]])
+    i += 2
+  }
+
+  return pairedCoords
 }
 
 /**

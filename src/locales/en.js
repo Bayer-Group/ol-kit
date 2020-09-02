@@ -90,5 +90,11 @@ export default {
   '_ol_kit.draw.polygonTooltip': 'Polygon',
   '_ol_kit.draw.circleTooltip': 'Circle',
   '_ol_kit.draw.boxTooltip': 'Box',
-  '_ol_kit.draw.freehandTooltip': 'Freehand'
+  '_ol_kit.draw.freehandTooltip': 'Freehand',
+  // Settings
+  '_ol_kit.settings.coordinateLabels.toggleLabel': 'Coordinate Labels',
+  '_ol_kit.settings.coordinateLabels.description': '',
+  '_ol_kit.settings.snapping.title': 'Vertex Snapping',
+  '_ol_kit.settings.snapping.description': 'Vertex snapping connects two vertices while drawing and editing features when they are within the specified pixel tolerance.',
+  '_ol_kit.settings.turnOnOff': 'Turn on/off'
 }

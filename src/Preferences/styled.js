@@ -12,6 +12,7 @@ export const SwitchContainer = styled.div`
   display: flex;
   flex-direction: ${props => props.compact ? 'row' : 'column'};
   order: 0;
+  align-items: center;
 `
 
 export const SwitchLabel = styled.label`
