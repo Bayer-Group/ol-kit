@@ -14,7 +14,6 @@ export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
   return props => { // eslint-disable-line react/display-name
-    console.log(Component.name, !!ProviderContext)
     return !ProviderContext
       ? <Component {...props} />
       : (

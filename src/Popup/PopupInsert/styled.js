@@ -13,5 +13,5 @@ export const AttributeSettings = styled.div`
 `
 
 export const HeightContainer = styled.div.attrs(p => ({ 'data-testid': p['data-testid'] }))`
-  height: 100%;
+  height: auto;
 `

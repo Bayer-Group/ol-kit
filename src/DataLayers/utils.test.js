@@ -93,7 +93,7 @@ describe('loadDataLayer', () => {
     const parser = new DOMParser()
     const kmlData = parser.parseFromString(POLYGON_KML, 'text/xml')
 
-    console.log('kmlData', kmlData)
+    // console.log('kmlData', kmlData)
     // need to allow import of kml files via babel
     const dataLayer = await loadDataLayer(map, kmlData)
     const layers = map.getLayers().getArray()
@@ -104,7 +104,7 @@ describe('loadDataLayer', () => {
     // data layer should be added to map
     expect(layers[1]).toBe(dataLayer)
 
-    console.log('data:', dataLayer)
+    // console.log('data:', dataLayer)
   })
 
   it.skip('loadDataLayer should load valid kml endpoint', async () => {
@@ -119,7 +119,7 @@ describe('loadDataLayer', () => {
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
     const layers = map.getLayers().getArray()
 
-    console.log('features endpoint', dataLayer.getSource().getFeatures())
+    // console.log('features endpoint', dataLayer.getSource().getFeatures())
 
     expect(layers.length).toBe(2)
     // should return a VectorLayer

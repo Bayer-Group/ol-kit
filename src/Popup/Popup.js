@@ -18,6 +18,8 @@ class Popup extends Component {
     super(props)
 
     this.state = {
+      clickCoordinate: [0, 0],
+      clickPixel: [0, 0],
       features: [],
       loading: false,
       popupPosition: {
@@ -27,6 +29,10 @@ class Popup extends Component {
       },
       show: false
     }
+
+    this.timer = 0
+    this.isDoubleClick = false
+    this.defaultState = this.state
   }
 
   componentDidMount () {
@@ -34,25 +40,34 @@ class Popup extends Component {
 
     // bind to map click events
     map.on('click', this.mapClickHandler)
+    map.on('dblclick', this.mapDoubleClickHandler)
   }
 
   componentWillUnmount () {
     const { map } = this.props
 
     map.un('click', this.mapClickHandler)
+    map.un('dblclick', this.mapDoubleClickHandler)
+  }
+
+  mapDoubleClickHandler = () => {
+    clearTimeout(this.timer)
+    this.isDoubleClick = true
+    this.hidePopup()
   }
 
   mapClickHandler = e => {
-    // hide every map click and reshow if layers are detected
-    this.hidePopup()
+    this.timer = setTimeout(() => {
+      if (!this.isDoubleClick) {
+        // Get the interactions from the map as an array.
+        const interactions = e.map.getInteractions().getArray()
 
-    // Get the interactions from the map as an array.
-    const interactions = e.map.getInteractions().getArray()
-
-    // This checks to see if there is an active Draw interaction on the map and prevents the popup showing if it returns true.
-    if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return
-
-    this.checkForFeaturesAtClick(e)
+        // This checks to see if there is an active Draw interaction on the map and prevents the popup showing if it returns true.
+        if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return this.hidePopup()
+        this.checkForFeaturesAtClick(e)
+      }
+      this.isDoubleClick = false
+    }, 300)
   }
 
   checkForFeaturesAtClick = e => {
@@ -65,7 +80,7 @@ class Popup extends Component {
 
     // cancel if no layers at click location
     // do not add map movement listener or get features from layers
-    if (!promises.length) return
+    if (!promises.length) return this.hidePopup()
 
     // when the map is panned, we need to re-calculate the position of the popup
     const popupMoveHandler = () => {
@@ -92,39 +107,43 @@ class Popup extends Component {
     const popupPositionWhileLoading = getPopupPositionFromFeatures(e)
 
     // show popup in loading state while before resolving
-    this.setState({ show: true, loading: true, popupPosition: popupPositionWhileLoading }, () => onMapClick(this.state))
+    this.setState({
+      clickCoordinate: e.coordinate,
+      clickPixel: e.pixel,
+      loading: true,
+      popupPosition: popupPositionWhileLoading,
+      show: true
+    }, () => onMapClick(this.state))
 
     const layers = await Promise.all(promises)
-
-    const parsedFeatures = layers.reduce((acc, { features, layer }) => {
-      const layerFeatures = features.map(feature => {
-        const parentLayer = layer.get('_ol_kit_parent')
-        const parent = parentLayer || layer
-
-        feature.set('_ol_kit_parent', parent)
-
-        return feature
-      })
-
-      return [...acc, ...layerFeatures]
+    const parsedFeatures = layers.reduce((acc, { features }) => {
+      return [...acc, ...features]
     }, [])
 
     // ol returns these in reverse z-index order
     const features = parsedFeatures.reverse()
-
     const popupPosition = getPopupPositionFromFeatures(e, features)
 
     this.setState({ features, loading: false, popupPosition }, () => onMapClick(this.state))
   }
 
   hidePopup = () => {
-    const { map, onMapClick } = this.props
-    const popupPosition = getPopupPositionFromFeatures({ map }, [])
+    const { onMapClick } = this.props
 
     // stop tracking movement when popup show is set to false
     this.movementListener && removeMovementListener(this.movementListener)
 
-    this.setState({ features: [], popupPosition, show: false }, () => onMapClick(this.state))
+    this.setState({ ...this.defaultState }, () => onMapClick(this.state))
+  }
+
+  onDragEnd = e => {
+    // if drag occurs in PopupBase, update pixel in state here
+    this.setState({
+      popupPosition: {
+        ...this.state.popupPosition,
+        pixel: e.pinnedPixel
+      }
+    })
   }
 
   render () {
@@ -137,7 +156,7 @@ class Popup extends Component {
         ? null
         : (
           ReactDOM.createPortal(
-            <PopupBase arrow={arrow} pixel={pixel} {...this.props} show={show}>
+            <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
                   actions={actions}
@@ -173,6 +192,8 @@ Popup.propTypes = {
   map: PropTypes.object.isRequired,
   /** callback fired on map clicks with state object:
     {
+      clickCoordinate: [0, 0],
+      clickPixel: [0, 0],
       features: [],
       loading: false, // true after click before layers/features load
       popupPosition: {

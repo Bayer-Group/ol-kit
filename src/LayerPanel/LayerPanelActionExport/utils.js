@@ -4,9 +4,15 @@ import shpwrite from 'shp-write' // mapbox shapefile writer
 import olFeature from 'ol/feature'
 import ugh from 'ugh'
 
-const fs = require('fs') // fs is used to test downloads with jest in a node env
+let fs
 
-function groupBy (list, getGroupName) {
+try {
+  fs = require('fs') // fs is used to test downloads with jest in a node env
+} catch (e) {
+  // do nothing
+}
+
+function groupBy (list, getGroupName) { // eslint-disable-line
   return list.reduce((groups, item) => {
     const val = getGroupName(item)
 
@@ -138,7 +144,7 @@ function exportShapefile ({ format, visibleFeatures, sourceProjection, targetPro
   })
 
   const types = Array.from(new Set(featureCollection.features.map(feature => feature.geometry.type)))
-  const options = { folder: filename, types  }
+  const options = { folder: filename, types }
 
   return shpwrite.download(featureCollection, options)
 }
@@ -151,9 +157,9 @@ function exportGeoJSON ({ format, visibleFeatures, sourceProjection, targetProje
   const jsonString = JSON.stringify(featureCollection)
 
   // download the file for testing in a node env
-  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' })
+  fs?.writeFileSync?.(filename, jsonString, { encoding: 'utf8' }) // eslint-disable-line
 
-  return saveAs(new Blob([jsonString], {type: "octet/stream"}), filename)
+  return saveAs(new Blob([jsonString], { type: 'octet/stream' }), filename)
 }
 
 function exportKml (args) {
@@ -171,7 +177,8 @@ function exportKml (args) {
   const blob = new Blob([source], { type: 'kml' })
 
   // download the file for testing in a node env
-  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // fs is used for testing the download in node
+  // fs is used for testing the download in node
+  fs?.writeFileSync?.(filename, source, { encoding: 'utf8' }) // eslint-disable-line
 
   return saveAs(blob, filename)
 }

@@ -13,17 +13,20 @@ import { mdiCheckboxBlank } from '@mdi/js'
 class LayerPanelCheckbox extends Component {
   render () {
     const { checkboxState, handleClick, color } = this.props
+    const checkboxDataTestId = checkboxState ? 'LayerPanel.checked' : 'LayerPanel.unchecked'
 
     if (checkboxState === 'indeterminate') {
       return (
-        <Checkbox data-testid='LayerPanel.indeterminateCheckbox'
-          indeterminateIcon={<Icon path={mdiCheckboxBlank} size={1} color={color} />}
-          onClick={(e) => handleClick(e, true)} checked={!!checkboxState} indeterminate />
+        <Checkbox inputProps={{
+          'data-testid': 'LayerPanel.indeterminateCheckbox'
+        }} indeterminateIcon={<Icon path={mdiCheckboxBlank} size={1} color={color} />}
+        onClick={(e) => handleClick(e, true)} checked={!!checkboxState} indeterminate />
       )
     } else {
       return (
-        <Checkbox data-testid='LayerPanel.checkbox'
-          onClick={(e) => handleClick(e, !checkboxState)} checked={checkboxState} />
+        <Checkbox inputProps={{
+          'data-testid': checkboxDataTestId
+        }} onClick={(e) => handleClick(e, !checkboxState)} checked={checkboxState} />
       )
     }
   }

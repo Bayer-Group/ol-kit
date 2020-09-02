@@ -6,6 +6,9 @@ export default {
   '_ol_kit.StamenTerrain.title': 'Stamen Terrain',
   '_ol_kit.StamenTonerDark.title': 'Stamen Toner Dark',
   '_ol_kit.StamenTonerLite.title': 'Stamen Toner Lite',
+  // ContextMenu
+  '_ol_kit_.ContextMenuCoords.lat': 'latitude',
+  '_ol_kit_.ContextMenuCoords.long': 'longitude',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'Export KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',
@@ -60,5 +63,13 @@ export default {
   '_ol_kit.PopupDefaultPage.customize': 'Customize Details',
   '_ol_kit.PopupDefaultPage.details': 'Details',
   // Popup Actions
-  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy Geometry as Coordinates'
+  '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy Geometry as Coordinates',
+  // TimeSliderBase
+  '_ol_kit_.TimeSliderBase.dateRange': 'Date Range',
+  '_ol_kit_.TimeSliderBase.next': 'Next >',
+  '_ol_kit_.TimeSliderBase.previous': '< Prev',
+  '_ol_kit_.TimeSliderBase.selectedEndDate': 'Selected End Date',
+  '_ol_kit_.TimeSliderBase.selectedStartDate': 'Selected Start Date:',
+  '_ol_kit_.TimeSliderBase.to': 'To',
+  '_ol_kit_.TimeSliderBase.tooMany': 'Too many features to show preview. Use the date pickers below to filter by date.'
 }

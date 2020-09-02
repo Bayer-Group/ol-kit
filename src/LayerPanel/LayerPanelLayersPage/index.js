@@ -50,7 +50,7 @@ class LayerPanelLayersPage extends Component {
       masterCheckboxVisibility: true,
       featureListeners: [],
       filterText: null,
-      expandedLayer: false
+      expandedLayers: []
     }
   }
 
@@ -249,8 +249,13 @@ class LayerPanelLayersPage extends Component {
     return (layer instanceof olLayerVector || (layer && layer.isVectorLayer))
   }
 
-  handleExpandedLayer = () => {
-    this.setState(({ expandedLayer: !this.state.expandedLayer }))
+  handleExpandedLayer = (layer) => {
+    const clonedExpandedLayers = [...this.state.expandedLayers]
+    const index = clonedExpandedLayers.indexOf(layer.ol_uid)
+
+    index > -1 ? clonedExpandedLayers.splice(index, 1) : clonedExpandedLayers.push(layer.ol_uid)
+
+    this.setState({ expandedLayers: clonedExpandedLayers })
   }
 
   // highest zIndex should be at the front of the list (reverse order of array index)
@@ -268,7 +273,8 @@ class LayerPanelLayersPage extends Component {
       translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag,
       customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
     } = this.props
-    const { layers, masterCheckboxVisibility, filterText, expandedLayer } = this.state
+    const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
+    const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
 
     return (
       <LayerPanelPage>
@@ -279,7 +285,7 @@ class LayerPanelLayersPage extends Component {
             checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
           actions={customActions ||
             <LayerPanelActions
-              icon={<MoreHorizIcon />}
+              icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
               translations={translations}
               layers={layers}
               map={map}>
@@ -320,12 +326,12 @@ class LayerPanelLayersPage extends Component {
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
-                      open={expandedLayer}
-                      handleClick={this.handleExpandedLayer} />}
+                      open={isExpandedLayer(layer)}
+                      handleClick={() => this.handleExpandedLayer(layer)} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
-                    <ListItemSecondaryAction style={{ right: '0px !important' }} data-testid='LayerPanel.secondaryAction'>
+                    <ListItemSecondaryAction style={{ right: '0px !important' }}>
                       <LayerPanelActions
-                        icon={<MoreVertIcon />}
+                        icon={<MoreVertIcon data-testid='LayerPanel.actionsIcon' />}
                         translations={translations}
                         layer={layer}
                         map={map} >
@@ -337,11 +343,11 @@ class LayerPanelLayersPage extends Component {
                     </ListItemSecondaryAction>
                   </LayerPanelListItem>
                   { features
-                    ? <Collapse in={expandedLayer} timeout='auto' unmountOnExit>
+                    ? <Collapse in={isExpandedLayer(layer)} timeout='auto' unmountOnExit>
                       <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
                         {features.map((feature, i) => {
                           return (
-                            <ListItem key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                            <ListItem data-testid={`LayerPanel.feature${i}`} key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
                               <LayerPanelCheckbox
                                 handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
                                 checkboxState={feature.get('_ol_kit_feature_visibility')} />

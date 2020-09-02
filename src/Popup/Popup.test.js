@@ -24,13 +24,15 @@ describe('<Popup />', () => {
     testMap.dispatchEvent({ type: 'click', map: testMap, pixel: [20, 20] })
 
     const hidePopupEvent = {
+      clickCoordinate: [0, 0],
+      clickPixel: [0, 0],
       features: [],
       loading: false,
       popupPosition: { arrow: 'none', pixel: [0, 0], fits: false },
       show: false
     }
 
-    expect(onMapClick).toHaveBeenCalledWith(hidePopupEvent)
+    setTimeout(() => expect(onMapClick).toHaveBeenCalledWith(hidePopupEvent), 300)
 
     const defaultInsert = await getByTestId('popup-insert-default')
 
@@ -46,7 +48,7 @@ describe('<Popup />', () => {
     const onMapInit = jest.fn(map => {
       testMap = map
     })
-    const onMapClick = jest.fn(e => console.log(e))
+    const onMapClick = jest.fn()
     const { getByTestId } = render(<Map onMapInit={onMapInit} fullScreen><Popup onMapClick={onMapClick} show /></Map>)
 
     // wait for async child render
@@ -60,8 +62,8 @@ describe('<Popup />', () => {
 
     const coords = [minx, maxy]
 
-    console.log('set', testMap.getTargetElement())
-    console.log('pixel', testMap.getCoordinateFromPixel([0, 0]), testMap.getSize(), testMap.getView().getCenter(), testMap.getView().calculateExtent([600, 400]))
+    // console.log('set', testMap.getTargetElement())
+    // console.log('pixel', testMap.getCoordinateFromPixel([0, 0]), testMap.getSize(), testMap.getView().getCenter(), testMap.getView().calculateExtent([600, 400]))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([coords]))]

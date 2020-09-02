@@ -64,13 +64,13 @@ class LayerPanelActionExport extends Component {
         {translations['_ol_kit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
       </MenuItem>,
       <MenuItem
-      key='exportGeoJSON'
-      data-testid='LayerPanel.exportGeoJSON'
-      disableGutters={false}
-      disabled={this.isExportable()}
-      onClick={() => this.handleExport('geojson')} >
-      {translations['_ol_kit.LayerPanelActions.geojson']}
-    </MenuItem>]
+        key='exportGeoJSON'
+        data-testid='LayerPanel.exportGeoJSON'
+        disableGutters={false}
+        disabled={this.isExportable()}
+        onClick={() => this.handleExport('geojson')} >
+        {translations['_ol_kit.LayerPanelActions.geojson']}
+      </MenuItem>]
     )
   }
 }
@@ -90,7 +90,6 @@ LayerPanelActionExport.propTypes = {
 }
 
 LayerPanelActionExport.defaultProps = {
-  onExportFeatures: () => {},
   handleMenuClose: () => {},
   onExportFeatures: exportFeatures
 }
