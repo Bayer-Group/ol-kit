@@ -37,6 +37,7 @@ class DrawContainer extends React.Component {
     this.onDrawCancel = this.onDrawCancel.bind(this)
     this.onDrawEnd = this.onDrawEnd.bind(this)
     this.renderMeasure = this.renderMeasure.bind(this)
+    this.handleToggle = this.handleToggle.bind(this)
   }
 
   safeGetPreference = (key) => this.props.preferences?.payload?.get?.(key)
@@ -190,7 +191,9 @@ class DrawContainer extends React.Component {
   }
 
   renderMeasure = () => {
-    const { uom, translations, showCoordinateLabels, preferences } = this.props
+    const { uom, translations, showCoordinateLabels, preferences, showMeasurements } = this.props
+
+    if (!showMeasurements) return null
     const { feature, geometryType, drawMode } = this.state
     const { status, payload } = preferences
 
@@ -228,18 +231,23 @@ class DrawContainer extends React.Component {
   }
 
   render () {
-    const { showMeasurements } = this.props
-    return (
-      <Container>
-        { showMeasurements && this.renderMeasure() }
+    const { preferences, children } = this.props
+    const drawChildren = children || [
+        this.renderMeasure(),
         <Draw
           {...this.props}
+          preferences={preferences.payload}
           onDrawFinish={this.onDrawEnd}
           onDrawBegin={this.onDrawStart}
           onInteractionAdded={this.onInteractionAdded}
           onDrawCancel={this.onDrawCancel}
-          selectInteraction={this.props.selectInteraction} />
-        { this.renderPreferences() }
+          selectInteraction={this.props.selectInteraction} />,
+        this.renderPreferences()
+    ]
+  
+    return (
+      <Container>
+        {drawChildren}
       </Container>
     )
   }
@@ -268,6 +276,11 @@ DrawContainer.propTypes = {
   drawOpts: PropTypes.object,
   /** callback that returns the selected openlayers feature from the map */
   selectedFeature: PropTypes.func,
+  /** pass child comps to opt out of the default controls */
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),  
 }
 
 DrawContainer.defaultProps = {
