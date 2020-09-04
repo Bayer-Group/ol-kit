@@ -1,16 +1,16 @@
 import React from 'react'
-import olLayerVector from 'ol/layer/vector'
-import Draw from './Draw'
-import { connectToMap } from 'Map'
-import olSourceVector from 'ol/source/vector'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
-import { Container, ProgressWrapper } from './styled'
-import { styleMeasure } from './utils'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import olLayerVector from 'ol/layer/vector'
+import olSourceVector from 'ol/source/vector'
 import olDrawInteraction from 'ol/interaction/draw'
-import { SnapPreference, CoordinateLabelPreference } from 'Preferences'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Draw from './Draw'
 import { Measure } from 'Measure'
+import { SnapPreference, CoordinateLabelPreference } from 'Preferences'
+import { connectToMap } from 'Map'
+import { styleMeasure } from './utils'
+import { Container, ProgressWrapper } from './styled'
 
 class MockPreferences {
   constructor () {
@@ -171,13 +171,13 @@ class DrawContainer extends React.Component {
     switch (status) {
       case 'loading':
         return (
-          <ProgressWrapper>
+          <ProgressWrapper key={nanoid()}>
             <CircularProgress color={'primary'} />
           </ProgressWrapper>
         )
       case 'success':
         return (
-          <React.Fragment>
+          <React.Fragment key={'Snap'}>
             <SnapPreference
               translations={translations}
               preferences={payload}
@@ -200,20 +200,21 @@ class DrawContainer extends React.Component {
     switch (status) {
       case 'loading':
         return (
-          <ProgressWrapper>
+          <ProgressWrapper key={nanoid()}>
             <CircularProgress color={'primary'} />
           </ProgressWrapper>
         )
       case 'success':
         return (
-          <React.Fragment>
+          <React.Fragment key={'Measure'}>
             {
-              showCoordinateLabels &&
+              showCoordinateLabels ?
               <CoordinateLabelPreference
                 compact={true}
                 translations={translations}
                 preferences={payload}
-                onChange={this.handleToggle} />
+                onChange={this.handleToggle} /> :
+                null
             }
             <Measure
               {...this.props}
@@ -236,6 +237,7 @@ class DrawContainer extends React.Component {
         this.renderMeasure(),
         <Draw
           {...this.props}
+          key={'Draw'}
           preferences={preferences.payload}
           onDrawFinish={this.onDrawEnd}
           onDrawBegin={this.onDrawStart}
