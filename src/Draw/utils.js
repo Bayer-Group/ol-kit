@@ -14,8 +14,10 @@ import olCollection from 'ol/collection'
 import olSphere from 'ol/sphere'
 import olGeomPolygon from 'ol/geom/polygon'
 import olGeomMultiPoint from 'ol/geom/multipoint'
+import * as turfAssert from '@turf/invariant'
 
 const EPSG = 'EPSG:4326'
+const defaultDataProjection = 'EPSG:4326'
 
 const CONVERSION = {
   /* Conversion factors between meters which is returned by EPSG:4326
@@ -30,6 +32,20 @@ const CONVERSION = {
   'hectares': 0.0001 // 1 square meter = 0.0001 hectares
 }
 const SPHERE = new olSphere(6378137)
+
+function assertTurf (assertion, hard, ...args) {
+  try {
+    turfAssert[assertion].apply(null, args)
+  } catch (error) {
+    if (hard) {
+      throw new Error(error.message)
+    } else {
+      return false
+    }
+  }
+
+  return true
+}
 
 function myLocaleString (value, language) {
   return Number(value).toLocaleString(language)
