@@ -4,8 +4,10 @@ import { Tooltip, IconButton } from './styled'
 import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUncheckedOutlined'
 
 /**
+ * A button for drawing circles.
  * @component
- * @category vmc
+ * @category DrawCircle
+ * @since 0.18.0
  */
 class Circle extends Component {
   render () {

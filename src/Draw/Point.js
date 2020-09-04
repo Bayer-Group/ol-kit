@@ -4,8 +4,10 @@ import { Tooltip, IconButton } from './styled'
 import LensIcon from '@material-ui/icons/Lens'
 
 /**
+ * A button for drawing points.
  * @component
- * @category vmc
+ * @category DrawPoint
+ * @since 0.18.0
  */
 class Point extends Component {
   render () {

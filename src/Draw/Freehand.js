@@ -4,8 +4,10 @@ import { Tooltip, IconButton } from './styled'
 import GestureOutlinedIcon from '@material-ui/icons/GestureOutlined'
 
 /**
+ * A button for drawing freehand line strings.
  * @component
- * @category vmc
+ * @category DrawFreehand
+ * @since 0.18.0
  */
 class Freehand extends Component {
   render () {

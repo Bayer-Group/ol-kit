@@ -4,8 +4,10 @@ import { Tooltip, IconButton } from './styled'
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
 
 /**
+ * A button for drawing line strings.
  * @component
- * @category vmc
+ * @category DrawCircle
+ * @since 0.18.0
  */
 class Line extends Component {
   render () {

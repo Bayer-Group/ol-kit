@@ -27,6 +27,12 @@ class MockPreferences {
   }
 }
 
+/**
+ * A prebuilt Draw Tools component
+ * @component
+ * @category DrawContainer
+ * @since 0.18.0
+ */
 class DrawContainer extends React.Component {
   constructor () {
     super()
@@ -262,7 +268,7 @@ DrawContainer.propTypes = {
   selectInteraction: PropTypes.object,
   /** an object with `get` and `put` methods to handle measure state */
   preferences: PropTypes.object.isRequired,
-  /** pheonix translations object */
+  /** translations object */
   translations: PropTypes.object,
   /** boolean for enabling snap interaction */
   snap: PropTypes.bool,

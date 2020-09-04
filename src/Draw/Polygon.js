@@ -4,8 +4,10 @@ import { Tooltip, IconButton } from './styled'
 import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined';
 
 /**
+ * A button for drawing polygons.
  * @component
- * @category vmc
+ * @category DrawPolygons
+ * @since 0.18.0
  */
 class Polygon extends Component {
   render () {

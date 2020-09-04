@@ -23,8 +23,10 @@ import { getStyledFeatures } from './utils'
 const OL_DRAW_TYPES = [...Object.values(olGeomTypes)]
 
 /**
+ * A component for rendering basic draw tools
  * @component
- * @category vmc
+ * @category Draw
+ * @since 0.18.0
  */
 class Draw extends React.Component {
   constructor (props) {
@@ -222,7 +224,7 @@ Draw.propTypes = {
   /** openlayers map */
   map: PropTypes.object.isRequired,
 
-  /** openlayers layersource */
+  /** openlayers layer source */
   source: PropTypes.object,
 
   /** callback that's called when the feature's draw is completed and returns an openlayers feature */
@@ -240,7 +242,7 @@ Draw.propTypes = {
   /** openlayers draw interaction constructor props */
   drawOpts: PropTypes.object,
 
-  /** pheonix translations object */
+  /** translations object */
   translations: PropTypes.object,
 
   /** reference to openlayers select interaction which can optionally be managed by IA */
