@@ -32,16 +32,18 @@ class CustomPopupPage extends Component {
 
 And then this component would be used like so:
 
-```html static
-<Popup show={true} pixel={[50, 150]} inline={true}>
-  <PopupPageLayout>
-    {this.props.features.map(f => {
-      return (
-        <CustomPopupPage title={f.get('title')} attributes={f.getProperties()}>
-          <ActionItem title="edit" onClick={someHandler} />
-        </CustomPopupPage>
-      )
-    })}
-  </PopupPageLayout>
-</Popup>
+```jsx static
+return (
+  <Popup show={true} pixel={[50, 150]} inline={true}>
+    <PopupPageLayout>
+      {this.props.features.map(f => {
+        return (
+          <CustomPopupPage title={f.get('title')} attributes={f.getProperties()}>
+            <ActionItem title="edit" onClick={someHandler} />
+          </CustomPopupPage>
+        )
+      })}
+    </PopupPageLayout>
+  </Popup>
+)
 ```
