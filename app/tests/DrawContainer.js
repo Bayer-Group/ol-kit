@@ -5,7 +5,7 @@ const { waitAndClick, assertWithInfo, drawPolygon, addDebugCSS, drawRegularShape
 
 ;(async () => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     devtools: false
   })
   const page = await browser.newPage()
