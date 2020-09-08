@@ -7,7 +7,7 @@ import ugh from 'ugh'
 let fs
 
 try {
-  fs = require('fs') // fs is used to test downloads with jest in a node env
+  // fs = require('fs') // fs is used to test downloads with jest in a node env
 } catch (e) {
   // do nothing
 }
