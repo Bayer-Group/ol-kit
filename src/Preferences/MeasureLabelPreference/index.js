@@ -7,7 +7,7 @@ export class MeasureLabelPreference extends React.Component {
     super(props)
 
     this.state = {
-      enabled: props.preferences.get(props.enabledPreferenceKey),
+      enabled: props.preferences.get(props.enabledPreferenceKey) || false,
       value: props.preferences.get(props.valuePreferenceKey) || props.defaultUOM
     }
 
@@ -69,8 +69,8 @@ export class MeasureLabelPreference extends React.Component {
               }}
               checked={enabled}
               onChange={this.updateLabelEnabled}
-              disabled={!!disabled}
-              value={enabled}/>
+              value={enabled}
+              disabled={!!disabled}/>
           </SwitchContainer>
           {children && compact && !disabled && <ChildContainer>{children}</ChildContainer>}
           <Select value={value} data-testid='geokit-MeasureLabelPreference-uomOptions' onChange={this.updateLabelUOM} disabled={disabled}>
