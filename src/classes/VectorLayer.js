@@ -20,7 +20,7 @@ class VectorLayer extends olLayerVector {
   constructor (opts) {
     super(opts)
 
-    this.parser = {} //new OpenLayersParser()
+    this.parser = new OpenLayersParser()
     this.userStyles = []
     this.defaultStyles = []
     this._defaultStylesCache = []
