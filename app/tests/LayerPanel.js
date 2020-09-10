@@ -30,8 +30,8 @@ const { assertWithInfo } = require('./pupp-utils')
 
   assertWithInfo('number of layers', assert.equal, layersLength, 3)
 
-  await page.waitForSelector('.smooth-dnd-draggable-wrapper:nth-child(1) [data-testid="LayerPanel.actionsButton"]')
-  await page.click('.smooth-dnd-draggable-wrapper:nth-child(1) [data-testid="LayerPanel.actionsButton"]')
+  await page.waitForSelector('[data-testid="LayerPanel.actionsButton"]')
+  await page.click('[data-testid="LayerPanel.actionsButton"]')
 
   try {
     await page.waitForSelector('[data-testid="LayerPanel.menu"]', { timeout: 2000 })

@@ -62,9 +62,6 @@ describe('<Popup />', () => {
 
     const coords = [minx, maxy]
 
-    // console.log('set', testMap.getTargetElement())
-    // console.log('pixel', testMap.getCoordinateFromPixel([0, 0]), testMap.getSize(), testMap.getView().getCenter(), testMap.getView().calculateExtent([600, 400]))
-
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([coords]))]
 

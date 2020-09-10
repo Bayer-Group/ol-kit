@@ -51,7 +51,7 @@ describe('<Map />', () => {
     await waitFor(() => {}, { container })
 
     // make sure a <canvas> element is within the rendered html
-    expect(prettyDOM(testMap.getTargetElement())).toEqual(expect.stringContaining('<canvas'))
+    expect(prettyDOM(testMap.getTargetElement())).toEqual(expect.stringContaining('ol-viewport'))
   })
 
   it('should read the url and set the map location', (done) => {

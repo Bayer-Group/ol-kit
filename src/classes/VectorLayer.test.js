@@ -32,7 +32,7 @@ const defaultStyles = [{
     width: 2,
     cap: undefined,
     join: undefined,
-    dasharray: null,
+    dasharray: undefined,
     dashOffset: undefined
   }]
 }]
@@ -46,7 +46,7 @@ const updatedDefaultStyles = [{
     width: 2,
     cap: undefined,
     join: undefined,
-    dasharray: null,
+    dasharray: undefined,
     dashOffset: undefined
   }]
 }]

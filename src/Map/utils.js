@@ -191,7 +191,7 @@ export function createSelectInteraction () {
     image: new olCircle({
       radius: 5,
       fill: new olFill({
-        color: 'white'
+        color: '#ffffff'
       }),
       stroke: new olStroke({
         color: 'cyan',

@@ -74,12 +74,8 @@ describe('Popup utils', () => {
     const featureCoords = clusters.getSource().getSource().getFeatures()[0].getGeometry().getCoordinates()
     const clickPixel = map.getPixelFromCoordinate(featureCoords)
 
-    console.log('[ 179941500000, 179941500000 ]', featureCoords, map.getView().getProjection())
-
     const event = { map, pixel: [0,0] }
     const promises = await getLayersAndFeaturesForEvent(event)
-
-    console.log('promises', promises.length)
 
     expect(2).toBe(1)
   })
