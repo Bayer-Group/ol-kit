@@ -22,7 +22,7 @@ class ContextMenu extends React.Component {
       pixel: { x: 0, y: 0 }
     }
 
-    // debounce time was changed from 400 to 50 due to innacurate pointer/coords location
+    // debounce time was changed from 400 to 50 due to inaccurate pointer/coords location
     this.pointerMoveHandler = debounce(this.pointerMoveHandler, 50)
   }
 
