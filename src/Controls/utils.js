@@ -17,7 +17,6 @@ export function zoomDelta (map, delta, duration, easing = linear) {
   if (currentResolution && typeof view.animate === 'function') {
     view.animate({
       zoom: view.getZoom() + delta,
-      resolution: view.constrainResolution(currentResolution, delta),
       duration: newDuration,
       easing: newEasing
     })
