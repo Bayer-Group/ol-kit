@@ -2,12 +2,45 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import debounce from 'lodash.debounce'
-import olObservable from 'ol/Observable'
-import olSelect from 'ol/interaction/Select'
+import Event from 'ol/events/Event'
 
 import TimeSliderBase from './TimeSliderBase'
 import { datesDiffDay, datesSameDay } from './utils'
 import { connectToMap } from 'Map'
+
+class SelectEvent extends Event {
+  /**
+   * @param {SelectEventType} type The event type.
+   * @param {Array<import("ol/Feature.js").default>} selected Selected features.
+   * @param {Array<import("ol/Feature.js").default>} deselected Deselected features.
+   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Associated
+   *     {@link module:ol/MapBrowserEvent}.
+   */
+  constructor(type, selected, deselected, mapBrowserEvent) {
+    super(type);
+
+    /**
+     * Selected features array.
+     * @type {Array<import("ol/Feature.js").default>}
+     * @api
+     */
+    this.selected = selected;
+
+    /**
+     * Deselected features array.
+     * @type {Array<import("ol/Feature.js").default>}
+     * @api
+     */
+    this.deselected = deselected;
+
+    /**
+     * Associated {@link module:ol/MapBrowserEvent}.
+     * @type {import("ol/MapBrowserEvent.js").default}
+     * @api
+     */
+    this.mapBrowserEvent = mapBrowserEvent;
+  }
+}
 
 /** TimeSlider component used to display/filter data with time attributes
  * @component
@@ -41,9 +74,10 @@ class TimeSlider extends React.Component {
 
   componentWillUnmount = () => {
     const { map } = this.props
+    const layers = map.getLayers()
 
     // unbind the listener
-    olObservable.unByKey(this.layerListener)
+    layers.unset(this.layerListener)
     map.un('moveend', this.moveHandler)
   }
 
@@ -106,7 +140,7 @@ class TimeSlider extends React.Component {
       const deselected = selectInteraction.getFeatures().getArray()
       const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('_ol_kit_time_key'))), selectedDate))
       const selected = [...features]
-      const event = new olSelect.Event('select', selected, deselected)
+      const event = new SelectEvent('select', selected, deselected)
 
       // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
       selectInteraction.getFeatures().clear()
@@ -130,7 +164,7 @@ class TimeSlider extends React.Component {
         const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('_ol_kit_time_key')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
         const deselected = selectInteraction.getFeatures().getArray()
         const selected = [...features]
-        const event = new olSelect.Event('select', selected, deselected)
+        const event = new SelectEvent('select', selected, deselected)
 
         // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
         selectInteraction.getFeatures().clear()
