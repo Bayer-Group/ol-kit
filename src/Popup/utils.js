@@ -2,7 +2,6 @@ import bboxTurf from '@turf/bbox'
 import { lineString } from '@turf/helpers'
 import centroid from '@turf/centroid'
 import olMap from 'ol/Map'
-import olObservable from 'ol/Observable'
 import { fromLonLat } from 'ol/proj'
 import GeoJSON from 'ol/format/geojson'
 import olLayerVector from 'ol/layer/Vector'
@@ -29,9 +28,9 @@ export const addMovementListener = (map, callback, thisObj) => {
   const fastDebounce = debounce(callback, 0)
 
   const keys = [
-    map.on('change:size', slowDebounce, thisObj),
-    map.getView().on('change:resolution', slowDebounce, thisObj),
-    map.getView().on('change:center', fastDebounce, thisObj)
+    [map, map.on('change:size', slowDebounce, thisObj)],
+    [map.getView(), map.getView().on('change:resolution', slowDebounce, thisObj)],
+    [map.getView(), map.getView().on('change:center', fastDebounce, thisObj)]
   ]
 
   return keys
@@ -46,7 +45,7 @@ export const addMovementListener = (map, callback, thisObj) => {
  * @param {Array} keys - remove the listeners via an array of event keys
  */
 export const removeMovementListener = (keys = []) => {
-  keys.forEach(key => olObservable.unByKey(key))
+  keys.forEach(([obj, key]) => obj.unset(key))
 }
 
 /**

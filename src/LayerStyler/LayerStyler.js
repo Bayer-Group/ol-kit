@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StyleManager from 'LayerStyler/StyleManager'
-import olObservable from 'ol/Observable'
 import olFormatFilterAnd from 'ol/format/filter/and'
 import olFormatFilterOr from 'ol/format/filter/or'
 import olFormatFilterEqualTo from 'ol/format/filter/equalto'
@@ -49,7 +48,7 @@ class LayerStyler extends React.Component {
   componentWillUnmount () {
     const { listeners } = this.state
 
-    listeners.forEach(listener => olObservable.unByKey(listener))
+    listeners.forEach(([obj, listener]) => obj.unset(listener))
   }
 
   getTitleForLayer = (layer) => {
