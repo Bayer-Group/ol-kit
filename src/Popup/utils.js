@@ -28,9 +28,9 @@ export const addMovementListener = (map, callback, thisObj) => {
   const fastDebounce = debounce(callback, 0)
 
   const keys = [
-    [map, map.on('change:size', slowDebounce, thisObj)],
-    [map.getView(), map.getView().on('change:resolution', slowDebounce, thisObj)],
-    [map.getView(), map.getView().on('change:center', fastDebounce, thisObj)]
+    map.on('change:size', slowDebounce, thisObj),
+    map.getView().on('change:resolution', slowDebounce, thisObj),
+    map.getView().on('change:center', fastDebounce, thisObj)
   ]
 
   return keys
@@ -45,7 +45,7 @@ export const addMovementListener = (map, callback, thisObj) => {
  * @param {Array} keys - remove the listeners via an array of event keys
  */
 export const removeMovementListener = (keys = []) => {
-  keys.forEach(([obj, key]) => obj.unset(key))
+  keys.forEach(({ target, type, listener }) => target.un(type, listener))
 }
 
 /**
