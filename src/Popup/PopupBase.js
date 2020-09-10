@@ -33,10 +33,12 @@ class PopupBase extends Component {
   }
 
   onStop = e => {
+    const { pinnedPixel } = this.state
+
     this.setState({
       transparent: false
     })
-    this.props.onPopupDragEnd(e)
+    this.props.onPopupDragEnd({ ...e, pinnedPixel })
   }
 
   handleDrag = e => {
@@ -73,7 +75,7 @@ class PopupBase extends Component {
           transparent={transparent}
           width={width}>
           {draggable ? <DragHandle /> : null}
-          <ArrowBox hide={dragged} position={arrowTranslator[arrow]} />
+          {!dragged && <ArrowBox position={arrowTranslator[arrow]} />}
           {children}
         </Container>
       </Draggable>
