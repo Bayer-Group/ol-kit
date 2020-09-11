@@ -3,4 +3,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const HotApp = hot(App)
+
+ReactDOM.render(<HotApp />, document.getElementById('root'))
