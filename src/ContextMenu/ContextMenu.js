@@ -80,7 +80,7 @@ class ContextMenu extends React.Component {
     const { latitude: lat, longitude: long } = convertXYtoLatLong(map, pointerX, pointerY)
 
     // get any features at the event location (in OL v4 no features returns null which is bad; switch to empty array)
-    const features = map.getFeaturesAtPixel([pointerX, pointerY]) || []
+    const features = map.getFeaturesAtPixel([pointerX, pointerY])
 
     this.setState({ show: true, features, pixel: { x: e.x, y: e.y }, coords: { lat, long } })
   }

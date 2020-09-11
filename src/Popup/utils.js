@@ -3,10 +3,10 @@ import { lineString } from '@turf/helpers'
 import centroid from '@turf/centroid'
 import olMap from 'ol/Map'
 import { fromLonLat } from 'ol/proj'
-import GeoJSON from 'ol/format/geojson'
+import GeoJSON from 'ol/format/GeoJSON'
 import olLayerVector from 'ol/layer/Vector'
-import olVectorTile from 'ol/layer/Vectortile'
-import olSourceCluster from 'ol/source/cluster'
+import olVectorTile from 'ol/layer/VectorTile'
+import olSourceCluster from 'ol/source/Cluster'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -17,10 +17,9 @@ import ugh from 'ugh'
  * @since 0.2.0
  * @param {ol.Map} map - The openlayers map to which the events are bound
  * @param {Function} callback - The callback invoked when a `change:size`, `change:resolution` or a `change:center` event was fired
- * @param {Object} [thisObj] - The object to use as `this` in the event listeners.
  * @returns {ol.EventsKey[]} Array of openlayers event keys for unsetting listener events (use with removeMovementListener)
  */
-export const addMovementListener = (map, callback, thisObj) => {
+export const addMovementListener = (map, callback) => {
   if (typeof callback !== 'function') return ugh.error('\'addMovementListener\' requires a valid openlayers map & callback function') // eslint-disable-line
 
   // If performance becomes an issue with catalog layers & far zoom level, these debounce levels can be adjusted
@@ -28,9 +27,9 @@ export const addMovementListener = (map, callback, thisObj) => {
   const fastDebounce = debounce(callback, 0)
 
   const keys = [
-    map.on('change:size', slowDebounce, thisObj),
-    map.getView().on('change:resolution', slowDebounce, thisObj),
-    map.getView().on('change:center', fastDebounce, thisObj)
+    map.on('change:size', slowDebounce),
+    map.getView().on('change:resolution', slowDebounce),
+    map.getView().on('change:center', fastDebounce)
   ]
 
   return keys
@@ -138,7 +137,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   })
 
   // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
+  if (featuresAtPixel?.length) map.getLayers().getArray().forEach(wfsSelector)
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)

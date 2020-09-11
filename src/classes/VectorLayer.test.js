@@ -1,11 +1,11 @@
 import VectorLayer from './VectorLayer'
 import olSourceVector from 'ol/source/Vector'
 import olFeature from 'ol/Feature'
-import olGeomPolygon from 'ol/geom/polygon'
-import olFormatGeoJSON from 'ol/format/geojson'
-import olStyleStyle from 'ol/style/style'
-import olStyleFill from 'ol/style/fill'
-import olStyleStroke from 'ol/style/stroke'
+import olGeomPolygon from 'ol/geom/Polygon'
+import olFormatGeoJSON from 'ol/format/GeoJSON'
+import olStyleStyle from 'ol/style/Style'
+import olStyleFill from 'ol/style/Fill'
+import olStyleStroke from 'ol/style/Stroke'
 import olGeomPoint from 'ol/geom/Point'
 import olStyleCircle from 'ol/style/Circle'
 import olGeomLineString from 'ol/geom/LineString'
@@ -91,8 +91,7 @@ describe('Vector Layer class', () => {
       image: new olStyleCircle({
         fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
         stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
-        radius: 5,
-        snapToPixel: true
+        radius: 5
       })
     })]
 

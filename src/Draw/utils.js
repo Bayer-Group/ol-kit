@@ -1,19 +1,19 @@
 import ugh from 'ugh'
-import olFeature from 'ol/feature'
-import olGeomLineString from 'ol/geom/linestring'
-import olStyleFill from 'ol/style/fill'
-import olStyleStroke from 'ol/style/stroke'
-import olStyleStyle from 'ol/style/style'
-import olStyleCircle from 'ol/style/circle'
-import olStyleText from 'ol/style/text'
-import olPoint from 'ol/geom/point'
+import olFeature from 'ol/Feature'
+import olGeomLineString from 'ol/geom/LineString'
+import olStyleFill from 'ol/style/Fill'
+import olStyleStroke from 'ol/style/Stroke'
+import olStyleStyle from 'ol/style/Style'
+import olStyleCircle from 'ol/style/Circle'
+import olStyleText from 'ol/style/Text'
+import olPoint from 'ol/geom/Point'
 import centroid from '@turf/centroid'
-import olProj from 'ol/proj'
-import olFormatGeoJson from 'ol/format/geojson'
-import olCollection from 'ol/collection'
-import olSphere from 'ol/sphere'
-import olGeomPolygon from 'ol/geom/polygon'
-import olGeomMultiPoint from 'ol/geom/multipoint'
+import * as olProj from 'ol/proj'
+import olFormatGeoJson from 'ol/format/GeoJSON'
+import olCollection from 'ol/Collection'
+import * as olSphere from 'ol/sphere'
+import olGeomPolygon, { fromCircle } from 'ol/geom/Polygon'
+import olGeomMultiPoint from 'ol/geom/MultiPoint'
 import * as turfAssert from '@turf/invariant'
 
 const EPSG = 'EPSG:4326'
@@ -31,7 +31,6 @@ const CONVERSION = {
   'acres': 0.000247105, // 1 square meter = 0.000247105 acres
   'hectares': 0.0001 // 1 square meter = 0.0001 hectares
 }
-const SPHERE = new olSphere(6378137)
 
 function assertTurf (assertion, hard, ...args) {
   try {
@@ -51,17 +50,6 @@ function myLocaleString (value, language) {
   return Number(value).toLocaleString(language)
 }
 
-function resolveStyleFunctionArgs (args) {
-  // Using function.prototype.bind with additional arguments injects those arguments at the zeroth index of the arguements object and since opts is optional we need to handle a variable arguement object
-  const argLength = args.length
-  const feature = args[argLength - 2] || args
-  const resolution = args[argLength - 1]
-  const opts = argLength >= 3 ? args[0] : {}
-
-  return { feature, resolution, opts }
-}
-
-
 function getText (labelProps = { text: '' }, resolution, opts = {}) {
   if (resolution > opts.maxreso) return ''
 
@@ -74,23 +62,6 @@ function getText (labelProps = { text: '' }, resolution, opts = {}) {
       return stringDivider(labelProps.text, 32, '\n')
     default:
       return labelProps.text
-  }
-}
-
-function getTextWidth (text = '', map) {
-  // We want the width of the longest line of text so split with \n and reverse sort by length
-  const lines = text.split(`\n`).sort((a, b) => b.length - a.length)
-  // ol does not document this but if this needs to be faster we can get the context with `const ctx = map.renderer_.context_`
-  const targetEl = map.getViewport()
-  const canvas = Array.from(targetEl.children).find(child => child.tagName === 'CANVAS')
-  const ctx = canvas.getContext('2d')
-  // As of Chrome v75.0.3770.142 `CanvasRenderingContext2D.measureText()` only returns the wiodth but in the future it should be able to return additional measurement information
-  const textMetrics = ctx.measureText(lines[0])
-  const fontSize = ctx.font.split('px')[0] || 16
-
-  return {
-    width: textMetrics.width,
-    fontSize
   }
 }
 
@@ -149,7 +120,7 @@ function calcGeodesicLength (sourceProj, lineString) {
   const coordinates = projLineString.getCoordinates()
 
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    length += SPHERE.haversineDistance(coordinates[i], coordinates[i + 1])
+    length += olSphere.getDistance(coordinates[i], coordinates[i + 1])
   }
 
   return length
@@ -167,12 +138,8 @@ function convertGeodesicArea (area, units) {
 }
 
 function calcGeodesicArea (sourceProj, polygon) {
-  const projPolygon = polygon.clone().transform(sourceProj, EPSG)
-
-  const coordinates = projPolygon.getLinearRing(0).getCoordinates()
-
   /** Calculate geodesic area in meters */
-  const area = SPHERE.geodesicArea(coordinates)
+  const area = olSphere.getArea(polygon)
 
   return Math.abs(area)
 }
@@ -203,7 +170,7 @@ function calculateAreaAndDistance (map, geometry, areaUnit, distanceUnit) {
     }
   } else if (type === 'Circle') {
     // convert circle types into polygons to get accurate distance/area measurements when resizing
-    const polygonGeom = olGeomPolygon.fromCircle(geometry)
+    const polygonGeom = fromCircle(geometry)
 
     return calculateAreaAndDistance(map, polygonGeom, areaUnit, distanceUnit)
   } else if (type === 'Polygon') {
@@ -269,11 +236,11 @@ function transform (value, projection, toWgs84) {
   })
 
   return toWgs84
-    ? input(value, projection, type, format)
-    : output(value, projection, type, format)
+    ? transformInput(value, projection, type, format)
+    : transformOutput(value, projection, type, format)
 }
 
-function input (value, projection, type, format) {
+function transformInput (value, projection, type, format) {
   switch (type) {
     case 'coordinate':
       return olProj.toLonLat(value, projection)
@@ -292,7 +259,7 @@ function input (value, projection, type, format) {
   }
 }
 
-function output (value, projection, type, format) {
+function transformOutput (value, projection, type, format) {
   switch (type) {
     case 'coordinate':
       return olProj.transform(value, 'EPSG:4326', projection)
@@ -306,7 +273,7 @@ function output (value, projection, type, format) {
       return value.map(item => {
         const itemType = describeType(item).type
 
-        return output(item, projection, itemType, format)
+        return transformOutput(item, projection, itemType, format)
       })
     case 'geojsonCollection':
       return format.readFeatures(value)
@@ -394,7 +361,7 @@ function getCoordinates (geometry, optCircle = false) {
     case 'GeometryCollection':
       return geometry.getGeometries().map(geom => getCoordinates(geom, optCircle))
     case 'Circle':
-      return optCircle ? geometry.getCenter() : olGeomPolygon.fromCircle(geometry).getCoordinates()
+      return optCircle ? geometry.getCenter() : fromCircle(geometry).getCoordinates()
     default:
       try {
         return geometry.getCoordinates()
@@ -477,8 +444,7 @@ export function getStyledFeatures (layers, resolution) {
   return featureStyles
 }
 
-function getVertices (args) {
-  const { feature } = resolveStyleFunctionArgs(args)
+function getVertices (feature, resolution) {
   const geometry = feature.getGeometry()
 
   switch (geometry.getType()) {
@@ -532,13 +498,12 @@ function pairCoords (flatCoords) {
 /**
  * Style ol/features
  * @function
- * @param {object} opts - The config object
  * @param {ol/Feature} feature - The feature you want to style
  * @param {number} resolution - the resolution of the map
+ * @param {object} opts - The config object
  * @returns {object} The style object for the passed feature
  */
-export function styleText (...args) {
-  const { feature, resolution, opts } = resolveStyleFunctionArgs(args)
+export function styleText (feature, resolution, opts) {
   const label = feature.get('_vmf_label')
   const isMeasurement = feature.get('_vmf_type') === '_vmf_measurement'
   const isCentroidLabel = feature.get('_ol_kit_needs_centroid_label')
@@ -696,13 +661,13 @@ export function coordinateLabel (pointGeometry, resolution, opts) {
   })
 
   return new olStyleStyle({
-    text: styleText({
+    text: styleText(pointFeature, resolution, {
       store: opts,
       placement: 'point',
       maxAngle: Math.PI / 4,
       textAlign: undefined,
       textBaseline: 'hanging'
-    }, pointFeature, resolution),
+    }),
     geometry: geom
   })
 }
@@ -718,13 +683,13 @@ export function lengthLabel (lineGeometry, resolution, opts) {
   })
 
   return new olStyleStyle({
-    text: styleText({
+    text: styleText(perimeterFeature, resolution, {
       store: opts,
       placement: 'line',
       maxAngle: Math.PI / 4,
       textAlign: undefined,
       textBaseline: 'hanging'
-    }, perimeterFeature, resolution),
+    }),
     geometry: geom
   })
 }
@@ -741,13 +706,13 @@ export function perimeterLabel (polygonGeometry, resolution, opts) {
   })
 
   return new olStyleStyle({
-    text: styleText({
+    text: styleText(perimeterFeature, resolution, {
       store: opts,
       placement: 'line',
       maxAngle: Math.PI / 4,
       textAlign: undefined,
       textBaseline: 'hanging'
-    }, perimeterFeature, resolution),
+    }),
     geometry: clonedGeom
   })
 }
@@ -771,11 +736,11 @@ export function perimeterSegmentLabels (polygonGeometry, resolution, opts) {
     })
 
     labelStyles.push(new olStyleStyle({
-      text: styleText({
+      text: styleText(segmentFeature, resolution, {
         store: opts,
         placement: 'line',
         textBaseline: 'hanging'
-      }, segmentFeature, resolution),
+      }),
       geometry: segmentGeom
     }))
   }
@@ -794,9 +759,9 @@ export function areaLabel (polygonGeometry, resolution, opts) {
   })
 
   return new olStyleStyle({
-    text: styleText({
+    text: styleText(areaFeature, resolution, {
       store: opts
-    }, areaFeature, resolution),
+    }),
     geometry: areaGeometry
   })
 }
@@ -813,13 +778,13 @@ export function centroidLabel (geometry, resolution, opts) {
   })
 
   return new olStyleStyle({
-    text: styleText({
+    text: styleText(pointFeature, resolution, {
       store: opts,
       placement: 'point',
       maxAngle: Math.PI / 4,
       textAlign: undefined,
       textBaseline: 'hanging'
-    }, pointFeature, resolution),
+    }),
     geometry: point
   })
 }

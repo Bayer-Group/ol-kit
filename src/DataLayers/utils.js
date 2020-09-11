@@ -4,8 +4,8 @@ import olCircleStyle from 'ol/style/Circle'
 import olFill from 'ol/style/Fill'
 import olStroke from 'ol/style/Stroke'
 import Map from 'ol/Map'
-import GeoJSON from 'ol/format/geojson'
-import KML from 'ol/format/kml'
+import GeoJSON from 'ol/format/GeoJSON'
+import KML from 'ol/format/KML'
 import { VectorLayer } from 'classes'
 import ugh from 'ugh'
 
@@ -92,7 +92,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
   // create the layer and add features
   const source = new olVectorSource()
-  const layer = new VectorLayer({ renderMode: 'image', source })
+  const layer = new VectorLayer({ source })
 
   // set attribute for LayerPanel title
   layer.set('title', 'Data Layer')

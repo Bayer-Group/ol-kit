@@ -5,11 +5,11 @@ import olMap from 'ol/Map'
 import LayerStyler from './LayerStyler'
 import VectorLayer from '../classes/VectorLayer'
 import olVectorSource from 'ol/source/Vector'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olFill from 'ol/style/fill'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
+import olFill from 'ol/style/Fill'
 import olCircleStyle from 'ol/style/Circle'
-import olFormatGeoJSON from 'ol/format/geojson'
+import olFormatGeoJSON from 'ol/format/GeoJSON'
 
 const geojsonObject = {
   type: 'FeatureCollection',

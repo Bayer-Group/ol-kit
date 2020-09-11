@@ -1,4 +1,4 @@
-import wktFormat from 'ol/format/wkt'
+import wktFormat from 'ol/format/WKT'
 
 /**
  * Convert a feature to a WKT string

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, IconButton } from './styled'
-import olDrawInteraction from 'ol/interaction/draw'
+import olDrawInteraction, { createBox } from 'ol/interaction/Draw'
 import CropSquareSharpIcon from '@material-ui/icons/CropSquareSharp'
 
 const BOX_CONFIG = {
   type: 'Circle',
-  geometryFunction: olDrawInteraction.createBox()
+  geometryFunction: createBox()
 }
 
 /**

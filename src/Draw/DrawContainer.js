@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import olDrawInteraction from 'ol/interaction/draw'
+import olLayerVector from 'ol/layer/Vector'
+import olSourceVector from 'ol/source/Vector'
+import olDrawInteraction, { createBox } from 'ol/interaction/Draw'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Draw from './Draw'
 import { Measure } from 'Measure'
@@ -92,6 +92,7 @@ class DrawContainer extends React.Component {
       return exists
     } else {
       const layer = new olLayerVector({
+        className: `_ol_kit_${title}`,
         _vmf_id: nanoid(),
         _vmf_title: title,
         title: 'Annotations',
@@ -123,7 +124,7 @@ class DrawContainer extends React.Component {
     const distanceLabelsEnabled = this.safeGetPreference('_DISTANCE_LABEL_ENABLED')
     const areaLabelsEnabled = this.safeGetPreference('_AREA_LABEL_ENABLED')
     const opts = { distanceUOM, areaUOM, map }
-    const isBoxDraw = target.geometryFunction_?.toString() === olDrawInteraction.createBox().toString()
+    const isBoxDraw = target.geometryFunction_?.toString() === createBox().toString()
     const drawMode = isBoxDraw ? 'Box' : target.mode_
     const isFreehand = target.freehand_
 

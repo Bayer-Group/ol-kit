@@ -46,18 +46,19 @@ exports[`<BasemapManager /> should render a basic prebuilt DrawContainer compone
     [36m</div>[39m
     [36m<div[39m
       [33mclass[39m=[32m\\"ol-viewport\\"[39m
-      [33mdata-view[39m=[32m\\"2\\"[39m
       [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
     [36m>[39m
-      [36m<canvas[39m
-        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
-        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: none;\\"[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-unselectable ol-layers\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; width: 100%; height: 100%; z-index: 0; display: none;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;\\"[39m
       [36m/>[39m
     [36m</div>[39m
   [36m</div>[39m
@@ -138,7 +139,7 @@ exports[`<BasemapManager /> should render a basic prebuilt DrawContainer compone
                       [33mclass[39m=[32m\\"PrivateSwitchBase-input-19 MuiSwitch-input\\"[39m
                       [33mdata-testid[39m=[32m\\"geokit-MeasureLabelPreference-uomToggle\\"[39m
                       [33mtype[39m=[32m\\"checkbox\\"[39m
-                      [33mvalue[39m=[32m\\"\\"[39m
+                      [33mvalue[39m=[32m\\"false\\"[39m
                     [36m/>[39m
                     [36m<span[39m
                       [33mclass[39m=[32m\\"MuiSwitch-thumb\\"[39m
@@ -163,12 +164,7 @@ exports[`<BasemapManager /> should render a basic prebuilt DrawContainer compone
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput-underline\\"[39m
-              [33mdata-testid[39m=[32m\\"geokit-MeasureLabelPreference-uomOptions\\"[39m
-            [36m>[39m
-              [36m<div[39m
-                [33maria-haspopup[39m=[32m\\"listbox\\"[39m
-                [33mclass[39m..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput-underline\\"..."
 `;
 
 exports[`<BasemapManager /> should render a single child 1`] = `
@@ -217,18 +213,19 @@ exports[`<BasemapManager /> should render a single child 1`] = `
     [36m</div>[39m
     [36m<div[39m
       [33mclass[39m=[32m\\"ol-viewport\\"[39m
-      [33mdata-view[39m=[32m\\"24\\"[39m
       [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
     [36m>[39m
-      [36m<canvas[39m
-        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
-        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: none;\\"[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-unselectable ol-layers\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; width: 100%; height: 100%; z-index: 0;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;\\"[39m
       [36m/>[39m
     [36m</div>[39m
   [36m</div>[39m
@@ -290,18 +287,19 @@ exports[`<BasemapManager /> should render an array of children 1`] = `
     [36m</div>[39m
     [36m<div[39m
       [33mclass[39m=[32m\\"ol-viewport\\"[39m
-      [33mdata-view[39m=[32m\\"46\\"[39m
       [33mstyle[39m=[32m\\"position: relative; overflow: hidden; width: 100%; height: 100%;\\"[39m
     [36m>[39m
-      [36m<canvas[39m
-        [33mclass[39m=[32m\\"ol-unselectable\\"[39m
-        [33mstyle[39m=[32m\\"width: 100%; height: 100%; display: none;\\"[39m
+      [36m<div[39m
+        [33mclass[39m=[32m\\"ol-unselectable ol-layers\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; width: 100%; height: 100%; z-index: 0; display: none;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer-stopevent\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;\\"[39m
       [36m/>[39m
     [36m</div>[39m
   [36m</div>[39m

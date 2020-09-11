@@ -50,7 +50,7 @@ describe('<Map />', () => {
     // wait for async child render
     await waitFor(() => {}, { container })
 
-    // make sure a <canvas> element is within the rendered html
+    // make sure a <ol-viewport> element is within the rendered html
     expect(prettyDOM(testMap.getTargetElement())).toEqual(expect.stringContaining('ol-viewport'))
   })
 

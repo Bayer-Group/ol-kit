@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerTile from 'ol/layer/tile'
+import olLayerTile from 'ol/layer/Tile'
 import olSourceOSM from 'ol/source/OSM'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
@@ -34,6 +34,7 @@ class BasemapOpenStreetMap extends React.Component {
       crossOrigin: 'Anonymous'
     })
     const layer = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
       preload: Infinity,
       extent: undefined,
       [layerTypeID]: 'osm', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.

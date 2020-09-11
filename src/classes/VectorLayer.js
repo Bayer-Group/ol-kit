@@ -1,3 +1,4 @@
+import nanoid from 'nanoid'
 import olLayerVector from 'ol/layer/Vector'
 import OpenLayersParser from 'geostyler-openlayers-parser'
 import olStyleStyle from 'ol/style/Style'
@@ -18,6 +19,7 @@ import olGeomMultiLinestring from 'ol/geom/MultiLineString'
  */
 class VectorLayer extends olLayerVector {
   constructor (opts) {
+    if (!opts?.className) opts.className = `_ol_kit_vector_layer_${nanoid()}`
     super(opts)
 
     this.parser = new OpenLayersParser()
@@ -156,8 +158,7 @@ class VectorLayer extends olLayerVector {
         image: new olStyleCircle({
           fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
           stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
-          radius: 5,
-          snapToPixel: true
+          radius: 5
         })
       })]
     } else if (geomType instanceof olGeomLinestring || geomType instanceof olGeomMultiLinestring) {

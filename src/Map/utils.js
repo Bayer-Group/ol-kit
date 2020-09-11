@@ -1,7 +1,7 @@
 import React from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import TileLayer from 'ol/layer/tile'
+import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { transform } from 'ol/proj'
 import olInteractionSelect from 'ol/interaction/Select'
@@ -35,6 +35,7 @@ export function createMap (opts = {}) {
     }),
     layers: [
       new TileLayer({
+        className: '_ol_kit_basemap_layer',
         _ol_kit_basemap: 'osm', // used by BasemapManager
         source: new OSM()
       })
