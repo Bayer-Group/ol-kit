@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core'
 export const HeaderContainer = styled.div`
   padding-top: 15px;
   background: #eeeeee;
+  display: flex;
+  align-items: center;
 `
 
 export const InputContainer = styled.div`
@@ -13,8 +15,6 @@ export const InputContainer = styled.div`
 `
 
 export const FilterContainer = styled.div`
-  display: inline-block;
-  padding: 36px 0;
   text-align: center;
   vertical-align: top;
 `

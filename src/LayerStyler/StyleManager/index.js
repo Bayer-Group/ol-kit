@@ -167,7 +167,14 @@ class StyleManager extends Component {
       return Object.values(dedup).map(group => group.reverse())
     }
     const layerTitles = layers.map(getTitleForLayer)
-    const layerSelected = activeIdx !== null
+    const layerSelected = activeIdx !== null // eslint-disable-line
+    let tooltipMsg = ''
+
+    if (!layerSelected) {
+      tooltipMsg = 'Select a Geoserver Layer to filter attributes'
+    } else if (!layers[activeIdx].isGeoserverLayer) {
+      tooltipMsg = 'VectorLayers dont have filter capabilities, only Geoserver Layers do'
+    }
 
     return (
       <div data-testid='StyleManager'>
@@ -189,7 +196,9 @@ class StyleManager extends Component {
               </Select>
             </FormControl>
           </InputContainer>
-          <Tooltip title='VectorLayers dont have filter capabilities' placement='top'>
+          <Tooltip disableHoverListener={layerSelected && layers[activeIdx].isGeoserverLayer}
+            title={tooltipMsg}
+            placement='top'>
             <FilterContainer>
               <AttributesFilter
                 translations={translations}
