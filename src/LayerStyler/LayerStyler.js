@@ -174,8 +174,6 @@ class LayerStyler extends React.Component {
       return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer)
     })
 
-    console.log(layers, validLayers)
-
     if (layers.length - validLayers.length > 1) {
       ugh.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer')
     }
@@ -220,7 +218,9 @@ LayerStyler.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object.isRequired,
 
-  whitelistedLayers: PropTypes.array
+  whitelistedLayers: PropTypes.array,
+
+  onComponentMount: PropTypes.func
 }
 
 export default connectToMap(LayerStyler)
