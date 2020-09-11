@@ -24,8 +24,8 @@ module.exports = {
     // Create aliases to import or require certain modules more easily
     alias: {
       // these ensure we don't have duplicate versions on the same page
-      '@bayer/ol-kit': path.resolve(__dirname, '../', 'src')
-      //'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
+      '@bayer/ol-kit': path.resolve(__dirname, '../', 'src'),
+      // 'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
     }
   },
 

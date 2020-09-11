@@ -63,6 +63,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (typeof event !== 'object') return ugh.error('getLayersAndFeaturesForEvent first arg must be an object') // eslint-disable-line
   const { map, pixel } = event
   const promises = []
+  const clickCoordinate = map.getCoordinateFromPixel(pixel)
 
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
@@ -94,7 +95,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
     if (source instanceof olSourceCluster) {
       // support for clustered feature clicks
-      const clickCoordinate = map.getCoordinateFromPixel(pixel)
       const clusteredFeatures = source.getClosestFeatureToCoordinate(clickCoordinate).get('features')
 
       features = clusteredFeatures
@@ -131,13 +131,35 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     }
   }
 
+  const exhaustiveVectorFeaturesAtPixel = layer => {
+    const exhaustivePromise = new Promise(async resolve => {
+      let orphanedFeatures = []
+
+      layer?.getSource?.()?.getFeatures?.()?.forEach(f => {
+        if (f.getGeometry().intersectsCoordinate(clickCoordinate)) {
+          orphanedFeatures.push(f)
+        }
+      })
+      const { features } = await setParentLayer({ features: orphanedFeatures, layer })
+
+      resolve({ features, layer })
+    })
+
+    promises.push(exhaustivePromise)
+  }
+
   // check for featuresAtPixel to account for hitTolerance
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
-    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
+    layerFilter: () => true,
+    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 10,
+    checkWrapped: true
   })
 
+  // as of ol v6.x getFeaturesAtPixel is not very reliable so we perform an exhaustive search asynchronously
+  map.getLayers().forEach(exhaustiveVectorFeaturesAtPixel)
+
   // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel?.length) map.getLayers().getArray().forEach(wfsSelector)
+  if (featuresAtPixel?.length) map.getLayers().forEach(wfsSelector)
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)
