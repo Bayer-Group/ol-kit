@@ -25,7 +25,8 @@ class LayerStyler extends React.Component {
 
     this.state = {
       attributeValues: [],
-      listeners: []
+      listeners: [],
+      whitelistedLayers: props.whitelistedLayers
     }
   }
 
@@ -42,6 +43,8 @@ class LayerStyler extends React.Component {
 
     // make sure the attributes get updated each time the view extent changes
     const listeners = addMovementListener(map, () => this.forceUpdate())
+
+    this.props.onComponentMount()
 
     this.setState({ listeners })
   }
@@ -171,6 +174,8 @@ class LayerStyler extends React.Component {
       return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer)
     })
 
+    console.log(layers, validLayers)
+
     if (layers.length - validLayers.length > 1) {
       ugh.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer')
     }
@@ -204,12 +209,18 @@ class LayerStyler extends React.Component {
   }
 }
 
+LayerStyler.defaultProps = {
+  whitelistedLayers: []
+}
+
 LayerStyler.propTypes = {
   /** Openlayers map object */
   map: PropTypes.object.isRequired,
 
   /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object.isRequired
+  translations: PropTypes.object.isRequired,
+
+  whitelistedLayers: PropTypes.array
 }
 
 export default connectToMap(LayerStyler)

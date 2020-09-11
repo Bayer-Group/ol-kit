@@ -10,7 +10,8 @@ import { connectToMap } from 'Map'
 import LabelStyler from 'LayerStyler/_LabelStyler'
 import LayerStyler from 'LayerStyler/_LayerStyler'
 import SelectTabs from 'LayerStyler/_SelectTabs'
-import { HeaderContainer, InputContainer } from './styled'
+import AttributesFilter from 'LayerStyler/_AttributesFilter'
+import { HeaderContainer, InputContainer, FilterContainer, Tooltip } from './styled'
 
 const DEFAULT_LABEL_STYLE = {
   name: 'New Label Style',
@@ -155,7 +156,7 @@ class StyleManager extends Component {
 
       const dedup = {}
 
-      styles?.forEach((s, i) => {
+      styles?.forEach((s, i) => { // eslint-disable-line
         const key = JSON.stringify(trimFilters(s.filter))
         const val = dedup[key] ? [...dedup[key], { ...s, _index: i }] : [{ ...s, _index: i }]
 
@@ -188,13 +189,26 @@ class StyleManager extends Component {
               </Select>
             </FormControl>
           </InputContainer>
+          <Tooltip title='VectorLayers dont have filter capabilities' placement='top'>
+            <FilterContainer>
+              <AttributesFilter
+                translations={translations}
+                disabled={!layerSelected || !layers[activeIdx].isGeoserverLayer}
+                filters={filters[activeIdx]}
+                filterConditions={['is']}
+                attributes={getAttributesForLayer(layers[activeIdx])}
+                attributeValues={attributeValues}
+                onUpdateFilters={this.onFilterChange}
+                getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)} />
+            </FilterContainer>
+          </Tooltip>
         </HeaderContainer>
         {layerSelected &&
           <SelectTabs>
             <div title={translations['_ol_kit.StyleManager.styleTab']}>
               <LayerStyler
                 inputProps={{
-                  'data-testid':'StyleManager.customStyles'
+                  'data-testid': 'StyleManager.customStyles'
                 }}
                 translations={translations}
                 heading={`${translations['_ol_kit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
@@ -210,7 +224,7 @@ class StyleManager extends Component {
                 onStylesChange={this.onUserStyleChange} />
               <LayerStyler
                 inputProps={{
-                  'data-testid':'StyleManager.defaultStyles'
+                  'data-testid': 'StyleManager.defaultStyles'
                 }}
                 translations={translations}
                 heading={`${translations['_ol_kit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}

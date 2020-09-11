@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
+import MaterialButton from '@material-ui/core/Button'
 import MaterialPopover from '@material-ui/core/Popover'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -10,6 +10,15 @@ const Popover = withStyles(() => ({
     overflowY: 'visible'
   }
 }))(MaterialPopover)
+
+const Button = withStyles(() => ({
+  root: {
+    padding: '6px 16px !important',
+    borderRadius: '4px !important',
+    color: 'rgba(0, 0, 0, 0.87) !important',
+    backgroundColor: '#e0e0e0 !important'
+  }
+}))(MaterialButton)
 
 class PopoverBuilder extends React.Component {
   constructor () {

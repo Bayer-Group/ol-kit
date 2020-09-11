@@ -225,12 +225,10 @@ class StyleGroup extends Component {
                 </Fragment>
               )
           })}
-          <AddNewContainer>
-            <AddNew onClick={this.onNewStyleValue}>
-              <AddCircleIcon />
-              {translations['_ol_kit.StyleGroup.addValue']}
-            </AddNew>
-          </AddNewContainer>
+          <AddNew onClick={this.onNewStyleValue}>
+            <AddCircleIcon style={{ paddingRight: '5px' }} />
+            {translations['_ol_kit.StyleGroup.addValue']}
+          </AddNew>
         </div>
       </Card>
     )

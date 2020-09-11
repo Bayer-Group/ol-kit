@@ -25,7 +25,7 @@ export const Half = styled.div`
 export const Fourth = styled.div`
   display: flex;
   flex-direction: column;
-  wtitleth: 15%;
+  width: 15%;
   vertical-align: top;
 `
 
