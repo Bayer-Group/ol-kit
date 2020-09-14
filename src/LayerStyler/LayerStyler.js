@@ -208,7 +208,8 @@ class LayerStyler extends React.Component {
 }
 
 LayerStyler.defaultProps = {
-  whitelistedLayers: []
+  whitelistedLayers: [],
+  onComponentMount: () => {}
 }
 
 LayerStyler.propTypes = {
