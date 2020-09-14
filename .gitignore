@@ -11,4 +11,3 @@ node_modules/
 *.iml
 .parcel-cache
 .DS_Store
-.vscode
