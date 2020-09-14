@@ -120,6 +120,8 @@ class Popup extends Component {
       return [...acc, ...features]
     }, [])
 
+    if(!parsedFeatures.length) return this.hidePopup()
+
     // ol returns these in reverse z-index order
     const features = parsedFeatures.reverse()
     const popupPosition = getPopupPositionFromFeatures(e, features)

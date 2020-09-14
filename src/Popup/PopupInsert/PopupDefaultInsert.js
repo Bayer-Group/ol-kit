@@ -116,10 +116,13 @@ class PopupDefaultInsert extends Component {
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
 
+    // dedupe the features to remove possible duplicates introduced in ol6
+    const dedupedFeatures = [...new Set(features).values()]
+
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
-        {features.length
-          ? features.map((f, i) => (
+        {dedupedFeatures.length
+          ? dedupedFeatures.map((f, i) => (
               <PopupDefaultPage
                 attributes={propertiesFilter(f.getProperties())}
                 key={i}

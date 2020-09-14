@@ -151,7 +151,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   // check for featuresAtPixel to account for hitTolerance
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
     layerFilter: () => true,
-    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 10,
+    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3,
     checkWrapped: true
   })
 
