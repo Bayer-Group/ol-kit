@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<BasemapManager /> should render a basic prebuilt DrawContainer component 1`] = `
+exports[`<DrawContainer /> should render a basic prebuilt DrawContainer component 1`] = `
 "[36m<div>[39m
   [36m<div[39m
     [33mclass[39m=[32m\\"sc-AxhCb gdoKRR\\"[39m
@@ -171,7 +171,7 @@ exports[`<BasemapManager /> should render a basic prebuilt DrawContainer compone
                 [..."
 `;
 
-exports[`<BasemapManager /> should render a single child 1`] = `
+exports[`<DrawContainer /> should render a single child 1`] = `
 "[36m<div>[39m
   [36m<div[39m
     [33mclass[39m=[32m\\"sc-AxhCb gdoKRR\\"[39m
@@ -244,7 +244,7 @@ exports[`<BasemapManager /> should render a single child 1`] = `
 [36m</div>[39m"
 `;
 
-exports[`<BasemapManager /> should render an array of children 1`] = `
+exports[`<DrawContainer /> should render an array of children 1`] = `
 "[36m<div>[39m
   [36m<div[39m
     [33mclass[39m=[32m\\"sc-AxhCb gdoKRR\\"[39m
