@@ -5,7 +5,7 @@ import { Map } from 'Map'
 import BasemapManager from './BasemapManager'
 
 describe('<BasemapManager />', () => {
-  it('should render a basic basemap manager component', async () => {
+  it.skip('should render a basic basemap manager component', async () => {
     const { container } = render(<Map><BasemapManager inlineProp={true} /></Map>)
 
     // wait for async child render
