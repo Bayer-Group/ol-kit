@@ -1,3 +1,5 @@
+import { version } from '../../package.json'
+
 export default {
   // Basemap
   '_ol_kit.BingMaps.title': 'Bing Maps',
@@ -57,6 +59,7 @@ export default {
   '_ol_kit.StyleManager.labelTab': 'Labels',
   '_ol_kit.StyleManager.styleTab': 'Styles',
   // MapLogo
+  '_ol_kit.MapLogo.hover': `Powered by ol-kit v${version}`,
   '_ol_kit.MapLogo.title': 'Powered by ol-kit',
   // Popup
   '_ol_kit.PopupDefaultPage.actions': 'Actions',
