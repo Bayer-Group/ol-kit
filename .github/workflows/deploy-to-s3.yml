@@ -3,7 +3,7 @@ name: Deploy to Amazon S3
 on:
   push:
     branches:
-      - master
+      - 1.0.0-beta
 
 jobs:
   deploy:

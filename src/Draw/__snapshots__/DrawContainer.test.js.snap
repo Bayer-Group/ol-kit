@@ -18,7 +18,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
         [33mclass[39m=[32m\\"sc-AxirZ flfhYH\\"[39m
         [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
         [33mtarget[39m=[32m\\"_blank\\"[39m
-        [33mtitle[39m=[32m\\"Powered by ol-kit\\"[39m
+        [33mtitle[39m=[32m\\"Powered by ol-kit v1.0.0-beta\\"[39m
       [36m>[39m
         [36m<svg[39m
           [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
@@ -164,7 +164,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput-underline\\"..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput..."
 `;
 
 exports[`<DrawContainer /> should render a single child 1`] = `
