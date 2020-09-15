@@ -63,7 +63,6 @@ class LayerStyler extends Component {
     const { styles, onStylesChange } = this.props
     const newStyles = [...styles]
 
-
     // this reverse is done b/c the incoming styles are reversed so
     // the top-most item is actually the last item rendered by GS so it's "on top"
     // in the z index stack
@@ -125,7 +124,7 @@ class LayerStyler extends Component {
 
               return <StyleGroup
                 inputProps={{
-                  'data-testid':'LayerStyler.StyleGroup'
+                  'data-testid': 'LayerStyler.StyleGroup'
                 }}
                 translations={translations}
                 commaDelimitedAttributes={commaDelimitedAttributes}
@@ -222,7 +221,7 @@ LayerStyler.propTypes = {
   /** Callback function which resolves a promise to the values available for a given attribute */
   getValuesForAttribute: PropTypes.func,
 
-  attributeValues: PropTypes.array,
+  attributeValues: PropTypes.array
 }
 
 LayerStyler.defaultProps = {

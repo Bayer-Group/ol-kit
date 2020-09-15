@@ -24,7 +24,8 @@ class LayerStyler extends React.Component {
 
     this.state = {
       attributeValues: [],
-      listeners: []
+      listeners: [],
+      whitelistedLayers: props.whitelistedLayers
     }
   }
 
@@ -203,12 +204,18 @@ class LayerStyler extends React.Component {
   }
 }
 
+LayerStyler.defaultProps = {
+  whitelistedLayers: []
+}
+
 LayerStyler.propTypes = {
   /** Openlayers map object */
   map: PropTypes.object.isRequired,
 
   /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object.isRequired
+  translations: PropTypes.object.isRequired,
+
+  whitelistedLayers: PropTypes.array
 }
 
 export default connectToMap(LayerStyler)
