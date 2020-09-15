@@ -44,8 +44,6 @@ class LayerStyler extends React.Component {
     // make sure the attributes get updated each time the view extent changes
     const listeners = addMovementListener(map, () => this.forceUpdate())
 
-    this.props.onComponentMount()
-
     this.setState({ listeners })
   }
 
@@ -208,8 +206,7 @@ class LayerStyler extends React.Component {
 }
 
 LayerStyler.defaultProps = {
-  whitelistedLayers: [],
-  onComponentMount: () => {}
+  whitelistedLayers: []
 }
 
 LayerStyler.propTypes = {
@@ -219,9 +216,8 @@ LayerStyler.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object.isRequired,
 
-  whitelistedLayers: PropTypes.array,
-
-  onComponentMount: PropTypes.func
+  /** An array of layer typenames that will be used for a whitelist */
+  whitelistedLayers: PropTypes.array
 }
 
 export default connectToMap(LayerStyler)

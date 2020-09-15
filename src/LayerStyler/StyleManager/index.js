@@ -171,9 +171,9 @@ class StyleManager extends Component {
     let tooltipMsg = ''
 
     if (!layerSelected) {
-      tooltipMsg = 'Select a Geoserver Layer to filter attributes'
+      tooltipMsg = translations['_ol_kit.StyleManager.noLayerSelected']
     } else if (!layers[activeIdx].isGeoserverLayer) {
-      tooltipMsg = 'VectorLayers dont have filter capabilities, only Geoserver Layers do'
+      tooltipMsg = translations['_ol_kit.StyleManager.fitlerTooltip']
     }
 
     return (
