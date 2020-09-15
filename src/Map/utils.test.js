@@ -15,7 +15,7 @@ describe('createMap', () => {
     const map = createMap({ target: 'test-id' })
 
     expect(typeof map).toEqual('object')
-    expect(map.constructor.name).toBe('_ol_Map_')
+    expect(map.constructor.name).toBe('Map')
   })
 
   it('createMap should return a map when given a DOM element', () => {
@@ -25,7 +25,7 @@ describe('createMap', () => {
     const map = createMap({ target: el })
 
     expect(typeof map).toEqual('object')
-    expect(map.constructor.name).toBe('_ol_Map_')
+    expect(map.constructor.name).toBe('Map')
   })
 
   it('createMap called without arguments throws an error', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import olFormatWkt from 'ol/format/wkt'
+import olFormatWkt from 'ol/format/WKT'
 
 import { Map } from 'Map'
 import { PopupActionCopyWkt, convertFeatureToWkt } from 'Popup/PopupActions/PopupActionCopyWkt'

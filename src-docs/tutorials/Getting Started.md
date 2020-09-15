@@ -45,7 +45,7 @@ If you prefer creating your own `ol.Map` (see: [how to create a custom map](http
 ```javascript
 import React, { Component } from 'react'
 import { Map } from '@bayer/ol-kit'
-import olMap from 'ol/map'
+import olMap from 'ol/Map'
 
 class App extends Component {
   constructor(props) {

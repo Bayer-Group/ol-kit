@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StyleManager from 'LayerStyler/StyleManager'
-import olObservable from 'ol/observable'
-import olFormatFilterAnd from 'ol/format/filter/and'
-import olFormatFilterOr from 'ol/format/filter/or'
-import olFormatFilterEqualTo from 'ol/format/filter/equalto'
-import olFormatFilterIsLike from 'ol/format/filter/islike'
+import olFormatFilterAnd from 'ol/format/filter/And'
+import olFormatFilterOr from 'ol/format/filter/Or'
+import olFormatFilterEqualTo from 'ol/format/filter/EqualTo'
+import olFormatFilterIsLike from 'ol/format/filter/IsLike'
 import olFilterFunction from '../classes/FilterFunction'
 import ugh from 'ugh'
 
 import escapeRegExp from 'lodash.escaperegexp'
 
-import { addMovementListener } from 'Popup'
+import { addMovementListener, removeMovementListener } from 'Popup'
 import { connectToMap } from 'Map'
 
 /**
@@ -35,24 +34,22 @@ class LayerStyler extends React.Component {
     const layers = map.getLayers()
 
     // if a layer is added or removed, the list of layers should be updated
-    const handleMapChange = (e) => this.forceUpdate()
+    const handleLayersChange = (e) => this.forceUpdate()
 
     // bind the event listeners
-    this.onAddKey = layers.on('add', handleMapChange)
-    this.onRemoveKey = layers.on('remove', handleMapChange)
+    const onAddKey = layers.on('add', handleLayersChange)
+    const onRemoveKey = layers.on('remove', handleLayersChange)
 
     // make sure the attributes get updated each time the view extent changes
     const listeners = addMovementListener(map, () => this.forceUpdate())
 
-    this.props.onComponentMount()
-
-    this.setState({ listeners })
+    this.setState({ listeners: [...listeners, onAddKey, onRemoveKey] })
   }
 
   componentWillUnmount () {
     const { listeners } = this.state
 
-    listeners.forEach(listener => olObservable.unByKey(listener))
+    removeMovementListener(listeners)
   }
 
   getTitleForLayer = (layer) => {
@@ -208,8 +205,7 @@ class LayerStyler extends React.Component {
 }
 
 LayerStyler.defaultProps = {
-  whitelistedLayers: [],
-  onComponentMount: () => {}
+  whitelistedLayers: []
 }
 
 LayerStyler.propTypes = {
@@ -219,9 +215,7 @@ LayerStyler.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object.isRequired,
 
-  whitelistedLayers: PropTypes.array,
-
-  onComponentMount: PropTypes.func
+  whitelistedLayers: PropTypes.array
 }
 
 export default connectToMap(LayerStyler)

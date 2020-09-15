@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import olInteractionDraw from 'ol/interaction/draw'
+import olInteractionDraw from 'ol/interaction/Draw'
 
 import { connectToMap } from 'Map'
 import PopupBase from './PopupBase'
@@ -119,6 +119,8 @@ class Popup extends Component {
     const parsedFeatures = layers.reduce((acc, { features }) => {
       return [...acc, ...features]
     }, [])
+
+    if(!parsedFeatures.length) return this.hidePopup()
 
     // ol returns these in reverse z-index order
     const features = parsedFeatures.reverse()

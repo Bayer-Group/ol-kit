@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
+import olLayerVector from 'ol/layer/Vector'
+import olSourceVector from 'ol/source/Vector'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { connectToMap } from 'Map'; // eslint-disable-line
 
@@ -27,6 +27,7 @@ class BasemapBlankWhite extends React.Component {
   onClick = () => {
     const { map, layerTypeID, onBasemapChanged } = this.props
     const layer = new olLayerVector({
+      className: '_ol_kit_basemap_layer',
       [layerTypeID]: 'blankWhite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source: new olSourceVector()
     })

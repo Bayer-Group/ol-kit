@@ -10,14 +10,14 @@ import {
   LayerPanelPage,
   LayerPanelContent,
   BasemapContainer,
-  VectorLayer
+  VectorLayer,
+  DrawContainer
 } from '@bayer/ol-kit'
-
 import PaletteIcon from '@material-ui/icons/Palette'
-import olProj from 'ol/proj'
-import olFeature from 'ol/feature'
-import olGeomPoint from 'ol/geom/point'
-import olSourceVector from 'ol/source/vector'
+import { fromLonLat } from 'ol/proj'
+import olFeature from 'ol/Feature'
+import olGeomPoint from 'ol/geom/Point'
+import olSourceVector from 'ol/source/Vector'
 
 class App extends React.Component {
   onMapInit = async (map) => {
@@ -29,7 +29,7 @@ class App extends React.Component {
           feature_type: ['the lake house'],
           title: 'the lake house',
           name: 'the lake house',
-          geometry: new olGeomPoint(olProj.fromLonLat([-89.940598, 38.923107]))
+          geometry: new olGeomPoint(fromLonLat([-89.940598, 38.923107]))
         })]
       })
     })
@@ -58,6 +58,7 @@ class App extends React.Component {
         <ContextMenu />
         <Controls />
         <BasemapContainer />
+        <DrawContainer />
       </Map>
     )
   }

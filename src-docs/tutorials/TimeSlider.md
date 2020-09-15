@@ -6,15 +6,15 @@ To get the time aspect of your data to be respected on the slider, identify the 
 ```javascript
 // this is partially psuedo code (DATA_SET is made up)- don't copy/paste & expect results
 import React from 'react'
-import proj from 'ol/proj'
-import olVectorSource from 'ol/source/vector'
+import { fromLonLat } from 'ol/proj'
+import olVectorSource from 'ol/source/Vector'
 import { Map, TimeSlider, VectorLayer } from '@bayer/ol-kit'
 
 const App = () => {
   const onMapInit = async map => {
     const features = DATA_SET.map(data => {
       // example to convert lat/lon to coords
-      const coords = proj.fromLonLat(data.latlng.reverse())
+      const coords = fromLonLat(data.latlng.reverse())
       const feature = new olFeature({ geometry: new olPoint(coords) })
 
       // spread all the data keys as feature properties

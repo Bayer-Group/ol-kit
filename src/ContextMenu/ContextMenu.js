@@ -22,7 +22,7 @@ class ContextMenu extends React.Component {
       pixel: { x: 0, y: 0 }
     }
 
-    // debounce time was changed from 400 to 50 due to innacurate pointer/coords location
+    // debounce time was changed from 400 to 50 due to inaccurate pointer/coords location
     this.pointerMoveHandler = debounce(this.pointerMoveHandler, 50)
   }
 
@@ -80,7 +80,7 @@ class ContextMenu extends React.Component {
     const { latitude: lat, longitude: long } = convertXYtoLatLong(map, pointerX, pointerY)
 
     // get any features at the event location (in OL v4 no features returns null which is bad; switch to empty array)
-    const features = map.getFeaturesAtPixel([pointerX, pointerY]) || []
+    const features = map.getFeaturesAtPixel([pointerX, pointerY])
 
     this.setState({ show: true, features, pixel: { x: e.x, y: e.y }, coords: { lat, long } })
   }

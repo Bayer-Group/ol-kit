@@ -1,14 +1,14 @@
 import VectorLayer from './VectorLayer'
-import olSourceVector from 'ol/source/vector'
-import olFeature from 'ol/feature'
-import olGeomPolygon from 'ol/geom/polygon'
-import olFormatGeoJSON from 'ol/format/geojson'
-import olStyleStyle from 'ol/style/style'
-import olStyleFill from 'ol/style/fill'
-import olStyleStroke from 'ol/style/stroke'
-import olGeomPoint from 'ol/geom/point'
-import olStyleCircle from 'ol/style/circle'
-import olGeomLineString from 'ol/geom/linestring'
+import olSourceVector from 'ol/source/Vector'
+import olFeature from 'ol/Feature'
+import olGeomPolygon from 'ol/geom/Polygon'
+import olFormatGeoJSON from 'ol/format/GeoJSON'
+import olStyleStyle from 'ol/style/Style'
+import olStyleFill from 'ol/style/Fill'
+import olStyleStroke from 'ol/style/Stroke'
+import olGeomPoint from 'ol/geom/Point'
+import olStyleCircle from 'ol/style/Circle'
+import olGeomLineString from 'ol/geom/LineString'
 
 const userStyles = {
   name: 'OL Style',
@@ -32,7 +32,7 @@ const defaultStyles = [{
     width: 2,
     cap: undefined,
     join: undefined,
-    dasharray: null,
+    dasharray: undefined,
     dashOffset: undefined
   }]
 }]
@@ -46,7 +46,7 @@ const updatedDefaultStyles = [{
     width: 2,
     cap: undefined,
     join: undefined,
-    dasharray: null,
+    dasharray: undefined,
     dashOffset: undefined
   }]
 }]
@@ -91,8 +91,7 @@ describe('Vector Layer class', () => {
       image: new olStyleCircle({
         fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
         stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
-        radius: 5,
-        snapToPixel: true
+        radius: 5
       })
     })]
 

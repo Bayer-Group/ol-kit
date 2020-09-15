@@ -42,6 +42,18 @@ module.exports.drawPolygon = async function drawPolygon (page, map = 0, start = 
   await page.mouse.click(start[0], start[1], { clickCount: 2 })
 }
 
+module.exports.drawBox = async function drawBox (page, start = [500, 300], size = 700) {
+  await page.mouse.move(start[0], start[1])
+  await page.waitFor(1000)
+  await page.mouse.down()
+  await page.mouse.up()
+
+  await page.mouse.move(start[0] + size / 2, start[1] + size / 2)
+  await page.waitFor(1000)
+  await page.mouse.down()
+  await page.mouse.up()
+}
+
 module.exports.addDebugCSS = async function (page) {
   await page.addStyleTag({
     content: `*:hover {

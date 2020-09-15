@@ -1,14 +1,14 @@
 import React from 'react'
-import Map from 'ol/map'
-import View from 'ol/view'
-import TileLayer from 'ol/layer/tile'
-import OSM from 'ol/source/osm'
-import olProj from 'ol/proj'
-import olInteractionSelect from 'ol/interaction/select'
-import olFill from 'ol/style/fill'
-import olCircle from 'ol/style/circle'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
+import Map from 'ol/Map'
+import View from 'ol/View'
+import TileLayer from 'ol/layer/Tile'
+import OSM from 'ol/source/OSM'
+import { transform } from 'ol/proj'
+import olInteractionSelect from 'ol/interaction/Select'
+import olFill from 'ol/style/Fill'
+import olCircle from 'ol/style/Circle'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
 import qs from 'qs'
 
 import ugh from 'ugh'
@@ -35,6 +35,7 @@ export function createMap (opts = {}) {
     }),
     layers: [
       new TileLayer({
+        className: '_ol_kit_basemap_layer',
         _ol_kit_basemap: 'osm', // used by BasemapManager
         source: new OSM()
       })
@@ -93,7 +94,7 @@ export function connectToMap (Component) {
 export function updateUrlFromMap (map, viewParam = 'view') {
   if (!(map instanceof Map)) return ugh.throw('\'updateUrlFromMap\' requires a valid openlayers map as the first argument')
   const query = qs.parse(window.location.search, { ignoreQueryPrefix: true })
-  const coords = olProj.transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
+  const coords = transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
   const view = { [viewParam]: `${parseFloat(coords[1]).toFixed(6)},${parseFloat(coords[0]).toFixed(6)},${parseFloat(map.getView().getZoom()).toFixed(2)},${parseFloat(map.getView().getRotation()).toFixed(2)}` }
   const newQuery = { ...query, ...view }
   const queryString = qs.stringify(newQuery, { addQueryPrefix: true, encoder: (str) => str })
@@ -145,7 +146,7 @@ export function updateMapFromUrl (map, viewParam = 'view') {
  */
 export function centerAndZoom (map, opts = {}) {
   if (!(map instanceof Map)) return ugh.throw('\'centerAndZoom\' requires a valid openlayers map as the first argument')
-  const transformedCoords = olProj.transform([Number(opts.x), Number(opts.y)], 'EPSG:4326', map.getView().getProjection().getCode())
+  const transformedCoords = transform([Number(opts.x), Number(opts.y)], 'EPSG:4326', map.getView().getProjection().getCode())
 
   map.getView().setCenter(transformedCoords)
   map.getView().setZoom(opts.zoom)
@@ -165,7 +166,7 @@ export function centerAndZoom (map, opts = {}) {
  */
 export function convertXYtoLatLong (map, x, y) {
   const coords = map.getCoordinateFromPixel([x, y])
-  const transformed = olProj.transform(coords, map.getView().getProjection().getCode(), 'EPSG:4326')
+  const transformed = transform(coords, map.getView().getProjection().getCode(), 'EPSG:4326')
   const longitude = Number((Number(transformed[0] || 0) % 180).toFixed(6))
   const latitude = Number((transformed[1] || 0).toFixed(6))
 
@@ -191,7 +192,7 @@ export function createSelectInteraction () {
     image: new olCircle({
       radius: 5,
       fill: new olFill({
-        color: 'white'
+        color: '#ffffff'
       }),
       stroke: new olStroke({
         color: 'cyan',

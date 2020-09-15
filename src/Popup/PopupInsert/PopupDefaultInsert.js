@@ -1,13 +1,48 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import olSelect from 'ol/interaction/select'
 
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
+
+import Event from 'ol/events/Event'
 
 import { connectToMap } from 'Map'
 import { sanitizeProperties } from '../utils'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
+
+class SelectEvent extends Event {
+  /**
+   * @param {SelectEventType} type The event type.
+   * @param {Array<import("ol/Feature.js").default>} selected Selected features.
+   * @param {Array<import("ol/Feature.js").default>} deselected Deselected features.
+   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Associated
+   *     {@link module:ol/MapBrowserEvent}.
+   */
+  constructor(type, selected, deselected, mapBrowserEvent) {
+    super(type);
+
+    /**
+     * Selected features array.
+     * @type {Array<import("ol/Feature.js").default>}
+     * @api
+     */
+    this.selected = selected;
+
+    /**
+     * Deselected features array.
+     * @type {Array<import("ol/Feature.js").default>}
+     * @api
+     */
+    this.deselected = deselected;
+
+    /**
+     * Associated {@link module:ol/MapBrowserEvent}.
+     * @type {import("ol/MapBrowserEvent.js").default}
+     * @api
+     */
+    this.mapBrowserEvent = mapBrowserEvent;
+  }
+}
 
 /**
  * @component
@@ -51,7 +86,7 @@ class PopupDefaultInsert extends Component {
     const { selectInteraction } = this.props
     const deselected = selectInteraction.getFeatures().getArray()
     const selected = [feature]
-    const event = new olSelect.Event('select', selected, deselected)
+    const event = new SelectEvent('select', selected, deselected)
 
     // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
     selectInteraction.getFeatures().clear()
@@ -81,10 +116,13 @@ class PopupDefaultInsert extends Component {
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
 
+    // dedupe the features to remove possible duplicates introduced in ol6
+    const dedupedFeatures = [...new Set(features).values()]
+
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
-        {features.length
-          ? features.map((f, i) => (
+        {dedupedFeatures.length
+          ? dedupedFeatures.map((f, i) => (
               <PopupDefaultPage
                 attributes={propertiesFilter(f.getProperties())}
                 key={i}
