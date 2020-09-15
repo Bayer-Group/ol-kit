@@ -6,7 +6,7 @@ import LensIcon from '@material-ui/icons/Lens'
 /**
  * A button for drawing points.
  * @component
- * @category DrawPoint
+ * @category Draw
  * @since 0.18.0
  */
 class Point extends Component {

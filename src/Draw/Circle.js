@@ -6,7 +6,7 @@ import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUnch
 /**
  * A button for drawing circles.
  * @component
- * @category DrawCircle
+ * @category Draw
  * @since 0.18.0
  */
 class Circle extends Component {

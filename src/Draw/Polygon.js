@@ -6,7 +6,7 @@ import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined'
 /**
  * A button for drawing polygons.
  * @component
- * @category DrawPolygons
+ * @category Draw
  * @since 0.18.0
  */
 class Polygon extends Component {

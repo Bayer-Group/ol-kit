@@ -12,7 +12,7 @@ const BOX_CONFIG = {
 /**
  * A button for drawing boxes.
  * @component
- * @category DrawBox
+ * @category Draw
  * @since 0.18.0
  */
 class Box extends Component {

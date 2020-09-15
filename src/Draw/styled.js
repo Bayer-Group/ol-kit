@@ -36,7 +36,6 @@ export const Tooltip = withStyles({
   }
 })(MaterialTooltip)
 
-/** @component */
 export const ProgressWrapper = styled.div`
   display: flex;
   height: 100px;

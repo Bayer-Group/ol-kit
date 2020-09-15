@@ -6,7 +6,7 @@ import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 /**
  * A button for drawing line strings.
  * @component
- * @category DrawCircle
+ * @category Draw
  * @since 0.18.0
  */
 class Line extends Component {

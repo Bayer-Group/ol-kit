@@ -6,7 +6,7 @@ import GestureOutlinedIcon from '@material-ui/icons/GestureOutlined'
 /**
  * A button for drawing freehand line strings.
  * @component
- * @category DrawFreehand
+ * @category Draw
  * @since 0.18.0
  */
 class Freehand extends Component {
