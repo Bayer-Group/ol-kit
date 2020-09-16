@@ -19,20 +19,21 @@ function SimpleSnackbar(props) {
 
     setOpen(false)
   }
-  let message = ''
+  let message = 'Welcome to ol-kit!'
   console.log(props.location.pathname)
   switch (props.location.pathname) {
+    case '/covid':
+      message = 'Covid-19 Demo! (case data from arcgis)'
+      break;
     case '/space':
       message = 'Space Demo! (find the International Space Station)'
       break;
     case '/':
-      message = 'ol-kit Demo! Go explore the world 🌍'
+      message = 'Welcome to ol-kit Demo! Go explore the world 🌍'
       break;
     default:
       break;
   }
-
-  console.log('SNACK PROPS', props)
 
   return (
     <div>

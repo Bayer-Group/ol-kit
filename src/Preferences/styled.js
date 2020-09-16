@@ -32,9 +32,9 @@ export const TextField = withStyles(() => ({
         borderColor: '#152457'
       }
     },
-    'order': '99',
+    order: '99',
     'flex-shrink': 20,
-    'bottom': props => props.compact ? '-12px' : '0px'
+    bottom: props => props.compact ? '-12px' : '0px'
   }
 }))(MaterialTextField)
 
@@ -58,9 +58,9 @@ export const Switch = withStyles(() => ({
 
 export const Select = withStyles(() => ({
   root: {
-    'order': '99',
+    order: '99',
     'flex-grow': '1',
-    'bottom': props => props.compact ? '-12px' : '0px'
+    bottom: props => props.compact ? '-12px' : '0px'
   }
 }))(MaterialSelect)
 

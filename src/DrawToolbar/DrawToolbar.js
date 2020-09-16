@@ -23,10 +23,10 @@ const LeftCard = withStyles(() => ({
 
 const CenterCard = withStyles(() => ({
   root: {
-   borderRadius: '0px',
-   paddingLeft: '20px',
-   marginLeft: '0px',
-   height: '38px'
+    borderRadius: '0px',
+    paddingLeft: '20px',
+    marginLeft: '0px',
+    height: '38px'
   }
 }))(Card)
 
