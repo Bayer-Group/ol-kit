@@ -9,7 +9,7 @@ import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined'
  * @category Draw
  * @since 0.18.0
  */
-class Polygon extends Component {
+class DrawPolygon extends Component {
   render () {
     const { addInteraction, type, tooltipTitle } = this.props
 
@@ -26,7 +26,7 @@ class Polygon extends Component {
   }
 }
 
-Polygon.propTypes = {
+DrawPolygon.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -37,4 +37,4 @@ Polygon.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Polygon
+export default DrawPolygon

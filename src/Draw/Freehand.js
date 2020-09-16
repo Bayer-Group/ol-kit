@@ -9,7 +9,7 @@ import GestureOutlinedIcon from '@material-ui/icons/GestureOutlined'
  * @category Draw
  * @since 0.18.0
  */
-class Freehand extends Component {
+class DrawFreehand extends Component {
   render () {
     const { addInteraction, type, freehand, tooltipTitle } = this.props
 
@@ -26,7 +26,7 @@ class Freehand extends Component {
   }
 }
 
-Freehand.propTypes = {
+DrawFreehand.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -40,4 +40,4 @@ Freehand.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Freehand
+export default DrawFreehand
