@@ -1,8 +1,8 @@
 import { hot } from 'react-hot-loader/root'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import Router from './Router'
 
-const HotApp = hot(App)
+const HotApp = hot(Router)
 
 ReactDOM.render(<HotApp />, document.getElementById('root'))

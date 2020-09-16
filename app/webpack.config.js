@@ -64,7 +64,8 @@ module.exports = {
     port: 2020,
     clientLogLevel: 'none',
     publicPath: path.resolve('/'),
-    contentBase: path.resolve(__dirname, '../', 'build')
+    contentBase: path.resolve(__dirname, '../', 'build'),
+    historyApiFallback: true
   },
   node: { fs: 'empty' }
 }
