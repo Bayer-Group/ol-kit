@@ -6,7 +6,7 @@ import LensIcon from '@material-ui/icons/Lens'
 /**
  * A button for drawing points.
  * @component
- * @category DrawPoint
+ * @category Draw
  * @since 0.18.0
  */
 class Point extends Component {
@@ -15,7 +15,7 @@ class Point extends Component {
 
     return (
       <Tooltip title={tooltipTitle}>
-        <IconButton 
+        <IconButton
           data-testid='Draw.point'
           size='small'
           onClick={() => addInteraction({ type: 'Point' })}>

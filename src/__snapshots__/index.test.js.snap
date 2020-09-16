@@ -75,9 +75,11 @@ Object {
   "exportFeatures": [Function],
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
+  "getStyledFeatures": [Function],
   "loadDataLayer": [Function],
   "removeMovementListener": [Function],
   "sanitizeProperties": [Function],
+  "styleText": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }

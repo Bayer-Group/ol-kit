@@ -64,6 +64,7 @@ export const Half = styled.div`
 export const CollapseText = styled.div`
   display: flex;
   flex: 1;
+  justify-content: flex-end;
   text-align: right;
   line-height: 32px;
 `

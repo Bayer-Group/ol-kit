@@ -30,7 +30,7 @@ class MockPreferences {
 /**
  * A prebuilt Draw Tools component
  * @component
- * @category DrawContainer
+ * @category Draw
  * @since 0.18.0
  */
 class DrawContainer extends React.Component {

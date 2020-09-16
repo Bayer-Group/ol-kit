@@ -61,7 +61,6 @@ function resolveStyleFunctionArgs (args) {
   return { feature, resolution, opts }
 }
 
-
 function getText (labelProps = { text: '' }, resolution, opts = {}) {
   if (resolution > opts.maxreso) return ''
 
@@ -422,6 +421,7 @@ function scaleDistanceToMap (distance, map) {
  * Generate a 2D array of features paired to a style representing how they are currently styled on the map.
  * OpenLayers Features will inherit the style set on their parent layer if their own style is undefined.  This Function helps resolve the style that is actually being used to render the feature on the map.
  * @function getStyledFeatures
+ * @category Draw
  * @param {Object[]} layers - The Openlayers Layers you want to get the features from.
  * @param {Number} [resolution] - The map's current resolution.
  */
@@ -532,6 +532,7 @@ function pairCoords (flatCoords) {
 /**
  * Style ol/features
  * @function
+ * @category Draw
  * @param {object} opts - The config object
  * @param {ol/Feature} feature - The feature you want to style
  * @param {number} resolution - the resolution of the map
