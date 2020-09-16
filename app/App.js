@@ -1,66 +1,53 @@
 import React from 'react'
-import PaletteIcon from '@material-ui/icons/Palette'
-import { ApolloProvider } from '@apollo/react-hooks'
-import ApolloClient from 'apollo-boost'
-
-import olSourceVector from 'ol/source/vector'
-import olFeature from 'ol/feature'
-import olGeomPoint from 'ol/geom/point'
-import olProj from 'ol/proj'
-
 import {
-  BasemapContainer,
-  Controls,
-  LayerPanel,
-  LayerPanelContent,
-  LayerPanelPage,
-  LayerStyler,
   Map,
   Popup,
-  TimeSlider,
-  // VectorLayer,
-  loadDataLayer
-} from '../src' // replace this with '@bayer/ol-kit' in the wild
+  LayerPanel,
+  Controls,
+  ContextMenu,
+  loadDataLayer,
+  LayerStyler,
+  LayerPanelPage,
+  LayerPanelContent,
+  BasemapContainer,
+  VectorLayer,
+  DrawContainer
+} from '@bayer/ol-kit'
+import PaletteIcon from '@material-ui/icons/Palette'
+import olProj from 'ol/proj'
+import olFeature from 'ol/feature'
+import olGeomPoint from 'ol/geom/point'
+import olSourceVector from 'ol/source/vector'
 
-import ISS from './ISS'
-import SpaceX from './SpaceX'
+class App extends React.Component {
+  onMapInit = async (map) => {
+    // create a vector layer and add to the map
+    const layer = new VectorLayer({
+      title: 'Diltz\' House',
+      source: new olSourceVector({
+        features: [new olFeature({
+          feature_type: ['the lake house'],
+          title: 'the lake house',
+          name: 'the lake house',
+          geometry: new olGeomPoint(olProj.fromLonLat([-89.940598, 38.923107]))
+        })]
+      })
+    })
 
-const client = new ApolloClient({
-  uri: 'https://api.spacex.land/graphql/'
-})
+    map.addLayer(layer)
+    // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
 
-function App (props) {
-  const onMapInit = async (map) => {
-    window.map = map
-    // const layer = new VectorLayer({
-    //   title: 'Diltz\' House',
-    //   source: new olSourceVector({
-    //     features: [new olFeature({
-    //       feature_type: ['the lake house'],
-    //       title: 'the lake house',
-    //       name: 'the lake house',
-    //       geometry: new olGeomPoint(olProj.fromLonLat([-89.940598, 38.923107]))
-    //     })]
-    //   })
-    // })
-    //
-    // map.addLayer(layer)
-    // // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
-    
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
-    
+
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
-    dataLayer.set('title', 'NASA Geopolitcal Boundaries')
-    dataLayer.set('visible', false)
+
+    window.map = map
   }
 
-  return (
-    <ApolloProvider client={client}>
-      <Map onMapInit={onMapInit} fullScreen>
+  render () {
+    return (
+      <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
-        <TimeSlider />
-        <SpaceX />
-        <ISS />
         <LayerPanel>
           <LayerPanelPage tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
@@ -68,11 +55,13 @@ function App (props) {
             </LayerPanelContent>
           </LayerPanelPage>
         </LayerPanel>
-        <Controls variation={'dark'} />
+        <ContextMenu />
+        <Controls />
         <BasemapContainer />
+        <DrawContainer />
       </Map>
-    </ApolloProvider>
-  )
+    )
+  }
 }
 
 export default App
