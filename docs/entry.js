@@ -46,110 +46,110 @@ reactComponents['BasemapStamenTonerDark'] = Component6;
 import Component7 from '../src/Basemaps/StamenTonerLite.js';
 reactComponents['BasemapStamenTonerLite'] = Component7;
 
-import Component8 from '../src/Draw/Box.js';
-reactComponents['Box'] = Component8;
+import Component8 from '../src/Controls/Compass.js';
+reactComponents['Compass'] = Component8;
 
-import Component9 from '../src/Draw/Circle.js';
-reactComponents['Circle'] = Component9;
+import Component9 from '../src/ContextMenu/ContextMenu.js';
+reactComponents['ContextMenu'] = Component9;
 
-import Component10 from '../src/Controls/Compass.js';
-reactComponents['Compass'] = Component10;
+import Component10 from '../src/ContextMenu/ContextMenuCoords.js';
+reactComponents['ContextMenuCoords'] = Component10;
 
-import Component11 from '../src/ContextMenu/ContextMenu.js';
-reactComponents['ContextMenu'] = Component11;
+import Component11 from '../src/ContextMenu/ContextMenuListItem.js';
+reactComponents['ContextMenuListItem'] = Component11;
 
-import Component12 from '../src/ContextMenu/ContextMenuCoords.js';
-reactComponents['ContextMenuCoords'] = Component12;
+import Component12 from '../src/Controls/ControlGroup.js';
+reactComponents['ControlGroup'] = Component12;
 
-import Component13 from '../src/ContextMenu/ContextMenuListItem.js';
-reactComponents['ContextMenuListItem'] = Component13;
+import Component13 from '../src/Controls/ControlGroupButton.js';
+reactComponents['ControlGroupButton'] = Component13;
 
-import Component14 from '../src/Controls/ControlGroup.js';
-reactComponents['ControlGroup'] = Component14;
+import Component14 from '../src/Controls/Controls.js';
+reactComponents['Controls'] = Component14;
 
-import Component15 from '../src/Controls/ControlGroupButton.js';
-reactComponents['ControlGroupButton'] = Component15;
+import Component15 from '../src/Controls/CurrentLocation.js';
+reactComponents['CurrentLocation'] = Component15;
 
-import Component16 from '../src/Controls/Controls.js';
-reactComponents['Controls'] = Component16;
+import Component16 from '../src/Draw/Draw.js';
+reactComponents['Draw'] = Component16;
 
-import Component17 from '../src/Controls/CurrentLocation.js';
-reactComponents['CurrentLocation'] = Component17;
+import Component17 from '../src/Draw/Box.js';
+reactComponents['DrawBox'] = Component17;
 
-import Component18 from '../src/Draw/Draw.js';
-reactComponents['Draw'] = Component18;
+import Component18 from '../src/Draw/Circle.js';
+reactComponents['DrawCircle'] = Component18;
 
 import Component19 from '../src/Draw/DrawContainer.js';
 reactComponents['DrawContainer'] = Component19;
 
 import Component20 from '../src/Draw/Freehand.js';
-reactComponents['Freehand'] = Component20;
+reactComponents['DrawFreehand'] = Component20;
 
-import Component21 from '../src/GooglePlacesSearch/GooglePlacesSearch.js';
-reactComponents['GooglePlacesSearch'] = Component21;
+import Component21 from '../src/Draw/Line.js';
+reactComponents['DrawLine'] = Component21;
 
-import Component22 from '../src/LayerPanel/LayerPanel.js';
-reactComponents['LayerPanel'] = Component22;
+import Component22 from '../src/Draw/Point.js';
+reactComponents['DrawPoint'] = Component22;
 
-import Component23 from '../src/LayerPanel/LayerPanelActionExport/index.js';
-reactComponents['LayerPanelActionExport'] = Component23;
+import Component23 from '../src/Draw/Polygon.js';
+reactComponents['DrawPolygon'] = Component23;
 
-import Component24 from '../src/LayerPanel/LayerPanelActionExtent/index.js';
-reactComponents['LayerPanelActionExtent'] = Component24;
+import Component24 from '../src/GooglePlacesSearch/GooglePlacesSearch.js';
+reactComponents['GooglePlacesSearch'] = Component24;
 
-import Component25 from '../src/LayerPanel/LayerPanelActionImport/index.js';
-reactComponents['LayerPanelActionImport'] = Component25;
+import Component25 from '../src/LayerPanel/LayerPanel.js';
+reactComponents['LayerPanel'] = Component25;
 
-import Component26 from '../src/LayerPanel/LayerPanelActionOpacity/index.js';
-reactComponents['LayerPanelActionOpacity'] = Component26;
+import Component26 from '../src/LayerPanel/LayerPanelActionExport/index.js';
+reactComponents['LayerPanelActionExport'] = Component26;
 
-import Component27 from '../src/LayerPanel/LayerPanelActionRemove/index.js';
-reactComponents['LayerPanelActionRemove'] = Component27;
+import Component27 from '../src/LayerPanel/LayerPanelActionExtent/index.js';
+reactComponents['LayerPanelActionExtent'] = Component27;
 
-import Component28 from '../src/LayerPanel/LayerPanelActions/index.js';
-reactComponents['LayerPanelActions'] = Component28;
+import Component28 from '../src/LayerPanel/LayerPanelActionImport/index.js';
+reactComponents['LayerPanelActionImport'] = Component28;
 
-import Component29 from '../src/LayerPanel/LayerPanelBase/index.js';
-reactComponents['LayerPanelBase'] = Component29;
+import Component29 from '../src/LayerPanel/LayerPanelActionOpacity/index.js';
+reactComponents['LayerPanelActionOpacity'] = Component29;
 
-import Component30 from '../src/LayerPanel/LayerPanelCheckbox/index.js';
-reactComponents['LayerPanelCheckbox'] = Component30;
+import Component30 from '../src/LayerPanel/LayerPanelActionRemove/index.js';
+reactComponents['LayerPanelActionRemove'] = Component30;
 
-import Component31 from '../src/LayerPanel/LayerPanelContent/index.js';
-reactComponents['LayerPanelContent'] = Component31;
+import Component31 from '../src/LayerPanel/LayerPanelActions/index.js';
+reactComponents['LayerPanelActions'] = Component31;
 
-import Component32 from '../src/LayerPanel/LayerPanelHeader/index.js';
-reactComponents['LayerPanelHeader'] = Component32;
+import Component32 from '../src/LayerPanel/LayerPanelBase/index.js';
+reactComponents['LayerPanelBase'] = Component32;
 
-import Component33 from '../src/LayerPanel/LayerPanelLayersPage/index.js';
-reactComponents['LayerPanelLayersPage'] = Component33;
+import Component33 from '../src/LayerPanel/LayerPanelCheckbox/index.js';
+reactComponents['LayerPanelCheckbox'] = Component33;
 
-import Component34 from '../src/LayerPanel/LayerPanelList/index.js';
-reactComponents['LayerPanelList'] = Component34;
+import Component34 from '../src/LayerPanel/LayerPanelContent/index.js';
+reactComponents['LayerPanelContent'] = Component34;
 
-import Component35 from '../src/LayerPanel/LayerPanelListItem/index.js';
-reactComponents['LayerPanelListItem'] = Component35;
+import Component35 from '../src/LayerPanel/LayerPanelHeader/index.js';
+reactComponents['LayerPanelHeader'] = Component35;
 
-import Component36 from '../src/LayerPanel/LayerPanelMenu/index.js';
-reactComponents['LayerPanelMenu'] = Component36;
+import Component36 from '../src/LayerPanel/LayerPanelLayersPage/index.js';
+reactComponents['LayerPanelLayersPage'] = Component36;
 
-import Component37 from '../src/LayerPanel/LayerPanelPage/index.js';
-reactComponents['LayerPanelPage'] = Component37;
+import Component37 from '../src/LayerPanel/LayerPanelList/index.js';
+reactComponents['LayerPanelList'] = Component37;
 
-import Component38 from '../src/LayerStyler/LayerStyler.js';
-reactComponents['LayerStyler'] = Component38;
+import Component38 from '../src/LayerPanel/LayerPanelListItem/index.js';
+reactComponents['LayerPanelListItem'] = Component38;
 
-import Component39 from '../src/Draw/Line.js';
-reactComponents['Line'] = Component39;
+import Component39 from '../src/LayerPanel/LayerPanelMenu/index.js';
+reactComponents['LayerPanelMenu'] = Component39;
 
-import Component40 from '../src/Map/Map.js';
-reactComponents['Map'] = Component40;
+import Component40 from '../src/LayerPanel/LayerPanelPage/index.js';
+reactComponents['LayerPanelPage'] = Component40;
 
-import Component41 from '../src/Draw/Point.js';
-reactComponents['Point'] = Component41;
+import Component41 from '../src/LayerStyler/LayerStyler.js';
+reactComponents['LayerStyler'] = Component41;
 
-import Component42 from '../src/Draw/Polygon.js';
-reactComponents['Polygon'] = Component42;
+import Component42 from '../src/Map/Map.js';
+reactComponents['Map'] = Component42;
 
 import Component43 from '../src/Popup/Popup.js';
 reactComponents['Popup'] = Component43;
