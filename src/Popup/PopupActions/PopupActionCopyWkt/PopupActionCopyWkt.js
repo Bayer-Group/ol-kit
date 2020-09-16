@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connectToMap } from 'Map'
 import { PopupActionItem } from 'Popup'
-
+import en from  'locales/en'
 import { copyWktToClipbard } from './utils'
 
 /**
@@ -28,6 +28,10 @@ PopupActionCopyWkt.propTypes = {
   translations: PropTypes.shape({
     '_ol_kit.PopupActionWkt.copyToClipboard': PropTypes.string
   }).isRequired
+}
+
+PopupActionCopyWkt.defaultProps = {
+  translations: en
 }
 
 export default connectToMap(PopupActionCopyWkt)
