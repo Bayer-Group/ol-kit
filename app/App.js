@@ -10,9 +10,9 @@ import {
   LayerPanelPage,
   LayerPanelContent,
   BasemapContainer,
-  VectorLayer
+  VectorLayer,
+  DrawContainer
 } from '@bayer/ol-kit'
-
 import PaletteIcon from '@material-ui/icons/Palette'
 import olProj from 'ol/proj'
 import olFeature from 'ol/feature'
@@ -58,6 +58,7 @@ class App extends React.Component {
         <ContextMenu />
         <Controls />
         <BasemapContainer />
+        <DrawContainer />
       </Map>
     )
   }
