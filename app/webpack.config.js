@@ -61,7 +61,7 @@ module.exports = {
   ],
 
   devServer: {
-    port: 3000,
+    port: 2020,
     clientLogLevel: 'none',
     publicPath: path.resolve('/'),
     contentBase: path.resolve(__dirname, '../', 'build')
