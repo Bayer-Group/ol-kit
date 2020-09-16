@@ -20,7 +20,7 @@ import {
   TimeSlider,
   // VectorLayer,
   loadDataLayer
-} from '../src' // replace this with '@bayer/ol-kit' in the wild
+} from '@bayer/ol-kit'
 
 import ISS from './ISS'
 import SpaceX from './SpaceX'
