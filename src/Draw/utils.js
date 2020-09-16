@@ -22,14 +22,14 @@ const defaultDataProjection = 'EPSG:4326'
 const CONVERSION = {
   /* Conversion factors between meters which is returned by EPSG:4326
   and the user requested units */
-  'feet': 3.28084,
-  'miles': 0.000621371,
+  feet: 3.28084,
+  miles: 0.000621371,
   'nautical-miles': 0.000539957,
-  'yards': 1.09361,
-  'kilometers': 0.001,
-  'meters': 1,
-  'acres': 0.000247105, // 1 square meter = 0.000247105 acres
-  'hectares': 0.0001 // 1 square meter = 0.0001 hectares
+  yards: 1.09361,
+  kilometers: 0.001,
+  meters: 1,
+  acres: 0.000247105, // 1 square meter = 0.000247105 acres
+  hectares: 0.0001 // 1 square meter = 0.0001 hectares
 }
 const SPHERE = new olSphere(6378137)
 
@@ -249,7 +249,6 @@ function formatMeasurement (geom, measurement, opts) {
 
   return unit ? `${prettyValue}${isSquareUnit ? ' sq. ' : ' '}${unit.split('-').join(' ')}` : ''
 }
-
 
 function turf (turfFunc, argArray, projection = 'EPSG:3857') {
   const transformedArgs = argArray.map((arg) => {
@@ -690,8 +689,8 @@ export function coordinateLabel (pointGeometry, resolution, opts) {
   const geom = pointGeometry.clone()
   const pointFeature = new olFeature({
     geometry: geom,
-    '_vmf_type': '_vmf_measurement', // styleText determines the type of label to render based on the feature's type so we need this temporary feature to be a 'measurement' feature
-    '_vmf_label': {
+    _vmf_type: '_vmf_measurement', // styleText determines the type of label to render based on the feature's type so we need this temporary feature to be a 'measurement' feature
+    _vmf_label: {
       fontSize: 16
     }
   })
@@ -712,8 +711,8 @@ export function lengthLabel (lineGeometry, resolution, opts) {
   const geom = lineGeometry.clone()
   const perimeterFeature = new olFeature({
     geometry: geom,
-    '_vmf_type': '_vmf_measurement',
-    '_vmf_label': {
+    _vmf_type: '_vmf_measurement',
+    _vmf_label: {
       fontSize: 16
     }
   })
@@ -735,8 +734,8 @@ export function perimeterLabel (polygonGeometry, resolution, opts) {
   const perimeterCoords = clonedGeom.getLinearRing(0).getCoordinates()
   const perimeterFeature = new olFeature({
     geometry: new olGeomLineString(perimeterCoords),
-    '_vmf_type': '_vmf_measurement',
-    '_vmf_label': {
+    _vmf_type: '_vmf_measurement',
+    _vmf_label: {
       fontSize: 16
     }
   })
@@ -765,8 +764,8 @@ export function perimeterSegmentLabels (polygonGeometry, resolution, opts) {
     const segmentGeom = new olGeomLineString(segment)
     const segmentFeature = new olFeature({
       geometry: segmentGeom,
-      '_vmf_type': '_vmf_measurement',
-      '_vmf_label': {
+      _vmf_type: '_vmf_measurement',
+      _vmf_label: {
         fontSize: 16
       }
     })
@@ -788,8 +787,8 @@ export function areaLabel (polygonGeometry, resolution, opts) {
   const areaGeometry = polygonGeometry.clone()
   const areaFeature = new olFeature({
     geometry: areaGeometry,
-    '_vmf_type': '_vmf_measurement',
-    '_vmf_label': {
+    _vmf_type: '_vmf_measurement',
+    _vmf_label: {
       fontSize: 16
     }
   })
@@ -806,11 +805,11 @@ export function centroidLabel (geometry, resolution, opts) {
   const point = geometry.getType() === 'Circle ' ? new olPoint(geometry.clone().getCenter()) : turf(centroid, [geometry]).getGeometry()
   const pointFeature = new olFeature({
     geometry: point,
-    '_vmf_type': '_vmf_measurement', // styleText determines the type of label to render based on the feature's type so we need this temporary feature to be a 'measurement' feature
-    '_vmf_label': {
+    _vmf_type: '_vmf_measurement', // styleText determines the type of label to render based on the feature's type so we need this temporary feature to be a 'measurement' feature
+    _vmf_label: {
       fontSize: 16
     },
-    '_ol_kit_needs_centroid_label': true
+    _ol_kit_needs_centroid_label: true
   })
 
   return new olStyleStyle({
@@ -824,5 +823,4 @@ export function centroidLabel (geometry, resolution, opts) {
     geometry: point
   })
 }
-
 
