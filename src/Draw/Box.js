@@ -15,7 +15,7 @@ const BOX_CONFIG = {
  * @category Draw
  * @since 0.18.0
  */
-class Box extends Component {
+class DrawBox extends Component {
   isBoxDraw = () => {
     const { type, geometryFunction } = this.props
 
@@ -38,7 +38,7 @@ class Box extends Component {
   }
 }
 
-Box.propTypes = {
+DrawBox.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -52,4 +52,4 @@ Box.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Box
+export default DrawBox

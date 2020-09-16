@@ -9,7 +9,7 @@ import RadioButtonUncheckedOutlinedIcon from '@material-ui/icons/RadioButtonUnch
  * @category Draw
  * @since 0.18.0
  */
-class Circle extends Component {
+class DrawCircle extends Component {
   render () {
     const { addInteraction, type, geometryFunction, tooltipTitle } = this.props
 
@@ -26,7 +26,7 @@ class Circle extends Component {
   }
 }
 
-Circle.propTypes = {
+DrawCircle.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -40,4 +40,4 @@ Circle.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Circle
+export default DrawCircle

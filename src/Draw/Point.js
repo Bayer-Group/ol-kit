@@ -9,7 +9,7 @@ import LensIcon from '@material-ui/icons/Lens'
  * @category Draw
  * @since 0.18.0
  */
-class Point extends Component {
+class DrawPoint extends Component {
   render () {
     const { addInteraction, type, tooltipTitle } = this.props
 
@@ -26,7 +26,7 @@ class Point extends Component {
   }
 }
 
-Point.propTypes = {
+DrawPoint.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -37,4 +37,4 @@ Point.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Point
+export default DrawPoint
