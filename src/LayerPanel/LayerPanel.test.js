@@ -106,7 +106,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
@@ -134,7 +134,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
@@ -148,7 +148,7 @@ describe('<LayerPanel />', () => {
     testMap.addLayer(vectorLayer2)
     testMap.addLayer(vectorLayer)
 
-    const checkboxes = getAllByTestId('LayerPanel.checkbox')
+    const checkboxes = getAllByTestId('LayerPanel.checked')
 
     fireEvent.click(checkboxes[0])
 
@@ -188,7 +188,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265]))]
@@ -202,7 +202,7 @@ describe('<LayerPanel />', () => {
     testMap.addLayer(vectorLayer2)
     testMap.addLayer(vectorLayer)
 
-    const actions = getAllByTestId('LayerPanel.actions')
+    const actions = getAllByTestId('LayerPanel.actionsButton')
 
     fireEvent.click(actions[0])
     await waitFor(() => expect(getByText('Remove Layers')).toBeInTheDocument())
@@ -218,7 +218,7 @@ describe('<LayerPanel />', () => {
     // basemap is on the map still to +1
     expect(testMap.getLayers().getArray().length).toBe(3)
 
-    const checkboxes = getAllByTestId('LayerPanel.checkbox')
+    const checkboxes = getAllByTestId('LayerPanel.unchecked')
 
     fireEvent.click(checkboxes[1])
 
@@ -244,7 +244,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([-97.75, 30.265])), new olFeature(new olPoint([-99.75, 35.265]))]
@@ -261,7 +261,7 @@ describe('<LayerPanel />', () => {
 
     await waitFor(() => expect(getByText('My map feature')).toBeInTheDocument())
 
-    const checkboxes = getAllByTestId('LayerPanel.checkbox')
+    const checkboxes = getAllByTestId('LayerPanel.checked')
 
     fireEvent.click(checkboxes[2])
 
@@ -283,7 +283,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     const vectorSource = new olSourceVector({
       features: (new olFormatGeoJSON()).readFeatures(testGeoJSONData)
@@ -296,7 +296,7 @@ describe('<LayerPanel />', () => {
 
     testMap.addLayer(vectorLayer)
 
-    const actions = getAllByTestId('LayerPanel.actions')
+    const actions = getAllByTestId('LayerPanel.actionsButton')
 
     fireEvent.click(actions[0])
     fireEvent.click(getByTestId('LayerPanel.exportGeoJSON'))
@@ -324,7 +324,7 @@ describe('<LayerPanel />', () => {
     // wait for async child render
     await waitFor(() => expect(onMapInit).toHaveBeenCalled())
 
-    fireEvent.click(getByTestId('LayerPanel.openTab'))
+    fireEvent.click(getByTestId('LayerPanel.open'))
 
     const vectorSource = new olSourceVector({
       features: (new olFormatGeoJSON()).readFeatures(testGeoJSONData)
@@ -337,7 +337,7 @@ describe('<LayerPanel />', () => {
 
     testMap.addLayer(vectorLayer)
 
-    const actions = getAllByTestId('LayerPanel.actions')
+    const actions = getAllByTestId('LayerPanel.actionsButton')
 
     fireEvent.click(actions[0])
     fireEvent.click(getByTestId('LayerPanel.exportKML'))

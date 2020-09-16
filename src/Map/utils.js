@@ -154,6 +154,28 @@ export function centerAndZoom (map, opts = {}) {
 }
 
 /**
+ * Convert an XY pair to lat/long
+ * @function
+ * @category Map
+ * @since 0.16.0
+ * @param {ol.Map} map - reference to the openlayer map object
+ * @param {Number} x - the x coordinate
+ * @param {Number} y - the x coordinate
+ * @returns {Object} An object containing a `longitude` and `latitude` property
+ */
+export function convertXYtoLatLong (map, x, y) {
+  const coords = map.getCoordinateFromPixel([x, y])
+  const transformed = olProj.transform(coords, map.getView().getProjection().getCode(), 'EPSG:4326')
+  const longitude = Number((Number(transformed[0] || 0) % 180).toFixed(6))
+  const latitude = Number((transformed[1] || 0).toFixed(6))
+
+  return {
+    longitude,
+    latitude
+  }
+}
+
+/**
  * Create a new openlayers select interaction with default styling
  * @function
  * @category Map

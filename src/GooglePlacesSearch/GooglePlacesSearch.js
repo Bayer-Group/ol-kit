@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
-import Alert from '@material-ui/lab/Alert'
 import { connectToMap, centerAndZoom } from 'Map'
 import VectorLayer from '../classes/VectorLayer'
 import olCollection from 'ol/collection'
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 function GooglePlacesSearch (props) {
   const { map, apiKey } = props
   const { handleSubmit, register } = useForm()
-  const [errorMessage, setError] = useState(null)
+  const [_, setError] = useState(null) // eslint-disable-line
   const classes = useStyles()
 
   const dataLoader = (searchString) => {
@@ -110,9 +109,9 @@ function GooglePlacesSearch (props) {
       setError(error.message)
     }
   }
-  const handleClose = () => {
-    setError(null)
-  }
+  // const handleClose = () => {
+  //   setError(null)
+  // }
 
   return (
     <div className='search-bar-container'>
@@ -130,11 +129,6 @@ function GooglePlacesSearch (props) {
           </IconButton>
         </Paper>
       </form>
-      {
-        errorMessage ? <Alert severity='error' onClose={handleClose}>
-          {errorMessage}
-        </Alert> : null
-      }
     </div>
   )
 }

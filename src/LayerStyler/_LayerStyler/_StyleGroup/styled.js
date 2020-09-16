@@ -1,16 +1,12 @@
 import styled from 'styled-components'
 
-
-export const AddNewContainer = styled.div`
-  display: flex;
-  padding: 15px;
-`
-
-
 export const AddNew = styled.span`
+  display: flex;
+  align-items:center;
   color: #152357;
   cursor: pointer;
   transition: all 0.15s ease-in-out;
+  padding: 15px;
 
   &:hover {
     color: #054d94;

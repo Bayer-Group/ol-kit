@@ -9,7 +9,7 @@ class LayerPanelExpandableList extends Component {
 
     if (show) {
       if (open) {
-        return <ExpandLess data-testid='LayerPanel.expandLayer' onClick={handleClick} />
+        return <ExpandLess data-testid='LayerPanel.collapseLayer' onClick={handleClick} />
       } else {
         return <ExpandMore data-testid='LayerPanel.expandLayer' onClick={handleClick} />
       }

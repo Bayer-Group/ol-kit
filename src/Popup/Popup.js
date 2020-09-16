@@ -29,6 +29,9 @@ class Popup extends Component {
       },
       show: false
     }
+
+    this.timer = 0
+    this.isDoubleClick = false
     this.defaultState = this.state
   }
 
@@ -37,21 +40,34 @@ class Popup extends Component {
 
     // bind to map click events
     map.on('click', this.mapClickHandler)
+    map.on('dblclick', this.mapDoubleClickHandler)
   }
 
   componentWillUnmount () {
     const { map } = this.props
 
     map.un('click', this.mapClickHandler)
+    map.un('dblclick', this.mapDoubleClickHandler)
+  }
+
+  mapDoubleClickHandler = () => {
+    clearTimeout(this.timer)
+    this.isDoubleClick = true
+    this.hidePopup()
   }
 
   mapClickHandler = e => {
-    // Get the interactions from the map as an array.
-    const interactions = e.map.getInteractions().getArray()
+    this.timer = setTimeout(() => {
+      if (!this.isDoubleClick) {
+        // Get the interactions from the map as an array.
+        const interactions = e.map.getInteractions().getArray()
 
-    // This checks to see if there is an active Draw interaction on the map and prevents the popup showing if it returns true.
-    if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return this.hidePopup()
-    this.checkForFeaturesAtClick(e)
+        // This checks to see if there is an active Draw interaction on the map and prevents the popup showing if it returns true.
+        if (interactions.find((i) => i instanceof olInteractionDraw && i.get('active'))) return this.hidePopup()
+        this.checkForFeaturesAtClick(e)
+      }
+      this.isDoubleClick = false
+    }, 300)
   }
 
   checkForFeaturesAtClick = e => {
@@ -120,6 +136,16 @@ class Popup extends Component {
     this.setState({ ...this.defaultState }, () => onMapClick(this.state))
   }
 
+  onDragEnd = e => {
+    // if drag occurs in PopupBase, update pixel in state here
+    this.setState({
+      popupPosition: {
+        ...this.state.popupPosition,
+        pixel: e.pinnedPixel
+      }
+    })
+  }
+
   render () {
     const { actions, children, map, show: propShow } = this.props
     const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
@@ -130,7 +156,7 @@ class Popup extends Component {
         ? null
         : (
           ReactDOM.createPortal(
-            <PopupBase arrow={arrow} pixel={pixel} {...this.props} show={show}>
+            <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
                 <PopupDefaultInsert
                   actions={actions}

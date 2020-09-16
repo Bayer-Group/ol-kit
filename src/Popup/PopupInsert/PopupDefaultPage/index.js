@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connectToMap } from 'Map'
+import en from 'locales/en'
 import CLOSE from 'images/close_icon.svg'
 import LEFT_ARROW from 'images/left_arrow.svg'
 import RIGHT_ARROW from 'images/right_arrow.svg'
@@ -86,7 +87,7 @@ class PopupDefaultPage extends Component {
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
                     {children}
                   </Frame>
-                  : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px' }}>
+                  : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px', overflowY: 'scroll' }}>
                     {children}
                   </div>
                 }
@@ -135,7 +136,8 @@ PopupDefaultPage.defaultProps = {
   children: [],
   loading: false,
   currentTab: 0,
-  attributes: {}
+  attributes: {},
+  translations: en
 }
 
 export default connectToMap(PopupDefaultPage)

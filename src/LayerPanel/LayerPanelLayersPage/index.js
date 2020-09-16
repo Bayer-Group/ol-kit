@@ -284,7 +284,7 @@ class LayerPanelLayersPage extends Component {
             checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
           actions={customActions ||
             <LayerPanelActions
-              icon={<MoreHorizIcon />}
+              icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
               translations={translations}
               layers={layers}
               map={map}>
@@ -328,9 +328,9 @@ class LayerPanelLayersPage extends Component {
                       open={isExpandedLayer(layer)}
                       handleClick={() => this.handleExpandedLayer(layer)} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
-                    <ListItemSecondaryAction style={{ right: '0px !important' }} data-testid='LayerPanel.secondaryAction'>
+                    <ListItemSecondaryAction style={{ right: '0px !important' }}>
                       <LayerPanelActions
-                        icon={<MoreVertIcon />}
+                        icon={<MoreVertIcon data-testid='LayerPanel.actionsIcon' />}
                         translations={translations}
                         layer={layer}
                         map={map} >
@@ -346,7 +346,7 @@ class LayerPanelLayersPage extends Component {
                       <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
                         {features.map((feature, i) => {
                           return (
-                            <ListItem key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                            <ListItem data-testid={`LayerPanel.feature${i}`} key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
                               <LayerPanelCheckbox
                                 handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
                                 checkboxState={feature.get('_ol_kit_feature_visibility')} />

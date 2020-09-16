@@ -84,8 +84,8 @@ export const Close = styled.button`
   height: 18px;
   width: 40px;
   cursor: pointer;
-  top: 8px;
-  right: 2px;
+  top: 10px;
+  right: -2px;
   background: none;
   border: none;
   z-index: 2;
