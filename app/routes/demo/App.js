@@ -18,6 +18,7 @@ import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
+import GeoserverLayer from '../../../src/classes/GeoserverLayer'
 
 class App extends React.Component {
   onMapInit = async (map) => {
@@ -36,6 +37,10 @@ class App extends React.Component {
 
     map.addLayer(layer)
     // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
+
+    GeoserverLayer.fromURI('http://localhost:8600/geoserver/topp/wms?LAYERS=topp%3Astates').then(layer => {
+      map.addLayer(layer)
+    })
 
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 

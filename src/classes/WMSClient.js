@@ -7,11 +7,11 @@ const defaultHeaders = {
 
 export default class WMSClient {
   constructor (url, opts = {}) {
-    const baseUrlResults = /https?:\/\/.*ows/.exec(url)
-
+    const baseUrlResults = url //https?:\/\/.*topp/.exec(url)
+console.log('WMSClient', url)
     if (!baseUrlResults.length) throw new Error(`The base url (${url}) provided to WMSClient is malformed -- check the docs`)
 
-    this.base = baseUrlResults[0]
+    this.base = url //baseUrlResults[0]
     this.getHeaders = opts.getHeaders || (a => a)
     this.dsldEndpoint = opts.dsldEndpoint
   }
@@ -59,9 +59,10 @@ export default class WMSClient {
   _makeRequest (method) {
     return new Promise((resolve, reject) => {
       const uri = `${this.base}?service=WMS&request=${method}&version=1.3.0`
+      console.log('_makeRequest', uri)
 
       // axios.get(uri, this.options).then((res) => {
-      return fetch(uri, { xml: true, headers: this.getHeaders() })
+      return fetch(uri, { mode: 'no-cors', xml: true, headers: this.getHeaders() })
         .then(res => {
           if (res.status !== 200) return reject(new Error(res.status))
 

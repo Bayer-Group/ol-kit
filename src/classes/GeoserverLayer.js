@@ -484,7 +484,7 @@ export default class GeoserverLayer extends olLayerGroup {
       const [wfsLayerInfo, wmsLayerInfo] = results.map(({ value }) => value) // extract the returned values
       const layerProto = opts.isSingleTile ? olLayerImage : olLayerTile
       const sourceProto = opts.isSingleTile ? olSourceImageWMS : olSourceTileWMS
-      const { sldBody, layerTitle, layerName, typeName } = wfsLayerInfo || wmsLayerInfo
+      const { layerTitle = 'states layer', layerName, typeName } = wfsLayerInfo || wmsLayerInfo || {}
       const { attributes, geometryName } = wfsLayerInfo || {}
       const { extent, dimension } = wmsLayerInfo || {}
 
@@ -492,9 +492,9 @@ export default class GeoserverLayer extends olLayerGroup {
         source: new RasterSourceFactory({
           url: uri,
           gutter: 10,
-          projection: 'EPSG:3857',
+          projection: 'EPSG:4326',
           wrapX: true,
-          params: { LAYERS: layerName },
+          //params: { LAYERS: 'topp:tasmania_state_boundaries' },
           transition: 0,
           extent
         }, sourceProto, parserOpts),
@@ -507,16 +507,17 @@ export default class GeoserverLayer extends olLayerGroup {
       })
       const parser = new SLDParser()
 
-      return parser
-        .readStyle(sldBody)
-        .then(({ rules }) => {
+      // return parser
+      //   .readStyle(sldBody)
+      return Promise.resolve(true)
+        .then(() => {
           const layerOpts = {
             uri,
             dimension,
             typeName,
             attributes,
             geometryName,
-            defaultStyles: rules,
+            //defaultStyles: rules,
             getHeaders: opts.getHeaders,
             initialFilterMap: opts.initialFilterMap
           }

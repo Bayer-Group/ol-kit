@@ -14,13 +14,13 @@ const defaultHeaders = {
  */
 export default class WFSClient {
   constructor (url, opts = {}) {
-    const baseUrlResults = /https?:\/\/.*ows/.exec(url)
+    const baseUrlResults = url ///https?:\/\/.*topp/.exec(url)
 
     if (!baseUrlResults.length) {
       throw new Error(`The base url (${url}) provided to WFSClient is malformed -- check the docs`)
     }
 
-    this.base = baseUrlResults[0]
+    this.base = url // baseUrlResults[0]
     this.getHeaders = opts.getHeaders || (a => a)
     this.dsldEndpoint = opts.dsldEndpoint
   }
@@ -112,9 +112,9 @@ export default class WFSClient {
     const parser = new xml2js.Parser({ async: false })
 
     const headers = this.getHeaders(defaultHeaders)
-
+console.log('_makeRequest', uri)
     // return axios.post(uri, body, { headers })
-    return fetch(uri, { method: 'POST', headers, body })
+    return fetch(uri, { mode: 'no-cors', method: 'POST', headers, body })
       .then(res => res.json())
       .then(({ status, statusText, data }) => {
         if (status !== 200) throw new Error(statusText)
