@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { connectToMap } from '@bayer/ol-kit'
-import proj from 'ol/proj'
-import olFeature from 'ol/feature'
-import olVectorLayer from 'ol/layer/vector'
-import olPoint from 'ol/geom/point'
-import olVectorSource from 'ol/source/vector'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olFill from 'ol/style/fill'
-import olCircleStyle from 'ol/style/circle'
+import { fromLonLat } from 'ol/proj'
+import olFeature from 'ol/Feature'
+import olVectorLayer from 'ol/layer/Vector'
+import olPoint from 'ol/geom/Point'
+import olVectorSource from 'ol/source/Vector'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
+import olFill from 'ol/style/Fill'
+import olCircleStyle from 'ol/style/Circle'
 
 function DataLoader (props) {
   const { map } = props
@@ -21,7 +21,7 @@ function DataLoader (props) {
     data.features.forEach(feat => {
       if (feat.geometry) {
         const {x, y} = feat.geometry
-        const coords = proj.fromLonLat([x,y])
+        const coords = fromLonLat([x,y])
         const feature = new olFeature(new olPoint(coords))
         const hasConfirmed = feat.attributes.Confirmed > 0
         const color = hasConfirmed > 0 ? 'red' : 'blue'
