@@ -10,7 +10,7 @@ export let ProviderContext = null
  * @component
  * @category Provider
  * @example ./example.md
- * @since 0.10.0
+ * @since 1.0.0
  */
 class Provider extends React.Component {
   constructor (props) {
