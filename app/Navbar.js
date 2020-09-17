@@ -6,7 +6,7 @@ const Nav = styled.div`
   position: fixed;
   justify-content: center;
   display: flex;
-  z-index: 99999999;
+  z-index: 9999;
   font-size: 16px;
   opacity: .91;
   background: white;
