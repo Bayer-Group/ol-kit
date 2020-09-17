@@ -133,7 +133,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   const exhaustiveVectorFeaturesAtPixel = layer => {
     const exhaustivePromise = new Promise(async resolve => {
-      let orphanedFeatures = []
+      const orphanedFeatures = []
 
       layer?.getSource?.()?.getFeatures?.()?.forEach(f => {
         if (f.getGeometry().intersectsCoordinate(clickCoordinate)) {
