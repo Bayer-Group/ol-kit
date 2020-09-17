@@ -1,8 +1,8 @@
-# connectToMap
-The `connectToMap` wrapping function that automatically passes a `map`, `translations`, and/or `selectInteraction` prop to its child component.
+# connectToContext
+The `connectToContext` wrapping function that automatically passes a `map`, `translations`, and/or `selectInteraction` prop to its child component.
 
 ## How does it work?
-When the `Map` component is constructed, it attaches the OpenLayers map to a [context](https://reactjs.org/docs/context.html). If this context exists (which means `Map` has been constructed), `connectToMap` renders its child with a prop of `map` from the `Map` parent and also spreads the rest of the inline props. If a `Map` is not mounted, `connectToMap` will just render the child and pass props through without consuming a context. `translations` and `selectInteraction` will also be passed through from the `<Map>`'s context. Optimization: if `propTypes` are defined on the component passed to `connectToMap`, this util will check the against `propTypes` and filter out any props mentioned above that are unneeded, if `propTypes` is not set, all props mentioned above will be passed.
+When the `Map` component is constructed, it attaches the OpenLayers map to a [context](https://reactjs.org/docs/context.html). If this context exists (which means `Map` has been constructed), `connectToContext` renders its child with a prop of `map` from the `Map` parent and also spreads the rest of the inline props. If a `Map` is not mounted, `connectToContext` will just render the child and pass props through without consuming a context. `translations` and `selectInteraction` will also be passed through from the `<Map>`'s context. Optimization: if `propTypes` are defined on the component passed to `connectToContext`, this util will check the against `propTypes` and filter out any props mentioned above that are unneeded, if `propTypes` is not set, all props mentioned above will be passed.
 
 ## Automatic Example
 All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:
@@ -13,7 +13,7 @@ import { Map, Popup } from '@bayer/ol-kit'
 const App = () => {
   return (
     <Map>
-      <Popup /> {/* This Popup component was automatically given a map prop when wrapped by connectToMap internally */}
+      <Popup /> {/* This Popup component was automatically given a map prop when wrapped by connectToContext internally */}
     </Map>
   )
 }
@@ -43,7 +43,7 @@ Prebuilt ol-kit components get wrapped by this consumer before they are exported
 ```javascript
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connectToMap } from '@bayer/ol-kit'
+import { connectToContext } from '@bayer/ol-kit'
 
 const CustomMapComponent = props => {
   const { map } = props
@@ -59,12 +59,12 @@ CustomMapComponent.propTypes = {
   map: PropTypes.object.isRequired
 }
 
-export default connectToMap(CustomMapComponent)
+export default connectToContext(CustomMapComponent)
 ```
 The above example filtered out `translations` & `selectInteraction`...but if you do not define `propTypes`:
 ```javascript
 import React from 'react'
-import { connectToMap } from '@bayer/ol-kit'
+import { connectToContext } from '@bayer/ol-kit'
 
 const CustomMapComponent = props => {
   const { map, selectInteraction, translations } = props
@@ -76,5 +76,5 @@ const CustomMapComponent = props => {
   )
 }
 
-export default connectToMap(CustomMapComponent)
+export default connectToContext(CustomMapComponent)
 ```
