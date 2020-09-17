@@ -15,7 +15,7 @@ class CurrentLocation extends React.Component {
   gotoCurrentLocation = () => {
     const { map } = this.props
 
-    navigator?.geolocation?.getCurrentPosition((position) => {
+    navigator?.geolocation?.getCurrentPosition((position) => { // eslint-disable-line no-unused-expressions
       const opts = {
         x: position.coords.longitude,
         y: position.coords.latitude,

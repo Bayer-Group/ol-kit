@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, IconButton } from './styled'
-import olDrawInteraction, { createBox } from 'ol/interaction/Draw'
+import { createBox } from 'ol/interaction/Draw'
 import CropSquareSharpIcon from '@material-ui/icons/CropSquareSharp'
 
 const BOX_CONFIG = {

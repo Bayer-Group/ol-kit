@@ -132,10 +132,10 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   }
 
   const exhaustiveVectorFeaturesAtPixel = layer => {
-    const exhaustivePromise = new Promise(async resolve => {
-      let orphanedFeatures = []
+    const exhaustivePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+      const orphanedFeatures = []
 
-      layer?.getSource?.()?.getFeatures?.()?.forEach(f => {
+      layer?.getSource?.()?.getFeatures?.()?.forEach(f => { // eslint-disable-line no-unused-expressions
         if (f.getGeometry().intersectsCoordinate(clickCoordinate)) {
           orphanedFeatures.push(f)
         }

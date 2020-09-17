@@ -120,6 +120,7 @@ class DrawContainer extends React.Component {
   }
 
   onDrawStart (feature, { target }) {
+    const { map } = this.props
     const { distanceUOM, areaUOM } = this.getUoms()
     const pointLabels = this.safeGetPreference('_POINT_LABELS_ENABLED')
     const distanceLabelsEnabled = this.safeGetPreference('_DISTANCE_LABEL_ENABLED')
