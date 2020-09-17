@@ -7,11 +7,6 @@ import { withRouter } from 'react-router-dom'
 
 function SimpleSnackbar(props) {
   const [open, setOpen] = React.useState(true)
-
-  const handleClick = () => {
-    setOpen(true)
-  }
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
@@ -20,7 +15,7 @@ function SimpleSnackbar(props) {
     setOpen(false)
   }
   let message = 'Welcome to ol-kit!'
-  console.log(props.location.pathname)
+  
   switch (props.location.pathname) {
     case '/covid':
       message = 'Covid-19 Demo! (case data from arcgis)'
@@ -29,7 +24,7 @@ function SimpleSnackbar(props) {
       message = 'Space Demo! (find the International Space Station)'
       break;
     case '/':
-      message = 'Welcome to ol-kit Demo! Go explore the world 🌍'
+      message = 'Welcome ol-kit demo! Go explore the world 🌍'
       break;
     default:
       break;

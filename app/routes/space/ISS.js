@@ -1,13 +1,11 @@
-import React from 'react'
-
 import VectorLayer from 'classes/VectorLayer'
-import olSourceVector from 'ol/source/vector'
-import olFeature from 'ol/feature'
-import olGeomPoint from 'ol/geom/point'
-import olProj from 'ol/proj'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olIcon from 'ol/style/icon'
+import olSourceVector from 'ol/source/Vector'
+import olFeature from 'ol/Feature'
+import olGeomPoint from 'ol/geom/Point'
+import { fromLonLat } from 'ol/proj'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
+import olIcon from 'ol/style/Icon'
 
 import { connectToMap } from 'Map'
 
@@ -34,7 +32,7 @@ function ISS (props) {
       })
     })
     const feature = new olFeature({
-      geometry: new olGeomPoint(olProj.fromLonLat(lonLat))
+      geometry: new olGeomPoint(fromLonLat(lonLat))
     })
 
     feature.setStyle(iconStyle)
