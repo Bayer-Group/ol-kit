@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container, ButtonContainer } from './styled'
+import { ButtonContainer } from './styled'
 import Line from './Line'
 import Box from './Box'
 import Circle from './Circle'
@@ -65,6 +65,7 @@ class Draw extends React.Component {
       this.handleDrawCancel()
     }
   }
+
   selectListener = ({ selected }) => {
     this.setState({ feature: selected[0] })
     this.props.selectedFeature(selected[0])
@@ -199,21 +200,21 @@ class Draw extends React.Component {
             return React.cloneElement(child, { addInteraction: this.addInteraction, type, freehand, geometryFunction })
           })
           : <ButtonContainer>
-              <Point addInteraction={this.addInteraction} type={type}
-                tooltipTitle={translations['_ol_kit.draw.pointTooltip']} />
-              <Line addInteraction={this.addInteraction} type={type}
-                freehand={freehand} tooltipTitle={translations['_ol_kit.draw.lineTooltip']} />
-              <Polygon addInteraction={this.addInteraction} type={type}
-                tooltipTitle={translations['_ol_kit.draw.polygonTooltip']} />
-              <Circle addInteraction={this.addInteraction} type={type}
-                geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.circleTooltip']} />
-              <Box addInteraction={this.addInteraction} type={type}
-                geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.boxTooltip']} />
-              <Freehand addInteraction={this.addInteraction} type={type} freehand={freehand}
-                tooltipTitle={translations['_ol_kit.draw.freehandTooltip']} />
-            </ButtonContainer>}
+            <Point addInteraction={this.addInteraction} type={type}
+              tooltipTitle={translations['_ol_kit.draw.pointTooltip']} />
+            <Line addInteraction={this.addInteraction} type={type}
+              freehand={freehand} tooltipTitle={translations['_ol_kit.draw.lineTooltip']} />
+            <Polygon addInteraction={this.addInteraction} type={type}
+              tooltipTitle={translations['_ol_kit.draw.polygonTooltip']} />
+            <Circle addInteraction={this.addInteraction} type={type}
+              geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.circleTooltip']} />
+            <Box addInteraction={this.addInteraction} type={type}
+              geometryFunction={geometryFunction} tooltipTitle={translations['_ol_kit.draw.boxTooltip']} />
+            <Freehand addInteraction={this.addInteraction} type={type} freehand={freehand}
+              tooltipTitle={translations['_ol_kit.draw.freehandTooltip']} />
+          </ButtonContainer>}
         {
-          (Array.isArray(interactions) && interactions.length) ? (<DrawToolbar onFinish={this.handleDrawFinish} onCancel={this.handleDrawCancel} />) : null
+          (Array.isArray(interactions) && interactions.length) ? (<DrawToolbar onFinish={this.handleDrawFinish} onCancel={this.handleDrawCancel} />) : null // eslint-disable-line
         }
       </div>
     )

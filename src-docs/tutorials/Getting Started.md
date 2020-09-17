@@ -1,8 +1,17 @@
 # Getting Started
 
-Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these dependencies). For a comprehensive install use:
+Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these packages).
+
+### @next version
+This is a beta version that supports the latest version of openlayers. Once this is stable enough it will be released as ol-kit v1.0.0 (but for now these versions look like this: 1.0.0-beta.0). To install this version use:
 ```
-npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
+npm i @bayer/ol-kit@next ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
+```
+
+### @latest version
+This version is dependendent on an older version of openlayers (see below). This is stable but will eventually be deprecated. To install this version use:
+```
+npm i @bayer/ol-kit@latest ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
 ```
 
 ##### _Why ol@4.6.5?_
@@ -90,7 +99,7 @@ export default App
 ```
 
 ## Internal App
-To run our internal app inside `ol-kit` make sure to `npm install` and then run the command `npm run app` which will start the server on port 3000.
+To run our internal app inside `ol-kit`, make sure to `npm install` and then run the command `npm run app` which will start the server on port 3000.
 
 ## Next Steps
 Now that you have a map rendered, you probably want to make it awesome. Check out the components and tutorials provided by ol-kit that make it easy to add info popups, layer management, drawing capability, URI location tracking and much more.

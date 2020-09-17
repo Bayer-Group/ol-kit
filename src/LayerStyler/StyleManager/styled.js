@@ -21,7 +21,6 @@ export const FilterContainer = styled.div`
 
 export const Tooltip = withStyles(() => ({
   tooltip: {
-    fontSize: '15px',
-    paddingTop: '-36px'
+    fontSize: '15px'
   }
 }))(MaterialTooltip)
