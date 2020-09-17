@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * @component
@@ -63,4 +63,4 @@ LayerPanelActionExtent.defaultProps = {
   handleMenuClose: () => {}
 }
 
-export default connectToMap(LayerPanelActionExtent)
+export default connectToContext(LayerPanelActionExtent)

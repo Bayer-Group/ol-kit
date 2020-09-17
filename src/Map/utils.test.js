@@ -44,7 +44,7 @@ describe('createMap', () => {
 describe('connectToMap', () => {
   it('should render without passing a map', () => {
     // Map has not been mounted; no MapContext, so just render the Child
-    const Consumer = connectToMap(props => <div>child comp</div>)
+    const Consumer = connectToContext(props => <div>child comp</div>)
     const wrapper = mount(<Consumer inlineProp={true} />)
 
     // make sure connectToMap is passing inline props down to children
@@ -55,7 +55,7 @@ describe('connectToMap', () => {
 
   it('should pass a map prop to children', async () => {
     const Child = props => <div>child comp</div>
-    const Consumer = connectToMap(Child)
+    const Consumer = connectToContext(Child)
     const onMapInit = jest.fn()
     const wrapper = mount(<Map onMapInit={onMapInit}><Consumer inlineProp={true} /></Map>)
 
@@ -80,7 +80,7 @@ describe('connectToMap', () => {
       inlineProp: PropTypes.bool,
       map: PropTypes.object
     }
-    const Consumer = connectToMap(Child)
+    const Consumer = connectToContext(Child)
     const onMapInit = jest.fn()
     const wrapper = mount(<Map onMapInit={onMapInit}><Consumer inlineProp={true} /></Map>)
 

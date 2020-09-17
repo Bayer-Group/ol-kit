@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { ControlsContainer } from './styled'
-import { connectToMap } from 'Map'
 import Compass from './Compass'
 import ControlGroup from './ControlGroup'
 import CurrentLocation from './CurrentLocation'
 
 import ZoomIn from './ZoomIn'
 import ZoomOut from './ZoomOut'
+import Compass from './Compass'
+import { connectToContext } from 'Provider'
 
 /**
  * A map control container with built-in positioning
@@ -58,4 +59,4 @@ Controls.propTypes = {
   orientation: PropTypes.oneOf(['vertical', 'horizontal'])
 }
 
-export default connectToMap(Controls)
+export default connectToContext(Controls)

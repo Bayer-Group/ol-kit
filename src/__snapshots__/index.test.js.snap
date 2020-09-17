@@ -65,6 +65,7 @@ Object {
   "addMovementListener": [Function],
   "calculateViewPadding": [Function],
   "centerAndZoom": [Function],
+  "connectToContext": [Function],
   "connectToMap": [Function],
   "convertFeatureToWkt": [Function],
   "convertXYtoLatLong": [Function],

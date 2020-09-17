@@ -11,7 +11,7 @@ import ugh from 'ugh'
 import escapeRegExp from 'lodash.escaperegexp'
 
 import { addMovementListener, removeMovementListener } from 'Popup'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * UI to choose color, stroke, fill etc. for styles and labels on layers
@@ -219,4 +219,4 @@ LayerStyler.propTypes = {
   whitelistedLayers: PropTypes.array
 }
 
-export default connectToMap(LayerStyler)
+export default connectToContext(LayerStyler)

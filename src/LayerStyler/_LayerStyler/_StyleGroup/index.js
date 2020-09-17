@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 
 import ugh from 'ugh'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import Selector from 'LayerStyler/_Selector'
 import GenericSymbolizer from './_GenericSymbolizer'
 import escapeRegExp from 'lodash.escaperegexp'
@@ -257,4 +257,4 @@ StyleGroup.defaultProps = {
   attributeValues: []
 }
 
-export default connectToMap(StyleGroup)
+export default connectToContext(StyleGroup)

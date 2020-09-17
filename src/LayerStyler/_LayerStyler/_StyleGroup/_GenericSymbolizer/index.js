@@ -4,7 +4,7 @@ import ColorPicker from 'LayerStyler/_ColorPicker'
 import { Trashcan } from '../styled'
 import { Container, Fourth, Title } from './styled'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Delete from '@material-ui/icons/Delete'
@@ -113,4 +113,4 @@ GenericSymbolizer.defaultProps = {
   onSymbolizerDelete: () => {}
 }
 
-export default connectToMap(GenericSymbolizer)
+export default connectToContext(GenericSymbolizer)
