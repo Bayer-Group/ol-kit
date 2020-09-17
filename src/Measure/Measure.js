@@ -1,11 +1,13 @@
 import nanoid from 'nanoid'
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import en from 'locales/en'
 import { Container, UomContainer } from './styled'
 import MenuItem from '@material-ui/core/MenuItem'
 import { calculateAreaAndDistance } from './utils'
 import { MeasureLabelPreference } from 'Preferences'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 const UNIT_OPTIONS = {
   imperial: [
@@ -229,21 +231,9 @@ Measure.propTypes = {
 }
 
 Measure.defaultProps = {
-  translations: {
-    '_ol_kit.Measurement.distance': 'Distance: ',
-    '_ol_kit.Measurement.area': 'Area: ',
-    '_ol_kit.units.feet': 'Feet',
-    '_ol_kit.units.yards': 'Yards',
-    '_ol_kit.units.miles': 'Miles',
-    '_ol_kit.units.acres': 'Acres',
-    '_ol_kit.units.nauticalmiles': 'Nautical miles',
-    '_ol_kit.units.meters': 'Meters',
-    '_ol_kit.units.kilometers': 'Kilometers',
-    '_ol_kit.units.hectares': 'Hectares',
-    '_ol_kit.measurement.toggleLabel': 'Enable Measurements'
-  },
+  translations: en,
   onUomChange: () => {},
   uom: 'imperial'
 }
 
-export default connectToMap(Measure)
+export default connectToContext(Measure)

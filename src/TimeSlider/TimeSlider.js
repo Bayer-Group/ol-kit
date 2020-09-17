@@ -6,7 +6,7 @@ import Event from 'ol/events/Event'
 
 import TimeSliderBase from './TimeSliderBase'
 import { datesDiffDay, datesSameDay } from './utils'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 class SelectEvent extends Event {
   constructor (type, selected, deselected, mapBrowserEvent) {
@@ -200,4 +200,4 @@ TimeSlider.propTypes = {
   show: PropTypes.bool
 }
 
-export default connectToMap(TimeSlider)
+export default connectToContext(TimeSlider)

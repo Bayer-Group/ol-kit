@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import { ControlsContainer } from './styled'
-import Compass from './Compass'
 import ControlGroup from './ControlGroup'
 import CurrentLocation from './CurrentLocation'
 

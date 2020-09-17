@@ -1,4 +1,3 @@
-import React from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
@@ -12,7 +11,6 @@ import olStroke from 'ol/style/Stroke'
 import qs from 'qs'
 
 import ugh from 'ugh'
-import { connectToContext } from 'Provider'
 
 /**
  * Create an openlayers map
@@ -46,17 +44,6 @@ export function createMap (opts = {}) {
 
   return map
 }
-
-/**
- * DEPREACTED - use 'connectToContext' instead
- * @deprecated
- * @function
- * @category Map
- * @since 0.1.0
- * @param {Component} component - A React component you want wrapped
- * @returns {Component} A wrapped React component which will automatically be passed a reference to the ol.Map
- */
-export const connectToMap = connectToContext
 
 /**
  * Update the url with map location coordinates, zoom level & rotation

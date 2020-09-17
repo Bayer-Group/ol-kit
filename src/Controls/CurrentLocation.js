@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import ControlGroupButton from './ControlGroupButton'
 import GpsFixedIcon from '@material-ui/icons/GpsFixed'
-import { connectToMap, centerAndZoom } from 'Map'
+import { centerAndZoom } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * A simple map zoom control
@@ -43,4 +44,4 @@ CurrentLocation.propTypes = {
   map: PropTypes.object.isRequired
 }
 
-export default connectToMap(CurrentLocation)
+export default connectToContext(CurrentLocation)
