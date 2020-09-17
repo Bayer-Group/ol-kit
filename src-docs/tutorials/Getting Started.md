@@ -1,22 +1,10 @@
 # Getting Started
 
-Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these packages).
-
-### @next version
-This is a beta version that supports the latest version of openlayers. Once this is stable enough it will be released as ol-kit v1.0.0 (but for now these versions look like this: 1.0.0-beta.0). To install this version use:
+Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these packages). Use this comprehensive install:
 ```
-npm i @bayer/ol-kit@next ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
+npm i @bayer/ol-kit ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
 ```
-
-### @latest version
-This version is dependendent on an older version of openlayers (see below). This is stable but will eventually be deprecated. To install this version use:
-```
-npm i @bayer/ol-kit@latest ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
-```
-
-##### _Why ol@4.6.5?_
-ol-kit is a byproduct of an internal mapping framework at Bayer Crop Science that is running on an older version of OpenLayers. We would like to get to the latest but it will just take some time and effort- follow [this issue](https://github.com/MonsantoCo/ol-kit/issues/44) to stay up to date on the migration.
-##### **important!** Make sure you use the [OpenLayers docs for this version](https://openlayers.org/en/v4.6.5/apidoc/).
+#### [Link to the OpenLayers docs](https://openlayers.org/en/latest/apidoc/)
 
 ## Let's Get a Map on the Page
 There are two ways to get started making a map: let ol-kit generate a default map for you or pass in a custom `ol.Map`. (note: the below examples use both classical and functional components from React- ol-kit works with both of these syntaxes.)
@@ -50,7 +38,7 @@ export default App
 
 
 ### Pass a Custom Map
-If you prefer creating your own `ol.Map` (see: [how to create a custom map](https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html)) you can ignore the `onMapInit` prop and instead pass the `map` prop like so:
+If you prefer creating your own `ol.Map` (see: [how to create a custom map](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html)) you can ignore the `onMapInit` prop and instead pass the `map` prop like so:
 ```javascript
 import React, { Component } from 'react'
 import { Map } from '@bayer/ol-kit'
@@ -60,7 +48,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.myMap = new olMap({...})
+    this.myMap = new olMap({...}) // see example code in link above
   }
 
   render () {
@@ -99,7 +87,7 @@ export default App
 ```
 
 ## Internal App
-To run our internal app inside `ol-kit`, make sure to `npm install` and then run the command `npm run app` which will start the server on port 3000.
+To run our internal app inside `ol-kit`, make sure to `npm install` and then run the command `npm run app` which will start the server on port 2020.
 
 ## Next Steps
 Now that you have a map rendered, you probably want to make it awesome. Check out the components and tutorials provided by ol-kit that make it easy to add info popups, layer management, drawing capability, URI location tracking and much more.

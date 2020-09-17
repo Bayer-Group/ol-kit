@@ -8,6 +8,8 @@ To get the time aspect of your data to be respected on the slider, identify the 
 import React from 'react'
 import { fromLonLat } from 'ol/proj'
 import olVectorSource from 'ol/source/Vector'
+import olPoint from 'ol/geom/Point'
+import olFeature from 'ol/Feature'
 import { Map, TimeSlider, VectorLayer } from '@bayer/ol-kit'
 
 const App = () => {
