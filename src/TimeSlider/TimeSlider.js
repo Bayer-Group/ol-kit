@@ -9,35 +9,10 @@ import { datesDiffDay, datesSameDay } from './utils'
 import { connectToMap } from 'Map'
 
 class SelectEvent extends Event {
-  /**
-   * @param {SelectEventType} type The event type.
-   * @param {Array<import("ol/Feature.js").default>} selected Selected features.
-   * @param {Array<import("ol/Feature.js").default>} deselected Deselected features.
-   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Associated
-   *     {@link module:ol/MapBrowserEvent}.
-   */
   constructor (type, selected, deselected, mapBrowserEvent) {
     super(type)
-
-    /**
-     * Selected features array.
-     * @type {Array<import("ol/Feature.js").default>}
-     * @api
-     */
     this.selected = selected
-
-    /**
-     * Deselected features array.
-     * @type {Array<import("ol/Feature.js").default>}
-     * @api
-     */
     this.deselected = deselected
-
-    /**
-     * Associated {@link module:ol/MapBrowserEvent}.
-     * @type {import("ol/MapBrowserEvent.js").default}
-     * @api
-     */
     this.mapBrowserEvent = mapBrowserEvent
   }
 }
