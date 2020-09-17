@@ -6,9 +6,11 @@ import debounce from 'lodash.debounce'
 import MapLogo from './MapLogo'
 import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
 import { StyledMap } from './styled'
-import { connectToContext } from 'Provider'
 import en from 'locales/en'
 import ugh from 'ugh'
+
+// context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
+export let ProviderContext = null
 
 /**
  * A Reactified ol.Map wrapper component
@@ -29,14 +31,15 @@ class Map extends React.Component {
 
     // this is used to create a unique identifier for the map div
     this.target = `_ol_kit_map_${nanoid(6)}`
+
+    // create a map context
+    ProviderContext = React.createContext()
   }
 
   componentDidMount () {
     const {
-      addMapToContext,
       map: passedMap,
       onMapInit,
-      translations,
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
@@ -59,16 +62,6 @@ class Map extends React.Component {
 
     // setup select interactions for the map
     this.initializeSelect(this.map)
-
-    // callback for <Provider> if it is mounted as hoc
-    const mapContext = {
-      map: this.map,
-      mapId: this.target,
-      selectInteraction: this.selectInteraction,
-      translations // this can be hoisted to <Provider> only in the future
-    }
-
-    addMapToContext(mapContext)
 
     // optionally attach map listener
     if (updateUrlFromView) {
@@ -112,6 +105,16 @@ class Map extends React.Component {
     if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
   }
 
+  getContextValue = () => {
+    const { translations } = this.props
+
+    return {
+      map: this.map,
+      selectInteraction: this.selectInteraction,
+      translations
+    }
+  }
+
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
@@ -126,17 +129,18 @@ class Map extends React.Component {
             <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
         }
-        {mapInitialized // wait for map to initialize before rendering children
-          ? children
-          : null
-        }
+        <ProviderContext.Provider value={this.getContextValue()}>
+          {mapInitialized // wait for map to initialize before rendering children
+            ? children
+            : null
+          }
+        </ProviderContext.Provider>
       </>
     )
   }
 }
 
 Map.defaultProps = {
-  addMapToContext: () => {},
   fullScreen: false,
   logoPosition: 'right',
   map: null,
@@ -150,8 +154,6 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
-  /** callback passed by a <Provider> parent to attach props from this <Map> (map, selectInteraction, etc.) to context */
-  addMapToContext: PropTypes.func,
   /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -183,4 +185,4 @@ Map.propTypes = {
   translations: PropTypes.object
 }
 
-export default connectToContext(Map)
+export default Map
