@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { connectToMap } from '@bayer/ol-kit'
+import { connectToContext } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olVectorLayer from 'ol/layer/Vector'
@@ -60,4 +60,4 @@ function DataLoader (props) {
   return null
 }
 
-export default connectToMap(DataLoader)
+export default connectToContext(DataLoader)

@@ -1,4 +1,4 @@
-import VectorLayer from 'classes/VectorLayer'
+import { connectToContext, VectorLayer } from '@bayer/ol-kit'
 import olSourceVector from 'ol/source/Vector'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
@@ -6,8 +6,6 @@ import { fromLonLat } from 'ol/proj'
 import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
 import olIcon from 'ol/style/Icon'
-
-import { connectToMap } from 'Map'
 
 function ISS (props) {
   const { map } = props
@@ -48,4 +46,4 @@ function ISS (props) {
   return null
 }
 
-export default connectToMap(ISS)
+export default connectToContext(ISS)

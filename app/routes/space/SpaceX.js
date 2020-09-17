@@ -1,8 +1,7 @@
-import { useState} from 'react'
+import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { connectToMap } from 'Map'
-import VectorLayer from 'classes/VectorLayer'
+import { connectToContext, VectorLayer } from '@bayer/ol-kit'
 import olSourceVector from 'ol/source/Vector'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
@@ -139,4 +138,4 @@ function SpaceX (props) {
 
 }
 
-export default connectToMap(SpaceX)
+export default connectToContext(SpaceX)
