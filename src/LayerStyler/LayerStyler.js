@@ -215,6 +215,7 @@ LayerStyler.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object.isRequired,
 
+  /** An array of layer typenames that will be used for a whitelist */
   whitelistedLayers: PropTypes.array
 }
 

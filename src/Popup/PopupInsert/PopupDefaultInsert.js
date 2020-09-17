@@ -6,6 +6,7 @@ import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 import Event from 'ol/events/Event'
 
 import { connectToMap } from 'Map'
+import en from 'locales/en'
 import { sanitizeProperties } from '../utils'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
@@ -149,7 +150,8 @@ PopupDefaultInsert.defaultProps = {
   features: [],
   onClose: () => {},
   onSelectFeature: () => {},
-  propertiesFilter: sanitizeProperties
+  propertiesFilter: sanitizeProperties,
+  translations: en
 }
 
 PopupDefaultInsert.propTypes = {

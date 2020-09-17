@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, IconButton } from './styled'
-import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined';
+import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 
 /**
  * A button for drawing line strings.
  * @component
- * @category DrawCircle
+ * @category Draw
  * @since 0.18.0
  */
-class Line extends Component {
+class DrawLine extends Component {
   render () {
     const { addInteraction, type, freehand, tooltipTitle } = this.props
 
@@ -26,7 +26,7 @@ class Line extends Component {
   }
 }
 
-Line.propTypes = {
+DrawLine.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -40,4 +40,4 @@ Line.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Line
+export default DrawLine

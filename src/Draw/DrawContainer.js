@@ -23,6 +23,7 @@ class MockPreferences {
 
   async put (key, val) {
     this.state = { ...this.state, [key]: val }
+
     return val
   }
 }
@@ -30,7 +31,7 @@ class MockPreferences {
 /**
  * A prebuilt Draw Tools component
  * @component
- * @category DrawContainer
+ * @category Draw
  * @since 0.18.0
  */
 class DrawContainer extends React.Component {
@@ -215,13 +216,13 @@ class DrawContainer extends React.Component {
         return (
           <React.Fragment key={'Measure'}>
             {
-              showCoordinateLabels ?
-              <CoordinateLabelPreference
-                compact={true}
-                translations={translations}
-                preferences={payload}
-                onChange={this.handleToggle} /> :
-                null
+              showCoordinateLabels
+                ? <CoordinateLabelPreference
+                  compact={true}
+                  translations={translations}
+                  preferences={payload}
+                  onChange={this.handleToggle} />
+                : null
             }
             <Measure
               {...this.props}
@@ -241,19 +242,19 @@ class DrawContainer extends React.Component {
   render () {
     const { preferences, children } = this.props
     const drawChildren = children || [
-        this.renderMeasure(),
-        <Draw
-          {...this.props}
-          key={'Draw'}
-          preferences={preferences.payload}
-          onDrawFinish={this.onDrawEnd}
-          onDrawBegin={this.onDrawStart}
-          onInteractionAdded={this.onInteractionAdded}
-          onDrawCancel={this.onDrawCancel}
-          selectInteraction={this.props.selectInteraction} />,
-        this.renderPreferences()
+      this.renderMeasure(),
+      <Draw
+        {...this.props}
+        key={'Draw'}
+        preferences={preferences.payload}
+        onDrawFinish={this.onDrawEnd}
+        onDrawBegin={this.onDrawStart}
+        onInteractionAdded={this.onInteractionAdded}
+        onDrawCancel={this.onDrawCancel}
+        selectInteraction={this.props.selectInteraction} />,
+      this.renderPreferences()
     ]
-  
+
     return (
       <Container>
         {drawChildren}
@@ -289,7 +290,7 @@ DrawContainer.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]),  
+  ])
 }
 
 DrawContainer.defaultProps = {

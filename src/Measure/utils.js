@@ -6,14 +6,14 @@ const EPSG = 'EPSG:4326'
 const CONVERSION = {
   /* Conversion factors between meters which is returned by EPSG:4326
   and the user requested units */
-  'feet': 3.28084,
-  'miles': 0.000621371,
+  feet: 3.28084,
+  miles: 0.000621371,
   'nautical-miles': 0.000539957,
-  'yards': 1.09361,
-  'kilometers': 0.001,
-  'meters': 1,
-  'acres': 0.000247105, // 1 square meter = 0.000247105 acres
-  'hectares': 0.0001 // 1 square meter = 0.0001 hectares
+  yards: 1.09361,
+  kilometers: 0.001,
+  meters: 1,
+  acres: 0.000247105, // 1 square meter = 0.000247105 acres
+  hectares: 0.0001 // 1 square meter = 0.0001 hectares
 }
 
 export function myLocaleString (value, language) {

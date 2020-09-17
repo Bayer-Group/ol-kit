@@ -14,7 +14,6 @@ export const Container = styled.div`
   border-radius: 5px;
 `
 
-
 export const ButtonContainer = withStyles({
   root: {
     display: 'flex',
@@ -37,7 +36,6 @@ export const Tooltip = withStyles({
   }
 })(MaterialTooltip)
 
-/** @component */
 export const ProgressWrapper = styled.div`
   display: flex;
   height: 100px;

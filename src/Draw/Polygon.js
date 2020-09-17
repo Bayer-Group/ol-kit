@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, IconButton } from './styled'
-import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined';
+import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined'
 
 /**
  * A button for drawing polygons.
  * @component
- * @category DrawPolygons
+ * @category Draw
  * @since 0.18.0
  */
-class Polygon extends Component {
+class DrawPolygon extends Component {
   render () {
     const { addInteraction, type, tooltipTitle } = this.props
 
@@ -26,7 +26,7 @@ class Polygon extends Component {
   }
 }
 
-Polygon.propTypes = {
+DrawPolygon.propTypes = {
   /** the openlayers draw type */
   type: PropTypes.string,
 
@@ -37,4 +37,4 @@ Polygon.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
-export default Polygon
+export default DrawPolygon
