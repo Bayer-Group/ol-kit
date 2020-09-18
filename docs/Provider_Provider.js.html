@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | ZoomIn</title>
+    <title>ol-kit | Provider/Provider.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,189 +77,105 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltZoomIn /&gt
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="ZoomIn">
-        <a class="href-link" href="#ZoomIn">#</a>
-        
-        <span class="code-name">
-            
-                &ltZoomIn <i>map</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        A simple map zoom in control
-    </div>
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>Yes</td>
-          <td>reference to Openlayers map object</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.14.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Controls_ZoomIn.js.html" class="button">View Source</a>
-            <span>
-                <a href="Controls_ZoomIn.js.html">Controls/ZoomIn.js</a>, <a href="Controls_ZoomIn.js.html#line15">line 15</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import PropTypes from 'prop-types'
+import en from 'locales/en'
+import ugh from 'ugh'
+
+// context is only created when &lt;Provider> is implemented (see constructor)
+export let ProviderContext = null
+
+// TODO reenable this documentation once multi-map is available (add /** below)
+/* A higher order component that provides context to connectToContext wrapped children
+ * @component
+ * @example ./example.md
+ * @category Provider
+ * @since 1.0.0
+ */
+class Provider extends React.Component {
+  constructor (props) {
+    super(props)
+
+    // state becomes an object of persistedStateKeys (or component names) with their persisted states'
+    this.state = {
+      mapContext: {}
+    }
+
+    // create context when &lt;Provider> is included in component tree
+    ProviderContext = React.createContext()
+  }
+
+  persistState = (persistedState, persistedStateKey) => {
+    if (!persistedStateKey || typeof persistedStateKey !== 'string') return ugh.error('persistedStateKey (string; usually "ComponentName") must be passed as second arg to persistState(state, persistedStateKey)') // eslint-disable-line no-console
+
+    this.setState({ [persistedStateKey]: persistedState })
+  }
+
+  addMapToContext = mapContext => {
+    this.setState({ mapContext })
+  }
+
+  getContextValue = () => {
+    const { contextProps, map: mapProp, maps: mapsProp, translations } = this.props
+
+    // if (!mapProp &amp;&amp; !mapsProp.length) return ugh.throw('Provider requires either a \'map\' or \'maps\' prop to work!')
+
+    // support multi-map components
+    // default map reference to zeroith map from mapsProp if an array of maps has been passed
+    const map = mapsProp.length ? mapsProp[0] : mapProp
+    // default an array with single value of map prop if maps array has not been passed
+    const maps = mapsProp.length ? mapsProp : [mapProp]
+
+    return {
+      addMapToContext: this.addMapToContext,
+      map,
+      maps,
+      persistedState: this.state,
+      persistState: this.persistState,
+      translations,
+      ...this.state.mapContext,
+      ...contextProps
+    }
+  }
+
+  render () {
+    return (
+      &lt;ProviderContext.Provider value={this.getContextValue()}>
+        {this.props.children}
+      &lt;/ProviderContext.Provider>
+    )
+  }
+}
+
+Provider.defaultProps = {
+  contextProps: {},
+  maps: [],
+  translations: en
+}
+
+Provider.propTypes = {
+  /** Pass components as children of Provider component */
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  /** Add any custom props to context and they will be passed to all components wrapped by connectToContext */
+  contextProps: PropTypes.object,
+  /** OL map object (required if maps array is not passed) */
+  map: PropTypes.object,
+  /** Array of Openlayers map objects for components that support multi-map (this will override anything passed to map prop) */
+  maps: PropTypes.array,
+  /** Object with key/value pairs for component translation strings */
+  translations: PropTypes.object
+}
+
+export default Provider
+</code></pre>
+        </article>
+    </section>
 
 
 

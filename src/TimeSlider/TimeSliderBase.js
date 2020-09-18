@@ -48,7 +48,8 @@ TabPanel.propTypes = {
   index: PropTypes.number
 }
 
-/** TimeSliderBase component ui used by TimeSlider
+/**
+ * TimeSliderBase component ui used by TimeSlider
  * @component
  * @category TimeSlider
  * @since 0.12.0

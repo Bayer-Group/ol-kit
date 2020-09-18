@@ -25,7 +25,7 @@ function SimpleSnackbar(props) {
       message = 'Space Demo! (Find the International Space Station!)'
       break;
     case '/':
-      message = 'Welcome to the ol-kit demo! Go explore the world 🌍!'
+      message = 'Welcome to the ol-kit demo! Go explore the world 🌍'
       break;
     default:
       break;

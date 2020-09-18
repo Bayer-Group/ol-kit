@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import olLayerVector from 'ol/layer/Vector'
 import olSourceVector from 'ol/source/Vector'
-import olDrawInteraction from 'ol/interaction/Draw'
+import { createBox } from 'ol/interaction/Draw'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Draw from './Draw'
 import { Measure } from 'Measure'
@@ -126,7 +126,7 @@ class DrawContainer extends React.Component {
     const distanceLabelsEnabled = this.safeGetPreference('_DISTANCE_LABEL_ENABLED')
     const areaLabelsEnabled = this.safeGetPreference('_AREA_LABEL_ENABLED')
     const opts = { distanceUOM, areaUOM, map }
-    const isBoxDraw = target.geometryFunction_?.toString() === olDrawInteraction.createBox().toString()
+    const isBoxDraw = target.geometryFunction_?.toString() === createBox().toString()
     const drawMode = isBoxDraw ? 'Box' : target.mode_
     const isFreehand = target.freehand_
 
@@ -241,7 +241,7 @@ class DrawContainer extends React.Component {
   }
 
   render () {
-    const { preferences, children } = this.props
+    const { preferences, children, style } = this.props
     const drawChildren = children || [
       this.renderMeasure(),
       <Draw
@@ -257,7 +257,7 @@ class DrawContainer extends React.Component {
     ]
 
     return (
-      <Container>
+      <Container style={style}>
         {drawChildren}
       </Container>
     )
@@ -287,6 +287,8 @@ DrawContainer.propTypes = {
   drawOpts: PropTypes.object,
   /** callback that returns the selected openlayers feature from the map */
   selectedFeature: PropTypes.func,
+  /** pass custom style object to DrawContainer */
+  style: PropTypes.object,
   /** pass child comps to opt out of the default controls */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

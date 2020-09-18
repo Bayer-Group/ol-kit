@@ -5,6 +5,7 @@ import ControlGroupButton from './ControlGroupButton'
 import GpsFixedIcon from '@material-ui/icons/GpsFixed'
 import { centerAndZoom } from 'Map'
 import { connectToContext } from 'Provider'
+import ugh from 'ugh'
 
 /**
  * A simple map zoom control
@@ -16,16 +17,20 @@ class CurrentLocation extends React.Component {
   gotoCurrentLocation = () => {
     const { map } = this.props
 
-    navigator?.geolocation?.getCurrentPosition((position) => { // eslint-disable-line no-unused-expressions
-      const opts = {
-        x: position.coords.longitude,
-        y: position.coords.latitude,
-        zoom: 13,
-        showPointIcon: true
-      }
+    try {
+      navigator.geolocation.getCurrentPosition((position) => { // eslint-disable-line no-unused-expressions
+        const opts = {
+          x: position.coords.longitude,
+          y: position.coords.latitude,
+          zoom: 13,
+          showPointIcon: true
+        }
 
-      centerAndZoom(map, opts)
-    })
+        centerAndZoom(map, opts)
+      })
+    } catch (e) {
+      ugh.warn('Navigator not availble - could not find current location')
+    }
   }
 
   render () {

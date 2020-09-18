@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | ZoomIn</title>
+    <title>ol-kit | Provider/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,189 +77,63 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltZoomIn /&gt
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="ZoomIn">
-        <a class="href-link" href="#ZoomIn">#</a>
-        
-        <span class="code-name">
-            
-                &ltZoomIn <i>map</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        A simple map zoom in control
-    </div>
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>Yes</td>
-          <td>reference to Openlayers map object</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.14.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Controls_ZoomIn.js.html" class="button">View Source</a>
-            <span>
-                <a href="Controls_ZoomIn.js.html">Controls/ZoomIn.js</a>, <a href="Controls_ZoomIn.js.html#line15">line 15</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import ugh from 'ugh'
+import { ProviderContext } from 'Provider'
+
+/**
+ * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
+ * @function
+ * @category Provider
+ * @since 1.0.0
+ * @param {Component} component - A React component you want wrapped
+ * @returns {Component} A wrapped React component which will automatically be passed a reference to provider context
+ */
+export function connectToContext (Component) {
+  if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
+
+  return props => { // eslint-disable-line react/display-name
+    return !ProviderContext
+      ? &lt;Component {...props} />
+      : (
+        &lt;ProviderContext.Consumer>
+          {
+            (providerProps = {}) => {
+              // if propTypes is not defined on the component just pass all providerProps
+              const filteredProviderProps = { ...providerProps }
+              const { propTypes } = Component
+
+              if (propTypes) {
+                // filter out any props that do not need to get passed to this wrapped component
+                Object.keys(providerProps).forEach(key => {
+                  if (!propTypes[key]) delete filteredProviderProps[key]
+                })
+              }
+
+              // // persistedState logic
+              // const { persistedState, persistState } = providerProps
+              // // set the key to look up component's persisted state
+              // const persistedStateKey = props.persistedStateKey || Component.displayName || Component.name // eslint-disable-line react/prop-types
+
+              return (
+                &lt;Component
+                  // persistedState={persistedState[persistedStateKey]} // note: persistedState is undefined if persistedStateKey key doesn't exist yet (components should check for this)
+                  // persistState={persistState}
+                  {...filteredProviderProps}
+                  {...props} />
+              )
+            }
+          }
+        &lt;/ProviderContext.Consumer>
+      )
+  }
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
