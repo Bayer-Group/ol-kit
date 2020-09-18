@@ -62,7 +62,7 @@ module.exports = function bundle (Components, out, config) {
     const { displayName, filePath, type } = c.component
     const relativePath = path.relative(absoluteOut, filePath)
     const name = `Component${i}`
-    console.log('relative', name, relativePath)
+
     return [
       `import ${name} from '${relativePath}';`,
       `${type}Components['${displayName}'] = ${name};`,
@@ -80,8 +80,8 @@ module.exports = function bundle (Components, out, config) {
   } catch (error) {
     if(error.output && error.output.length){
       console.log(error.output[1].toString())
-      console.log('ALL ERRORS', error.output)
     }
-    // throw error
+    console.log('DID YOU GET A FATAL ERROR? "TypeError: Path must be a string." maybe? Comment the line below this console.log // throw error to build the docs ;)')
+    throw error
   }
 }

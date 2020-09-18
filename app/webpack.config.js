@@ -25,7 +25,7 @@ module.exports = {
     alias: {
       // these ensure we don't have duplicate versions on the same page
       '@bayer/ol-kit': path.resolve(__dirname, '../', 'src'),
-      // 'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
+      'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
     }
   },
 
