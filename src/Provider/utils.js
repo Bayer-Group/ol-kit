@@ -1,6 +1,6 @@
 import React from 'react'
 import ugh from 'ugh'
-import { ProviderContext } from '../Map/Map'
+import { ProviderContext } from 'Provider'
 
 /**
  * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
