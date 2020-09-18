@@ -71,17 +71,16 @@ export default class RasterSourceFactory {
     }
     // this calls the getHeaders func on every request and is handy when auth headers need to be added
     const headers = this.getHeaders(defaultHeaders)
-console.log('loadFunc', this.body)
+
     return fetch(src, {
       method: 'POST',
       responseType: 'blob',
-      headers
-      //body: qs.stringify(this.body)
+      headers,
+      body: qs.stringify(this.body)
     })
     //return axios.post(src, qs.stringify(this.body), { responseType: 'blob', headers })
       .then(res => res.blob())
       .then(data => {
-        console.log('BLOB', data)
         img.getImage().src = (window.URL || window.webkitURL).createObjectURL(data)
         img.getImage().crossOrigin = 'anonymous'
       }).catch((err) => {

@@ -484,7 +484,7 @@ export default class GeoserverLayer extends olLayerGroup {
       const [wfsLayerInfo, wmsLayerInfo] = results.map(({ value }) => value) // extract the returned values
       const layerProto = opts.isSingleTile ? olLayerImage : olLayerTile
       const sourceProto = opts.isSingleTile ? olSourceImageWMS : olSourceTileWMS
-      const { layerTitle = 'states layer', layerName, typeName } = wfsLayerInfo || wmsLayerInfo || {}
+      const { layerTitle, layerName, typeName } = wfsLayerInfo || wmsLayerInfo || {}
       const { attributes, geometryName } = wfsLayerInfo || {}
       const { extent, dimension } = wmsLayerInfo || {}
 
