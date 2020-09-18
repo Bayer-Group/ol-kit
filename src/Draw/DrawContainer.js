@@ -240,7 +240,7 @@ class DrawContainer extends React.Component {
   }
 
   render () {
-    const { preferences, children } = this.props
+    const { preferences, children, style } = this.props
     const drawChildren = children || [
       this.renderMeasure(),
       <Draw
@@ -256,7 +256,7 @@ class DrawContainer extends React.Component {
     ]
 
     return (
-      <Container>
+      <Container style={style}>
         {drawChildren}
       </Container>
     )

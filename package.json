@@ -145,7 +145,7 @@
     "webpack-dev-server": "~3.11.0"
   },
   "peerDependencies": {
-    "ol": "4.6.5",
+    "ol": "6.4.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "styled-components": ">=5.0.0",
