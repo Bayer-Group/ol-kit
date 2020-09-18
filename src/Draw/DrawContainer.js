@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Draw from './Draw'
 import { Measure } from 'Measure'
 import { SnapPreference, CoordinateLabelPreference } from 'Preferences'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import { styleMeasure } from './utils'
 import { Container, ProgressWrapper } from './styled'
 
@@ -120,6 +120,7 @@ class DrawContainer extends React.Component {
   }
 
   onDrawStart (feature, { target }) {
+    const { map } = this.props
     const { distanceUOM, areaUOM } = this.getUoms()
     const pointLabels = this.safeGetPreference('_POINT_LABELS_ENABLED')
     const distanceLabelsEnabled = this.safeGetPreference('_DISTANCE_LABEL_ENABLED')
@@ -302,4 +303,4 @@ DrawContainer.defaultProps = {
   selectedFeature: () => {}
 }
 
-export default connectToMap(DrawContainer)
+export default connectToContext(DrawContainer)

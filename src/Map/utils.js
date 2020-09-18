@@ -1,4 +1,3 @@
-import React from 'react'
 import Map from 'ol/Map'
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
@@ -12,7 +11,6 @@ import olStroke from 'ol/style/Stroke'
 import qs from 'qs'
 
 import ugh from 'ugh'
-import { MapContext } from './Map'
 
 /**
  * Create an openlayers map
@@ -45,41 +43,6 @@ export function createMap (opts = {}) {
   })
 
   return map
-}
-
-/**
- * A wrapper utility function designed to automatically pass down an ol.Map from the top-level Map component
- * @function
- * @category Map
- * @since 0.1.0
- * @param {Component} component - A React component you want wrapped
- * @returns {Component} A wrapped React component which will automatically be passed a reference to the ol.Map
- */
-export function connectToMap (Component) {
-  if (!Component) return ugh.throw('Pass a React component to \'connectToMap\'')
-
-  return props => ( // eslint-disable-line react/display-name
-    !MapContext
-      ? <Component {...props} />
-      : (
-        <MapContext.Consumer>
-          {(providerProps = {}) => {
-            // if propTypes is not defined on the component just pass all providerProps
-            const filteredProviderProps = { ...providerProps }
-            const { propTypes } = Component
-
-            if (propTypes) {
-              // filter out any props that do not need to get passed to this wrapped component
-              Object.keys(providerProps).forEach(key => {
-                if (!propTypes[key]) delete filteredProviderProps[key]
-              })
-            }
-
-            return <Component {...filteredProviderProps} {...props} />
-          }}
-        </MapContext.Consumer>
-      )
-  )
 }
 
 /**

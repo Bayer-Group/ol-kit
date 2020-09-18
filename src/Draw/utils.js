@@ -1,3 +1,4 @@
+/* eslint-disable */
 import ugh from 'ugh'
 import olFeature from 'ol/Feature'
 import olGeomLineString from 'ol/geom/LineString'
@@ -12,7 +13,7 @@ import * as olProj from 'ol/proj'
 import olFormatGeoJson from 'ol/format/GeoJSON'
 import olCollection from 'ol/Collection'
 import * as olSphere from 'ol/sphere'
-import olGeomPolygon, { fromCircle } from 'ol/geom/Polygon'
+import { fromCircle } from 'ol/geom/Polygon'
 import olGeomMultiPoint from 'ol/geom/MultiPoint'
 import * as turfAssert from '@turf/invariant'
 
@@ -488,7 +489,7 @@ function pointsFromVertices (geometry) {
   } else if (featureType === 'Point' || featureType === 'Circle') {
     return [coordinates]
   } else {
-    logger.warn('Geometries of type %s are not supported', featureType)
+    ugh.warn('Geometries of type %s are not supported', featureType)
 
     return coordinates
   }

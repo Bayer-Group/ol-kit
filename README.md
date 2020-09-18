@@ -13,14 +13,22 @@ Check out the [demo site here!](https://demo.ol-kit.com/)
 Install `ol-kit` and its `peerDependencies`
 
 ```bash
-npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
+npm i @bayer/ol-kit ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
 ```
 
 ## Getting Started
 It's easy to start building map apps with ol-kit. For simple projects, the following will get you started:
 ```javascript
 import React from 'react'
-import { Map, Controls, LayerPanel, Popup, loadDataLayer } from '@bayer/ol-kit'
+import {
+  Map,
+  BasemapContainer,
+  ContextMenu,
+  Controls,
+  LayerPanel,
+  Popup,
+  loadDataLayer
+} from '@bayer/ol-kit'
 
 class App extends React.Component {
   onMapInit = async map => {
@@ -31,13 +39,17 @@ class App extends React.Component {
     // find a geojson or kml dataset (url or file) to load on the map
     const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
     const dataLayer = await loadDataLayer(map, data)
+    // set the title on the layer to show in LayerPanel
+    dataLayer.set('title', 'NASA Data')
 
     console.log('data layer:', dataLayer)
   }
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit}>
+      <Map onMapInit={this.onMapInit} fullScreen>
+        <BasemapContainer />
+        <ContextMenu />
         <Controls />
         <LayerPanel />
         <Popup />
@@ -50,7 +62,7 @@ export default App
 ```
 
 ## Documentation
-The documentation for the project is available in the `/docs` directory and the hosted version is available at [ol-kit.com](https://ol-kit.com).
+The documentation for the project is available in the `/docs` directory and the hosted version is available at [ol-kit.com](https://ol-kit.com/docs).
 
 ## Bugs & Feature Requests
 If you find a bug or think of a new feature, please submit a Github issue.

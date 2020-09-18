@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | PopupActionItem</title>
+    <title>ol-kit | connectToContext</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -71,277 +71,88 @@
             </div>
             <div class="column is-9-desktop" id="main-content-wrapper">
                 <div class="content">
-                    
-
-
-
-
-<section>
+                    <section>
 
 <header>
-    
-        <h2>
-            &ltPopupActionItem /&gt
-        </h2>
-        
     
 </header>
 
 <article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="PopupActionItem">
-        <a class="href-link" href="#PopupActionItem">#</a>
-        
-        <span class="code-name">
-            
-                &ltPopupActionItem <i>title</i> <i>children</i> <i>disabled</i> <i>onClick</i> <i>style</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
-          <td>
-            union
-          </td>
-          <td>Yes</td>
-          <td>The title of the action item (if a custom child component is not specified)</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>The content of the action item (takes precendence over `title`)</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>disabled</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>Determines if the action item should be disabled</td>
-          <td>false</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>onClick</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>Callback fired when the action item is clicked</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>style</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>Styles applied to <Item></td>
-          <td>{}</td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Popup_PopupInsert_PopupActionItem_index.js.html" class="button">View Source</a>
-            <span>
-                <a href="Popup_PopupInsert_PopupActionItem_index.js.html">Popup/PopupInsert/PopupActionItem/index.js</a>, <a href="Popup_PopupInsert_PopupActionItem_index.js.html#line11">line 11</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        
-
-<div id='jv634vxi9gkf7bi77a'></div>
-
-<script>
-  ReactDOM.render(ReactWrapper({
-    example: "./example.md",
-    uniqId: "jv634vxi9gkf7bi77a",
-  }), document.getElementById('jv634vxi9gkf7bi77a'));
-</script>
-    
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <p>A <code>PopupActionItem</code> is a list item which renders within a popup. You can pass <code>PopupActionItem</code> a simple string <code>title</code> and bind an <code>onClick</code> to do whatever you wish when a user selects the item. If an item should be disabled, pass <code>disabled={true}</code> and your <code>onClick</code> won't be called when the item is clicked.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
-  &lt;Popup show={true} pixel={[50, 10]} inline={true}>
-    &lt;PopupActionItem title=&quot;My Action&quot; />
-    &lt;PopupActionItem disabled={true} title=&quot;Disabled Action&quot; />
-  &lt;/Popup>
-)
+    <h1>connectToContext</h1>
+<p>The <code>connectToContext</code> wrapping function that automatically passes a <code>map</code>, <code>translations</code>, and/or <code>selectInteraction</code> prop to its child component.</p>
+<h2>How does it work?</h2>
+<p>When the <code>Map</code> component is constructed, it attaches the OpenLayers map to a <a href="https://reactjs.org/docs/context.html">context</a>. If this context exists (which means <code>Map</code> has been constructed), <code>connectToContext</code> renders its child with a prop of <code>map</code> from the <code>Map</code> parent and also spreads the rest of the inline props. If a <code>Map</code> is not mounted, <code>connectToContext</code> will just render the child and pass props through without consuming a context. <code>translations</code> and <code>selectInteraction</code> will also be passed through from the <code>&lt;Map&gt;</code>'s context. Optimization: if <code>propTypes</code> are defined on the component passed to <code>connectToContext</code>, this util will check the against <code>propTypes</code> and filter out any props mentioned above that are unneeded, if <code>propTypes</code> is not set, all props mentioned above will be passed.</p>
+<h2>Automatic Example</h2>
+<p>All components provided by ol-kit are already wrapped, so a single-line drop-in is all you need to get it working:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup } from '@bayer/ol-kit'
+
+const App = () => {
+  return (
+    &lt;Map>
+      &lt;Popup /> {/* This Popup component was automatically given a map prop when wrapped by connectToContext internally */}
+    &lt;/Map>
+  )
+}
+
+export default App
 </code></pre>
-<p>If you desire to completely customize your action item, pass a child component into the <code>PopupActionItem</code> to render a completely custom item.</p>
-<pre class="prettyprint source lang-jsx"><code>return (
-  &lt;Popup show={true} pixel={[50, 10]} inline={true}>
-    &lt;PopupActionItem title=&quot;My Action&quot; />
-    &lt;PopupActionItem>
-      &lt;div style={{background: '#ec0000', padding: '20px', color: 'white'}}>
-        &lt;i className=&quot;zmdi zmdi-delete&quot; style={{ paddingRight: '20px'}}>&lt;/i>
-        Custom Danger Action
-      &lt;/div>
-    &lt;/PopupActionItem>
-  &lt;/Popup>
-)
+<h2>Manual Example</h2>
+<p>If you prefer to not use the <code>Map</code> component you must manually pass the <code>map</code> prop to all ol-kit components:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map, Popup } from '@bayer/ol-kit'
+
+const App = () => {
+  return (
+    &lt;div>
+      &lt;Popup map={yourOlMap} />
+    &lt;/div>
+  )
+}
+
+export default App
 </code></pre>
-            </div>
-        </div>
-    
-    
+<h2>Wrapping Your Components</h2>
+<p>Prebuilt ol-kit components get wrapped by this consumer before they are exported so they can be dropped in and just work. If you want to leverage the same logic, wrap your custom component like so:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import PropTypes from 'prop-types'
+import { connectToContext } from '@bayer/ol-kit'
+
+const CustomMapComponent = props => {
+  const { map } = props
+
+  // do some logic with the map
+
+  return (
+    &lt;div>This component has map as a prop!&lt;/div>
+  )
+}
+
+CustomMapComponent.propTypes = {
+  map: PropTypes.object.isRequired
+}
+
+export default connectToContext(CustomMapComponent)
+</code></pre>
+<p>The above example filtered out <code>translations</code> &amp; <code>selectInteraction</code>...but if you do not define <code>propTypes</code>:</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { connectToContext } from '@bayer/ol-kit'
+
+const CustomMapComponent = props => {
+  const { map, selectInteraction, translations } = props
+
+  // access to all context props from &lt;Map> parent
+
+  return (
+    &lt;div>This component has map, selectInteraction, and translations props!&lt;/div>
+  )
+}
+
+export default connectToContext(CustomMapComponent)
+</code></pre>
 </article>
 
 </section>
-
-
-
 
                 </div>
             </div>

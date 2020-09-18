@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import LayerPanelBase from 'LayerPanel/LayerPanelBase'
 import LayerPanelLayersPage from 'LayerPanel/LayerPanelLayersPage'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * @component
@@ -32,4 +32,4 @@ LayerPanel.propTypes = {
   children: PropTypes.node
 }
 
-export default connectToMap(LayerPanel)
+export default connectToContext(LayerPanel)

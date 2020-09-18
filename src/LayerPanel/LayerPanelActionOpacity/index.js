@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { OpacityWrapper, OpacityTitle, Slider } from './styled'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * @component
@@ -38,4 +38,4 @@ LayerPanelActionOpacity.propTypes = {
   translations: PropTypes.object
 }
 
-export default connectToMap(LayerPanelActionOpacity)
+export default connectToContext(LayerPanelActionOpacity)

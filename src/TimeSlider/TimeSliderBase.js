@@ -17,7 +17,8 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import SyncIcon from '@material-ui/icons/Sync'
 
-import { connectToMap } from 'Map'
+import en from 'locales/en'
+import { connectToContext } from 'Provider'
 import {
   Container,
   LayerTitle,
@@ -453,7 +454,8 @@ class TimeSliderBase extends React.Component {
 TimeSliderBase.defaultProps = {
   onClose: () => {},
   onDatesChange: () => {},
-  onTabChange: () => {}
+  onTabChange: () => {},
+  translations: en
 }
 
 TimeSliderBase.propTypes = {
@@ -482,4 +484,4 @@ TimeSliderBase.propTypes = {
   })
 }
 
-export default connectToMap(TimeSliderBase)
+export default connectToContext(TimeSliderBase)

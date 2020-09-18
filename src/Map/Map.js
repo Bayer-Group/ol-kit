@@ -10,7 +10,7 @@ import en from 'locales/en'
 import ugh from 'ugh'
 
 // context should only be created when <Map> is mounted (see constructor), otherwise it's null so child comps don't use context
-export let MapContext = null
+export let ProviderContext = null
 
 /**
  * A Reactified ol.Map wrapper component
@@ -33,7 +33,7 @@ class Map extends React.Component {
     this.target = `_ol_kit_map_${nanoid(6)}`
 
     // create a map context
-    MapContext = React.createContext()
+    ProviderContext = React.createContext()
   }
 
   componentDidMount () {
@@ -129,12 +129,12 @@ class Map extends React.Component {
             <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
         }
-        <MapContext.Provider value={this.getContextValue()}>
+        <ProviderContext.Provider value={this.getContextValue()}>
           {mapInitialized // wait for map to initialize before rendering children
             ? children
             : null
           }
-        </MapContext.Provider>
+        </ProviderContext.Provider>
       </>
     )
   }

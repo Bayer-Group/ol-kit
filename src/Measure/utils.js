@@ -1,6 +1,6 @@
 import { getDistance, getArea } from 'ol/sphere'
 import olGeomLineString from 'ol/geom/LineString'
-import olGeomPolygon, { fromCircle } from 'ol/geom/Polygon'
+import { fromCircle } from 'ol/geom/Polygon'
 const EPSG = 'EPSG:4326'
 
 const CONVERSION = {
