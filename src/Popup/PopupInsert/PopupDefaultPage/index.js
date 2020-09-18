@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { connectToMap } from 'Map'
 import en from 'locales/en'
+import { connectToContext } from 'Provider'
 import CLOSE from 'images/close_icon.svg'
 import LEFT_ARROW from 'images/left_arrow.svg'
 import RIGHT_ARROW from 'images/right_arrow.svg'
@@ -140,4 +140,4 @@ PopupDefaultPage.defaultProps = {
   translations: en
 }
 
-export default connectToMap(PopupDefaultPage)
+export default connectToContext(PopupDefaultPage)

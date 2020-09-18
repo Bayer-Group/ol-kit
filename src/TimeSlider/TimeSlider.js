@@ -2,12 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import debounce from 'lodash.debounce'
-import olObservable from 'ol/observable'
-import olSelect from 'ol/interaction/select'
+import Event from 'ol/events/Event'
 
 import TimeSliderBase from './TimeSliderBase'
 import { datesDiffDay, datesSameDay } from './utils'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
+
+class SelectEvent extends Event {
+  constructor (type, selected, deselected, mapBrowserEvent) {
+    super(type)
+    this.selected = selected
+    this.deselected = deselected
+    this.mapBrowserEvent = mapBrowserEvent
+  }
+}
 
 /** TimeSlider component used to display/filter data with time attributes
  * @component
@@ -41,9 +49,10 @@ class TimeSlider extends React.Component {
 
   componentWillUnmount = () => {
     const { map } = this.props
+    const layers = map.getLayers()
 
     // unbind the listener
-    olObservable.unByKey(this.layerListener)
+    layers.unset(this.layerListener)
     map.un('moveend', this.moveHandler)
   }
 
@@ -106,7 +115,7 @@ class TimeSlider extends React.Component {
       const deselected = selectInteraction.getFeatures().getArray()
       const features = source.getFeatures().filter(f => datesSameDay(new Date(f.get(layer.get('_ol_kit_time_key'))), selectedDate))
       const selected = [...features]
-      const event = new olSelect.Event('select', selected, deselected)
+      const event = new SelectEvent('select', selected, deselected)
 
       // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
       selectInteraction.getFeatures().clear()
@@ -130,7 +139,7 @@ class TimeSlider extends React.Component {
         const features = allFeatures.filter(f => moment(new Date(f.get(layer.get('_ol_kit_time_key')))).isBetween(selectedDateRange[0], selectedDateRange[1]))
         const deselected = selectInteraction.getFeatures().getArray()
         const selected = [...features]
-        const event = new olSelect.Event('select', selected, deselected)
+        const event = new SelectEvent('select', selected, deselected)
 
         // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
         selectInteraction.getFeatures().clear()
@@ -191,4 +200,4 @@ TimeSlider.propTypes = {
   show: PropTypes.bool
 }
 
-export default connectToMap(TimeSlider)
+export default connectToContext(TimeSlider)

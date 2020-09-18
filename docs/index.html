@@ -78,32 +78,44 @@
 <p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
 <pre class="prettyprint source lang-javascript"><code>
   import React from 'react'
-  import { Map, Controls, LayerPanel, Popup, loadDataLayer } from '@bayer/ol-kit'
-
+  import {
+    Map,
+    BasemapContainer,
+    ContextMenu,
+    Controls,
+    LayerPanel,
+    Popup,
+    loadDataLayer
+  } from '@bayer/ol-kit'
+  
   class App extends React.Component {
     onMapInit = async map => {
       console.log('we got a map!', map)
       // nice to have map set on the window while debugging
       window.map = map
-
+  
       // find a geojson or kml dataset (url or file) to load on the map
       const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
       const dataLayer = await loadDataLayer(map, data)
-
+      // set the title on the layer to show in LayerPanel
+      dataLayer.set('title', 'NASA Data')
+  
       console.log('data layer:', dataLayer)
     }
-
+  
     render () {
       return (
-        &lt;Map onMapInit={this.onMapInit}>
-          &lt;Controls />
-          &lt;LayerPanel />
-          &lt;Popup />
-        &lt;/Map>
+        <Map onMapInit={this.onMapInit} fullScreen>
+          <BasemapContainer />
+          <ContextMenu />
+          <Controls />
+          <LayerPanel />
+          <Popup />
+        </Map>
       )
     }
   }
-
+  
   export default App
 </code></pre>
 <h4><a href="docs.html">Go to docs</a></h4>

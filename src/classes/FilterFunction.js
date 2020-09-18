@@ -1,4 +1,4 @@
-import olFilterComparisonBinary from 'ol/format/filter/comparisonbinary'
+import olFilterComparisonBinary from 'ol/format/filter/ComparisonBinary'
 
 class Function extends olFilterComparisonBinary {
   constructor (name, propertyName, expression) {

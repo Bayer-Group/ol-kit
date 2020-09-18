@@ -1,14 +1,14 @@
 /* eslint-disable */
-import olFeature from 'ol/feature'
-import olVectorLayer from 'ol/layer/vector'
-import olPoint from 'ol/geom/point'
-import olClusterSource from 'ol/source/cluster'
-import olVectorSource from 'ol/source/vector'
-import olStyle from 'ol/style/style'
-import olText from 'ol/style/text'
-import olFill from 'ol/style/fill'
-import olStroke from 'ol/style/stroke'
-import olCircle from 'ol/style/circle'
+import olFeature from 'ol/Feature'
+import olVectorLayer from 'ol/layer/Vector'
+import olPoint from 'ol/geom/Point'
+import olClusterSource from 'ol/source/Cluster'
+import olVectorSource from 'ol/source/Vector'
+import olStyle from 'ol/style/Style'
+import olText from 'ol/style/Text'
+import olFill from 'ol/style/Fill'
+import olStroke from 'ol/style/Stroke'
+import olCircle from 'ol/style/Circle'
 import { createMap } from 'Map'
 import { getLayersAndFeaturesForEvent, sanitizeProperties } from 'Popup'
 
@@ -74,12 +74,8 @@ describe('Popup utils', () => {
     const featureCoords = clusters.getSource().getSource().getFeatures()[0].getGeometry().getCoordinates()
     const clickPixel = map.getPixelFromCoordinate(featureCoords)
 
-    console.log('[ 179941500000, 179941500000 ]', featureCoords, map.getView().getProjection())
-
     const event = { map, pixel: [0,0] }
     const promises = await getLayersAndFeaturesForEvent(event)
-
-    console.log('promises', promises.length)
 
     expect(2).toBe(1)
   })

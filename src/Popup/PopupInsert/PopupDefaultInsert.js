@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import olSelect from 'ol/interaction/select'
-
-import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
-
-import { connectToMap } from 'Map'
+import Event from 'ol/events/Event'
 import en from 'locales/en'
 import { sanitizeProperties } from '../utils'
+import { connectToContext } from 'Provider'
+import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
+
+class SelectEvent extends Event {
+  constructor(type, selected, deselected, mapBrowserEvent) {
+    super(type)
+    this.selected = selected
+    this.deselected = deselected
+    this.mapBrowserEvent = mapBrowserEvent
+  }
+}
 
 /**
  * @component
@@ -52,7 +59,7 @@ class PopupDefaultInsert extends Component {
     const { selectInteraction } = this.props
     const deselected = selectInteraction.getFeatures().getArray()
     const selected = [feature]
-    const event = new olSelect.Event('select', selected, deselected)
+    const event = new SelectEvent('select', selected, deselected)
 
     // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
     selectInteraction.getFeatures().clear()
@@ -82,10 +89,13 @@ class PopupDefaultInsert extends Component {
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
 
+    // dedupe the features to remove possible duplicates introduced in ol6
+    const dedupedFeatures = [...new Set(features).values()]
+
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
-        {features.length
-          ? features.map((f, i) => (
+        {dedupedFeatures.length
+          ? dedupedFeatures.map((f, i) => (
               <PopupDefaultPage
                 attributes={propertiesFilter(f.getProperties())}
                 key={i}
@@ -146,4 +156,4 @@ PopupDefaultInsert.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupDefaultInsert)
+export default connectToContext(PopupDefaultInsert)

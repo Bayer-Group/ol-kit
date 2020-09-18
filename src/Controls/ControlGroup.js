@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { ControlGroupContainer } from './styled'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 import ZoomIn from './ZoomIn'
 import ZoomOut from './ZoomOut'
@@ -46,4 +46,4 @@ ControlGroup.propTypes = {
   orientation: PropTypes.oneOf(['vertical', 'horizontal'])
 }
 
-export default connectToMap(ControlGroup)
+export default connectToContext(ControlGroup)

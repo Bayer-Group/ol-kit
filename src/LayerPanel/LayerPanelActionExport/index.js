@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
-import olLayerVector from 'ol/layer/vector'
-import { connectToMap } from 'Map'
+import olLayerVector from 'ol/layer/Vector'
+import { connectToContext } from 'Provider'
 import { exportFeatures } from './utils'
 
 /**
@@ -94,4 +94,4 @@ LayerPanelActionExport.defaultProps = {
   onExportFeatures: exportFeatures
 }
 
-export default connectToMap(LayerPanelActionExport)
+export default connectToContext(LayerPanelActionExport)

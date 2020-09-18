@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import olInteractionDraw from 'ol/interaction/draw'
+import olInteractionDraw from 'ol/interaction/Draw'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import PopupBase from './PopupBase'
 import PopupDefaultInsert from './PopupInsert/PopupDefaultInsert'
 import { addMovementListener, getLayersAndFeaturesForEvent, getPopupPositionFromFeatures, removeMovementListener } from './utils'
@@ -120,6 +120,8 @@ class Popup extends Component {
       return [...acc, ...features]
     }, [])
 
+    if (!parsedFeatures.length) return this.hidePopup()
+
     // ol returns these in reverse z-index order
     const features = parsedFeatures.reverse()
     const popupPosition = getPopupPositionFromFeatures(e, features)
@@ -209,4 +211,4 @@ Popup.propTypes = {
   show: PropTypes.bool
 }
 
-export default connectToMap(Popup)
+export default connectToContext(Popup)

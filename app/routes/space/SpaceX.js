@@ -1,15 +1,14 @@
-import React, { useState} from 'react'
+import { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { connectToMap } from 'Map'
-import VectorLayer from 'classes/VectorLayer'
-import olSourceVector from 'ol/source/vector'
-import olFeature from 'ol/feature'
-import olGeomPoint from 'ol/geom/point'
-import olProj from 'ol/proj'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olIcon from 'ol/style/icon'
+import { connectToContext, VectorLayer } from '@bayer/ol-kit'
+import olSourceVector from 'ol/source/Vector'
+import olFeature from 'ol/Feature'
+import olGeomPoint from 'ol/geom/Point'
+import { fromLonLat } from 'ol/proj'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
+import olIcon from 'ol/style/Icon'
 
 const GET_LANDPADS = gql`
 {
@@ -81,7 +80,7 @@ function SpaceX (props) {
         })
       })
       const feature = new olFeature({
-        geometry: new olGeomPoint(olProj.fromLonLat([
+        geometry: new olGeomPoint(fromLonLat([
           pad.location.longitude, pad.location.latitude
         ]))
       })
@@ -114,7 +113,7 @@ function SpaceX (props) {
       const padthing = launchData.launchpads.find((pad) => pad.id === flight.launch_site.site_id)
       const latlong = [padthing.location.longitude, padthing.location.latitude]
       const feature = new olFeature({
-        geometry: new olGeomPoint(olProj.fromLonLat( latlong ))
+        geometry: new olGeomPoint(fromLonLat( latlong ))
       })
 
       // feature.setStyle(iconStyle)
@@ -139,4 +138,4 @@ function SpaceX (props) {
 
 }
 
-export default connectToMap(SpaceX)
+export default connectToContext(SpaceX)

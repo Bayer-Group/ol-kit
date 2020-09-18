@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import { UploadInput } from './styled'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * @component
@@ -108,4 +108,4 @@ LayerPanelActionImport.defaultProps = {
   handleImport: () => {}
 }
 
-export default connectToMap(LayerPanelActionImport)
+export default connectToContext(LayerPanelActionImport)

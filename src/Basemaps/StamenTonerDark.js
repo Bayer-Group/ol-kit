@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerTile from 'ol/layer/tile'
-import olSourceStamen from 'ol/source/stamen'
+import olLayerTile from 'ol/layer/Tile'
+import olSourceStamen from 'ol/source/Stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTonerDark } from './thumbnails'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { connectToContext } from 'Provider'; // eslint-disable-line
 
 /**
  * Stamen toner dark basemap option
@@ -34,6 +34,7 @@ class BasemapStamenTonerDark extends React.Component {
       cacheSize: 40
     })
     const layer = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
       preload: Infinity,
       extent: undefined,
       [layerTypeID]: 'stamenTonerDark', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
@@ -87,4 +88,4 @@ BasemapStamenTonerDark.defaultProps = {
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(BasemapStamenTonerDark)
+export default connectToContext(BasemapStamenTonerDark)

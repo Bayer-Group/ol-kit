@@ -8,16 +8,16 @@ import Point from './Point'
 import Polygon from './Polygon'
 import Freehand from './Freehand'
 import { DrawToolbar } from 'DrawToolbar'
-import olFeature from 'ol/feature'
-import olDrawInteraction from 'ol/interaction/draw'
-import olSnapInteraction from 'ol/interaction/snap'
-import olGeomTypes from 'ol/geom/geometrytype'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import olGeomCircle from 'ol/geom/circle'
-import olGeomPolygon from 'ol/geom/polygon'
-import olCollection from 'ol/collection'
-import { connectToMap } from 'Map'
+import olFeature from 'ol/Feature'
+import olDrawInteraction from 'ol/interaction/Draw'
+import olSnapInteraction from 'ol/interaction/Snap'
+import olGeomTypes from 'ol/geom/GeometryType'
+import olLayerVector from 'ol/layer/Vector'
+import olSourceVector from 'ol/source/Vector'
+import olGeomCircle from 'ol/geom/Circle'
+import { fromCircle } from 'ol/geom/Polygon'
+import olCollection from 'ol/Collection'
+import { connectToContext } from 'Provider'
 import { getStyledFeatures } from './utils'
 
 const OL_DRAW_TYPES = [...Object.values(olGeomTypes)]
@@ -160,7 +160,7 @@ class Draw extends React.Component {
     const geomIsCircle = geom instanceof olGeomCircle
 
     if (geomIsCircle) {
-      const circleGeom = olGeomPolygon.fromCircle(geom, 180)
+      const circleGeom = fromCircle(geom, 180)
 
       feature.setGeometry(circleGeom)
     }
@@ -280,4 +280,4 @@ Draw.defaultProps = {
   onDrawCancel: () => {}
 }
 
-export default connectToMap(Draw)
+export default connectToContext(Draw)

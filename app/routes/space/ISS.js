@@ -1,15 +1,11 @@
-import React from 'react'
-
-import VectorLayer from 'classes/VectorLayer'
-import olSourceVector from 'ol/source/vector'
-import olFeature from 'ol/feature'
-import olGeomPoint from 'ol/geom/point'
-import olProj from 'ol/proj'
-import olStyle from 'ol/style/style'
-import olStroke from 'ol/style/stroke'
-import olIcon from 'ol/style/icon'
-
-import { connectToMap } from 'Map'
+import { connectToContext, VectorLayer } from '@bayer/ol-kit'
+import olSourceVector from 'ol/source/Vector'
+import olFeature from 'ol/Feature'
+import olGeomPoint from 'ol/geom/Point'
+import { fromLonLat } from 'ol/proj'
+import olStyle from 'ol/style/Style'
+import olStroke from 'ol/style/Stroke'
+import olIcon from 'ol/style/Icon'
 
 function ISS (props) {
   const { map } = props
@@ -21,9 +17,9 @@ function ISS (props) {
   })
 
   setInterval(async () => {
-    const data = await fetch('http://api.open-notify.org/iss-now.json')
+    const data = await fetch('https://api.wheretheiss.at/v1/satellites/25544')
     const res = await data.json()
-    const lonLat = [Number(res.iss_position.longitude), Number(res.iss_position.latitude)]
+    const lonLat = [Number(res.longitude), Number(res.latitude)]
 
     const iconStyle = new olStyle({
       stroke: new olStroke(),
@@ -34,13 +30,11 @@ function ISS (props) {
       })
     })
     const feature = new olFeature({
-      geometry: new olGeomPoint(olProj.fromLonLat(lonLat))
+      geometry: new olGeomPoint(fromLonLat(lonLat))
     })
 
     feature.setStyle(iconStyle)
-    feature.set('time', new Date().toString())
-    feature.set('latitude', lonLat[1])
-    feature.set('longitude', lonLat[0])
+    feature.setProperties({ ...res, 'title': `International Space Station` })
 
     layer.getSource().addFeature(feature)
   }, 2000)
@@ -50,4 +44,4 @@ function ISS (props) {
   return null
 }
 
-export default connectToMap(ISS)
+export default connectToContext(ISS)

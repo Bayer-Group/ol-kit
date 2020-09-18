@@ -1,6 +1,6 @@
-import olSphere from 'ol/sphere'
-import olGeomLineString from 'ol/geom/linestring'
-import olGeomPolygon from 'ol/geom/polygon'
+import { getDistance, getArea } from 'ol/sphere'
+import olGeomLineString from 'ol/geom/LineString'
+import { fromCircle } from 'ol/geom/Polygon'
 const EPSG = 'EPSG:4326'
 
 const CONVERSION = {
@@ -15,7 +15,6 @@ const CONVERSION = {
   acres: 0.000247105, // 1 square meter = 0.000247105 acres
   hectares: 0.0001 // 1 square meter = 0.0001 hectares
 }
-const SPHERE = new olSphere(6378137)
 
 export function myLocaleString (value, language) {
   return Number(value).toLocaleString(language)
@@ -28,7 +27,7 @@ export function calcGeodesicLength (sourceProj, lineString) {
   const coordinates = projLineString.getCoordinates()
 
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-    length += SPHERE.haversineDistance(coordinates[i], coordinates[i + 1])
+    length += getDistance(coordinates[i], coordinates[i + 1])
   }
 
   return length
@@ -46,12 +45,8 @@ export function convertGeodesicArea (area, units) {
 }
 
 export function calcGeodesicArea (sourceProj, polygon) {
-  const projPolygon = polygon.clone().transform(sourceProj, EPSG)
-
-  const coordinates = projPolygon.getLinearRing(0).getCoordinates()
-
   /** Calculate geodesic area in meters */
-  const area = SPHERE.geodesicArea(coordinates)
+  const area = getArea(polygon)
 
   return Math.abs(area)
 }
@@ -65,7 +60,7 @@ export function calculateGeodesic (map, geometry, units = 'meters') {
   } else if (type === 'LineString') {
     return (calcGeodesicLength(sourceProj, geometry) * CONVERSION[units]).toFixed(2)
   } else if (type === 'Circle') {
-    return (Math.PI * Math.pow(geometry.getRadius(), 2)) * CONVERSION[units]
+    return (Math.PI * Math.pow(geometry.getRadius(), 2)) * CONVERSION[units] // this should be able to use `getArea` but needs to be tested first
   } else {
     return 0
   }
@@ -82,7 +77,7 @@ export function calculateAreaAndDistance (map, geometry, areaUnit, distanceUnit)
     }
   } else if (type === 'Circle') {
     // convert circle types into polygons to get accurate distance/area measurements when resizing
-    const polygonGeom = olGeomPolygon.fromCircle(geometry)
+    const polygonGeom = fromCircle(geometry)
 
     return calculateAreaAndDistance(map, polygonGeom, areaUnit, distanceUnit)
   } else if (type === 'Polygon') {

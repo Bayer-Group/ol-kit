@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerTile from 'ol/layer/tile'
-import olSourceBingMaps from 'ol/source/bingmaps'
+import olLayerTile from 'ol/layer/Tile'
+import olSourceBingMaps from 'ol/source/BingMaps'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 const DEFAULT_OPTS = {
   thumbnail: '',
@@ -40,6 +40,7 @@ class BasemapBingMaps extends React.Component {
     const opts = { ...DEFAULT_OPTS, ...sourceOpts }
     const source = new olSourceBingMaps(opts)
     const layer = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
       [layerTypeID]: layerID, // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
@@ -98,4 +99,4 @@ BasemapBingMaps.defaultProps = {
   layerID: 'bingAerial'
 }
 
-export default connectToMap(BasemapBingMaps)
+export default connectToContext(BasemapBingMaps)

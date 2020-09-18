@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import RemoveIcon from '@material-ui/icons/Remove'
 import ControlGroupButton from './ControlGroupButton'
 import { zoomDelta } from './utils'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { connectToContext } from 'Provider'
 
 /**
  * A simple map zoom out control
@@ -55,4 +55,4 @@ ZoomOut.propTypes = {
   map: PropTypes.object.isRequired
 }
 
-export default connectToMap(ZoomOut)
+export default connectToContext(ZoomOut)
