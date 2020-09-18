@@ -287,6 +287,8 @@ DrawContainer.propTypes = {
   drawOpts: PropTypes.object,
   /** callback that returns the selected openlayers feature from the map */
   selectedFeature: PropTypes.func,
+  /** pass custom style object to DrawContainer */
+  style: PropTypes.object,
   /** pass child comps to opt out of the default controls */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
