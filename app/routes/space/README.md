@@ -6,7 +6,7 @@ This demo is actually 3 seperate layers in one unlike the covid demo. Users can 
 
 #### ISS (international space station)
 
-The App.js file here is very simple, we're essentialy loading an `ol-kit` map, and adding more `ol-kit` components namely, `Popup`, `TimeSlider`, `LayerPanel`, `BasemapContainer` `Controls`, `LayerPanel`, `LayerPanelContent`, `LayerPanelPage`, `LayerStyler`, `loadDataLayer` you can read about all of these components on our [docs page](https://ol-kit.com/docs.html)
+The App.js file here is very simple, we're essentialy loading an `ol-kit` map, and adding more `ol-kit` components namely, `Popup`, `TimeSlider`, `LayerPanel`, `BasemapContainer` `Controls`, `LayerPanelContent`, `LayerPanelPage`, `LayerStyler`, `loadDataLayer` you can read about all of these components on our [docs page](https://ol-kit.com/docs.html)
 
 #### ISS.js (International Space Station Tracker)
 
