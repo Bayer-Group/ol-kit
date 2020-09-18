@@ -17,7 +17,7 @@ import {
 } from '@bayer/ol-kit'
 import PaletteIcon from '@material-ui/icons/Palette'
 import CreateIcon from '@material-ui/icons/Create'
-import { fromLonLat } from 'ol/Proj'
+import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
