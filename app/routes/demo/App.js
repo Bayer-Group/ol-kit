@@ -38,7 +38,7 @@ class App extends React.Component {
     map.addLayer(layer)
     // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
 
-    GeoserverLayer.fromURI('http://localhost:8600/geoserver/topp/wms?LAYERS=topp%3Astates').then(layer => {
+    GeoserverLayer.fromURI('http://localhost:8600/geoserver/topp/wms?LAYERS=tiger-ny').then(layer => {
       map.addLayer(layer)
     })
 

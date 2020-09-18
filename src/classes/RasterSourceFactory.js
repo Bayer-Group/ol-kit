@@ -1,5 +1,5 @@
 import qs from 'qs'
-//import axios from 'axios'
+// import axios from 'axios'
 
 import olSourceTileWMS from 'ol/source/tilewms'
 
@@ -78,7 +78,7 @@ export default class RasterSourceFactory {
       headers,
       body: qs.stringify(this.body)
     })
-    //return axios.post(src, qs.stringify(this.body), { responseType: 'blob', headers })
+    // return axios.post(src, qs.stringify(this.body), { responseType: 'blob', headers })
       .then(res => res.blob())
       .then(data => {
         img.getImage().src = (window.URL || window.webkitURL).createObjectURL(data)

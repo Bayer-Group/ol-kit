@@ -1,4 +1,4 @@
-//import { parseExtent } from 'utils/geoserver'
+// import { parseExtent } from 'utils/geoserver'
 
 /**
  * A utility class which uses a wmsClient class to retrieve layer info
@@ -37,7 +37,7 @@ export default class wmsClientParser {
       const layerName = layerProps.Name
       const layerTitle = layerProps.Title
       const dimension = layerProps.Dimension || undefined
-      const extent = [] //parseExtent(layerProps, 'EPSG:3857')
+      const extent = [] // parseExtent(layerProps, 'EPSG:3857')
       const { typeName } = this.getIdentiferForItem(this.client.base)
 
       return Promise.all([

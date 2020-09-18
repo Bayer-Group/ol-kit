@@ -494,7 +494,7 @@ export default class GeoserverLayer extends olLayerGroup {
           gutter: 10,
           projection: 'EPSG:4326',
           wrapX: true,
-          //params: { LAYERS: 'topp:tasmania_state_boundaries' },
+          // params: { LAYERS: 'topp:tasmania_state_boundaries' },
           transition: 0,
           extent
         }, sourceProto, parserOpts),
@@ -517,7 +517,7 @@ export default class GeoserverLayer extends olLayerGroup {
             typeName,
             attributes,
             geometryName,
-            //defaultStyles: rules,
+            // defaultStyles: rules,
             getHeaders: opts.getHeaders,
             initialFilterMap: opts.initialFilterMap
           }

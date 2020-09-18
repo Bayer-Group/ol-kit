@@ -28,7 +28,7 @@ const FESNS = 'http://www.opengis.net/fes'
 
 const QUERY_SERIALIZERS = {
   'http://www.opengis.net/wfs': {
-    'PropertyName': olXML.makeChildAppender(olFormatXSD.writeStringTextNode)
+    PropertyName: olXML.makeChildAppender(olFormatXSD.writeStringTextNode)
   }
 }
 
@@ -92,12 +92,12 @@ class CustomWFSFormat extends olFormatWFS {
     const context = { node: node }
 
     Object.assign(context, {
-      'srsName': options.srsName,
-      'featureNS': options.featureNS ? options.featureNS : this.featureNS_,
-      'featurePrefix': options.featurePrefix,
-      'geometryName': options.geometryName,
-      'filter': filter,
-      'propertyNames': options.propertyNames ? options.propertyNames : []
+      srsName: options.srsName,
+      featureNS: options.featureNS ? options.featureNS : this.featureNS_,
+      featurePrefix: options.featurePrefix,
+      geometryName: options.geometryName,
+      filter: filter,
+      propertyNames: options.propertyNames ? options.propertyNames : []
     })
 
     // assert(Array.isArray(options.featureTypes), 11) // `options.featureTypes` should be an Array
@@ -362,26 +362,26 @@ function writeIsBetweenFilter (node, filter, objectStack) {
 
 const GETFEATURE_SERIALIZERS = {
   'http://www.opengis.net/wfs': {
-    'Query': olXML.makeChildAppender(writeQuery)
+    Query: olXML.makeChildAppender(writeQuery)
   },
   'http://www.opengis.net/ogc': {
-    'During': olXML.makeChildAppender(writeDuringFilter),
-    'And': olXML.makeChildAppender(writeLogicalFilter),
-    'Or': olXML.makeChildAppender(writeLogicalFilter),
-    'Not': olXML.makeChildAppender(writeNotFilter),
-    'BBOX': olXML.makeChildAppender(writeBboxFilter),
-    'Contains': olXML.makeChildAppender(writeContainsFilter),
-    'Intersects': olXML.makeChildAppender(writeIntersectsFilter),
-    'Within': olXML.makeChildAppender(writeWithinFilter),
-    'PropertyIsEqualTo': olXML.makeChildAppender(writeComparisonFilter),
-    'PropertyIsNotEqualTo': olXML.makeChildAppender(writeComparisonFilter),
-    'PropertyIsLessThan': olXML.makeChildAppender(writeComparisonFilter),
-    'PropertyIsLessThanOrEqualTo': olXML.makeChildAppender(writeComparisonFilter),
-    'PropertyIsGreaterThan': olXML.makeChildAppender(writeComparisonFilter),
-    'PropertyIsGreaterThanOrEqualTo': olXML.makeChildAppender(writeComparisonFilter),
-    'PropertyIsNull': olXML.makeChildAppender(writeIsNullFilter),
-    'PropertyIsBetween': olXML.makeChildAppender(writeIsBetweenFilter),
-    'PropertyIsLike': olXML.makeChildAppender(writeIsLikeFilter)
+    During: olXML.makeChildAppender(writeDuringFilter),
+    And: olXML.makeChildAppender(writeLogicalFilter),
+    Or: olXML.makeChildAppender(writeLogicalFilter),
+    Not: olXML.makeChildAppender(writeNotFilter),
+    BBOX: olXML.makeChildAppender(writeBboxFilter),
+    Contains: olXML.makeChildAppender(writeContainsFilter),
+    Intersects: olXML.makeChildAppender(writeIntersectsFilter),
+    Within: olXML.makeChildAppender(writeWithinFilter),
+    PropertyIsEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsNotEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsLessThan: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsLessThanOrEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsGreaterThan: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsGreaterThanOrEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsNull: olXML.makeChildAppender(writeIsNullFilter),
+    PropertyIsBetween: olXML.makeChildAppender(writeIsBetweenFilter),
+    PropertyIsLike: olXML.makeChildAppender(writeIsLikeFilter)
   }
 }
 
