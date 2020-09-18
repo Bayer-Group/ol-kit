@@ -241,7 +241,7 @@ class DrawContainer extends React.Component {
   }
 
   render () {
-    const { preferences, children } = this.props
+    const { preferences, children, style } = this.props
     const drawChildren = children || [
       this.renderMeasure(),
       <Draw
@@ -257,7 +257,7 @@ class DrawContainer extends React.Component {
     ]
 
     return (
-      <Container>
+      <Container style={style}>
         {drawChildren}
       </Container>
     )
@@ -287,6 +287,8 @@ DrawContainer.propTypes = {
   drawOpts: PropTypes.object,
   /** callback that returns the selected openlayers feature from the map */
   selectedFeature: PropTypes.func,
+  /** pass custom style object to DrawContainer */
+  style: PropTypes.object,
   /** pass child comps to opt out of the default controls */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

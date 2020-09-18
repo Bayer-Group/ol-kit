@@ -56,8 +56,6 @@ Object {
   "PopupPageLayout": [Function],
   "PopupPageLayoutChild": [Function],
   "PopupTabs": [Function],
-  "Provider": [Function],
-  "ProviderContext": null,
   "TimeSlider": [Function],
   "TimeSliderBase": [Function],
   "VectorLayer": [Function],
