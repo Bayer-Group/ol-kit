@@ -13,13 +13,13 @@ function ISS (props) {
   const layer = new VectorLayer({
     title: 'ISS Tracker',
     source: new olSourceVector({ features: [] }),
-    // _ol_kit_time_key: 'time'
+    _ol_kit_time_key: 'time'
   })
 
   setInterval(async () => {
-    const data = await fetch('http://api.open-notify.org/iss-now.json')
+    const data = await fetch('https://api.wheretheiss.at/v1/satellites/25544')
     const res = await data.json()
-    const lonLat = [Number(res.iss_position.longitude), Number(res.iss_position.latitude)]
+    const lonLat = [Number(res.longitude), Number(res.latitude)]
 
     const iconStyle = new olStyle({
       stroke: new olStroke(),
@@ -34,9 +34,7 @@ function ISS (props) {
     })
 
     feature.setStyle(iconStyle)
-    feature.set('time', new Date().toString())
-    feature.set('latitude', lonLat[1])
-    feature.set('longitude', lonLat[0])
+    feature.setProperties({ ...res, 'title': `International Space Station` })
 
     layer.getSource().addFeature(feature)
   }, 2000)
