@@ -132,6 +132,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   }
 
   const exhaustiveVectorFeaturesAtPixel = layer => {
+    if (!layer.getVisible()) return // don't resolve features for hidden layers
     const exhaustivePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
       const orphanedFeatures = []
 
