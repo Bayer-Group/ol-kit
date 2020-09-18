@@ -80,7 +80,8 @@ module.exports = function bundle (Components, out, config) {
   } catch (error) {
     if(error.output && error.output.length){
       console.log(error.output[1].toString())
+      console.log('ALL ERRORS', error.output)
     }
-    throw error
+    // throw error
   }
 }
