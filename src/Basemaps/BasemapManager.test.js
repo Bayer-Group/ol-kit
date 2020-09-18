@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
-import { prettyDOM } from '@testing-library/dom'
 import { Map } from 'Map'
 import BasemapManager from './BasemapManager'
 
@@ -11,7 +10,7 @@ describe('<BasemapManager />', () => {
     // wait for async child render
     await waitFor(() => {}, { container })
 
-    expect(prettyDOM(container)).toMatchSnapshot()
+    expect(container).toMatchSnapshot()
   })
   it.skip('should render a single child', async () => {
     const child = <div id='child comp'>child comp</div>
@@ -20,7 +19,7 @@ describe('<BasemapManager />', () => {
     // wait for async child render
     await waitFor(() => {}, { container })
 
-    expect(prettyDOM(container)).toMatchSnapshot()
+    expect(container).toMatchSnapshot()
   })
   it.skip('should render an array of children', async () => {
     const child1 = <div key={1} id='1'>child comp</div>
@@ -31,6 +30,6 @@ describe('<BasemapManager />', () => {
     // wait for async child render
     await waitFor(() => {}, { container })
 
-    expect(prettyDOM(container)).toMatchSnapshot()
+    expect(container).toMatchSnapshot()
   })
 })

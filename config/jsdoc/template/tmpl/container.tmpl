@@ -236,6 +236,17 @@
             </div>
         </div>
     <?js } ?>
+
+    <?js if (doc.component && doc.component.example) { ?>
+        <div>
+            <br/>
+            <h2 class="title">Examples</h2>
+            <div class="example">
+                <?js= doc.component.example ?>
+            </div>
+        </div>
+    <?js } ?>
+    
 </article>
 
 </section>

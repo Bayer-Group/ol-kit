@@ -32,7 +32,6 @@ export const Container = styled.div`
 `
 
 export const ArrowBox = styled.div`
-  display: ${p => p.hide ? 'none' : 'block'};
   &::after, &::before {
     ${props => props.position === 'click' ? 'right' : props.position}: 100%;
     ${props => props.position === 'top' || props.position === 'bottom' ? 'left' : 'top'}: 50%;
@@ -61,7 +60,7 @@ export const ArrowBox = styled.div`
 export const DragHandleIcon = styled.div`
   height: 25px;
   width: 70px;
-  cursor: pointer;
+  cursor: move;
   color: ${props => props.color || `#fff`};
   padding: 3px;
   z-index: 100;
