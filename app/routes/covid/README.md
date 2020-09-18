@@ -1,6 +1,6 @@
 ## COVID-19 Demo
 
-This demo pulls geogrpahical COVID data from the [ArcGIS](arcgis.com) which is very repuatable in the Geospatial industry. Each major area in the US will have a red circle, and the radius will increase depending on the number of confirmed cases.
+This demo pulls geogrpahical COVID data from the [ArcGIS](https://www.arcgis.com/index.html) which is very repuatable in the Geospatial industry. Each major area in the US will have a red circle, and the radius will increase depending on the number of confirmed cases.
 
 ### How it works:
 
@@ -12,7 +12,7 @@ The App.js file here is very simple, we're essentialy loading an `ol-kit` map, t
 
 Here we are calling ArcGIS using the built-in JavaScript library called `fetch`, and we're getting back a large array of coordinates and confirmed cases corresponding to those coordinates.
 
-We first convert the coordinates from the data to a projection our map can understand using a function from openlayers called [fromLatLon](https://openlayers.org/en/latest/apidoc/module-ol_proj.html)
+We first convert the coordinates from the data to a projection our map can understand using a function from openlayers called [fromLonLat](https://openlayers.org/en/latest/apidoc/module-ol_proj.html)
 
 Then we determine the radius of the circle based on the number of confirmed cases. 
 `const radius = hasConfirmed ? feat.attributes.Confirmed / 1500 : feat.attributes.Confirmed`
