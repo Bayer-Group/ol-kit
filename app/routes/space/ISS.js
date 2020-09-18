@@ -13,7 +13,7 @@ function ISS (props) {
   const layer = new VectorLayer({
     title: 'ISS Tracker',
     source: new olSourceVector({ features: [] }),
-    _ol_kit_time_key: 'time'
+    // _ol_kit_time_key: 'time'
   })
 
   setInterval(async () => {

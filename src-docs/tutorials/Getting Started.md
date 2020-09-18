@@ -1,5 +1,9 @@
 # Getting Started
 
+### Learning Materials from ol-kit Team
+- [Learn about React.js fundamentals](https://youtu.be/Deya_2lCpzU) by [Daniel Rodenberg](https://github.com/drodenberg) & [Glen Selle](https://github.com/glenselle)
+- [Go in depth with OpenLayers api](https://youtu.be/1CyCGGL-BRo) by [Patrick Moulden](https://github.com/PatchesMaps)
+
 Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these packages). Use this comprehensive install:
 ```
 npm i @bayer/ol-kit ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
