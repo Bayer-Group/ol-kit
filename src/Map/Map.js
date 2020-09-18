@@ -61,14 +61,14 @@ class Map extends React.Component {
     this.initializeSelect(this.map)
 
     // callback for <Provider> if it is mounted as hoc
-    const mapContext = {
+    const mapConfig = {
       map: this.map,
       mapId: this.target,
       selectInteraction: this.selectInteraction,
       translations // this can be hoisted to <Provider> only in the future
     }
 
-    addMapToContext(mapContext)
+    addMapToContext(mapConfig)
 
     // optionally attach map listener
     if (updateUrlFromView) {

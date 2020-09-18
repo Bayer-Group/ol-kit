@@ -6,10 +6,11 @@ import ugh from 'ugh'
 // context is only created when <Provider> is implemented (see constructor)
 export let ProviderContext = null
 
-/** A higher order component that provides context to connectToContext wrapped children
+// TODO reenable this documentation once multi-map is available (add /** below)
+/* A higher order component that provides context to connectToContext wrapped children
  * @component
- * @category Provider
  * @example ./example.md
+ * @category Provider
  * @since 1.0.0
  */
 class Provider extends React.Component {
