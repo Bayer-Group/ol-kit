@@ -44,6 +44,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       }
     ]
   },
@@ -53,7 +61,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, 'index.html'),
-      favicon: path.resolve(__dirname, 'favicon.ico')
+      favicon: path.resolve(__dirname, 'favicon.ico'),
     }),
 
     // Do not emit compiled assets that include errors
