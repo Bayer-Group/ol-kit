@@ -64,6 +64,14 @@ export default App
 ## Documentation
 The documentation for the project is available in the `/docs` directory and the hosted version is available at [ol-kit.com](https://ol-kit.com/docs).
 
+## Running the Demo application locally
+
+```
+npm install
+npm run app
+# open your browser and go to localhost:2020
+```
+
 ## Bugs & Feature Requests
 If you find a bug or think of a new feature, please submit a Github issue.
 
