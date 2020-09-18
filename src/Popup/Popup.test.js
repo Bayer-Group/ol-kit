@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
-import olFeature from 'ol/feature'
-import olVectorLayer from 'ol/layer/vector'
-import olPoint from 'ol/geom/point'
-import olVectorSource from 'ol/source/vector'
+import olFeature from 'ol/Feature'
+import olVectorLayer from 'ol/layer/Vector'
+import olPoint from 'ol/geom/Point'
+import olVectorSource from 'ol/source/Vector'
 import { Map } from 'Map'
 import { Popup } from 'Popup'
 
@@ -61,9 +61,6 @@ describe('<Popup />', () => {
     const [minx, miny, maxx, maxy] = testMap.getView().calculateExtent([600, 400]) // eslint-disable-line no-unused-vars
 
     const coords = [minx, maxy]
-
-    // console.log('set', testMap.getTargetElement())
-    // console.log('pixel', testMap.getCoordinateFromPixel([0, 0]), testMap.getSize(), testMap.getView().getCenter(), testMap.getView().calculateExtent([600, 400]))
 
     // add a feature to that map at a known pixel location
     const features = [new olFeature(new olPoint([coords]))]

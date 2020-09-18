@@ -1,7 +1,7 @@
 import Clipboard from 'clipboard'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 import { CoordWrapper, CoordGroup, CoordTitle, CoordRaw } from './styled'
 
@@ -86,4 +86,4 @@ ContextMenuCoords.defaultProps = {
   }
 }
 
-export default connectToMap(ContextMenuCoords)
+export default connectToContext(ContextMenuCoords)

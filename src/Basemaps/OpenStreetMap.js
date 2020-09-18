@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerTile from 'ol/layer/tile'
-import olSourceOSM from 'ol/source/osm'
+import olLayerTile from 'ol/layer/Tile'
+import olSourceOSM from 'ol/source/OSM'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { osm } from './thumbnails'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { connectToContext } from 'Provider'; // eslint-disable-line
 
 /**
  * OSM basemap option
@@ -34,6 +34,7 @@ class BasemapOpenStreetMap extends React.Component {
       crossOrigin: 'Anonymous'
     })
     const layer = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
       preload: Infinity,
       extent: undefined,
       [layerTypeID]: 'osm', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
@@ -87,4 +88,4 @@ BasemapOpenStreetMap.defaultProps = {
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(BasemapOpenStreetMap)
+export default connectToContext(BasemapOpenStreetMap)

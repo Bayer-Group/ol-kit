@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import olMap from 'ol/map'
+import olMap from 'ol/Map'
 import { Controls } from 'Controls'
 
 // we re-create the mock for each test

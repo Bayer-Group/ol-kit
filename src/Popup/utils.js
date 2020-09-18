@@ -1,13 +1,12 @@
 import bboxTurf from '@turf/bbox'
 import { lineString } from '@turf/helpers'
 import centroid from '@turf/centroid'
-import olMap from 'ol/map'
-import olObservable from 'ol/observable'
-import proj from 'ol/proj'
-import GeoJSON from 'ol/format/geojson'
-import olLayerVector from 'ol/layer/vector'
-import olVectorTile from 'ol/layer/vectortile'
-import olSourceCluster from 'ol/source/cluster'
+import olMap from 'ol/Map'
+import { fromLonLat } from 'ol/proj'
+import GeoJSON from 'ol/format/GeoJSON'
+import olLayerVector from 'ol/layer/Vector'
+import olVectorTile from 'ol/layer/VectorTile'
+import olSourceCluster from 'ol/source/Cluster'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -18,10 +17,9 @@ import ugh from 'ugh'
  * @since 0.2.0
  * @param {ol.Map} map - The openlayers map to which the events are bound
  * @param {Function} callback - The callback invoked when a `change:size`, `change:resolution` or a `change:center` event was fired
- * @param {Object} [thisObj] - The object to use as `this` in the event listeners.
  * @returns {ol.EventsKey[]} Array of openlayers event keys for unsetting listener events (use with removeMovementListener)
  */
-export const addMovementListener = (map, callback, thisObj) => {
+export const addMovementListener = (map, callback) => {
   if (typeof callback !== 'function') return ugh.error('\'addMovementListener\' requires a valid openlayers map & callback function') // eslint-disable-line
 
   // If performance becomes an issue with catalog layers & far zoom level, these debounce levels can be adjusted
@@ -29,9 +27,9 @@ export const addMovementListener = (map, callback, thisObj) => {
   const fastDebounce = debounce(callback, 0)
 
   const keys = [
-    map.on('change:size', slowDebounce, thisObj),
-    map.getView().on('change:resolution', slowDebounce, thisObj),
-    map.getView().on('change:center', fastDebounce, thisObj)
+    map.on('change:size', slowDebounce),
+    map.getView().on('change:resolution', slowDebounce),
+    map.getView().on('change:center', fastDebounce)
   ]
 
   return keys
@@ -46,7 +44,7 @@ export const addMovementListener = (map, callback, thisObj) => {
  * @param {Array} keys - remove the listeners via an array of event keys
  */
 export const removeMovementListener = (keys = []) => {
-  keys.forEach(key => olObservable.unByKey(key))
+  keys.forEach(({ target, type, listener }) => target.un(type, listener))
 }
 
 /**
@@ -65,6 +63,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (typeof event !== 'object') return ugh.error('getLayersAndFeaturesForEvent first arg must be an object') // eslint-disable-line
   const { map, pixel } = event
   const promises = []
+  const clickCoordinate = map.getCoordinateFromPixel(pixel)
 
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
@@ -96,7 +95,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
     if (source instanceof olSourceCluster) {
       // support for clustered feature clicks
-      const clickCoordinate = map.getCoordinateFromPixel(pixel)
       const clusteredFeatures = source.getClosestFeatureToCoordinate(clickCoordinate).get('features')
 
       features = clusteredFeatures
@@ -133,13 +131,35 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     }
   }
 
+  const exhaustiveVectorFeaturesAtPixel = layer => {
+    const exhaustivePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+      const orphanedFeatures = []
+
+      layer?.getSource?.()?.getFeatures?.()?.forEach(f => { // eslint-disable-line no-unused-expressions
+        if (f.getGeometry().intersectsCoordinate(clickCoordinate)) {
+          orphanedFeatures.push(f)
+        }
+      })
+      const { features } = await setParentLayer({ features: orphanedFeatures, layer })
+
+      resolve({ features, layer })
+    })
+
+    promises.push(exhaustivePromise)
+  }
+
   // check for featuresAtPixel to account for hitTolerance
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
-    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3
+    layerFilter: () => true,
+    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3,
+    checkWrapped: true
   })
 
+  // as of ol v6.x getFeaturesAtPixel is not very reliable so we perform an exhaustive search asynchronously
+  map.getLayers().forEach(exhaustiveVectorFeaturesAtPixel)
+
   // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel) map.getLayers().getArray().forEach(wfsSelector)
+  if (featuresAtPixel?.length) map.getLayers().forEach(wfsSelector)
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)
@@ -219,7 +239,7 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
 
   const getMidPixel = lineCoords => {
     const centerFeature = centroid(lineString(lineCoords))
-    const coords = proj.fromLonLat(centerFeature.geometry.coordinates)
+    const coords = fromLonLat(centerFeature.geometry.coordinates)
 
     return map.getPixelFromCoordinate(coords)
   }

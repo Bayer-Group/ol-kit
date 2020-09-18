@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, waitFor, fireEvent } from '@testing-library/react'
-import olFeature from 'ol/feature'
-import olLayerVector from 'ol/layer/vector'
-import olPoint from 'ol/geom/point'
-import olSourceVector from 'ol/source/vector'
-import olFormatGeoJSON from 'ol/format/geojson'
+import olFeature from 'ol/Feature'
+import olLayerVector from 'ol/layer/Vector'
+import olPoint from 'ol/geom/Point'
+import olSourceVector from 'ol/source/Vector'
+import olFormatGeoJSON from 'ol/format/GeoJSON'
 import { Map } from 'Map'
 import { LayerPanel } from 'LayerPanel'
 const fs = require('fs')
@@ -166,7 +166,7 @@ describe('<LayerPanel />', () => {
 
     fireEvent.click(checkboxes[1])
 
-    // when we toggle visibility of one but not all layers the mastercheckbox should be indeterminate
+    // when we toggle visibility of one but not all layers the master checkbox should be indeterminate
     expect(testMap.getLayers().getArray()[0].getVisible()).toBe(true)
     expect(testMap.getLayers().getArray()[1].getVisible()).toBe(true)
     expect(testMap.getLayers().getArray()[2].getVisible()).toBe(false)
@@ -265,7 +265,7 @@ describe('<LayerPanel />', () => {
 
     fireEvent.click(checkboxes[2])
 
-    // when we toggle visibility of one but not all features the mastercheckbox and the layers checkbox should be indeterminate
+    // when we toggle visibility of one but not all features the master checkbox and the layers checkbox should be indeterminate
     expect(getAllByTestId('LayerPanel.indeterminateCheckbox').length).toBe(2)
   })
 

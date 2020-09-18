@@ -1,10 +1,10 @@
-import wktFormat from 'ol/format/wkt'
+import wktFormat from 'ol/format/WKT'
 
 /**
  * Convert a feature to a WKT string
  * @function
  * @category PopupActionCopyWkt
- * @param {Object} feature - An ol/feature 
+ * @param {Object} feature - An ol/Feature 
  * @param {Number} [decimalPlaces] - the number of decimal places in the output coordinates
  * @returns {String} The WKT string of the feature passed
  */
@@ -33,10 +33,10 @@ export const copyTextToClipboard = text => {
 }
 
 /**
- * Given an ol/feature, copy its WKT string to the system clipboard
+ * Given an ol/Feature, copy its WKT string to the system clipboard
  * @function
  * @category PopupActionCopyWkt
- * @param {Object} feature - An ol/feature 
+ * @param {Object} feature - An ol/Feature 
  * @param {Number} [decimalPlaces] - the number of decimal places in the output coordinates
  */
 export const copyWktToClipbard = (feature, decimalPlaces) => {

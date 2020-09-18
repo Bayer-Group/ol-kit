@@ -4,11 +4,15 @@ import { Card, Tabs, Tab, InitialTab } from './styled'
 // material-ui-icons
 import LayersIcon from '@material-ui/icons/Layers'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+<<<<<<< HEAD
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import { connectToMap } from 'Map'
 import Typography from '@material-ui/core/Typography'
 import { CardContent } from '@material-ui/core'
+=======
+import { connectToContext } from 'Provider'
+>>>>>>> 7a98794cdc36edcac0073182cbed60c1ebcbc6a8
 
 /**
  * @component
@@ -75,4 +79,4 @@ LayerPanelBase.propTypes = {
   style: PropTypes.object
 }
 
-export default connectToMap(LayerPanelBase)
+export default connectToContext(LayerPanelBase)

@@ -23,15 +23,15 @@ import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
 
 import TextField from '@material-ui/core/TextField'
 
-import olObservable from 'ol/observable'
-import olLayerVector from 'ol/layer/vector'
-import olSourceVector from 'ol/source/vector'
-import olStyleStyle from 'ol/style/style'
+import olLayerVector from 'ol/layer/Vector'
+import olSourceVector from 'ol/source/Vector'
+import olStyleStyle from 'ol/style/Style'
 
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 import isEqual from 'lodash.isequal'
+import { connectToContext } from 'Provider'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -81,10 +81,11 @@ class LayerPanelLayersPage extends Component {
   }
 
   componentWillUnmount = () => {
+    const { map } = this.props
+    const layers = map.getLayers()
     // unbind the listeners
-    olObservable.unByKey(this.onAddKey)
-    olObservable.unByKey(this.onRemoveKey)
-    olObservable.unByKey(this.onMoveEndKey)
+    layers.unset(this.onAddKey)
+    layers.unset(this.onRemoveKey)
     this.removeFeatureListeners()
   }
 
@@ -112,7 +113,7 @@ class LayerPanelLayersPage extends Component {
       const addFeature = source.on('addfeature', this.handleFeatureChange)
       const removeFeature = source.on('removefeature', this.handleFeatureChange)
 
-      return [...listeners, addFeature, removeFeature]
+      return [...listeners, [source, addFeature], [source, removeFeature]]
     }, [])
 
     this.setState({ featureListeners })
@@ -121,8 +122,8 @@ class LayerPanelLayersPage extends Component {
   removeFeatureListeners = () => {
     const { featureListeners = [] } = this.state
 
-    Array.isArray(featureListeners) && featureListeners.forEach(listener => {
-      olObservable.unByKey(listener)
+    Array.isArray(featureListeners) && featureListeners.forEach(([source, listener]) => {
+      source.unset(listener)
     })
   }
 
@@ -427,4 +428,4 @@ LayerPanelLayersPage.propTypes = {
   disableDrag: PropTypes.bool
 }
 
-export default LayerPanelLayersPage
+export default connectToContext(LayerPanelLayersPage)
