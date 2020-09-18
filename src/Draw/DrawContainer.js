@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
 import olLayerVector from 'ol/layer/Vector'
 import olSourceVector from 'ol/source/Vector'
-import olDrawInteraction from 'ol/interaction/Draw'
+import { createBox } from 'ol/interaction/Draw'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Draw from './Draw'
 import { Measure } from 'Measure'
@@ -126,7 +126,7 @@ class DrawContainer extends React.Component {
     const distanceLabelsEnabled = this.safeGetPreference('_DISTANCE_LABEL_ENABLED')
     const areaLabelsEnabled = this.safeGetPreference('_AREA_LABEL_ENABLED')
     const opts = { distanceUOM, areaUOM, map }
-    const isBoxDraw = target.geometryFunction_?.toString() === olDrawInteraction.createBox().toString()
+    const isBoxDraw = target.geometryFunction_?.toString() === createBox().toString()
     const drawMode = isBoxDraw ? 'Box' : target.mode_
     const isFreehand = target.freehand_
 
