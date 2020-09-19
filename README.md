@@ -66,6 +66,8 @@ The documentation for the project is available in the `/docs` directory and the 
 
 ## Running the Demo application locally
 
+The code for the demo application lives in the `app/` folder.
+
 ```
 npm install
 npm run app
