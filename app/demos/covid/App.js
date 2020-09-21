@@ -26,8 +26,6 @@ function App() {
 
     // reset the 0th index layer (old basemap) to new basemap
     layers.setAt(0, layer)
-
-    console.log('HERE?')
   }
 
   return (

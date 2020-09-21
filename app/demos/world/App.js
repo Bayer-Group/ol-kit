@@ -51,7 +51,7 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <LayerPanel>
-          <LayerPanelLayersPage onFeaturesImport={data => loadDataLayer(window.map, data)} />
+          <LayerPanelLayersPage />
           <LayerPanelPage tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
