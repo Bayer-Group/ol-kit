@@ -70,7 +70,6 @@ function DataLoader (props) {
   useEffect(() => {
     dataFetcher()
   }, [])
-  console.log('DATA', map)
 
   return null
 }
