@@ -12,8 +12,8 @@ import {
   BasemapContainer,
   VectorLayer,
   DrawContainer,
-  Draw,
-  LayerPanelHeader
+  LayerPanelHeader,
+  LayerPanelLayersPage
 } from '@bayer/ol-kit'
 import PaletteIcon from '@material-ui/icons/Palette'
 import CreateIcon from '@material-ui/icons/Create'
@@ -38,7 +38,6 @@ class App extends React.Component {
     })
 
     map.addLayer(layer)
-    // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
 
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 
@@ -52,6 +51,7 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <LayerPanel>
+          <LayerPanelLayersPage onFeaturesImport={data => loadDataLayer(window.map, data)} />
           <LayerPanelPage tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
