@@ -26,9 +26,9 @@ class Map extends React.Component {
 
     // map is passed as a prop- use this flag to determine whether a map/portal should be created
     this.passedMap = props.map
-
+    console.log('TARGET?', props.mapId)
     // this is used to create a unique identifier for the map div
-    this.target = `_ol_kit_map_${nanoid(6)}`
+    this.target = props.mapId || `_ol_kit_map_${nanoid(6)}`
   }
 
   componentDidMount () {
@@ -136,7 +136,7 @@ class Map extends React.Component {
 }
 
 Map.defaultProps = {
-  addMapToContext: () => {},
+  // addMapToContext: () => {},
   fullScreen: false,
   logoPosition: 'right',
   map: null,

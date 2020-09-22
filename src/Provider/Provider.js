@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import nanoid from 'nanoid'
 import en from 'locales/en'
 import ugh from 'ugh'
 
 // context is only created when <Provider> is implemented (see constructor)
-export let ProviderContext = null
+export let ProviderContext = {}
 
 // TODO reenable this documentation once multi-map is available (add /** below)
 /* A higher order component that provides context to connectToContext wrapped children
@@ -16,14 +17,17 @@ export let ProviderContext = null
 class Provider extends React.Component {
   constructor (props) {
     super(props)
+    console.log('CONSTRUCT')
+
+    const mapId = `_ol_kit_map_${nanoid(6)}`
+    // create context when <Provider> is included in component tree
+    ProviderContext[mapId] = React.createContext()
 
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
     this.state = {
-      mapContext: {}
+      mapContext: {},
+      mapId
     }
-
-    // create context when <Provider> is included in component tree
-    ProviderContext = React.createContext()
   }
 
   persistState = (persistedState, persistedStateKey) => {
@@ -33,7 +37,8 @@ class Provider extends React.Component {
   }
 
   addMapToContext = mapContext => {
-    this.setState({ mapContext })
+
+    this.setState({ mapContext: { ...mapContext, ...this.state.mapId }})
   }
 
   getContextValue = () => {
@@ -46,6 +51,7 @@ class Provider extends React.Component {
     const map = mapsProp.length ? mapsProp[0] : mapProp
     // default an array with single value of map prop if maps array has not been passed
     const maps = mapsProp.length ? mapsProp : [mapProp]
+    console.log('mapcontext', this.state.mapContext)
 
     return {
       addMapToContext: this.addMapToContext,
@@ -55,15 +61,22 @@ class Provider extends React.Component {
       persistState: this.persistState,
       translations,
       ...this.state.mapContext,
-      ...contextProps
+      ...contextProps,
     }
   }
 
   render () {
+    console.log('Provider render', Object.keys(ProviderContext))
+    const Wrapper = ProviderContext[this.state.mapId]
+
     return (
-      <ProviderContext.Provider value={this.getContextValue()}>
-        {this.props.children}
-      </ProviderContext.Provider>
+      !Object.keys(ProviderContext).length
+        ? this.props.children
+        : (
+          <Wrapper.Provider value={this.getContextValue()}>
+            {this.props.children}
+          </Wrapper.Provider>
+        )
     )
   }
 }

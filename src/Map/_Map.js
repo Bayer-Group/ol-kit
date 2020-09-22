@@ -1,5 +1,5 @@
 import React from 'react'
-import Map from './Map' // this should be the only relative ./Map import in ol-kit
+import Map from './Map' // this should be the only relative ./Map
 import { Provider } from 'Provider'
 
 /* this becomes a ternary once <Provider> multi-map is available

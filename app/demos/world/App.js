@@ -48,26 +48,48 @@ class App extends React.Component {
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit} fullScreen>
-        <Popup />
-        <LayerPanel>
-          <LayerPanelLayersPage />
-          <LayerPanelPage tabIcon={<PaletteIcon />}>
-            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <LayerStyler />
-            </LayerPanelContent>
-          </LayerPanelPage>
-          <LayerPanelPage tabIcon={<CreateIcon />}>
-            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <LayerPanelHeader title='Draw' />
-              <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-            </LayerPanelContent>
-          </LayerPanelPage>
-        </LayerPanel>
-        <ContextMenu />
-        <Controls />
-        <BasemapContainer />
-      </Map>
+      <>
+        <Map onMapInit={this.onMapInit} fullScreen>
+          {/* <Popup />
+          <LayerPanel>
+            <LayerPanelLayersPage />
+            <LayerPanelPage tabIcon={<PaletteIcon />}>
+              <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
+                <LayerStyler />
+              </LayerPanelContent>
+            </LayerPanelPage>
+            <LayerPanelPage tabIcon={<CreateIcon />}>
+              <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
+                <LayerPanelHeader title='Draw' />
+                <DrawContainer style={{ position: 'relative', width: 'auto' }} />
+              </LayerPanelContent>
+            </LayerPanelPage>
+          </LayerPanel>
+          <ContextMenu />
+          <Controls />
+          <BasemapContainer /> */}
+        </Map>
+        <Map onMapInit={this.onMapInit} fullScreen>
+          {/* <Popup />
+          <LayerPanel>
+            <LayerPanelLayersPage />
+            <LayerPanelPage tabIcon={<PaletteIcon />}>
+              <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
+                <LayerStyler />
+              </LayerPanelContent>
+            </LayerPanelPage>
+            <LayerPanelPage tabIcon={<CreateIcon />}>
+              <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
+                <LayerPanelHeader title='Draw' />
+                <DrawContainer style={{ position: 'relative', width: 'auto' }} />
+              </LayerPanelContent>
+            </LayerPanelPage>
+          </LayerPanel>
+          <ContextMenu />
+          <Controls />
+          <BasemapContainer /> */}
+        </Map>
+      </>
     )
   }
 }

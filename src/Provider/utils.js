@@ -14,10 +14,15 @@ export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
   return props => { // eslint-disable-line react/display-name
-    return !ProviderContext
-      ? <Component {...props} />
+    console.log('conntectToContext', props)
+    const mapId = props?.map?.getTarget()
+    console.log('mapId', props, mapId)
+    const Wrapper = ProviderContext[mapId]
+
+    return !mapId
+      ? <Component {...props} mapId={mapId} />
       : (
-        <ProviderContext.Consumer>
+        <Wrapper.Consumer>
           {
             (providerProps = {}) => {
               // if propTypes is not defined on the component just pass all providerProps
@@ -45,7 +50,7 @@ export function connectToContext (Component) {
               )
             }
           }
-        </ProviderContext.Consumer>
+        </Wrapper.Consumer>
       )
   }
 }
