@@ -25,7 +25,7 @@ module.exports = {
     alias: {
       // these ensure we don't have duplicate versions on the same page
       '@bayer/ol-kit': path.resolve(__dirname, '../', 'src'),
-      // 'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
+      'react-dom': path.resolve(__dirname, '../', 'node_modules/@hot-loader/react-dom')
     }
   },
 
@@ -44,6 +44,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       }
     ]
   },
@@ -53,7 +61,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, 'index.html'),
-      favicon: path.resolve(__dirname, 'favicon.ico')
+      favicon: path.resolve(__dirname, 'favicon.ico'),
     }),
 
     // Do not emit compiled assets that include errors

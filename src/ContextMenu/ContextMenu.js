@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash.debounce'
 
-import { connectToMap, convertXYtoLatLong } from 'Map'
+import { convertXYtoLatLong } from 'Map'
+import { connectToContext } from 'Provider'
 import ContextMenuCoordinateGroup from './ContextMenuCoords'
 
 import { Container } from './styled'
@@ -142,4 +143,4 @@ ContextMenu.defaultProps = {
   keepDefaults: false
 }
 
-export default connectToMap(ContextMenu)
+export default connectToContext(ContextMenu)

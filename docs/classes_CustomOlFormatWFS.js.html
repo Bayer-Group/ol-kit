@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | classes/CustomOlFormatWFS.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToContext.html">connectToContext</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#_applyWMSStyles">_applyWMSStyles</a></li><li><a href="global.html#_makeRequest">_makeRequest</a></li><li><a href="global.html#clearFeatures">clearFeatures</a></li><li><a href="global.html#describeFeatureType">describeFeatureType</a></li><li><a href="global.html#FEATURE_PREFIX">FEATURE_PREFIX</a></li><li><a href="global.html#FESNS">FESNS</a></li><li><a href="global.html#fetchFeatures">fetchFeatures</a></li><li><a href="global.html#fetchFeaturesAtClick">fetchFeaturesAtClick</a></li><li><a href="global.html#fetchFeaturesIntersectingExtent">fetchFeaturesIntersectingExtent</a></li><li><a href="global.html#fetchFeaturesIntersectingGeom">fetchFeaturesIntersectingGeom</a></li><li><a href="global.html#fetchValuesForAttribute">fetchValuesForAttribute</a></li><li><a href="global.html#fromURI">fromURI</a></li><li><a href="global.html#getAttributes">getAttributes</a></li><li><a href="global.html#getCapabilities">getCapabilities</a></li><li><a href="global.html#getDefaultWMSStyles">getDefaultWMSStyles</a></li><li><a href="global.html#getFeatures">getFeatures</a></li><li><a href="global.html#getGeometryName">getGeometryName</a></li><li><a href="global.html#getLayerInfo">getLayerInfo</a></li><li><a href="global.html#getSLDBody">getSLDBody</a></li><li><a href="global.html#getTypeName">getTypeName</a></li><li><a href="global.html#getUri">getUri</a></li><li><a href="global.html#getUserWMSStyles">getUserWMSStyles</a></li><li><a href="global.html#getWFSLayer">getWFSLayer</a></li><li><a href="global.html#getWMSFilters">getWMSFilters</a></li><li><a href="global.html#getWMSLayer">getWMSLayer</a></li><li><a href="global.html#getZIndex">getZIndex</a></li><li><a href="global.html#objectStack%255Bundefined%255D">objectStack[undefined]</a></li><li><a href="global.html#OGCNS">OGCNS</a></li><li><a href="global.html#resetDefaultWMSStyles">resetDefaultWMSStyles</a></li><li><a href="global.html#setDefaultWMSStyles">setDefaultWMSStyles</a></li><li><a href="global.html#setUserWMSStyles">setUserWMSStyles</a></li><li><a href="global.html#setWMSFilters">setWMSFilters</a></li><li><a href="global.html#setZIndex">setZIndex</a></li><li><a href="global.html#writeGetFeature">writeGetFeature</a></li><li><a href="global.html#writeOgcExpression">writeOgcExpression</a></li><li><a href="global.html#writeOgcLiteral">writeOgcLiteral</a></li><li><a href="global.html#writeOgcPropertyName">writeOgcPropertyName</a></li><li><a href="global.html#writeQuery">writeQuery</a></li><li><a href="global.html#XMLNS">XMLNS</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>Draw</h2><h3>Components</h3><ul><li><a href="Draw.html">Draw</a></li><li><a href="DrawBox.html">DrawBox</a></li><li><a href="DrawCircle.html">DrawCircle</a></li><li><a href="DrawContainer.html">DrawContainer</a></li><li><a href="DrawFreehand.html">DrawFreehand</a></li><li><a href="DrawLine.html">DrawLine</a></li><li><a href="DrawPoint.html">DrawPoint</a></li><li><a href="DrawPolygon.html">DrawPolygon</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#getStyledFeatures">getStyledFeatures</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>Provider</h2><h3>Utils</h3><ul><li><a href="global.html#connectToContext">connectToContext</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import olFormatWFS from 'ol/format/wfs'
+import * as olXML from 'ol/xml'
+import * as olFormatXSD from 'ol/format/xsd'
+import asserts from 'ol/asserts'
+import olFormatFilter from 'ol/format/filter'
+import GMLBase from 'ol/format/gmlbase'
+import GML3 from 'ol/format/GML3'
+
+/**
+ * @type {string}
+ */
+const OGCNS = 'http://www.opengis.net/ogc'
+
+/**
+ * @type {string}
+ */
+const FEATURE_PREFIX = 'feature'
+
+/**
+ * @type {string}
+ */
+const XMLNS = 'http://www.w3.org/2000/xmlns/'
+
+/**
+ * @type {string}
+ */
+const FESNS = 'http://www.opengis.net/fes'
+
+const QUERY_SERIALIZERS = {
+  'http://www.opengis.net/wfs': {
+    PropertyName: olXML.makeChildAppender(olFormatXSD.writeStringTextNode)
+  }
+}
+
+class CustomWFSFormat extends olFormatWFS {
+  /**
+   * Encode format as WFS `GetFeature` and return the Node.
+   *
+   * @param {WriteGetFeatureOptions} options Options.
+   * @return {Node} Result.
+   * @api
+   */
+  writeGetFeature (options) {
+    const node = olXML.createElementNS('http://www.opengis.net/wfs', 'GetFeature')
+
+    node.setAttribute('service', 'WFS')
+    node.setAttribute('version', '1.1.0')
+    let filter
+
+    if (options) {
+      if (options.handle) {
+        node.setAttribute('handle', options.handle)
+      }
+      if (options.outputFormat) {
+        node.setAttribute('outputFormat', options.outputFormat)
+      }
+      if (options.maxFeatures !== undefined) {
+        node.setAttribute('maxFeatures', String(options.maxFeatures))
+      }
+      if (options.resultType) {
+        node.setAttribute('resultType', options.resultType)
+      }
+      if (options.startIndex !== undefined) {
+        node.setAttribute('startIndex', String(options.startIndex))
+      }
+      if (options.count !== undefined) {
+        node.setAttribute('count', String(options.count))
+      }
+      if (options.viewParams !== undefined) {
+        node.setAttribute('viewParams', options.viewParams)
+      }
+      filter = options.filter
+      if (options.bbox) {
+        asserts.assert(options.geometryName, 12) // `options.geometryName` must also be provided when `options.bbox` is set
+        const bbox = olFormatFilter.bbox(
+          /** @type {string} */ (options.geometryName), options.bbox, options.srsName)
+
+        if (filter) {
+          // if bbox and filter are both set, combine the two into a single filter
+          filter = olFormatFilter.and(filter, bbox)
+        } else {
+          filter = bbox
+        }
+      }
+    }
+    node.setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'xsi:schemaLocation', this.schemaLocation_)
+    const context = { node: node }
+
+    Object.assign(context, {
+      srsName: options.srsName,
+      featureNS: options.featureNS ? options.featureNS : this.featureNS_,
+      featurePrefix: options.featurePrefix,
+      geometryName: options.geometryName,
+      filter: filter,
+      propertyNames: options.propertyNames ? options.propertyNames : []
+    })
+
+    writeGetFeature(node, /** @type {!Array&lt;string>} */ (options.featureTypes), [context], this)
+
+    return node
+  }
+}
+
+/**
+ * @param {Node} node Node.
+ * @param {ol.format.filter.IsLike} filter Filter.
+ * @param {Array.&lt;*>} objectStack Node stack.
+ * @private
+ */
+function writeIsLikeFilter (node, filter, objectStack) {
+  node.setAttribute('wildCard', filter.wildCard)
+  node.setAttribute('singleChar', filter.singleChar)
+  node.setAttribute('escapeChar', filter.escapeChar)
+  if (filter.matchCase !== undefined) {
+    node.setAttribute('matchCase', filter.matchCase.toString())
+  }
+  if (typeof filter.propertyName === 'string') {
+    writeOgcPropertyName(node, filter.propertyName)
+  } else {
+    const child = olXML.createElementNS(OGCNS, 'Function')
+
+    child.setAttribute('name', filter.propertyName.name)
+    writeOgcLiteral(child, `${filter.propertyName.expression}`)
+    writeOgcPropertyName(child, filter.propertyName.propertyName)
+    node.appendChild(child)
+  }
+  writeOgcLiteral(node, `${filter.pattern}`)
+}
+
+/**
+ * @param {string} tagName Tag name.
+ * @param {Node} node Node.
+ * @param {string} value Value.
+ */
+function writeOgcExpression (tagName, node, value) {
+  const property = olXML.createElementNS(OGCNS, tagName)
+
+  olFormatXSD.writeStringTextNode(property, value)
+  node.appendChild(property)
+}
+
+/**
+ * @param {Node} node Node.
+ * @param {string} value PropertyName value.
+ */
+function writeOgcPropertyName (node, value) {
+  writeOgcExpression('PropertyName', node, value)
+}
+
+/**
+ * @param {Node} node Node.
+ * @param {string} value PropertyName value.
+ */
+function writeOgcLiteral (node, value) {
+  writeOgcExpression('Literal', node, value)
+}
+
+/**
+ * @param {Node} node Node.
+ * @param {Array&lt;string>} featureTypes Feature types.
+ * @param {Array&lt;*>} objectStack Node stack.
+ */
+function writeGetFeature (node, featureTypes, objectStack) {
+  const context = (objectStack[objectStack.length - 1])
+  const item = (Object.assign({}, context))
+
+  item.node = node
+  olXML.pushSerializeAndPop(item,
+    GETFEATURE_SERIALIZERS,
+    olXML.makeSimpleNodeFactory('Query'), featureTypes,
+    objectStack)
+}
+
+/**
+ * @param {string|undefined} featurePrefix The prefix of the feature.
+ * @param {string} featureType The type of the feature.
+ * @returns {string} The value of the typeName property.
+ */
+function getTypeName (featurePrefix = FEATURE_PREFIX, featureType) {
+  const prefix = `${featurePrefix}:`
+
+  // The featureType already contains the prefix.
+  if (featureType.indexOf(prefix) === 0) {
+    return featureType
+  } else {
+    return prefix + featureType
+  }
+}
+
+function writeFilterCondition (node, filter, objectStack) {
+  const item = { node: node }
+
+  olXML.pushSerializeAndPop(item,
+    GETFEATURE_SERIALIZERS,
+    olXML.makeSimpleNodeFactory(filter.getTagName()),
+    [filter], objectStack)
+}
+
+/**
+ * @param {Element} node Node.
+ * @param {string} featureType Feature type.
+ * @param {Array&lt;*>} objectStack Node stack.
+ */
+function writeQuery (node, featureType, objectStack) {
+  const context = /** @type {Object} */ (objectStack[objectStack.length - 1])
+  const featurePrefix = context['featurePrefix'] // eslint-disable-line
+  const featureNS = context['featureNS'] // eslint-disable-line
+  const propertyNames = context['propertyNames'] // eslint-disable-line
+  const srsName = context['srsName'] // eslint-disable-line
+
+  let typeName
+
+  // If feature prefix is not defined, we must not use the default prefix.
+  if (featurePrefix) {
+    typeName = getTypeName(featurePrefix, featureType)
+  } else {
+    typeName = featureType
+  }
+  node.setAttribute('typeName', typeName)
+  if (srsName) {
+    node.setAttribute('srsName', srsName)
+  }
+  if (featureNS) {
+    node.setAttributeNS(XMLNS, `xmlns:${featurePrefix}`, featureNS)
+  }
+  const item = (Object.assign({}, context))
+
+  item.node = node
+  olXML.pushSerializeAndPop(item,
+    QUERY_SERIALIZERS,
+    olXML.makeSimpleNodeFactory('PropertyName'), propertyNames,
+    objectStack)
+  const filter = context['filter'] // eslint-disable-line
+
+  if (filter) {
+    const child = olXML.createElementNS(OGCNS, 'Filter')
+
+    node.appendChild(child)
+    writeFilterCondition(child, filter, objectStack)
+  }
+}
+
+function writeTimeInstant (node, time) {
+  const timeInstant = olXML.createElementNS(GMLBase.GMLNS, 'TimeInstant')
+
+  node.appendChild(timeInstant)
+
+  const timePosition = olXML.createElementNS(GMLBase.GMLNS, 'timePosition')
+
+  timeInstant.appendChild(timePosition)
+  olFormatXSD.writeStringTextNode(timePosition, time)
+}
+
+function writeDuringFilter (node, filter, objectStack) {
+  const valueReference = olXML.createElementNS(FESNS, 'ValueReference')
+
+  olFormatXSD.writeStringTextNode(valueReference, filter.propertyName)
+  node.appendChild(valueReference)
+
+  const timePeriod = olXML.createElementNS(GMLBase.GMLNS, 'TimePeriod')
+
+  node.appendChild(timePeriod)
+
+  const begin = olXML.createElementNS(GMLBase.GMLNS, 'begin')
+
+  timePeriod.appendChild(begin)
+  writeTimeInstant(begin, filter.begin)
+
+  const end = olXML.createElementNS(GMLBase.GMLNS, 'end')
+
+  timePeriod.appendChild(end)
+  writeTimeInstant(end, filter.end)
+}
+
+function writeLogicalFilter (node, filter, objectStack) {
+  const item = { node: node }
+  const conditions = filter.conditions
+
+  for (let i = 0, ii = conditions.length; i &lt; ii; ++i) {
+    const condition = conditions[i]
+
+    olXML.pushSerializeAndPop(item,
+      GETFEATURE_SERIALIZERS,
+      olXML.makeSimpleNodeFactory(condition.getTagName()),
+      [condition], objectStack)
+  }
+}
+
+function writeNotFilter (node, filter, objectStack) {
+  const item = { node: node }
+  const condition = filter.condition
+
+  olXML.pushSerializeAndPop(item,
+    GETFEATURE_SERIALIZERS,
+    olXML.makeSimpleNodeFactory(condition.getTagName()),
+    [condition], objectStack)
+}
+
+function writeBboxFilter (node, filter, objectStack) {
+  const context = objectStack[objectStack.length - 1]
+
+  context['srsName'] = filter.srsName // eslint-disable-line
+  writeOgcPropertyName(node, filter.geometryName)
+  GML3.prototype.writeGeometryElement(node, filter.extent, objectStack)
+}
+
+function writeContainsFilter (node, filter, objectStack) {
+  const context = objectStack[objectStack.length - 1]
+
+  context['srsName'] = filter.srsName // eslint-disable-line
+  writeOgcPropertyName(node, filter.geometryName)
+  GML3.prototype.writeGeometryElement(node, filter.geometry, objectStack)
+}
+
+function writeIntersectsFilter (node, filter, objectStack) {
+  const context = objectStack[objectStack.length - 1]
+
+  context['srsName'] = filter.srsName // eslint-disable-line
+  writeOgcPropertyName(node, filter.geometryName)
+  GML3.prototype.writeGeometryElement(node, filter.geometry, objectStack)
+}
+
+function writeWithinFilter (node, filter, objectStack) {
+  const context = objectStack[objectStack.length - 1]
+
+  context['srsName'] = filter.srsName // eslint-disable-line
+  writeOgcPropertyName(node, filter.geometryName)
+  GML3.prototype.writeGeometryElement(node, filter.geometry, objectStack)
+}
+
+function writeComparisonFilter (node, filter, objectStack) {
+  if (filter.matchCase !== undefined) {
+    node.setAttribute('matchCase', filter.matchCase.toString())
+  }
+  writeOgcPropertyName(node, filter.propertyName)
+  writeOgcLiteral(node, `${filter.expression}`)
+}
+
+function writeIsNullFilter (node, filter, objectStack) {
+  writeOgcPropertyName(node, filter.propertyName)
+}
+
+function writeIsBetweenFilter (node, filter, objectStack) {
+  writeOgcPropertyName(node, filter.propertyName)
+
+  const lowerBoundary = olXML.createElementNS(OGCNS, 'LowerBoundary')
+
+  node.appendChild(lowerBoundary)
+  writeOgcLiteral(lowerBoundary, `${filter.lowerBoundary}`)
+
+  const upperBoundary = olXML.createElementNS(OGCNS, 'UpperBoundary')
+
+  node.appendChild(upperBoundary)
+  writeOgcLiteral(upperBoundary, `${filter.upperBoundary}`)
+}
+
+const GETFEATURE_SERIALIZERS = {
+  'http://www.opengis.net/wfs': {
+    Query: olXML.makeChildAppender(writeQuery)
+  },
+  'http://www.opengis.net/ogc': {
+    During: olXML.makeChildAppender(writeDuringFilter),
+    And: olXML.makeChildAppender(writeLogicalFilter),
+    Or: olXML.makeChildAppender(writeLogicalFilter),
+    Not: olXML.makeChildAppender(writeNotFilter),
+    BBOX: olXML.makeChildAppender(writeBboxFilter),
+    Contains: olXML.makeChildAppender(writeContainsFilter),
+    Intersects: olXML.makeChildAppender(writeIntersectsFilter),
+    Within: olXML.makeChildAppender(writeWithinFilter),
+    PropertyIsEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsNotEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsLessThan: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsLessThanOrEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsGreaterThan: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsGreaterThanOrEqualTo: olXML.makeChildAppender(writeComparisonFilter),
+    PropertyIsNull: olXML.makeChildAppender(writeIsNullFilter),
+    PropertyIsBetween: olXML.makeChildAppender(writeIsBetweenFilter),
+    PropertyIsLike: olXML.makeChildAppender(writeIsLikeFilter)
+  }
+}
+
+export default CustomWFSFormat
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

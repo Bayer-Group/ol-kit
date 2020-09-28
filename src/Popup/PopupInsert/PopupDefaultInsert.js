@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
-import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
-
 import Event from 'ol/events/Event'
-
-import { connectToMap } from 'Map'
 import en from 'locales/en'
 import { sanitizeProperties } from '../utils'
+import { connectToContext } from 'Provider'
+import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
@@ -159,4 +156,4 @@ PopupDefaultInsert.propTypes = {
   }).isRequired
 }
 
-export default connectToMap(PopupDefaultInsert)
+export default connectToContext(PopupDefaultInsert)

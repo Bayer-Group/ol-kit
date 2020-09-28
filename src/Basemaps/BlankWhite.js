@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import olLayerVector from 'ol/layer/Vector'
 import olSourceVector from 'ol/source/Vector'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { connectToContext } from 'Provider'; // eslint-disable-line
 
 /**
  * Blank white basemap option
@@ -79,4 +79,4 @@ BasemapBlankWhite.defaultProps = {
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(BasemapBlankWhite)
+export default connectToContext(BasemapBlankWhite)

@@ -1,4 +1,4 @@
-import VectorLayer from 'classes/VectorLayer'
+import { connectToContext, VectorLayer } from '@bayer/ol-kit'
 import olSourceVector from 'ol/source/Vector'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
@@ -6,8 +6,6 @@ import { fromLonLat } from 'ol/proj'
 import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
 import olIcon from 'ol/style/Icon'
-
-import { connectToMap } from 'Map'
 
 function ISS (props) {
   const { map } = props
@@ -18,11 +16,14 @@ function ISS (props) {
     // _ol_kit_time_key: 'time'
   })
 
-  setInterval(async () => {
-    const data = await fetch('http://api.open-notify.org/iss-now.json')
-    const res = await data.json()
-    const lonLat = [Number(res.iss_position.longitude), Number(res.iss_position.latitude)]
 
+  setInterval(async () => {
+    // calling the international space station api to get its current coordinates
+    const data = await fetch('https://api.wheretheiss.at/v1/satellites/25544')
+    const res = await data.json()
+    const lonLat = [Number(res.longitude), Number(res.latitude)]
+
+    // styling the icon, using a picutre of the ISS
     const iconStyle = new olStyle({
       stroke: new olStroke(),
         image: new olIcon({
@@ -32,20 +33,21 @@ function ISS (props) {
       })
     })
     const feature = new olFeature({
+       // Converts coordinates from the data to a projection that our map can understand. Read more here: https://openlayers.org/en/latest/apidoc/module-ol_proj.html
       geometry: new olGeomPoint(fromLonLat(lonLat))
     })
 
+    // adding the style to the feature, and adding addtional metadata
     feature.setStyle(iconStyle)
-    feature.set('time', new Date().toString())
-    feature.set('latitude', lonLat[1])
-    feature.set('longitude', lonLat[0])
+    feature.setProperties({ ...res, 'title': `International Space Station` })
 
+    // Adding the feature to the layer
     layer.getSource().addFeature(feature)
-  }, 2000)
+  }, 2000) // runs every 2000ms or 2 seconds
 
   map.addLayer(layer)
 
   return null
 }
 
-export default connectToMap(ISS)
+export default connectToContext(ISS)

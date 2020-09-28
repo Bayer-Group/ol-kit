@@ -9,9 +9,9 @@ import Navbar from './Navbar'
 import Snackbar from './Snackbar'
 
 // routes
-import Covid from './routes/covid/App'
-import Demo from './routes/demo/App'
-import Space from './routes/space/App'
+import Covid from './demos/covid/App'
+import Space from './demos/space/App'
+import World from './demos/world/App'
 
 export default function App() {
   return (
@@ -20,14 +20,14 @@ export default function App() {
       <Navbar />
 
       <Switch>
-        <Route path='/space'>
-          <Space />
-        </Route>
         <Route path='/covid'>
           <Covid />
         </Route>
+        <Route path='/space'>
+          <Space />
+        </Route>
         <Route path='/'>
-          <Demo />
+          <World />
         </Route>
       </Switch>
     </Router>

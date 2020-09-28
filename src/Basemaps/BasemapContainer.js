@@ -7,7 +7,7 @@ import BlankWhite from './BlankWhite'
 import StamenTerrain from './StamenTerrain'
 import StamenTonerDark from './StamenTonerDark'
 import StamenTonerLite from './StamenTonerLite'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 /**
  * A floating basemap selector that slides options up to toggle basemap
@@ -126,4 +126,4 @@ BasemapContainer.propTypes = {
   variation: PropTypes.string
 }
 
-export default connectToMap(BasemapContainer)
+export default connectToContext(BasemapContainer)

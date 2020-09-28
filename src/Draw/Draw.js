@@ -17,7 +17,7 @@ import olSourceVector from 'ol/source/Vector'
 import olGeomCircle from 'ol/geom/Circle'
 import { fromCircle } from 'ol/geom/Polygon'
 import olCollection from 'ol/Collection'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import { getStyledFeatures } from './utils'
 
 const OL_DRAW_TYPES = [...Object.values(olGeomTypes)]
@@ -280,4 +280,4 @@ Draw.defaultProps = {
   onDrawCancel: () => {}
 }
 
-export default connectToMap(Draw)
+export default connectToContext(Draw)

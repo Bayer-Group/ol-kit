@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import IconButton from '@material-ui/core/IconButton'
-import { connectToMap } from 'Map'; // eslint-disable-line
+import { connectToContext } from 'Provider'
 
 import { IconWrapper } from './styled'
 
@@ -29,4 +29,4 @@ ControlGroupButton.propTypes = {
   children: PropTypes.node
 }
 
-export default connectToMap(ControlGroupButton)
+export default connectToContext(ControlGroupButton)

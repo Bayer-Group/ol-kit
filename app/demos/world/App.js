@@ -11,9 +11,12 @@ import {
   LayerPanelContent,
   BasemapContainer,
   VectorLayer,
-  DrawContainer
+  DrawContainer,
+  LayerPanelHeader,
+  LayerPanelLayersPage
 } from '@bayer/ol-kit'
 import PaletteIcon from '@material-ui/icons/Palette'
+import CreateIcon from '@material-ui/icons/Create'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
@@ -36,7 +39,6 @@ class App extends React.Component {
     })
 
     map.addLayer(layer)
-    // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
 
     // http://localhost:8600/geoserver/topp/states/ows?SERVICE=WMS
     GeoserverLayer.fromURI('http://localhost:8600/geoserver/topp/states/ows').then(layer => {
@@ -55,16 +57,22 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <LayerPanel>
+          <LayerPanelLayersPage />
           <LayerPanelPage tabIcon={<PaletteIcon />}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
+            </LayerPanelContent>
+          </LayerPanelPage>
+          <LayerPanelPage tabIcon={<CreateIcon />}>
+            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
+              <LayerPanelHeader title='Draw' />
+              <DrawContainer style={{ position: 'relative', width: 'auto' }} />
             </LayerPanelContent>
           </LayerPanelPage>
         </LayerPanel>
         <ContextMenu />
         <Controls />
         <BasemapContainer />
-        <DrawContainer />
       </Map>
     )
   }

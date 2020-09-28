@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'
 import { PopupActionItem } from 'Popup'
 import en from  'locales/en'
 import { copyWktToClipbard } from './utils'
@@ -34,4 +34,4 @@ PopupActionCopyWkt.defaultProps = {
   translations: en
 }
 
-export default connectToMap(PopupActionCopyWkt)
+export default connectToContext(PopupActionCopyWkt)

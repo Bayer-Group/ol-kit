@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | classes/GeoserverLayer.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToContext.html">connectToContext</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Classes</h3><ul><li><a href="module.exports.html">exports</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#_applyWMSStyles">_applyWMSStyles</a></li><li><a href="global.html#_makeRequest">_makeRequest</a></li><li><a href="global.html#clearFeatures">clearFeatures</a></li><li><a href="global.html#describeFeatureType">describeFeatureType</a></li><li><a href="global.html#FEATURE_PREFIX">FEATURE_PREFIX</a></li><li><a href="global.html#FESNS">FESNS</a></li><li><a href="global.html#fetchFeatures">fetchFeatures</a></li><li><a href="global.html#fetchFeaturesAtClick">fetchFeaturesAtClick</a></li><li><a href="global.html#fetchFeaturesIntersectingExtent">fetchFeaturesIntersectingExtent</a></li><li><a href="global.html#fetchFeaturesIntersectingGeom">fetchFeaturesIntersectingGeom</a></li><li><a href="global.html#fetchValuesForAttribute">fetchValuesForAttribute</a></li><li><a href="global.html#fromURI">fromURI</a></li><li><a href="global.html#getAttributes">getAttributes</a></li><li><a href="global.html#getCapabilities">getCapabilities</a></li><li><a href="global.html#getDefaultWMSStyles">getDefaultWMSStyles</a></li><li><a href="global.html#getFeatures">getFeatures</a></li><li><a href="global.html#getGeometryName">getGeometryName</a></li><li><a href="global.html#getLayerInfo">getLayerInfo</a></li><li><a href="global.html#getSLDBody">getSLDBody</a></li><li><a href="global.html#getTypeName">getTypeName</a></li><li><a href="global.html#getUri">getUri</a></li><li><a href="global.html#getUserWMSStyles">getUserWMSStyles</a></li><li><a href="global.html#getWFSLayer">getWFSLayer</a></li><li><a href="global.html#getWMSFilters">getWMSFilters</a></li><li><a href="global.html#getWMSLayer">getWMSLayer</a></li><li><a href="global.html#getZIndex">getZIndex</a></li><li><a href="global.html#objectStack%255Bundefined%255D">objectStack[undefined]</a></li><li><a href="global.html#OGCNS">OGCNS</a></li><li><a href="global.html#resetDefaultWMSStyles">resetDefaultWMSStyles</a></li><li><a href="global.html#setDefaultWMSStyles">setDefaultWMSStyles</a></li><li><a href="global.html#setUserWMSStyles">setUserWMSStyles</a></li><li><a href="global.html#setWMSFilters">setWMSFilters</a></li><li><a href="global.html#setZIndex">setZIndex</a></li><li><a href="global.html#writeGetFeature">writeGetFeature</a></li><li><a href="global.html#writeOgcExpression">writeOgcExpression</a></li><li><a href="global.html#writeOgcLiteral">writeOgcLiteral</a></li><li><a href="global.html#writeOgcPropertyName">writeOgcPropertyName</a></li><li><a href="global.html#writeQuery">writeQuery</a></li><li><a href="global.html#XMLNS">XMLNS</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>Draw</h2><h3>Components</h3><ul><li><a href="Draw.html">Draw</a></li><li><a href="DrawBox.html">DrawBox</a></li><li><a href="DrawCircle.html">DrawCircle</a></li><li><a href="DrawContainer.html">DrawContainer</a></li><li><a href="DrawFreehand.html">DrawFreehand</a></li><li><a href="DrawLine.html">DrawLine</a></li><li><a href="DrawPoint.html">DrawPoint</a></li><li><a href="DrawPolygon.html">DrawPolygon</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#getStyledFeatures">getStyledFeatures</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>Provider</h2><h3>Utils</h3><ul><li><a href="global.html#connectToContext">connectToContext</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import allSettled from 'promise.allsettled'
+import olLayerImage from 'ol/layer/image'
+import olLayerTile from 'ol/layer/tile'
+import olLayerVector from 'ol/layer/vector'
+import olSourceImageWMS from 'ol/source/imagewms'
+import olSourceTileWMS from 'ol/source/tilewms'
+import olSourceVector from 'ol/source/vector'
+import customOlFormatWFS from 'classes/CustomOlFormatWFS'
+import olLayerGroup from 'ol/layer/group'
+import olGeomPolygon from 'ol/geom/polygon'
+import olGeomCircle from 'ol/geom/circle'
+
+import ugh from 'ugh'
+import escapeRegExp from 'lodash.escaperegexp'
+import SLDParser from '@bayer/geostyler-geoserver-sld-parser'
+
+import WFSClient from './WFSClient'
+import WFSClientParser from './WFSClientParser'
+import WMSClient from './WMSClient'
+import WMSClientParser from './WMSClientParser'
+import RasterSourceFactory from './RasterSourceFactory'
+import olFormatFilterBbox from 'ol/format/filter/bbox'
+import olFormatFilterAnd from 'ol/format/filter/and'
+import olFormatFilterEqualTo from 'ol/format/filter/equalto'
+import olFormatFilterIntersects from 'ol/format/filter/intersects'
+
+// backwards compatibility for chrome &lt;= 75
+allSettled.shim() // will be a no-op if not needed
+
+const wmsLayerTypes = [olLayerImage, olLayerTile]
+
+/**
+ * A class to manage layers from geoserver with both a WMS and WFS component
+ * @class
+ * @since 3.12.0
+ * @param {Object} olOpts - Options passed down to ol/layer/Group
+ * @param {Object} classOpts - Options for the GeoserverLayer class to set things up
+ * @returns {GeoserverLayer} An instance of GeoserverLayer
+ */
+export default class GeoserverLayer extends olLayerGroup {
+  constructor (olOpts, classOpts = {}) {
+    if (!olOpts.layers || olOpts.layers.length > 2) throw new Error('You must pass an image and a vector layer (2 total) to create a GeoserverLayer')
+
+    super(olOpts)
+
+    // apply styles and filters in the constructor (same as if calling the methods directly)
+    this._defaultStylesCache = classOpts.defaultStyles || []
+    this.defaultStyles = classOpts.defaultStyles || []
+    this.userStyles = classOpts.userStyles || []
+
+    if (classOpts.uri) this.uri = /https?:\/\/.*ows/.exec(classOpts.uri)
+    this.typeName = classOpts.typeName
+    this.attributes = classOpts.attributes || []
+    this.geometryName = classOpts.geometryName
+    this.getHeaders = classOpts.getHeaders
+    this.attrValuesMap = new Map()
+    this.isGeoserverLayer = true
+    this.initialFilterMap = classOpts.initialFilterMap || new Map()
+
+    this._applyWMSStyles()
+    this.setWMSFilters(classOpts.filters)
+
+    return this
+  }
+
+  setLayers (layers) {
+    // add ref to parent layer to each layer in this group
+    layers.forEach(layer => layer.set('_ol_kit_parent', this))
+    // reference to setLayers method from olLayerGroup
+    super.setLayers(layers)
+  }
+
+  /**
+   * Returns the URI of the layer (on which WMS &amp; WFS requests are built)
+   * @method
+   * @since 3.12.0
+   * @returns {String}
+   */
+  getUri () {
+    return this.uri
+  }
+
+  /**
+   * Returns the typeName of the layer (passed in when the layer is created)
+   * @method
+   * @since 3.12.0
+   * @returns {String}
+   */
+  getTypeName () {
+    return this.typeName
+  }
+
+  /**
+   * Returns the attributes of the layer (passed in when the layer is created)
+   * @method
+   * @since 3.12.0
+   * @returns {String[]} An array of attribute names
+   */
+  getAttributes () {
+    return this.attributes
+  }
+
+  /**
+   * Returns an array of strings representing the values for the passed attribute
+   * @method
+   * @since 3.12.0
+   * @returns {String[]} An array of value names
+   */
+  fetchValuesForAttribute (map, attribute, opts) {
+    const MAX_FEATURES = 10000
+    const extent = map.getView().calculateExtent()
+    const body = {
+      // We only want the features for the current map extent
+      filter: olFormatFilterBbox(this.geometryName, extent, 'EPSG:3857'),
+      // If issues arise with performance over loading this many features set this to some other value or possibly make a saga.
+      maxFeatures: MAX_FEATURES,
+      // The default output is XML so set it to JSON to make it easier to parse
+      outputFormat: 'application/json',
+      // attempt to solve 'featureTypes must be array' assertion error
+      featureTypes: [this.typeName],
+      // hardcoded srsName which isn't provided by GeoserverLayer
+      srsName: 'urn:ogc:def:crs:EPSG:4326',
+      // parse prefix from typeName
+      featurePrefix: this.typeName.split(':')[0],
+      propertyNames: [opts.attribute]
+    }
+
+    return this.fetchFeatures(body)
+      .then(features => {
+        console.log('fetched features', features.length)
+
+        return features.map(f => f[attribute])
+      })
+  }
+
+  /**
+   * Returns the name of the geometry attribute of the layer (passed in when the layer is created)
+   * @method
+   * @since 3.12.0
+   * @returns {String}
+   */
+  getGeometryName () {
+    return this.geometryName
+  }
+
+  /**
+   * Returns all the features contained within the vector layer
+   * @method
+   * @since 3.12.0
+   * @returns {olCollection} An Openlayers collection of features
+   */
+  getFeatures () {
+    return this.getWFSLayer().getSource().getFeatures()
+  }
+
+  /**
+   * Returns the zindex of the underlying WMS/WFS layers
+   * @method
+   * @since 3.12.0
+   * @returns {Number} An integer representing the zindex of the layer
+   */
+  getZIndex () {
+    return this.getWMSLayer().getZIndex()
+  }
+
+  /**
+   * Clears all the features contained within the vector layer
+   * @method
+   * @since 3.12.0
+   */
+  clearFeatures () {
+    return this.getWFSLayer().getSource().clear()
+  }
+
+  /**
+   * Returns the vector layer of the GeoserverLayer
+   * NOTE: if you are working with a raster layer the vector layer
+   * will never have any features...check the layer mode to see if
+   * it's operating in raster layer mode
+   * @method
+   * @since 3.12.0
+   * @returns {olLayerVector} A Openlayers vector layer
+   */
+  getWFSLayer () {
+    return this.getLayers().getArray().find(l => l instanceof olLayerVector)
+  }
+
+  /**
+   * Returns the image layer of the GeoserverLayer
+   * @method
+   * @since 3.12.0
+   * @returns {olLayerImage|olLayerTile} One of two Openlayers image types
+   */
+  getWMSLayer () {
+    return this.getLayers().getArray().find(l => wmsLayerTypes.find(t => l instanceof t))
+  }
+
+  /**
+   * Gets the default geostyler rules being used on the WMS layer
+   * More info on geostyler: https://github.com/terrestris/geostyler-sld-parser
+   * @method
+   * @since 3.12.0
+   */
+  getDefaultWMSStyles () {
+    return this.defaultStyles
+  }
+
+  /**
+   * Resets the layer's styling back to its default styles (passed in the constructor)
+   * @method
+   * @since 3.12.0
+   */
+  resetDefaultWMSStyles () {
+    this.defaultStyles = this._defaultStylesCache
+
+    this._applyWMSStyles()
+  }
+
+  /**
+   * Gets user provided geostyler rules being used on the WMS layer
+   * More info on geostyler: https://github.com/terrestris/geostyler-sld-parser
+   * @method
+   * @since 3.12.0
+   */
+  getUserWMSStyles () {
+    return this.userStyles
+  }
+
+  /**
+   * Sets the default WMS SLD from an array of geostyler rules
+   * More info on geostyler: https://github.com/terrestris/geostyler-sld-parser
+   * @method
+   * @since 3.12.0
+   */
+  setDefaultWMSStyles (styles) {
+    this.defaultStyles = styles
+
+    this._applyWMSStyles()
+  }
+
+  /**
+   * Sets the default WMS SLD from a geostyler style object
+   * More info on geostyler: https://github.com/terrestris/geostyler-sld-parser
+   * @method
+   * @since 3.12.0
+   */
+  setUserWMSStyles (styles) {
+    this.userStyles = styles
+
+    this._applyWMSStyles()
+  }
+
+  /**
+   * Set the zindex of the underlying WMS/WFS layers
+   * @method
+   * @since 3.12.0
+   */
+  setZIndex (idx) {
+    // we want both the parent and its children to have the same z-index set
+    super.setZIndex(idx)
+    this.getWMSLayer().setZIndex(idx)
+    this.getWFSLayer().setZIndex(idx)
+  }
+
+  /**
+   * Applies the user and default styles to the child layer sources
+   * This method will cause the layers to re-render themselves with the new styling
+   * @method
+   * @since 3.12.0
+   */
+  _applyWMSStyles () {
+    const parser = new SLDParser()
+    const filteredUserStyles = this.getUserWMSStyles().filter(style => {
+      // do a safe check for the filter key
+      if (!Array.isArray(style.filter)) return true
+      const attributeValue = style.filter[1][1] instanceof Array
+        ? style.filter[1][1][1][2]
+        : style.filter[1][2]
+
+      return attributeValue !== ''
+    })
+
+    if (this.getAttributes().includes('deleted')) {
+      filteredUserStyles.map(style => {
+        if (!Array.isArray(style.filter)) {
+          // if deleted attribute exists &amp; a filter is missing, set it to deleted filter
+          style.filter = ['==', 'deleted', 'false']
+        }
+        // the second item in the filter array should always be the deleted tag false so if it doesn't have that then
+        // add it by pushing to the array
+        if (!style.filter[2]) {
+          style.filter.push(['==', 'deleted', 'false'])
+        }
+      })
+    }
+
+    const style = {
+      name: this.getTypeName(),
+      rules: [
+        ...this.getDefaultWMSStyles(),
+        ...filteredUserStyles
+      ]
+    }
+
+    return parser
+      .writeStyle(style)
+      .then(sldString => {
+        // update the sld_body which is what geoserver uses to style the layer
+        this.getWMSLayer().getSource().setStyle(sldString)
+      })
+  }
+
+  /**
+   * Gets the layer's WMS filter (using an internal JS map format)
+   * @method
+   * @since 3.12.0
+   */
+  getWMSFilters (filter) {
+    return this.wmsfilters
+  }
+
+  /**
+   * Sets the layer's WMS filter (using an internal JS map format)
+   * @method
+   * @since 3.12.0
+   */
+  setWMSFilters (filters = [], opts = {}) {
+    this.wmsfilters = filters
+    const wmsSource = this.getWMSLayer().getSource()
+
+    const filtersToStrings = filters => {
+      const filterStrings = filters.map(({ attribute, value: val }) => {
+        return opts.commaDelimitedAttributes &amp;&amp; opts.commaDelimitedAttributes.includes(attribute)
+                ? `strMatches(${attribute}, '^${escapeRegExp(val)}( )??,.*') = TRUE OR strMatches(${attribute}, '.*,( )??${escapeRegExp(val)}( )??,.*') = TRUE OR strMatches(${attribute}, '.*,( )??${escapeRegExp(val)}( )??$') = TRUE OR ${attribute} = '${escapeRegExp(val)}'` // eslint-disable-line
+          : `${attribute} = '${val}'`
+      })
+
+      // if there's only one filter we simply return it, otherwise we use the logical operator of the first filter
+      return filterStrings.length === 1 ? filterStrings[0] : filterStrings.join(` ${filters[0].logical} `)
+    }
+
+    // update the cql_param which is what geoserver uses to filter the WMS layer
+    if (filters.length) {
+      wmsSource.setFilter(filtersToStrings(filters))
+
+    // if we don't remove the filter geoserver will filter out the entire layer (nothing will show)
+    } else {
+      wmsSource.removeFilter()
+    }
+
+    // ensures the view is updated with new tiles from the server (based on the cql_filter)
+    wmsSource.refresh()
+  }
+
+  setOlFilters (olFilters) {
+    this.olFilters = olFilters
+
+    this.dispatchEvent('filter:change')
+  }
+
+  /**
+   * Provides a means of querying the underlying layer's WFS service to fetch
+   * features given a set of options passed to ol/format/WFS
+   * @method
+   * @since 3.12.0
+   * @returns {Promise} A promise which resolves to an array of ol/Feature objects
+   */
+  fetchFeatures (getFeatureOpts) {
+    const defaultHeaders = {
+      'Content-Type': 'text/xml'
+    }
+    const formatWFS = new customOlFormatWFS({
+      featureNS: 'http://www.opengis.net/wfs'
+    })
+    const body = formatWFS.writeGetFeature(getFeatureOpts)
+
+    // make a POST request with a WFS GetFeature XML payload
+    return fetch(this.uri, {
+      method: 'POST',
+      body: body.outerHTML,
+      headers: this.getHeaders(defaultHeaders)
+    })
+      .then(res => res.json())
+      .then(({ status, statusText, data }) => {
+        if (status !== 200) throw new Error(statusText)
+
+        const opts = { dataProjection: formatWFS.readProjection(data), featureProjection: 'EPSG:3857' } // do we know the map projection?
+        const features = formatWFS.readFeatures(data, opts)
+
+        // set reference to parent layer on features
+        features.forEach(feature => feature.set('_ol_kit_parent', this))
+
+        return features
+      })
+  }
+
+  /**
+   * Provides a means of querying the underlying layer's WFS service to fetch
+   * features intersecting a given geometry
+   * @method
+   * @since 3.12.0
+   * @returns {Promise} A promise which resolves to an array of ol/Feature objects
+   */
+  fetchFeaturesIntersectingGeom (geom, opts = { maxFeatures: 50, featureTypes: [] }) {
+    let filter = {}
+    const olIntersectsFilter = new olFormatFilterIntersects(this.geometryName, geom)
+    const existingFilters = ['AND', new Map(this.initialFilterMap)]
+    const intersectParams = new Set([[this.geometryName, geom, 'EPSG:3857']])
+
+    existingFilters[1].set('INTERSECTS', intersectParams)
+
+    // if the layer has a deleted attribute, add this to the filter
+    if (this.getAttributes().includes('deleted')) {
+      filter = new olFormatFilterAnd(this.olFilters, olIntersectsFilter, new olFormatFilterEqualTo('deleted', false))
+      existingFilters[1].set('EQUALS', new Map([['deleted', false]]))
+    } else {
+      filter = new olFormatFilterAnd(this.olFilters, olIntersectsFilter)
+    }
+
+    const filterOpts = {
+      srsName: 'EPSG:3857',
+      filter: filter,
+      featureTypes: [...opts.featureTypes, this.typeName],
+      maxFeatures: opts.maxFeatures,
+      outputFormat: opts.outputFormat
+    }
+
+    return this.fetchFeatures(filterOpts)
+  }
+
+  /**
+   * Provides a means of querying the underlying layer's WFS service to fetch
+   * features at a given coordinate
+   * @method
+   * @since 3.12.0
+   * @returns {Promise} A promise which resolves to an array of ol/Feature objects
+   */
+  fetchFeaturesAtClick (coord, map, opts = { hitTolerance: 8 }) {
+    const relativeUnits = opts.hitTolerance * map.getView().getResolution()
+    const geom = olGeomPolygon.fromCircle(new olGeomCircle(coord, relativeUnits))
+
+    return this.fetchFeaturesIntersectingGeom(geom)
+  }
+
+  /**
+   * Provides a means of querying the underlying layer's WFS service to retrieve features
+   * intersecting a given extent
+   * @method
+   * @since 3.12.0
+   * @returns {Promise} A promise which resolves to an array of ol/Feature objects
+   */
+  fetchFeaturesIntersectingExtent (extent, opts) {
+    const poly = olGeomPolygon.fromExtent(extent)
+
+    return this.fetchFeaturesIntersectingGeom(poly, opts)
+  }
+
+  /**
+   * Provides a convenient way to load layers from geoserver with easy ability to
+   * filter or style the WMS component and also request the layer's WFS service to
+   * retrieve features or use in applications
+   * @method
+   * @since 3.12.0
+   * @returns {GeoserverLayer} A new instance of GeoserverLayer which can be added to the map
+   */
+  static fromURI (uri, opts = { getHeaders: opts => opts, isSingleTile: false }) {
+    if (!uri) throw new Error('No valid uri passed to fromURI')
+    const parserOpts = { getHeaders: opts.getHeaders }
+    const wfsClientParser = new WFSClientParser(new WFSClient(uri, parserOpts))
+    const wmsClientParser = new WMSClientParser(new WMSClient(uri, parserOpts))
+
+    return Promise.allSettled(
+      [wfsClientParser.getLayerInfo(uri), wmsClientParser.getLayerInfo()]
+    ).then((results) => {
+      // Throw an error if all of the requests fail
+      if (results.every(({ status }) => status === 'rejected')) {
+        ugh.error('There was a problem generating a GeoserverLayer with the passed layer', results)
+      }
+      // check the results for rejected requests and warn if some (but not all) of them failed
+      results.forEach((result) => {
+        if (!result || result.status === 'rejected') ugh.warn(`an error occurred while fetching layer metadata for ${uri}, the layer was successfully created but may not be fully functional: ${result?.reason}\n`, result)
+      })
+      const [wfsLayerInfo, wmsLayerInfo] = results.map(({ value }) => value) // extract the returned values
+      const layerProto = opts.isSingleTile ? olLayerImage : olLayerTile
+      const sourceProto = opts.isSingleTile ? olSourceImageWMS : olSourceTileWMS
+      const { layerTitle, layerName, typeName } = wfsLayerInfo || wmsLayerInfo || {}
+      const { attributes, geometryName } = wfsLayerInfo || {}
+      const { extent, dimension } = wmsLayerInfo || {}
+
+      const wmsLayer = new layerProto({
+        source: new RasterSourceFactory({
+          url: uri,
+          gutter: 10,
+          projection: 'EPSG:4326',
+          wrapX: true,
+          // params: { LAYERS: 'topp:tasmania_state_boundaries' },
+          transition: 0,
+          extent
+        }, sourceProto, parserOpts),
+        visible: true,
+        dimension
+      })
+
+      const wfsLayer = new olLayerVector({
+        source: new olSourceVector()
+      })
+      const parser = new SLDParser()
+
+      // return parser
+      //   .readStyle(sldBody)
+      return Promise.resolve(true)
+        .then(() => {
+          const layerOpts = {
+            uri,
+            dimension,
+            typeName,
+            attributes,
+            geometryName,
+            // defaultStyles: rules,
+            getHeaders: opts.getHeaders,
+            initialFilterMap: opts.initialFilterMap
+          }
+
+          return new GeoserverLayer({
+            layers: [wmsLayer, wfsLayer],
+            title: layerTitle,
+            ckan_id: opts.ckan_id
+          }, layerOpts)
+        })
+        .catch(error => {
+          // log the error from geostyler-geoserver-sld-parser &amp; return new layer with empty default styles
+          ugh.error(error)
+
+          const layerOpts = {
+            uri,
+            dimension,
+            typeName,
+            attributes,
+            geometryName,
+            defaultStyles: [],
+            getHeaders: opts.getHeaders,
+            initialFilterMap: opts.initialFilterMap
+          }
+
+          return new GeoserverLayer({
+            layers: [wmsLayer, wfsLayer],
+            title: layerTitle
+          }, layerOpts)
+        })
+    })
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

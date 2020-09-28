@@ -122,6 +122,7 @@
     "eslint-plugin-react": "~7.19.0",
     "eslint-plugin-react-hooks": "^4.1.0",
     "eslint-plugin-standard": "~4.0.1",
+    "file-loader": "^6.1.0",
     "graphql": "^14.7.0",
     "html-webpack-plugin": "~4.3.0",
     "husky": "~4.2.5",
@@ -148,7 +149,7 @@
     "webpack-dev-server": "~3.11.0"
   },
   "peerDependencies": {
-    "ol": "4.6.5",
+    "ol": "6.4.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "styled-components": ">=5.0.0",
