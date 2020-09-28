@@ -14,13 +14,11 @@ const defaultHeaders = {
  */
 export default class WFSClient {
   constructor (url, opts = {}) {
-    const baseUrlResults = url // /https?:\/\/.*topp/.exec(url)
-
-    if (!baseUrlResults.length) {
+    if (!url.length) {
       throw new Error(`The base url (${url}) provided to WFSClient is malformed -- check the docs`)
     }
 
-    this.base = url // baseUrlResults[0]
+    this.base = url
     this.getHeaders = opts.getHeaders || (a => a)
     this.dsldEndpoint = opts.dsldEndpoint
   }
@@ -39,11 +37,10 @@ export default class WFSClient {
     const uri = `${this.dsldEndpoint}?typename=${typeName}`
     const headers = this.getHeaders(defaultHeaders)
 
-    // return axios.get(uri, { headers })
     return fetch(uri, { headers })
-      .then(res => res.json())
-      .then(({ status, statusText, data }) => {
-        if (status !== 200) throw new Error(statusText)
+      .then(res => { if (res.status !== 200) throw new Error(res.statusText)})
+      .then(res => res.text())
+      .then(data => {
         let newData = data
         const parser = new DOMParser()
         const xmlDoc = parser.parseFromString(data, 'text/xml')
@@ -113,13 +110,10 @@ export default class WFSClient {
 
     const headers = this.getHeaders(defaultHeaders)
 
-    console.log('_makeRequest', uri)
-    // return axios.post(uri, body, { headers })
-    return fetch(uri, { mode: 'no-cors', method: 'POST', headers, body })
-      .then(res => res.json())
-      .then(({ status, statusText, data }) => {
-        if (status !== 200) throw new Error(statusText)
-
+    return fetch(uri, { method: 'POST', headers, body })
+      .then(res => { if (status !== 200) { throw new Error(statusText) }})
+      .then(res => res.text())
+      .then(res => {
         return new Promise((resolve, reject) => {
           parser.parseString(data, (err, result) => {
             // geoserver stupidly returns 200s even when errors occur, so we add

@@ -5,7 +5,7 @@ import asserts from 'ol/asserts'
 import olFormatFilter from 'ol/format/filter'
 import GMLBase from 'ol/format/gmlbase'
 import GML3 from 'ol/format/GML3'
-console.log(olXML)
+
 /**
  * @type {string}
  */
@@ -41,11 +41,6 @@ class CustomWFSFormat extends olFormatWFS {
    * @api
    */
   writeGetFeature (options) {
-    // const result = super.writeGetFeature(options)
-
-    // console.log(result) // eslint-disable-line no-console
-
-    // return result
     const node = olXML.createElementNS('http://www.opengis.net/wfs', 'GetFeature')
 
     node.setAttribute('service', 'WFS')
@@ -100,7 +95,6 @@ class CustomWFSFormat extends olFormatWFS {
       propertyNames: options.propertyNames ? options.propertyNames : []
     })
 
-    // assert(Array.isArray(options.featureTypes), 11) // `options.featureTypes` should be an Array
     writeGetFeature(node, /** @type {!Array<string>} */ (options.featureTypes), [context], this)
 
     return node

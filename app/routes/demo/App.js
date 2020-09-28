@@ -38,13 +38,14 @@ class App extends React.Component {
     map.addLayer(layer)
     // centerAndZoom(map, { x: -89.941642, y: 38.922929, zoom: 17.20 })
 
-    GeoserverLayer.fromURI('http://localhost:8600/geoserver/topp/wms?LAYERS=tiger-ny').then(layer => {
+    // http://localhost:8600/geoserver/topp/states/ows?SERVICE=WMS
+    GeoserverLayer.fromURI('http://localhost:8600/geoserver/topp/states/ows').then(layer => {
       map.addLayer(layer)
     })
 
-    const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
+    //const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 
-    dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+    //dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
 
     window.map = map
   }

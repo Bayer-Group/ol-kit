@@ -375,7 +375,6 @@ export default class GeoserverLayer extends olLayerGroup {
     const body = formatWFS.writeGetFeature(getFeatureOpts)
 
     // make a POST request with a WFS GetFeature XML payload
-    //     return axios.post(this.uri, body.outerHTML, { headers: this.getHeaders(defaultHeaders) })
     return fetch(this.uri, {
       method: 'POST',
       body: body.outerHTML,
