@@ -184,15 +184,6 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
     bottom: getPadding(2),
     left: getPadding(3)
   }
-  // olMap.getPixelFromCoordinate returns a pixel relative to the map's target element so we need to convert that to a pixel relative to the window.
-  const mapToScreenPixel = (pixel = [0, 0]) => {
-    const { x, y } = map.getTargetElement().getBoundingClientRect()
-    const offset = [x, y]
-
-    return pixel.map((val, i) => {
-      return val + offset[i]
-    })
-  }
 
   // find bbox for passed features
   const getFitsForFeatures = rawFeatures => {
@@ -231,21 +222,21 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
 
   // the order of these checks determine which side is tried first (right, left, top, and then bottom)
   const getPosition = bbox => {
-    if (fitsRight(bbox.right)) return { arrow: 'left', pixel: mapToScreenPixel(bbox.right), fits: true }
-    if (fitsLeft(bbox.left)) return { arrow: 'right', pixel: mapToScreenPixel(bbox.left), fits: true }
-    if (fitsAbove(bbox.top)) return { arrow: 'bottom', pixel: mapToScreenPixel(bbox.top), fits: true }
-    if (fitsBelow(bbox.bottom)) return { arrow: 'top', pixel: mapToScreenPixel(bbox.bottom), fits: true }
+    if (fitsRight(bbox.right)) return { arrow: 'left', pixel: bbox.right, fits: true }
+    if (fitsLeft(bbox.left)) return { arrow: 'right', pixel: bbox.left, fits: true }
+    if (fitsAbove(bbox.top)) return { arrow: 'bottom', pixel: bbox.top, fits: true }
+    if (fitsBelow(bbox.bottom)) return { arrow: 'top', pixel: bbox.bottom, fits: true }
 
     if (opts.lastPosition) {
-      if (opts.lastPosition.arrow === 'left') return { arrow: 'left', pixel: mapToScreenPixel(bbox.right), fits: false }
-      if (opts.lastPosition.arrow === 'top') return { arrow: 'top', pixel: mapToScreenPixel(bbox.bottom), fits: false }
-      if (opts.lastPosition.arrow === 'bottom') return { arrow: 'bottom', pixel: mapToScreenPixel(bbox.top), fits: false }
-      if (opts.lastPosition.arrow === 'right') return { arrow: 'right', pixel: mapToScreenPixel(bbox.left), fits: false }
-      if (opts.lastPosition.arrow === 'none') return { arrow: 'none', pixel: mapToScreenPixel(opts.lastPosition.pixel), fits: false }
+      if (opts.lastPosition.arrow === 'left') return { arrow: 'left', pixel: bbox.right, fits: false }
+      if (opts.lastPosition.arrow === 'top') return { arrow: 'top', pixel: bbox.bottom, fits: false }
+      if (opts.lastPosition.arrow === 'bottom') return { arrow: 'bottom', pixel: bbox.top, fits: false }
+      if (opts.lastPosition.arrow === 'right') return { arrow: 'right', pixel: bbox.left, fits: false }
+      if (opts.lastPosition.arrow === 'none') return { arrow: 'none', pixel: opts.lastPosition.pixel, fits: false }
     }
 
     // if none of the above return, it doesn't fit on any side (it's on top of or within)
-    return { arrow: 'none', pixel: mapToScreenPixel(pixel), fits: false }
+    return { arrow: 'none', pixel, fits: false }
   }
 
   return getPosition(getFitsForFeatures(features))
