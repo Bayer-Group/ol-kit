@@ -36,13 +36,18 @@ class App extends React.Component {
     // nice to have map set on the window while debugging
     window.map = map
 
-    // find a geojson or kml dataset (url or file) to load on the map
-    const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
-    const dataLayer = await loadDataLayer(map, data)
-    // set the title on the layer to show in LayerPanel
-    dataLayer.set('title', 'NASA Data')
+    // if data fails to load, components inside of mount will fail to render
+    try {
+      // find a geojson or kml dataset (url or file) to load on the map
+      const data = 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML'
+      const dataLayer = await loadDataLayer(map, data)
+      // set the title on the layer to show in LayerPanel
+      dataLayer.set('title', 'NASA Data')
 
-    console.log('data layer:', dataLayer)
+      console.log('data layer:', dataLayer)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   render () {
