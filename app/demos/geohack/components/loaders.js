@@ -1,18 +1,18 @@
-import olVectorSource from 'ol/source/vector'
-import olStyle from 'ol/style/style'
-import olFill from 'ol/style/fill'
-import olCircle from 'ol/style/circle'
-import olStroke from 'ol/style/stroke'
-import KML from 'ol/format/kml'
-import GeoJSON from 'ol/format/geojson'
+import olVectorSource from 'ol/source/Vector'
+import olStyle from 'ol/style/Style'
+import olFill from 'ol/style/Fill'
+import olCircle from 'ol/style/Circle'
+import olStroke from 'ol/style/Stroke'
+import KML from 'ol/format/KML'
+import GeoJSON from 'ol/format/GeoJSON'
 import  { VectorLayer, } from '@bayer/ol-kit'
-import TileLayer from 'ol/layer/tile'
-import XYZ from 'ol/source/xyz'
-import TileWMS from 'ol/source/tilewms';
-import OlLoadingStrategy from 'ol/loadingstrategy';
-import OlVector from 'ol/source/vector';
-import OlLayerVector from 'ol/layer/vector';
-import OlFormatGeoJSON from 'ol/format/geojson';
+import TileLayer from 'ol/layer/Tile'
+import XYZ from 'ol/source/XYZ'
+import TileWMS from 'ol/source/TileWMS';
+import * as OlLoadingStrategy from 'ol/loadingstrategy';
+import OlVector from 'ol/source/Vector';
+import OlLayerVector from 'ol/layer/Vector';
+import OlFormatGeoJSON from 'ol/format/GeoJSON'; 
 
 
 export function getFeaturesFromDataSet (map, dataSet) {
