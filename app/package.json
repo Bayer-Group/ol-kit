@@ -43,7 +43,7 @@
   "main": "./core/index.js",
   "scripts": {
     "app:build": "webpack --config webpack.config.js",
-    "app": "NODE_ENV=development webpack-dev-server --hot --inline --config webpack.config.js",
+    "app": "webpack-dev-server --hot --inline --config webpack.config.js",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
     "integrations": "./app/integration.sh",
     "lint": "eslint src/**/*.js",
