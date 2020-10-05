@@ -70,7 +70,6 @@
     "ol": "^6.4.3",
     "react-bootstrap": "^1.3.0",
     "recharts": "^1.8.5",
-    "ugh": "^0.1.1"
   },
   "devDependencies": {
     "apollo-boost": "^0.4.9",
