@@ -50,7 +50,9 @@ class Map extends React.Component {
 
       // update AFTER onMapInit to get map into the state/context
       isPromise
-        ? initCallback.then(() => this.setState({ mapInitialized: true }))
+        ? initCallback
+          .catch(e => ugh.error('Error caught in \'onMapInit\'', e))
+          .finally(() => this.setState({ mapInitialized: true })) // always initialize app
         : this.setState({ mapInitialized: true })
     }
 
