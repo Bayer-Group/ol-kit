@@ -81,7 +81,7 @@ module.exports = function bundle (Components, out, config) {
     if(error.output && error.output.length){
       console.log(error.output[1].toString())
     }
-    console.log('DID YOU GET A FATAL ERROR? "TypeError: Path must be a string." maybe? Comment the line below this console.log // throw error to build the docs ;)')
-    throw error
+    // console.log('DID YOU GET A FATAL ERROR? "TypeError: Path must be a string." maybe? Comment the line below this console.log // throw error to build the docs ;)')
+    console.error(error)
   }
 }
