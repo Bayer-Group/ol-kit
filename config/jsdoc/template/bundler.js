@@ -79,9 +79,7 @@ module.exports = function bundle (Components, out, config) {
     execSync(cmd)
   } catch (error) {
     if(error.output && error.output.length){
-      console.log(error.output[1].toString())
+      console.log('"TypeError: Path must be a string." will not effect the docs output 👍', error.output[1].toString())
     }
-    // console.log('DID YOU GET A FATAL ERROR? "TypeError: Path must be a string." maybe? Comment the line below this console.log // throw error to build the docs ;)')
-    console.error(error)
   }
 }
