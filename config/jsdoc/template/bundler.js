@@ -82,4 +82,8 @@ module.exports = function bundle (Components, out, config) {
       console.log('"TypeError: Path must be a string." will not effect the docs output 👍', error.output[1].toString())
     }
   }
+  const link = `${path.join(__dirname, '../../../')}docs/index.html`
+  // open bundle in browser to view files
+  setTimeout(() => execSync(`open ${link}`), 1000)
+  console.log(`SUCCESS! Checkout the docs build here: ${link}`)
 }
