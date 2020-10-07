@@ -44,7 +44,7 @@
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
-    "app:build": "webpack --config app/webpack.config.js",
+    "app:build": "OL_KIT_DEVELOPMENT=true webpack --config app/webpack.config.js",
     "app": "OL_KIT_DEVELOPMENT=true webpack-dev-server --hot --inline --config app/webpack.config.js",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
     "integrations": "./app/integration.sh",
