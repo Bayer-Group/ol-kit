@@ -73,7 +73,7 @@
 <img src="static/example-screenshot-1.png" />
 <h2>Installation</h2>
 <p>Install ol-kit and its <code>peerDependencies</code></p>
-<code>npm i @bayer/ol-kit ol@4.6.5 react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save</code>
+<code>npm i @bayer/ol-kit ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save</code>
 <h2>Getting Started</h2>
 <p>It's easy to start building map apps with ol-kit. For simple projects the following will get you started:</p>
 <pre class="prettyprint source lang-javascript"><code>
@@ -105,13 +105,13 @@
   
     render () {
       return (
-        <Map onMapInit={this.onMapInit} fullScreen>
-          <BasemapContainer />
-          <ContextMenu />
-          <Controls />
-          <LayerPanel />
-          <Popup />
-        </Map>
+        &lt;Map onMapInit={this.onMapInit} fullScreen&gt;
+          &lt;BasemapContainer /&gt;
+          &lt;ContextMenu /&gt;
+          &lt;Controls /&gt;
+          &lt;LayerPanel /&gt;
+          &lt;Popup /&gt;
+        &lt;/Map&gt;
       )
     }
   }
