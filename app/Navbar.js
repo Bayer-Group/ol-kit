@@ -50,6 +50,11 @@ export default function Navbar () {
           <NavImg src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Biohazard_symbol_%28red%29.svg/520px-Biohazard_symbol_%28red%29.svg.png' title='covid demo' />
         </NavLink>
       </Link>
+      <Link to='/geohack'>
+        <NavLink>
+          <NavImg src='https://cdn4.iconfinder.com/data/icons/award-and-trophy-flat-0619/64/trophy-ribbon-gold-winner-512.png' title='Trophy Icon for Geohack Winners' />
+        </NavLink>
+      </Link>
     </Nav>
   )
 }

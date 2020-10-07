@@ -1,0 +1,103 @@
+{
+  "name": "ol-kit-demo",
+  "version": "1.0.1",
+  "license": "BSD",
+  "description": "Mapping components & utils built with openlayers + react",
+  "keywords": [
+    "map",
+    "mapping",
+    "toolkit",
+    "react",
+    "openlayers",
+    "components"
+  ],
+  "contributors": [
+    {
+      "name": "Jake Stäzrad",
+      "email": "jake.webb@1904labs.com",
+      "url": "https://github.com/stazrad"
+    },
+    {
+      "name": "Glen Selle",
+      "email": "glen.selle@1904labs.com",
+      "url": "https://github.com/glenselle"
+    },
+    {
+      "name": "Daniel Rodenberg",
+      "email": "daniel.rodenberg@1904labs.com",
+      "url": "https://github.com/drodenberg"
+    },
+    {
+      "name": "Patrick Moulden",
+      "email": "patrick.moulden@1904labs.com",
+      "url": "https://github.com/PatchesMaps"
+    },
+    {
+      "name": "Bilal Ather",
+      "email": "bather@1904labs.com",
+      "url": "https://github.com/AtherBilal"
+    }
+  ],
+  "homepage": "https://ol-kit.com",
+  "bugs": "https://github.com/MonsantoCo/ol-kit/issues",
+  "main": "./core/index.js",
+  "scripts": {
+    "app:build": "webpack --config webpack.config.js",
+    "app": "NODE_ENV=development webpack-dev-server --hot --inline --config webpack.config.js",
+    "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
+    "integrations": "./app/integration.sh",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
+    "prepublishOnly": "run preventPublish",
+    "ship": "run ship",
+    "test": "jest --notify --config=jest.config.js",
+    "test:coverage": "jest --config=jest.config.js --coverage",
+    "test:watch": "jest --notify --config=jest.config.js --watch --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MonsantoCo/ol-kit.git"
+  },
+  "dependencies": {
+    "@bayer/ol-kit": "^1.0.1",
+    "@material-ui/core": "~4.9.12",
+    "@material-ui/icons": "~4.9.1",
+    "@material-ui/pickers": "~3.2.10",
+    "@material-ui/styles": "~4.9.10",
+    "file-saver": "^2.0.2",
+    "formik": "^2.1.6",
+    "mui-datatables": "^3.4.1",
+    "ol": "^6.4.3",
+    "react-bootstrap": "^1.3.0",
+    "recharts": "^1.8.5"
+  },
+  "devDependencies": {
+    "apollo-boost": "^0.4.9",
+    "css-loader": "~3.6.0",
+    "eslint": "~6.8.0",
+    "file-loader": "^6.1.0",
+    "graphql": "^14.7.0",
+    "html-webpack-plugin": "~4.3.0",
+    "jest": "~25.4.0",
+    "jsdoc": "3.6.3",
+    "puppeteer": "^4.0.1",
+    "react": "~16.11.0",
+    "react-dom": "~16.11.0",
+    "react-hot-loader": "~4.12.21",
+    "react-router-dom": "^5.2.0",
+    "runjs": "~4.4.2",
+    "styled-components": "~5.0.1",
+    "webpack": "~4.43.0",
+    "webpack-dev-server": "~3.11.0",
+    "yup": "^0.29.3"
+  },
+  "peerDependencies": {
+    "ol": "6.4.3",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "styled-components": ">=5.0.0",
+    "@material-ui/core": ">=4.0.0",
+    "@material-ui/icons": ">=4.0.0",
+    "@material-ui/styles": ">=4.0.0"
+  }
+}
