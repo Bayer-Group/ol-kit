@@ -24,6 +24,9 @@ function SimpleSnackbar(props) {
     case '/space':
       message = 'Space Demo! (Find the International Space Station!)'
       break;
+    case '/geohack':
+      message = 'GeoHack 2020 Winner Demo! Checkout COVID Tweets!'
+      break;
     case '/':
       message = 'Welcome to the ol-kit demo! Go explore the world 🌍'
       break;
@@ -35,15 +38,19 @@ function SimpleSnackbar(props) {
     let url = 'https://github.com/MonsantoCo/ol-kit/'
     switch (props.location.pathname) {
       case '/covid':
-        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/routes/covid'
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/covid'
         window.open(url, '_blank')
         break;
       case '/space':
-        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/routes/space'
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/space'
+        window.open(url, '_blank')
+        break;
+      case '/geohack':
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/geohack'
         window.open(url, '_blank')
         break;
       case '/':
-        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/routes/demo'
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/world'
         window.open(url, '_blank')
         break;
       default:

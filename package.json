@@ -31,6 +31,11 @@
       "name": "Patrick Moulden",
       "email": "patrick.moulden@1904labs.com",
       "url": "https://github.com/PatchesMaps"
+    },
+    {
+      "name": "Bilal Ather",
+      "email": "bather@1904labs.com",
+      "url": "https://github.com/AtherBilal"
     }
   ],
   "homepage": "https://ol-kit.com",
@@ -40,7 +45,7 @@
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
     "app:build": "webpack --config app/webpack.config.js",
-    "app": "webpack-dev-server --hot --inline --config app/webpack.config.js",
+    "app": "OL_KIT_DEVELOPMENT=true webpack-dev-server --hot --inline --config app/webpack.config.js",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
     "integrations": "./app/integration.sh",
     "lint": "eslint src/**/*.js",
@@ -143,7 +148,8 @@
     "styled-components": "~5.0.1",
     "webpack": "~4.43.0",
     "webpack-cli": "~3.3.12",
-    "webpack-dev-server": "~3.11.0"
+    "webpack-dev-server": "~3.11.0",
+    "yup": "^0.29.3"
   },
   "peerDependencies": {
     "ol": "6.4.3",
