@@ -58,6 +58,7 @@ Object {
   "PopupTabs": [Function],
   "Provider": [Function],
   "ProviderContext": null,
+  "SyncableMap": [Function],
   "TimeSlider": [Function],
   "TimeSliderBase": [Function],
   "VectorLayer": [Function],
