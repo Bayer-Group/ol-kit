@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | DrawPoint</title>
+    <title>ol-kit | SyncableMap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,11 +80,9 @@
 
 <header>
     
-        <h2>
-            &ltDrawPoint /&gt
-        </h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>SyncableMap<span class="signature">(opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A button for drawing points.</div>
+            <div class="class-description">SyncableMap class extends olMap <a href="https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html">https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html</a></div>
         
     
 </header>
@@ -100,12 +98,12 @@
 
 
     
-    <h4 class="name" id="DrawPoint">
-        <a class="href-link" href="#DrawPoint">#</a>
+    <h4 class="name" id="SyncableMap">
+        <a class="href-link" href="#SyncableMap">#</a>
         
         <span class="code-name">
             
-                &ltDrawPoint <i>type</i> <i>addInteraction</i> <i>tooltipTitle</i> /&gt
+                new SyncableMap<span class="signature">(opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -120,61 +118,69 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
     
-        <h5>PropTypes:</h5>
-        
 
 <table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>type</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>the openlayers draw type</td>
-          <td></td>
-        </tr>
+        <th>Type</th>
+
         
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>addInteraction</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>a function that adds the draw interaction to the openlayers map on click of the button</td>
-          <td></td>
-        </tr>
+        <th>Attributes</th>
         
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>tooltipTitle</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>a title for the tooltip</td>
-          <td></td>
-        </tr>
+
         
-  
-  </tbody>
-</table>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>opts</code></td>
+  
 
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Object of optional params for olMap</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
 
 
 
@@ -186,7 +192,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.18.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>1.1.0</li></ul></dd>
     
 
     
@@ -216,9 +222,9 @@
 
     
         <p class="tag-source">
-            <a href="Draw_Point.js.html" class="button">View Source</a>
+            <a href="classes_SyncableMap.js.html" class="button">View Source</a>
             <span>
-                <a href="Draw_Point.js.html">Draw/Point.js</a>, <a href="Draw_Point.js.html#line12">line 12</a>
+                <a href="classes_SyncableMap.js.html">classes/SyncableMap.js</a>, <a href="classes_SyncableMap.js.html#line11">line 11</a>
             </span>
         </p>
     
@@ -251,8 +257,6 @@
     
     </div>
     
-        
-    
     
 
     
@@ -273,30 +277,6 @@
 
     
 
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <h1>DrawContainer</h1>
-<p>The <code>&lt;DrawContainer&gt;</code> component will render a set prebuilt draw and measure tools or child component(s) passed in as the <code>children</code> prop. These tools allow the user to draw features with point, line, and polygon geometries on a map user configurable geometry snap settings. These features can also be styled with perimiter and area measurement labels. Measurements are calculated geodesically using the WGS84 ellipsoid. The user can also label the geometry vertices with their respective coordinates in decimal degrees.</p>
-<h2>Drop-in example:</h2>
-<p>This one-liner will render prebuilt draw components in a map.</p>
-<pre class="prettyprint source lang-javascript"><code>import React from 'react'
-import { Map, DrawContainer } from '@bayer/ol-kit'
-
-const App = () => {
-  return (
-  &lt;Map>
-    &lt;DrawContainer />
-  &lt;/Map>
-  )
-}
-
-export default App
-</code></pre>
-            </div>
-        </div>
     
     
 </article>

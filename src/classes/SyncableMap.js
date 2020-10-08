@@ -4,10 +4,10 @@ import olMap from 'ol/Map'
  * SyncableMap class extends olMap {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html}
  * @function
  * @category Classes
- * @since 0.1.0
+ * @since 1.1.0
  * @param {Object} [opts] - Object of optional params for olMap
  */
-export default class SyncableMap extends olMap {
+class SyncableMap extends olMap {
   constructor (opts = {}) {
     super(opts)
 
@@ -41,3 +41,5 @@ export default class SyncableMap extends olMap {
     this.dispatchEvent(eventType)
   }
 }
+
+export default SyncableMap
