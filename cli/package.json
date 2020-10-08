@@ -1,0 +1,25 @@
+{
+  "name": "",
+  "version": "0.0.0",
+  "team": "",
+  "homepage": "/",
+  "description": "",
+  "keywords": [
+    "ol-kit",
+    "open-source-map"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "@bayer/ol-kit": "^1.0.2",
+    "@material-ui/icons": "^4.9.1",
+    "child-process-promise": "^2.2.1",
+    "depcheck": "^1.2.0",
+    "ol": "^6.4.3",
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "vorpal": "^1.12.0"
+  }
+}
