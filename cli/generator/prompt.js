@@ -208,6 +208,9 @@ vorpal
   .action(function () {
     prompt = new Prompt(this)
   })
+  .cancel(function () {
+    process.exit(1)
+ })
 
 vorpal
   .delimiter('ol-kit:')

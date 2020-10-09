@@ -1,0 +1,14 @@
++ @material-ui/icons@4.9.1
++ ol@6.4.3
++ @material-ui/styles@4.10.0
++ @material-ui/core@4.11.0
++ styled-components@5.2.0
++ react@16.13.1
++ react-dom@16.13.1
+added 101 packages from 121 contributors and audited 101 packages in 9.408s
+
+6 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+

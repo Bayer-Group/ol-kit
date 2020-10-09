@@ -10,7 +10,7 @@ module.exports = {
   run: async () => {
     const projectDir = cliInput.get('projectDirectory')
     const rootDir = new RootDirController(projectDir)
-    let peerDepInstall
+    let peerDepInstall = ''
     // Create directory for new implementing application
     if (!rootDir.has()) rootDir.make()
 
@@ -21,8 +21,12 @@ module.exports = {
       .then(() => {
         // If our peer dependencies ship a breaking change this will need to be addressed.
         const peerDependencies = require(`${rootDir.projectPath}/package.json`).peerDependencies
-        peerDepInstall = Object.keys(peerDependencies).join(' ')
-        return peerDepInstall
+
+        // installing only major packages eg. if >=5.2.3 we will install package@5
+        for (const [package, version] of Object.entries(peerDependencies)) {
+          peerDepInstall += `${package}@${version.split('.')[0].replace(/\D/g,'')} `
+        }
+        return peerDepInstallls
       })
       .then((peerDepInstall) => {
         console.log(chalk.cyan(`    Installing dependencies...(This may take a while)`))
