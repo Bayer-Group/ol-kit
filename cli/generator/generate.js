@@ -5,8 +5,7 @@ const packageMerge = require('./packageMerge')
 const exec = require('child-process-promise').exec
 const depcheck = require('depcheck')
 const path = require("path")
-const babelConfig = require('../../babel.config.js')
-///Users/elaxx/projects/ol-kit/.eslintrc.json
+
 module.exports = {
   run: async () => {
     const projectDir = cliInput.get('projectDirectory')
@@ -16,7 +15,7 @@ module.exports = {
     if (!rootDir.has()) rootDir.make()
 
     return new Promise( async (resolve, reject) => {
-      // Clone vmap directory into new implementing application
+      // Clone ol-kit directory into new implementing application
       console.log(chalk.cyan(`    Cloning ol-kit files into /${projectDir}`))
       return exec(`git clone https://github.com/MonsantoCo/ol-kit.git ./${projectDir}`) 
       .then(() => {
@@ -27,6 +26,7 @@ module.exports = {
       })
       .then((peerDepInstall) => {
         console.log(chalk.cyan(`    Installing dependencies...(This may take a while)`))
+        // remove everything except app/demos/world/*
         return exec(`cd ./${projectDir} && 
         find . -depth -mindepth 1 \! -path "./app/demos/world/*" \! -path "./app/demos/world" -delete && 
         mv app/demos/world/App.js . && 
@@ -34,6 +34,7 @@ module.exports = {
         npm install ${peerDepInstall} --save`)
       })
       .then(() => {
+        //check dependencies to see if there are any missing then install them
         return depcheck(path.resolve(`./${projectDir}`), {}, (unused) => {
           const missingDependencies = Object.keys(unused.missing).join(' ')
           return exec(`cd ${projectDir}; npm install ${missingDependencies} --save`, () => {
