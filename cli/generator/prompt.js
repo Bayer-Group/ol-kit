@@ -8,14 +8,8 @@ const generator = require('./generate')
 class Prompt {
   constructor (vorpalInstance) {
     this.vorpalInstance = vorpalInstance
-
-    // this.getTeamName = this.getTeamName.bind(this)
     this.getAppName = this.getAppName.bind(this)
-    // this.getAppHomepage = this.getAppHomepage.bind(this)
     this.getProjectDirectoryName = this.getProjectDirectoryName.bind(this)
-    // this.getDescription = this.getDescription.bind(this)
-    // this.getKeywords = this.getKeywords.bind(this)
-    // this.getGitRepoUrl = this.getGitRepoUrl.bind(this)
     this.finish = this.finish.bind(this)
 
     return this
@@ -118,50 +112,6 @@ class Prompt {
       })
     }).catch((err) => console.log(err))
   }
-
-  // getDescription () {
-  //   return new Promise((resolve, reject) => {
-  //     this.vorpalInstance.prompt({
-  //       type: 'input',
-  //       name: 'projectDescription',
-  //       message: `Project Description: `
-  //     }, (res) => {
-  //       cliInput.set('projectDescription', res.projectDescription || '')
-  //       resolve()
-  //     })
-  //   }).catch((err) => console.log(err))
-  // }
-
-  // getKeywords () {
-  //   return new Promise((resolve, reject) => {
-  //     this.vorpalInstance.prompt({
-  //       type: 'input',
-  //       name: 'projectKeywords',
-  //       message: `Keywords (comma delimited): `
-  //     }, (res) => {
-  //       let keywords = res.projectKeywords || ''
-
-  //       keywords = keywords.split(',').map((key) => key.trim())
-  //       keywords.push('atlas', 'velocity-map-framework', 'vmf')
-
-  //       cliInput.set('projectKeywords', keywords)
-  //       resolve()
-  //     })
-  //   }).catch((err) => console.log(err))
-  // }
-
-  // getGitRepoUrl () {
-  //   return new Promise((resolve, reject) => {
-  //     this.vorpalInstance.prompt({
-  //       type: 'input',
-  //       name: 'gitRepoUrl',
-  //       message: `Git Repo Url: `
-  //     }, (res) => {
-  //       cliInput.set('gitRepoUrl', res.gitRepoUrl || '')
-  //       resolve()
-  //     })
-  //   }).catch((err) => console.log(err))
-  // }
 
   finish () {
     return new Promise((resolve, reject) => {
