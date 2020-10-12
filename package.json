@@ -41,6 +41,9 @@
   "homepage": "https://ol-kit.com",
   "bugs": "https://github.com/MonsantoCo/ol-kit/issues",
   "main": "./core/index.js",
+  "bin": {
+    "create-map": "node cli/index.js"
+  },
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
