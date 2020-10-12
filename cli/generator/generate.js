@@ -26,7 +26,7 @@ module.exports = {
         for (const [package, version] of Object.entries(peerDependencies)) {
           peerDepInstall += `${package}@${version.split('.')[0].replace(/\D/g,'')} `
         }
-        return peerDepInstallls
+        return peerDepInstall
       })
       .then((peerDepInstall) => {
         console.log(chalk.cyan(`    Installing dependencies...(This may take a while)`))
