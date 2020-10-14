@@ -6,7 +6,21 @@
 - Go in depth with OpenLayers api [watch vid](https://youtu.be/1CyCGGL-BRo) by [Patrick Moulden aka Patches](https://github.com/PatchesMaps)
 
 ## Jump In
-Getting started with ol-kit is simple. We assume you already have a React application. If not, you can use something like [Create React App](https://create-react-app.dev/). There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these packages). Use this comprehensive install:
+
+### Map from Scratch
+
+Getting started with ol-kit is simple. Our CLI will create a base ol-kit project! All you have to do is run the following command: 
+
+```
+npx @bayer/ol-kit create-map
+```
+
+Note: You will need node installed on your machine. If you do not have node you can install it [here](https://nodejs.org/en/).
+
+### Existing React App
+
+There are a few `peerDependencies` required by ol-kit that need to be installed on your side (this avoids problems introduced by having multiple instances of these packages). Use this comprehensive install:
+
 ```
 npm i @bayer/ol-kit ol react react-dom styled-components @material-ui/core @material-ui/icons @material-ui/styles --save
 ```
