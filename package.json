@@ -47,8 +47,8 @@
   "scripts": {
     "build": "rm -rf core/ && babel src/ -d core",
     "dev": "rm -rf core/ && { babel --watch src/ -d core; } | tee >&2",
-    "app:build": "OL_KIT_DEVELOPMENT=true webpack --config app/webpack.config.js",
-    "app": "OL_KIT_DEVELOPMENT=true webpack-dev-server --hot --inline --config app/webpack.config.js",
+    "app:build": "cross-env-shell OL_KIT_DEVELOPMENT=true webpack --config app/webpack.config.js",
+    "app": "cross-env-shell OL_KIT_DEVELOPMENT=true webpack-dev-server --hot --inline --config app/webpack.config.js",
     "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
     "integrations": "./app/integration.sh",
     "lint": "eslint src/**/*.js",
@@ -117,6 +117,7 @@
     "babel-plugin-module-resolver": "~3.2.0",
     "better-docs": "~1.4.7",
     "child_process": "~1.0.2",
+    "cross-env": "^7.0.2",
     "css-loader": "~3.6.0",
     "enzyme": "~3.10.0",
     "enzyme-adapter-react-16": "~1.15.2",
