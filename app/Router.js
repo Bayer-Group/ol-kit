@@ -14,14 +14,14 @@ import Space from './demos/space/App'
 import World from './demos/world/App'
 import Geohack from './demos/geohack/App'
 
-export default function App() {
+export default function App () {
   return (
     <Router>
       <Snackbar />
       <Navbar />
 
       <Switch>
-      <Route path='/geohack'>
+        <Route path='/geohack'>
           <Geohack />
         </Route>
         <Route path='/covid'>

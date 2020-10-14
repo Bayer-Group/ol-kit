@@ -52,7 +52,7 @@ class LayerPanelBase extends Component {
           <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
             {showLayerPanel &&
               React.Children.map(children, (child, i) => {
-                if (child) return <Tab key={i} label={child.props.label} />
+                if (child) return <Tab key={i} label={child.props.tabIcon || child.props.label} />
               })
             }
           </Tabs>

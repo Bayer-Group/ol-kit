@@ -11,12 +11,8 @@ import {
   LayerPanelContent,
   BasemapContainer,
   VectorLayer,
-  DrawContainer,
-  LayerPanelHeader,
-  LayerPanelLayersPage
+  DrawContainer
 } from '@bayer/ol-kit'
-import PaletteIcon from '@material-ui/icons/Palette'
-import CreateIcon from '@material-ui/icons/Create'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
@@ -51,15 +47,13 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <LayerPanel>
-          <LayerPanelLayersPage />
-          <LayerPanelPage tabIcon={<PaletteIcon />}>
+          <LayerPanelPage label={'Layer Styler'}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
             </LayerPanelContent>
           </LayerPanelPage>
-          <LayerPanelPage tabIcon={<CreateIcon />}>
+          <LayerPanelPage label={'Draw'}>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <LayerPanelHeader title='Draw' />
               <DrawContainer style={{ position: 'relative', width: 'auto' }} />
             </LayerPanelContent>
           </LayerPanelPage>
