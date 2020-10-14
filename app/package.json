@@ -43,16 +43,9 @@
   "main": "./core/index.js",
   "scripts": {
     "app:build": "webpack --config webpack.config.js",
-    "app": "NODE_ENV=development webpack-dev-server --hot --inline --config webpack.config.js",
-    "docs": "rm -rf docs/ && jsdoc -r -c jsdoc.json && cp src-docs/overrides/* docs/",
-    "integrations": "./app/integration.sh",
+    "app": "webpack-dev-server --hot --inline --config webpack.config.js",
     "lint": "eslint src/**/*.js",
-    "lint:fix": "npm run lint -- --fix",
-    "prepublishOnly": "run preventPublish",
-    "ship": "run ship",
-    "test": "jest --notify --config=jest.config.js",
-    "test:coverage": "jest --config=jest.config.js --coverage",
-    "test:watch": "jest --notify --config=jest.config.js --watch --coverage"
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
