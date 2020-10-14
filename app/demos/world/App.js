@@ -26,13 +26,13 @@ class App extends React.Component {
   onMapInit = async (map) => {
     // create a vector layer and add to the map
     const layer = new VectorLayer({
-      title: 'Diltz\' House',
+      title: '1904Labs HQ',
       source: new olSourceVector({
         features: [new olFeature({
-          feature_type: ['the lake house'],
-          title: 'the lake house',
-          name: 'the lake house',
-          geometry: new olGeomPoint(fromLonLat([-89.940598, 38.923107]))
+          feature_type: ['1904Labs HQ'],
+          title: '1904Labs HQ',
+          name: '1904Labs HQ',
+          geometry: new olGeomPoint(fromLonLat([38.636069, -90.24618]))
         })]
       })
     })
