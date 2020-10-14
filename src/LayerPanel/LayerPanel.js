@@ -11,10 +11,10 @@ import { connectToContext } from 'Provider'
  */
 class LayerPanel extends Component {
   render () {
-    const { translations, children, map } = this.props
+    const { translations, children, map, opacity } = this.props
 
     return (
-      <LayerPanelBase translations={translations}>
+      <LayerPanelBase translations={translations} opacity={opacity}>
         {[<LayerPanelLayersPage label='Layers' {...this.props} key='layerPanelLayersPage' map={map} />].concat(children)}
       </LayerPanelBase>
     )
@@ -29,7 +29,10 @@ LayerPanel.propTypes = {
   map: PropTypes.object.isRequired,
 
   /** A set of prebuilt page components (like `LayerPanelListPage`) or custom pages */
-  children: PropTypes.node
+  children: PropTypes.node,
+
+  /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
+  opacity: PropTypes.number
 }
 
 export default connectToContext(LayerPanel)

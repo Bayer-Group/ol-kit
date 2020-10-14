@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Tabs, Tab, InitialTab } from './styled'
+import { Card, Tabs, Tab, InitialTab, CardContent } from './styled'
 // material-ui-icons
 import LayersIcon from '@material-ui/icons/Layers'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Typography from '@material-ui/core/Typography'
-import { CardContent } from '@material-ui/core'
 import { connectToContext } from 'Provider'
 
 /**
@@ -37,7 +36,7 @@ class LayerPanelBase extends Component {
   }
 
   render () {
-    const { inline, style, children } = this.props
+    const { inline, style, children, translations } = this.props
     const { activeIndex, showLayerPanel } = this.state
     const tabDataTestId = showLayerPanel ? 'LayerPanel.close' : 'LayerPanel.open'
 
@@ -45,7 +44,7 @@ class LayerPanelBase extends Component {
       <>
         {!showLayerPanel && <InitialTab id='initialtab' onClick={this.showLayerPanel} icon={<LayersIcon data-testid={tabDataTestId} />} />}
         <Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
-          <CardContent style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0px 0px 0px 16px', background: '#ededed' }}>
+          <CardContent>
             <Typography variant='h5' component='h5'>Layer Panel - Map 1</Typography>
             <IconButton onClick={this.hideLayerPanel}><CloseIcon /></IconButton>
           </CardContent>
@@ -56,7 +55,7 @@ class LayerPanelBase extends Component {
               })
             }
           </Tabs>
-          {this.props.translations && React.Children.toArray(children)[activeIndex]}
+          {translations && React.Children.toArray(children)[activeIndex]}
         </Card>
       </>
     )
@@ -71,7 +70,9 @@ LayerPanelBase.propTypes = {
   children: PropTypes.node.isRequired,
 
   /** An object of styles spread on the layerpanel */
-  style: PropTypes.object
+  style: PropTypes.object,
+
+  translations: PropTypes.object
 }
 
 export default connectToContext(LayerPanelBase)
