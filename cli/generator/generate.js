@@ -15,7 +15,7 @@ module.exports = {
     return new Promise( async (resolve, reject) => {
       // Clone ol-kit directory into new implementing application
       console.log(chalk.cyan(`    Cloning ol-kit files into /${projectDir}`))
-      return exec(`git clone --single-branch --branch cli https://github.com/MonsantoCo/ol-kit.git ./${projectDir}`)
+      return exec(`git clone https://github.com/MonsantoCo/ol-kit.git ./${projectDir}`)
       .then(() => {
         // If our peer dependencies ship a breaking change this will need to be addressed.
         const peerDependencies = require(`${rootDir.projectPath}/package.json`).peerDependencies
