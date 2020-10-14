@@ -6,7 +6,7 @@ const Nav = styled.div`
   position: fixed;
   justify-content: center;
   display: flex;
-  z-index: 9999;
+  z-index: 999;
   font-size: 16px;
   opacity: .91;
   background: white;
@@ -48,6 +48,11 @@ export default function Navbar () {
       <Link to='/covid'>
         <NavLink>
           <NavImg src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Biohazard_symbol_%28red%29.svg/520px-Biohazard_symbol_%28red%29.svg.png' title='covid demo' />
+        </NavLink>
+      </Link>
+      <Link to='/geohack'>
+        <NavLink>
+          <NavImg src='https://cdn4.iconfinder.com/data/icons/award-and-trophy-flat-0619/64/trophy-ribbon-gold-winner-512.png' title='Trophy Icon for Geohack Winners' />
         </NavLink>
       </Link>
     </Nav>

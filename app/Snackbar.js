@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
+import githubLogo from './images/githubLogo.png'
 
 function SimpleSnackbar(props) {
   const [open, setOpen] = React.useState(true)
@@ -23,6 +24,9 @@ function SimpleSnackbar(props) {
     case '/space':
       message = 'Space Demo! (Find the International Space Station!)'
       break;
+    case '/geohack':
+      message = 'GeoHack 2020 Winner Demo! Checkout COVID Tweets!'
+      break;
     case '/':
       message = 'Welcome to the ol-kit demo! Go explore the world 🌍'
       break;
@@ -34,15 +38,19 @@ function SimpleSnackbar(props) {
     let url = 'https://github.com/MonsantoCo/ol-kit/'
     switch (props.location.pathname) {
       case '/covid':
-        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/routes/covid'
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/covid'
         window.open(url, '_blank')
         break;
       case '/space':
-        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/routes/space'
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/space'
+        window.open(url, '_blank')
+        break;
+      case '/geohack':
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/geohack'
         window.open(url, '_blank')
         break;
       case '/':
-        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/routes/demo'
+        url = 'https://github.com/MonsantoCo/ol-kit/tree/master/app/demos/world'
         window.open(url, '_blank')
         break;
       default:
@@ -51,7 +59,6 @@ function SimpleSnackbar(props) {
   }
 
   const SnackbarImg = styled.img`
-    height: 40px;
     width: 40px;
   `
 
@@ -69,7 +76,7 @@ function SimpleSnackbar(props) {
         action={
           <React.Fragment>
             <IconButton size="small" aria-label="Source Code" color="inherit" onClick={linkSourceCode} style={{fontSize: '0.9rem'}}>
-              <SnackbarImg src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/217d5ea0-623d-40b1-9b31-027b904a5f15/dccuk5k-9eee2a52-9684-4023-ae06-ae13c46c5d08.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvMjE3ZDVlYTAtNjIzZC00MGIxLTliMzEtMDI3YjkwNGE1ZjE1XC9kY2N1azVrLTllZWUyYTUyLTk2ODQtNDAyMy1hZTA2LWFlMTNjNDZjNWQwOC5wbmcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.B2xmnrPQ4PGVoYAil-PAPV8CKR-fAIcIo4IlC6xHtU0" title="Source Code Link" />
+              <SnackbarImg src={githubLogo} title="Source Code Link" />
             </IconButton>
             <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
               <CloseIcon fontSize="small" />

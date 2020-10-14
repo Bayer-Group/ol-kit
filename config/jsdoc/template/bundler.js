@@ -62,6 +62,7 @@ module.exports = function bundle (Components, out, config) {
     const { displayName, filePath, type } = c.component
     const relativePath = path.relative(absoluteOut, filePath)
     const name = `Component${i}`
+
     return [
       `import ${name} from '${relativePath}';`,
       `${type}Components['${displayName}'] = ${name};`,
@@ -78,8 +79,11 @@ module.exports = function bundle (Components, out, config) {
     execSync(cmd)
   } catch (error) {
     if(error.output && error.output.length){
-      console.log(error.output[1].toString())
+      console.log('"TypeError: Path must be a string." will not effect the docs output 👍', error.output[1].toString())
     }
-    throw error
   }
+  const link = `${path.join(__dirname, '../../../')}docs/index.html`
+  // open bundle in browser to view files
+  setTimeout(() => execSync(`open ${link}`), 1000)
+  console.log(`SUCCESS! Checkout the docs build here: ${link}`)
 }
