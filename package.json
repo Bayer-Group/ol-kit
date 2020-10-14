@@ -142,6 +142,7 @@
     "jest-puppeteer": "~4.4.0",
     "jest-styled-components": "~7.0.2",
     "jsdoc": "3.6.3",
+    "mui-datatables": "^3.5.0",
     "parcel": "2.0.0-alpha.3.2",
     "puppeteer": "~4.0.1",
     "react": "~16.11.0",

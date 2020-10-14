@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const babelConfig = require('../babel.config.js')
 
 // during development be sure to pass this env variable so that we get the alias to src gets created
-const alias = process.env.OL_KIT_DEVELOPMENT ? { alias: { '@bayer/ol-kit': path.resolve(__dirname, '../', 'src') } }: {}
+const alias = process.env.OL_KIT_DEVELOPMENT ? { '@bayer/ol-kit': path.resolve(__dirname, '../', 'src') }: {}
 
 module.exports = {
   mode: 'development',
@@ -25,7 +25,7 @@ module.exports = {
 
   resolve: {
     // Create aliases to import or require certain modules more easily
-    alias
+    alias: {...alias}
   },
 
   module: {
