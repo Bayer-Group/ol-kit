@@ -69,14 +69,6 @@ class Prompt {
   clobberCheck (projectDirectory) {
     return new Promise((resolve, reject) => {
       console.error(chalk.red(`Directory /${projectDirectory}) already exists, please pick a new directory name`))
-      // this.voorpalInstance.prompt({
-      //   type: 'log',
-      //   name: 'clobber',
-      //   message: `Directory (/${projectDirectory}) already exists, please pick a new directory name`,
-      //   default: false
-      // }, (res) => {
-      //   resolve(res.clobber)
-      // })
     }).catch((err) => console.log(err))
   }
 }
