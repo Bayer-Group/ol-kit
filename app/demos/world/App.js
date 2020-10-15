@@ -32,7 +32,7 @@ class App extends React.Component {
           feature_type: ['1904Labs HQ'],
           title: '1904Labs HQ',
           name: '1904Labs HQ',
-          geometry: new olGeomPoint(fromLonLat([38.636069, -90.24618]))
+          geometry: new olGeomPoint(fromLonLat([-90.24618, 38.636069]))
         })]
       })
     })
