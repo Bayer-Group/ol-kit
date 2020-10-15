@@ -8,80 +8,10 @@ const generator = require('./generate')
 class Prompt {
   constructor (vorpalInstance) {
     this.vorpalInstance = vorpalInstance
-    this.getAppName = this.getAppName.bind(this)
     this.getProjectDirectoryName = this.getProjectDirectoryName.bind(this)
     this.finish = this.finish.bind(this)
 
     return this
-  }
-  getTeamName () {
-    return new Promise((resolve, reject) => {
-      this.vorpalInstance.prompt({
-        type: 'input',
-        name: 'teamName',
-        message: `Team name (Spaces 👍 ): `
-      }, (res) => {
-        const name = res.teamName
-
-        const newAppVariables = Object.assign({}, {
-          '__Team_NAME__': name,
-          '__COOKIE_NAME__': name.split(' ').join('-').toLowerCase()
-        }, cliInput.get('appVariables'))
-
-        cliInput.set('appVariables', newAppVariables)
-        cliInput.set('teamName', name)
-        cliInput.set('pkgAppName', name.toLowerCase().split(' ').join('-'))
-
-        resolve()
-      })
-    }).catch((err) => console.log(err))
-  }
-
-  getAppName () {
-    return new Promise((resolve, reject) => {
-      this.vorpalInstance.prompt({
-        type: 'input',
-        name: 'appName',
-        message: `App name (Spaces 👍 ): `
-      }, (res) => {
-        const name = res.appName
-
-        const newAppVariables = Object.assign({}, {
-          '__APP_NAME__': name,
-          '__COOKIE_NAME__': name.split(' ').join('-').toLowerCase()
-        }, cliInput.get('appVariables'))
-
-        cliInput.set('appVariables', newAppVariables)
-        cliInput.set('appName', name)
-        cliInput.set('pkgAppName', name.toLowerCase().split(' ').join('-'))
-
-        resolve()
-      })
-    }).catch((err) => console.log(err))
-  }
-
-  getAppHomepage () {
-    return new Promise((resolve, reject) => {
-      this.vorpalInstance.prompt({
-        type: 'input',
-        name: 'appHomepage',
-        message: `App Homepage (e.g. "/__my_cool_mapping_app__"): `
-      }, (res) => {
-        let homepage = res.appHomepage.split(' ').join('-')
-
-        if (homepage.charAt(0) !== '/') {
-          homepage = `/${homepage}`
-        }
-
-        const newAppVariables = Object.assign({}, {
-          '__APP_HOMEPAGE__': homepage
-        }, cliInput.get('appVariables'))
-
-        cliInput.set('appVariables', newAppVariables)
-        cliInput.set('appHomepage', homepage)
-        resolve()
-      })
-    }).catch((err) => console.log(err))
   }
 
   getProjectDirectoryName () {
@@ -119,7 +49,6 @@ class Prompt {
         type: 'confirm',
         name: 'generate',
         message: `\n Generate project with options -> \n
-          App: ${cliInput.get('appName')}
           Project Directory: ${cliInput.get('projectDirectory')}.
         `,
         default: true
@@ -139,14 +68,7 @@ class Prompt {
 
   clobberCheck (projectDirectory) {
     return new Promise((resolve, reject) => {
-      this.vorpalInstance.prompt({
-        type: 'confirm',
-        name: 'clobber',
-        message: `Directory (/${projectDirectory}) already exists, replace it?`,
-        default: false
-      }, (res) => {
-        resolve(res.clobber)
-      })
+      console.error(chalk.red(`Directory /${projectDirectory}) already exists, please pick a new directory name`))
     }).catch((err) => console.log(err))
   }
 }

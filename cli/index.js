@@ -38,11 +38,12 @@ console.log(chalk.yellow(`
 %&&/       %&&   #&&            &&&&&&&&&      &&&    &&&   
  &&&&     &&&%   #&&            &&&    &&&&    &&&    &&&   
    /&&&&&&&,     #&&            &&&      &&&&  &&&     &&&&&
+
+
   ///////////////////////////////////////////////
   /// ol-kit an open source mapping framework ///
   ///////////////////////////////////////////////\n`))
 
 
-prompt.getAppName()
-  .then(prompt.getProjectDirectoryName)
+prompt.getProjectDirectoryName()
   .then(prompt.finish)
