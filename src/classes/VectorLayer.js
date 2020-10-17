@@ -11,7 +11,7 @@ import olGeomMultiPoint from 'ol/geom/MultiPoint'
 import olGeomMultiLinestring from 'ol/geom/MultiLineString'
 
 /**
- * VectorLayer class extends olLayerVector {@link https://openlayers.org/en/v4.6.5/apidoc/ol.layer.Vector.html}
+ * VectorLayer class extends olLayerVector {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html}
  * @function
  * @category Classes
  * @since 0.1.0

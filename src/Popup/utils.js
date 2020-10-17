@@ -73,7 +73,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       const parent = parentLayer || layer
 
       features.forEach((feature, i) => {
-        // true makes this performant with a silent trigger: https://openlayers.org/en/v4.6.5/apidoc/ol.Feature.html#set
+        // true makes this performant with a silent trigger: https://openlayers.org/en/latest/apidoc/module-ol_Feature.html#set
         feature.set('_ol_kit_parent', parent, true)
 
         return feature
