@@ -36,7 +36,7 @@ class LayerPanelBase extends Component {
   }
 
   render () {
-    const { inline, style, children, translations } = this.props
+    const { inline, style, children, translations, layerPanelTitle } = this.props
     const { activeIndex, showLayerPanel } = this.state
     const tabDataTestId = showLayerPanel ? 'LayerPanel.close' : 'LayerPanel.open'
 
@@ -45,7 +45,7 @@ class LayerPanelBase extends Component {
         {!showLayerPanel && <InitialTab id='initialtab' onClick={this.showLayerPanel} icon={<LayersIcon data-testid={tabDataTestId} />} />}
         <Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
           <CardContent>
-            <Typography variant='h5' component='h5'>Layer Panel - Map 1</Typography>
+            <Typography variant='h5' component='h5'>{layerPanelTitle}</Typography>
             <IconButton onClick={this.hideLayerPanel}><CloseIcon /></IconButton>
           </CardContent>
           <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
@@ -72,6 +72,10 @@ LayerPanelBase.propTypes = {
   /** An object of styles spread on the layerpanel */
   style: PropTypes.object,
 
+  /** Title of the LayerPanel */
+  layerPanelTitle: PropTypes.string,
+
+  /** Object with key/value pairs for translated strings */
   translations: PropTypes.object
 }
 

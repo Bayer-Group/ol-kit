@@ -14,7 +14,7 @@ export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
   transition: 'all .3s',
   position: props => props.inline ? 'inline' : 'absolute',
   right: props => props.open ? '15px' : '-400px',
-  opacity: props => props.opacity ? props.opacity : 0.9
+  opacity: 0.9
 })
 
 export const Tabs = styled(({ ...props }) => {

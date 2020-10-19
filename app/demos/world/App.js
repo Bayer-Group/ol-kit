@@ -18,6 +18,8 @@ import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
+import LayersIcon from '@material-ui/icons/Layers'
+
 class App extends React.Component {
   onMapInit = async (map) => {
     // create a vector layer and add to the map
@@ -47,7 +49,7 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <LayerPanel>
-          <LayerPanelPage label={'Layer Styler'}>
+          <LayerPanelPage tabIcon='Layer Styler'>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
             </LayerPanelContent>

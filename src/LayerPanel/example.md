@@ -15,7 +15,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
 
 // Passing the props through the LayerPanel component
 return (
-  <LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+  <LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick} layerPanelTitle='My Layer Panel'>
     <LayerPanelPage tabIcon={<VpnKeyIcon />}>
       <LayerPanelHeader
         title='Legends Page'
