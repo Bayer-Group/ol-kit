@@ -19,7 +19,7 @@ import ugh from 'ugh'
  * @since 0.1.0
  * @param {Object} [opts] - Object of optional params
  * @param {String} [opts.target] - htm id tag that map will into which the map will render
- * @returns {ol.Map} A newly constructed [ol.Map]{@link https://openlayers.org/en/v4.6.5/apidoc/ol.Map.html}
+ * @returns {ol.Map} A newly constructed [ol.Map]{@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html}
  */
 export function createMap (opts = {}) {
   if (!opts.target) return ugh.throw('You must pass an options object with a DOM target for the map')
@@ -144,7 +144,7 @@ export function convertXYtoLatLong (map, x, y) {
  * @function
  * @category Map
  * @since 0.2.0
- * @returns {ol.interaction.Select} https://openlayers.org/en/v4.6.5/apidoc/ol.interaction.Select.html
+ * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
 export function createSelectInteraction () {
   const DEFAULT_SELECT_STYLE = new olStyle({
