@@ -32,6 +32,8 @@ import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 import isEqual from 'lodash.isequal'
 import { connectToContext } from 'Provider'
+import { convertFileToFeatures } from 'LayerPanel/LayerPanelActionImport/utils'
+import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -268,16 +270,35 @@ class LayerPanelLayersPage extends Component {
     this.setState({ layers: reorderedLayers })
   }
 
+  handleImport = file => {
+    const { map, onFeaturesImport } = this.props
+
+    // otherwise, add them to the map ourselves
+    convertFileToFeatures(file, map).then(({ features, name }) => {
+      // if a callback to handle imported features is passed, IAs handle add them to the map
+      if (onFeaturesImport) return onFeaturesImport(features, name)
+
+      // if no onFeaturesImport prop is passed, create a layer, add it and center/zoom the map
+      if (!onFeaturesImport) {
+        const source = new olSourceVector({ features })
+        const layer = new VectorLayer({ title: name, source })
+
+        map.addLayer(layer)
+        map.getView().fit(source.getExtent(), map.getSize())
+      }
+    })
+  }
+
   render () {
     const {
-      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag,
+      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon,
       customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
 
     return (
-      <LayerPanelPage>
+      <LayerPanelPage tabIcon={tabIcon}>
         <LayerPanelHeader
           title={translations['_ol_kit.LayerPanelLayersPage.title']}
           translations={translations}
@@ -292,7 +313,7 @@ class LayerPanelLayersPage extends Component {
               <LayerPanelActionRemove
                 removeFeaturesForLayer={this.removeFeaturesForLayer}
                 shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-              {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
+              {<LayerPanelActionImport handleImport={onFileImport || this.handleImport} />}
               <LayerPanelActionExport onExportFeatures={onExportFeatures} />
             </LayerPanelActions>} />
         {enableFilter &&

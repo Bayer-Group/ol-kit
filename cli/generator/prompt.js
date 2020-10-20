@@ -40,7 +40,7 @@ class Prompt {
           setProjectDirectory(projectDirectory, resolve)
         }
       })
-    }).catch((err) => console.log(err))
+    }).catch((err) => console.log(err)) // eslint-disable-line
   }
 
   finish () {
@@ -48,28 +48,28 @@ class Prompt {
       this.vorpalInstance.prompt({
         type: 'confirm',
         name: 'generate',
-        message: `\n Generate project with options -> \n
+        message: `\nGenerate project with options -> \n
           Project Directory: ${cliInput.get('projectDirectory')}.
         `,
         default: true
       }, (res) => {
         if (res.generate) {
-          console.log('  ')
-          console.log(chalk.cyan('🛠  Building...'))
-          console.log('  ')
+          console.log('  ') // eslint-disable-line
+          console.log(chalk.cyan('🛠  Building...')) // eslint-disable-line
+          console.log('  ') // eslint-disable-line
 
           generator.run()
         } else {
-          console.log('Exiting')
+          console.log('Exiting') // eslint-disable-line
         }
       })
-    }).catch((err) => console.log(err))
+    }).catch((err) => console.log(err)) // eslint-disable-line
   }
 
   clobberCheck (projectDirectory) {
     return new Promise((resolve, reject) => {
-      console.error(chalk.red(`Directory /${projectDirectory}) already exists, please pick a new directory name`))
-    }).catch((err) => console.log(err))
+      console.error(chalk.red(`Directory /${projectDirectory}) already exists, please pick a new directory name`)) // eslint-disable-line
+    }).catch((err) => console.log(err)) // eslint-disable-line
   }
 }
 
@@ -82,7 +82,7 @@ vorpal
   })
   .cancel(function () {
     process.exit(1)
- })
+  })
 
 vorpal
   .delimiter('ol-kit:')
