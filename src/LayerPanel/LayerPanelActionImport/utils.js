@@ -9,11 +9,12 @@ import olFormatFeature from 'ol/format/Feature'
 import olFormatWKT from 'ol/format/WKT'
 import olFormatGeoJSON from 'ol/format/GeoJSON'
 import olFormatKML from 'ol/format/KML'
+import olPolygon from 'ol/geom/Polygon'
 
 import Papa from 'papaparse'
 
+// const shapefile = require('shapefile')
 import shp from 'shpjs'
-
 export function arrRegexIndexOf (arr, re) {
   for (const i in arr) {
     if (arr[i].match(re)) {
@@ -248,18 +249,19 @@ export function processKMZ (file) {
 
 export function processShapefile (file) {
   return new Promise((resolve, reject) => {
-    const formdata = new FormData()
+    const fileReader = new FileReader()
 
-    formdata.set('inputFile', file)
-    console.log(window.URL.createObjectURL(file))
-    shp(formdata)
-      .then(geojson => {
-        resolve({
-          results: geojson,
-          format: new olFormatGeoJSON()
+    fileReader.readAsArrayBuffer(file)
+    fileReader.onloadend = function (e) {
+      shp(e.target.result)
+        .then(geojson => {
+          resolve({
+            results: geojson,
+            format: new olFormatGeoJSON()
+          })
         })
-      })
-      .catch(reject)
+        .catch(reject)
+    }
   })
 }
 
