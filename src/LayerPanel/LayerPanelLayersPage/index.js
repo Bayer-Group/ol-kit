@@ -271,15 +271,16 @@ class LayerPanelLayersPage extends Component {
   }
 
   handleImport = file => {
-    const { map, onFeaturesImport } = this.props
+    // TODO: somehow Greb added to import callbacks that are the same thing... next major we need to remove one of these
+    const { map, onFeaturesImport, onFileImport } = this.props
 
     // otherwise, add them to the map ourselves
     convertFileToFeatures(file, map).then(({ features, name }) => {
       // if a callback to handle imported features is passed, IAs handle add them to the map
-      if (onFeaturesImport) return onFeaturesImport(features, name)
+      if (onFeaturesImport || onFileImport) return onFeaturesImport(features, name)
 
       // if no onFeaturesImport prop is passed, create a layer, add it and center/zoom the map
-      if (!onFeaturesImport) {
+      if (!onFeaturesImport || !onFileImport) {
         const source = new olSourceVector({ features })
         const layer = new VectorLayer({ title: name, source })
 
@@ -292,7 +293,7 @@ class LayerPanelLayersPage extends Component {
   render () {
     const {
       translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon,
-      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
+      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
@@ -313,7 +314,7 @@ class LayerPanelLayersPage extends Component {
               <LayerPanelActionRemove
                 removeFeaturesForLayer={this.removeFeaturesForLayer}
                 shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-              {<LayerPanelActionImport handleImport={onFileImport || this.handleImport} />}
+              {<LayerPanelActionImport handleImport={this.handleImport} />}
               <LayerPanelActionExport onExportFeatures={onExportFeatures} />
             </LayerPanelActions>} />
         {enableFilter &&

@@ -9,12 +9,10 @@ import olFormatFeature from 'ol/format/Feature'
 import olFormatWKT from 'ol/format/WKT'
 import olFormatGeoJSON from 'ol/format/GeoJSON'
 import olFormatKML from 'ol/format/KML'
-import olPolygon from 'ol/geom/Polygon'
 
 import Papa from 'papaparse'
-
-// const shapefile = require('shapefile')
 import shp from 'shpjs'
+
 export function arrRegexIndexOf (arr, re) {
   for (const i in arr) {
     if (arr[i].match(re)) {

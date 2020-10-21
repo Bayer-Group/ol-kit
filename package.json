@@ -93,7 +93,6 @@
     "react-draggable": "~4.4.3",
     "react-hook-form": "~5.7.2",
     "react-select": "~3.1.0",
-    "shapefile": "^0.6.6",
     "shp-write": "~0.3.2",
     "shpjs": "^3.6.0",
     "uuid": "~7.0.3",
