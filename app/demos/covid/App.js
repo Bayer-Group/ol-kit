@@ -1,8 +1,9 @@
 import React from 'react'
-import { Controls, Map, Popup } from '@bayer/ol-kit'
+import { Controls, Map, Popup, MapPanel, LayerPanelPage } from '@bayer/ol-kit'
 import olLayerTile from 'ol/layer/Tile'
 import olSourceStamen from 'ol/source/Stamen'
 import DataLoader from './DataLoader'
+import Welcome from '../../Welcome'
 
 function App() {
   const onMapInit = map => {
@@ -30,6 +31,11 @@ function App() {
 
   return (
     <Map onMapInit={onMapInit} fullScreen>
+      <MapPanel>
+        <LayerPanelPage label='Home'>
+          <Welcome />
+        </LayerPanelPage>
+      </MapPanel>
       <DataLoader />
       <Controls />
       <Popup />

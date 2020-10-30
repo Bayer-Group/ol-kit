@@ -8,7 +8,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import {
   Button,
   ButtonContainer,
-  Half,
+  LeftSide,
   AddNew,
   ResetText,
   CollapseText,
@@ -100,7 +100,7 @@ class LayerStyler extends Component {
     return (
       <div>
         <ButtonContainer>
-          <Half>
+          <LeftSide>
             <StyleGroupHeading id={heading}>
               {heading}
               {showNewButtons &&
@@ -112,7 +112,7 @@ class LayerStyler extends Component {
               }
               {onDefaultStyleReset && <ResetText onClick={onDefaultStyleReset}>{translations['_ol_kit.LayerStyler.reset']}</ResetText>}
             </StyleGroupHeading>
-          </Half>
+          </LeftSide>
           <CollapseText>
             {styles.length > 0 && <Button onClick={this.collapse}>{collapsed ? translations['_ol_kit.LayerStyler.show'] : translations['_ol_kit.LayerStyler.hide']}</Button>}
           </CollapseText>

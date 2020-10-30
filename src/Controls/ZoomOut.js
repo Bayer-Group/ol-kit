@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import RemoveIcon from '@material-ui/icons/Remove'
 import ControlGroupButton from './ControlGroupButton'
-import { zoomDelta } from './utils'
+import { zoomDelta, replaceZoomBoxCSS } from './utils'
 import { connectToContext } from 'Provider'
 
 /**
@@ -13,7 +13,7 @@ import { connectToContext } from 'Provider'
  * @since 0.14.0
  */
 function ZoomOut (props) {
-  const { map } = props
+  const { map, injectZoomBoxCSS } = props
 
   let mouseDownTime
 
@@ -39,6 +39,8 @@ function ZoomOut (props) {
     clearTimeout(repeatTimeout)
   }
 
+  if (injectZoomBoxCSS) replaceZoomBoxCSS()
+
   return (
     <ControlGroupButton
       id='_ol_kit_zoom_out'
@@ -52,7 +54,10 @@ function ZoomOut (props) {
 
 ZoomOut.propTypes = {
   /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired
+  map: PropTypes.object.isRequired,
+
+  /** injects a CSS style so the Openlayers zoom box is styled correctly */
+  injectZoomBoxCSS: PropTypes.bool
 }
 
 export default connectToContext(ZoomOut)

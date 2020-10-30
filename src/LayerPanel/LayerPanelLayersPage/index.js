@@ -270,23 +270,26 @@ class LayerPanelLayersPage extends Component {
     this.setState({ layers: reorderedLayers })
   }
 
-  handleImport = file => {
-    // TODO: somehow Greb added to import callbacks that are the same thing... next major we need to remove one of these
-    const { map, onFeaturesImport, onFileImport } = this.props
-
+  onFileImport = file => {
+    const { map, onFileImport } = this.props
+console.log('handling import?????')
     // otherwise, add them to the map ourselves
     convertFileToFeatures(file, map).then(({ features, name }) => {
+      console.log('should have converted...')
       // if a callback to handle imported features is passed, IAs handle add them to the map
-      if (onFeaturesImport || onFileImport) return onFeaturesImport(features, name)
+      if (onFileImport) {
+        onFileImport(features, name)
 
-      // if no onFeaturesImport prop is passed, create a layer, add it and center/zoom the map
-      if (!onFeaturesImport || !onFileImport) {
+      // if no onFileImport prop is passed, create a layer, add it and center/zoom the map
+      } else {
         const source = new olSourceVector({ features })
         const layer = new VectorLayer({ title: name, source })
 
         map.addLayer(layer)
         map.getView().fit(source.getExtent(), map.getSize())
       }
+    }).catch(err => {
+      console.log('an error happened', err)
     })
   }
 
@@ -300,23 +303,6 @@ class LayerPanelLayersPage extends Component {
 
     return (
       <LayerPanelPage tabIcon={tabIcon}>
-        <LayerPanelHeader
-          title={translations['_ol_kit.LayerPanelLayersPage.title']}
-          translations={translations}
-          avatar={<LayerPanelCheckbox
-            checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
-          actions={customActions ||
-            <LayerPanelActions
-              icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
-              translations={translations}
-              layers={layers}
-              map={map}>
-              <LayerPanelActionRemove
-                removeFeaturesForLayer={this.removeFeaturesForLayer}
-                shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-              {<LayerPanelActionImport handleImport={this.handleImport} />}
-              <LayerPanelActionExport onExportFeatures={onExportFeatures} />
-            </LayerPanelActions>} />
         {enableFilter &&
           <TextField
             id='feature-filter-input'
@@ -347,7 +333,7 @@ class LayerPanelLayersPage extends Component {
                   <LayerPanelActionRemove
                     removeFeaturesForLayer={this.removeFeaturesForLayer}
                     shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-                  {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
+                  <LayerPanelActionImport handleImport={this.onFileImport} />
                   <LayerPanelActionExport onExportFeatures={onExportFeatures} />
                 </LayerPanelActions>
               </ListItemSecondaryAction>
@@ -435,7 +421,7 @@ LayerPanelLayersPage.propTypes = {
   enableFilter: PropTypes.bool,
 
   /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
-  onFeaturesImport: PropTypes.func,
+  onFileImport: PropTypes.func,
 
   /** A callback function fired when a feature list item is double clicked */
   handleFeatureDoubleClick: PropTypes.func,
@@ -457,9 +443,6 @@ LayerPanelLayersPage.propTypes = {
 
   /** A callback function to set custom Menu Items for a specific layer. Should recieve an array of `@material-ui/core/MenuItem` */
   getMenuItemsForLayer: PropTypes.func,
-
-  /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
-  onFileImport: PropTypes.func,
 
   /** A boolean to disable the drag event on the LayerPanelList */
   disableDrag: PropTypes.bool

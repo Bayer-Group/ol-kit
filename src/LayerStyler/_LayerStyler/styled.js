@@ -7,16 +7,13 @@ export const ButtonContainer = styled.div`
   display: flex;
 `
 
-
 export const Button = styled.div`
   user-select: none;
   display: inline-block;
   color: #152357;
   cursor: pointer;
-  width: 25%;
   font-size: 12px;
 `
-
 
 export const StyleGroupHeading = styled.span`
   display: flex;
@@ -26,7 +23,6 @@ export const StyleGroupHeading = styled.span`
   line-height: 32px;
   align-items: center;
 `
-
 
 export const AddNew = styled.div`
   display: flex;
@@ -54,12 +50,10 @@ export const ResetText = styled.div`
   }
 `
 
-
-export const Half = styled.div`
-  flex: 1;
+export const LeftSide = styled.div`
+  flex: 2;
   display: flex;
 `
-
 
 export const CollapseText = styled.div`
   display: flex;
@@ -69,13 +63,11 @@ export const CollapseText = styled.div`
   line-height: 32px;
 `
 
-
 export const Fourth = styled.div`
   display: inline-block;
   width: 25%;
   vertical-align: top;
 `
-
 
 export const Text = styled.div`
   color: #939393;
@@ -85,17 +77,14 @@ export const Text = styled.div`
   font-size: 16px;
 `
 
-
 export const NewStyleGroupContainer = styled.div`
   display: flex;
   margin: 5px;
 `
 
-
 export const NewStyleGroupIcon = styled.i`
   padding: 0 10px 0 0;
 `
-
 
 export const NewStyleGroupButton = styled.div`
   flex: 1;

@@ -31,7 +31,7 @@ class LayerPanelActionImport extends Component {
   validFile = (file) => {
     const { fileTypes } = this.props
 
-    return file && fileTypes.find((type) => file.name.endsWith(type.extension.toLowerCase()))
+    return !!(file && fileTypes.find((type) => file.name.endsWith(type.extension.toLowerCase())))
   }
 
   render () {

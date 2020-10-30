@@ -5,9 +5,6 @@ import {
   Route
 } from 'react-router-dom'
 
-import Navbar from './Navbar'
-import Snackbar from './Snackbar'
-
 // routes
 import Covid from './demos/covid/App'
 import Space from './demos/space/App'
@@ -17,9 +14,6 @@ import Geohack from './demos/geohack/App'
 export default function App () {
   return (
     <Router>
-      <Snackbar />
-      <Navbar />
-
       <Switch>
         <Route path='/geohack'>
           <Geohack />

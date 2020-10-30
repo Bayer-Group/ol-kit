@@ -4,9 +4,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   flex: 1;
-  justify-content: flex-end;
+  justify-content: space-around;
 `
-
 
 export const DeleteAll = styled.div`
   font-size: 10px;
@@ -15,12 +14,10 @@ export const DeleteAll = styled.div`
   cursor: pointer;
 `
 
-
 export const Half = styled.div`
   display: flex;
   flex: 1;
 `
-
 
 export const Fourth = styled.div`
   display: flex;
@@ -28,7 +25,6 @@ export const Fourth = styled.div`
   width: 15%;
   vertical-align: top;
 `
-
 
 export const Title = styled.div`
   font-size: 10px;

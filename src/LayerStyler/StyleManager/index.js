@@ -11,7 +11,7 @@ import LabelStyler from 'LayerStyler/_LabelStyler'
 import LayerStyler from 'LayerStyler/_LayerStyler'
 import SelectTabs from 'LayerStyler/_SelectTabs'
 import AttributesFilter from 'LayerStyler/_AttributesFilter'
-import { HeaderContainer, InputContainer, FilterContainer, Tooltip } from './styled'
+import { HeaderContainer, NoLayerText, InputContainer, FilterContainer, Tooltip } from './styled'
 
 const DEFAULT_LABEL_STYLE = {
   name: 'New Label Style',
@@ -50,7 +50,7 @@ class StyleManager extends Component {
 
     this.state = {
       // we start with a null value which tells us nothing is selected
-      activeIdx: null,
+      activeIdx: props.initialIdx,
       userCollapsed: false,
       defaultCollapsed: true,
       values: []
@@ -167,52 +167,41 @@ class StyleManager extends Component {
       return Object.values(dedup).map(group => group.reverse())
     }
     const layerTitles = layers.map(getTitleForLayer)
-    const layerSelected = activeIdx !== null // eslint-disable-line
+    const layerSelectable = !!layers.length // eslint-disable-line
     let tooltipMsg = ''
 
-    if (!layerSelected) {
-      tooltipMsg = translations['_ol_kit.StyleManager.noLayerSelected']
+    if (!layerSelectable) {
+      tooltipMsg = translations['_ol_kit.StyleManager.nolayerSelected']
     } else if (!layers[activeIdx].isGeoserverLayer) {
       tooltipMsg = translations['_ol_kit.StyleManager.fitlerTooltip']
     }
 
     return (
       <div data-testid='StyleManager'>
-        <HeaderContainer>
-          <InputContainer>
-            <FormControl style={{ width: '300px', margin: '20px' }}>
-              <InputLabel htmlFor='layer-selector'>{translations['_ol_kit.StyleManager.chooseLayer']}</InputLabel>
-              <Select
-                value={layerTitles[activeIdx] || ''}
-                onChange={this.handleLayerChange}
-                type='text'
-                inputProps={{
-                  id: 'layer-selector',
-                  'data-testid': 'StyleManager.chooseLayer'
-                }}>
-                {layerTitles.map(t => {
-                  return <MenuItem key={t} value={t}>{t}</MenuItem>
-                })}
-              </Select>
-            </FormControl>
-          </InputContainer>
-          <Tooltip disableHoverListener={layerSelected && layers[activeIdx].isGeoserverLayer}
-            title={tooltipMsg}
-            placement='top'>
-            <FilterContainer>
-              <AttributesFilter
-                translations={translations}
-                disabled={!layerSelected || !layers[activeIdx].isGeoserverLayer}
-                filters={filters[activeIdx]}
-                filterConditions={['is']}
-                attributes={getAttributesForLayer(layers[activeIdx])}
-                attributeValues={attributeValues}
-                onUpdateFilters={this.onFilterChange}
-                getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)} />
-            </FilterContainer>
-          </Tooltip>
-        </HeaderContainer>
-        {layerSelected &&
+        {layerSelectable ? (
+          <HeaderContainer>
+            <InputContainer>
+              <FormControl style={{ width: '300px', margin: '20px' }}>
+                <InputLabel htmlFor='layer-selector'>{translations['_ol_kit.StyleManager.chooseLayer']}</InputLabel>
+                <Select
+                  value={layerTitles[activeIdx] || ''}
+                  onChange={this.handleLayerChange}
+                  type='text'
+                  inputProps={{
+                    id: 'layer-selector',
+                    'data-testid': 'StyleManager.chooseLayer'
+                  }}>
+                  {layerTitles.map(t => {
+                    return <MenuItem key={t} value={t}>{t}</MenuItem>
+                  })}
+                </Select>
+              </FormControl>
+            </InputContainer>
+          </HeaderContainer>
+        ) : (
+          <NoLayerText>You must have a layer on the map to style</NoLayerText>
+        )}
+        {layerSelectable &&
           <SelectTabs>
             <div title={translations['_ol_kit.StyleManager.styleTab']}>
               <LayerStyler
@@ -259,6 +248,10 @@ class StyleManager extends Component {
   }
 }
 
+StyleManager.defaultProps = {
+  initialIdx: 0
+}
+
 StyleManager.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.object,
@@ -274,6 +267,9 @@ StyleManager.propTypes = {
 
   /** array of openlayers layer objects */
   layers: PropTypes.array.isRequired,
+
+  /** initial index of the layer to show */
+  initialIdx: PropTypes.number.isRequired,
 
   /** returns an array of strings representing the attributes */
   getAttributesForLayer: PropTypes.func.isRequired,

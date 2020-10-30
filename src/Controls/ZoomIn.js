@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import AddIcon from '@material-ui/icons/Add'
 import ControlGroupButton from './ControlGroupButton'
-import { zoomDelta } from './utils'
+import { zoomDelta, replaceZoomBoxCSS } from './utils'
 import { connectToContext } from 'Provider'
 
 /**
@@ -13,7 +13,7 @@ import { connectToContext } from 'Provider'
  * @since 0.14.0
  */
 function ZoomIn (props) {
-  const { map } = props
+  const { map, injectZoomBoxCSS } = props
 
   let mouseDownTime
 
@@ -42,6 +42,8 @@ function ZoomIn (props) {
     clearTimeout(repeatTimeout)
   }
 
+  if (injectZoomBoxCSS) replaceZoomBoxCSS()
+
   return (
     <ControlGroupButton
       id='_ol_kit_zoom_in'
@@ -52,9 +54,16 @@ function ZoomIn (props) {
   )
 }
 
+ZoomIn.defaultProps = {
+  injectZoomBoxCSS: true
+}
+
 ZoomIn.propTypes = {
   /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired
+  map: PropTypes.object.isRequired,
+
+  /** injects a CSS style so the Openlayers zoom box is styled correctly */
+  injectZoomBoxCSS: PropTypes.bool
 }
 
 export default connectToContext(ZoomIn)
