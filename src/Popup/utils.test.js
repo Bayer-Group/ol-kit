@@ -18,7 +18,7 @@ describe('Popup utils', () => {
   it.skip('should get features for cluster source', async () => {
     const map = createMap({ target: 'map' })
 
-    // taken from ol example: https://openlayers.org/en/v4.6.5/examples/cluster.html
+    // taken from ol example: https://openlayers.org/en/latest/examples/cluster.html
     // START EXAMPLE
     var distance = { value: '40' }
     var count = 20000

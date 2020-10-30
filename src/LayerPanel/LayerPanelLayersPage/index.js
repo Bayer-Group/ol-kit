@@ -333,6 +333,25 @@ class LayerPanelLayersPage extends Component {
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
             items={layers} >
+            <LayerPanelListItem
+              title={translations['_ol_kit.LayerPanelLayersPage.title']}
+              translations={translations} >
+              <LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />
+              <ListItemText primary={'All Layers'} />
+              <ListItemSecondaryAction style={{ right: '0px !important' }}>
+                <LayerPanelActions
+                  icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
+                  translations={translations}
+                  layers={layers}
+                  map={map}>
+                  <LayerPanelActionRemove
+                    removeFeaturesForLayer={this.removeFeaturesForLayer}
+                    shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+                  {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
+                  <LayerPanelActionExport onExportFeatures={onExportFeatures} />
+                </LayerPanelActions>
+              </ListItemSecondaryAction>
+            </LayerPanelListItem>
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
