@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Tabs, Tab } from './styled'
+import { Card, Tabs, Tab, InitialTab, CardContent } from './styled'
 // material-ui-icons
 import LayersIcon from '@material-ui/icons/Layers'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import Typography from '@material-ui/core/Typography'
 import { connectToContext } from 'Provider'
 
 /**
@@ -16,43 +18,46 @@ class LayerPanelBase extends Component {
     super(props)
 
     this.state = {
-      activeIndex: false,
+      activeIndex: 0,
       showLayerPanel: false
     }
   }
 
   handleChange = (_, activeIndex) => {
-    const { showLayerPanel } = this.state
+    this.setState({ activeIndex })
+  }
 
-    // the first time through the idx is 0 so we need to add 1
-    if (activeIndex === 0) {
-      this.setState({ showLayerPanel: !this.state.showLayerPanel, activeIndex: showLayerPanel ? false : 1 })
-    } else {
-      this.setState({ activeIndex })
-    }
+  showLayerPanel = () => {
+    this.setState({ showLayerPanel: true })
+  }
+
+  hideLayerPanel = () => {
+    this.setState({ showLayerPanel: false })
   }
 
   render () {
-    const { inline, style, children } = this.props
+    const { inline, style, children, translations, layerPanelTitle } = this.props
     const { activeIndex, showLayerPanel } = this.state
     const tabDataTestId = showLayerPanel ? 'LayerPanel.close' : 'LayerPanel.open'
 
     return (
-      <Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
-        <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
-          <Tab icon={
-            showLayerPanel
-              ? <ChevronRightIcon data-testid={tabDataTestId} />
-              : <LayersIcon data-testid={tabDataTestId} />
-          } />
-          {showLayerPanel &&
-            React.Children.map(children, (child, i) => {
-              if (child) return <Tab key={i} icon={child.props.tabIcon} />
-            })
-          }
-        </Tabs>
-        {React.Children.toArray(children)[activeIndex - 1]}
-      </Card>
+      <>
+        {!showLayerPanel && <InitialTab id='initialtab' onClick={this.showLayerPanel} icon={<LayersIcon data-testid={tabDataTestId} />} />}
+        <Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
+          <CardContent>
+            <Typography variant='h5' component='h5'>{layerPanelTitle}</Typography>
+            <IconButton onClick={this.hideLayerPanel}><CloseIcon /></IconButton>
+          </CardContent>
+          <Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
+            {showLayerPanel &&
+              React.Children.map(children, (child, i) => {
+                if (child) return <Tab key={i} label={child.props.tabIcon || child.props.label} />
+              })
+            }
+          </Tabs>
+          {translations && React.Children.toArray(children)[activeIndex]}
+        </Card>
+      </>
     )
   }
 }
@@ -65,7 +70,13 @@ LayerPanelBase.propTypes = {
   children: PropTypes.node.isRequired,
 
   /** An object of styles spread on the layerpanel */
-  style: PropTypes.object
+  style: PropTypes.object,
+
+  /** Title of the LayerPanel */
+  layerPanelTitle: PropTypes.string,
+
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.object
 }
 
 export default connectToContext(LayerPanelBase)

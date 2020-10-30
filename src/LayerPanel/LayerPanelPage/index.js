@@ -9,10 +9,10 @@ import PropTypes from 'prop-types'
  */
 class LayerPanelPage extends Component {
   render () {
-    const { children } = this.props
+    const { children, label, tabIcon } = this.props
 
     return (
-      <LayerPanelPageContainer data-testid='LayerPanel.page'>
+      <LayerPanelPageContainer label={label} tabIcon={tabIcon} data-testid='LayerPanel.page'>
         {children}
       </LayerPanelPageContainer>
     )
@@ -21,7 +21,13 @@ class LayerPanelPage extends Component {
 
 LayerPanelPage.propTypes = {
   /** An array of components (likely a LayerPanelHeader, LayerPanelContent, or LayerPanelFooter) */
-  children: PropTypes.node
+  children: PropTypes.node,
+
+  /** A string title of the page. Will be used as tab title. */
+  label: PropTypes.string,
+
+  /** A @material-ui/icon. Check LayerPanelPage example.md for more clarification */
+  tabIcon: PropTypes.node
 }
 
 export default LayerPanelPage
