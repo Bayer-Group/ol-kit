@@ -34,12 +34,12 @@ class MapPanel extends Component {
   }
 
   render () {
-    const { style, children, translations } = this.props
+    const { children, translations } = this.props
     const { activeIndex, showPanel } = this.state
 
     return (
       <>
-        <Card open={showPanel} styles={style} numoftabs={children.length || 1} className='_popup_boundary' >
+        <Card open={showPanel} numoftabs={children.length || 1} className='_popup_boundary' >
           <div style={{ display: 'flex', background: 'rgb(237, 237, 237)' }}>
             <InitialTab onClick={this.togglePanel} icon={showPanel ? <KeyboardArrowDownIcon data-testid='MapPanel.close' /> : <KeyboardArrowRightIcon data-testid='MapPanel.open' />} />
             <Tabs
