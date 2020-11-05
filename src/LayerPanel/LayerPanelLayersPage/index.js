@@ -272,10 +272,10 @@ class LayerPanelLayersPage extends Component {
 
   onFileImport = file => {
     const { map, onFileImport } = this.props
-console.log('handling import?????')
+
     // otherwise, add them to the map ourselves
     convertFileToFeatures(file, map).then(({ features, name }) => {
-      console.log('should have converted...')
+
       // if a callback to handle imported features is passed, IAs handle add them to the map
       if (onFileImport) {
         onFileImport(features, name)
@@ -289,7 +289,6 @@ console.log('handling import?????')
         map.getView().fit(source.getExtent(), map.getSize())
       }
     }).catch(err => {
-      console.log('an error happened', err)
     })
   }
 

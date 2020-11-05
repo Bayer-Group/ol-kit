@@ -7,8 +7,8 @@ import MaterialCardContent from '@material-ui/core/CardContent'
 import { styled } from '@material-ui/styles'
 
 export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
-  position: props => props.inline ? 'inline' : 'absolute',
   height: props => props.open ? `auto` : '48px',
+  position: 'absolute',
   maxHeight: '645px',
   width: '345px',
   top: '20px',

@@ -199,7 +199,7 @@ class StyleManager extends Component {
             </InputContainer>
           </HeaderContainer>
         ) : (
-          <NoLayerText>You must have a layer on the map to style</NoLayerText>
+          <NoLayerText>{translations['_ol_kit.StyleManager.noLayerText']}</NoLayerText>
         )}
         {layerSelectable &&
           <SelectTabs>

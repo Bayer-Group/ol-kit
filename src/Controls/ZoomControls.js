@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import ZoomIn from './ZoomIn'
 import ZoomOut from './ZoomOut'
 import ControlGroup from './ControlGroup'
-import { replaceZoomBoxCSS } from './utils'
 import { connectToContext } from 'Provider'; // eslint-disable-line
 
 /**
@@ -16,12 +15,10 @@ import { connectToContext } from 'Provider'; // eslint-disable-line
 function ZoomControls (props) {
   const { orientation } = props
 
-  replaceZoomBoxCSS()
-
   return (
     <ControlGroup orientation={orientation}>
-      <ZoomIn injectZoomBoxCSS={false} />
-      <ZoomOut injectZoomBoxCSS={false} />
+      <ZoomIn />
+      <ZoomOut />
     </ControlGroup>
   )
 }

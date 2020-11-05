@@ -6,7 +6,7 @@ import ApolloClient from 'apollo-boost'
 import {
   BasemapContainer,
   Controls,
-  MapPanel,
+  TabbedPanel,
   LayerPanelContent,
   LayerPanelPage,
   LayerStyler,
@@ -44,7 +44,7 @@ function App (props) {
         <TimeSlider />
         <SpaceX />
         <ISS />
-        <MapPanel>
+        <TabbedPanel>
           <LayerPanelPage label='Home'>
             <Welcome />
           </LayerPanelPage>
@@ -53,7 +53,7 @@ function App (props) {
               <LayerStyler />
             </LayerPanelContent>
           </LayerPanelPage>
-        </MapPanel>
+        </TabbedPanel>
         <Controls variation={'dark'} />
         <BasemapContainer />
       </Map>

@@ -8,10 +8,10 @@ import { connectToContext } from 'Provider'
 
 /**
  * @component
- * @category MapPanel
+ * @category TabbedPanel
  * @since 1.3.0
  */
-class MapPanel extends Component {
+class TabbedPanel extends Component {
   constructor (props) {
     super(props)
 
@@ -50,8 +50,7 @@ class MapPanel extends Component {
               scrollButtons='auto'>
               {React.Children.map(children, (child, i) => {
                 if (child) return <Tab key={i + 1} label={child.props.tabIcon || child.props.label} />
-              })
-              }
+              })}
             </Tabs>
           </div>
           {translations && React.Children.toArray(children)[activeIndex]}
@@ -61,14 +60,11 @@ class MapPanel extends Component {
   }
 }
 
-MapPanel.defaultProps = {}
+TabbedPanel.defaultProps = {}
 
-MapPanel.propTypes = {
+TabbedPanel.propTypes = {
   /** The pages of the panel (things like `LayerPanelPage` or `LayerStyler` components) */
   children: PropTypes.node.isRequired,
-
-  /** An object of styles spread on the map panel */
-  style: PropTypes.object,
 
   /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
   opacity: PropTypes.number,
@@ -77,4 +73,4 @@ MapPanel.propTypes = {
   translations: PropTypes.object
 }
 
-export default connectToContext(MapPanel)
+export default connectToContext(TabbedPanel)

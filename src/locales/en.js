@@ -60,6 +60,7 @@ export default {
   '_ol_kit.StyleManager.styleTab': 'Styles',
   '_ol_kit.StyleManager.fitlerTooltip': 'Unsupported layer type for filtering Layer attributes (Supported types include GeoserverLayer)',
   '_ol_kit.StyleManager.noLayerSelected': 'Select a Geoserver Layer to filter attributes',
+  '_ol_kit.StyleManager.noLayerText': 'You must have a layer on the map to style',
   // MapLogo
   '_ol_kit.MapLogo.hover': `Powered by ol-kit v${version}`,
   '_ol_kit.MapLogo.title': 'Powered by ol-kit',

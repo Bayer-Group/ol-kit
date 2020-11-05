@@ -2,11 +2,10 @@ import React from 'react'
 import {
   Map,
   Popup,
-  MapPanel,
+  TabbedPanel,
   Controls,
   ContextMenu,
   loadDataLayer,
-  PlaceSearch,
   LayerStyler,
   LayerPanelLayersPage,
   LayerPanelPage,
@@ -50,12 +49,9 @@ class App extends React.Component {
     return (
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
-        <MapPanel>
+        <TabbedPanel>
           <LayerPanelPage tabIcon='Home'>
             <Welcome />
-          </LayerPanelPage>
-          <LayerPanelPage label='Explore'>
-            <PlaceSearch />
           </LayerPanelPage>
           <LayerPanelPage label='Layers'>
             <LayerPanelLayersPage />
@@ -70,7 +66,7 @@ class App extends React.Component {
               <DrawContainer style={{ position: 'relative', width: 'auto' }} />
             </LayerPanelContent>
           </LayerPanelPage>
-        </MapPanel>
+        </TabbedPanel>
         <ContextMenu />
         <Controls />
         <BasemapContainer />

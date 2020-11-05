@@ -1,20 +1,5 @@
 import { easeOut, linear } from 'ol/easing'
 
-const OLZOOMBOXID = 'ol-css-zoombox-style'
-
-export function replaceZoomBoxCSS () {
-  const exists = document.getElementById(OLZOOMBOXID)
-
-  if (!exists) {
-    const style = window.document.createElement('style')
-
-    style.id = OLZOOMBOXID
-    style.textContent = '.ol-box{box-sizing:border-box;border:2px solid #000;outline:2px dashed #fff;outline-offset:-2px;}'
-
-    window.document.head.append(style)
-  }
-}
-
 export function rotateMap (map, rotation, duration = 350) {
   map.getView().animate({
     rotation,

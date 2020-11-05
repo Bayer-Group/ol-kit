@@ -5,7 +5,7 @@ import {
   Popup,
   Controls,
   loadDataLayer,
-  MapPanel,
+  TabbedPanel,
   LayerPanelPage,
   LayerPanelLayersPage,
   TimeSlider,
@@ -61,14 +61,14 @@ class MapView extends Component {
         <Controls />
         <Popup />
         <TimeSlider />
-        <MapPanel>
+        <TabbedPanel>
           <LayerPanelPage tabIcon='Home'>
             <Welcome />
           </LayerPanelPage>
           <LayerPanelPage label='Layers'>
             <LayerPanelLayersPage />
           </LayerPanelPage>
-        </MapPanel>
+        </TabbedPanel>
         <BasemapContainer />
         {this.state.selectedFeature? <Chart feature={this.state.selectedFeature} isState={this.state.isState}/>:null}
       </Map>
