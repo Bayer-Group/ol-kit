@@ -8,7 +8,7 @@ import {
   Controls,
   TabbedPanel,
   LayerPanelContent,
-  LayerPanelPage,
+  TabbedPanelPage,
   LayerStyler,
   Map,
   Popup,
@@ -45,14 +45,14 @@ function App (props) {
         <SpaceX />
         <ISS />
         <TabbedPanel>
-          <LayerPanelPage label='Home'>
+          <TabbedPanelPage label='Home'>
             <Welcome />
-          </LayerPanelPage>
-          <LayerPanelPage label='Styles'>
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Styles'>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
             </LayerPanelContent>
-          </LayerPanelPage>
+          </TabbedPanelPage>
         </TabbedPanel>
         <Controls variation={'dark'} />
         <BasemapContainer />

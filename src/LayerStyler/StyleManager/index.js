@@ -50,7 +50,7 @@ class StyleManager extends Component {
 
     this.state = {
       // we start with a null value which tells us nothing is selected
-      activeIdx: props.initialIdx,
+      activeIdx: null,
       userCollapsed: false,
       defaultCollapsed: true,
       values: []
@@ -167,10 +167,10 @@ class StyleManager extends Component {
       return Object.values(dedup).map(group => group.reverse())
     }
     const layerTitles = layers.map(getTitleForLayer)
-    const layerSelectable = !!layers.length // eslint-disable-line
+    const layerSelected = activeIdx !== null // eslint-disable-line
     let tooltipMsg = ''
 
-    if (!layerSelectable) {
+    if (!layerSelected) {
       tooltipMsg = translations['_ol_kit.StyleManager.nolayerSelected']
     } else if (!layers[activeIdx].isGeoserverLayer) {
       tooltipMsg = translations['_ol_kit.StyleManager.fitlerTooltip']
@@ -178,7 +178,7 @@ class StyleManager extends Component {
 
     return (
       <div data-testid='StyleManager'>
-        {layerSelectable ? (
+        {layerSelected ? (
           <HeaderContainer>
             <InputContainer>
               <FormControl style={{ width: '300px', margin: '20px' }}>
@@ -201,7 +201,7 @@ class StyleManager extends Component {
         ) : (
           <NoLayerText>{translations['_ol_kit.StyleManager.noLayerText']}</NoLayerText>
         )}
-        {layerSelectable &&
+        {layerSelected &&
           <SelectTabs>
             <div title={translations['_ol_kit.StyleManager.styleTab']}>
               <LayerStyler
@@ -248,9 +248,7 @@ class StyleManager extends Component {
   }
 }
 
-StyleManager.defaultProps = {
-  initialIdx: 0
-}
+StyleManager.defaultProps = {}
 
 StyleManager.propTypes = {
   /** Object with key/value pairs for translated strings */
@@ -267,9 +265,6 @@ StyleManager.propTypes = {
 
   /** array of openlayers layer objects */
   layers: PropTypes.array.isRequired,
-
-  /** initial index of the layer to show */
-  initialIdx: PropTypes.number.isRequired,
 
   /** returns an array of strings representing the attributes */
   getAttributesForLayer: PropTypes.func.isRequired,

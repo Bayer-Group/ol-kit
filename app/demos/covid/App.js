@@ -1,5 +1,5 @@
 import React from 'react'
-import { Controls, Map, Popup, TabbedPanel, LayerPanelPage } from '@bayer/ol-kit'
+import { Controls, Map, Popup, TabbedPanel, TabbedPanelPage } from '@bayer/ol-kit'
 import olLayerTile from 'ol/layer/Tile'
 import olSourceStamen from 'ol/source/Stamen'
 import DataLoader from './DataLoader'
@@ -32,9 +32,9 @@ function App() {
   return (
     <Map onMapInit={onMapInit} fullScreen>
       <TabbedPanel>
-        <LayerPanelPage label='Home'>
+        <TabbedPanelPage label='Home'>
           <Welcome />
-        </LayerPanelPage>
+        </TabbedPanelPage>
       </TabbedPanel>
       <DataLoader />
       <Controls />

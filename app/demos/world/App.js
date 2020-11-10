@@ -8,7 +8,7 @@ import {
   loadDataLayer,
   LayerStyler,
   LayerPanelLayersPage,
-  LayerPanelPage,
+  TabbedPanelPage,
   LayerPanelContent,
   BasemapContainer,
   VectorLayer,
@@ -50,22 +50,18 @@ class App extends React.Component {
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
         <TabbedPanel>
-          <LayerPanelPage tabIcon='Home'>
+          <TabbedPanelPage tabIcon='Home'>
             <Welcome />
-          </LayerPanelPage>
-          <LayerPanelPage label='Layers'>
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Layers'>
             <LayerPanelLayersPage />
-          </LayerPanelPage>
-          <LayerPanelPage label='Styles'>
-            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <LayerStyler />
-            </LayerPanelContent>
-          </LayerPanelPage>
-          <LayerPanelPage label='Draw'>
-            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-            </LayerPanelContent>
-          </LayerPanelPage>
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Styles'>
+            <LayerStyler />
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Draw'>
+            <DrawContainer style={{ position: 'relative', width: 'auto' }} />
+          </TabbedPanelPage>
         </TabbedPanel>
         <ContextMenu />
         <Controls />

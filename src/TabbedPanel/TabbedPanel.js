@@ -22,7 +22,7 @@ class TabbedPanel extends Component {
   }
 
   handleChange = (_, activeIndex) => {
-    this.setState({ activeIndex })
+    this.setState({ activeIndex, showPanel: true })
   }
 
   togglePanel = () => {

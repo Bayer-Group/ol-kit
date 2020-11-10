@@ -2,6 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+const Description = styled.p`
+  line-height: 1.5rem;
+`
+
 const GridWrapper = styled.div`
   display: flex;
 `
@@ -15,11 +19,11 @@ const NavImg = styled.img`
   width: 50px;
 `
 
-export default function Welcome () {
+export default function Welcome ({ desc = 'There\'s a lot you can do with ol-kit. Check out some of these examples.' }) {
   return (
     <div style={{margin: '20px', fontFamily: 'sans-serif'}}>
-      <h2>Hey There 👋</h2>
-      <p>There's a lot you can do with ol-kit. Check out some of these examples.</p>
+      <Description>{desc}</Description>
+      <h3>Other Demos</h3>
       <GridWrapper>
         <Link to='/'>
           <NavLink>
