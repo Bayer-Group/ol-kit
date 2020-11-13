@@ -93,14 +93,18 @@ import { connectToContext } from 'Provider'
  */
 class LayerPanel extends Component {
   render () {
-    const { translations, children, map } = this.props
+    const { translations, children, map, opacity, layerPanelTitle } = this.props
 
     return (
-      &lt;LayerPanelBase translations={translations}>
-        {[&lt;LayerPanelLayersPage {...this.props} key='layerPanelLayersPage' map={map} />].concat(children)}
+      &lt;LayerPanelBase translations={translations} opacity={opacity} layerPanelTitle={layerPanelTitle}>
+        {[&lt;LayerPanelLayersPage label='Layers' {...this.props} key='layerPanelLayersPage' map={map} />].concat(children)}
       &lt;/LayerPanelBase>
     )
   }
+}
+
+LayerPanel.defaultProps = {
+  layerPanelTitle: 'Layer Panel'
 }
 
 LayerPanel.propTypes = {
@@ -111,7 +115,13 @@ LayerPanel.propTypes = {
   map: PropTypes.object.isRequired,
 
   /** A set of prebuilt page components (like `LayerPanelListPage`) or custom pages */
-  children: PropTypes.node
+  children: PropTypes.node,
+
+  /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
+  opacity: PropTypes.number,
+
+  /** Title of the LayerPanel */
+  layerPanelTitle: PropTypes.string
 }
 
 export default connectToContext(LayerPanel)
@@ -132,7 +142,9 @@ export default connectToContext(LayerPanel)
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunity </a>
+            </div>
         </div>
     </div>
 </footer>
