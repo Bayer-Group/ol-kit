@@ -4,6 +4,8 @@ import centroid from '@turf/centroid'
 import olMap from 'ol/Map'
 import { fromLonLat } from 'ol/proj'
 import GeoJSON from 'ol/format/GeoJSON'
+import olFeature from 'ol/Feature'
+import olPolygon from 'ol/geom/Polygon'
 import olLayerVector from 'ol/layer/Vector'
 import olVectorTile from 'ol/layer/VectorTile'
 import olSourceCluster from 'ol/source/Cluster'
@@ -78,6 +80,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
         return feature
       })
+      console.log('setParent', features)
 
       resolve({ features, layer })
     })
@@ -85,7 +88,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   const wfsSelector = layer => {
     // this logic only handles clicks on vector layer types
-    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
+    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector
 
     // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
     if (!layer.getLayerState().managed || !allowedLayerType) return // do nothing with these layer types
@@ -160,10 +163,51 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   map.getLayers().forEach(exhaustiveVectorFeaturesAtPixel)
 
   // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel?.length) map.getLayers().forEach(wfsSelector)
+  if (featuresAtPixel?.length) map.getLayers().forEach(async layer => {
+    if (layer instanceof olVectorTile) {
+      const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+        const rawFeatures = await layer.getSource().getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
+        // console.log('renderFeat', renderFeatures)
+        // const rawFeatures = renderFeatures.map(feat => {
+        //   // const type = feat.getType()
+        //   // TODO here
+        //   // console.log('source', layer.getSource().getFeaturesInExtent(map.getView().calculateExtent(map.getSize())))
+        //   const coords = []
+
+        //   const mappedCoords = feat.flatCoordinates_.map((coord, i) => {
+        //     if (i%2 == 0) {
+        //       coords.push([coord, feat.flatCoordinates_[i+1]])
+        //       return [coord, feat.flatCoordinates_[i+1]]
+        //     } else { return null }
+        //   }).filter(e => e)
+        //   console.log('coords', coords)
+        //   console.log('mappedCoords', mappedCoords)
+        //   const geometry = new olPolygon(coords) // feat.flatCoordinates_, 'XY', []
+        //   const properties = feat.getProperties()
+        //   const feature = new olFeature({ geometry })
+          
+        //   feature.setProperties(properties)
+
+        //   return feature
+        // })
+        const { features } = await setParentLayer({ features: rawFeatures, layer })
+
+        console.log('features', rawFeatures, features)
+
+        resolve({ features, layer })
+      })
+
+      promises.push(vectorTilePromise)
+    } else {
+      // handle non vector tile wfs layers
+      wfsSelector(layer)
+    }
+  })
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)
+
+  console.log('promuses', promises)
 
   return promises
 }

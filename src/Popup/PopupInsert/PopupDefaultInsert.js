@@ -56,6 +56,7 @@ class PopupDefaultInsert extends Component {
   }
 
   selectFeature = feature => {
+    console.log('selectFeature', feature)
     const { selectInteraction } = this.props
     const deselected = selectInteraction.getFeatures().getArray()
     const selected = [feature]

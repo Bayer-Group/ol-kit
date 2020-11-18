@@ -14,6 +14,7 @@ import {
 import MVT from 'ol/format/MVT'
 import VectorTileLayer from 'ol/layer/VectorTile'
 import VectorTileSource from 'ol/source/VectorTile'
+import olFeature from 'ol/Feature'
 
 class App extends React.Component {
   onMapInit = async (map) => {
@@ -25,6 +26,7 @@ class App extends React.Component {
         maxZoom: 15,
         format: new MVT({
           idProperty: 'iso_a3',
+          featureClass: olFeature
         }),
         url:
           'https://ahocevar.com/geoserver/gwc/service/tms/1.0.0/' +
