@@ -103,7 +103,7 @@
         
         <span class="code-name">
             
-                &ltLayerPanelPage <i>children</i> /&gt
+                &ltLayerPanelPage <i>children</i> <i>label</i> <i>tabIcon</i> /&gt
             
         </span>
     </h4>
@@ -142,6 +142,28 @@
           </td>
           <td>No</td>
           <td>An array of components (likely a LayerPanelHeader, LayerPanelContent, or LayerPanelFooter)</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>label</code></td>
+          <td>
+            string
+          </td>
+          <td>No</td>
+          <td>A string title of the page. Will be used as tab title.</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>tabIcon</code></td>
+          <td>
+            node
+          </td>
+          <td>No</td>
+          <td>A @material-ui/icon. Check LayerPanelPage example.md for more clarification</td>
           <td></td>
         </tr>
         
@@ -254,13 +276,13 @@
             <br/>
             <h2 class="title">Examples</h2>
             <div class="example">
-                <p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through.</p>
+                <p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through. Or if you want a title for the tab you can pass a label string prop.</p>
 <pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
 import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
 
 return (
   &lt;LayerPanel>
-    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+    &lt;LayerPanelPage label={'Legends'} tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelContent>
         Legends Page
       &lt;/LayerPanelContent>
@@ -290,7 +312,9 @@ return (
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>

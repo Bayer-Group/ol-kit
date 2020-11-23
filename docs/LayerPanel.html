@@ -103,7 +103,7 @@
         
         <span class="code-name">
             
-                &ltLayerPanel <i>translations</i> <i>map</i> <i>children</i> /&gt
+                &ltLayerPanel <i>translations</i> <i>map</i> <i>children</i> <i>opacity</i> <i>layerPanelTitle</i> /&gt
             
         </span>
     </h4>
@@ -165,6 +165,28 @@
           <td>No</td>
           <td>A set of prebuilt page components (like `LayerPanelListPage`) or custom pages</td>
           <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>opacity</code></td>
+          <td>
+            number
+          </td>
+          <td>No</td>
+          <td>A float number for the opacity of the LayerPanel. i.e. (0.5)</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>layerPanelTitle</code></td>
+          <td>
+            string
+          </td>
+          <td>No</td>
+          <td>Title of the LayerPanel</td>
+          <td>'Layer Panel'</td>
         </tr>
         
   
@@ -289,7 +311,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
 
 // Passing the props through the LayerPanel component
 return (
-  &lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+  &lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick} layerPanelTitle='My Layer Panel'>
     &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
       &lt;LayerPanelHeader
         title='Legends Page'
@@ -434,7 +456,9 @@ return (
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>

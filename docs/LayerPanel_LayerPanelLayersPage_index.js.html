@@ -360,23 +360,6 @@ class LayerPanelLayersPage extends Component {
 
     return (
       &lt;LayerPanelPage>
-        &lt;LayerPanelHeader
-          title={translations['_ol_kit.LayerPanelLayersPage.title']}
-          translations={translations}
-          avatar={&lt;LayerPanelCheckbox
-            checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
-          actions={customActions ||
-            &lt;LayerPanelActions
-              icon={&lt;MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
-              translations={translations}
-              layers={layers}
-              map={map}>
-              &lt;LayerPanelActionRemove
-                removeFeaturesForLayer={this.removeFeaturesForLayer}
-                shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-              {onFileImport &amp;&amp; &lt;LayerPanelActionImport handleImport={onFileImport} />}
-              &lt;LayerPanelActionExport onExportFeatures={onExportFeatures} />
-            &lt;/LayerPanelActions>} />
         {enableFilter &amp;&amp;
           &lt;TextField
             id='feature-filter-input'
@@ -393,6 +376,25 @@ class LayerPanelLayersPage extends Component {
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
             items={layers} >
+            &lt;LayerPanelListItem
+              title={translations['_ol_kit.LayerPanelLayersPage.title']}
+              translations={translations} >
+              &lt;LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />
+              &lt;ListItemText primary={'All Layers'} />
+              &lt;ListItemSecondaryAction style={{ right: '0px !important' }}>
+                &lt;LayerPanelActions
+                  icon={&lt;MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
+                  translations={translations}
+                  layers={layers}
+                  map={map}>
+                  &lt;LayerPanelActionRemove
+                    removeFeaturesForLayer={this.removeFeaturesForLayer}
+                    shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+                  {onFileImport &amp;&amp; &lt;LayerPanelActionImport handleImport={onFileImport} />}
+                  &lt;LayerPanelActionExport onExportFeatures={onExportFeatures} />
+                &lt;/LayerPanelActions>
+              &lt;/ListItemSecondaryAction>
+            &lt;/LayerPanelListItem>
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
@@ -524,7 +526,9 @@ export default connectToContext(LayerPanelLayersPage)
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>
