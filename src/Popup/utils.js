@@ -80,7 +80,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
         return feature
       })
-      console.log('setParent', features)
 
       resolve({ features, layer })
     })
@@ -166,33 +165,20 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (featuresAtPixel?.length) map.getLayers().forEach(async layer => {
     if (layer instanceof olVectorTile) {
       const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-        const rawFeatures = await layer.getSource().getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
-        // console.log('renderFeat', renderFeatures)
-        // const rawFeatures = renderFeatures.map(feat => {
-        //   // const type = feat.getType()
-        //   // TODO here
-        //   // console.log('source', layer.getSource().getFeaturesInExtent(map.getView().calculateExtent(map.getSize())))
-        //   const coords = []
+        const vectorTileSourceFeatures = await layer.getSource().getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
+        const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
+          const { ol_uid } = sourceFeature
+          let isFeatureAtClick = false
 
-        //   const mappedCoords = feat.flatCoordinates_.map((coord, i) => {
-        //     if (i%2 == 0) {
-        //       coords.push([coord, feat.flatCoordinates_[i+1]])
-        //       return [coord, feat.flatCoordinates_[i+1]]
-        //     } else { return null }
-        //   }).filter(e => e)
-        //   console.log('coords', coords)
-        //   console.log('mappedCoords', mappedCoords)
-        //   const geometry = new olPolygon(coords) // feat.flatCoordinates_, 'XY', []
-        //   const properties = feat.getProperties()
-        //   const feature = new olFeature({ geometry })
-          
-        //   feature.setProperties(properties)
+          featuresAtPixel.forEach(feat => {
+            if (feat.ol_uid === ol_uid) isFeatureAtClick = true
+          })
 
-        //   return feature
-        // })
-        const { features } = await setParentLayer({ features: rawFeatures, layer })
+          return isFeatureAtClick
+        })
 
-        console.log('features', rawFeatures, features)
+        console.log('vector tile features?', featuresAtPixel, matchingFeaturesAtPixel)
+        const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
 
         resolve({ features, layer })
       })
