@@ -33,11 +33,12 @@ const applyDrag = (arr, dragResult) => {
  */
 class LayerPanelList extends Component {
   handleDrop = e => {
-    const { onSort, onReorderedItems, items } = this.props
+    const { onSort, onReorderedItems, items, onLayerReorder } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
 
     if (onReorderedItems) {
       onReorderedItems(reorderedItems)
+      onLayerReorder()
     }
   }
 
@@ -142,12 +143,16 @@ LayerPanelList.propTypes = {
   items: PropTypes.array,
 
   /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+
+  /** A callback function to inform when the list is reordered */
+  onLayerReorder: PropTypes.func
 }
 
 LayerPanelList.defaultProps = {
   onSort: (a, b) => { return a - b },
-  disableDrag: false
+  disableDrag: false,
+  onLayerReorder: () => {}
 }
 
 export default LayerPanelList
