@@ -205,9 +205,9 @@ describe('<LayerPanel />', () => {
     const actions = getAllByTestId('LayerPanel.actionsButton')
 
     fireEvent.click(actions[0])
-    await waitFor(() => expect(getByText('Remove Layers')).toBeInTheDocument())
+    await waitFor(() => expect(getByText('Remove Selected')).toBeInTheDocument())
 
-    fireEvent.click(getByText('Remove Layers'))
+    fireEvent.click(getByText('Remove Selected'))
 
     // should still have the basemap
     expect(testMap.getLayers().getArray().length).toBe(1)
@@ -224,9 +224,9 @@ describe('<LayerPanel />', () => {
 
     // make sure the layer that was toggled off is not removed
     fireEvent.click(actions[0])
-    await waitFor(() => expect(getByText('Remove Layers')).toBeInTheDocument())
+    await waitFor(() => expect(getByText('Remove Selected')).toBeInTheDocument())
 
-    fireEvent.click(getByText('Remove Layers'))
+    fireEvent.click(getByText('Remove Selected'))
 
     // should still have the basemap
     expect(testMap.getLayers().getArray().length).toBe(2)
