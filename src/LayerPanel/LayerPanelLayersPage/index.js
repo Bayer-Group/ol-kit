@@ -27,11 +27,35 @@ import olObservable from 'ol/observable'
 import olLayerVector from 'ol/layer/vector'
 import olSourceVector from 'ol/source/vector'
 import olStyleStyle from 'ol/style/style'
+import olStyleFill from 'ol/style/fill'
+import olStyleStroke from 'ol/style/stroke'
+import olStyleCircle from 'ol/style/circle'
 
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 const INDETERMINATE = 'indeterminate'
+
+const fill = new olStyleFill({
+  color: 'rgba(255,255,255,0.4)'
+})
+
+const stroke = new olStyleStroke({
+  color: '#3399CC',
+  width: 1.25
+})
+
+const DEFAULT_DRAW_STYLE = [
+  new olStyleStyle({
+    image: new olStyleCircle({
+      fill: fill,
+      stroke: stroke,
+      radius: 5
+    }),
+    fill: fill,
+    stroke: stroke
+  })
+]
 
 /**
  * @component
@@ -164,7 +188,7 @@ class LayerPanelLayersPage extends Component {
 
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
-      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle()
+      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle() || DEFAULT_DRAW_STYLE
       const featureStyle = isVisible ? iaFeatureStyle : new olStyleStyle()
 
       feature.set('_ol_kit_feature_visibility', isVisible)
