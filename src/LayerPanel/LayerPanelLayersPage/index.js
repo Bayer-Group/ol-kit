@@ -88,8 +88,6 @@ class LayerPanelLayersPage extends Component {
         filteredLayers[safeFilteredLayersLength] && filteredLayers[safeFilteredLayersLength].setZIndex(filteredLayers.length) // eslint-disable-line
       }
 
-      console.log(filteredLayers.sort(this.zIndexSort), layers)
-
       this.setState({ layers: filteredLayers.sort(this.zIndexSort) }, this.bindFeatureListeners)
     }
 
