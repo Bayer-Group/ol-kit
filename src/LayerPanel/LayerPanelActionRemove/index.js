@@ -22,9 +22,9 @@ class LayerPanelActionRemove extends Component {
       })
     } else if (layer) {
       map.removeLayer(layer)
-      onLayerRemoved(layer)
     }
 
+    onLayerRemoved(layer)
     handleMenuClose()
   }
 
