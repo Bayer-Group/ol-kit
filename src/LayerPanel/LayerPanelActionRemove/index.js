@@ -11,7 +11,7 @@ import olLayerVector from 'ol/layer/vector'
 class LayerPanelActionRemove extends Component {
   // this param of layers is coming from the MenuItem onClick func
   handleRemove = () => {
-    const { layers, layer, map, shouldAllowLayerRemoval, removeFeaturesForLayer, handleMenuClose } = this.props
+    const { layers, layer, map, shouldAllowLayerRemoval, removeFeaturesForLayer, handleMenuClose, onLayerRemoved } = this.props
 
     if (Array.isArray(layers)) {
       layers.forEach(layer => {
@@ -22,6 +22,7 @@ class LayerPanelActionRemove extends Component {
       })
     } else if (layer) {
       map.removeLayer(layer)
+      onLayerRemoved(layer)
     }
 
     handleMenuClose()
@@ -38,8 +39,8 @@ class LayerPanelActionRemove extends Component {
   render () {
     const { layers, layer, translations } = this.props
     const noVisibleLayers = layers && this.getVisibleLayers().length === 0
-    const removeLayer = translations['_ol_kit.actions.removeLayer'] || 'Remove Layer'
-    const removeLayers = translations['_ol_kit.actions.removeLayers'] || 'Remove Layers'
+    const removeLayer = translations['_ol_kit.actions.removeLayer']
+    const removeLayers = translations['_ol_kit.actions.removeLayers']
 
     return (
       <MenuItem data-testid='LayerPanelAction.remove' disableGutters={false} disabled={layers && noVisibleLayers} onClick={this.handleRemove}>
@@ -69,12 +70,15 @@ LayerPanelActionRemove.propTypes = {
   removeFeaturesForLayer: PropTypes.func,
 
   /** A callback function that closes the `LayerPanelMenu` */
-  handleMenuClose: PropTypes.func
+  handleMenuClose: PropTypes.func,
+
+  /** A callback function that informs when a layer has been removed and passes that layer back to the IA */
 }
 
 LayerPanelActionRemove.defaultProps = {
   shouldAllowLayerRemoval: (layer) => true,
-  handleMenuClose: () => {}
+  handleMenuClose: () => {},
+  onLayerRemoved: () => {}
 }
 
 export default LayerPanelActionRemove

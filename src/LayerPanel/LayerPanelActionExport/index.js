@@ -53,7 +53,7 @@ class LayerPanelActionExport extends Component {
         disableGutters={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('kml')} >
-        {translations['_ol_kit.LayerPanelActions.kml'] || 'Export KML'}
+        {translations['_ol_kit.LayerPanelActions.kml']}
       </MenuItem>,
       <MenuItem
         key='exportShp'
@@ -61,7 +61,7 @@ class LayerPanelActionExport extends Component {
         disableGutters={false}
         disabled={this.isExportable()}
         onClick={() => this.handleExport('shp')} >
-        {translations['_ol_kit.LayerPanelActions.shapefile'] || 'Export Shapefile'}
+        {translations['_ol_kit.LayerPanelActions.shapefile']}
       </MenuItem>,
       <MenuItem
         key='exportGeoJSON'

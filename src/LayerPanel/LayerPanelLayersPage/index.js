@@ -27,13 +27,35 @@ import olObservable from 'ol/observable'
 import olLayerVector from 'ol/layer/vector'
 import olSourceVector from 'ol/source/vector'
 import olStyleStyle from 'ol/style/style'
+import olStyleFill from 'ol/style/fill'
+import olStyleStroke from 'ol/style/stroke'
+import olStyleCircle from 'ol/style/circle'
 
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
-import isEqual from 'lodash.isequal'
-
 const INDETERMINATE = 'indeterminate'
+
+const fill = new olStyleFill({
+  color: 'rgba(255,255,255,0.4)'
+})
+
+const stroke = new olStyleStroke({
+  color: '#3399CC',
+  width: 1.25
+})
+
+const DEFAULT_DRAW_STYLE = [
+  new olStyleStyle({
+    image: new olStyleCircle({
+      fill: fill,
+      stroke: stroke,
+      radius: 5
+    }),
+    fill: fill,
+    stroke: stroke
+  })
+]
 
 /**
  * @component
@@ -164,13 +186,13 @@ class LayerPanelLayersPage extends Component {
 
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
-      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle()
-      const featureOriginalStyle = isEqual(iaFeatureStyle, new olStyleStyle(null))
-        ? feature.setStyle(null) : iaFeatureStyle
-      const featureStyle = isVisible ? featureOriginalStyle : new olStyleStyle()
+      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle() || DEFAULT_DRAW_STYLE
+      const featureStyle = isVisible ? iaFeatureStyle : new olStyleStyle()
 
       feature.set('_ol_kit_feature_visibility', isVisible)
-      if (feature.get('_ol_kit_feature_style') === undefined) feature.set('_ol_kit_feature_style', featureStyle)
+      // in order to do feature visibility we have to set the features style to nil... which means that we need to store
+      // the original style so that when it becomes visible again we can set it to the original style
+      if (feature.get('_ol_kit_feature_style') === undefined) feature.set('_ol_kit_feature_style', iaFeatureStyle)
       feature.setStyle(featureStyle)
 
       return feature
@@ -313,7 +335,7 @@ class LayerPanelLayersPage extends Component {
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
-              return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
+              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
