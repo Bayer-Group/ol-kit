@@ -4,7 +4,13 @@ import nanoid from 'nanoid'
 import debounce from 'lodash.debounce'
 
 import MapLogo from './MapLogo'
-import { createMap, createSelectInteraction, updateMapFromUrl, updateUrlFromMap } from './utils'
+import {
+  createMap,
+  createSelectInteraction,
+  updateMapFromUrl,
+  updateUrlFromMap,
+  replaceZoomBoxCSS
+} from './utils'
 import { StyledMap } from './styled'
 import en from 'locales/en'
 import ugh from 'ugh'
@@ -43,7 +49,8 @@ class Map extends React.Component {
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
-      urlViewParam
+      urlViewParam,
+      dragZoomboxStyle
     } = this.props
     const onMapReady = map => {
       // pass map back via callback prop
@@ -84,6 +91,9 @@ class Map extends React.Component {
       // callback that returns a reference to the created map
       onMapReady(this.map)
     }
+
+    // optionally add zoombox styling
+    replaceZoomBoxCSS(dragZoomboxStyle)
   }
 
   initializeSelect = map => {
@@ -152,7 +162,8 @@ Map.defaultProps = {
   updateViewFromUrl: true,
   urlViewParam: 'view',
   style: {},
-  translations: en
+  translations: en,
+  dragZoomboxStyle: { backgroundColor: 'rgb(0, 50, 50, 0.5)' }
 }
 
 Map.propTypes = {
@@ -183,6 +194,8 @@ Map.propTypes = {
   selectInteraction: PropTypes.object,
   /** apply inline styles to the map container */
   style: PropTypes.object,
+  /** apply styles to the OL shift-zoom box */
+  dragZoomboxStyle: PropTypes.object,
   /** object of string key/values (see: locales) */
   translations: PropTypes.object
 }
