@@ -291,7 +291,7 @@ class LayerPanelLayersPage extends Component {
 
   render () {
     const {
-      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag,
+      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, onLayerRemoved, onLayerReorder,
       customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
@@ -312,7 +312,8 @@ class LayerPanelLayersPage extends Component {
               map={map}>
               <LayerPanelActionRemove
                 removeFeaturesForLayer={this.removeFeaturesForLayer}
-                shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+                shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+                onLayerRemoved={onLayerRemoved} />
               {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
               <LayerPanelActionExport onExportFeatures={onExportFeatures} />
             </LayerPanelActions>} />
@@ -331,7 +332,8 @@ class LayerPanelLayersPage extends Component {
             disableDrag={disableDrag}
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
-            items={layers} >
+            items={layers}
+            onLayerReorder={onLayerReorder} >
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
@@ -442,7 +444,13 @@ LayerPanelLayersPage.propTypes = {
   onFileImport: PropTypes.func,
 
   /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+
+  /** A callback function to inform when layers are reordered */
+  onLayerReorder: PropTypes.func,
+
+  /** A callback function to inform when a layer is removed */
+  onLayerRemoved: PropTypes.func
 }
 
 export default LayerPanelLayersPage
