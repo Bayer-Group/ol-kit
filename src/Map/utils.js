@@ -14,6 +14,25 @@ import qs from 'qs'
 import ugh from 'ugh'
 import { MapContext } from './Map'
 
+const OLKIT_ZOOMBOX_ID = '_ol-kit-css-zoombox-style'
+
+export function replaceZoomBoxCSS (dragStyle) {
+  const exists = document.getElementById(OLKIT_ZOOMBOX_ID)
+  const dragStyleString = Object.entries(dragStyle)
+    .map(([k, v]) => `${k}:${v}`)
+    .join(';')
+    .replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
+
+  if (!exists) {
+    const style = window.document.createElement('style')
+
+    style.id = OLKIT_ZOOMBOX_ID
+    style.textContent = `.ol-box{ ${dragStyleString} }`
+
+    window.document.head.append(style)
+  }
+}
+
 /**
  * Create an openlayers map
  * @function

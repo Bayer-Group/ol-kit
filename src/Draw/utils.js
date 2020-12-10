@@ -76,23 +76,6 @@ function getText (labelProps = { text: '' }, resolution, opts = {}) {
   }
 }
 
-function getTextWidth (text = '', map) {
-  // We want the width of the longest line of text so split with \n and reverse sort by length
-  const lines = text.split(`\n`).sort((a, b) => b.length - a.length)
-  // ol does not document this but if this needs to be faster we can get the context with `const ctx = map.renderer_.context_`
-  const targetEl = map.getViewport()
-  const canvas = Array.from(targetEl.children).find(child => child.tagName === 'CANVAS')
-  const ctx = canvas.getContext('2d')
-  // As of Chrome v75.0.3770.142 `CanvasRenderingContext2D.measureText()` only returns the wiodth but in the future it should be able to return additional measurement information
-  const textMetrics = ctx.measureText(lines[0])
-  const fontSize = ctx.font.split('px')[0] || 16
-
-  return {
-    width: textMetrics.width,
-    fontSize
-  }
-}
-
 function stringDivider (str, width, spaceReplacer) {
   if (str.length > width) {
     let p = width
@@ -124,21 +107,6 @@ function calculateScale (map, feature) {
   const scaleFactor = labelResolution / currentResolution
 
   return vmfLabel.scaling ? scaleFactor : 1
-}
-
-function formatStyleString (textStyle) {
-  const font = textStyle.getFont() || 14
-  const scale = textStyle.getScale() || 1
-  const px = font.indexOf('px')
-  const size = font.slice(px - 2, px)
-  const scaledSize = (size - 6) * scale // Size - 6 is just done to make the text appear the same relative size as it is on the map
-  const scaledFont = font.replace(`${size}px`, `${scaledSize}px`)
-  const fillColor = textStyle.getFill().getColor()
-  const stroke = textStyle.getStroke()
-  const strokeColor = stroke.getColor()
-  const strokeWidth = stroke.getWidth()
-
-  return `font: ${scaledFont}; letter-spacing: 0px; paint-order: stroke; stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: ${fillColor}`
 }
 
 function calcGeodesicLength (sourceProj, lineString) {
@@ -188,35 +156,6 @@ function calculateGeodesic (map, geometry, units = 'meters') {
     return (Math.PI * Math.pow(geometry.getRadius(), 2)) * CONVERSION[units]
   } else {
     return 0
-  }
-}
-
-function calculateAreaAndDistance (map, geometry, areaUnit, distanceUnit) {
-  const type = geometry.getType()
-  const sourceProj = map.getView().getProjection()
-
-  if (type === 'LineString') {
-    return {
-      area: null,
-      distance: calcGeodesicLength(sourceProj, geometry) * CONVERSION[distanceUnit]
-    }
-  } else if (type === 'Circle') {
-    // convert circle types into polygons to get accurate distance/area measurements when resizing
-    const polygonGeom = olGeomPolygon.fromCircle(geometry)
-
-    return calculateAreaAndDistance(map, polygonGeom, areaUnit, distanceUnit)
-  } else if (type === 'Polygon') {
-    const lineString = new olGeomLineString(geometry.getLinearRing(0).getCoordinates())
-
-    return {
-      area: convertGeodesicArea(calcGeodesicArea(sourceProj, geometry), areaUnit),
-      distance: calcGeodesicLength(sourceProj, lineString) * CONVERSION[distanceUnit]
-    }
-  } else {
-    return {
-      area: null,
-      distance: null
-    }
   }
 }
 
@@ -410,12 +349,6 @@ function flatten (array) {
   }, [])
 }
 
-function scaleDistanceToMap (distance, map) {
-  const currentResolution = map.getView().getResolution()
-
-  return distance * currentResolution
-}
-
 /**
  * Generate a 2D array of features paired to a style representing how they are currently styled on the map.
  * OpenLayers Features will inherit the style set on their parent layer if their own style is undefined.  This Function helps resolve the style that is actually being used to render the feature on the map.
@@ -446,7 +379,7 @@ export function getStyledFeatures (layers, resolution) {
       // Try every avenue for getting the style from the feature itself since that style will override the layer's style.
       const featureStyleFunction = feature.getStyleFunction()
       const featureStyle = typeof featureStyleFunction === 'function'
-        ? featureStyleFunction.call(feature, resolution) // eslint-disable-line no-useless-call // This isn't actually a useless call and I don't know why eslint doesn't like it.
+        ? featureStyleFunction.call(feature, resolution)
         : feature.getStyle()
 
       if (featureStyle || !layerStyleFunction) { // If we have a valid style from the feature we use that.  This is an or because if we don't have a style from the feature or the layer than we return it as undefined.
@@ -511,8 +444,6 @@ function pointsFromVertices (geometry) {
   } else if (featureType === 'Point' || featureType === 'Circle') {
     return [coordinates]
   } else {
-    logger.warn('Geometries of type %s are not supported', featureType)
-
     return coordinates
   }
 }
