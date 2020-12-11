@@ -186,7 +186,7 @@ class LayerPanelLayersPage extends Component {
 
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
-      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle() || DEFAULT_DRAW_STYLE
+      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle() || layer.getStyle() || DEFAULT_DRAW_STYLE
       const featureStyle = isVisible ? iaFeatureStyle : new olStyleStyle()
 
       feature.set('_ol_kit_feature_visibility', isVisible)
@@ -197,7 +197,10 @@ class LayerPanelLayersPage extends Component {
 
       return feature
     }).filter((feature) => {
-      return !this.props.enableFilter || !this.state.filterText ? true : feature.get('name').toLowerCase().includes(this.state.filterText.toLowerCase())
+      const name = feature.get('name')
+
+      return !this.props.enableFilter || !this.state.filterText || !name
+        ? true : name.toLowerCase().includes(this.state.filterText.toLowerCase())
     })
   }
 
