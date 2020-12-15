@@ -34,6 +34,8 @@ import olStyleCircle from 'ol/style/circle'
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
+import isEqual from 'lodash.isequal'
+
 const INDETERMINATE = 'indeterminate'
 
 const fill = new olStyleFill({
@@ -186,13 +188,12 @@ class LayerPanelLayersPage extends Component {
 
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
-      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle() || layer.getStyle() || DEFAULT_DRAW_STYLE
-      const featureStyle = isVisible ? iaFeatureStyle : new olStyleStyle()
+      const olkitStyle = feature.get('_ol_kit_feature_style') || feature.getStyle()
+      const featureOriginalStyle = isEqual(olkitStyle, new olStyleStyle(null)) ? undefined : olkitStyle
+      const featureStyle = isVisible ? featureOriginalStyle : new olStyleStyle()
 
       feature.set('_ol_kit_feature_visibility', isVisible)
-      // in order to do feature visibility we have to set the features style to nil... which means that we need to store
-      // the original style so that when it becomes visible again we can set it to the original style
-      if (feature.get('_ol_kit_feature_style') === undefined) feature.set('_ol_kit_feature_style', iaFeatureStyle)
+      if (feature.get('_ol_kit_feature_style') === undefined) feature.set('_ol_kit_feature_style', featureStyle)
       feature.setStyle(featureStyle)
 
       return feature
