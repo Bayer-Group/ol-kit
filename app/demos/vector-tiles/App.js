@@ -9,10 +9,10 @@ import {
   LayerPanelPage,
   LayerPanelContent,
   BasemapContainer,
+  VectorTileLayer,
   DrawContainer
 } from '@bayer/ol-kit'
 import MVT from 'ol/format/MVT'
-import VectorTileLayer from 'ol/layer/VectorTile'
 import VectorTileSource from 'ol/source/VectorTile'
 import olFeature from 'ol/Feature'
 
@@ -20,6 +20,7 @@ class App extends React.Component {
   onMapInit = async (map) => {
     // create a vector layer and add to the map
     const layer = new VectorTileLayer({
+      className: 'vector-tiles-layer',
       declutter: true,
       title: 'Vector Tiles Layer',
       source: new VectorTileSource({
@@ -28,9 +29,7 @@ class App extends React.Component {
           idProperty: 'iso_a3',
           featureClass: olFeature
         }),
-        url:
-          'https://ahocevar.com/geoserver/gwc/service/tms/1.0.0/' +
-          'ne:ne_10m_admin_0_countries@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf',
+        url: 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf'
       }),
     })
 
