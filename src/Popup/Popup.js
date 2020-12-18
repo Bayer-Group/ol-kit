@@ -119,7 +119,6 @@ class Popup extends Component {
     const parsedFeatures = layers.reduce((acc, { features }) => {
       return [...acc, ...features]
     }, [])
-    console.log('parsedFeatures', parsedFeatures, layers)
 
     if (!parsedFeatures.length) return this.hidePopup()
 

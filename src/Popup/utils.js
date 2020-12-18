@@ -171,13 +171,12 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
           let isFeatureAtClick = false
 
           featuresAtPixel.forEach(feat => {
-            if (feat.ol_uid === ol_uid) isFeatureAtClick = true
+            if (feat?.ol_uid === ol_uid) isFeatureAtClick = true
           })
 
           return isFeatureAtClick
         })
 
-        console.log('vector tile features?', featuresAtPixel, matchingFeaturesAtPixel)
         const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
 
         resolve({ features, layer })
@@ -192,8 +191,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)
-
-  console.log('promuses', promises)
 
   return promises
 }
