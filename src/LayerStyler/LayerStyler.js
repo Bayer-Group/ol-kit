@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StyleManager from 'LayerStyler/StyleManager'
-import olVectorTile from 'ol/layer/VectorTile'
 import olFormatFilterAnd from 'ol/format/filter/And'
 import olFormatFilterOr from 'ol/format/filter/Or'
 import olFormatFilterEqualTo from 'ol/format/filter/EqualTo'
@@ -13,7 +12,6 @@ import escapeRegExp from 'lodash.escaperegexp'
 
 import { addMovementListener, removeMovementListener } from 'Popup'
 import { connectToContext } from 'Provider'
-import LayerRenderer from 'ol/renderer/Layer'
 
 /**
  * UI to choose color, stroke, fill etc. for styles and labels on layers

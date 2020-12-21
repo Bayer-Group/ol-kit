@@ -40,9 +40,12 @@ class VectorTileLayer extends olVectorTile {
    * @returns {Array} VectorTileLayer attributes
    */
   getAttributes () {
-    return this.getSource().getFeaturesInExtent([-Infinity, -Infinity, Infinity, Infinity]).reduce((attributes, feature) => {
-      return [...new Set([...attributes, ...Object.keys(feature.getProperties())]).values()]
-    }, [])
+    // Vector tile layers don't have the convention that all features have to share the same attributes so we have to get all of the features and summarize their attributes.
+    return this.getSource()
+      .getFeaturesInExtent([-Infinity, -Infinity, Infinity, Infinity]) // get all available features
+      .reduce((attributes, feature) => {
+        return [...new Set([...attributes, ...Object.keys(feature.getProperties())]).values()]
+      }, [])
   }
 
   /**
