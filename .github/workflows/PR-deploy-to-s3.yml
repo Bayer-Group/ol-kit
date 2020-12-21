@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Amazon S3
+    name: PR Deploy to S3
     runs-on: ubuntu-latest
 
     steps:
