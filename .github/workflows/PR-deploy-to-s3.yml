@@ -32,4 +32,4 @@ jobs:
 
     - name: Copy files to the test website with the AWS CLI
       run: |
-        aws s3 sync --delete ./build s3://ol-kit/branch/${GITHUB_REF##*/}
+        aws s3 sync --delete ./build s3://ol-kit/branch/${GITHUB_HEAD_REF}
