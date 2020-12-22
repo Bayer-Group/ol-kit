@@ -23,8 +23,10 @@ class PopupActionGroup extends Component {
   }
 
   render () {
-    const { title, children } = this.props
+    const { title, children, feature } = this.props
     const { right, top } = this.el ? this.el.getBoundingClientRect() : { right: 0, top: 0 }
+    
+    const transformedChildren = React.Children.map(children, c => React.cloneElement(c, { feature }))
 
     return (
       <div style={{ position: 'relative' }} ref={(element) => { this.el = element }}>
@@ -44,7 +46,7 @@ class PopupActionGroup extends Component {
               showFlyout={this.state.showFlyout}
               onMouseEnter={() => this.onHover(true)}
               onMouseLeave={() => this.onHover(false)}>
-              {children}
+              {transformedChildren}
             </Flyout>,
             document.body)
         }
@@ -58,7 +60,10 @@ PopupActionGroup.propTypes = {
   children: PropTypes.node.isRequired,
 
   /** Title of the action group to display on the root level */
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  
+  /** Openlayers feature currently shown in popup */
+  feature: PropTypes.object
 }
 
 export default PopupActionGroup
