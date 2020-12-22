@@ -14,7 +14,7 @@ import olGeomMultiLinestring from 'ol/geom/MultiLineString'
  * VectorTileLayer class extends olLayerVector {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorTileLayer.html}
  * @function
  * @category Classes
- * @since 1.5.0
+ * @since 1.3.0
  * @param {Object} [opts] - Object of optional params for olLayerVector
  */
 class VectorTileLayer extends olVectorTile {
@@ -36,7 +36,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that returns the VectorTileLayers attributes
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    * @returns {Array} VectorTileLayer attributes
    */
   getAttributes () {
@@ -51,7 +51,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that returns the VectorTileLayers values of a specific attribute
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    * @param {String} - olFeature property
    * @returns {Array} VectorTileLayer values of a specific attribute
    */
@@ -64,7 +64,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that sets custom styles from ManageLayer
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
    */
   setUserVectorStyles (styles) {
@@ -76,7 +76,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that returns the VectorTileLayers custom user styles
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    * @returns {Object} Geostyler rules object
    */
   getUserVectorStyles () {
@@ -86,7 +86,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that sets default styles of a VectorTileLayer
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    */
   setDefaultVectorStyles () {
     return this.parser.readStyle(this.getStyle()()).then(style => {
@@ -98,7 +98,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that returns the VectorTileLayers default VectorTileLayer styles
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    * @returns {Object} Geostyler rules object
    */
   getDefaultVectorStyles () {
@@ -108,7 +108,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that updates default styles of a VectorTileLayer
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
    */
   updateDefaultVectorStyles (styles) {
@@ -120,7 +120,7 @@ class VectorTileLayer extends olVectorTile {
   /**
    * A function that resets default styles of a VectorTileLayer back to its original default
    * @function
-   * @since 1.5.0
+   * @since 1.3.0
    */
   resetDefaultVectorStyles () {
     this.defaultStyles = this._defaultStylesCache
