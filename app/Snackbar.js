@@ -15,7 +15,7 @@ function SimpleSnackbar(props) {
     }
     setOpen(false)
   }
-  let message = 'Welcome to ol-kit!'
+  let message = 'Welcome to HELL!!!!'
 
   switch (props.location.pathname) {
     case '/covid':
