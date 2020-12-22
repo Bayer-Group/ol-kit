@@ -10,10 +10,10 @@ import { Item, Action } from './styled'
  */
 class PopupActionItem extends Component {
   render () {
-    const { children, title, disabled, onClick, style } = this.props
+    const { children, feature, title, disabled, onClick, style } = this.props
 
     return (
-      <Action role='button' onClick={disabled ? () => {} : onClick}>
+      <Action role='button' onClick={disabled ? () => {} : (e) => onClick(e, feature)}>
         {title ? <Item disabled={disabled} style={style}>{title}</Item> : children}
       </Action>
     )
@@ -34,7 +34,10 @@ PopupActionItem.propTypes = {
   onClick: PropTypes.func,
 
   /** Styles applied to <Item> */
-  style: PropTypes.object
+  style: PropTypes.object,
+  
+  /** OpenLayers feature on which the action is being done */
+  feature: PropTypes.object
 }
 
 PopupActionItem.defaultProps = {
