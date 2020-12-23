@@ -4,8 +4,6 @@ import centroid from '@turf/centroid'
 import olMap from 'ol/Map'
 import { fromLonLat } from 'ol/proj'
 import GeoJSON from 'ol/format/GeoJSON'
-import olFeature from 'ol/Feature'
-import olPolygon from 'ol/geom/Polygon'
 import olLayerVector from 'ol/layer/Vector'
 import olVectorTile from 'ol/layer/VectorTile'
 import olSourceCluster from 'ol/source/Cluster'
@@ -162,32 +160,36 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   map.getLayers().forEach(exhaustiveVectorFeaturesAtPixel)
 
   // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel?.length) map.getLayers().forEach(async layer => {
-    if (layer instanceof olVectorTile) {
-      const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-        const vectorTileSourceFeatures = await layer.getSource().getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
-        const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
-          const { ol_uid } = sourceFeature
-          let isFeatureAtClick = false
+  if (featuresAtPixel?.length) {
+    map.getLayers().forEach(async layer => {
+      if (layer instanceof olVectorTile) {
+        const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+          const vectorTileSourceFeatures = await layer.getSource()
+            .getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
+          const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
+            const { ol_uid } = sourceFeature // eslint-disable-line camelcase
 
-          featuresAtPixel.forEach(feat => {
-            if (feat?.ol_uid === ol_uid) isFeatureAtClick = true
+            let isFeatureAtClick = false
+
+            featuresAtPixel.forEach(feat => {
+              if (feat?.ol_uid === ol_uid) isFeatureAtClick = true // eslint-disable-line camelcase
+            })
+
+            return isFeatureAtClick
           })
 
-          return isFeatureAtClick
+          const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
+
+          resolve({ features, layer })
         })
 
-        const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
-
-        resolve({ features, layer })
-      })
-
-      promises.push(vectorTilePromise)
-    } else {
+        promises.push(vectorTilePromise)
+      } else {
       // handle non vector tile wfs layers
-      wfsSelector(layer)
-    }
-  })
+        wfsSelector(layer)
+      }
+    })
+  }
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)

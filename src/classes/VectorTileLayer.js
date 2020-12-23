@@ -156,7 +156,8 @@ class VectorTileLayer extends olVectorTile {
   _setInitialStyle () {
     let style = {}
     const hasFeatures = this.getSource().getFeaturesInExtent([0, 0, Infinity, Infinity]).length
-    const geomType = hasFeatures ? this.getSource().getFeaturesInExtent([0, 0, Infinity, Infinity])[0].getGeometry() : null
+    const geomType = hasFeatures ? this.getSource()
+      .getFeaturesInExtent([0, 0, Infinity, Infinity])[0].getGeometry() : null
 
     if (geomType instanceof olGeomPoint || geomType instanceof olGeomMultiPoint) {
       style = [new olStyleStyle({
