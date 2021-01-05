@@ -69,7 +69,12 @@ describe('Vector Layer class', () => {
 
     const receivedStyle = vectorLayer.getStyle()()
     const expectedStyle = [new olStyleStyle({
-      fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
+      image: new olStyleCircle({
+        fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
+        stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
+        radius: 5
+      }),
+      fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
       stroke: new olStyleStroke({ color: '#3399CC', width: 2 })
     })]
 
@@ -89,7 +94,12 @@ describe('Vector Layer class', () => {
     const receivedStyle = vectorLayer.getStyle()()
     const expectedStyle = [new olStyleStyle({
       image: new olStyleCircle({
-        fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
+        image: new olStyleCircle({
+          fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
+          stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
+          radius: 5
+        }),
+        fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
         stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
         radius: 5
       })
