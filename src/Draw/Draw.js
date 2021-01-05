@@ -12,6 +12,7 @@ import olFeature from 'ol/Feature'
 import olDrawInteraction from 'ol/interaction/Draw'
 import olSnapInteraction from 'ol/interaction/Snap'
 import olGeomTypes from 'ol/geom/GeometryType'
+import { VectorLayer } from '../classes'
 import olLayerVector from 'ol/layer/Vector'
 import olSourceVector from 'ol/source/Vector'
 import olGeomCircle from 'ol/geom/Circle'
@@ -92,7 +93,7 @@ class Draw extends React.Component {
       const snapOpts = preferences ? { pixelTolerance: preferences.get?.('_SNAPPING_TOLERANCE') } : this.props.snapOpts
       const mapLayers = map.getLayers().getArray()
       const res = map.getView().getResolution()
-      const vectorLayers = mapLayers.filter(layer => layer instanceof olLayerVector)
+      const vectorLayers = mapLayers.filter(layer => layer instanceof olLayerVector || layer instanceof VectorLayer)
       const snapFeatures = new olCollection(getStyledFeatures(vectorLayers, res).map(([feature]) => feature))
       const snapInteractionOpts = { features: snapFeatures, ...snapOpts }
       const snapInteraction = new olSnapInteraction(snapInteractionOpts)
