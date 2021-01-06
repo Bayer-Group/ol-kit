@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanel/LayerPanelActionImport/index.js</title>
+    <title>ol-kit | classes/VectorTileLayer.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,117 +80,191 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import MenuItem from '@material-ui/core/MenuItem'
-import { UploadInput } from './styled'
-import { connectToContext } from 'Provider'
+            <pre class="prettyprint source linenums"><code>import nanoid from 'nanoid'
+import olVectorTile from 'ol/layer/VectorTile'
+import OpenLayersParser from 'geostyler-openlayers-parser'
+import olStyleStyle from 'ol/style/Style'
+import olStyleFill from 'ol/style/Fill'
+import olStyleStroke from 'ol/style/Stroke'
+import olStyleCircle from 'ol/style/Circle'
+import olGeomPoint from 'ol/geom/Point'
+import olGeomLinestring from 'ol/geom/LineString'
+import olGeomMultiPoint from 'ol/geom/MultiPoint'
+import olGeomMultiLinestring from 'ol/geom/MultiLineString'
 
 /**
- * @component
- * @category LayerPanel
- * @since 0.5.0
+ * VectorTileLayer class extends olLayerVector {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorTileLayer.html}
+ * @function
+ * @category Classes
+ * @since 1.4.0
+ * @param {Object} [opts] - Object of optional params for olLayerVector
  */
-class LayerPanelActionImport extends Component {
-  constructor (props) {
-    super(props)
+class VectorTileLayer extends olVectorTile {
+  constructor (opts) {
+    if (!opts?.className) opts.className = `_ol_kit_vector_layer_${nanoid()}`
+    super(opts)
 
-    this.state = { value: null }
+    this.parser = new OpenLayersParser()
+    this.userStyles = []
+    this.defaultStyles = []
+    this._defaultStylesCache = []
+    this.isVectorTileLayer = true
+    if (!opts?.style) this._setInitialStyle()
+    this.setDefaultVectorStyles()
+
+    return this
   }
 
-  onFileChange = (id) => {
-    const file = document.getElementById(id).files[0]
+  /**
+   * A function that returns the VectorTileLayers attributes
+   * @function
+   * @since 1.4.0
+   * @returns {Array} VectorTileLayer attributes
+   */
+  getAttributes () {
+    // Vector tile layers don't have the convention that all features have to share the same attributes so we have to get all of the features and summarize their attributes.
+    return this.getSource()
+      .getFeaturesInExtent([-Infinity, -Infinity, Infinity, Infinity]) // get all available features
+      .reduce((attributes, feature) => {
+        return [...new Set([...attributes, ...Object.keys(feature.getProperties())]).values()]
+      }, [])
+  }
 
-    if (this.validFile(file)) {
-      this.props.handleImport(file)
+  /**
+   * A function that returns the VectorTileLayers values of a specific attribute
+   * @function
+   * @since 1.4.0
+   * @param {String} - olFeature property
+   * @returns {Array} VectorTileLayer values of a specific attribute
+   */
+  fetchValuesForAttribute (attribute) {
+    const dupes = this.getSource().getFeaturesInExtent([-Infinity, -Infinity, Infinity, Infinity]).map(feature => feature.getProperties()[`${attribute}`])
+
+    return [...new Set(dupes)]
+  }
+
+  /**
+   * A function that sets custom styles from ManageLayer
+   * @function
+   * @since 1.4.0
+   * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
+   */
+  setUserVectorStyles (styles) {
+    this.userStyles = styles
+
+    this._applyVectorStyles()
+  }
+
+  /**
+   * A function that returns the VectorTileLayers custom user styles
+   * @function
+   * @since 1.4.0
+   * @returns {Object} Geostyler rules object
+   */
+  getUserVectorStyles () {
+    return this.userStyles
+  }
+
+  /**
+   * A function that sets default styles of a VectorTileLayer
+   * @function
+   * @since 1.4.0
+   */
+  setDefaultVectorStyles () {
+    return this.parser.readStyle(this.getStyle()()).then(style => {
+      this._defaultStylesCache = style.rules
+      this.defaultStyles = style.rules
+    })
+  }
+
+  /**
+   * A function that returns the VectorTileLayers default VectorTileLayer styles
+   * @function
+   * @since 1.4.0
+   * @returns {Object} Geostyler rules object
+   */
+  getDefaultVectorStyles () {
+    return this.defaultStyles
+  }
+
+  /**
+   * A function that updates default styles of a VectorTileLayer
+   * @function
+   * @since 1.4.0
+   * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
+   */
+  updateDefaultVectorStyles (styles) {
+    this.defaultStyles = styles
+
+    this._applyVectorStyles()
+  }
+
+  /**
+   * A function that resets default styles of a VectorTileLayer back to its original default
+   * @function
+   * @since 1.4.0
+   */
+  resetDefaultVectorStyles () {
+    this.defaultStyles = this._defaultStylesCache
+
+    this._applyVectorStyles()
+  }
+
+  _applyVectorStyles () {
+    const filteredUserStyles = this.getUserVectorStyles().filter(style => {
+      // do a safe check for the filter key
+      if (!Array.isArray(style.filter)) return true
+      const attributeValue = style.filter[1][2]
+
+      return attributeValue !== ''
+    })
+
+    const style = {
+      name: this.get('title') || 'Custom Vector Style',
+      rules: [
+        ...this.getDefaultVectorStyles(),
+        ...filteredUserStyles
+      ]
     }
 
-    // clear the file input -- otherwise file with same name as last imported will not trigger event
-    this.setState({ value: null })
-    this.props.handleMenuClose()
+    return this.parser
+      .writeStyle(style)
+      .then(olStyle => {
+        // update the sld_body which is what geoserver uses to style the layer
+        this.setStyle(olStyle)
+      })
   }
 
-  validFile = (file) => {
-    const { fileTypes } = this.props
+  _setInitialStyle () {
+    let style = {}
+    const hasFeatures = this.getSource().getFeaturesInExtent([0, 0, Infinity, Infinity]).length
+    const geomType = hasFeatures ? this.getSource()
+      .getFeaturesInExtent([0, 0, Infinity, Infinity])[0].getGeometry() : null
 
-    return !!(file &amp;&amp; fileTypes.find((type) => file.name.endsWith(type.extension.toLowerCase())))
-  }
-
-  render () {
-    const { fileTypes, translations } = this.props
-
-    return (
-      &lt;MenuItem disableGutters={false}>
-        &lt;label htmlFor='file-upload'>
-          {translations['_ol_kit.LayerPanelActions.import'] || 'Import File'}
-        &lt;/label>
-        &lt;UploadInput
-          value={this.state.value || ''}
-          type='file'
-          accept={fileTypes.map(f => f.extension).join(',')}
-          id='file-upload'
-          hidden={true}
-          onChange={(e) => this.onFileChange('file-upload')}
-          className='zmdi zmdi-upload'
-        />
-      &lt;/MenuItem>
-    )
-  }
-}
-
-LayerPanelActionImport.propTypes = {
-  /** Array of file types and their corresponding extensions */
-  fileTypes: PropTypes.arrayOf(PropTypes.exact({
-    display: PropTypes.string,
-    extension: PropTypes.string
-  })).isRequired,
-
-  /** A callback function that returns the file thats being imported */
-  handleImport: PropTypes.func.isRequired,
-
-  /** A function that closes the `LayerPanelMenu` */
-  handleMenuClose: PropTypes.func,
-
-  /** An object of translation key/value pairs */
-  translations: PropTypes.object
-}
-
-LayerPanelActionImport.defaultProps = {
-  fileTypes: [
-    {
-      display: 'KML',
-      extension: '.kml'
-    },
-    {
-      display: 'Compressed KML',
-      extension: '.kmz'
-    },
-    {
-      display: 'GeoJSON',
-      extension: '.geojson'
-    },
-    {
-      display: 'JSON',
-      extension: '.json'
-    },
-    {
-      display: 'WKT',
-      extension: '.wkt'
-    },
-    {
-      display: 'CSV',
-      extension: '.csv'
-    },
-    {
-      display: 'Shapefile ZIP',
-      extension: '.zip'
+    if (geomType instanceof olGeomPoint || geomType instanceof olGeomMultiPoint) {
+      style = [new olStyleStyle({
+        image: new olStyleCircle({
+          fill: new olStyleFill({ color: 'rgba(255,255,255,0.5)' }),
+          stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
+          radius: 5
+        })
+      })]
+    } else if (geomType instanceof olGeomLinestring || geomType instanceof olGeomMultiLinestring) {
+      style = [new olStyleStyle({
+        stroke: new olStyleStroke({ color: '#3399CC', width: 2 })
+      })]
+    } else {
+      style = [new olStyleStyle({
+        fill: new olStyleFill({ color: 'rgba(255,255,255,0.5)' }),
+        stroke: new olStyleStroke({ color: '#3399CC', width: 2 })
+      })]
     }
-  ],
-  handleMenuClose: () => {},
-  handleImport: () => {}
+
+    this.setStyle(() => style)
+  }
 }
 
-export default connectToContext(LayerPanelActionImport)
+export default VectorTileLayer
 </code></pre>
         </article>
     </section>

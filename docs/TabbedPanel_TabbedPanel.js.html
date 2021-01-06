@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanel/LayerPanelActionImport/index.js</title>
+    <title>ol-kit | TabbedPanel/TabbedPanel.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -82,115 +82,80 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import MenuItem from '@material-ui/core/MenuItem'
-import { UploadInput } from './styled'
+import { Card, Tabs, Tab, InitialTab } from './styled'
+
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import { connectToContext } from 'Provider'
 
 /**
  * @component
- * @category LayerPanel
- * @since 0.5.0
+ * @category TabbedPanel
+ * @since 1.4.0
  */
-class LayerPanelActionImport extends Component {
+class TabbedPanel extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { value: null }
-  }
-
-  onFileChange = (id) => {
-    const file = document.getElementById(id).files[0]
-
-    if (this.validFile(file)) {
-      this.props.handleImport(file)
+    this.state = {
+      activeIndex: 0,
+      showPanel: true
     }
-
-    // clear the file input -- otherwise file with same name as last imported will not trigger event
-    this.setState({ value: null })
-    this.props.handleMenuClose()
   }
 
-  validFile = (file) => {
-    const { fileTypes } = this.props
+  handleChange = (_, activeIndex) => {
+    this.setState({ activeIndex, showPanel: true })
+  }
 
-    return !!(file &amp;&amp; fileTypes.find((type) => file.name.endsWith(type.extension.toLowerCase())))
+  togglePanel = () => {
+    this.setState({ showPanel: !this.state.showPanel })
+  }
+
+  hideLayerPanel = () => {
+    this.setState({ showPanel: false })
   }
 
   render () {
-    const { fileTypes, translations } = this.props
+    const { children, translations } = this.props
+    const { activeIndex, showPanel } = this.state
 
     return (
-      &lt;MenuItem disableGutters={false}>
-        &lt;label htmlFor='file-upload'>
-          {translations['_ol_kit.LayerPanelActions.import'] || 'Import File'}
-        &lt;/label>
-        &lt;UploadInput
-          value={this.state.value || ''}
-          type='file'
-          accept={fileTypes.map(f => f.extension).join(',')}
-          id='file-upload'
-          hidden={true}
-          onChange={(e) => this.onFileChange('file-upload')}
-          className='zmdi zmdi-upload'
-        />
-      &lt;/MenuItem>
+      &lt;>
+        &lt;Card open={showPanel} numoftabs={children.length || 1} className='_popup_boundary' >
+          &lt;div style={{ display: 'flex', background: 'rgb(237, 237, 237)' }}>
+            &lt;InitialTab onClick={this.togglePanel} icon={showPanel ? &lt;KeyboardArrowDownIcon data-testid='MapPanel.close' /> : &lt;KeyboardArrowRightIcon data-testid='MapPanel.open' />} />
+            &lt;Tabs
+              open={showPanel}
+              value={activeIndex}
+              onChange={this.handleChange}
+              variant='scrollable'
+              scrollButtons='auto'>
+              {React.Children.map(children, (child, i) => {
+                if (child) return &lt;Tab key={i + 1} label={child.props.tabIcon || child.props.label} />
+              })}
+            &lt;/Tabs>
+          &lt;/div>
+          {translations &amp;&amp; React.Children.toArray(children)[activeIndex]}
+        &lt;/Card>
+      &lt;/>
     )
   }
 }
 
-LayerPanelActionImport.propTypes = {
-  /** Array of file types and their corresponding extensions */
-  fileTypes: PropTypes.arrayOf(PropTypes.exact({
-    display: PropTypes.string,
-    extension: PropTypes.string
-  })).isRequired,
+TabbedPanel.defaultProps = {}
 
-  /** A callback function that returns the file thats being imported */
-  handleImport: PropTypes.func.isRequired,
+TabbedPanel.propTypes = {
+  /** The pages of the panel (things like `LayerPanelPage` or `LayerStyler` components) */
+  children: PropTypes.node.isRequired,
 
-  /** A function that closes the `LayerPanelMenu` */
-  handleMenuClose: PropTypes.func,
+  /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
+  opacity: PropTypes.number,
 
-  /** An object of translation key/value pairs */
+  /** Object with key/value pairs for translated strings */
   translations: PropTypes.object
 }
 
-LayerPanelActionImport.defaultProps = {
-  fileTypes: [
-    {
-      display: 'KML',
-      extension: '.kml'
-    },
-    {
-      display: 'Compressed KML',
-      extension: '.kmz'
-    },
-    {
-      display: 'GeoJSON',
-      extension: '.geojson'
-    },
-    {
-      display: 'JSON',
-      extension: '.json'
-    },
-    {
-      display: 'WKT',
-      extension: '.wkt'
-    },
-    {
-      display: 'CSV',
-      extension: '.csv'
-    },
-    {
-      display: 'Shapefile ZIP',
-      extension: '.zip'
-    }
-  ],
-  handleMenuClose: () => {},
-  handleImport: () => {}
-}
-
-export default connectToContext(LayerPanelActionImport)
+export default connectToContext(TabbedPanel)
 </code></pre>
         </article>
     </section>
