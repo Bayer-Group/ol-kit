@@ -191,7 +191,7 @@ class ContextMenu extends React.Component {
         &lt;ContextMenuCoordinateGroup key={'coordgroup'} {...props} />
       ]
       // this logic allows defaults, custom or a mix (defaults render on top &amp; custom below)
-      const contents = children ? [...(keepDefaults ? defaults : []), ...children] : defaults
+      const contents = children ? [...(keepDefaults ? defaults : []), ...React.Children.toArray(children)] : defaults
 
       return React.Children.map(contents, c => React.cloneElement(c, props))
     }
