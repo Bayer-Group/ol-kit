@@ -177,7 +177,7 @@ describe('<LayerPanel />', () => {
     expect(testMap.getLayers().getArray()[1].getVisible()).toBe(true)
     expect(testMap.getLayers().getArray()[2].getVisible()).toBe(true)
   })
-  it('should remove Layers from action bar', async () => {
+  it('should remove all Layers from action bar', async () => {
     let testMap
     const onMapInit = jest.fn(map => {
       testMap = map
@@ -205,9 +205,9 @@ describe('<LayerPanel />', () => {
     const actions = getAllByTestId('LayerPanel.actionsButton')
 
     fireEvent.click(actions[0])
-    await waitFor(() => expect(getByText('Remove Layers')).toBeInTheDocument())
+    await waitFor(() => expect(getByText('Remove All Layers')).toBeInTheDocument())
 
-    fireEvent.click(getByText('Remove Layers'))
+    fireEvent.click(getByText('Remove All Layers'))
 
     // should still have the basemap
     expect(testMap.getLayers().getArray().length).toBe(1)
@@ -224,9 +224,9 @@ describe('<LayerPanel />', () => {
 
     // make sure the layer that was toggled off is not removed
     fireEvent.click(actions[0])
-    await waitFor(() => expect(getByText('Remove Layers')).toBeInTheDocument())
+    await waitFor(() => expect(getByText('Remove All Layers')).toBeInTheDocument())
 
-    fireEvent.click(getByText('Remove Layers'))
+    fireEvent.click(getByText('Remove All Layers'))
 
     // should still have the basemap
     expect(testMap.getLayers().getArray().length).toBe(2)
