@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
-import LayerPanelHeader from 'LayerPanel/LayerPanelHeader'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
@@ -167,9 +166,8 @@ class LayerPanelLayersPage extends Component {
 
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
-      const iaFeatureStyle = feature.get('_ol_kit_feature_style') || feature.getStyle()
-      const featureOriginalStyle = isEqual(iaFeatureStyle, new olStyleStyle(null))
-        ? feature.setStyle(null) : iaFeatureStyle
+      const olkitStyle = feature.get('_ol_kit_feature_style') || feature.getStyle()
+      const featureOriginalStyle = isEqual(olkitStyle, new olStyleStyle(null)) ? undefined : olkitStyle
       const featureStyle = isVisible ? featureOriginalStyle : new olStyleStyle()
 
       feature.set('_ol_kit_feature_visibility', isVisible)
@@ -178,7 +176,10 @@ class LayerPanelLayersPage extends Component {
 
       return feature
     }).filter((feature) => {
-      return !this.props.enableFilter || !this.state.filterText ? true : feature.get('name').toLowerCase().includes(this.state.filterText.toLowerCase())
+      const name = feature.get('name')
+
+      return !this.props.enableFilter || !this.state.filterText || !name
+        ? true : name.toLowerCase().includes(this.state.filterText.toLowerCase())
     })
   }
 
@@ -275,7 +276,6 @@ class LayerPanelLayersPage extends Component {
 
     // otherwise, add them to the map ourselves
     convertFileToFeatures(file, map).then(({ features, name }) => {
-
       // if a callback to handle imported features is passed, IAs handle add them to the map
       if (onFileImport) {
         onFileImport(features, name)
@@ -289,16 +289,19 @@ class LayerPanelLayersPage extends Component {
         map.getView().fit(source.getExtent(), map.getSize())
       }
     }).catch(err => {
+      console.log(err) // eslint-disable-line
     })
   }
 
   render () {
     const {
-      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon,
-      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures
+      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
+      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
+
+    console.log(this.props)
 
     return (
       <LayerPanelPage tabIcon={tabIcon}>
@@ -317,11 +320,14 @@ class LayerPanelLayersPage extends Component {
             disableDrag={disableDrag}
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
-            items={layers} >
+            items={layers}
+            onLayerReorder={onLayerReorder} >
             <LayerPanelListItem
               title={translations['_ol_kit.LayerPanelLayersPage.title']}
               translations={translations} >
-              <LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />
+              <LayerPanelCheckbox
+                checkboxState={masterCheckboxVisibility}
+                handleClick={this.setVisibilityForAllLayers} />
               <ListItemText primary={'All Layers'} />
               <ListItemSecondaryAction style={{ right: '0px !important' }}>
                 <LayerPanelActions
@@ -331,7 +337,8 @@ class LayerPanelLayersPage extends Component {
                   map={map}>
                   <LayerPanelActionRemove
                     removeFeaturesForLayer={this.removeFeaturesForLayer}
-                    shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+                    shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+                    onLayerRemoved={onLayerRemoved} />
                   <LayerPanelActionImport handleImport={this.onFileImport} />
                   <LayerPanelActionExport onExportFeatures={onExportFeatures} />
                 </LayerPanelActions>
@@ -444,7 +451,13 @@ LayerPanelLayersPage.propTypes = {
   getMenuItemsForLayer: PropTypes.func,
 
   /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+
+  /** A callback function to inform when layers are reordered */
+  onLayerReorder: PropTypes.func,
+
+  /** A callback function to inform when a layer is removed */
+  onLayerRemoved: PropTypes.func
 }
 
 export default connectToContext(LayerPanelLayersPage)
