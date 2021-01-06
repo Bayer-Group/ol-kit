@@ -82,10 +82,12 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card, Tabs, Tab } from './styled'
+import { Card, Tabs, Tab, InitialTab, CardContent } from './styled'
 // material-ui-icons
 import LayersIcon from '@material-ui/icons/Layers'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import Typography from '@material-ui/core/Typography'
 import { connectToContext } from 'Provider'
 
 /**
@@ -98,43 +100,46 @@ class LayerPanelBase extends Component {
     super(props)
 
     this.state = {
-      activeIndex: false,
+      activeIndex: 0,
       showLayerPanel: false
     }
   }
 
   handleChange = (_, activeIndex) => {
-    const { showLayerPanel } = this.state
+    this.setState({ activeIndex })
+  }
 
-    // the first time through the idx is 0 so we need to add 1
-    if (activeIndex === 0) {
-      this.setState({ showLayerPanel: !this.state.showLayerPanel, activeIndex: showLayerPanel ? false : 1 })
-    } else {
-      this.setState({ activeIndex })
-    }
+  showLayerPanel = () => {
+    this.setState({ showLayerPanel: true })
+  }
+
+  hideLayerPanel = () => {
+    this.setState({ showLayerPanel: false })
   }
 
   render () {
-    const { inline, style, children } = this.props
+    const { inline, style, children, translations, layerPanelTitle } = this.props
     const { activeIndex, showLayerPanel } = this.state
     const tabDataTestId = showLayerPanel ? 'LayerPanel.close' : 'LayerPanel.open'
 
     return (
-      &lt;Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
-        &lt;Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
-          &lt;Tab icon={
-            showLayerPanel
-              ? &lt;ChevronRightIcon data-testid={tabDataTestId} />
-              : &lt;LayersIcon data-testid={tabDataTestId} />
-          } />
-          {showLayerPanel &amp;&amp;
-            React.Children.map(children, (child, i) => {
-              if (child) return &lt;Tab key={i} icon={child.props.tabIcon} />
-            })
-          }
-        &lt;/Tabs>
-        {React.Children.toArray(children)[activeIndex - 1]}
-      &lt;/Card>
+      &lt;>
+        {!showLayerPanel &amp;&amp; &lt;InitialTab id='initialtab' onClick={this.showLayerPanel} icon={&lt;LayersIcon data-testid={tabDataTestId} />} />}
+        &lt;Card open={showLayerPanel} styles={style} numoftabs={children.length || 1} inline={inline} className='_popup_boundary' >
+          &lt;CardContent>
+            &lt;Typography variant='h5' component='h5'>{layerPanelTitle}&lt;/Typography>
+            &lt;IconButton onClick={this.hideLayerPanel}>&lt;CloseIcon />&lt;/IconButton>
+          &lt;/CardContent>
+          &lt;Tabs open={showLayerPanel} value={activeIndex} onChange={this.handleChange} >
+            {showLayerPanel &amp;&amp;
+              React.Children.map(children, (child, i) => {
+                if (child) return &lt;Tab key={i} label={child.props.tabIcon || child.props.label} />
+              })
+            }
+          &lt;/Tabs>
+          {translations &amp;&amp; React.Children.toArray(children)[activeIndex]}
+        &lt;/Card>
+      &lt;/>
     )
   }
 }
@@ -147,7 +152,13 @@ LayerPanelBase.propTypes = {
   children: PropTypes.node.isRequired,
 
   /** An object of styles spread on the layerpanel */
-  style: PropTypes.object
+  style: PropTypes.object,
+
+  /** Title of the LayerPanel */
+  layerPanelTitle: PropTypes.string,
+
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.object
 }
 
 export default connectToContext(LayerPanelBase)
@@ -168,7 +179,9 @@ export default connectToContext(LayerPanelBase)
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>

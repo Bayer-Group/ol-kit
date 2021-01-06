@@ -91,10 +91,10 @@ import PropTypes from 'prop-types'
  */
 class LayerPanelPage extends Component {
   render () {
-    const { children } = this.props
+    const { children, label, tabIcon } = this.props
 
     return (
-      &lt;LayerPanelPageContainer data-testid='LayerPanel.page'>
+      &lt;LayerPanelPageContainer label={label} tabIcon={tabIcon} data-testid='LayerPanel.page'>
         {children}
       &lt;/LayerPanelPageContainer>
     )
@@ -103,7 +103,13 @@ class LayerPanelPage extends Component {
 
 LayerPanelPage.propTypes = {
   /** An array of components (likely a LayerPanelHeader, LayerPanelContent, or LayerPanelFooter) */
-  children: PropTypes.node
+  children: PropTypes.node,
+
+  /** A string title of the page. Will be used as tab title. */
+  label: PropTypes.string,
+
+  /** A @material-ui/icon. Check LayerPanelPage example.md for more clarification */
+  tabIcon: PropTypes.node
 }
 
 export default LayerPanelPage
@@ -124,7 +130,9 @@ export default LayerPanelPage
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>

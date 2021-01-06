@@ -85,7 +85,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   const wfsSelector = layer => {
     // this logic only handles clicks on vector layer types
-    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector || layer instanceof olVectorTile
+    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector
 
     // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
     if (!layer.getLayerState().managed || !allowedLayerType) return // do nothing with these layer types
@@ -160,7 +160,36 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   map.getLayers().forEach(exhaustiveVectorFeaturesAtPixel)
 
   // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel?.length) map.getLayers().forEach(wfsSelector)
+  if (featuresAtPixel?.length) {
+    map.getLayers().forEach(async layer => {
+      if (layer instanceof olVectorTile) {
+        const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+          const vectorTileSourceFeatures = await layer.getSource()
+            .getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
+          const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
+            const { ol_uid } = sourceFeature // eslint-disable-line camelcase
+
+            let isFeatureAtClick = false
+
+            featuresAtPixel.forEach(feat => {
+              if (feat?.ol_uid === ol_uid) isFeatureAtClick = true // eslint-disable-line camelcase
+            })
+
+            return isFeatureAtClick
+          })
+
+          const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
+
+          resolve({ features, layer })
+        })
+
+        promises.push(vectorTilePromise)
+      } else {
+      // handle non vector tile wfs layers
+        wfsSelector(layer)
+      }
+    })
+  }
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)

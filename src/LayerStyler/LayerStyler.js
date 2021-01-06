@@ -60,7 +60,7 @@ class LayerStyler extends React.Component {
     if (layer) {
       if (layer.isGeoserverLayer) {
         return layer.getAttributes().sort((a, b) => a.localeCompare(b))
-      } else if (layer.isVectorLayer) {
+      } else if (layer.isVectorLayer || layer.isVectorTileLayer) {
         return layer.getAttributes().sort((a, b) => a.localeCompare(b))
       }
     }
@@ -75,7 +75,7 @@ class LayerStyler extends React.Component {
         const attributeValues = await layer.fetchValuesForAttribute(this.props.map, attribute, opts)
 
         this.setState({ attributeValues })
-      } else if (layer.isVectorLayer) {
+      } else if (layer.isVectorLayer || layer.isVectorTileLayer) {
         const attributeValues = layer.fetchValuesForAttribute(attribute)
 
         this.setState({ attributeValues })
@@ -145,7 +145,7 @@ class LayerStyler extends React.Component {
   onUserStyleChange = (layer, styles) => {
     if (layer && layer.isGeoserverLayer) {
       layer.setUserWMSStyles(styles)
-    } else if (layer && layer.isVectorLayer) {
+    } else if (layer && (layer.isVectorLayer || layer.isVectorTileLayer)) {
       layer.setUserVectorStyles(styles)
     }
 
@@ -156,7 +156,7 @@ class LayerStyler extends React.Component {
   onDefaultStyleReset = (layer) => {
     if (layer && layer.isGeoserverLayer) {
       layer.resetDefaultWMSStyles()
-    } else if (layer.isVectorLayer) {
+    } else if (layer.isVectorLayer || layer.isVectorTileLayer) {
       layer.resetDefaultVectorStyles()
     }
 
@@ -168,7 +168,7 @@ class LayerStyler extends React.Component {
     const { map } = this.props
     const layers = map.getLayers().getArray()
     const validLayers = layers.filter(layer => {
-      return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer)
+      return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer || layer.isVectorTileLayer)
     })
 
     if (layers.length - validLayers.length > 1) {

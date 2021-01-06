@@ -105,8 +105,10 @@ class PopupActionGroup extends Component {
   }
 
   render () {
-    const { title, children } = this.props
+    const { title, children, feature } = this.props
     const { right, top } = this.el ? this.el.getBoundingClientRect() : { right: 0, top: 0 }
+    
+    const transformedChildren = React.Children.map(children, c => React.cloneElement(c, { feature }))
 
     return (
       &lt;div style={{ position: 'relative' }} ref={(element) => { this.el = element }}>
@@ -126,7 +128,7 @@ class PopupActionGroup extends Component {
               showFlyout={this.state.showFlyout}
               onMouseEnter={() => this.onHover(true)}
               onMouseLeave={() => this.onHover(false)}>
-              {children}
+              {transformedChildren}
             &lt;/Flyout>,
             document.body)
         }
@@ -140,7 +142,10 @@ PopupActionGroup.propTypes = {
   children: PropTypes.node.isRequired,
 
   /** Title of the action group to display on the root level */
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  
+  /** Openlayers feature currently shown in popup */
+  feature: PropTypes.object
 }
 
 export default PopupActionGroup
@@ -161,7 +166,9 @@ export default PopupActionGroup
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>

@@ -92,10 +92,10 @@ import { Item, Action } from './styled'
  */
 class PopupActionItem extends Component {
   render () {
-    const { children, title, disabled, onClick, style } = this.props
+    const { children, feature, title, disabled, onClick, style } = this.props
 
     return (
-      &lt;Action role='button' onClick={disabled ? () => {} : onClick}>
+      &lt;Action role='button' onClick={disabled ? () => {} : (e) => onClick(e, feature)}>
         {title ? &lt;Item disabled={disabled} style={style}>{title}&lt;/Item> : children}
       &lt;/Action>
     )
@@ -116,7 +116,10 @@ PopupActionItem.propTypes = {
   onClick: PropTypes.func,
 
   /** Styles applied to &lt;Item> */
-  style: PropTypes.object
+  style: PropTypes.object,
+  
+  /** OpenLayers feature on which the action is being done */
+  feature: PropTypes.object
 }
 
 PopupActionItem.defaultProps = {
@@ -142,7 +145,9 @@ export default PopupActionItem
             <a href="https://www.cropscience.bayer.com" target="_blank">
                 <img src="static/bayer-logo.png" width="200px" />
             </a>
-            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved.</div>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
         </div>
     </div>
 </footer>
