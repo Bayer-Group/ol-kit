@@ -61,6 +61,7 @@ Object {
   "TimeSlider": [Function],
   "TimeSliderBase": [Function],
   "VectorLayer": [Function],
+  "VectorTileLayer": [Function],
   "ZoomControls": [Function],
   "ZoomIn": [Function],
   "ZoomOut": [Function],

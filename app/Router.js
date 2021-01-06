@@ -13,6 +13,7 @@ import Covid from './demos/covid/App'
 import Space from './demos/space/App'
 import World from './demos/world/App'
 import Geohack from './demos/geohack/App'
+import VectorTiles from './demos/vector-tiles/App'
 
 export default function App () {
   return (
@@ -29,6 +30,9 @@ export default function App () {
         </Route>
         <Route path='/space'>
           <Space />
+        </Route>
+        <Route path='/vector-tiles'>
+          <VectorTiles />
         </Route>
         <Route path='/'>
           <World />
