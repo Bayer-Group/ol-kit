@@ -1,6 +1,6 @@
 const semver = require('semver')
 const child_process = require('child_process')
-const packageJson = require('./package.json')
+const packageJson = require('./../package.json')
 
 const packageName = packageJson.name
 const tag = packageJson.version.includes('-') ? 'next' : 'latest'
