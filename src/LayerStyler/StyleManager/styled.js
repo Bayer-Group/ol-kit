@@ -19,6 +19,12 @@ export const FilterContainer = styled.div`
   vertical-align: top;
 `
 
+export const NoLayerText = styled.div`
+  color: #535353;
+  margin: 30px;
+  text-align: center;
+`
+
 export const Tooltip = withStyles(() => ({
   tooltip: {
     fontSize: '15px'

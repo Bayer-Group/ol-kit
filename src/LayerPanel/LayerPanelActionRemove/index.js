@@ -39,7 +39,7 @@ class LayerPanelActionRemove extends Component {
     const { layers, layer, translations } = this.props
     const noVisibleLayers = layers && this.getVisibleLayers().length === 0
     const removeLayer = translations['_ol_kit.actions.removeLayer'] || 'Remove Layer'
-    const removeLayers = translations['_ol_kit.actions.removeLayers'] || 'Remove Layers'
+    const removeLayers = translations['_ol_kit.actions.removeLayers'] || 'Remove All Layers'
 
     return (
       <MenuItem data-testid='LayerPanelAction.remove' disableGutters={false} disabled={layers && noVisibleLayers} onClick={this.handleRemove}>

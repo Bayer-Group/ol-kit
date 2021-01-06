@@ -32,6 +32,8 @@ import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 import isEqual from 'lodash.isequal'
 import { connectToContext } from 'Provider'
+import { convertFileToFeatures } from 'LayerPanel/LayerPanelActionImport/utils'
+import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -268,16 +270,38 @@ class LayerPanelLayersPage extends Component {
     this.setState({ layers: reorderedLayers })
   }
 
+  onFileImport = file => {
+    const { map, onFileImport } = this.props
+
+    // otherwise, add them to the map ourselves
+    convertFileToFeatures(file, map).then(({ features, name }) => {
+
+      // if a callback to handle imported features is passed, IAs handle add them to the map
+      if (onFileImport) {
+        onFileImport(features, name)
+
+      // if no onFileImport prop is passed, create a layer, add it and center/zoom the map
+      } else {
+        const source = new olSourceVector({ features })
+        const layer = new VectorLayer({ title: name, source })
+
+        map.addLayer(layer)
+        map.getView().fit(source.getExtent(), map.getSize())
+      }
+    }).catch(err => {
+    })
+  }
+
   render () {
     const {
-      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag,
-      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onFileImport, onExportFeatures
+      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon,
+      customActions, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
 
     return (
-      <LayerPanelPage>
+      <LayerPanelPage tabIcon={tabIcon}>
         {enableFilter &&
           <TextField
             id='feature-filter-input'
@@ -308,7 +332,7 @@ class LayerPanelLayersPage extends Component {
                   <LayerPanelActionRemove
                     removeFeaturesForLayer={this.removeFeaturesForLayer}
                     shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
-                  {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
+                  <LayerPanelActionImport handleImport={this.onFileImport} />
                   <LayerPanelActionExport onExportFeatures={onExportFeatures} />
                 </LayerPanelActions>
               </ListItemSecondaryAction>
@@ -396,7 +420,7 @@ LayerPanelLayersPage.propTypes = {
   enableFilter: PropTypes.bool,
 
   /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
-  onFeaturesImport: PropTypes.func,
+  onFileImport: PropTypes.func,
 
   /** A callback function fired when a feature list item is double clicked */
   handleFeatureDoubleClick: PropTypes.func,
@@ -418,9 +442,6 @@ LayerPanelLayersPage.propTypes = {
 
   /** A callback function to set custom Menu Items for a specific layer. Should recieve an array of `@material-ui/core/MenuItem` */
   getMenuItemsForLayer: PropTypes.func,
-
-  /** A callback function passed the features imported from 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types */
-  onFileImport: PropTypes.func,
 
   /** A boolean to disable the drag event on the LayerPanelList */
   disableDrag: PropTypes.bool

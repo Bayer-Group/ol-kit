@@ -47,10 +47,13 @@ function ZoomIn (props) {
       id='_ol_kit_zoom_in'
       data-testid='_ol_kit_zoom_in'
       icon={<AddIcon />}
-      onMouseDown={() => handleMouseDown()}
-      onMouseUp={() => stopZoom()} />
+      onMouseOut={() => stopZoom()}
+      onMouseUp={() => stopZoom()}
+      onMouseDown={() => handleMouseDown()} />
   )
 }
+
+ZoomIn.defaultProps = {}
 
 ZoomIn.propTypes = {
   /** reference to Openlayers map object */

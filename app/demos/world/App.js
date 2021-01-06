@@ -2,12 +2,13 @@ import React from 'react'
 import {
   Map,
   Popup,
-  LayerPanel,
+  TabbedPanel,
   Controls,
   ContextMenu,
   loadDataLayer,
   LayerStyler,
-  LayerPanelPage,
+  LayerPanelLayersPage,
+  TabbedPanelPage,
   LayerPanelContent,
   BasemapContainer,
   VectorLayer,
@@ -18,7 +19,7 @@ import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
-import LayersIcon from '@material-ui/icons/Layers'
+import Welcome from '../../Welcome'
 
 class App extends React.Component {
   onMapInit = async (map) => {
@@ -48,18 +49,20 @@ class App extends React.Component {
     return (
       <Map onMapInit={this.onMapInit} fullScreen>
         <Popup />
-        <LayerPanel>
-          <LayerPanelPage tabIcon='Layer Styler'>
-            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <LayerStyler />
-            </LayerPanelContent>
-          </LayerPanelPage>
-          <LayerPanelPage label={'Draw'}>
-            <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
-              <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-            </LayerPanelContent>
-          </LayerPanelPage>
-        </LayerPanel>
+        <TabbedPanel>
+          <TabbedPanelPage tabIcon='Home'>
+            <Welcome />
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Layers'>
+            <LayerPanelLayersPage />
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Styles'>
+            <LayerStyler />
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Draw'>
+            <DrawContainer style={{ position: 'relative', width: 'auto' }} />
+          </TabbedPanelPage>
+        </TabbedPanel>
         <ContextMenu />
         <Controls />
         <BasemapContainer />

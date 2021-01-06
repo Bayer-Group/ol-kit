@@ -5,12 +5,15 @@ import {
   Popup,
   Controls,
   loadDataLayer,
-  LayerPanel,
+  TabbedPanel,
+  TabbedPanelPage,
+  LayerPanelLayersPage,
   TimeSlider,
   BasemapContainer
 } from '@bayer/ol-kit'
 import Chart from './Chart'
 
+import Welcome from '../../Welcome'
 
 class MapView extends Component {
     state= {
@@ -58,7 +61,14 @@ class MapView extends Component {
         <Controls />
         <Popup />
         <TimeSlider />
-        <LayerPanel />
+        <TabbedPanel>
+          <TabbedPanelPage tabIcon='Home'>
+            <Welcome />
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Layers'>
+            <LayerPanelLayersPage />
+          </TabbedPanelPage>
+        </TabbedPanel>
         <BasemapContainer />
         {this.state.selectedFeature? <Chart feature={this.state.selectedFeature} isState={this.state.isState}/>:null}
       </Map>

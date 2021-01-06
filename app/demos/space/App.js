@@ -6,9 +6,9 @@ import ApolloClient from 'apollo-boost'
 import {
   BasemapContainer,
   Controls,
-  LayerPanel,
+  TabbedPanel,
   LayerPanelContent,
-  LayerPanelPage,
+  TabbedPanelPage,
   LayerStyler,
   Map,
   Popup,
@@ -16,6 +16,7 @@ import {
   loadDataLayer
 } from '@bayer/ol-kit'
 
+import Welcome from '../../Welcome'
 import ISS from './ISS'
 import SpaceX from './SpaceX'
 
@@ -43,13 +44,16 @@ function App (props) {
         <TimeSlider />
         <SpaceX />
         <ISS />
-        <LayerPanel>
-          <LayerPanelPage tabIcon={<PaletteIcon />}>
+        <TabbedPanel>
+          <TabbedPanelPage label='Home'>
+            <Welcome />
+          </TabbedPanelPage>
+          <TabbedPanelPage label='Styles'>
             <LayerPanelContent style={{ padding: '0px', fontFamily: 'Roboto, Arial, sans-serif' }}>
               <LayerStyler />
             </LayerPanelContent>
-          </LayerPanelPage>
-        </LayerPanel>
+          </TabbedPanelPage>
+        </TabbedPanel>
         <Controls variation={'dark'} />
         <BasemapContainer />
       </Map>

@@ -43,10 +43,10 @@ function ZoomOut (props) {
     <ControlGroupButton
       id='_ol_kit_zoom_out'
       data-testid='_ol_kit_zoom_out'
+      icon={<RemoveIcon />}
+      onMouseOut={() => stopZoom()}
       onMouseUp={() => stopZoom()}
-      onMouseDown={() => handleMouseDown()}>
-      <RemoveIcon />
-    </ControlGroupButton>
+      onMouseDown={() => handleMouseDown()} />
   )
 }
 

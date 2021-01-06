@@ -58,9 +58,7 @@ class MyCustomLayerPanelContainer extends React.Component {
     this.handleReorderedItems = this.handleReorderedItems.bind(this)
   }
 
-  updateLegends () {
-    console.log('updated my legends')
-  }
+  updateLegends () {}
 
   handleReorderedItems (newItems) {
     this.setState({ legends: newItems })

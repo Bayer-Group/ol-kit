@@ -15,12 +15,12 @@ export default {
   '_ol_kit.LayerPanelActions.kml': 'Export KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',
   '_ol_kit.LayerPanelActions.geojson': 'Export GeoJSON',
-  '_ol_kit.LayerPanelActions.import': 'Import',
+  '_ol_kit.LayerPanelActions.import': 'Import File',
   '_ol_kit.LayerPanelLayersPage.title': 'Active Layers',
   '_ol_kit.LayerPanelLayersPage.filterText': 'Filter Layers',
   '_ol_kit.LayerPanelListItem.feature': 'feature',
   '_ol_kit.actions.removeLayer': 'Remove Layer',
-  '_ol_kit.actions.removeLayers': 'Remove Layers',
+  '_ol_kit.actions.removeLayers': 'Remove All Layers',
   // LayerStyler
   '_ol_kit.AttributesFilter.where': 'Where',
   '_ol_kit.AttributesFilter.AND': 'AND',
@@ -60,6 +60,7 @@ export default {
   '_ol_kit.StyleManager.styleTab': 'Styles',
   '_ol_kit.StyleManager.fitlerTooltip': 'Unsupported layer type for filtering Layer attributes (Supported types include GeoserverLayer)',
   '_ol_kit.StyleManager.noLayerSelected': 'Select a Geoserver Layer to filter attributes',
+  '_ol_kit.StyleManager.noLayerText': 'Add a layer on the map to style',
   // MapLogo
   '_ol_kit.MapLogo.hover': `Powered by ol-kit v${version}`,
   '_ol_kit.MapLogo.title': 'Powered by ol-kit',
