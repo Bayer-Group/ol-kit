@@ -136,11 +136,11 @@ class Map extends React.Component {
             fullScreen={fullScreen}
             style={style}>
             <MapLogo logoPosition={logoPosition} translations={translations} />
-            {mapInitialized // wait for map to initialize before rendering children
-              ? children
-              : null
-            }
           </StyledMap>
+        }
+        {mapInitialized // wait for map to initialize before rendering children
+          ? children
+          : null
         }
       </>
     )
