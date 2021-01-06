@@ -9,7 +9,7 @@ import { connectToContext } from 'Provider'
 /**
  * @component
  * @category TabbedPanel
- * @since 1.3.0
+ * @since 1.4.0
  */
 class TabbedPanel extends Component {
   constructor (props) {

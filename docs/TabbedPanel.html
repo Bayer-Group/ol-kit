@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanel/LayerPanelActionImport/index.js</title>
+    <title>ol-kit | TabbedPanel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,123 +75,207 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import MenuItem from '@material-ui/core/MenuItem'
-import { UploadInput } from './styled'
-import { connectToContext } from 'Provider'
+        <h2>
+            &ltTabbedPanel /&gt
+        </h2>
+        
+    
+</header>
 
-/**
- * @component
- * @category LayerPanel
- * @since 0.5.0
- */
-class LayerPanelActionImport extends Component {
-  constructor (props) {
-    super(props)
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-    this.state = { value: null }
-  }
 
-  onFileChange = (id) => {
-    const file = document.getElementById(id).files[0]
+    
+    <h4 class="name" id="TabbedPanel">
+        <a class="href-link" href="#TabbedPanel">#</a>
+        
+        <span class="code-name">
+            
+                &ltTabbedPanel <i>children</i> <i>opacity</i> <i>translations</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-    if (this.validFile(file)) {
-      this.props.handleImport(file)
-    }
+    
+    
 
-    // clear the file input -- otherwise file with same name as last imported will not trigger event
-    this.setState({ value: null })
-    this.props.handleMenuClose()
-  }
 
-  validFile = (file) => {
-    const { fileTypes } = this.props
 
-    return !!(file &amp;&amp; fileTypes.find((type) => file.name.endsWith(type.extension.toLowerCase())))
-  }
 
-  render () {
-    const { fileTypes, translations } = this.props
 
-    return (
-      &lt;MenuItem disableGutters={false}>
-        &lt;label htmlFor='file-upload'>
-          {translations['_ol_kit.LayerPanelActions.import'] || 'Import File'}
-        &lt;/label>
-        &lt;UploadInput
-          value={this.state.value || ''}
-          type='file'
-          accept={fileTypes.map(f => f.extension).join(',')}
-          id='file-upload'
-          hidden={true}
-          onChange={(e) => this.onFileChange('file-upload')}
-          className='zmdi zmdi-upload'
-        />
-      &lt;/MenuItem>
-    )
-  }
-}
 
-LayerPanelActionImport.propTypes = {
-  /** Array of file types and their corresponding extensions */
-  fileTypes: PropTypes.arrayOf(PropTypes.exact({
-    display: PropTypes.string,
-    extension: PropTypes.string
-  })).isRequired,
 
-  /** A callback function that returns the file thats being imported */
-  handleImport: PropTypes.func.isRequired,
+    
+        <h5>PropTypes:</h5>
+        
 
-  /** A function that closes the `LayerPanelMenu` */
-  handleMenuClose: PropTypes.func,
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
 
-  /** An object of translation key/value pairs */
-  translations: PropTypes.object
-}
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>children</code></td>
+          <td>
+            node
+          </td>
+          <td>Yes</td>
+          <td>The pages of the panel (things like `LayerPanelPage` or `LayerStyler` components)</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>opacity</code></td>
+          <td>
+            number
+          </td>
+          <td>No</td>
+          <td>A float number for the opacity of the LayerPanel. i.e. (0.5)</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>Object with key/value pairs for translated strings</td>
+          <td></td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
 
-LayerPanelActionImport.defaultProps = {
-  fileTypes: [
-    {
-      display: 'KML',
-      extension: '.kml'
-    },
-    {
-      display: 'Compressed KML',
-      extension: '.kmz'
-    },
-    {
-      display: 'GeoJSON',
-      extension: '.geojson'
-    },
-    {
-      display: 'JSON',
-      extension: '.json'
-    },
-    {
-      display: 'WKT',
-      extension: '.wkt'
-    },
-    {
-      display: 'CSV',
-      extension: '.csv'
-    },
-    {
-      display: 'Shapefile ZIP',
-      extension: '.zip'
-    }
-  ],
-  handleMenuClose: () => {},
-  handleImport: () => {}
-}
 
-export default connectToContext(LayerPanelActionImport)
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.4.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="TabbedPanel_TabbedPanel.js.html" class="button">View Source</a>
+            <span>
+                <a href="TabbedPanel_TabbedPanel.js.html">TabbedPanel/TabbedPanel.js</a>, <a href="TabbedPanel_TabbedPanel.js.html#line15">line 15</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+</article>
+
+</section>
 
 
 

@@ -156,7 +156,7 @@ class VectorLayer extends olLayerVector {
     if (geomType instanceof olGeomPoint || geomType instanceof olGeomMultiPoint) {
       style = [new olStyleStyle({
         image: new olStyleCircle({
-          fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
+          fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
           stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
           radius: 5
         })
@@ -167,7 +167,12 @@ class VectorLayer extends olLayerVector {
       })]
     } else {
       style = [new olStyleStyle({
-        fill: new olStyleFill({ color: 'rgba(255,255,255,1)' }),
+        image: new olStyleCircle({
+          fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
+          stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
+          radius: 5
+        }),
+        fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
         stroke: new olStyleStroke({ color: '#3399CC', width: 2 })
       })]
     }

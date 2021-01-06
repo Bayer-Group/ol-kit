@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
-import olLayerVector from 'ol/layer/Vector'
+import { VectorLayer } from '../classes'
 import olSourceVector from 'ol/source/Vector'
 import { createBox } from 'ol/interaction/Draw'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -92,7 +92,7 @@ class DrawContainer extends React.Component {
     if (exists) {
       return exists
     } else {
-      const layer = new olLayerVector({
+      const layer = new VectorLayer({
         className: `_ol_kit_${title}`,
         _vmf_id: nanoid(),
         _vmf_title: title,
