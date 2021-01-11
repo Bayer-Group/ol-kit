@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import List from '@material-ui/core/List'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
 import nanoid from 'nanoid'
-
 import PropTypes from 'prop-types'
 
 const applyDrag = (arr, dragResult) => {
@@ -32,6 +31,7 @@ const applyDrag = (arr, dragResult) => {
  * @since 0.5.0
  */
 class LayerPanelList extends Component {
+
   handleDrop = e => {
     const { onSort, onReorderedItems, items } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
@@ -90,13 +90,14 @@ class LayerPanelList extends Component {
     if (children) {
       return (
         <List>
-          <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
+          <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd} >
             {React.Children.map(this.props.children, (child, i) => {
+
               const id = `${i}_${nanoid(6)}`
 
               return (
-                <div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id}>
-                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>{child}</div>
+                <div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id} >
+                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart} onMouseEnter={() => this.addInteraction} >{child}</div>
                 </div>
               )
             })}
@@ -108,12 +109,13 @@ class LayerPanelList extends Component {
         <List>
           <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
             {items.map((item, i) => {
+              console.log('item: ', item)
               const id = `${i}_${nanoid(6)}`
 
               return (
                 <div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
-                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>
-                    <LayerPanelListItem>{item}</LayerPanelListItem>
+                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart} >
+                    <LayerPanelListItem onMouseOver={() => this.addInteraction}>{item}</LayerPanelListItem>
                   </div>
                 </div>
               )

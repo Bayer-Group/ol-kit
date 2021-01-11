@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import LayerPanelBase from 'LayerPanel/LayerPanelBase'
 import LayerPanelLayersPage from 'LayerPanel/LayerPanelLayersPage'
 import { connectToContext } from 'Provider'
-
 /**
  * @component
  * @category LayerPanel

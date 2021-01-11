@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
-import LayerPanelHeader from 'LayerPanel/LayerPanelHeader'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
@@ -14,6 +13,11 @@ import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
+import olStroke from 'ol/style/Stroke'
+import olFill from 'ol/style/Fill'
+import olCircle from 'ol/style/Circle'
+
+import { createSelectInteraction } from '../../Map/utils'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -55,6 +59,42 @@ class LayerPanelLayersPage extends Component {
     }
   }
 
+  initializeSelect = map => {
+    const { selectInteraction } = this.props
+
+    const style = new olStyleStyle({
+      stroke: new olStroke({
+        color: 'red',
+        width: 3
+      }),
+      image: new olCircle({
+        radius: 5,
+        fill: new olFill({
+          color: '#ffffff'
+        }),
+        stroke: new olStroke({
+          color: 'red',
+          width: 2
+        })
+      })
+    })
+
+    this.selectInteraction = createSelectInteraction({ type: '_ol_kit_layer_panel_hover', style: [style] })
+
+    // Add a second select interaction to show hover states
+    map.addInteraction(this.selectInteraction)
+  }
+
+  selectFeatures = features => {
+    // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
+    this.selectInteraction.getFeatures().clear()
+    features.forEach(feature => {
+      if (feature.get('_ol_kit_feature_visibility')) {
+        this.selectInteraction.getFeatures().push(feature)
+      }
+    })
+  }
+
   componentDidMount = () => {
     const { map, layerFilter } = this.props
     const layers = map.getLayers()
@@ -73,7 +113,7 @@ class LayerPanelLayersPage extends Component {
 
     // we call this to re-retrieve the layers on mount
     handleMapChange()
-
+    this.initializeSelect(map)
     // we call this to re-adjust the master checkbox as needed
     this.handleMasterCheckbox()
 
@@ -85,6 +125,7 @@ class LayerPanelLayersPage extends Component {
   componentWillUnmount = () => {
     const { map } = this.props
     const layers = map.getLayers()
+
     // unbind the listeners
     layers.unset(this.onAddKey)
     layers.unset(this.onRemoveKey)
@@ -288,8 +329,7 @@ class LayerPanelLayersPage extends Component {
         map.addLayer(layer)
         map.getView().fit(source.getExtent(), map.getSize())
       }
-    }).catch(err => {
-    })
+    }).catch(err => { console.error(err) })
   }
 
   render () {
@@ -345,7 +385,7 @@ class LayerPanelLayersPage extends Component {
               const features = this.getFeaturesForLayer(layer)
 
               return (
-                <div key={i}>
+                <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={!layer ? null : layer.getVisible()}
