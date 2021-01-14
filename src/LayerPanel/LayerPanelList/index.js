@@ -109,7 +109,6 @@ class LayerPanelList extends Component {
         <List>
           <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
             {items.map((item, i) => {
-              console.log('item: ', item)
               const id = `${i}_${nanoid(6)}`
 
               return (

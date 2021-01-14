@@ -183,7 +183,6 @@ export function createSelectInteraction (props) {
     })
   })
 
-
   return new olInteractionSelect({
     hitTolerance: 3,
     style: [DEFAULT_SELECT_STYLE],
