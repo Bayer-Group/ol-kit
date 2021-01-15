@@ -9,7 +9,6 @@ import {
   LayerStyler,
   LayerPanelLayersPage,
   TabbedPanelPage,
-  LayerPanelContent,
   BasemapContainer,
   VectorLayer,
   DrawContainer
@@ -20,7 +19,6 @@ import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
 import Welcome from '../../Welcome'
-import { orange, pink } from '@material-ui/core/colors'
 
 class App extends React.Component {
   onMapInit = async (map) => {
