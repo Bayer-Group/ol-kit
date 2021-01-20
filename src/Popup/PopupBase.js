@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Draggable from 'react-draggable'
+import { DragContainer } from 'DragContainer'
 
 import DragHandle from './DragHandle'
 import { ArrowBox, Container } from './styled'
@@ -59,13 +59,7 @@ class PopupBase extends Component {
     const arrow = dragged ? lastArrow : arrowProp
 
     return (
-      <Draggable
-        axis='both'
-        bounds='parent'
-        handle='.handle'
-        onDrag={this.handleDrag}
-        onStart={this.onStart}
-        onStop={this.onStop}>
+      <DragContainer onStart={this.onStart} onStop={this.onStop} handleDrag={this.handleDrag}>
         <Container
           arrow={arrow}
           height={height}
@@ -78,7 +72,7 @@ class PopupBase extends Component {
           {!dragged && <ArrowBox position={arrowTranslator[arrow]} />}
           {children}
         </Container>
-      </Draggable>
+      </DragContainer>
     )
   }
 }
