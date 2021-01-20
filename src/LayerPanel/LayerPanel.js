@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import LayerPanelBase from 'LayerPanel/LayerPanelBase'
 import LayerPanelLayersPage from 'LayerPanel/LayerPanelLayersPage'
 import { connectToContext } from 'Provider'
-
 /**
  * @component
  * @category LayerPanel
@@ -11,18 +10,19 @@ import { connectToContext } from 'Provider'
  */
 class LayerPanel extends Component {
   render () {
-    const { translations, children, map, opacity, layerPanelTitle } = this.props
+    const { translations, children, map, opacity, layerPanelTitle, disableHover, setHoverStyle } = this.props
 
     return (
       <LayerPanelBase translations={translations} opacity={opacity} layerPanelTitle={layerPanelTitle}>
-        {[<LayerPanelLayersPage label='Layers' {...this.props} key='layerPanelLayersPage' map={map} />].concat(children)}
+        {[<LayerPanelLayersPage label='Layers' {...this.props} key='layerPanelLayersPage' map={map} disableHover={disableHover} setHoverStyle={setHoverStyle}/>].concat(children)}
       </LayerPanelBase>
     )
   }
 }
 
 LayerPanel.defaultProps = {
-  layerPanelTitle: 'Layer Panel'
+  layerPanelTitle: 'Layer Panel',
+  disableHover: false
 }
 
 LayerPanel.propTypes = {
@@ -39,7 +39,13 @@ LayerPanel.propTypes = {
   opacity: PropTypes.number,
 
   /** Title of the LayerPanel */
-  layerPanelTitle: PropTypes.string
+  layerPanelTitle: PropTypes.string,
+
+  /** Truthy value will disable hover */
+  disableHover: PropTypes.bool,
+
+  /** Pass fill, stroke, and color hover style values */
+  setHoverStyle: PropTypes.func
 }
 
 export default connectToContext(LayerPanel)

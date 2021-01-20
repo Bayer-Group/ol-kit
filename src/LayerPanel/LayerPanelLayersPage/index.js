@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
-import LayerPanelHeader from 'LayerPanel/LayerPanelHeader'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
@@ -14,6 +13,12 @@ import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
+import olStroke from 'ol/style/Stroke'
+import olFill from 'ol/style/Fill'
+import olCircle from 'ol/style/Circle'
+import ugh from 'ugh'
+
+import { createSelectInteraction } from '../../Map/utils'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -55,6 +60,49 @@ class LayerPanelLayersPage extends Component {
     }
   }
 
+  initializeSelect = map => {
+    const { setHoverStyle, disableHover } = this.props
+
+    if (disableHover) return // opt-out
+
+    const { stroke = 'red', fill = '#ffffff', color = 'red'} = setHoverStyle()
+
+    const style = new olStyleStyle({
+      stroke: new olStroke({
+        color: stroke,
+        width: 3
+      }),
+      image: new olCircle({
+        radius: 5,
+        fill: new olFill({
+          color: fill
+        }),
+        stroke: new olStroke({
+          color: color,
+          width: 2
+        })
+      })
+    })
+
+    this.selectInteraction = createSelectInteraction({ _ol_kit_interaction_type: '_ol_kit_layer_panel_hover', style: [style] })
+
+    // Add a second select interaction to show hover states
+    map.addInteraction(this.selectInteraction)
+  }
+
+  selectFeatures = features => {
+    const { disableHover } = this.props
+
+    if (disableHover) return
+    // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
+    this.selectInteraction.getFeatures().clear()
+    features.forEach(feature => {
+      if (feature.get('_ol_kit_feature_visibility')) {
+        this.selectInteraction.getFeatures().push(feature)
+      }
+    })
+  }
+
   componentDidMount = () => {
     const { map, layerFilter } = this.props
     const layers = map.getLayers()
@@ -73,7 +121,7 @@ class LayerPanelLayersPage extends Component {
 
     // we call this to re-retrieve the layers on mount
     handleMapChange()
-
+    this.initializeSelect(map)
     // we call this to re-adjust the master checkbox as needed
     this.handleMasterCheckbox()
 
@@ -85,6 +133,7 @@ class LayerPanelLayersPage extends Component {
   componentWillUnmount = () => {
     const { map } = this.props
     const layers = map.getLayers()
+
     // unbind the listeners
     layers.unset(this.onAddKey)
     layers.unset(this.onRemoveKey)
@@ -288,8 +337,7 @@ class LayerPanelLayersPage extends Component {
         map.addLayer(layer)
         map.getView().fit(source.getExtent(), map.getSize())
       }
-    }).catch(err => {
-    })
+    }).catch(ugh.error)
   }
 
   render () {
@@ -345,7 +393,7 @@ class LayerPanelLayersPage extends Component {
               const features = this.getFeaturesForLayer(layer)
 
               return (
-                <div key={i}>
+                <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={!layer ? null : layer.getVisible()}
@@ -400,7 +448,9 @@ LayerPanelLayersPage.defaultProps = {
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
-  tabIcon: <LayersIcon />
+  tabIcon: <LayersIcon />,
+  setHoverStyle: () => ({ color: 'red', fill: '#ffffff', stroke: 'red' }),
+  disableHover: false
 }
 
 LayerPanelLayersPage.propTypes = {
@@ -444,7 +494,13 @@ LayerPanelLayersPage.propTypes = {
   getMenuItemsForLayer: PropTypes.func,
 
   /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+
+  /** Truthy value will disable hover */
+  disableHover: PropTypes.bool,
+
+  /** Pass fill, stroke, and color hover style values */
+  setHoverStyle: PropTypes.func
 }
 
 export default connectToContext(LayerPanelLayersPage)

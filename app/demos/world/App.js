@@ -9,7 +9,6 @@ import {
   LayerStyler,
   LayerPanelLayersPage,
   TabbedPanelPage,
-  LayerPanelContent,
   BasemapContainer,
   VectorLayer,
   DrawContainer
