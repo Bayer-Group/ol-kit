@@ -165,7 +165,7 @@ export function convertXYtoLatLong (map, x, y) {
  * @since 0.2.0
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
-export function createSelectInteraction () {
+export function createSelectInteraction (props) {
   const DEFAULT_SELECT_STYLE = new olStyle({
     stroke: new olStroke({
       color: 'cyan',
@@ -185,6 +185,7 @@ export function createSelectInteraction () {
 
   return new olInteractionSelect({
     hitTolerance: 3,
-    style: [DEFAULT_SELECT_STYLE]
+    style: [DEFAULT_SELECT_STYLE],
+    ...props
   })
 }
