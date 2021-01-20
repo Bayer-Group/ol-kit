@@ -103,7 +103,7 @@
         
         <span class="code-name">
             
-                &ltLayerPanelLayersPage <i>translations</i> <i>map</i> <i>tabIcon</i> <i>layerFilter</i> <i>enableFilter</i> <i>onFileImport</i> <i>handleFeatureDoubleClick</i> <i>handleLayerDoubleClick</i> <i>customActions</i> <i>shouldHideFeatures</i> <i>shouldAllowLayerRemoval</i> <i>onExportFeatures</i> <i>getMenuItemsForLayer</i> <i>disableDrag</i> /&gt
+                &ltLayerPanelLayersPage <i>translations</i> <i>map</i> <i>tabIcon</i> <i>layerFilter</i> <i>enableFilter</i> <i>onFileImport</i> <i>handleFeatureDoubleClick</i> <i>handleLayerDoubleClick</i> <i>customActions</i> <i>shouldHideFeatures</i> <i>shouldAllowLayerRemoval</i> <i>onExportFeatures</i> <i>getMenuItemsForLayer</i> <i>disableDrag</i> <i>onLayerReorder</i> <i>onLayerRemoved</i> <i>disableHover</i> <i>setHoverStyle</i> /&gt
             
         </span>
     </h4>
@@ -289,6 +289,50 @@
         </tr>
         
   
+        <tr class="deep-level-0">
+          <td class="name"><code>onLayerReorder</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>A callback function to inform when layers are reordered</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onLayerRemoved</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>A callback function to inform when a layer is removed</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>disableHover</code></td>
+          <td>
+            bool
+          </td>
+          <td>No</td>
+          <td>Truthy value will disable hover</td>
+          <td>false</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>setHoverStyle</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>Pass fill, stroke, and color hover style values</td>
+          <td>() => ({ color: 'red', fill: '#ffffff', stroke: 'red' })</td>
+        </tr>
+        
+  
   </tbody>
 </table>
     
@@ -337,7 +381,7 @@
         <p class="tag-source">
             <a href="LayerPanel_LayerPanelLayersPage_index.js.html" class="button">View Source</a>
             <span>
-                <a href="LayerPanel_LayerPanelLayersPage_index.js.html">LayerPanel/LayerPanelLayersPage/index.js</a>, <a href="LayerPanel_LayerPanelLayersPage_index.js.html#line46">line 46</a>
+                <a href="LayerPanel_LayerPanelLayersPage_index.js.html">LayerPanel/LayerPanelLayersPage/index.js</a>, <a href="LayerPanel_LayerPanelLayersPage_index.js.html#line51">line 51</a>
             </span>
         </p>
     
