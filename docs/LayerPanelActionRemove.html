@@ -103,7 +103,7 @@
         
         <span class="code-name">
             
-                &ltLayerPanelActionRemove <i>layers</i> <i>layer</i> <i>map</i> <i>translations</i> <i>shouldAllowLayerRemoval</i> <i>removeFeaturesForLayer</i> <i>handleMenuClose</i> /&gt
+                &ltLayerPanelActionRemove <i>layers</i> <i>layer</i> <i>map</i> <i>translations</i> <i>shouldAllowLayerRemoval</i> <i>removeFeaturesForLayer</i> <i>handleMenuClose</i> <i>onLayerRemoved</i> /&gt
             
         </span>
     </h4>
@@ -208,6 +208,17 @@
           </td>
           <td>No</td>
           <td>A callback function that closes the `LayerPanelMenu`</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onLayerRemoved</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>A callback function that informs when a layer has been removed and passes that layer back to the IA</td>
           <td>() => {}</td>
         </tr>
         

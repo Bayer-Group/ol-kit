@@ -85,7 +85,6 @@
 import List from '@material-ui/core/List'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
 import nanoid from 'nanoid'
-
 import PropTypes from 'prop-types'
 
 const applyDrag = (arr, dragResult) => {
@@ -114,6 +113,7 @@ const applyDrag = (arr, dragResult) => {
  * @since 0.5.0
  */
 class LayerPanelList extends Component {
+
   handleDrop = e => {
     const { onSort, onReorderedItems, items } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
@@ -172,13 +172,14 @@ class LayerPanelList extends Component {
     if (children) {
       return (
         &lt;List>
-          &lt;div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
+          &lt;div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd} >
             {React.Children.map(this.props.children, (child, i) => {
+
               const id = `${i}_${nanoid(6)}`
 
               return (
-                &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id}>
-                  &lt;div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>{child}&lt;/div>
+                &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id} >
+                  &lt;div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart} onMouseEnter={() => this.addInteraction} >{child}&lt;/div>
                 &lt;/div>
               )
             })}
@@ -194,8 +195,8 @@ class LayerPanelList extends Component {
 
               return (
                 &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
-                  &lt;div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart}>
-                    &lt;LayerPanelListItem>{item}&lt;/LayerPanelListItem>
+                  &lt;div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart} >
+                    &lt;LayerPanelListItem onMouseOver={() => this.addInteraction}>{item}&lt;/LayerPanelListItem>
                   &lt;/div>
                 &lt;/div>
               )
