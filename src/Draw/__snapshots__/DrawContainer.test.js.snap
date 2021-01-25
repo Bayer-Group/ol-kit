@@ -50,7 +50,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
     [36m>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-unselectable ol-layers\\"[39m
-        [33mstyle[39m=[32m\\"position: absolute; width: 100%; height: 100%; z-index: 0;\\"[39m
+        [33mstyle[39m=[32m\\"position: absolute; width: 100%; height: 100%; z-index: 0; display: none;\\"[39m
       [36m/>[39m
       [36m<div[39m
         [33mclass[39m=[32m\\"ol-overlaycontainer\\"[39m
@@ -164,5 +164,5 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput-underline..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root Mui..."
 `;
