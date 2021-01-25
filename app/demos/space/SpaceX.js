@@ -79,14 +79,13 @@ function SpaceX (props) {
 
   if (!padsOnMap && !loadingPads && !!padsData) {
     const features = padsData.landpads.map(pad => {
-      
       // styling the icon with a spaceX picture
       const iconStyle = new olStyle({
         stroke: new olStroke(),
-            image: new olIcon({
+        image: new olIcon({
           opacity: 1,
           src: 'https://edge.alluremedia.com.au/uploads/businessinsider/2018/02/boosters_spacex.jpg',
-          scale: .05
+          scale: 0.05
         })
       })
 
@@ -117,10 +116,10 @@ function SpaceX (props) {
     const features = flightsData.launchesPastResult.data.map(flight => {
       const iconStyle = new olStyle({
         stroke: new olStroke(),
-            image: new olIcon({
+        image: new olIcon({
           opacity: 1,
           src: 'https://edge.alluremedia.com.au/uploads/businessinsider/2018/02/boosters_spacex.jpg',
-          scale: .05
+          scale: 0.05
         })
       })
       const padthing = launchData.launchpads.find((pad) => pad.id === flight.launch_site.site_id)

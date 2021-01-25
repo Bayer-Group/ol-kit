@@ -33,8 +33,8 @@ import {
   TooManyForPreview
 } from './styled'
 import { datesDiffDay, datesSameDay } from './utils'
-import { DragContainer } from '../DragContainer'
-import DragHandle from '../Popup/DragHandle'
+import { DragHandle } from 'DragHandle'
+import Draggable from 'react-draggable'
 
 // const MAX_DATES = 300
 
@@ -340,7 +340,7 @@ class TimeSliderBase extends React.Component {
   }
 
   render () {
-    const { tabs, translations } = this.props
+    const { tabs, translations, draggable } = this.props
     const {
       tooManyDates,
       dates,
@@ -353,15 +353,15 @@ class TimeSliderBase extends React.Component {
     } = this.state
 
     return (
-      <DragContainer>
-        
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-
-          <Typography component='div'>
-            <Container>
-            <DragHandle /> 
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Typography component='div'>
+          <Draggable
+            axis='both'
+            handle='.timesliderdrag'>
+            <Container id='timesliderbase'>
               <Grid container justify='center'>
                 <Card style={{ width: '100%', paddingTop: '4px' }}>
+                  {draggable ? <DragHandle handleTag='timesliderdrag' /> : null}
                   <Tabs
                     style={{ marginRight: '60px' }}
                     indicatorColor='primary'
@@ -452,9 +452,9 @@ class TimeSliderBase extends React.Component {
                 </Card>
               </Grid>
             </Container>
-          </Typography>
-        </MuiPickersUtilsProvider>
-      </DragContainer>
+          </Draggable>
+        </Typography>
+      </MuiPickersUtilsProvider>
     )
   }
 }
@@ -463,7 +463,8 @@ TimeSliderBase.defaultProps = {
   onClose: () => {},
   onDatesChange: () => {},
   onTabChange: () => {},
-  translations: en
+  translations: en,
+  draggable: true
 }
 
 TimeSliderBase.propTypes = {
@@ -489,7 +490,9 @@ TimeSliderBase.propTypes = {
     '_ol_kit_.TimeSliderBase.selectedStartDate': PropTypes.string,
     '_ol_kit_.TimeSliderBase.to': PropTypes.string,
     '_ol_kit_.TimeSliderBase.tooMany': PropTypes.string
-  })
+  }),
+  /** Boolean to allow timeslider to be dragged around the screen */
+  draggable: PropTypes.bool
 }
 
 export default connectToContext(TimeSliderBase)

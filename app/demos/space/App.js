@@ -40,8 +40,9 @@ function App (props) {
   return (
     <ApolloProvider client={client}>
       <Map onMapInit={onMapInit} fullScreen>
-        <Popup />
+        
         <TimeSlider />
+        <Popup />
         <SpaceX />
         <ISS />
         <TabbedPanel>
