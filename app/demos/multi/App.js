@@ -49,13 +49,10 @@ class App extends React.Component {
   render () {
     const multiMapConfig = {
       map0: createMap({ target: 'map0' }),
-      map1: createMap({ target: 'map1' }),
-      map2: createMap({ target: 'map2' }),
-      map3: createMap({ target: 'map3' }),
     }
 
     return (
-      <MultiMapManager multiMapConfig={multiMapConfig}>
+      <MultiMapManager multiMapConfig={multiMapConfig} groups={[['map0', 'map1'],['map2', 'map3']]}>
         <div>yay multi maps</div>
       </MultiMapManager>
       // <Map onMapInit={this.onMapInit} fullScreen>

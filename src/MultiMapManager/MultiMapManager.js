@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
+import Map from '../Map/Map'
+import { syncMapEvents } from './utils'
 import ugh from 'ugh'
+
+import { FlexMap, FullScreenFlex } from './styled'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
@@ -48,11 +52,28 @@ class MultiMapManager extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { multiMapConfig } = this.props
+    const maps = Object.values(multiMapConfig)
+    
+    syncMapEvents(maps)
+  }
+
   render () {
-    console.log(this.props.multiMapConfig)
+    const { multiMapConfig } = this.props
+
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>
-        {this.props.children}
+        <FullScreenFlex>
+          {Object.entries(multiMapConfig).map(([key, map]) => {
+            return (
+              <FlexMap key={key}>
+                <Map
+                  key={key} />
+              </FlexMap>
+            )
+          })}
+        </FullScreenFlex>
       </MultiMapContext.Provider>
     )
   }
