@@ -53,10 +53,14 @@ class MultiMapManager extends React.Component {
   }
 
   componentDidMount() {
-    const { multiMapConfig } = this.props
-    const maps = Object.values(multiMapConfig)
-    
-    syncMapEvents(maps)
+    const { groups, multiMapConfig } = this.props
+
+    groups.forEach(groupIds => {
+      // sync events by map groups
+      const groupedMaps = groupIds.map(id => multiMapConfig[id])
+
+      syncMapEvents(groupedMaps)
+    })
   }
 
   render () {
@@ -65,9 +69,9 @@ class MultiMapManager extends React.Component {
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>
         <FullScreenFlex>
-          {Object.entries(multiMapConfig).map(([key, map]) => {
+          {Object.entries(multiMapConfig).map(([key, map], i) => {
             return (
-              <FlexMap key={key}>
+              <FlexMap index={i} total={Object.entries(multiMapConfig).length} key={key}>
                 <Map
                   key={key} />
               </FlexMap>

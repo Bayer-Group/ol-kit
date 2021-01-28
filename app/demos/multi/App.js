@@ -49,6 +49,13 @@ class App extends React.Component {
   render () {
     const multiMapConfig = {
       map0: createMap({ target: 'map0' }),
+      map1: createMap({ target: 'map1' }),
+      map2: createMap({ target: 'map2' }),
+      map3: createMap({ target: 'map3' }),
+      map4: createMap({ target: 'map4' }),
+      map5: createMap({ target: 'map5' }),
+      map6: createMap({ target: 'map6' }),
+      map7: createMap({ target: 'map7' }),
     }
 
     return (
