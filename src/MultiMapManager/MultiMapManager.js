@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import Map from '../Map/Map'
+import { MapLogo, StyledMap } from 'Map'
 import { syncMapEvents } from './utils'
 import ugh from 'ugh'
 
@@ -65,14 +66,19 @@ class MultiMapManager extends React.Component {
 
   render () {
     const { multiMapConfig } = this.props
+    const entries = Object.entries(multiMapConfig)
 
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>
         <FullScreenFlex>
-          {Object.entries(multiMapConfig).map(([key, map], i) => {
+          {entries.map(([key, map], i) => {
             return (
-              <FlexMap index={i} total={Object.entries(multiMapConfig).length} key={key}>
+              <FlexMap index={i} total={entries.length} key={key}>
+                <StyledMap id={key}>
+                  {/* <MapLogo /> */}
+                </StyledMap>
                 <Map
+                  map={map}
                   key={key} />
               </FlexMap>
             )

@@ -14,16 +14,15 @@ export function syncMapEvents (maps, eventType, opts = {}) {
   maps.forEach(map => {
     const view = map.getView()
 
-    console.log('syncMapEvents', view)
+    console.log('syncMapEvents', map.getTarget(), maps.map(m => m.getTarget()))
 
     if (eventType) {
       view.once(eventType, e => mapChangeHandler(e, maps))
     } else {
-      console.log('ELSE')
       // default to all map view movement events
-      map.on('moveend', e => mapChangeHandler(e, maps))
-      view.on('change:resolution', e => mapChangeHandler(e, maps))
-      view.on('change:rotation', e => mapChangeHandler(e, maps))
+      view.once('change:center', e => mapChangeHandler(e, maps))
+      view.once('change:resolution', e => mapChangeHandler(e, maps))
+      view.once('change:rotation', e => mapChangeHandler(e, maps))
     }
   })
 }
@@ -56,6 +55,6 @@ export function mapChangeHandler (event, syncedMaps) {
         }
       }
 
-      // syncMapEvents(thisView, event.type)
+      syncMapEvents(thisView, event.type)
     })
   }
