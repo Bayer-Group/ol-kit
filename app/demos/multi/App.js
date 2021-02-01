@@ -69,14 +69,13 @@ class App extends React.Component {
   render () {
     const { multiMapConfig } = this.state
     const entries = Object.entries(multiMapConfig)
-    console.log('APP RENDER')
     
     return (
       <MultiMapManager multiMapConfig={multiMapConfig} groups={[['map0', 'map1'],['map2', 'map3']]}>
         {entries.map(([key, map], i) => {
           return (
             <FlexMap key={key}>
-              <Map _ol_kit_multi={true}>
+              <Map id={key} _ol_kit_multi={true}>
                 {/* <MapLogo /> */}
               </Map>
             </FlexMap>

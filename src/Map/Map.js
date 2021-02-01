@@ -34,7 +34,11 @@ class Map extends React.Component {
     this.passedMap = props.map
 
     // this is used to create a unique identifier for the map div
-    this.target = this.passedMap ? this.passedMap.getTarget() : `_ol_kit_map_${nanoid(6)}`
+    this.target = props.id || `_ol_kit_map_${nanoid(6)}`
+    if (this.passedMap) {
+      // override target with openlayers map DOM target
+      this.target = this.passedMap.getTarget()
+    }
   }
 
   componentDidMount () {
@@ -65,6 +69,10 @@ class Map extends React.Component {
 
     // if no map was passed, create the map
     this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
+
+    if (this.passedMap && !this.passedMap.getTargetElement()) {
+      ugh.warn('A `map` prop has been passed to `<Map>` but the openlayers map has not been mounted to the DOM!')
+    }
 
     // setup select interactions for the map
     this.initializeSelect(this.map)

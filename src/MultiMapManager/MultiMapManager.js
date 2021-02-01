@@ -1,15 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
-import Map from '../Map/Map'
-import { MapLogo, StyledMap } from 'Map'
 import { syncMapEvents } from './utils'
 import ugh from 'ugh'
 
 import { FlexMap, FullScreenFlex } from './styled'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
-export let MultiMapContext = null
+export let MultiMapContext = false
 const contextState = {}
 
 /* A higher order component that provides context to connectToContext wrapped children
@@ -41,23 +39,9 @@ class MultiMapManager extends React.Component {
   }
 
   getContextValue = () => {
-    const { contextProps, map: mapProp, maps: mapsProp, translations } = this.props
-
-    // if (!mapProp && !mapsProp.length) return ugh.throw('MultiMapManager requires either a \'map\' or \'maps\' prop to work!')
-
-    // support multi-map components
-    // default map reference to zeroith map from mapsProp if an array of maps has been passed
-    const map = mapsProp.length ? mapsProp[0] : mapProp
-    // default an array with single value of map prop if maps array has not been passed
-    const maps = mapsProp.length ? mapsProp : [mapProp]
+    const { contextProps } = this.props
 
     return {
-      // addMapToContext: this.addMapToContext,
-      // map,
-      // maps,
-      // persistedState: this.state,
-      // persistState: this.persistState,
-      // translations,
       ...contextState,
       ...contextProps
     }
@@ -97,8 +81,6 @@ class MultiMapManager extends React.Component {
       }
     })
     const adoptedChildren = childModifier(this.props.children)
-
-    console.log('CONTEXT', this.getContextValue())
 
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>
