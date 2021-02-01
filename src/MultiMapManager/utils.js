@@ -14,7 +14,7 @@ export function syncMapEvents (maps, eventType, opts = {}) {
   maps.forEach(map => {
     const view = map.getView()
 
-    console.log('syncMapEvents', map.getTarget(), maps.map(m => m.getTarget()))
+    console.log('before', map.getView())
 
     if (eventType) {
       view.once(eventType, e => mapChangeHandler(e, maps))
@@ -24,13 +24,14 @@ export function syncMapEvents (maps, eventType, opts = {}) {
       view.once('change:resolution', e => mapChangeHandler(e, maps))
       view.once('change:rotation', e => mapChangeHandler(e, maps))
     }
+    console.log('map after listenres', map.getView())
   })
 }
 
 export function mapChangeHandler (event, syncedMaps) {
     const view = event.target
 
-    console.log('mapCHangeHan', event.type)
+    console.log('MAP CHANGE HANDLER WORKS!', event.type)
 
     syncedMaps.map(map => {
       const thisView = map.getView()

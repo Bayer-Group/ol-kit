@@ -10,6 +10,7 @@ import { FlexMap, FullScreenFlex } from './styled'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
+const contextState = {}
 
 /* A higher order component that provides context to connectToContext wrapped children
  * @component
@@ -30,6 +31,15 @@ class MultiMapManager extends React.Component {
     MultiMapContext = React.createContext()
   }
 
+  addToContext = (config, addToContextProp = () => {}) => {
+    const mapId = config.map.getTargetElement().id
+
+    contextState[mapId] = {...config}
+
+    // call original prop
+    addToContextProp(config)
+  }
+
   getContextValue = () => {
     const { contextProps, map: mapProp, maps: mapsProp, translations } = this.props
 
@@ -43,46 +53,66 @@ class MultiMapManager extends React.Component {
 
     return {
       // addMapToContext: this.addMapToContext,
-      map,
-      maps,
+      // map,
+      // maps,
       // persistedState: this.state,
       // persistState: this.persistState,
-      translations,
-      ...this.state.mapContext,
+      // translations,
+      ...contextState,
       ...contextProps
     }
   }
 
   componentDidMount() {
     const { groups, multiMapConfig } = this.props
+    const entries = Object.entries(multiMapConfig)
 
-    groups.forEach(groupIds => {
-      // sync events by map groups
-      const groupedMaps = groupIds.map(id => multiMapConfig[id])
-
-      syncMapEvents(groupedMaps)
-    })
+    if (entries.length) {
+      groups.forEach(groupIds => {
+        // sync events by map groups
+        const groupedMaps = groupIds.map(id => multiMapConfig[id])
+  
+        syncMapEvents(groupedMaps)
+      })
+    }
   }
 
   render () {
     const { multiMapConfig } = this.props
-    const entries = Object.entries(multiMapConfig)
+    const childModifier = children => children.map(child => {
+      if (child?.props?._ol_kit_multi) {
+        // catch for multi map children
+        const propOverride = config => this.addToContext(config, child.props.addMapToContext)
+        const adoptedChild = React.cloneElement(child, { addMapToContext: propOverride })
+
+        return adoptedChild
+      } else if (Array.isArray(child)) {
+        // child is an array of children
+        return childModifier(child)
+      } else if (child?.props?.children) {
+        // loop through children of children
+        return childModifier([child.props.children])
+      } else {
+        return child
+      }
+    })
+    const adoptedChildren = childModifier(this.props.children)
+
+    console.log('CONTEXT', this.getContextValue())
 
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>
         <FullScreenFlex>
-          {entries.map(([key, map], i) => {
+          {adoptedChildren}
+          {/* {entries.map(([key, map], i) => {
             return (
               <FlexMap index={i} total={entries.length} key={key}>
-                <StyledMap id={key}>
-                  {/* <MapLogo /> */}
-                </StyledMap>
                 <Map
                   map={map}
                   key={key} />
               </FlexMap>
             )
-          })}
+          })} */}
         </FullScreenFlex>
       </MultiMapContext.Provider>
     )

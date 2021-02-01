@@ -13,6 +13,7 @@ import {
   BasemapContainer,
   VectorLayer,
   DrawContainer,
+  FlexMap,
   createMap
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
@@ -23,6 +24,10 @@ import olSourceVector from 'ol/source/Vector'
 import Welcome from '../../Welcome'
 
 class App extends React.Component {
+  state = {
+    multiMapConfig: {}
+  }
+
   onMapInit = async (map) => {
     // create a vector layer and add to the map
     const layer = new VectorLayer({
@@ -46,7 +51,7 @@ class App extends React.Component {
     window.map = map
   }
 
-  render () {
+  componentDidMount () {
     const multiMapConfig = {
       map0: createMap({ target: 'map0' }),
       map1: createMap({ target: 'map1' }),
@@ -58,8 +63,25 @@ class App extends React.Component {
       map7: createMap({ target: 'map7' }),
     }
 
+    this.setState({ multiMapConfig })
+  }
+
+  render () {
+    const { multiMapConfig } = this.state
+    const entries = Object.entries(multiMapConfig)
+    console.log('APP RENDER')
+    
     return (
       <MultiMapManager multiMapConfig={multiMapConfig} groups={[['map0', 'map1'],['map2', 'map3']]}>
+        {entries.map(([key, map], i) => {
+          return (
+            <FlexMap key={key}>
+              <Map _ol_kit_multi={true}>
+                {/* <MapLogo /> */}
+              </Map>
+            </FlexMap>
+          )
+        })}
         <div>yay multi maps</div>
       </MultiMapManager>
       // <Map onMapInit={this.onMapInit} fullScreen>

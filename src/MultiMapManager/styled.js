@@ -22,6 +22,9 @@ export const FlexMap = styled.div`
   }}
   ${p => p.style};
 `
+// FlexMap.defaultProps = {
+//   _ol_kit_multi: true
+// }
 
 export const FullScreenFlex = styled.div`
   position: absolute;
