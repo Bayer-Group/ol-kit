@@ -39,7 +39,6 @@ class Map extends React.Component {
       // override target with openlayers map DOM target
       this.target = this.passedMap.getTarget()
     }
-    console.log('CONSTRUCTOR', this.target)
   }
 
   componentDidMount () {

@@ -38,27 +38,21 @@ export default class SafeParent extends React.Component {
     const { parentContextKey } = this.state
     const contextKey = inlineProps._ol_kit_context_id || parentContextKey
     const relativeProviderProps = providerProps[contextKey]
+    const filteredProviderProps = { ...relativeProviderProps }
+
+    if (Component.propTypes) {
+      // filter out any props from context that do not need to get passed to this wrapped component
+      Object.keys(providerProps).forEach(key => {
+        if (!propTypes[key]) delete filteredProviderProps[key]
+      })
+    }
 
     return (
       !!contextKey ? (
-        <Component {...relativeProviderProps} {...inlineProps} />
+        <Component {...filteredProviderProps} {...inlineProps} />
       ):(
         <div ref={this.ref}>{`Could not find parent <Map> for ${Component.name} during context lookup`}</div>
       )
     )
   }
 }
-
-//  // choose a subset of provider props based off id passed to <Map>
-//  const relativeProviderProps = providerProps[props._ol_kit_context_id]
-//  const filteredProviderProps = { ...relativeProviderProps }
-//  const { propTypes } = Component
-
-//  console.log(`Multi map relative Context: ${Component.name}`, providerProps, filteredProviderProps, props)
-
-//  if (propTypes) {
-//    // filter out any props that do not need to get passed to this wrapped component
-//    Object.keys(providerProps).forEach(key => {
-//      if (!propTypes[key]) delete filteredProviderProps[key]
-//    })
-//  }

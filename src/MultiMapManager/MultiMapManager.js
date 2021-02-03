@@ -2,9 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { syncMapEvents } from './utils'
-import ugh from 'ugh'
-
-import { FlexMap, FullScreenFlex } from './styled'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = false
@@ -75,7 +72,6 @@ class MultiMapManager extends React.Component {
   }
 
   render () {
-    const { multiMapConfig } = this.props
     const childModifier = rawChildren => {
       const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
@@ -83,7 +79,7 @@ class MultiMapManager extends React.Component {
         if (child?.props?._ol_kit_multi) {
           // we caught a map
           // catch for multi map children
-          const grandChildren = React.cloneElement(child.props.children, { _ol_kit_context_id: child.props.id }) // add recursion later
+          const grandChildren = React.cloneElement(child.props.children, { _ol_kit_context_id: child.props.id }) // this explicit _ol_kit_context_id prop no longer necessary
           const propOverride = config => this.addToContext(config, child.props.addMapToContext)
           const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
           const adoptedChild = React.cloneElement(child, { addMapToContext: propOverride, onMapInit: onMapInitOverride, _ol_kit_context_id: child.props.id, map: null }, [grandChildren])
@@ -101,8 +97,6 @@ class MultiMapManager extends React.Component {
       })
     }
     const adoptedChildren = childModifier(this.props.children)
-
-    console.log('MANAGER RENDER')
 
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>
@@ -138,23 +132,3 @@ MultiMapManager.propTypes = {
 }
 
 export default MultiMapManager
-
-
-
-
-
-
-
-
-
-
-
-  // persistState = (persistedState, persistedStateKey) => {
-  //   if (!persistedStateKey || typeof persistedStateKey !== 'string') return ugh.error('persistedStateKey (string; usually "ComponentName") must be passed as second arg to persistState(state, persistedStateKey)') // eslint-disable-line no-console
-
-  //   this.setState({ [persistedStateKey]: persistedState })
-  // }
-
-  // addMapToContext = mapContext => {
-  //   this.setState({ mapContext })
-  // }

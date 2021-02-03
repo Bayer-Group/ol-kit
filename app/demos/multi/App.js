@@ -23,6 +23,7 @@ import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
 import Welcome from '../../Welcome'
+import { create } from 'ol/transform'
 
 class App extends React.Component {
   state = {
@@ -78,7 +79,6 @@ class App extends React.Component {
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
                   <Popup isPopupFromApp />
-                  {/* <MapLogo /> */}
                 </Map>
               </FlexMap>
             )
