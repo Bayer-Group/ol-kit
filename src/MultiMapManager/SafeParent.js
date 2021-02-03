@@ -14,7 +14,7 @@ export default class SafeParent extends React.Component {
   }
 
   componentDidMount () {
-    const { providerProps } = this.props
+    const { Component, providerProps } = this.props
     const keys = Object.keys(providerProps)
 
     console.log('DID MOUNT safeParent', keys, this.ref)
@@ -26,6 +26,8 @@ export default class SafeParent extends React.Component {
         console.log('parentMap', parentMap)
         return parentMap?.id
       })
+
+      if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup`)
 
       this.setState({ parentContextKey })
     }
@@ -41,7 +43,7 @@ export default class SafeParent extends React.Component {
       !!contextKey ? (
         <Component {...relativeProviderProps} {...inlineProps} />
       ):(
-        <div ref={this.ref}></div>
+        <div ref={this.ref}>{`Could not find parent <Map> for ${Component.name} during context lookup`}</div>
       )
     )
   }

@@ -15,7 +15,6 @@ export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
   return props => { // eslint-disable-line react/display-name
-    console.log(`WRAPPED ${Component.name}`, props)
 
     // if no context exists, just render the component with inline props
     if (!MultiMapContext && !ProviderContext) return <Component {...props} />
@@ -27,7 +26,10 @@ export function connectToContext (Component) {
           {
             (providerProps = {}) => {
               return (
-                <SafeParent inlineProps={props} providerProps={providerProps} Component={Component} />
+                <SafeParent
+                  inlineProps={props}
+                  providerProps={providerProps}
+                  Component={Component} />
               )
             }
           }
@@ -39,8 +41,6 @@ export function connectToContext (Component) {
               // if propTypes is not defined on the component just pass all providerProps
               const filteredProviderProps = { ...providerProps }
               const { propTypes } = Component
-
-              console.log('providerProps', providerProps, props, providerProps[props.id], 'stinrg')
 
               if (propTypes) {
                 // filter out any props that do not need to get passed to this wrapped component
