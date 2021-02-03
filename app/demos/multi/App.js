@@ -14,6 +14,7 @@ import {
   VectorLayer,
   DrawContainer,
   FlexMap,
+  FullScreenFlex,
   createMap
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
@@ -51,37 +52,39 @@ class App extends React.Component {
     window.map = map
   }
 
-  componentDidMount () {
-    const multiMapConfig = {
-      map0: createMap({ target: 'map0' }),
-      map1: createMap({ target: 'map1' }),
-      map2: createMap({ target: 'map2' }),
-      map3: createMap({ target: 'map3' }),
-      map4: createMap({ target: 'map4' }),
-      map5: createMap({ target: 'map5' }),
-      map6: createMap({ target: 'map6' }),
-      map7: createMap({ target: 'map7' }),
-    }
-
-    this.setState({ multiMapConfig })
-  }
-
   render () {
-    const { multiMapConfig } = this.state
+    const multiMapConfig = {
+      map0: undefined,
+      map1: undefined,
+      map2: undefined,
+      map3: undefined,
+      map4: undefined,
+      map5: undefined,
+      map6: undefined,
+      map7: undefined,
+    }
     const entries = Object.entries(multiMapConfig)
     
     return (
-      <MultiMapManager multiMapConfig={multiMapConfig} groups={[['map0', 'map1'],['map2', 'map3']]}>
-        {entries.map(([key, map], i) => {
-          return (
-            <FlexMap key={key}>
-              <Map id={key} _ol_kit_multi={true}>
-                {/* <MapLogo /> */}
-              </Map>
-            </FlexMap>
-          )
-        })}
-        <div>yay multi maps</div>
+      <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
+        <FullScreenFlex>
+          {entries.map(([key, map], i) => {
+            return (
+              <FlexMap
+                key={key}
+                index={i}
+                total={entries.length}
+                numberOfRows={2}
+                numberOfColumns={4}>
+                <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
+                  <Popup isPopupFromApp />
+                  {/* <MapLogo /> */}
+                </Map>
+              </FlexMap>
+            )
+          })}
+          <div>yay multi maps</div>
+        </FullScreenFlex>
       </MultiMapManager>
       // <Map onMapInit={this.onMapInit} fullScreen>
       //   <Popup />

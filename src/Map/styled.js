@@ -31,6 +31,7 @@ export const StyledMap = styled.div.attrs(props => ({
 }))`
   height: 100%;
   width: 100%;
+  display: inline-flex;
   position: ${p => p.fullScreen ? 'fixed' : 'relative'};
   top: 0;
   bottom: 0;

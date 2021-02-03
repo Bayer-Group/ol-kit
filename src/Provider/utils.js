@@ -1,7 +1,7 @@
 import React from 'react'
 import ugh from 'ugh'
 import { ProviderContext } from 'Provider'
-import { MultiMapContext } from 'MultiMapManager'
+import { MultiMapContext, SafeParent } from 'MultiMapManager'
 
 /**
  * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
@@ -15,23 +15,32 @@ export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
   return props => { // eslint-disable-line react/display-name
-    // multimap context will take precedence over the provider context
-    const PriorityContext = !!MultiMapContext ? MultiMapContext : ProviderContext
-    console.log('PRiorityContext', PriorityContext)
+    console.log(`WRAPPED ${Component.name}`, props)
 
-    // if no context exits, just render the component with props
-    return !PriorityContext
-      ? <Component {...props} />
-      : (
-        <PriorityContext.Consumer>
+    // if no context exists, just render the component with inline props
+    if (!MultiMapContext && !ProviderContext) return <Component {...props} />
+    
+    // multimap context will take precedence over the provider context
+    return !!MultiMapContext
+      ? (
+        <MultiMapContext.Consumer>
+          {
+            (providerProps = {}) => {
+              return (
+                <SafeParent inlineProps={props} providerProps={providerProps} Component={Component} />
+              )
+            }
+          }
+        </MultiMapContext.Consumer>
+      ):(
+        <ProviderContext.Consumer>
           {
             (providerProps = {}) => {
               // if propTypes is not defined on the component just pass all providerProps
               const filteredProviderProps = { ...providerProps }
               const { propTypes } = Component
 
-
-              console.log('providerProps', providerProps)
+              console.log('providerProps', providerProps, props, providerProps[props.id], 'stinrg')
 
               if (propTypes) {
                 // filter out any props that do not need to get passed to this wrapped component
@@ -54,7 +63,7 @@ export function connectToContext (Component) {
               )
             }
           }
-        </PriorityContext.Consumer>
+        </ProviderContext.Consumer>
       )
   }
 }

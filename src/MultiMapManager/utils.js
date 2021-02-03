@@ -14,7 +14,7 @@ export function syncMapEvents (maps, eventType, opts = {}) {
   maps.forEach(map => {
     const view = map.getView()
 
-    console.log('before', map.getView())
+    console.log('syncMapEvents before attach listeners', map.getView())
 
     if (eventType) {
       view.once(eventType, e => mapChangeHandler(e, maps))
@@ -24,7 +24,7 @@ export function syncMapEvents (maps, eventType, opts = {}) {
       view.once('change:resolution', e => mapChangeHandler(e, maps))
       view.once('change:rotation', e => mapChangeHandler(e, maps))
     }
-    console.log('map after listenres', map.getView())
+    console.log('syncMapEvents map after listeners', map.getView())
   })
 }
 
@@ -33,7 +33,7 @@ export function mapChangeHandler (event, syncedMaps) {
 
     console.log('MAP CHANGE HANDLER WORKS!', event.type)
 
-    syncedMaps.map(map => {
+    syncedMaps.forEach(map => {
       const thisView = map.getView()
 
       // do not sync while view is animating
@@ -55,7 +55,6 @@ export function mapChangeHandler (event, syncedMaps) {
             return ''
         }
       }
-
-      syncMapEvents(thisView, event.type)
+      syncMapEvents([map], event.type)
     })
   }
