@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import cloneDeep from 'lodash.clonedeep'
 
 import { connectToContext } from 'Provider'
+import { HeatmapControls } from 'Heatmap'
 import LabelStyler from 'LayerStyler/_LabelStyler'
 import LayerStyler from 'LayerStyler/_LayerStyler'
 import SelectTabs from 'LayerStyler/_SelectTabs'
@@ -200,6 +201,9 @@ class StyleManager extends Component {
           </HeaderContainer>
         ) : (
           <NoLayerText>{translations['_ol_kit.StyleManager.noLayerText']}</NoLayerText>
+        )}
+        {layerSelected && layers[activeIdx].isHeatmapLayer && (
+          <HeatmapControls layer={layers[activeIdx]} />
         )}
         {layerSelected &&
           <SelectTabs>

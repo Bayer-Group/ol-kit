@@ -5,6 +5,8 @@ import {
   TabbedPanel,
   Controls,
   ContextMenu,
+  HeatmapControls,
+  HeatmapLayer,
   loadDataLayer,
   LayerStyler,
   LayerPanelLayersPage,
@@ -16,7 +18,6 @@ import {
 
 import KML from 'ol/format/KML'
 import VectorSource from 'ol/source/Vector'
-import { Heatmap as HeatmapLayer } from 'ol/layer'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
