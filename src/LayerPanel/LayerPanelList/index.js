@@ -71,8 +71,8 @@ class LayerPanelList extends Component {
 
     do {
       if (dropNode.className === 'draggable') {
-        const removedIndex = this.dragTarget.id[0]
-        const addedIndex = this.displaced.id[0]
+        const removedIndex = this.dragTarget.id.split('_')[0]
+        const addedIndex = this.displaced.id.split('_')[0]
         const payload = this.dragTarget
 
         this.handleDrop({ ...e, removedIndex, addedIndex, payload })
