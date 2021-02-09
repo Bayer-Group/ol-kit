@@ -231,7 +231,8 @@ class LayerPanelLayersPage extends Component {
   handleMasterCheckbox = () => {
     const visibleLayers = this.getVisibleLayers().length
     const allLayers = this.state.layers.length
-    const indeterminateLayers = this.getVisibleLayers().filter(layer => layer.getVisible() === INDETERMINATE).length
+    const indeterminateLayers = this.getVisibleLayers().filter(layer => layer.get('_ol_kit_layerpanel_visibility') === INDETERMINATE).length
+
     const masterCheckboxState = indeterminateLayers ? INDETERMINATE : visibleLayers === allLayers && allLayers > 0 ? true : visibleLayers > 0 ? INDETERMINATE : false // eslint-disable-line
 
     this.setState({ masterCheckboxVisibility: masterCheckboxState })
@@ -245,8 +246,13 @@ class LayerPanelLayersPage extends Component {
 
     if (layerCheckboxClick && layerVisibility === INDETERMINATE) {
       layer.setVisible(true)
+      layer.set('_ol_kit_layerpanel_visibility', true)
+    } else if (layerCheckboxClick) {
+      layer.setVisible(!layer.getVisible())
+      layer.set('_ol_kit_layerpanel_visibility', !layer.getVisible())
     } else {
-      layerCheckboxClick ? layer.setVisible(!layer.getVisible()) : layer.setVisible(layerVisibility)
+      layer.setVisible(layerVisibility === INDETERMINATE ? true : layerVisibility)
+      layer.set('_ol_kit_layerpanel_visibility', layerVisibility)
     }
 
     if (layerCheckboxClick) this.setVisibilityForAllFeaturesOfLayer(layer, layer.getVisible())
@@ -349,7 +355,7 @@ class LayerPanelLayersPage extends Component {
                 <div key={i}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
-                      checkboxState={!layer ? null : layer.getVisible()}
+                      checkboxState={!layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()}
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
