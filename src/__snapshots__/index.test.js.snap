@@ -27,6 +27,8 @@ Object {
   "DrawPoint": [Function],
   "DrawPolygon": [Function],
   "GooglePlacesSearch": [Function],
+  "HeatmapControls": [Function],
+  "HeatmapLayer": [Function],
   "LayerPanel": [Function],
   "LayerPanelActionExport": [Function],
   "LayerPanelActionExtent": [Function],
