@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanelPage</title>
+    <title>ol-kit | Heatmap/HeatmapControls.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,229 +77,69 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltLayerPanelPage /&gt
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="LayerPanelPage">
-        <a class="href-link" href="#LayerPanelPage">#</a>
-        
-        <span class="code-name">
-            
-                &ltLayerPanelPage <i>children</i> <i>label</i> <i>tabIcon</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>An array of components (likely a LayerPanelHeader, LayerPanelContent, or LayerPanelFooter)</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>label</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>A string title of the page. Will be used as tab title.</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>tabIcon</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>A @material-ui/icon. Check LayerPanelPage example.md for more clarification</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.5.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="LayerPanel_LayerPanelPage_index.js.html" class="button">View Source</a>
-            <span>
-                <a href="LayerPanel_LayerPanelPage_index.js.html">LayerPanel/LayerPanelPage/index.js</a>, <a href="LayerPanel_LayerPanelPage_index.js.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through. Or if you want a title for the tab you can pass a label string prop.</p>
-<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
-import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
-
-return (
-  &lt;LayerPanel>
-    &lt;LayerPanelPage label={'Legends'} tabIcon={&lt;VpnKeyIcon />}>
-      &lt;LayerPanelContent>
-        Legends Page
-      &lt;/LayerPanelContent>
-    &lt;/LayerPanelPage>
-  &lt;/LayerPanel>
-)
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import en from 'locales/en'
+import { Container, InnerContainer, InputContainer, Label, Slider, Title } from './styled'
+
+/**
+ * UI to choose parameters for HeatmapLayer types (rendered in LayerStyler)
+ * @component
+ * @category Heatmap
+ */
+const HeatmapControls = props => {
+  const { layer, translations } = props
+  const [blur, setBlur] = useState(layer?.getBlur() || 15)
+  const [radius, setRadius] = useState(layer?.getRadius() || 5)
+
+  const handleBlur = blur => {
+    layer.setBlur(parseInt(blur))
+    setBlur(blur)
+  }
+  const handleRadius = radius => {
+    layer.setRadius(parseInt(radius))
+    setRadius(radius)
+  }
+
+  return (
+    &lt;Container>
+      &lt;Title>{translations['_ol_kit.HeatmapControls.title']}&lt;/Title>
+      &lt;InnerContainer>
+        &lt;InputContainer>
+          &lt;Label htmlFor='radius'>{translations['_ol_kit.HeatmapControls.radius']}&lt;/Label>
+          &lt;Slider id='radius' type='range' min='1' max='50' step='1' value={radius} onChange={(e) => handleRadius(e.target.value)}/>
+        &lt;/InputContainer>
+        &lt;InputContainer>
+          &lt;Label htmlFor='blur'>{translations['_ol_kit.HeatmapControls.blur']}&lt;/Label>
+          &lt;Slider id='blur' type='range' min='1' max='50' step='1' value={blur} onChange={(e) => handleBlur(e.target.value)}/>
+        &lt;/InputContainer>
+      &lt;/InnerContainer>
+    &lt;/Container>
+  )
+}
+
+HeatmapControls.propTypes = {
+  /** HeatmapLayer type from ol-kit */
+  layer: PropTypes.object.isRequired,
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.shape({
+    '_ol_kit.HeatmapControls.blur': PropTypes.string,
+    '_ol_kit.HeatmapControls.radius': PropTypes.string,
+    '_ol_kit.HeatmapControls.title': PropTypes.string
+  }).isRequired
+}
+
+HeatmapControls.defaultProps = {
+  translations: en
+}
+
+export default HeatmapControls
 </code></pre>
-<p><img src="https://github.platforms.engineering/storage/user/2990/files/59702f80-86d2-11ea-8633-e35602cec3c5" alt="image"></p>
-            </div>
-        </div>
-    
-    
-</article>
-
-</section>
+        </article>
+    </section>
 
 
 

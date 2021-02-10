@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanelPage</title>
+    <title>ol-kit | classes/HeatmapLayer.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,229 +77,32 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltLayerPanelPage /&gt
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="LayerPanelPage">
-        <a class="href-link" href="#LayerPanelPage">#</a>
-        
-        <span class="code-name">
-            
-                &ltLayerPanelPage <i>children</i> <i>label</i> <i>tabIcon</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>An array of components (likely a LayerPanelHeader, LayerPanelContent, or LayerPanelFooter)</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>label</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>A string title of the page. Will be used as tab title.</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>tabIcon</code></td>
-          <td>
-            node
-          </td>
-          <td>No</td>
-          <td>A @material-ui/icon. Check LayerPanelPage example.md for more clarification</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.5.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="LayerPanel_LayerPanelPage_index.js.html" class="button">View Source</a>
-            <span>
-                <a href="LayerPanel_LayerPanelPage_index.js.html">LayerPanel/LayerPanelPage/index.js</a>, <a href="LayerPanel_LayerPanelPage_index.js.html#line10">line 10</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through. Or if you want a title for the tab you can pass a label string prop.</p>
-<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
-import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
-
-return (
-  &lt;LayerPanel>
-    &lt;LayerPanelPage label={'Legends'} tabIcon={&lt;VpnKeyIcon />}>
-      &lt;LayerPanelContent>
-        Legends Page
-      &lt;/LayerPanelContent>
-    &lt;/LayerPanelPage>
-  &lt;/LayerPanel>
-)
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Heatmap from 'ol/layer/Heatmap'
+
+/**
+ * HeatmapLayer class extends olLayerHeatmap {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Heatmap-Heatmap.html}
+ * @function
+ * @category Classes
+ * @since 1.6.0
+ * @param {Object} [opts] - Object of optional params for olLayerHeatmap
+ */
+class HeatmapLayer extends Heatmap {
+  constructor (opts) {
+    super(opts)
+
+    this.isHeatmapLayer = true
+
+    return this
+  }
+}
+
+export default HeatmapLayer
 </code></pre>
-<p><img src="https://github.platforms.engineering/storage/user/2990/files/59702f80-86d2-11ea-8633-e35602cec3c5" alt="image"></p>
-            </div>
-        </div>
-    
-    
-</article>
-
-</section>
+        </article>
+    </section>
 
 
 

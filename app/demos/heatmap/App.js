@@ -39,8 +39,7 @@ class App extends React.Component {
         features
       }),
       blur: parseInt(blur, 10),
-      radius: parseInt(radius, 10),
-      gradient: ['#00f', '#0ff', '#0f0', '#ff0', '#f00']
+      radius: parseInt(radius, 10)
     })
 
     map.addLayer(layer)

@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { Container, InnerContainer, InputContainer, Label, Slider, Title } from './styled'
 
+/**
+ * UI to choose parameters for HeatmapLayer types (rendered in LayerStyler)
+ * @component
+ * @category Heatmap
+ */
 const HeatmapControls = props => {
   const { layer, translations } = props
   const [blur, setBlur] = useState(layer?.getBlur() || 15)
