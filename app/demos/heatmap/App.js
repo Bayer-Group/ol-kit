@@ -74,7 +74,7 @@ class App extends React.Component {
 
     // map.addLayer(pointLayer)
 
-    const blur = 80
+    const blur = 30
     const radius = 10
 
     // create a vector layer and add to the map

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import MaterialSwitch from '@material-ui/core/Switch'
 
 import { Container } from './styled'
+import Layer from 'ol/layer/Layer'
 
 const Switch = withStyles(() => ({
   switchBase: {
@@ -19,43 +20,33 @@ const Switch = withStyles(() => ({
   track: {}
 }))(MaterialSwitch)
 
-export class HeatmapControls extends React.Component {
-  componentDidMount () {
-    const { layer } = this.props
+const HeatmapControls = props => {
+  const { layer, translations } = props
+  const [blur, setBlur] = useState(layer?.getBlur() || 15)
+  const [radius, setRadius] = useState(layer?.getRadius() || 5)
 
-    const blur = document.getElementById('blur')
-    const radius = document.getElementById('radius')
-
-    const blurHandler = function () {
-      layer.setBlur(parseInt(blur.value, 10))
-    }
-    blur.addEventListener('input', blurHandler)
-    blur.addEventListener('change', blurHandler)
-    
-    const radiusHandler = function () {
-      layer.setRadius(parseInt(radius.value, 10))
-    }
-    radius.addEventListener('input', radiusHandler)
-    radius.addEventListener('change', radiusHandler)
+  const handleBlur = blur => {
+    layer.setBlur(parseInt(blur))
+    setBlur(blur)
+  }
+  const handleRadius = radius => {
+    layer.setRadius(parseInt(radius))
+    setRadius(radius)
   }
 
-  render () {
-    const { translations } = this.props
-
-    return (
-      <Container>
-        Heatmap controls
-        <div>
-          <label for="radius">radius size</label>
-          <input id="radius" type="range" min="1" max="50" step="1" value="5"/>
-        </div>
-        <div>
-          <label for="blur">blur size</label>
-          <input id="blur" type="range" min="1" max="50" step="1" value="15"/>
-        </div>
-      </Container>
-    )
-  }
+  return (
+    <Container>
+      Heatmap controls
+      <div>
+        <label htmlFor="radius">radius size</label>
+        <input id="radius" type="range" min="1" max="50" step="1" value={radius} onChange={(e) => handleRadius(e.target.value)}/>
+      </div>
+      <div>
+        <label htmlFor="blur">blur size</label>
+        <input id="blur" type="range" min="1" max="50" step="1" value={blur} onChange={(e) => handleBlur(e.target.value)}/>
+      </div>
+    </Container>
+  )
 }
 
 HeatmapControls.propTypes = {
