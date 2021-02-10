@@ -202,51 +202,52 @@ class StyleManager extends Component {
         ) : (
           <NoLayerText>{translations['_ol_kit.StyleManager.noLayerText']}</NoLayerText>
         )}
-        {layerSelected && layers[activeIdx].isHeatmapLayer && (
-          <HeatmapControls layer={layers[activeIdx]} />
+        {layerSelected && (
+          layers[activeIdx].isHeatmapLayer ? (
+            <HeatmapControls layer={layers[activeIdx]} />
+          ):(
+            <SelectTabs>
+              <div title={translations['_ol_kit.StyleManager.styleTab']}>
+                <LayerStyler
+                  inputProps={{
+                    'data-testid': 'StyleManager.customStyles'
+                  }}
+                  translations={translations}
+                  heading={`${translations['_ol_kit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
+                  showNewButtons={true}
+                  collapsed={userCollapsed}
+                  getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)}
+                  attributeValues={attributeValues}
+                  layer={layers[activeIdx]}
+                  commaDelimitedAttributes={getCommaDelimitedAttributesForLayer?.(layers[activeIdx])}
+                  attributes={getAttributesForLayer(layers[activeIdx])}
+                  styles={groupStyles(getNonLabelStyles(userStyles[activeIdx]))}
+                  onCollapseToggle={() => this.onCollapseToggle('userCollapsed')}
+                  onStylesChange={this.onUserStyleChange} />
+                <LayerStyler
+                  inputProps={{
+                    'data-testid': 'StyleManager.defaultStyles'
+                  }}
+                  translations={translations}
+                  heading={`${translations['_ol_kit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}
+                  collapsed={defaultCollapsed}
+                  attributes={getAttributesForLayer(layers[activeIdx])}
+                  styles={groupStyles(defaultStyles[activeIdx])}
+                  onCollapseToggle={() => this.onCollapseToggle('defaultCollapsed')}
+                  onStylesChange={this.onDefaultStyleChange}
+                  onDefaultStyleReset={this.onDefaultStyleReset}
+                  isDefaultStyler={true} />
+              </div>
+              <div data-testid={'StyleManager.labelTab'} title={translations['_ol_kit.StyleManager.labelTab']}>
+                <LabelStyler
+                  translations={translations}
+                  style={getLabelStyle(userStyles[activeIdx]) || cloneDeep(DEFAULT_LABEL_STYLE)}
+                  attributes={getAttributesForLayer(layers[activeIdx])}
+                  onStylesChange={this.onLabelStyleChange} />
+              </div>
+            </SelectTabs>
+          )
         )}
-        {layerSelected &&
-          <SelectTabs>
-            <div title={translations['_ol_kit.StyleManager.styleTab']}>
-              <LayerStyler
-                inputProps={{
-                  'data-testid': 'StyleManager.customStyles'
-                }}
-                translations={translations}
-                heading={`${translations['_ol_kit.StyleManager.customStyles']} (${getNonLabelStyles(userStyles[activeIdx])?.length})`}
-                showNewButtons={true}
-                collapsed={userCollapsed}
-                getValuesForAttribute={attribute => getValuesForAttribute(layers[activeIdx], attribute)}
-                attributeValues={attributeValues}
-                layer={layers[activeIdx]}
-                commaDelimitedAttributes={getCommaDelimitedAttributesForLayer?.(layers[activeIdx])}
-                attributes={getAttributesForLayer(layers[activeIdx])}
-                styles={groupStyles(getNonLabelStyles(userStyles[activeIdx]))}
-                onCollapseToggle={() => this.onCollapseToggle('userCollapsed')}
-                onStylesChange={this.onUserStyleChange} />
-              <LayerStyler
-                inputProps={{
-                  'data-testid': 'StyleManager.defaultStyles'
-                }}
-                translations={translations}
-                heading={`${translations['_ol_kit.StyleManager.defaultStyles']} (${defaultStyles[activeIdx]?.length || '0'})`}
-                collapsed={defaultCollapsed}
-                attributes={getAttributesForLayer(layers[activeIdx])}
-                styles={groupStyles(defaultStyles[activeIdx])}
-                onCollapseToggle={() => this.onCollapseToggle('defaultCollapsed')}
-                onStylesChange={this.onDefaultStyleChange}
-                onDefaultStyleReset={this.onDefaultStyleReset}
-                isDefaultStyler={true} />
-            </div>
-            <div data-testid={'StyleManager.labelTab'} title={translations['_ol_kit.StyleManager.labelTab']}>
-              <LabelStyler
-                translations={translations}
-                style={getLabelStyle(userStyles[activeIdx]) || cloneDeep(DEFAULT_LABEL_STYLE)}
-                attributes={getAttributesForLayer(layers[activeIdx])}
-                onStylesChange={this.onLabelStyleChange} />
-            </div>
-          </SelectTabs>
-        }
       </div>
     )
   }

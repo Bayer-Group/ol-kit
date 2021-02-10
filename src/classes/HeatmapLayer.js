@@ -1,9 +1,9 @@
-import { Heatmap } from 'ol/layer'
+import Heatmap from 'ol/layer/Heatmap'
 
 class HeatmapLayer extends Heatmap {
   constructor (opts) {
     super(opts)
-    
+
     this.isHeatmapLayer = true
 
     return this
