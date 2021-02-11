@@ -248,8 +248,10 @@ class LayerPanelLayersPage extends Component {
       layer.setVisible(true)
       layer.set('_ol_kit_layerpanel_visibility', true)
     } else if (layerCheckboxClick) {
-      layer.setVisible(!layer.getVisible())
-      layer.set('_ol_kit_layerpanel_visibility', !layer.getVisible())
+      const lv = !layer.getVisible()
+
+      layer.setVisible(lv)
+      layer.set('_ol_kit_layerpanel_visibility', lv)
     } else {
       layer.setVisible(layerVisibility === INDETERMINATE ? true : layerVisibility)
       layer.set('_ol_kit_layerpanel_visibility', layerVisibility)
@@ -350,12 +352,13 @@ class LayerPanelLayersPage extends Component {
               return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
+              const layerCheckboxState = !layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()
 
               return (
                 <div key={i}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
-                      checkboxState={!layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()}
+                      checkboxState={layerCheckboxState} // eslint-disable-line
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
