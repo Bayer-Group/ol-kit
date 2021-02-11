@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import HeatmapLayer from 'ol/layer/Heatmap'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
@@ -203,7 +204,7 @@ class StyleManager extends Component {
           <NoLayerText>{translations['_ol_kit.StyleManager.noLayerText']}</NoLayerText>
         )}
         {layerSelected && (
-          layers[activeIdx].isHeatmapLayer ? (
+          layers[activeIdx] instanceof HeatmapLayer ? (
             <HeatmapControls layer={layers[activeIdx]} />
           ):(
             <SelectTabs>

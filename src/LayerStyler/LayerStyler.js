@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StyleManager from 'LayerStyler/StyleManager'
+import HeatmapLayer from 'ol/layer/Heatmap'
 import olFormatFilterAnd from 'ol/format/filter/And'
 import olFormatFilterOr from 'ol/format/filter/Or'
 import olFormatFilterEqualTo from 'ol/format/filter/EqualTo'
@@ -168,7 +169,7 @@ class LayerStyler extends React.Component {
     const { map } = this.props
     const layers = map.getLayers().getArray()
     const validLayers = layers.filter(layer => {
-      return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer || layer.isVectorTileLayer || layer.isHeatmapLayer)
+      return !layer.get('_ol_kit_basemap') && (layer.isGeoserverLayer || layer.isVectorLayer || layer.isVectorTileLayer || layer instanceof HeatmapLayer)
     })
 
     if (layers.length - validLayers.length > 1) {

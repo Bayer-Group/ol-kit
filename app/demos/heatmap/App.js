@@ -5,12 +5,12 @@ import {
   TabbedPanel,
   Controls,
   ContextMenu,
-  HeatmapLayer,
   LayerStyler, // HeatmapControls lives in here
   LayerPanelLayersPage,
   TabbedPanelPage,
   BasemapContainer,
 } from '@bayer/ol-kit'
+import HeatmapLayer from 'ol/layer/Heatmap'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'

@@ -8,7 +8,7 @@ import { Container, InnerContainer, InputContainer, Label, Slider, Title } from 
  * @component
  * @category Heatmap
  */
-const HeatmapControls = props => {
+function HeatmapControls (props) {
   const { layer, translations } = props
   const [blur, setBlur] = useState(layer?.getBlur() || 15)
   const [radius, setRadius] = useState(layer?.getRadius() || 5)
