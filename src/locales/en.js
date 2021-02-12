@@ -11,6 +11,10 @@ export default {
   // ContextMenu
   '_ol_kit_.ContextMenuCoords.lat': 'latitude',
   '_ol_kit_.ContextMenuCoords.long': 'longitude',
+  // HeatmapControls
+  '_ol_kit.HeatmapControls.blur': 'Blur size',
+  '_ol_kit.HeatmapControls.radius': 'Radius size',
+  '_ol_kit.HeatmapControls.title': 'Heatmap Controls',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'Export KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',

@@ -7,6 +7,7 @@ import {
 
 // routes
 import Covid from './demos/covid/App'
+import Heatmap from './demos/heatmap/App'
 import Space from './demos/space/App'
 import Inline from './demos/inline/App'
 import MultiMap from './demos/multi/App'
@@ -29,6 +30,9 @@ export default function App () {
         </Route>
         <Route path='/inline'>
           <Inline />
+        </Route>
+        <Route path='/heatmap'>
+          <Heatmap />
         </Route>
         <Route path='/vector-tiles'>
           <VectorTiles />

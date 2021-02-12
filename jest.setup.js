@@ -5,6 +5,9 @@ import '@babel/polyfill'
 import '@testing-library/jest-dom/extend-expect'
 require('jest-fetch-mock').enableMocks()
 
+// avoid `URL.createObjectURL is not a function` error
+global.URL.createObjectURL = jest.fn()
+
 // add mock to keep map snapshots consistent
 jest.mock('nanoid', () => () => 'test_id')
 
