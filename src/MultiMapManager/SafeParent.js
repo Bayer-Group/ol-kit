@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import ugh from 'ugh'
 
 export default class SafeParent extends React.Component {
@@ -17,13 +16,10 @@ export default class SafeParent extends React.Component {
     const { Component, providerProps } = this.props
     const keys = Object.keys(providerProps)
 
-    console.log('DID MOUNT safeParent', keys, this.ref)
-
     if (this.ref.current) {
       const parentContextKey = keys.find(key => {
         const parentMap = this.ref.current.closest(`#${key}`)
-        
-        console.log('parentMap', parentMap)
+
         return parentMap?.id
       })
 
@@ -43,7 +39,7 @@ export default class SafeParent extends React.Component {
     if (Component.propTypes) {
       // filter out any props from context that do not need to get passed to this wrapped component
       Object.keys(providerProps).forEach(key => {
-        if (!propTypes[key]) delete filteredProviderProps[key]
+        if (!Component.propTypes[key]) delete filteredProviderProps[key]
       })
     }
 

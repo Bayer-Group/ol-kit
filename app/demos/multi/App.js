@@ -54,58 +54,54 @@ class App extends React.Component {
   }
 
   render () {
-    const multiMapConfig = {
-      map0: undefined,
-      map1: undefined,
-      map2: undefined,
-      map3: undefined,
-      map4: undefined,
-      map5: undefined,
-      map6: undefined,
-      map7: undefined,
-    }
-    const entries = Object.entries(multiMapConfig)
-    
+    const multiMapConfig = [
+      'map0',
+      'map1',
+      'map2',
+      'map3',
+      'map4',
+      'map5',
+      'map6',
+      'map7',
+    ]
+
     return (
       <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
         <FullScreenFlex>
-          {entries.map(([key, map], i) => {
+          {multiMapConfig.map((key, i, array) => {
+            console.log(`${key}: !${i} && !${array.length % 2} && ${array.length > 1}`, (!i && !array.length % 2 && array.length > 1)) // eslint-disable-line no-console
             return (
               <FlexMap
                 key={key}
                 index={i}
-                total={entries.length}
+                total={array.length}
                 numberOfRows={2}
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
                   <Popup isPopupFromApp />
+                  {/* <TabbedPanel>
+                    <TabbedPanelPage tabIcon='Home'>
+                      <Welcome />
+                    </TabbedPanelPage>
+                    <TabbedPanelPage label='Layers'>
+                      <LayerPanelLayersPage />
+                    </TabbedPanelPage>
+                    <TabbedPanelPage label='Styles'>
+                      <LayerStyler />
+                    </TabbedPanelPage>
+                    <TabbedPanelPage label='Draw'>
+                      <DrawContainer style={{ position: 'relative', width: 'auto' }} />
+                    </TabbedPanelPage>
+                  </TabbedPanel>
+                  <ContextMenu />
+                  <Controls />
+                  <BasemapContainer /> */}
                 </Map>
               </FlexMap>
             )
           })}
-          <div>yay multi maps</div>
         </FullScreenFlex>
       </MultiMapManager>
-      // <Map onMapInit={this.onMapInit} fullScreen>
-      //   <Popup />
-      //   <TabbedPanel>
-      //     <TabbedPanelPage tabIcon='Home'>
-      //       <Welcome />
-      //     </TabbedPanelPage>
-      //     <TabbedPanelPage label='Layers'>
-      //       <LayerPanelLayersPage />
-      //     </TabbedPanelPage>
-      //     <TabbedPanelPage label='Styles'>
-      //       <LayerStyler />
-      //     </TabbedPanelPage>
-      //     <TabbedPanelPage label='Draw'>
-      //       <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-      //     </TabbedPanelPage>
-      //   </TabbedPanel>
-      //   <ContextMenu />
-      //   <Controls />
-      //   <BasemapContainer />
-      // </Map>
     )
   }
 }

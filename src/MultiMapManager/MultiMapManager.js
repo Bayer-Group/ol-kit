@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
-import { syncMapEvents } from './utils'
+import { syncViewEvents } from './utils'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = false
@@ -30,7 +30,6 @@ class MultiMapManager extends React.Component {
 
   addToContext = (config, addToContextProp = () => {}) => {
     const mapId = config.map.getTargetElement().id
-    // console.log('addToContext', mapId)
 
     contextState[mapId] = {...config}
 
@@ -50,14 +49,12 @@ class MultiMapManager extends React.Component {
 
     if (multiMaps.length === Object.keys(contextState).length) {
       const { groups } = this.props
-      // console.log('MulitMapManager INIT')
 
       groups.forEach(groupIds => {
-        // console.log('groupIds', groupIds)
         // sync events by map groups
-        const groupedMaps = groupIds.map(id => contextState[id].map)
+        const groupedViews = groupIds.map(id => contextState[id].map.getView())
   
-        syncMapEvents(groupedMaps)
+        syncViewEvents(groupedViews)
       })
     }
   }
@@ -75,14 +72,14 @@ class MultiMapManager extends React.Component {
     const childModifier = rawChildren => {
       const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
-      return children.map(child => {
+      return children.map((child, i) => {
         if (child?.props?._ol_kit_multi) {
           // we caught a map
           // catch for multi map children
           const grandChildren = React.cloneElement(child.props.children, { _ol_kit_context_id: child.props.id }) // this explicit _ol_kit_context_id prop no longer necessary
           const propOverride = config => this.addToContext(config, child.props.addMapToContext)
           const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
-          const adoptedChild = React.cloneElement(child, { addMapToContext: propOverride, onMapInit: onMapInitOverride, _ol_kit_context_id: child.props.id, map: null }, [grandChildren])
+          const adoptedChild = React.cloneElement(child, { addMapToContext: propOverride, onMapInit: onMapInitOverride, _ol_kit_context_id: child.props.id, map: null, key: i }, [grandChildren])
 
           return adoptedChild
         } else if (Array.isArray(child)) {
