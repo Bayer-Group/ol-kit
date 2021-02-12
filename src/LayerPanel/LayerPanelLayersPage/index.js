@@ -358,7 +358,7 @@ class LayerPanelLayersPage extends Component {
                 <div key={i}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
-                      checkboxState={layerCheckboxState} // eslint-disable-line
+                      checkboxState={layerCheckboxState}
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
