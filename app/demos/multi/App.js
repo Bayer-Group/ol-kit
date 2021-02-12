@@ -69,7 +69,6 @@ class App extends React.Component {
       <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
         <FullScreenFlex>
           {multiMapConfig.map((key, i, array) => {
-            console.log(`${key}: !${i} && !${array.length % 2} && ${array.length > 1}`, (!i && !array.length % 2 && array.length > 1)) // eslint-disable-line no-console
             return (
               <FlexMap
                 key={key}
@@ -78,7 +77,7 @@ class App extends React.Component {
                 numberOfRows={2}
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
-                  <Popup isPopupFromApp />
+                  <Popup />
                   {/* <TabbedPanel>
                     <TabbedPanelPage tabIcon='Home'>
                       <Welcome />
