@@ -5,6 +5,7 @@ import en from 'locales/en'
 import { sanitizeProperties } from '../utils'
 import { connectToContext } from 'Provider'
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
+import { PopupActionNavigate } from 'Popup/PopupActions/PopupActionNavigate'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
@@ -84,7 +85,7 @@ class PopupDefaultInsert extends Component {
     const { selectedIdx } = this.state
 
     const getChildren = feature => {
-      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />]
+      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />, <PopupActionNavigate key='nav' />]
 
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }

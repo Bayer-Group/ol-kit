@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Item, Action } from './styled'
+import { Item, Link, Action } from './styled'
 
 /**
  * @component
@@ -10,7 +10,15 @@ import { Item, Action } from './styled'
  */
 class PopupActionItem extends Component {
   render () {
-    const { children, feature, title, disabled, onClick, style } = this.props
+    const { children, feature, title, disabled, onClick, style, href, target } = this.props
+
+    if (href && !disabled) {
+      return (
+        <Action role='button' onClick={(e) => onClick(e, feature)}>
+          {title ? <Link href={href} target={target || '_blank'}><span><Item style={style}>{title}</Item></span></Link> : children}
+        </Action>
+      )
+    }
 
     return (
       <Action role='button' onClick={disabled ? () => {} : (e) => onClick(e, feature)}>

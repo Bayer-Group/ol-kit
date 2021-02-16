@@ -50,6 +50,7 @@ Object {
   "PopupActionCopyWkt": [Function],
   "PopupActionGroup": [Function],
   "PopupActionItem": [Function],
+  "PopupActionNavigate": [Function],
   "PopupBase": [Function],
   "PopupDataList": [Function],
   "PopupDefaultInsert": [Function],

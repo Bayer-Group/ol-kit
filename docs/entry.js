@@ -204,3 +204,6 @@ reactComponents['ZoomIn'] = Component59;
 
 import Component60 from '../src/Controls/ZoomOut.js';
 reactComponents['ZoomOut'] = Component60;
+
+import Component61 from '../src/Popup/PopupActions/PopupActionNavigate/PopupActionNavigate.js';
+reactComponents['PopupActionNavigate'] = Component61;
