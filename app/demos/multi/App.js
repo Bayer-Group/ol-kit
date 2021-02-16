@@ -2,34 +2,20 @@ import React from 'react'
 import {
   Map,
   Popup,
-  TabbedPanel,
   Controls,
   ContextMenu,
   loadDataLayer,
-  LayerStyler,
-  LayerPanelLayersPage,
   MultiMapManager,
-  TabbedPanelPage,
-  BasemapContainer,
   VectorLayer,
-  DrawContainer,
   FlexMap,
-  FullScreenFlex,
-  createMap
+  FullScreenFlex
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
-import Welcome from '../../Welcome'
-import { create } from 'ol/transform'
-
 class App extends React.Component {
-  state = {
-    multiMapConfig: {}
-  }
-
   onMapInit = async (map) => {
     // create a vector layer and add to the map
     const layer = new VectorLayer({
@@ -54,7 +40,7 @@ class App extends React.Component {
   }
 
   render () {
-    const multiMapConfig = [
+    const mapKeys = [
       'map0',
       'map1',
       'map2',
@@ -68,7 +54,7 @@ class App extends React.Component {
     return (
       <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
         <FullScreenFlex>
-          {multiMapConfig.map((key, i, array) => {
+          {mapKeys.map((key, i, array) => {
             return (
               <FlexMap
                 key={key}
@@ -78,23 +64,8 @@ class App extends React.Component {
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
                   <Popup />
-                  {/* <TabbedPanel>
-                    <TabbedPanelPage tabIcon='Home'>
-                      <Welcome />
-                    </TabbedPanelPage>
-                    <TabbedPanelPage label='Layers'>
-                      <LayerPanelLayersPage />
-                    </TabbedPanelPage>
-                    <TabbedPanelPage label='Styles'>
-                      <LayerStyler />
-                    </TabbedPanelPage>
-                    <TabbedPanelPage label='Draw'>
-                      <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-                    </TabbedPanelPage>
-                  </TabbedPanel>
+                  {/* <Controls /> */}
                   <ContextMenu />
-                  <Controls />
-                  <BasemapContainer /> */}
                 </Map>
               </FlexMap>
             )

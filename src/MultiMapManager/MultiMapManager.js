@@ -4,7 +4,7 @@ import en from 'locales/en'
 import { syncViewEvents } from './utils'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
-export let MultiMapContext = false
+export let MultiMapContext = null
 const contextState = {}
 const multiMaps = []
 
@@ -12,7 +12,7 @@ const multiMaps = []
  * @component
  * @example ./example.md
  * @category MultiMap
- * @since 1.6.0
+ * @since 1.7.0
  */
 class MultiMapManager extends React.Component {
   constructor (props) {
