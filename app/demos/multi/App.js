@@ -8,7 +8,8 @@ import {
   MultiMapManager,
   VectorLayer,
   FlexMap,
-  FullScreenFlex
+  FullScreenFlex,
+  connectToContext
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
@@ -63,9 +64,10 @@ class App extends React.Component {
                 numberOfRows={2}
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
-                  <Popup />
+                  <Popup isPopup />
                   {/* <Controls /> */}
-                  <ContextMenu />
+                  <ContextMenu isContextMenu />
+                  {connectToContext(<div>Mappy div</div>)}
                 </Map>
               </FlexMap>
             )

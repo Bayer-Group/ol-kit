@@ -15,6 +15,7 @@ export default class SafeParent extends React.Component {
   componentDidMount () {
     const { Component, providerProps } = this.props
     const keys = Object.keys(providerProps)
+    console.log('keys', keys)
 
     if (this.ref.current) {
       const parentContextKey = keys.find(key => {
@@ -23,7 +24,7 @@ export default class SafeParent extends React.Component {
         return parentMap?.id
       })
 
-      if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup`)
+      if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
 
       this.setState({ parentContextKey })
     }
@@ -35,7 +36,7 @@ export default class SafeParent extends React.Component {
     const contextKey = inlineProps._ol_kit_context_id || parentContextKey
     const relativeProviderProps = providerProps[contextKey]
     const filteredProviderProps = { ...relativeProviderProps }
-    console.log('Compnent', Component)
+    console.log('SafeParent', Component, inlineProps, providerProps)
 
     if (Component.propTypes) {
       // filter out any props from context that do not need to get passed to this wrapped component
