@@ -56,7 +56,8 @@ PopupActionItem.propTypes = {
 
 PopupActionItem.defaultProps = {
   disabled: false,
-  style: {}
+  style: {},
+  onClick: () => {}
 }
 
 export default PopupActionItem

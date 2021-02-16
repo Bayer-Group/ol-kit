@@ -1,2 +1,2 @@
 export * from './PopupActionCopyWkt'
-export * from './PopupActionNavigate'
+export * from './PopupActionGoogleMaps'
