@@ -45,7 +45,13 @@ PopupActionItem.propTypes = {
   style: PropTypes.object,
   
   /** OpenLayers feature on which the action is being done */
-  feature: PropTypes.object
+  feature: PropTypes.object,
+
+  /** Link to open when action item is clicked */
+  href: PropTypes.string,
+
+  /** Determines how link should be open - _blank means new tab */
+  target: PropTypes.string
 }
 
 PopupActionItem.defaultProps = {
