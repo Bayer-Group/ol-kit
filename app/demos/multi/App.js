@@ -78,10 +78,10 @@ class App extends React.Component {
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
                   <Popup />
-                  {/* <TabbedPanel>
-                    <TabbedPanelPage tabIcon='Home'>
+                  <TabbedPanel>
+                    {i === 0 && <TabbedPanelPage tabIcon='Home'>
                       <Welcome />
-                    </TabbedPanelPage>
+                    </TabbedPanelPage>}
                     <TabbedPanelPage label='Layers'>
                       <LayerPanelLayersPage />
                     </TabbedPanelPage>
@@ -94,7 +94,7 @@ class App extends React.Component {
                   </TabbedPanel>
                   <ContextMenu />
                   <Controls />
-                  <BasemapContainer /> */}
+                  <BasemapContainer />
                 </Map>
               </FlexMap>
             )
