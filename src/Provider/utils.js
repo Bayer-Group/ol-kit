@@ -3,6 +3,8 @@ import ugh from 'ugh'
 import { ProviderContext } from 'Provider'
 import { MultiMapContext, SafeParent } from 'MultiMapManager'
 
+let contextConflictWarning = false
+
 /**
  * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
  * @function
@@ -18,7 +20,11 @@ export function connectToContext (Component) {
 
     // if no context exists, just render the component with inline props
     if (!MultiMapContext && !ProviderContext) return <Component {...props} />
-    
+    if (!contextConflictWarning && !!MultiMapContext && !!ProviderContext) {
+      contextConflictWarning = true
+      ugh.warn('MultiMapContext and ProviderContext are both mounted on the page. MultiMapContext will supersede ProviderContext and may result in unexpected behavior!') // eslint-disable-line max-len
+    }
+
     // multimap context will take precedence over the provider context
     return !!MultiMapContext
       ? (

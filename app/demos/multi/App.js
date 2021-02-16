@@ -2,19 +2,26 @@ import React from 'react'
 import {
   Map,
   Popup,
+  TabbedPanel,
   Controls,
   ContextMenu,
   loadDataLayer,
+  LayerStyler,
+  LayerPanelLayersPage,
   MultiMapManager,
+  TabbedPanelPage,
+  BasemapContainer,
   VectorLayer,
+  DrawContainer,
   FlexMap,
-  FullScreenFlex,
-  connectToContext
+  FullScreenFlex
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
+
+import Welcome from '../../Welcome'
 
 class App extends React.Component {
   onMapInit = async (map) => {
@@ -64,10 +71,24 @@ class App extends React.Component {
                 numberOfRows={2}
                 numberOfColumns={4}>
                 <Map id={key} _ol_kit_multi={true} onMapInit={this.onMapInit}>
-                  <Popup isPopup />
-                  {/* <Controls /> */}
-                  <ContextMenu isContextMenu />
-                  {connectToContext(<div>Mappy div</div>)}
+                  <Popup />
+                  <TabbedPanel>
+                    {i === 0 && <TabbedPanelPage tabIcon='Home'>
+                      <Welcome />
+                    </TabbedPanelPage>}
+                    <TabbedPanelPage label='Layers'>
+                      <LayerPanelLayersPage />
+                    </TabbedPanelPage>
+                    <TabbedPanelPage label='Styles'>
+                      <LayerStyler />
+                    </TabbedPanelPage>
+                    <TabbedPanelPage label='Draw'>
+                      <DrawContainer style={{ position: 'relative', width: 'auto' }} />
+                    </TabbedPanelPage>
+                  </TabbedPanel>
+                  <ContextMenu />
+                  <Controls />
+                  <BasemapContainer />
                 </Map>
               </FlexMap>
             )
