@@ -76,10 +76,10 @@ class MultiMapManager extends React.Component {
         if (child?.props?._ol_kit_multi) {
           // we caught a map
           // catch for multi map children
-          const grandChildren = React.cloneElement(child.props.children, { _ol_kit_context_id: child.props.id }) // this explicit _ol_kit_context_id prop no longer necessary
+          // const grandChildren = React.cloneElement(child.props.children, { _ol_kit_context_id: child.props.id }) // this explicit _ol_kit_context_id prop no longer necessary
           const propOverride = config => this.addToContext(config, child.props.addMapToContext)
           const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
-          const adoptedChild = React.cloneElement(child, { addMapToContext: propOverride, onMapInit: onMapInitOverride, _ol_kit_context_id: child.props.id, map: null, key: i }, [grandChildren])
+          const adoptedChild = React.cloneElement(child, { addMapToContext: propOverride, onMapInit: onMapInitOverride, _ol_kit_context_id: child.props.id, map: null, key: i })
 
           return adoptedChild
         } else if (Array.isArray(child)) {
