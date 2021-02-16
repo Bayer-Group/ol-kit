@@ -39,7 +39,7 @@ class MultiMapManager extends React.Component {
   }
 
   onMapInitOverride = (map, onMapInitProp = () => {}) => {
-    const mapId = map.getTargetElement().id
+    const mapId = map?.getTargetElement()?.id
 
     multiMaps.push(mapId)
 
