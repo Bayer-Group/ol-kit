@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ugh from 'ugh'
 
 export default class SafeParent extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -44,11 +45,20 @@ export default class SafeParent extends React.Component {
     }
 
     return (
-      !!contextKey ? (
+      contextKey ? (
         <Component {...filteredProviderProps} {...inlineProps} />
-      ):(
+      ) : (
         <div ref={this.ref}>{`Could not find parent <Map> for ${Component.name} during context lookup`}</div>
       )
     )
   }
+}
+
+SafeParent.propTypes = {
+  /** the Component being wrapped and returned */
+  Component: PropTypes.Component.isRequired,
+  /** original props provided directly to the Component- these always take precedence */
+  inlineProps: PropTypes.Object,
+  /** props provided from React context (set in the MultiMapManager and passed down) */
+  providerProps: PropTypes.Object
 }

@@ -181,6 +181,8 @@ Map.propTypes = {
   ]),
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
+  /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */
+  id: PropTypes.string,
   /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
   logoPosition: PropTypes.string,
   /** optionally pass a custom map */

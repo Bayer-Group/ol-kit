@@ -7,9 +7,9 @@ export const FlexMap = styled.div`
     const breakPoint = p.index < adjustedColumns
     const needsAdjustment = !!(p.total % 2) && breakPoint
 
-    return needsAdjustment ? `${100/adjustedColumns}%` : `${100/p.numberOfColumns}%`
+    return needsAdjustment ? `${100 / adjustedColumns}%` : `${100 / p.numberOfColumns}%`
   }};
-  height: ${p => `${100/p.numberOfRows}%`};
+  height: ${p => `${100 / p.numberOfRows}%`};
   flex-grow: ${p => !p.index && (p.total % 2) ? '2' : '1'};
   flex-shrink: ${p => !p.index && (p.total % 2) ? '1' : '2'};
 `

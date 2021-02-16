@@ -31,7 +31,7 @@ class MultiMapManager extends React.Component {
   addToContext = (config, addToContextProp = () => {}) => {
     const mapId = config.map.getTargetElement().id
 
-    contextState[mapId] = {...config}
+    contextState[mapId] = { ...config }
 
     // call original prop
     addToContextProp(config)
@@ -53,7 +53,7 @@ class MultiMapManager extends React.Component {
       groups.forEach(groupIds => {
         // sync events by map groups
         const groupedViews = groupIds.map(id => contextState[id].map.getView())
-  
+
         syncViewEvents(groupedViews)
       })
     }
@@ -74,12 +74,18 @@ class MultiMapManager extends React.Component {
 
       return children.map((child, i) => {
         if (child?.props?._ol_kit_multi) {
-          console.log('we caucht a map', child)
           // we caught a map
-          // catch for multi map children
           const propOverride = config => this.addToContext(config, child.props.addMapToContext)
           const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
-          const adoptedChild = React.cloneElement(child, { ...child.props, addMapToContext: propOverride, onMapInit: onMapInitOverride, _ol_kit_context_id: child.props.id, map: null, key: i })
+          const propsOverride = {
+            ...child.props,
+            addMapToContext: propOverride,
+            onMapInit: onMapInitOverride,
+            _ol_kit_context_id: child.props.id,
+            map: null,
+            key: i
+          }
+          const adoptedChild = React.cloneElement(child, propsOverride)
 
           return adoptedChild
         } else if (Array.isArray(child)) {
@@ -87,7 +93,7 @@ class MultiMapManager extends React.Component {
           return childModifier(child)
         } else if (child?.props?.children) {
           // loop through children of children
-          return React.cloneElement(child, {...child.props}, [childModifier(child.props.children)])
+          return React.cloneElement(child, { ...child.props }, [childModifier(child.props.children)])
         } else {
           return child
         }
@@ -105,7 +111,6 @@ class MultiMapManager extends React.Component {
 
 MultiMapManager.defaultProps = {
   contextProps: {},
-  maps: [],
   translations: en
 }
 
@@ -117,13 +122,8 @@ MultiMapManager.propTypes = {
   ]).isRequired,
   /** Add any custom props to context and they will be passed to all components wrapped by connectToContext */
   contextProps: PropTypes.object,
-  /** OL map object (required if maps array is not passed) */
-  map: PropTypes.object,
-  /** Array of Openlayers map objects for components that support multi-map (this will override anything passed to map prop) */
-  maps: PropTypes.array,
-  multiMapConfig: PropTypes.shape({
-    key: PropTypes.object
-  }),
+  /** Nested arrays of ids grouped together to syncronize events across multiple maps */
+  groups: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   /** Object with key/value pairs for component translation strings */
   translations: PropTypes.object
 }

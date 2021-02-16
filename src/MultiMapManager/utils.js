@@ -1,7 +1,7 @@
 import Event from 'ol/events/Event'
 
 /**
- * Sync multiple openlayers 
+ * Sync multiple openlayers
  * @function
  * @category MultiMap
  * @since 1.7.0
@@ -35,29 +35,29 @@ class ViewEvent extends Event {
 }
 
 export function mapChangeHandler (event, syncedViews) {
-    const eventView = event.target
+  const eventView = event.target
 
-    syncedViews.forEach(view => {
-      // do not sync while view is animating
-      if (view.ol_uid !== eventView.ol_uid && !view.getAnimating()) {
-        switch (event.type) {
-          case 'change:center':
-            if (eventView.getInteracting()) {
-              view.adjustCenter(eventView.getCenter().map((val, i) => val - event.oldValue[i]))
-            } else if (event.key === 'resolution') {
-              view.setCenter(eventView.getCenter())
-            }
-            break
-          case 'change:resolution':
-            eventView.dispatchEvent(new ViewEvent(event.key, 'change:center', 0, eventView))
-            view.setResolution(eventView.getResolution())
-            break
-          case 'change:rotation':
-            view.setRotation(eventView.getRotation())
-            break
-          default:
-            return ''
-        }
+  syncedViews.forEach(view => {
+    // do not sync while view is animating
+    if (view.ol_uid !== eventView.ol_uid && !view.getAnimating()) {
+      switch (event.type) {
+        case 'change:center':
+          if (eventView.getInteracting()) {
+            view.adjustCenter(eventView.getCenter().map((val, i) => val - event.oldValue[i]))
+          } else if (event.key === 'resolution') {
+            view.setCenter(eventView.getCenter())
+          }
+          break
+        case 'change:resolution':
+          eventView.dispatchEvent(new ViewEvent(event.key, 'change:center', 0, eventView))
+          view.setResolution(eventView.getResolution())
+          break
+        case 'change:rotation':
+          view.setRotation(eventView.getRotation())
+          break
+        default:
+          return ''
       }
-    })
-  }
+    }
+  })
+}

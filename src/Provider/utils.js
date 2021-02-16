@@ -17,7 +17,6 @@ export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
   return props => { // eslint-disable-line react/display-name
-
     // if no context exists, just render the component with inline props
     if (!MultiMapContext && !ProviderContext) return <Component {...props} />
     if (!contextConflictWarning && !!MultiMapContext && !!ProviderContext) {
@@ -26,7 +25,7 @@ export function connectToContext (Component) {
     }
 
     // multimap context will take precedence over the provider context
-    return !!MultiMapContext
+    return MultiMapContext
       ? (
         <MultiMapContext.Consumer>
           {
@@ -40,7 +39,7 @@ export function connectToContext (Component) {
             }
           }
         </MultiMapContext.Consumer>
-      ):(
+      ) : (
         <ProviderContext.Consumer>
           {
             (providerProps = {}) => {
