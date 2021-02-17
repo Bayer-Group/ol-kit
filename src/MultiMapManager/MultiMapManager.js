@@ -8,9 +8,8 @@ export let MultiMapContext = null
 const contextState = {}
 const multiMaps = []
 
-/* A higher order component that provides context to connectToContext wrapped children
+/* A higher order component that manages MultiMapContext for connectToContext wrapped children
  * @component
- * @example ./example.md
  * @category MultiMap
  * @since 1.7.0
  */

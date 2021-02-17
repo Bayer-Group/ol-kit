@@ -2,6 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ugh from 'ugh'
 
+/* A higher order component that manages MultiMapContext for connectToContext wrapped children
+ * @component
+ * @category MultiMap
+ * @since 1.7.0
+ */
 export default class SafeParent extends React.Component {
   constructor (props) {
     super(props)
@@ -56,7 +61,7 @@ export default class SafeParent extends React.Component {
 
 SafeParent.propTypes = {
   /** the Component being wrapped and returned */
-  Component: PropTypes.Component.isRequired,
+  Component: PropTypes.node.isRequired,
   /** original props provided directly to the Component- these always take precedence */
   inlineProps: PropTypes.Object,
   /** props provided from React context (set in the MultiMapManager and passed down) */
