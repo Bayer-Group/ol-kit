@@ -51,6 +51,7 @@ Object {
   "PopupActionGoogleMaps": [Function],
   "PopupActionGroup": [Function],
   "PopupActionItem": [Function],
+  "PopupActionLink": [Function],
   "PopupBase": [Function],
   "PopupDataList": [Function],
   "PopupDefaultInsert": [Function],

@@ -13,7 +13,7 @@ const PopupActionLink = ({ href, target, windowFeatures, ...props }) => {
     return <PopupActionItem onClick={onClick} {...props} />
 }
 
-PopupActionItem.propTypes = {
+PopupActionLink.propTypes = {
     /** The title of the action item (if a custom child component is not specified) */
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   
@@ -41,7 +41,7 @@ PopupActionItem.propTypes = {
     ])
   }
   
-  PopupActionItem.defaultProps = {
+  PopupActionLink.defaultProps = {
     onClick: () => {},
     target: "_blank"
   }
