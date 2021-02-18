@@ -14,7 +14,3 @@ export const Item = styled.div`
     background: #f2f2f2;
   }
 `
-
-export const Link = styled.a`
-  text-decoration: none;
-`

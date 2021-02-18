@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Item, Link, Action } from './styled'
+import { Item, Action } from './styled'
 
 /**
  * @component
@@ -10,15 +10,7 @@ import { Item, Link, Action } from './styled'
  */
 class PopupActionItem extends Component {
   render () {
-    const { children, feature, title, disabled, onClick, style, href, target } = this.props
-
-    if (href && !disabled) {
-      return (
-        <Action role='button' onClick={(e) => onClick(e, feature)}>
-          {title ? <Link href={href} target={target || '_blank'}><span><Item style={style}>{title}</Item></span></Link> : children}
-        </Action>
-      )
-    }
+    const { children, feature, title, disabled, onClick, style } = this.props
 
     return (
       <Action role='button' onClick={disabled ? () => {} : (e) => onClick(e, feature)}>
@@ -45,19 +37,12 @@ PopupActionItem.propTypes = {
   style: PropTypes.object,
   
   /** OpenLayers feature on which the action is being done */
-  feature: PropTypes.object,
-
-  /** Link to open when action item is clicked */
-  href: PropTypes.string,
-
-  /** Determines how link should be open - _blank means new tab */
-  target: PropTypes.string
+  feature: PropTypes.object
 }
 
 PopupActionItem.defaultProps = {
   disabled: false,
-  style: {},
-  onClick: () => {}
+  style: {}
 }
 
 export default PopupActionItem
