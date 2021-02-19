@@ -24,16 +24,11 @@ export default class SafeParent extends React.Component {
     const { current } = this.ref
 
     if (current) {
-      if (inlineProps._ol_kit_context_id && current.parentElement?.classList && !current.parentElement?.classList?.contains(inlineProps._ol_kit_context_id)) {
-        current.parentElement.classList.add(inlineProps._ol_kit_context_id)
-        this.setState({ parentContextKey: inlineProps._ol_kit_context_id })
-      } else {
-        const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`.${key}`))
+      const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`))
 
-        if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
+      if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
 
-        this.setState({ parentContextKey })
-      }
+      this.setState({ parentContextKey })
     }
   }
 
@@ -44,7 +39,8 @@ export default class SafeParent extends React.Component {
   render () {
     const { Component, inlineProps, providerProps } = this.props
     const { parentContextKey } = this.state
-    const relativeProviderProps = providerProps[parentContextKey]
+    const contextKey = inlineProps._ol_kit_context_id || parentContextKey
+    const relativeProviderProps = providerProps[contextKey]
     const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
 
     if (Component.propTypes) {
@@ -55,7 +51,7 @@ export default class SafeParent extends React.Component {
     }
 
     return (
-      parentContextKey ? (
+      contextKey ? (
         <Component {...filteredProviderProps} {...inlineProps} />
       ) : (
         <div ref={this.ref}>{`Could not find parent <Map> for ${Component.name} during context lookup`}</div>
