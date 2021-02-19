@@ -6,12 +6,11 @@ import { PopupActionItem } from 'Popup'
 const PopupActionLink = ({ href, target, windowFeatures, ...props }) => {
 
     const onClick = (event, feature) => {
-        console.log("clicking", feature)
         window.open(href, target, windowFeatures)
         return props.onClick(event, feature)
     }
 
-    return <PopupActionItem {...props} onClick={(event, feature) => onClick(event, feature)} />
+    return <PopupActionItem {...props} onClick={onClick} />
 }
 
 PopupActionLink.propTypes = {
