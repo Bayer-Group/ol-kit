@@ -12,6 +12,7 @@ export const FlexMap = styled.div`
   height: ${p => `${100 / p.numberOfRows}%`};
   flex-grow: ${p => !p.index && (p.total % 2) ? '2' : '1'};
   flex-shrink: ${p => !p.index && (p.total % 2) ? '1' : '2'};
+  position: relative;
 `
 
 export const FullScreenFlex = styled.div`
