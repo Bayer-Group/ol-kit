@@ -18,29 +18,34 @@ export default class SafeParent extends React.Component {
     this.ref = React.createRef()
   }
 
-  componentDidMount () {
-    const { Component, providerProps } = this.props
+  contextKeyLookup () {
+    const { Component, providerProps, inlineProps } = this.props
     const keys = Object.keys(providerProps)
+    const { current } = this.ref
 
-    if (this.ref.current) {
-      const parentContextKey = keys.find(key => {
-        const parentMap = this.ref.current.closest(`#${key}`)
+    if (current) {
+      if (inlineProps._ol_kit_context_id && current.parentElement?.classList && !current.parentElement?.classList?.contains(inlineProps._ol_kit_context_id)) {
+        current.parentElement.classList.add(inlineProps._ol_kit_context_id)
+        this.setState({ parentContextKey: inlineProps._ol_kit_context_id })
+      } else {
+        const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`.${key}`))
 
-        return parentMap?.id
-      })
+        if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
 
-      if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
-
-      this.setState({ parentContextKey })
+        this.setState({ parentContextKey })
+      }
     }
+  }
+
+  componentDidMount() {
+    this.contextKeyLookup()
   }
 
   render () {
     const { Component, inlineProps, providerProps } = this.props
     const { parentContextKey } = this.state
-    const contextKey = inlineProps._ol_kit_context_id || parentContextKey
-    const relativeProviderProps = providerProps[contextKey]
-    const filteredProviderProps = { ...relativeProviderProps }
+    const relativeProviderProps = providerProps[parentContextKey]
+    const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
 
     if (Component.propTypes) {
       // filter out any props from context that do not need to get passed to this wrapped component
@@ -50,7 +55,7 @@ export default class SafeParent extends React.Component {
     }
 
     return (
-      contextKey ? (
+      parentContextKey ? (
         <Component {...filteredProviderProps} {...inlineProps} />
       ) : (
         <div ref={this.ref}>{`Could not find parent <Map> for ${Component.name} during context lookup`}</div>
