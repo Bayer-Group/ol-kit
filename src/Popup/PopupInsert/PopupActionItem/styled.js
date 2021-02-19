@@ -7,7 +7,6 @@ export const Action = styled.div`
 export const Item = styled.div`
   padding: 12px 15px;
   font-size: 15px;
-  text-decoration: none;
   color: ${props => props.disabled ? 'gray' : 'black'};
 
   &:hover {

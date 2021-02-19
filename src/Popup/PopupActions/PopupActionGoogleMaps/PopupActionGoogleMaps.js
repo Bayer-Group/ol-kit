@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import en from  'locales/en'
-import { PopupActionItem } from 'Popup'
+import { PopupActionLink } from 'Popup'
 
 import { getCenter } from 'ol/extent'
 import { transform } from 'ol/proj'
@@ -17,7 +17,7 @@ const PopupActionGoogleMaps = ({ feature, translations }) => {
   const url = `https://www.google.com/maps/search/?api=1&query=${ lat },${ long }`
   
   return (
-    <PopupActionItem
+    <PopupActionLink
       title={translations['_ol_kit.PopupActionGoogleMaps.navigateGoogleMaps']}
       href={url} />
   )

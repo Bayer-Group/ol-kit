@@ -74,7 +74,7 @@ export default {
   '_ol_kit.PopupDefaultPage.details': 'Details',
   // Popup Actions
   '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy Geometry as Coordinates',
-  '_ol_kit.PopupActionGoogleMaps.navigateGoogleMaps': 'Navigate here with Google Maps',
+  '_ol_kit.PopupActionGoogleMaps.navigateGoogleMaps': 'View location in Google Maps',
   // TimeSliderBase
   '_ol_kit_.TimeSliderBase.dateRange': 'Date Range',
   '_ol_kit_.TimeSliderBase.next': 'Next >',

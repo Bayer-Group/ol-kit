@@ -5,12 +5,13 @@ import { PopupActionItem } from 'Popup'
 
 const PopupActionLink = ({ href, target, windowFeatures, ...props }) => {
 
-    const onClick = async (event, feature) => {
+    const onClick = (event, feature) => {
+        console.log("clicking", feature)
         window.open(href, target, windowFeatures)
         return props.onClick(event, feature)
     }
 
-    return <PopupActionItem onClick={onClick} {...props} />
+    return <PopupActionItem {...props} onClick={(event, feature) => onClick(event, feature)} />
 }
 
 PopupActionLink.propTypes = {
@@ -33,12 +34,17 @@ PopupActionLink.propTypes = {
     feature: PropTypes.object,
   
     /** Link to open when action item is clicked */
-    href: PropTypes.string,
+    href: PropTypes.string.isRequired,
   
     /** Determines how link should be open - _blank means new tab */
     target: PropTypes.oneOf([
         '_blank', '_self', '_parent', '_top'
-    ])
+    ]),
+
+    /** A DOMString containing a comma-separated list of window features given with their
+     * corresponding values in the form "name=value". See https://developer.mozilla.org/en-US/docs/Web/API/Window/open#window_features
+     * for more details */
+    windowFeatures: PropTypes.array,
   }
   
   PopupActionLink.defaultProps = {
