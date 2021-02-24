@@ -19,7 +19,7 @@ export default class SafeParent extends React.Component {
   }
 
   contextKeyLookup () {
-    const { Component, providerProps, inlineProps } = this.props
+    const { Component, providerProps } = this.props
     const keys = Object.keys(providerProps)
     const { current } = this.ref
 
@@ -32,7 +32,7 @@ export default class SafeParent extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.contextKeyLookup()
   }
 
