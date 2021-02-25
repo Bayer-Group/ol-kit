@@ -75,9 +75,6 @@ class LayerPanelList extends Component {
         const addedIndex = this.displaced.id.split('_')[0]
         const payload = this.dragTarget
 
-        console.log('addedindex', addedIndex)
-        console.log('removedIndex', removedIndex)
-
         this.handleDrop({ ...e, removedIndex, addedIndex, payload })
 
         break

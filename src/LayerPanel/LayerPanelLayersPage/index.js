@@ -9,12 +9,11 @@ import LayerPanelCheckbox from 'LayerPanel/LayerPanelCheckbox'
 import LayerPanelExpandableList from 'LayerPanel/_LayerPanelExpandableList'
 import LayerPanelActions from 'LayerPanel/LayerPanelActions'
 import { ListItem, ListItemText } from 'LayerPanel/LayerPanelListItem/styled'
-import { ListItemSecondaryAction, LayerContainer } from './styled'
+import { ListItemSecondaryAction } from './styled'
 import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
-import debounce from 'lodash.debounce'
 
 import { connectToMap } from 'Map'
 
@@ -38,8 +37,6 @@ import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 import isEqual from 'lodash.isequal'
-
-import en from '../../locales/en'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -407,23 +404,11 @@ class LayerPanelLayersPage extends Component {
 LayerPanelLayersPage.defaultProps = {
   handleFeatureDoubleClick: () => {},
   handleLayerDoubleClick: () => {},
-  layerFilter: (layers) => layers.filter(layer => {
-    // const filteredFeatures = this.getFeaturesForLayer(layer)
-
-    if (!layer.get('_ol_kit_basemap') && layer.get('name') !== 'unselectable') {
-      return true
-    }
-    // } else if (!enableFilter || !(layer instanceof olLayerVector) || shouldHideFeatures(layer)) {
-    //   return true
-    // } else {
-    //   return filteredFeatures.length
-    // }
-  }),
+  layerFilter: (layers) => layers.filter(layer => !layer.get('_ol_kit_basemap') && layer.get('name') !== 'unselectable'),
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
-  tabIcon: <LayersIcon />,
-  translations: en
+  tabIcon: <LayersIcon />
 }
 
 LayerPanelLayersPage.propTypes = {
