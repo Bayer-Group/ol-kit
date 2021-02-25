@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { syncViewEvents } from './utils'
-import { Map as olKitMap } from '@bayer/ol-kit'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
@@ -73,7 +72,7 @@ class MultiMapManager extends React.Component {
       const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
       return children.map((child, i) => {
-        if (child?.type?.toString?.() === olKitMap.toString?.()) {
+        if (child.type?.displayName === '_Map' || child.type?.toString?.().startsWith('function _Map')) {
           // we caught a map
           const propOverride = config => this.addToContext(config, child.props.addMapToContext)
           const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
