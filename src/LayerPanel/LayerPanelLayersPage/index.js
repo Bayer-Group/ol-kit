@@ -9,11 +9,14 @@ import LayerPanelCheckbox from 'LayerPanel/LayerPanelCheckbox'
 import LayerPanelExpandableList from 'LayerPanel/_LayerPanelExpandableList'
 import LayerPanelActions from 'LayerPanel/LayerPanelActions'
 import { ListItem, ListItemText } from 'LayerPanel/LayerPanelListItem/styled'
-import { ListItemSecondaryAction } from './styled'
+import { ListItemSecondaryAction, LayerContainer } from './styled'
 import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
+import debounce from 'lodash.debounce'
+
+import { connectToMap } from 'Map'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -35,6 +38,8 @@ import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 
 import isEqual from 'lodash.isequal'
+
+import en from '../../locales/en'
 
 const INDETERMINATE = 'indeterminate'
 
@@ -72,7 +77,7 @@ class LayerPanelLayersPage extends Component {
       layers: [],
       masterCheckboxVisibility: true,
       featureListeners: [],
-      filterText: null,
+      filterText: '',
       expandedLayers: []
     }
   }
@@ -329,33 +334,29 @@ class LayerPanelLayersPage extends Component {
               {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
               <LayerPanelActionExport onExportFeatures={onExportFeatures} />
             </LayerPanelActions>} />
-        {enableFilter &&
-          <TextField
-            id='feature-filter-input'
-            label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
-            type='text'
-            style={{ margin: '8px' }}
-            fullWidth
-            value={filterText}
-            onChange={(e) => this.handleFilter(e.target.value)} />
-        }
-        <LayerPanelContent padding='0px 15px'>
+        <TextField
+          id='feature-filter-input'
+          label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
+          type='text'
+          style={{ margin: '8px', display: enableFilter ? 'block' : 'none' }}
+          fullWidth
+          value={filterText}
+          onChange={(e) => this.handleFilter(e.target.value)} />
+        <LayerPanelContent padding={enableFilter ? '0px 15px 58px 15px !important' : '0px 15px'}>
           <LayerPanelList
             disableDrag={disableDrag}
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
             items={layers}
             onLayerReorder={onLayerReorder} >
-            {layerFilter(layers).filter((layer) => {
-              const filteredFeatures = this.getFeaturesForLayer(layer)
-
-              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures.length
-            }).map((layer, i) => {
+            {layerFilter(layers).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
               const layerCheckboxState = !layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()
+              const showLayer = !enableFilter || !(layer instanceof olLayerVector) ||
+                this.props.shouldHideFeatures(layer) ? true : features.length
 
               return (
-                <div key={i}>
+                <div key={i} style={{ display: showLayer ? 'block' : 'none' }}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={layerCheckboxState}
@@ -406,11 +407,23 @@ class LayerPanelLayersPage extends Component {
 LayerPanelLayersPage.defaultProps = {
   handleFeatureDoubleClick: () => {},
   handleLayerDoubleClick: () => {},
-  layerFilter: (layers) => layers.filter(layer => !layer.get('_ol_kit_basemap') && layer.get('name') !== 'unselectable'),
+  layerFilter: (layers) => layers.filter(layer => {
+    // const filteredFeatures = this.getFeaturesForLayer(layer)
+
+    if (!layer.get('_ol_kit_basemap') && layer.get('name') !== 'unselectable') {
+      return true
+    }
+    // } else if (!enableFilter || !(layer instanceof olLayerVector) || shouldHideFeatures(layer)) {
+    //   return true
+    // } else {
+    //   return filteredFeatures.length
+    // }
+  }),
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
-  tabIcon: <LayersIcon />
+  tabIcon: <LayersIcon />,
+  translations: en
 }
 
 LayerPanelLayersPage.propTypes = {
@@ -466,4 +479,4 @@ LayerPanelLayersPage.propTypes = {
   onLayerRemoved: PropTypes.func
 }
 
-export default LayerPanelLayersPage
+export default connectToMap(LayerPanelLayersPage)
