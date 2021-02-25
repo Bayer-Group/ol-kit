@@ -1,0 +1,53 @@
+html, body, #root {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.map {
+  height: 500px;
+  width: 100%;
+  background-color: #b5d0d0;
+}
+
+.half-map {
+  float: left;
+  height: 500px;
+  width: 50%;
+  background-color: #b5d0d0;
+}
+
+.full-map {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #b5d0d0;
+}
+
+.navbar-dark {
+  background-color:teal;
+  background-image: none;
+  background-repeat: no-repeat;
+}
+
+.list-item {
+  padding: 1;
+  margin: 1;
+  width: 100%;
+  height: 100%;
+}

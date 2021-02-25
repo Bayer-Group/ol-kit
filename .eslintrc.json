@@ -2,7 +2,8 @@
   "extends": ["eslint:recommended", "plugin:react/recommended", "standard"],
   "parser": "babel-eslint",
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -62,6 +63,7 @@
     "no-alert": "error",
     "no-array-constructor": "error",
     "no-class-assign": "error",
+    "no-console": "error",
     "no-continue": "error",
     "no-duplicate-imports": "error",
     "no-eval": "error",
@@ -135,6 +137,7 @@
     "fetch": true,
     "XMLSerializer": true,
     "Worker": true,
-    "self": true
+    "self": true,
+    "Element": true
   }
 }

@@ -1,96 +1,104 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
+import { fireEvent, render, waitFor } from '@testing-library/react'
+import { prettyDOM } from '@testing-library/dom'
+import { Map } from 'Map'
 import BingMaps from './BingMaps'
-import Map from '../Map'
-import olMap from 'ol/map'
-import olLayerVector from 'ol/layer/vector'
+import olMap from 'ol/Map'
+import olLayerVector from 'ol/layer/Vector'
 
+const TEXT_IDENTIFIER = 'Bing Maps'
 const mockSourceOpts = {
   key: ''
 }
 
 describe('<BingMaps />', () => {
-  it('should render a basic basemap option component', () => {
-    const wrapper = shallow(<BingMaps sourceOpts={mockSourceOpts} />, { wrappingComponent: Map })
+  it.skip('should render a basic basemap option component', async () => {
+    const { container } = render(<Map><BingMaps sourceOpts={mockSourceOpts} /></Map>)
 
-    expect(wrapper).toMatchSnapshot()
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    expect(prettyDOM(container)).toMatchSnapshot()
   })
 
-  it('should require a key', () => {
-    const wrapper = shallow(<BingMaps sourceOpts={{ key: undefined }} />, { wrappingComponent: Map })
+  it.skip('should require a key', async () => {
+    const { container } = render(<Map><BingMaps sourceOpts={{ key: undefined }} /></Map>)
 
-    expect(wrapper).toThrowErrorMatchingSnapshot()
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    expect(prettyDOM(container)).toMatchSnapshot()
   })
 
-  it('should add a basemap to an empty map when clicked', () => {
+  it('should add a basemap to an empty map when clicked', async () => {
     const map = new olMap()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} />, { wrappingComponent: Map })
+    const { container, getByText } = render(<Map map={map}><BingMaps sourceOpts={mockSourceOpts} /></Map>)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(0)
-
-    wrapper.simulate('click')
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
-  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a string layerTypeID.', () => {
+  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a string layerTypeID.', async () => {
     const mockLayerTypeID = 'mockLayerTypeID'
     const mockLayer = new olLayerVector()
 
-    mockLayer[mockLayerTypeID] = 'osm'
+    mockLayer.set(mockLayerTypeID, 'osm')
 
     const map = new olMap({
       layers: [
         mockLayer
       ]
     })
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} />,
-      { wrappingComponent: Map })
+    const { container, getByText } = render(
+      <Map map={map}>
+        <BingMaps sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} />
+      </Map>
+    )
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
 
     expect(map.getLayers().getArray().length).toBe(1)
-
-    wrapper.simulate('click')
-    expect(map.getLayers().getArray().length).toBe(1)
-  })
-
-  it('should set the first layer to a basemap to a map containing a preexisting basemap when clicked with a Symbol layerTypeID.', () => {
-    const mockLayerTypeID = Symbol('mockLayerTypeID')
-    const mockLayer = new olLayerVector()
-
-    mockLayer[mockLayerTypeID] = 'osm'
-
-    const map = new olMap({
-      layers: [
-        mockLayer
-      ]
-    })
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} layerTypeID={mockLayerTypeID} />,
-      { wrappingComponent: Map })
-
-    expect(map.getLayers().getArray().length).toBe(1)
-
-    wrapper.simulate('click')
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(map.getLayers().getArray().length).toBe(1)
   })
 
-  it('should fire the callback when the layers are changed', () => {
-    const map = new olMap()
+  it('should fire the callback when the layers are changed', async () => {
     const callback = jest.fn()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} onBasemapChanged={callback} />,
-      { wrappingComponent: Map })
+    const { container, getByText } = render(
+      <Map>
+        <BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />
+      </Map>
+    )
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
 
     expect(callback).not.toHaveBeenCalled()
-    wrapper.simulate('click')
+    fireEvent.click(getByText(TEXT_IDENTIFIER))
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
-  it('should render a blue border to indicate when the layer is present on the map', () => {
+  it('should render a blue border to indicate when the layer is present on the map', async () => {
     const callback = jest.fn()
-    const map = new olMap()
-    const wrapper = mount(<BingMaps map={map} sourceOpts={mockSourceOpts} onBasemapChanged={callback} />,
-      { wrappingComponent: Map })
+    const onMapInit = jest.fn()
+    const wrapper = mount(
+      <Map onMapInit={onMapInit}>
+        <BingMaps sourceOpts={mockSourceOpts} onBasemapChanged={callback} />
+      </Map>
+    )
+
+    // wait for async child render
+    await waitFor(() => expect(onMapInit).toHaveBeenCalled())
+    wrapper.update()
 
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeFalsy()
-    wrapper.simulate('click')
+    wrapper.find('._ol_kit_basemapOption').first().simulate('click')
     expect(callback).toHaveBeenCalledTimes(1)
     expect(wrapper.find('._ol_kit_basemapOption').first().prop('isActive')).toBeTruthy()
   })

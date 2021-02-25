@@ -3,21 +3,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="utf-8">
-    <title>JSDoc: Map/Map.js</title>
+    <title>ol-kit | Map/Map.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
     <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
 
@@ -27,10 +27,7 @@
         <div class="container">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                    
-                     
-                        <h1 class="navbar-item">ol-kit</h1>
-                    
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -42,19 +39,19 @@
                     <div class="navbar-end">
                     
                         <div class="navbar-item">
-                            <a href="tutorial-Getting%20Started.html" target="_blank">
+                            <a href="tutorial-Getting%20Started.html">
                                 Get Started
                             </a>
                         </div>
                     
                         <div class="navbar-item">
-                            <a href="docs.html" target="_blank">
+                            <a href="docs.html">
                                 Docs
                             </a>
                         </div>
                     
                         <div class="navbar-item">
-                            <a href="https://github.com/MonsantoCo/ol-kit" target="_blank">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
                                 Github
                             </a>
                         </div>
@@ -65,22 +62,17 @@
             </nav>
         </div>
     </div>
-    <div class="container">
+    <div id="page-wrapper" class="container">
         <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-Getting Started.html">Getting Started</a></li><li><a href="tutorial-Map Consumer.html">Map Consumer</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createMap">createMap</a></li></ul></div>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToContext.html">connectToContext</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFileToFeatures">convertFileToFeatures</a></li><li><a href="global.html#convertFileToLayer">convertFileToLayer</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li><li><a href="VectorTileLayer.html">VectorTileLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>Draw</h2><h3>Components</h3><ul><li><a href="Draw.html">Draw</a></li><li><a href="DrawBox.html">DrawBox</a></li><li><a href="DrawCircle.html">DrawCircle</a></li><li><a href="DrawContainer.html">DrawContainer</a></li><li><a href="DrawFreehand.html">DrawFreehand</a></li><li><a href="DrawLine.html">DrawLine</a></li><li><a href="DrawPoint.html">DrawPoint</a></li><li><a href="DrawPolygon.html">DrawPolygon</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#getStyledFeatures">getStyledFeatures</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>Heatmap</h2><h3>Components</h3><ul><li><a href="HeatmapControls.html">HeatmapControls</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>Provider</h2><h3>Utils</h3><ul><li><a href="global.html#connectToContext">connectToContext</a></li></ul></div><div class="category"><h2>TabbedPanel</h2><h3>Components</h3><ul><li><a href="TabbedPanel.html">TabbedPanel</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
                     </nav>
                 </div>
             </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Source</p>
-                        <h1>Map/Map.js</h1>
-                    </header>
-                    
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
                     
 
 
@@ -91,79 +83,205 @@
             <pre class="prettyprint source linenums"><code>import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
-import { createMap } from './utils'
+import debounce from 'lodash.debounce'
 
-// context should only be created when &lt;Map> is mounted (see constructor), otherwise it's null so child comps don't use context
-export let MapContext = null
+import MapLogo from './MapLogo'
+import {
+  createMap,
+  updateMapFromUrl,
+  updateUrlFromMap,
+  replaceZoomBoxCSS,
+  createSelectInteraction
+} from './utils'
+import { StyledMap } from './styled'
+import { connectToContext } from 'Provider'
+import en from 'locales/en'
+import ugh from 'ugh'
 
 /**
  * A Reactified ol.Map wrapper component
  * @component
  * @category Map
- * @since 1.0.0
+ * @since 0.1.0
  */
 class Map extends React.Component {
   constructor (props) {
     super(props)
 
-    // this is used to create a unique identifier for the map div
-    this.target = `_olKit_map_${nanoid(6)}`
+    this.state = {
+      mapInitialized: false
+    }
 
-    // create a map context
-    MapContext = React.createContext()
+    // map is passed as a prop- use this flag to determine whether a map/portal should be created
+    this.passedMap = props.map
+
+    // this is used to create a unique identifier for the map div
+    this.target = `_ol_kit_map_${nanoid(6)}`
   }
 
   componentDidMount () {
-    const { map, onMapInit } = this.props
+    const {
+      addMapToContext,
+      map: passedMap,
+      onMapInit,
+      translations,
+      updateUrlDebounce,
+      updateUrlFromView,
+      updateViewFromUrl,
+      urlViewParam,
+      dragZoomboxStyle
+    } = this.props
+    const onMapReady = map => {
+      // pass map back via callback prop
+      const initCallback = onMapInit(map)
+      // if onMapInit prop returns a promise, render children after promise is resolved
+      const isPromise = !!initCallback &amp;&amp; typeof initCallback.then === 'function'
 
-    if (!map) {
-      // if no map was passed, create the map
-      this.map = createMap({ target: this.target })
-      // callback that returns a reference to the created map
-      onMapInit(this.map)
-      // force update to get this.map into the context
-      this.forceUpdate()
-    } else {
-      this.map = map
+      // update AFTER onMapInit to get map into the state/context
+      isPromise
+        ? initCallback
+          .catch(e => ugh.error('Error caught in \'onMapInit\'', e))
+          .finally(() => this.setState({ mapInitialized: true })) // always initialize app
+        : this.setState({ mapInitialized: true })
     }
+
+    // if no map was passed, create the map
+    this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
+
+    // setup select interactions for the map
+    this.initializeSelect(this.map)
+
+    // callback for &lt;Provider> if it is mounted as hoc
+    const mapConfig = {
+      map: this.map,
+      mapId: this.target,
+      selectInteraction: this.selectInteraction,
+      translations // this can be hoisted to &lt;Provider> only in the future
+    }
+
+    addMapToContext(mapConfig)
+
+    // optionally attach map listener
+    if (updateUrlFromView) {
+      const setUrl = () => updateUrlFromMap(this.map, urlViewParam)
+      const mapMoveListener = debounce(setUrl, updateUrlDebounce)
+
+      // update the url param after map movements
+      this.map.on('moveend', mapMoveListener)
+    }
+
+    // optionally update map view from url param
+    if (updateViewFromUrl) {
+      // read the url to update the map from view info
+      updateMapFromUrl(this.map, urlViewParam)
+        .catch(ugh.error)
+        .finally(() => onMapReady(this.map)) // always fire callback with map reference on success/failure
+    } else {
+      // callback that returns a reference to the created map
+      onMapReady(this.map)
+    }
+
+    // optionally add zoombox styling
+    replaceZoomBoxCSS(dragZoomboxStyle)
   }
 
-  getContextValue = () => {
-    return {
-      map: this.map
+  initializeSelect = map => {
+    const { selectInteraction } = this.props
+
+    if (selectInteraction) {
+      // if select is passed as a prop always use that one first
+      this.selectInteraction = selectInteraction
+    } else {
+      // otherwise create a new select interaction
+      this.selectInteraction = createSelectInteraction()
     }
+
+    // check the map to see if select interaction has been added
+    const selectInteractionOnMap = map.getInteractions().getArray()
+      // Layer panel also adds a select interaction
+      .filter(interaction => interaction._ol_kit_interaction_type !== '_ol_kit_layer_panel_hover')
+      // this checks if the select interaction created or passed in is the same instance on the map and never double adds
+      .find(interaction => interaction === this.selectInteraction)
+
+    // do not double add the interaction to the map
+    if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
   }
 
   render () {
+    const { children, fullScreen, logoPosition, style, translations } = this.props
+    const { mapInitialized } = this.state
+
     return (
-      &lt;React.Fragment>
-        &lt;div id={this.target}>&lt;/div>
-        &lt;MapContext.Provider value={this.getContextValue()}>
-          {this.props.children}
-        &lt;/MapContext.Provider>
-      &lt;/React.Fragment>
+      &lt;>
+        {!this.passedMap &amp;&amp;
+          &lt;StyledMap
+            id={this.target}
+            fullScreen={fullScreen}
+            style={style}>
+            &lt;MapLogo logoPosition={logoPosition} translations={translations} />
+          &lt;/StyledMap>
+        }
+        {mapInitialized // wait for map to initialize before rendering children
+          ? children
+          : null
+        }
+      &lt;/>
     )
   }
 }
 
 Map.defaultProps = {
+  addMapToContext: () => {},
+  fullScreen: false,
+  logoPosition: 'right',
   map: null,
-  onMapInit: () => {}
+  onMapInit: () => {},
+  updateUrlDebounce: 400,
+  updateUrlFromView: true,
+  updateViewFromUrl: true,
+  urlViewParam: 'view',
+  style: {},
+  dragZoomboxStyle: { backgroundColor: 'rgb(0, 50, 50, 0.5)' },
+  translations: en
 }
 
 Map.propTypes = {
-  /** all children components will automatically be passed a reference to the map object via the `map` prop */
+  /** callback passed by a &lt;Provider> parent to attach props from this &lt;Map> (map, selectInteraction, etc.) to context */
+  addMapToContext: PropTypes.func,
+  /** any ol-kit children components will automatically be passed a reference to the map object via the `map` prop */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired,
+  ]),
+  /** if this is set to false, the map will fill it's parent container */
+  fullScreen: PropTypes.bool,
+  /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
+  logoPosition: PropTypes.string,
   /** optionally pass a custom map */
   map: PropTypes.object,
-  /** returns an initialized map object if nothing was passed to the `map` prop */
-  onMapInit: PropTypes.func.isRequired
+  /** callback called with initialized map object after optional animations complete
+    note: if a Promise is returned from this function, Map will wait for onMapInit to resolve before rendering children
+  */
+  onMapInit: PropTypes.func,
+  /** the length of debounce on map movements before the url gets updated */
+  updateUrlDebounce: PropTypes.number,
+  /** add map location coords + zoom level to url as query params */
+  updateUrlFromView: PropTypes.bool,
+  /** update map view based off the url param */
+  updateViewFromUrl: PropTypes.bool,
+  /** change the url param used to set the map location coords */
+  urlViewParam: PropTypes.string,
+  /** an openlayers select interaction passed down to connected components - created internally if not passed as prop */
+  selectInteraction: PropTypes.object,
+  /** apply inline styles to the map container */
+  style: PropTypes.object,
+  /** apply styles to the OL shift-zoom box */
+  dragZoomboxStyle: PropTypes.object,
+  /** object of string key/values (see: locales) */
+  translations: PropTypes.object
 }
 
-export default Map
+export default connectToContext(Map)
 </code></pre>
         </article>
     </section>
@@ -175,20 +293,22 @@ export default Map
             </div>
         </div>
     </div>
-
-
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Jan 15 2020 15:22:04 GMT-0600 (Central Standard Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
+        </div>
     </div>
 </footer>
 
-
-<script src="scripts/app.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
 </html>

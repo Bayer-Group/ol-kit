@@ -1,9 +1,9 @@
-docs/static/
 coverage/
 dist/
 .jest/
-lib/
+/lib
 core/
+build/
 node_modules/
 *.log
 .env

@@ -1,12 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import olLayerTile from 'ol/layer/tile'
-import olSourceStamen from 'ol/source/stamen'
+import olLayerTile from 'ol/layer/Tile'
+import olSourceStamen from 'ol/source/Stamen'
 import { BasemapOption, BasemapThumbnail, Label } from './styled'
 import { stamenTonerDark } from './thumbnails'
-import { connectToMap } from 'Map'
+import { connectToContext } from 'Provider'; // eslint-disable-line
 
-class StamenTonerDark extends React.Component {
+/**
+ * Stamen toner dark basemap option
+ * @component
+ * @category Basemap
+ * @since 0.1.0
+ */
+class BasemapStamenTonerDark extends React.Component {
   handleLayersChange = () => {
     this.forceUpdate()
   }
@@ -20,6 +26,7 @@ class StamenTonerDark extends React.Component {
   }
 
   onClick = () => {
+    const { map, layerTypeID, onBasemapChanged } = this.props
     const source = new olSourceStamen({
       layer: 'toner',
       url: 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
@@ -27,17 +34,15 @@ class StamenTonerDark extends React.Component {
       cacheSize: 40
     })
     const layer = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
       preload: Infinity,
       extent: undefined,
+      [layerTypeID]: 'stamenTonerDark', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
       source
     })
-    const { map, layerTypeID, onBasemapChanged } = this.props
-
-    layer[layerTypeID] = 'stamenTonerDark' // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
-
     const layers = map.getLayers()
     const layerArray = layers.getArray()
-    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0][layerTypeID] : false
+    const hasBasemap = layerTypeID && layerArray.length ? layerArray[0].get(layerTypeID) : false
 
     if (hasBasemap) {
       layers.setAt(0, layer)
@@ -50,25 +55,24 @@ class StamenTonerDark extends React.Component {
 
   render () {
     const { translations, thumbnail, map, layerTypeID } = this.props
-    const label = translations.label
     const layerArray = map.getLayers().getArray()
-    const isActive = layerArray.length ? layerArray[0][layerTypeID] === 'stamenTonerDark' : false
+    const isActive = layerArray.length ? layerArray[0].get(layerTypeID) === 'stamenTonerDark' : false
 
     return (
       <BasemapOption className='_ol_kit_basemapOption' isActive={isActive} onClick={this.onClick}>
         <BasemapThumbnail thumbnail={thumbnail} />
-        <Label>{label}</Label>
+        <Label>{translations['_ol_kit.StamenTonerDark.title']}</Label>
       </BasemapOption>
     )
   }
 }
 
-StamenTonerDark.propTypes = {
+BasemapStamenTonerDark.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    label: PropTypes.string
+    '_ol_kit.StamenTonerDark.title': PropTypes.string
   }),
   /** A string containing an http url or data url to a thumbnail image */
   thumbnail: PropTypes.string,
@@ -78,13 +82,10 @@ StamenTonerDark.propTypes = {
   onBasemapChanged: PropTypes.func
 }
 
-StamenTonerDark.defaultProps = {
+BasemapStamenTonerDark.defaultProps = {
   thumbnail: stamenTonerDark,
   onBasemapChanged: () => {},
-  translations: {
-    label: 'Stamen Toner Dark'
-  },
   layerTypeID: '_ol_kit_basemap'
 }
 
-export default connectToMap(StamenTonerDark)
+export default connectToContext(BasemapStamenTonerDark)

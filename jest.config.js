@@ -1,6 +1,7 @@
 module.exports = {
   'testEnvironment': 'jest-environment-jsdom-global',
   'verbose': true,
+  'automock': false,
   'unmockedModulePathPatterns': [
     '<rootDir>/node_modules/react/',
     '<rootDir>/node_modules/react-dom/',
@@ -16,8 +17,8 @@ module.exports = {
     'node_modules',
     'core'
   ],
-  'setupFiles': [
-    './jest.setup.js',
+  'setupFilesAfterEnv': [
+    '<rootDir>/jest.setup.js',
     'jest-canvas-mock'
   ],
   'snapshotSerializers': [
