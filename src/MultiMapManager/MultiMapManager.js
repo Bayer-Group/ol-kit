@@ -72,7 +72,7 @@ class MultiMapManager extends React.Component {
       const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
       return children.map((child, i) => {
-        if (child.type?.displayName === '_Map' || child.type?.toString?.().startsWith('function _Map')) {
+        if (child.type?.displayName === '_Map' || child.type?.toString?.().startsWith('function _Map')) { // check to see if `child` is a Map component, this isn't the best check ever but it works
           // we caught a map
           const propOverride = config => this.addToContext(config, child.props.addMapToContext)
           const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
