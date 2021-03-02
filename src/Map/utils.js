@@ -83,8 +83,8 @@ export function connectToMap (Component) {
         <MapContext.Consumer>
           {(providerProps = {}) => {
             // if propTypes is not defined on the component just pass all providerProps
-            const filteredProviderProps = { ...providerProps }
-            const { propTypes } = Component
+            const { defaultProps, propTypes } = Component
+            const filteredProviderProps = { ...defaultProps, ...providerProps }
 
             if (propTypes) {
               // filter out any props that do not need to get passed to this wrapped component
