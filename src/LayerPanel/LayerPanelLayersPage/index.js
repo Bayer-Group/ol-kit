@@ -15,6 +15,8 @@ import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
 
+import { connectToMap } from 'Map'
+
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
@@ -72,7 +74,7 @@ class LayerPanelLayersPage extends Component {
       layers: [],
       masterCheckboxVisibility: true,
       featureListeners: [],
-      filterText: null,
+      filterText: '',
       expandedLayers: []
     }
   }
@@ -329,33 +331,29 @@ class LayerPanelLayersPage extends Component {
               {onFileImport && <LayerPanelActionImport handleImport={onFileImport} />}
               <LayerPanelActionExport onExportFeatures={onExportFeatures} />
             </LayerPanelActions>} />
-        {enableFilter &&
-          <TextField
-            id='feature-filter-input'
-            label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
-            type='text'
-            style={{ margin: '8px' }}
-            fullWidth
-            value={filterText}
-            onChange={(e) => this.handleFilter(e.target.value)} />
-        }
-        <LayerPanelContent padding='0px 15px'>
+        <TextField
+          id='feature-filter-input'
+          label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
+          type='text'
+          style={{ margin: '8px', display: enableFilter ? 'block' : 'none' }}
+          fullWidth
+          value={filterText}
+          onChange={(e) => this.handleFilter(e.target.value)} />
+        <LayerPanelContent padding={enableFilter ? '0px 15px 58px 15px !important' : '0px 15px'}>
           <LayerPanelList
             disableDrag={disableDrag}
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
             items={layers}
             onLayerReorder={onLayerReorder} >
-            {layerFilter(layers).filter((layer) => {
-              const filteredFeatures = this.getFeaturesForLayer(layer)
-
-              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures.length
-            }).map((layer, i) => {
+            {layerFilter(layers).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
               const layerCheckboxState = !layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()
+              const showLayer = !enableFilter || !(layer instanceof olLayerVector) ||
+                this.props.shouldHideFeatures(layer) ? true : features.length
 
               return (
-                <div key={i}>
+                <div key={i} style={{ display: showLayer ? 'block' : 'none' }}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={layerCheckboxState}
@@ -466,4 +464,4 @@ LayerPanelLayersPage.propTypes = {
   onLayerRemoved: PropTypes.func
 }
 
-export default LayerPanelLayersPage
+export default connectToMap(LayerPanelLayersPage)
