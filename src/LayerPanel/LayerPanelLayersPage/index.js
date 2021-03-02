@@ -15,8 +15,6 @@ import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
 
-import { connectToMap } from 'Map'
-
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
@@ -310,7 +308,7 @@ class LayerPanelLayersPage extends Component {
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
-
+    console.log('RENDER', this.props)
     return (
       <LayerPanelPage>
         <LayerPanelHeader
@@ -464,4 +462,4 @@ LayerPanelLayersPage.propTypes = {
   onLayerRemoved: PropTypes.func
 }
 
-export default connectToMap(LayerPanelLayersPage)
+export default LayerPanelLayersPage
