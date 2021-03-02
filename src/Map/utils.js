@@ -75,17 +75,17 @@ export function createMap (opts = {}) {
  */
 export function connectToMap (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToMap\'')
+  const { defaultProps, propTypes } = Component
 
   return props => ( // eslint-disable-line react/display-name
     !MapContext
-      ? <Component {...props} />
+      ? <Component {...defaultProps} {...props} />
       : (
         <MapContext.Consumer>
           {(providerProps = {}) => {
-            // if propTypes is not defined on the component just pass all providerProps
             const filteredProviderProps = { ...providerProps }
-            const { propTypes } = Component
 
+            // if propTypes is not defined on the component just pass all providerProps
             if (propTypes) {
               // filter out any props that do not need to get passed to this wrapped component
               Object.keys(providerProps).forEach(key => {
@@ -93,7 +93,7 @@ export function connectToMap (Component) {
               })
             }
 
-            return <Component {...filteredProviderProps} {...props} />
+            return <Component {...defaultProps} {...filteredProviderProps} {...props} />
           }}
         </MapContext.Consumer>
       )
