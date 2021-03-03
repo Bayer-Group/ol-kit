@@ -70,7 +70,7 @@ class App extends React.Component {
                 total={array.length}
                 numberOfRows={2}
                 numberOfColumns={4}>
-                <Map id={key} onMapInit={this.onMapInit}>
+                <Map id={key} onMapInit={this.onMapInit} isMultiMap>
                   <Popup />
                   <TabbedPanel>
                     {i === 0 && <TabbedPanelPage tabIcon='Home'>

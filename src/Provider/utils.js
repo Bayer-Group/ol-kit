@@ -16,9 +16,11 @@ let contextConflictWarning = false
 export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
-  return props => { // eslint-disable-line react/display-name
+  return explicitProps => { // eslint-disable-line react/display-name
+    const { defaultProps = {} } = Component
+
     // if no context exists, just render the component with inline props
-    if (!MultiMapContext && !ProviderContext) return <Component {...props} />
+    if (!MultiMapContext && !ProviderContext) return <Component {...defaultProps} {...explicitProps} />
     if (!contextConflictWarning && !!MultiMapContext && !!ProviderContext) {
       contextConflictWarning = true
       ugh.warn('MultiMapContext and ProviderContext are both mounted on the page. MultiMapContext will supersede ProviderContext and may result in unexpected behavior!') // eslint-disable-line max-len
@@ -32,7 +34,8 @@ export function connectToContext (Component) {
             (providerProps = {}) => {
               return (
                 <SafeParent
-                  inlineProps={props}
+                  defaultProps={defaultProps}
+                  explicitProps={explicitProps}
                   providerProps={providerProps}
                   Component={Component} />
               )
@@ -63,8 +66,9 @@ export function connectToContext (Component) {
                 <Component
                   // persistedState={persistedState[persistedStateKey]} // note: persistedState is undefined if persistedStateKey key doesn't exist yet (components should check for this)
                   // persistState={persistState}
+                  {...defaultProps}
                   {...filteredProviderProps}
-                  {...props} />
+                  {...explicitProps} />
               )
             }
           }

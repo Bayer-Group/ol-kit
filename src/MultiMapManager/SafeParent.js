@@ -26,7 +26,7 @@ export default class SafeParent extends React.Component {
     if (current) {
       const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`)) // search the dom, starting at the placeholder ref created in the initial render and moving up; searching first for the map div itself and then siblings of the map div to handle how the map component currently handles children.
 
-      if (!parentContextKey) ugh.error(`Could not find parent <Map> for ${Component.name} during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
+      if (!parentContextKey) ugh.error(`Could not find parent <Map> for component: "${Component.name}" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
 
       this.setState({ parentContextKey })
     }
@@ -37,9 +37,9 @@ export default class SafeParent extends React.Component {
   }
 
   render () {
-    const { Component, inlineProps, providerProps } = this.props
+    const { Component, defaultProps, explicitProps, providerProps } = this.props
     const { parentContextKey } = this.state
-    const contextKey = inlineProps._ol_kit_context_id || parentContextKey
+    const contextKey = explicitProps._ol_kit_context_id || parentContextKey
     const relativeProviderProps = providerProps[contextKey]
     const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
 
@@ -52,9 +52,9 @@ export default class SafeParent extends React.Component {
 
     return (
       contextKey ? (
-        <Component {...filteredProviderProps} {...inlineProps} />
+        <Component {...defaultProps} {...filteredProviderProps} {...explicitProps} />
       ) : (
-        <div ref={this.ref}>{`Could not find parent <Map> for ${Component.name} during context lookup`}</div>
+        <div ref={this.ref}>{`Could not find parent <Map> for component: "${Component.name}" during context lookup`}</div>
       )
     )
   }
@@ -63,8 +63,10 @@ export default class SafeParent extends React.Component {
 SafeParent.propTypes = {
   /** the Component being wrapped and returned */
   Component: PropTypes.node.isRequired,
+  /** defaultProps from the Component that need to get spread first (to be overwritten) */
+  defaultProps: PropTypes.object,
   /** original props provided directly to the Component- these always take precedence */
-  inlineProps: PropTypes.Object,
+  explicitProps: PropTypes.object,
   /** props provided from React context (set in the MultiMapManager and passed down) */
-  providerProps: PropTypes.Object
+  providerProps: PropTypes.object
 }
