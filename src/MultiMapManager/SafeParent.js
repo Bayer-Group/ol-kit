@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ugh from 'ugh'
 
+// adding a ** to next line will add this docs when ready
 /* A higher order component that manages MultiMapContext for connectToContext wrapped children
  * @component
  * @category MultiMap

@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | TabbedPanel/TabbedPanel.js</title>
+    <title>ol-kit | MultiMapManager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,88 +75,157 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Card, Tabs, Tab, InitialTab } from './styled'
+        <h2>
+            &ltMultiMapManager /&gt
+        </h2>
+        
+            <div class="class-description">A higher order component that manages MultiMapContext for connectToContext wrapped children</div>
+        
+    
+</header>
 
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import { connectToContext } from 'Provider'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-/**
- * @component
- * @category TabbedPanel
- * @since 1.4.0
- */
-class TabbedPanel extends Component {
-  constructor (props) {
-    super(props)
 
-    this.state = {
-      activeIndex: 0,
-      showPanel: true
-    }
-  }
+    
+    <h4 class="name" id="MultiMapManager">
+        <a class="href-link" href="#MultiMapManager">#</a>
+        
+        <span class="code-name">
+            
+                &ltMultiMapManager  /&gt
+            
+        </span>
+    </h4>
+    
 
-  handleChange = (_, activeIndex) => {
-    this.setState({ activeIndex, showPanel: true })
-  }
+    
+    
 
-  togglePanel = () => {
-    this.setState({ showPanel: !this.state.showPanel })
-  }
 
-  hideLayerPanel = () => {
-    this.setState({ showPanel: false })
-  }
 
-  render () {
-    const { children, translations } = this.props
-    const { activeIndex, showPanel } = this.state
 
-    return (
-      &lt;>
-        &lt;Card open={showPanel} numoftabs={children.length || 1} className='_popup_boundary' >
-          &lt;div style={{ display: 'flex', background: 'rgb(237, 237, 237)' }}>
-            &lt;InitialTab onClick={this.togglePanel} icon={showPanel ? &lt;KeyboardArrowDownIcon data-testid='MapPanel.close' /> : &lt;KeyboardArrowRightIcon data-testid='MapPanel.open' />} />
-            &lt;Tabs
-              open={showPanel}
-              value={activeIndex}
-              onChange={this.handleChange}
-              variant='scrollable'
-              scrollButtons='auto'>
-              {React.Children.map(children, (child, i) => {
-                if (child) return &lt;Tab key={i + 1} label={child.props.tabIcon || child.props.label} />
-              })}
-            &lt;/Tabs>
-          &lt;/div>
-          {translations &amp;&amp; React.Children.toArray(children)[activeIndex]}
-        &lt;/Card>
-      &lt;/>
-    )
-  }
-}
 
-TabbedPanel.defaultProps = {}
 
-TabbedPanel.propTypes = {
-  /** The pages of the panel (things like `LayerPanelPage` or `LayerStyler` components) */
-  children: PropTypes.node.isRequired,
 
-  /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
-  opacity: PropTypes.number,
+    
 
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object
-}
 
-export default connectToContext(TabbedPanel)
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.7.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="MultiMapManager_MultiMapManager.js.html" class="button">View Source</a>
+            <span>
+                <a href="MultiMapManager_MultiMapManager.js.html">MultiMapManager/MultiMapManager.js</a>, <a href="MultiMapManager_MultiMapManager.js.html#line18">line 18</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+</article>
+
+</section>
 
 
 

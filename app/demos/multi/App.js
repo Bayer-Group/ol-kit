@@ -72,20 +72,6 @@ class App extends React.Component {
                 numberOfColumns={4}>
                 <Map id={key} onMapInit={this.onMapInit} isMultiMap>
                   <Popup />
-                  <TabbedPanel>
-                    {i === 0 && <TabbedPanelPage tabIcon='Home'>
-                      <Welcome />
-                    </TabbedPanelPage>}
-                    <TabbedPanelPage label='Layers'>
-                      <LayerPanelLayersPage />
-                    </TabbedPanelPage>
-                    <TabbedPanelPage label='Styles'>
-                      <LayerStyler />
-                    </TabbedPanelPage>
-                    <TabbedPanelPage label='Draw'>
-                      <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-                    </TabbedPanelPage>
-                  </TabbedPanel>
                   <ContextMenu />
                   <Controls />
                   <BasemapContainer />

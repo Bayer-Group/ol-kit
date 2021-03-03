@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | TabbedPanel/TabbedPanel.js</title>
+    <title>ol-kit | MultiMapManager/SafeParent.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,82 +80,79 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
+            <pre class="prettyprint source linenums"><code>import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Tabs, Tab, InitialTab } from './styled'
+import ugh from 'ugh'
 
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import { connectToContext } from 'Provider'
-
-/**
+//adding a ** to next line will add this docs when ready
+/* A higher order component that manages MultiMapContext for connectToContext wrapped children
  * @component
- * @category TabbedPanel
- * @since 1.4.0
+ * @category MultiMap
+ * @since 1.7.0
  */
-class TabbedPanel extends Component {
+export default class SafeParent extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      activeIndex: 0,
-      showPanel: true
+      parentContextKey: null
+    }
+
+    this.ref = React.createRef()
+  }
+
+  contextKeyLookup () {
+    const { Component, providerProps } = this.props
+    const keys = Object.keys(providerProps)
+    const { current } = this.ref
+
+    if (current) {
+      const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`)) // search the dom, starting at the placeholder ref created in the initial render and moving up; searching first for the map div itself and then siblings of the map div to handle how the map component currently handles children.
+
+      if (!parentContextKey) ugh.error(`Could not find parent &lt;Map> for component: "${Component.name}" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
+
+      this.setState({ parentContextKey })
     }
   }
 
-  handleChange = (_, activeIndex) => {
-    this.setState({ activeIndex, showPanel: true })
-  }
-
-  togglePanel = () => {
-    this.setState({ showPanel: !this.state.showPanel })
-  }
-
-  hideLayerPanel = () => {
-    this.setState({ showPanel: false })
+  componentDidMount () {
+    this.contextKeyLookup()
   }
 
   render () {
-    const { children, translations } = this.props
-    const { activeIndex, showPanel } = this.state
+    const { Component, defaultProps, explicitProps, providerProps } = this.props
+    const { parentContextKey } = this.state
+    const contextKey = explicitProps._ol_kit_context_id || parentContextKey
+    const relativeProviderProps = providerProps[contextKey]
+    const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
+
+    if (Component.propTypes) {
+      // filter out any props from context that do not need to get passed to this wrapped component
+      Object.keys(providerProps).forEach(key => {
+        if (!Component.propTypes[key]) delete filteredProviderProps[key]
+      })
+    }
 
     return (
-      &lt;>
-        &lt;Card open={showPanel} numoftabs={children.length || 1} className='_popup_boundary' >
-          &lt;div style={{ display: 'flex', background: 'rgb(237, 237, 237)' }}>
-            &lt;InitialTab onClick={this.togglePanel} icon={showPanel ? &lt;KeyboardArrowDownIcon data-testid='MapPanel.close' /> : &lt;KeyboardArrowRightIcon data-testid='MapPanel.open' />} />
-            &lt;Tabs
-              open={showPanel}
-              value={activeIndex}
-              onChange={this.handleChange}
-              variant='scrollable'
-              scrollButtons='auto'>
-              {React.Children.map(children, (child, i) => {
-                if (child) return &lt;Tab key={i + 1} label={child.props.tabIcon || child.props.label} />
-              })}
-            &lt;/Tabs>
-          &lt;/div>
-          {translations &amp;&amp; React.Children.toArray(children)[activeIndex]}
-        &lt;/Card>
-      &lt;/>
+      contextKey ? (
+        &lt;Component {...defaultProps} {...filteredProviderProps} {...explicitProps} />
+      ) : (
+        &lt;div ref={this.ref}>{`Could not find parent &lt;Map> for component: "${Component.name}" during context lookup`}&lt;/div>
+      )
     )
   }
 }
 
-TabbedPanel.defaultProps = {}
-
-TabbedPanel.propTypes = {
-  /** The pages of the panel (things like `LayerPanelPage` or `LayerStyler` components) */
-  children: PropTypes.node.isRequired,
-
-  /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
-  opacity: PropTypes.number,
-
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object
+SafeParent.propTypes = {
+  /** the Component being wrapped and returned */
+  Component: PropTypes.node.isRequired,
+  /** defaultProps from the Component that need to get spread first (to be overwritten) */
+  defaultProps: PropTypes.object,
+  /** original props provided directly to the Component- these always take precedence */
+  explicitProps: PropTypes.object,
+  /** props provided from React context (set in the MultiMapManager and passed down) */
+  providerProps: PropTypes.object
 }
-
-export default connectToContext(TabbedPanel)
 </code></pre>
         </article>
     </section>

@@ -160,6 +160,7 @@ Map.defaultProps = {
   addMapToContext: () => {},
   fullScreen: false,
   logoPosition: 'right',
+  isMultiMap: false,
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,
@@ -183,6 +184,8 @@ Map.propTypes = {
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */
   id: PropTypes.string,
+  /** flag passed for <MultiMapManager> to recognize when <Map> is in multi-map mode */
+  isMultiMap: PropTypes.bool,
   /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
   logoPosition: PropTypes.string,
   /** optionally pass a custom map */

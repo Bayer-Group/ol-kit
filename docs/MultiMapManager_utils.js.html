@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | TabbedPanel/TabbedPanel.js</title>
+    <title>ol-kit | MultiMapManager/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,82 +80,62 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Card, Tabs, Tab, InitialTab } from './styled'
-
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import { connectToContext } from 'Provider'
+            <pre class="prettyprint source linenums"><code>import Event from 'ol/events/Event'
 
 /**
- * @component
- * @category TabbedPanel
- * @since 1.4.0
+ * Sync multiple openlayers
+ * @function
+ * @category MultiMap
+ * @since 1.7.0
+ * @param {Object} [views] - Array of openlayers views
  */
-class TabbedPanel extends Component {
-  constructor (props) {
-    super(props)
+export function syncViewEvents (views) {
+  views.forEach((view, _, viewArray) => {
+    const syncedViews = viewArray
 
-    this.state = {
-      activeIndex: 0,
-      showPanel: true
+    view.on('change:center', e => mapChangeHandler(e, syncedViews))
+    view.on('change:resolution', e => mapChangeHandler(e, syncedViews))
+    view.on('change:rotation', e => mapChangeHandler(e, syncedViews))
+  })
+}
+
+class ViewEvent extends Event {
+  constructor (key, type, oldValue, target) {
+    super(type)
+    this.key = key
+    this.type = type
+    this.oldValue = oldValue
+    this.target = target
+  }
+}
+
+export function mapChangeHandler (event, syncedViews) {
+  const eventView = event.target
+
+  syncedViews.forEach(view => {
+    // do not sync while view is animating
+    if (view.ol_uid !== eventView.ol_uid &amp;&amp; !view.getAnimating()) {
+      switch (event.type) {
+        case 'change:center':
+          if (eventView.getInteracting()) {
+            view.adjustCenter(eventView.getCenter().map((val, i) => val - event.oldValue[i]))
+          } else if (event.key === 'resolution') {
+            view.setCenter(eventView.getCenter()) // this could potentially sync the view centers rather than syncing the delta center
+          }
+          break
+        case 'change:resolution':
+          eventView.dispatchEvent(new ViewEvent(event.key, 'change:center', 0, eventView))
+          view.setResolution(eventView.getResolution())
+          break
+        case 'change:rotation':
+          view.setRotation(eventView.getRotation())
+          break
+        default:
+          return ''
+      }
     }
-  }
-
-  handleChange = (_, activeIndex) => {
-    this.setState({ activeIndex, showPanel: true })
-  }
-
-  togglePanel = () => {
-    this.setState({ showPanel: !this.state.showPanel })
-  }
-
-  hideLayerPanel = () => {
-    this.setState({ showPanel: false })
-  }
-
-  render () {
-    const { children, translations } = this.props
-    const { activeIndex, showPanel } = this.state
-
-    return (
-      &lt;>
-        &lt;Card open={showPanel} numoftabs={children.length || 1} className='_popup_boundary' >
-          &lt;div style={{ display: 'flex', background: 'rgb(237, 237, 237)' }}>
-            &lt;InitialTab onClick={this.togglePanel} icon={showPanel ? &lt;KeyboardArrowDownIcon data-testid='MapPanel.close' /> : &lt;KeyboardArrowRightIcon data-testid='MapPanel.open' />} />
-            &lt;Tabs
-              open={showPanel}
-              value={activeIndex}
-              onChange={this.handleChange}
-              variant='scrollable'
-              scrollButtons='auto'>
-              {React.Children.map(children, (child, i) => {
-                if (child) return &lt;Tab key={i + 1} label={child.props.tabIcon || child.props.label} />
-              })}
-            &lt;/Tabs>
-          &lt;/div>
-          {translations &amp;&amp; React.Children.toArray(children)[activeIndex]}
-        &lt;/Card>
-      &lt;/>
-    )
-  }
+  })
 }
-
-TabbedPanel.defaultProps = {}
-
-TabbedPanel.propTypes = {
-  /** The pages of the panel (things like `LayerPanelPage` or `LayerStyler` components) */
-  children: PropTypes.node.isRequired,
-
-  /** A float number for the opacity of the LayerPanel. i.e. (0.5) */
-  opacity: PropTypes.number,
-
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object
-}
-
-export default connectToContext(TabbedPanel)
 </code></pre>
         </article>
     </section>
