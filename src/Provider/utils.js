@@ -1,6 +1,9 @@
 import React from 'react'
 import ugh from 'ugh'
 import { ProviderContext } from 'Provider'
+import { MultiMapContext, SafeParent } from 'MultiMapManager'
+
+let contextConflictWarning = false
 
 /**
  * A wrapper utility function designed to automatically pass down provider conntext as props from the Provider component
@@ -13,10 +16,33 @@ import { ProviderContext } from 'Provider'
 export function connectToContext (Component) {
   if (!Component) return ugh.throw('Pass a React component to \'connectToContext\'')
 
-  return props => { // eslint-disable-line react/display-name
-    return !ProviderContext
-      ? <Component {...props} />
-      : (
+  return explicitProps => { // eslint-disable-line react/display-name
+    const { defaultProps = {} } = Component
+
+    // if no context exists, just render the component with inline props
+    if (!MultiMapContext && !ProviderContext) return <Component {...defaultProps} {...explicitProps} />
+    if (!contextConflictWarning && !!MultiMapContext && !!ProviderContext) {
+      contextConflictWarning = true
+      ugh.warn('MultiMapContext and ProviderContext are both mounted on the page. MultiMapContext will supersede ProviderContext and may result in unexpected behavior!') // eslint-disable-line max-len
+    }
+
+    // multimap context will take precedence over the provider context
+    return MultiMapContext
+      ? (
+        <MultiMapContext.Consumer>
+          {
+            (providerProps = {}) => {
+              return (
+                <SafeParent
+                  defaultProps={defaultProps}
+                  explicitProps={explicitProps}
+                  providerProps={providerProps}
+                  Component={Component} />
+              )
+            }
+          }
+        </MultiMapContext.Consumer>
+      ) : (
         <ProviderContext.Consumer>
           {
             (providerProps = {}) => {
@@ -40,8 +66,9 @@ export function connectToContext (Component) {
                 <Component
                   // persistedState={persistedState[persistedStateKey]} // note: persistedState is undefined if persistedStateKey key doesn't exist yet (components should check for this)
                   // persistState={persistState}
+                  {...defaultProps}
                   {...filteredProviderProps}
-                  {...props} />
+                  {...explicitProps} />
               )
             }
           }
