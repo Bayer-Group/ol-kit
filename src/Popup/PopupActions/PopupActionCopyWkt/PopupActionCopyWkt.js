@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connectToContext } from 'Provider'
 import { PopupActionItem } from 'Popup'
-import en from  'locales/en'
+import en from 'locales/en'
 import { copyWktToClipbard } from './utils'
 
 /**
@@ -23,7 +23,7 @@ PopupActionCopyWkt.propTypes = {
 
   /** The OpenLayers feature of the current popup page */
   feature: PropTypes.object,
-  
+
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupActionWkt.copyToClipboard': PropTypes.string
