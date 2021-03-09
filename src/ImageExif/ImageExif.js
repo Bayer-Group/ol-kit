@@ -79,6 +79,7 @@ function ImageExif (props) {
       const olPoint2 = geojsonToOl(geojsonPoint2).getGeometry().getCoordinates()
       const lineThing = new LineString([olPoint1, olPoint2])
       const bearingFeature = new Feature(lineThing)
+
       bearingFeature.set('title', 'Image Bearing')
       bearingFeature.set('name', 'Image Bearing')
       features.push(bearingFeature)
@@ -91,6 +92,7 @@ function ImageExif (props) {
       map.addLayer(vectorLayer)
     }
     reader.onerror = function (e) {
+      // eslint-disable-next-line no-console
       console.log(e.target.error)
     }
     reader.readAsArrayBuffer(acceptedFiles[0])
@@ -107,7 +109,7 @@ function ImageExif (props) {
             {
               isDragActive
                 ? <p>Drop the files here ...</p>
-                : <p>Drag 'n' drop some files here, or click to select files</p>
+                : <p>Drag and drop some files here, or click to select files</p>
             }
           </div>
         </InputContainer>
