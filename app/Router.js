@@ -14,6 +14,7 @@ import MultiMap from './demos/multi/App'
 import World from './demos/world/App'
 import Geohack from './demos/geohack/App'
 import VectorTiles from './demos/vector-tiles/App'
+import ImageExif from './demos/image-exif/App'
 
 export default function App () {
   return (
@@ -33,6 +34,9 @@ export default function App () {
         </Route>
         <Route path='/heatmap'>
           <Heatmap />
+        </Route>
+        <Route path='/image-exif'>
+          <ImageExif />
         </Route>
         <Route path='/vector-tiles'>
           <VectorTiles />
