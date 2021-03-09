@@ -3,10 +3,9 @@ import { connectToContext } from '@bayer/ol-kit'
 import transformTranslate from '@turf/transform-translate'
 import Feature from 'ol/Feature'
 import VectorLayer from 'ol/layer/Vector'
-import Point from 'ol/geom/Point'
-import Circle from 'ol/geom/Circle'
-import LineString from 'ol/geom/LineString'
+import { Circle, LineString, Point } from 'ol/geom'
 import GeoJSON from 'ol/format/GeoJSON'
+import { Icon, Stroke, Style } from 'ol/style'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { Container, InnerContainer, InputContainer, Title } from './styled'
@@ -14,6 +13,7 @@ import { useDropzone } from 'react-dropzone'
 import ExifReader from 'exifreader'
 import VectorSource from 'ol/source/Vector'
 import { fromLonLat } from 'ol/proj'
+import arrow from './arrow.png'
 
 const format = new GeoJSON()
 const projectionOpts = {
@@ -22,11 +22,11 @@ const projectionOpts = {
   featureProjection: 'EPSG:3857'
 }
 
-export const olToGeojson = (feature) => {
+const olToGeojson = (feature) => {
   return format.writeFeatureObject(feature, projectionOpts)
 }
 
-export const geojsonToOl = (feature) => {
+const geojsonToOl = (feature) => {
   if (feature.type === 'FeatureCollection') {
     return format.readFeatures(feature, projectionOpts)
   } else {
@@ -36,6 +36,39 @@ export const geojsonToOl = (feature) => {
 
 function ImageExif (props) {
   const { map, translations } = props
+  const styleFunction = feature => {
+    const geometry = feature.getGeometry()
+    const styles = [
+      // linestring
+      new Style({
+        stroke: new Stroke({
+          color: '#ffcc33',
+          width: 2
+        })
+      })]
+
+    geometry.forEachSegment((start, end) => {
+      const dx = end[0] - start[0]
+      const dy = end[1] - start[1]
+      const rotation = Math.atan2(dy, dx)
+      // arrows
+
+      styles.push(
+        new Style({
+          geometry: new Point(end),
+          image: new Icon({
+            src: arrow,
+            anchor: [0.75, 0.5],
+            rotateWithView: true,
+            rotation: -rotation
+          })
+        })
+      )
+    })
+
+    return styles
+  }
+
   const onDrop = useCallback(acceptedFiles => {
     const features = []
     const reader = new FileReader()
@@ -69,12 +102,19 @@ function ImageExif (props) {
       errorRadiusFeature.setProperties({ 'Error Radius (meters)': imageLocationError })
       errorRadiusFeature.set('title', 'Image Location Error Radius')
       errorRadiusFeature.set('name', 'Error Radius')
+      errorRadiusFeature.setStyle(new Style({
+        stroke: new Stroke({
+          lineDash: [4, 8],
+          color: '#ff0000',
+          width: 2
+        })
+      }))
       features.push(errorRadiusFeature)
 
       // Image Bearing Line
       const imageBearing = sortedProperties.GPSDestBearing
       const geojsonPoint1 = olToGeojson(imageLocationFeature)
-      const geojsonPoint2 = transformTranslate(geojsonPoint1, imageLocationError, imageBearing, { units: 'meters' })
+      const geojsonPoint2 = transformTranslate(geojsonPoint1, 2, imageBearing, { units: 'meters' })
       const olPoint1 = geojsonToOl(geojsonPoint1).getGeometry().getCoordinates()
       const olPoint2 = geojsonToOl(geojsonPoint2).getGeometry().getCoordinates()
       const lineThing = new LineString([olPoint1, olPoint2])
@@ -82,6 +122,7 @@ function ImageExif (props) {
 
       bearingFeature.set('title', 'Image Bearing')
       bearingFeature.set('name', 'Image Bearing')
+      bearingFeature.setStyle(styleFunction)
       features.push(bearingFeature)
 
       const source = new VectorSource({ features })
