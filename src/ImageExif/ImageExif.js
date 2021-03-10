@@ -118,6 +118,7 @@ function ImageExif (props) {
             errorRadiusFeature.set('title', 'Image Location Error Radius')
             errorRadiusFeature.set('name', 'Error Radius')
             errorRadiusFeature.set('imageId', imageId)
+            errorRadiusFeature.set('imageURL', imageURL)
             errorRadiusFeature.setStyle(new Style({
               stroke: new Stroke({
                 lineDash: [4, 8],
@@ -143,6 +144,7 @@ function ImageExif (props) {
             bearingFeature.set('name', 'Image Bearing')
             bearingFeature.set('imageId', imageId)
             bearingFeature.setStyle(styleFunction)
+            bearingFeature.set('imageURL', imageURL)
             features.push(bearingFeature)
           }
 
