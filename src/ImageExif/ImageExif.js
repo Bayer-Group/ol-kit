@@ -71,9 +71,8 @@ function ImageExif (props) {
   }
 
   const onDrop = useCallback(acceptedFiles => {
-    const features = []
-
     acceptedFiles.forEach(file => {
+      const features = []
       const imageId = uuidv4()
       const imageName = file.name
       const imageURL = URL.createObjectURL(file)
