@@ -146,6 +146,7 @@ function ImageExif (props) {
 
           map.addLayer(vectorLayer)
         } else {
+          // eslint-disable-next-line no-undef,no-alert
           alert('Uploaded image has no location info and cannot be plotted on the map')
         }
       }
