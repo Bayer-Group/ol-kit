@@ -75,6 +75,8 @@ function ImageExif (props) {
 
     acceptedFiles.forEach(file => {
       const imageId = uuidv4()
+      const imageName = file.name
+      const imageURL = URL.createObjectURL(file)
       const reader = new FileReader()
 
       reader.onloadend = function (e) {
@@ -101,8 +103,9 @@ function ImageExif (props) {
 
           imageLocationFeature.setProperties(sortedProperties)
           imageLocationFeature.set('title', 'Captured Image')
-          imageLocationFeature.set('name', 'Image Location')
+          imageLocationFeature.set('name', imageName)
           imageLocationFeature.set('imageId', imageId)
+          imageLocationFeature.set('imageURL', imageURL)
           features.push(imageLocationFeature)
 
           // Image Location Error Margin

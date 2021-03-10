@@ -1,26 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Controls, Map, Popup, TabbedPanel, TabbedPanelPage } from '@bayer/ol-kit'
+import Viewer from 'react-viewer'
 import ImageExif from '../../../src/ImageExif/ImageExif'
 import { LayerPanel, PopupActionItem } from '../../../src'
 
-const imageActions = () => {
+const imageActions = setActiveImage => {
   return [
     <PopupActionItem
       key={'exploreImageAction'}
       title={'Explore Image'}
-      onClick={(e, feature) => console.log(feature)}
-    />,
-    <PopupActionItem
-      key={'addImageDetailsAction'}
-      title={'Add Details'}
-      onClick={(e, feature) => console.log(feature)}
+      onClick={(e, feature) => setActiveImage(feature.values_.imageURL)}
     />
   ]
 }
 
 function App () {
+  const [activeImage, setActiveImage] = useState(null)
+
   return (
     <Map fullScreen>
+      <Viewer
+        visible={!!activeImage}
+        onClose={() => { setActiveImage(null) } }
+        images={[{ src: activeImage, alt: 'Field Image' }]}
+      />
       <TabbedPanel>
         <TabbedPanelPage label='Image EXIF'>
           <ImageExif />
@@ -28,7 +31,7 @@ function App () {
       </TabbedPanel>
       <LayerPanel />
       <Controls />
-      <Popup actions={imageActions()} />
+      <Popup actions={imageActions(setActiveImage)} />
     </Map>
   )
 }

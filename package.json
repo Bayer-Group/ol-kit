@@ -96,6 +96,7 @@
     "react-dropzone": "^11.3.1",
     "react-hook-form": "~5.7.2",
     "react-select": "~3.1.0",
+    "react-viewer": "^3.2.2",
     "shp-write": "~0.3.2",
     "shpjs": "^3.6.0",
     "uuid": "~7.0.3",
