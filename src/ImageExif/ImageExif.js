@@ -14,6 +14,7 @@ import ExifReader from 'exifreader'
 import VectorSource from 'ol/source/Vector'
 import { fromLonLat } from 'ol/proj'
 import arrow from './arrow.png'
+import { v4 as uuidv4 } from 'uuid'
 
 const format = new GeoJSON()
 const projectionOpts = {
@@ -73,6 +74,7 @@ function ImageExif (props) {
     const features = []
 
     acceptedFiles.forEach(file => {
+      const imageId = uuidv4()
       const reader = new FileReader()
 
       reader.onloadend = function (e) {
@@ -100,6 +102,7 @@ function ImageExif (props) {
           imageLocationFeature.setProperties(sortedProperties)
           imageLocationFeature.set('title', 'Captured Image')
           imageLocationFeature.set('name', 'Image Location')
+          imageLocationFeature.set('imageId', imageId)
           features.push(imageLocationFeature)
 
           // Image Location Error Margin
@@ -112,6 +115,7 @@ function ImageExif (props) {
             errorRadiusFeature.setProperties({ 'Error Radius (meters)': imageLocationError })
             errorRadiusFeature.set('title', 'Image Location Error Radius')
             errorRadiusFeature.set('name', 'Error Radius')
+            errorRadiusFeature.set('imageId', imageId)
             errorRadiusFeature.setStyle(new Style({
               stroke: new Stroke({
                 lineDash: [4, 8],
@@ -135,6 +139,7 @@ function ImageExif (props) {
 
             bearingFeature.set('title', 'Image Bearing')
             bearingFeature.set('name', 'Image Bearing')
+            bearingFeature.set('imageId', imageId)
             bearingFeature.setStyle(styleFunction)
             features.push(bearingFeature)
           }

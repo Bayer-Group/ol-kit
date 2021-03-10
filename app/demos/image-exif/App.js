@@ -1,7 +1,22 @@
 import React from 'react'
 import { Controls, Map, Popup, TabbedPanel, TabbedPanelPage } from '@bayer/ol-kit'
 import ImageExif from '../../../src/ImageExif/ImageExif'
-import { LayerPanel } from '../../../src'
+import { LayerPanel, PopupActionItem } from '../../../src'
+
+const imageActions = () => {
+  return [
+    <PopupActionItem
+      key={'exploreImageAction'}
+      title={'Explore Image'}
+      onClick={(e, feature) => console.log(feature)}
+    />,
+    <PopupActionItem
+      key={'addImageDetailsAction'}
+      title={'Add Details'}
+      onClick={(e, feature) => console.log(feature)}
+    />
+  ]
+}
 
 function App () {
   return (
@@ -13,7 +28,7 @@ function App () {
       </TabbedPanel>
       <LayerPanel />
       <Controls />
-      <Popup />
+      <Popup actions={imageActions()} />
     </Map>
   )
 }
