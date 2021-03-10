@@ -165,7 +165,7 @@ function ImageExif (props) {
       reader.readAsArrayBuffer(file)
     })
   }, [])
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: 'image/*', onDrop })
 
   return (
     <Container>
