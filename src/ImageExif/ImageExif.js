@@ -71,72 +71,90 @@ function ImageExif (props) {
 
   const onDrop = useCallback(acceptedFiles => {
     const features = []
-    const reader = new FileReader()
 
-    reader.onloadend = function (e) {
-      const tags = ExifReader.load(e.target.result)
-      const tagKeys = Object.keys(tags).sort()
-      const sortedProperties = {}
+    acceptedFiles.forEach(file => {
+      const reader = new FileReader()
 
-      tagKeys.forEach(x => {
-        sortedProperties[x] = tags[x].description
-      })
+      reader.onloadend = function (e) {
+        const tags = ExifReader.load(e.target.result)
+        // const isIphone = (tags.Make.description === 'Apple')
+        const imageIsGeotagged = !!(tags.GPSLatitude && tags.GPSLongitude)
 
-      // Image Location
-      const imageLat = sortedProperties.GPSLatitude
-      const imageLong = sortedProperties.GPSLongitude
-      const coords = fromLonLat([imageLong * -1, imageLat])
-      const centerPoint = new Point(coords)
-      const imageLocationFeature = new Feature(centerPoint)
+        if (imageIsGeotagged) {
+          const tagKeys = Object.keys(tags).sort()
+          const sortedProperties = {}
 
-      imageLocationFeature.setProperties(sortedProperties)
-      imageLocationFeature.set('title', 'Captured Image')
-      imageLocationFeature.set('name', 'Image Location')
-      features.push(imageLocationFeature)
+          tagKeys.forEach(x => {
+            sortedProperties[x] = tags[x].description
+          })
 
-      // Image Location Error Margin
-      const imageLocationError = Number(sortedProperties.GPSHPositioningError)
-      const errorRadius = new Circle(coords, imageLocationError)
-      const errorRadiusFeature = new Feature(errorRadius)
+          // Image Location
+          const latRef = sortedProperties.GPSLatitudeRef === 'North latitude' ? 'N' : 'S'
+          const longRef = sortedProperties.GPSLongitudeRef === 'West longitude' ? 'W' : 'E'
+          const imageLat = (latRef === 'N') ? sortedProperties.GPSLatitude : sortedProperties.GPSLatitude * -1
+          const imageLong = (longRef === 'W') ? (sortedProperties.GPSLongitude * -1) : sortedProperties.GPSLongitude
+          const coords = fromLonLat([imageLong, imageLat])
+          const centerPoint = new Point(coords)
+          const imageLocationFeature = new Feature(centerPoint)
 
-      errorRadiusFeature.setProperties({ 'Error Radius (meters)': imageLocationError })
-      errorRadiusFeature.set('title', 'Image Location Error Radius')
-      errorRadiusFeature.set('name', 'Error Radius')
-      errorRadiusFeature.setStyle(new Style({
-        stroke: new Stroke({
-          lineDash: [4, 8],
-          color: '#ff0000',
-          width: 2
-        })
-      }))
-      features.push(errorRadiusFeature)
+          imageLocationFeature.setProperties(sortedProperties)
+          imageLocationFeature.set('title', 'Captured Image')
+          imageLocationFeature.set('name', 'Image Location')
+          features.push(imageLocationFeature)
 
-      // Image Bearing Line
-      const imageBearing = sortedProperties.GPSDestBearing
-      const geojsonPoint1 = olToGeojson(imageLocationFeature)
-      const geojsonPoint2 = transformTranslate(geojsonPoint1, 2, imageBearing, { units: 'meters' })
-      const olPoint1 = geojsonToOl(geojsonPoint1).getGeometry().getCoordinates()
-      const olPoint2 = geojsonToOl(geojsonPoint2).getGeometry().getCoordinates()
-      const lineThing = new LineString([olPoint1, olPoint2])
-      const bearingFeature = new Feature(lineThing)
+          // Image Location Error Margin
+          const imageLocationError = Number(sortedProperties.GPSHPositioningError)
 
-      bearingFeature.set('title', 'Image Bearing')
-      bearingFeature.set('name', 'Image Bearing')
-      bearingFeature.setStyle(styleFunction)
-      features.push(bearingFeature)
+          if (imageLocationError) {
+            const errorRadius = new Circle(coords, imageLocationError)
+            const errorRadiusFeature = new Feature(errorRadius)
 
-      const source = new VectorSource({ features })
-      const vectorLayer = new VectorLayer({ source })
+            errorRadiusFeature.setProperties({ 'Error Radius (meters)': imageLocationError })
+            errorRadiusFeature.set('title', 'Image Location Error Radius')
+            errorRadiusFeature.set('name', 'Error Radius')
+            errorRadiusFeature.setStyle(new Style({
+              stroke: new Stroke({
+                lineDash: [4, 8],
+                color: '#ff0000',
+                width: 2
+              })
+            }))
+            features.push(errorRadiusFeature)
+          }
 
-      vectorLayer.set('title', 'Image Location')
+          // Image Bearing Line
+          const imageBearing = sortedProperties.GPSDestBearing
 
-      map.addLayer(vectorLayer)
-    }
-    reader.onerror = function (e) {
-      // eslint-disable-next-line no-console
-      console.log(e.target.error)
-    }
-    reader.readAsArrayBuffer(acceptedFiles[0])
+          if (imageBearing) {
+            const geojsonPoint1 = olToGeojson(imageLocationFeature)
+            const geojsonPoint2 = transformTranslate(geojsonPoint1, 2, imageBearing, { units: 'meters' })
+            const olPoint1 = geojsonToOl(geojsonPoint1).getGeometry().getCoordinates()
+            const olPoint2 = geojsonToOl(geojsonPoint2).getGeometry().getCoordinates()
+            const lineThing = new LineString([olPoint1, olPoint2])
+            const bearingFeature = new Feature(lineThing)
+
+            bearingFeature.set('title', 'Image Bearing')
+            bearingFeature.set('name', 'Image Bearing')
+            bearingFeature.setStyle(styleFunction)
+            features.push(bearingFeature)
+          }
+
+          const source = new VectorSource({ features })
+          const vectorLayer = new VectorLayer({ source })
+
+          vectorLayer.set('title', 'Image Location')
+
+          map.addLayer(vectorLayer)
+        } else {
+          alert('Uploaded image has no location info and cannot be plotted on the map')
+        }
+      }
+      reader.onerror = function (e) {
+        // eslint-disable-next-line no-console
+        console.log(e.target.error)
+      }
+      reader.readAsArrayBuffer(file)
+    })
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
