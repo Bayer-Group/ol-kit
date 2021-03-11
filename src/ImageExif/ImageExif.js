@@ -71,16 +71,26 @@ function ImageExif (props) {
   }
 
   const onDrop = useCallback(acceptedFiles => {
-    acceptedFiles.forEach(file => {
+    const unlocatableFiles = []
+
+    acceptedFiles.forEach((file, i, arr) => {
       const features = []
       const imageId = uuidv4()
       const imageName = file.name
       const imageURL = URL.createObjectURL(file)
       const reader = new FileReader()
 
-      reader.onloadend = function (e) {
+      reader.onloadend = () => {
+        const endOfFiles = (i + 1 === arr.length)
+
+        if (endOfFiles && unlocatableFiles.length) {
+          // eslint-disable-next-line no-alert,no-undef
+          alert(`${unlocatableFiles.length} file(s) missing location data and could not be added.`)
+        }
+      }
+
+      reader.onload = function (e) {
         const tags = ExifReader.load(e.target.result)
-        // const isIphone = (tags.Make.description === 'Apple')
         const imageIsGeotagged = !!(tags.GPSLatitude && tags.GPSLongitude)
 
         if (imageIsGeotagged) {
@@ -155,8 +165,7 @@ function ImageExif (props) {
 
           map.addLayer(vectorLayer)
         } else {
-          // eslint-disable-next-line no-undef,no-alert
-          alert('Uploaded image has no location info and cannot be plotted on the map')
+          unlocatableFiles.push(file)
         }
       }
       reader.onerror = function (e) {
