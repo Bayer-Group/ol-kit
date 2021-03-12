@@ -3,6 +3,7 @@ import { Controls, Map, Popup, TabbedPanel, TabbedPanelPage } from '@bayer/ol-ki
 import Viewer from 'react-viewer'
 import ImageExif from '../../../src/ImageExif/ImageExif'
 import { LayerPanel, PopupActionItem } from '../../../src'
+import Welcome from '../../Welcome'
 
 const imageActions = setActiveImage => {
   return [
@@ -25,6 +26,9 @@ function App () {
         images={[{ src: activeImage, alt: 'Field Image' }]}
       />
       <TabbedPanel>
+        <TabbedPanelPage label='Home'>
+          <Welcome />
+        </TabbedPanelPage>
         <TabbedPanelPage label='Image EXIF'>
           <ImageExif />
         </TabbedPanelPage>
