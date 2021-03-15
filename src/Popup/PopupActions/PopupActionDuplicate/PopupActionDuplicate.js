@@ -16,21 +16,24 @@ class ActionDuplicate extends Component {
   }
 
   duplicate = () => {
-    const { feature, getAnnotationsLayer, onActionEnd, onDuplicateFeature, map } = this.props
+    const { feature, onActionEnd, map, translations } = this.props
     const geometry = feature.getGeometry().clone()
     const clone = new olFeature({ geometry, name: 'Duplicated shape' })
 
     if (typeof onActionEnd === 'function') {
       onActionEnd(clone)
     } else {
-      // add copied feature to annotation layer
-      const annotationsLayer = getAnnotationsLayer(map)
+      const layer = new VectorLayer({
+        title: translations['_ol_kit.PopupActionDuplicate.title'],
+        source: new olSourceVector()
+      })
 
-      // we don't need a custom style on the feature -- let the annotation layer style it
       clone.setStyle(null)
-      annotationsLayer.getSource().addFeature(clone)
+      layer.getSource().addFeature(clone)
+
+      map.addLayer(layer)
     }
-    onDuplicateFeature(clone)
+
     this.setState({ showSnackbar: true })
   }
 
@@ -55,12 +58,8 @@ class ActionDuplicate extends Component {
 ActionDuplicate.propTypes = {
   /** olFeature to duplicate */
   feature: PropTypes.object,
-  /** Callback function that will give ol-kit the layer to add the dupe to */
-  getAnnotationsLayer: PropTypes.func,
   /** Callback function that will inform when action is complete */
   onActionEnd: PropTypes.func,
-  /** Callback function that passes the duplicated feature back */
-  onDuplicateFeature: PropTypes.func,
   /** olMap */
   map: PropTypes.object,
   /** Object with key/value pairs for translated strings */
@@ -71,23 +70,6 @@ ActionDuplicate.propTypes = {
 }
 
 ActionDuplicate.defaultProps = {
-  onDuplicateFeature: () => {},
-  getAnnotationsLayer: (map) => {
-    const annotationLayer = map.getLayers().getArray().find(layer => layer.get('title') === 'Annotations')
-
-    if (annotationLayer) {
-      return annotationLayer
-    } else {
-      const layer = new VectorLayer({
-        title: 'Annotations',
-        source: new olSourceVector()
-      })
-
-      map.addLayer(layer)
-
-      return layer
-    }
-  },
   translations: {
     '_ol_kit.PopupActionDuplicate.alert': 'Shape duplicated!',
     '_ol_kit.PopupActionDuplicate.title': 'Duplicate Shape'
