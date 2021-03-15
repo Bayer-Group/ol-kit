@@ -14,7 +14,7 @@ import VectorSource from 'ol/source/Vector'
 import { fromLonLat } from 'ol/proj'
 import arrow from './arrow.png'
 import { v4 as uuidv4 } from 'uuid'
-import ugh from 'src/ugh'
+import ugh from '../ugh'
 
 const format = new GeoJSON()
 const projectionOpts = {
@@ -185,8 +185,8 @@ function ImageExif (props) {
             <input {...getInputProps()} />
             {
               isDragActive
-                ? <p>Drop the files here ...</p>
-                : <p>Drag and drop some image files here, or click to select files</p>
+                ? <p>{translations['_ol_kit.ImageExif.dragActive']}</p>
+                : <p>{translations['_ol_kit.ImageExif.dragInactive']}</p>
             }
           </div>
         </InputContainer>
@@ -198,7 +198,9 @@ function ImageExif (props) {
 ImageExif.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    '_ol_kit.ImageExif.title': PropTypes.string
+    '_ol_kit.ImageExif.title': PropTypes.string,
+    '_ol_kit.ImageExif.dragActive': PropTypes.string,
+    '_ol_kit.ImageExif.dragInactive': PropTypes.string
   }).isRequired,
   map: PropTypes.object
 }
