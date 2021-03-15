@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip, IconButton } from './styled'
 import PinDrop from '@material-ui/icons/PinDrop'
@@ -11,6 +11,7 @@ import PinDrop from '@material-ui/icons/PinDrop'
  */
 function DrawPin (props) {
   const { addInteraction, type, tooltipTitle } = props
+
   return (
     <Tooltip title={tooltipTitle}>
       <IconButton

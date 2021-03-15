@@ -41,10 +41,6 @@ function getSVGUri (path, opts = {}) {
   return window.encodeURI(getSVGWrapper(path, opts))
 }
 
-function getSVGString (path, opts = {}) {
-  return getSVGWrapper(path, opts)
-}
-
 const fill = new olStyleFill({
   color: 'rgba(255,255,255,0.4)'
 })
@@ -69,13 +65,13 @@ const waypointPin = new olStyle({
   }),
   geometry: getVertices
 })
-console.log(`data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'green', size: 8 })}`)
+
 const startPin = new olStyle({
   image: new olStyleIcon({
     anchor: [0.5, 0.5],
     opacity: 1,
     src: `data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'green', size: 8 })}`,
-    scale: 4,
+    scale: 4
   }),
   geometry: feature => {
     const geom = feature.getGeometry()
@@ -89,7 +85,7 @@ const endPin = new olStyle({
     anchor: [0.5, 0.5],
     opacity: 1,
     src: `data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'rgba(255,0,0,1)', size: 8 })}`,
-    scale: 4,
+    scale: 4
   }),
   geometry: feature => {
     const points = pointsFromVertices(feature.getGeometry())
@@ -99,7 +95,7 @@ const endPin = new olStyle({
 })
 
 const getDirections = async (locations, apiKey) => {
-  let waypoints = locations
+  const waypoints = locations
   const origin = waypoints.shift().reverse()
   const destination = waypoints.pop().reverse()
 
@@ -140,16 +136,16 @@ function GoogleDirections (props) {
   const onDrawFinish = async (feature) => {
     const waypoints = feature.getGeometry().getCoordinates().map(coord => toLonLat(coord))
     const route = await getDirections(waypoints, apiKey)
-    const directionsLayer = new VectorLayer({
+
+    return new VectorLayer({
       title: 'Google Directions',
       source: new olSourceVector({
-        features: [route],
+        features: [route]
       }),
       style: [startPin, endPin, routeStyle],
-      map,
+      map
     })
   }
-  const onDrawCancel = () => console.log('onDrawCancel')
 
   return (
     <>
@@ -157,7 +153,6 @@ function GoogleDirections (props) {
         onDrawFinish={onDrawFinish}
         onDrawBegin={onDrawBegin}
         onInteractionAdded={() => {}}
-        onDrawCancel={onDrawCancel}
         drawOpts={{ geometryFunction: geometryFunctionCalback, style: [waypointPin, startPin, endPin] }}
       >
         <DrawPin type={'LineString'} />

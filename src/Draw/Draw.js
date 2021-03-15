@@ -198,7 +198,9 @@ class Draw extends React.Component {
       <div data-testid='Draw.container'>
         {this.props.children
           ? React.Children.map(this.props.children, child => {
-            const moddedChild = React.cloneElement(child, {...{ addInteraction: this.addInteraction, type, freehand, geometryFunction }, ...child.props})
+            const moddedChild = React.cloneElement(child, {
+              ...{ addInteraction: this.addInteraction, type, freehand, geometryFunction }, ...child.props
+            })
 
             return moddedChild
           })
