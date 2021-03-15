@@ -85,10 +85,18 @@ class PopupDefaultPage extends Component {
                 </div>
                 {childrenCount > 3
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
-                    {children}
+                    {React.Children.map(children, item =>
+                      React.cloneElement(item, {
+                        ...item.props, onClose: onClose
+                      })
+                    )}
                   </Frame>
                   : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px', overflowY: 'scroll' }}>
-                    {children}
+                    {React.Children.map(children, item =>
+                      React.cloneElement(item, {
+                        ...item.props, onClose: onClose
+                      })
+                    )}
                   </div>
                 }
               </PopupTabs>

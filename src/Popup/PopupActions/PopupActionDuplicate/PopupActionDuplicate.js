@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Snackbar } from 'Snackbar'
 import olFeature from 'ol/Feature'
 import VectorLayer from 'classes/VectorLayer'
-import olSourceVector from 'ol/Source/Vector'
+import olSourceVector from 'ol/source/Vector'
 
 import { PopupActionItem } from 'Popup'
 import { connectToContext } from 'Provider'
@@ -62,6 +62,8 @@ ActionDuplicate.propTypes = {
   onActionEnd: PropTypes.func,
   /** olMap */
   map: PropTypes.object,
+  /** Callback to close Popup */
+  onClose: PropTypes.func,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupActionDuplicate.alert': PropTypes.string,

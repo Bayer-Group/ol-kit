@@ -5,12 +5,13 @@ import { connectToContext } from 'Provider'
 
 class ActionRemove extends Component {
   remove = () => {
-    const { feature, parentLayerKey, onActionEnd } = this.props
+    const { feature, parentLayerKey, onActionEnd, onClose } = this.props
 
     if (typeof onActionEnd === 'function') {
       onActionEnd(feature)
     } else {
       feature.get(parentLayerKey).getSource().removeFeature(feature)
+      onClose()
     }
   }
 
@@ -32,6 +33,8 @@ ActionRemove.propTypes = {
   onActionEnd: PropTypes.func,
   /** A String for the feature to find its parent layer to remove from */
   parentLayerKey: PropTypes.string,
+  /** Callback to close Popup */
+  onClose: PropTypes.func,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupActionRemove.title': PropTypes.string

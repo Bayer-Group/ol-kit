@@ -86,7 +86,9 @@ class PopupDefaultInsert extends Component {
     const { selectedIdx } = this.state
 
     const getChildren = feature => {
-      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />, <PopupActionDuplicate key='dupe' />, <PopupActionRemove key='remove' />]
+      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
+        <PopupActionDuplicate key='dupe' />,
+        <PopupActionRemove key='remove' />]
 
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
@@ -104,7 +106,7 @@ class PopupDefaultInsert extends Component {
               loading={loading}
               onClose={onClose}
               onSettingsClick={onSettingsClick}
-              title={f.get('title') || `Feature ${i+1}`}
+              title={f.get('title') || `Feature ${i + 1}`}
               translations={translations}>
               {getChildren(f)}
             </PopupDefaultPage>
