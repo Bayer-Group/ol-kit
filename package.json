@@ -95,6 +95,7 @@
     "react-select": "~3.1.0",
     "shp-write": "~0.3.2",
     "shpjs": "^3.6.0",
+    "tinycolor2": "^1.4.2",
     "uuid": "~7.0.3",
     "vorpal": "~1.12.0"
   },
