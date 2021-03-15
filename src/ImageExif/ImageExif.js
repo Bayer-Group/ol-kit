@@ -15,6 +15,7 @@ import VectorSource from 'ol/source/Vector'
 import { fromLonLat } from 'ol/proj'
 import arrow from './arrow.png'
 import { v4 as uuidv4 } from 'uuid'
+import ugh from 'src/ugh'
 
 const format = new GeoJSON()
 const projectionOpts = {
@@ -169,8 +170,7 @@ function ImageExif (props) {
         }
       }
       reader.onerror = function (e) {
-        // eslint-disable-next-line no-console
-        console.log(e.target.error)
+        ugh.error(e.target.error)
       }
       reader.readAsArrayBuffer(file)
     })
