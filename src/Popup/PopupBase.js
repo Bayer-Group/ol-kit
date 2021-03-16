@@ -107,7 +107,7 @@ PopupBase.propTypes = {
   ]),
   draggable: PropTypes.bool,
   /** The height of the popup */
-  height: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** Render the component inline (without absolute positioning) */
   inline: PropTypes.bool,
   /** Callback fired during drags when draggable is true */
