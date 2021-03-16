@@ -86,7 +86,7 @@ class PopupBase extends Component {
 PopupBase.defaultProps = {
   arrow: 'none',
   draggable: true,
-  height: 280,
+  height: 'auto',
   inline: false,
   onPopupDrag: () => {},
   onPopupDragEnd: () => {},
