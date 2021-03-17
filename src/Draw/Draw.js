@@ -69,7 +69,7 @@ class Draw extends React.Component {
 
   selectListener = ({ selected }) => {
     this.setState({ feature: selected[0] })
-    this.props.selectedFeature(selected[0])
+    this.props?.selectedFeature?.(selected[0]) // eslint-disable-line no-unused-expressions
   }
 
   addInteraction = (opts) => {

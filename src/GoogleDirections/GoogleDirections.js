@@ -8,13 +8,15 @@ import olFormatPolyline from 'ol/format/Polyline'
 import { toLonLat } from 'ol/proj'
 import olGeomLineString from 'ol/geom/LineString'
 import { startPin, endPin, waypointPin, routeStyle } from './utils'
+import { Container } from './styled'
 
 const getDirections = async (locations, apiKey) => {
   const waypoints = locations
   const origin = waypoints.shift().reverse()
   const destination = waypoints.pop().reverse()
+  const formatedWaypoints = waypoints.map(c => c.reverse()).join('|')
 
-  return fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${waypoints.map(c => c.reverse()).toString()}&key=${apiKey}`)
+  return fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&waypoints=${formatedWaypoints}&key=${apiKey}`)
     .then(response => response.json())
     .then(json => {
       if (json.status === 'ZERO_RESULTS') {
@@ -22,13 +24,39 @@ const getDirections = async (locations, apiKey) => {
       } else if (json.status === 'REQUEST_DENIED') {
         throw new Error('The provided API key is invalid')
       } else {
-        const route = json.routes?.[0].overview_polyline?.points
+        const route = json.routes?.[0]?.overview_polyline?.points
         const format = new olFormatPolyline()
-        const feature = format.readFeature(route, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
+        const routeFeature = format.readFeature(route, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
 
-        return feature
+        routeFeature.setProperties(json.routes?.[0])
+        routeFeature.set('title', json.routes?.[0].summary)
+
+        return routeFeature
       }
     })
+}
+
+export function getStepFeatures (feature) {
+  const legs = feature.getProperties().legs
+  const steps = legs.map(leg => leg.steps).flat()
+  const format = new olFormatPolyline()
+
+  return steps.map((step, i) => {
+    const stepRoute = step?.polyline?.points
+    const feature = format.readFeature(stepRoute, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' })
+
+    const formatedProps = { ...step }
+
+    for (const prop in step) {
+      const val = step[prop]
+
+      if (val?.text) formatedProps[prop] = val.text
+    }
+    feature.setProperties(formatedProps)
+    feature.set('title', `Step ${i}`)
+
+    return feature
+  })
 }
 
 function GoogleDirections (props) {
@@ -46,36 +74,47 @@ function GoogleDirections (props) {
   )
 
   const onDrawBegin = (feature) => {
+    setCoords([])
     feature.setStyle([waypointPin, startPin, endPin])
   }
   const onDrawFinish = async (feature) => {
     const waypoints = feature.getGeometry().getCoordinates().map(coord => toLonLat(coord))
     const route = await getDirections(waypoints, apiKey)
 
-    return new VectorLayer({
-      title: 'Google Directions',
+    const routeLayer = new VectorLayer({
+      title: 'Google Directions - Overview',
       source: new olSourceVector({
         features: [route]
       }),
-      style: [startPin, endPin, routeStyle],
-      map
+      style: [startPin, endPin, routeStyle]
     })
+    const stepLayer = new VectorLayer({
+      title: 'Google Directions - Step by Step',
+      source: new olSourceVector({
+        features: getStepFeatures(route)
+      }),
+      style: [routeStyle]
+    })
+
+    map.addLayer(routeLayer)
+    map.addLayer(stepLayer)
+    setCoords([])
   }
 
   return (
-    <>
+    <Container>
+      <p>
+        {!coords.length ? 'Place a point at your origin:' : 'Now place a point to add a destination and click finish when you\'re done:'}
+      </p>
       <Draw
         onDrawFinish={onDrawFinish}
         onDrawBegin={onDrawBegin}
-        onInteractionAdded={() => {}}
+        onDrawCancel={() => setCoords([])}
         drawOpts={{ geometryFunction: geometryFunctionCalback, style: [waypointPin, startPin, endPin] }}
       >
         <DrawPin type={'LineString'} />
       </Draw>
-      <div>
-        {!coords.length ? 'Place a point at your origin' : 'Now place a point to add a destination and click finish when you\'re done'}
-      </div>
-    </>
+    </Container>
   )
 }
 

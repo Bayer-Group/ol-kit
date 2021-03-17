@@ -62,20 +62,10 @@ export const waypointPin = new olStyle({
 })
 
 export const startPin = new olStyle({
-  // image: new olStyleCircle({
-  //   fill: new olStyleFill({
-  //     color: 'green'
-  //   }),
-  //   stroke: new olStyleStroke({
-  //     color: '#3399CC',
-  //     width: 0.5
-  //   }),
-  //   radius: 8
-  // }),
   image: new olStyleIcon({
-    anchor: [0.5, 0.5],
+    anchor: [0.5, 1],
     opacity: 1,
-    src: `data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'green', size: 8 })}`,
+    src: `data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'green', size: { height: 8, width: 8 } })}`,
     scale: 4
   }),
   geometry: feature => {
@@ -87,20 +77,10 @@ export const startPin = new olStyle({
 })
 
 export const endPin = new olStyle({
-  // image: new olStyleCircle({
-  //   fill: new olStyleFill({
-  //     color: 'red'
-  //   }),
-  //   stroke: new olStyleStroke({
-  //     color: '#3399CC',
-  //     width: 0.5
-  //   }),
-  //   radius: 8
-  // }),
   image: new olStyleIcon({
-    anchor: [0.5, 0.5],
+    anchor: [0.5, 1],
     opacity: 1,
-    src: `data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'rgba(255,0,0,1)', size: 8 })}`,
+    src: `data:image/svg+xml;utf8,${getSVGUri(mapPin, { fill: 'red', size: { height: 8, width: 8 } })}`,
     scale: 4
   }),
   geometry: feature => {

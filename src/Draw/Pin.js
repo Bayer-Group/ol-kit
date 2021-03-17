@@ -35,4 +35,8 @@ DrawPin.propTypes = {
   tooltipTitle: PropTypes.string
 }
 
+DrawPin.defaultProps = {
+  tooltipTitle: 'Waypoint'
+}
+
 export default DrawPin
