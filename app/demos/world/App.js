@@ -12,8 +12,6 @@ import {
   BasemapContainer,
   VectorLayer,
   DrawContainer,
-  GoogleDirections,
-  GooglePlacesSearch,
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
@@ -62,9 +60,6 @@ class App extends React.Component {
           </TabbedPanelPage>
           <TabbedPanelPage label='Draw'>
             <DrawContainer style={{ position: 'relative', width: 'auto' }} />
-          </TabbedPanelPage>
-          <TabbedPanelPage label='Directions'>
-            <GoogleDirections apiKey={'AIzaSyCVYYzV5T_v5KSHnBW3PrIK2waBngOr2dM'} />
           </TabbedPanelPage>
         </TabbedPanel>
         <ContextMenu />
