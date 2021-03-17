@@ -60,7 +60,7 @@ export function getStepFeatures (feature) {
 }
 
 function GoogleDirections (props) {
-  const { map, apiKey } = props
+  const { map, apiKey, translations } = props
   const [coords, setCoords] = useState([])
 
   const geometryFunctionCalback = useCallback(
@@ -104,7 +104,7 @@ function GoogleDirections (props) {
   return (
     <Container>
       <p>
-        {!coords.length ? 'Place a point at your origin:' : 'Now place a point to add a destination and click finish when you\'re done:'}
+        {!coords.length ? translations['_ol_kit.directions.placeOriginPoint'] : translations['_ol_kit.directions.placeWaypoint']}
       </p>
       <Draw
         onDrawFinish={onDrawFinish}
@@ -112,7 +112,7 @@ function GoogleDirections (props) {
         onDrawCancel={() => setCoords([])}
         drawOpts={{ geometryFunction: geometryFunctionCalback, style: [waypointPin, startPin, endPin] }}
       >
-        <DrawPin type={'LineString'} />
+        <DrawPin type={'LineString'} tooltipTitle={translations['_ol_kit.directions.waypointLabel']} />
       </Draw>
     </Container>
   )
@@ -123,7 +123,9 @@ GoogleDirections.propTypes = {
   map: PropTypes.object.isRequired,
   /* Note that you will need to create an account with Google and get an API key. Be sure to turn on all location based permissions.
   You can find instructions on how to do that here https://developers.google.com/places/web-service/intro */
-  apiKey: PropTypes.string.isRequired
+  apiKey: PropTypes.string.isRequired,
+  /** translations object */
+  translations: PropTypes.object
 }
 
 export default connectToContext(GoogleDirections)
