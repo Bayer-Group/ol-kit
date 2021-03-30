@@ -361,7 +361,7 @@ class TimeSliderBase extends React.Component {
             <Container id='timesliderbase'>
               <Grid container justify='center'>
                 <Card style={{ width: '100%', paddingTop: '4px' }}>
-                  {draggable ? <DragHandle handleTag='timesliderdrag' /> : null}
+                  {draggable ? <DragHandle className='timesliderdrag' /> : null}
                   <Tabs
                     style={{ marginRight: '60px' }}
                     indicatorColor='primary'

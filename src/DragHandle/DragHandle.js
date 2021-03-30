@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { DragHandleIcon } from '../Popup/styled'
 
 export default function DragHandle (props) {
-  const { color, height, handleTag } = props
+  const { color, height, className } = props
 
   return (
-    <DragHandleIcon color={color} height={height} className={handleTag}>
+    <DragHandleIcon color={color} height={height} className={className}>
       <svg width='65px' height='7px' viewBox='0 0 32 7' version='1.1' xmlns='http://www.w3.org/2000/svg' >
         <title>Drag icon</title>
         <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
@@ -29,11 +29,11 @@ export default function DragHandle (props) {
 DragHandle.defaultProps = {
   color: 'grey',
   height: '7px',
-  handleTag: 'handle'
+  className: 'handle'
 }
 
 DragHandle.propTypes = {
   color: PropTypes.string,
   height: PropTypes.string,
-  handleTag: PropTypes.string
+  className: PropTypes.string
 }

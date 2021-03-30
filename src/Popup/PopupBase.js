@@ -74,7 +74,7 @@ class PopupBase extends Component {
           show={show}
           transparent={transparent}
           width={width}>
-          {draggable ? <DragHandle handleTag='popupHandleTag' /> : null}
+          {draggable ? <DragHandle className='popupHandleTag' /> : null}
           {!dragged && <ArrowBox position={arrowTranslator[arrow]} />}
           {children}
         </Container>
