@@ -10,6 +10,18 @@ import { sanitizeProperties } from '../utils'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
+<<<<<<< HEAD
+=======
+class SelectEvent extends Event {
+  constructor (type, selected, deselected, mapBrowserEvent) {
+    super(type)
+    this.selected = selected
+    this.deselected = deselected
+    this.mapBrowserEvent = mapBrowserEvent
+  }
+}
+
+>>>>>>> b8c8ccd... squash popup style changes
 /**
  * @component
  * @category Popup
@@ -43,7 +55,7 @@ class PopupDefaultInsert extends Component {
       // safeSelectIdx prevents a bug of setting an index out of range of the features available to select
       const safeSelectIdx = selectedIdx > nextProps.features.length ? 0 : selectedIdx
 
-      this.setState({selectedIdx: safeSelectIdx})
+      this.setState({ selectedIdx: safeSelectIdx })
       this.selectFeature(nextProps.features[safeSelectIdx])
     }
   }
@@ -84,6 +96,7 @@ class PopupDefaultInsert extends Component {
 
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
+<<<<<<< HEAD
         {features.length
           ? features.map((f, i) => (
               <PopupDefaultPage
@@ -97,6 +110,22 @@ class PopupDefaultInsert extends Component {
                 {getChildren(f)}
               </PopupDefaultPage>
             ))
+=======
+        {dedupedFeatures.length
+          ? dedupedFeatures.map((f, i) => (
+            <PopupDefaultPage
+              attributes={propertiesFilter(f.getProperties())}
+              key={i}
+              loading={loading}
+              onClose={onClose}
+              onSettingsClick={onSettingsClick}
+              title={f.get('title') || `Feature ${i + 1}`}
+              translations={translations}
+              subtitle={f.get('featuretype') || null}>
+              {getChildren(f)}
+            </PopupDefaultPage>
+          ))
+>>>>>>> b8c8ccd... squash popup style changes
           : <PopupDefaultPage
             title={loading ? 'Loading features' : 'Select a feature'}
             loading={loading}
