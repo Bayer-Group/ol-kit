@@ -59,6 +59,12 @@ export function getStepFeatures (feature) {
   })
 }
 
+/**
+ * A button for drawing two pin points for Google Directions.
+ * @component
+ * @category GoogleDirections
+ * @since 1.8.0
+ */
 function GoogleDirections (props) {
   const { map, apiKey, translations } = props
   const [coords, setCoords] = useState([])
