@@ -14,13 +14,14 @@ export const Container = styled.div`
 
 
 export const Row = styled.div`
-  color: #787878;
   margin: 0 0 15px 0;
   max-height: 200px;
 `
 
 
 export const Key = styled.div`
+  color: #787878;
+  text-transform: capitalize;
   display: block;
 `
 
@@ -33,4 +34,5 @@ export const Value = styled.div`
   line-height: 1.5;
   overflow: hidden;
   padding: 1px;
+  font-weight: bold;
 `
