@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Draggable from 'react-draggable'
 
-import DragHandle from './DragHandle'
+import { DragHandle } from 'DragHandle'
 import { ArrowBox, Container } from './styled'
 
 /**
@@ -62,7 +62,7 @@ class PopupBase extends Component {
       <Draggable
         axis='both'
         bounds='parent'
-        handle='.handle'
+        handle={'.popupHandleTag'}
         onDrag={this.handleDrag}
         onStart={this.onStart}
         onStop={this.onStop}>
@@ -74,7 +74,7 @@ class PopupBase extends Component {
           show={show}
           transparent={transparent}
           width={width}>
-          {draggable ? <DragHandle /> : null}
+          {draggable ? <DragHandle className='popupHandleTag' /> : null}
           {!dragged && <ArrowBox position={arrowTranslator[arrow]} />}
           {children}
         </Container>
