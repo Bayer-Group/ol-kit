@@ -24,6 +24,7 @@ Object {
   "DrawContainer": [Function],
   "DrawFreehand": [Function],
   "DrawLine": [Function],
+  "DrawPin": [Function],
   "DrawPoint": [Function],
   "DrawPolygon": [Function],
   "FlexMap": Object {
@@ -98,6 +99,7 @@ Object {
     "warnTooManyClasses": [Function],
     "withComponent": [Function],
   },
+  "GoogleDirections": [Function],
   "GooglePlacesSearch": [Function],
   "HeatmapControls": [Function],
   "LayerPanel": [Function],
@@ -225,6 +227,7 @@ Object {
   "PopupTabs": [Function],
   "Provider": [Function],
   "ProviderContext": null,
+  "SafeParent": [Function],
   "StyledMap": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [
@@ -286,8 +289,10 @@ Object {
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
   "getStyledFeatures": [Function],
+  "getVertices": [Function],
   "loadDataLayer": [Function],
   "mapChangeHandler": [Function],
+  "pointsFromVertices": [Function],
   "removeMovementListener": [Function],
   "replaceZoomBoxCSS": [Function],
   "sanitizeProperties": [Function],
