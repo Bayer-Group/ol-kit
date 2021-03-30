@@ -23,7 +23,7 @@ export const Container = styled.div`
   z-index: 99;
   opacity: ${p => p.transparent ? 0.8 : 1};
   width: ${p => p.width}px;
-  height: ${p => p.height}px;
+  height: ${p => p.height};
   left: ${({ arrow, height, pixel, width }) => positionContainer(arrow, pixel, width, height).left}px;
   top: ${({ arrow, height, pixel, width }) => positionContainer(arrow, pixel, width, height).top}px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
