@@ -24,8 +24,82 @@ Object {
   "DrawContainer": [Function],
   "DrawFreehand": [Function],
   "DrawLine": [Function],
+  "DrawPin": [Function],
   "DrawPoint": [Function],
   "DrawPolygon": [Function],
+  "FlexMap": Object {
+    "$$typeof": Symbol(react.forward_ref),
+    "attrs": Array [],
+    "componentStyle": e {
+      "baseHash": -633946211,
+      "baseStyle": undefined,
+      "componentId": "sc-jSFkmK",
+      "isStatic": false,
+      "rules": Array [
+        "
+  display: flex;
+  width: ",
+        [Function],
+        ";
+  height: ",
+        [Function],
+        ";
+  flex-grow: ",
+        [Function],
+        ";
+  flex-shrink: ",
+        [Function],
+        ";
+  position: relative;
+",
+      ],
+      "staticRulesId": "",
+    },
+    "displayName": "styled.div",
+    "foldedComponentIds": Array [],
+    "render": [Function],
+    "shouldForwardProp": undefined,
+    "styledComponentId": "sc-jSFkmK",
+    "target": "div",
+    "toString": [Function],
+    "warnTooManyClasses": [Function],
+    "withComponent": [Function],
+  },
+  "FullScreenFlex": Object {
+    "$$typeof": Symbol(react.forward_ref),
+    "attrs": Array [],
+    "componentStyle": e {
+      "baseHash": 488360518,
+      "baseStyle": undefined,
+      "componentId": "sc-gKAblj",
+      "isStatic": false,
+      "rules": Array [
+        "
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: stretch;
+  display: flex;
+",
+      ],
+      "staticRulesId": "",
+    },
+    "displayName": "styled.div",
+    "foldedComponentIds": Array [],
+    "render": [Function],
+    "shouldForwardProp": undefined,
+    "styledComponentId": "sc-gKAblj",
+    "target": "div",
+    "toString": [Function],
+    "warnTooManyClasses": [Function],
+    "withComponent": [Function],
+  },
+  "GoogleDirections": [Function],
   "GooglePlacesSearch": [Function],
   "HeatmapControls": [Function],
   "LayerPanel": [Function],
@@ -45,7 +119,101 @@ Object {
   "LayerPanelMenu": [Function],
   "LayerPanelPage": [Function],
   "LayerStyler": [Function],
+  "Logo": Object {
+    "$$typeof": Symbol(react.forward_ref),
+    "attrs": Array [
+      [Function],
+    ],
+    "componentStyle": e {
+      "baseHash": 1335391198,
+      "baseStyle": undefined,
+      "componentId": "sc-fujyUd",
+      "isStatic": false,
+      "rules": Array [
+        "
+  width: 15px;
+  height: 15px;
+  padding: 2px;
+  cursor: pointer;
+",
+      ],
+      "staticRulesId": "",
+    },
+    "displayName": "styled.a",
+    "foldedComponentIds": Array [],
+    "render": [Function],
+    "shouldForwardProp": undefined,
+    "styledComponentId": "sc-fujyUd",
+    "target": "a",
+    "toString": [Function],
+    "warnTooManyClasses": [Function],
+    "withComponent": [Function],
+  },
+  "LogoContainer": Object {
+    "$$typeof": Symbol(react.forward_ref),
+    "attrs": Array [],
+    "componentStyle": e {
+      "baseHash": -396000879,
+      "baseStyle": undefined,
+      "componentId": "sc-iCoHVE",
+      "isStatic": false,
+      "rules": Array [
+        "
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: ",
+        [Function],
+        ";
+  align-items: flex-end;
+  bottom: 1px;
+  z-index: 1;
+",
+      ],
+      "staticRulesId": "",
+    },
+    "displayName": "styled.div",
+    "foldedComponentIds": Array [],
+    "render": [Function],
+    "shouldForwardProp": undefined,
+    "styledComponentId": "sc-iCoHVE",
+    "target": "div",
+    "toString": [Function],
+    "warnTooManyClasses": [Function],
+    "withComponent": [Function],
+  },
+  "LogoText": Object {
+    "$$typeof": Symbol(react.forward_ref),
+    "attrs": Array [],
+    "componentStyle": e {
+      "baseHash": 1268401350,
+      "baseStyle": undefined,
+      "componentId": "sc-pNWxx",
+      "isStatic": false,
+      "rules": Array [
+        "
+  font-size: 11px;
+  font-family: Roboto,Arial,sans-serif;
+  padding-left: 2px;
+  margin: 0px;
+",
+      ],
+      "staticRulesId": "",
+    },
+    "displayName": "styled.p",
+    "foldedComponentIds": Array [],
+    "render": [Function],
+    "shouldForwardProp": undefined,
+    "styledComponentId": "sc-pNWxx",
+    "target": "p",
+    "toString": [Function],
+    "warnTooManyClasses": [Function],
+    "withComponent": [Function],
+  },
   "Map": [Function],
+  "MapLogo": [Function],
+  "MultiMapContext": null,
+  "MultiMapManager": [Function],
   "Popup": [Function],
   "PopupActionCopyWkt": [Function],
   "PopupActionGoogleMaps": [Function],
@@ -61,6 +229,46 @@ Object {
   "PopupTabs": [Function],
   "Provider": [Function],
   "ProviderContext": null,
+  "SafeParent": [Function],
+  "Snackbar": [Function],
+  "StyledMap": Object {
+    "$$typeof": Symbol(react.forward_ref),
+    "attrs": Array [
+      [Function],
+    ],
+    "componentStyle": e {
+      "baseHash": 1611134500,
+      "baseStyle": undefined,
+      "componentId": "sc-jrsJCI",
+      "isStatic": false,
+      "rules": Array [
+        "
+  height: 100%;
+  width: 100%;
+  position: ",
+        [Function],
+        ";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  ",
+        [Function],
+        ";
+",
+      ],
+      "staticRulesId": "",
+    },
+    "displayName": "styled.div",
+    "foldedComponentIds": Array [],
+    "render": [Function],
+    "shouldForwardProp": undefined,
+    "styledComponentId": "sc-jrsJCI",
+    "target": "div",
+    "toString": [Function],
+    "warnTooManyClasses": [Function],
+    "withComponent": [Function],
+  },
   "TabbedPanel": [Function],
   "TabbedPanelPage": [Function],
   "TimeSlider": [Function],
@@ -84,11 +292,15 @@ Object {
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
   "getStyledFeatures": [Function],
+  "getVertices": [Function],
   "loadDataLayer": [Function],
+  "mapChangeHandler": [Function],
+  "pointsFromVertices": [Function],
   "removeMovementListener": [Function],
   "replaceZoomBoxCSS": [Function],
   "sanitizeProperties": [Function],
   "styleText": [Function],
+  "syncViewEvents": [Function],
   "updateMapFromUrl": [Function],
   "updateUrlFromMap": [Function],
 }

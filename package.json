@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -76,6 +76,7 @@
     "@turf/helpers": "~6.1.4",
     "child-process-promise": "~2.2.1",
     "clipboard": "~2.0.6",
+    "clsx": "^1.1.1",
     "depcheck": "~1.2.0",
     "geostyler-openlayers-parser": "~2.1.0",
     "jszip": "^3.5.0",
@@ -95,6 +96,7 @@
     "react-select": "~3.1.0",
     "shp-write": "~0.3.2",
     "shpjs": "^3.6.0",
+    "tinycolor2": "^1.4.2",
     "uuid": "~7.0.3",
     "vorpal": "~1.12.0"
   },

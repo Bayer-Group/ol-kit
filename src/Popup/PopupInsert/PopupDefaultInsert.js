@@ -5,12 +5,17 @@ import en from 'locales/en'
 import { sanitizeProperties } from '../utils'
 import { connectToContext } from 'Provider'
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
+<<<<<<< HEAD
 import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
+=======
+import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
+import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
+>>>>>>> 3c62d7c695db9f8c04066c885b21a77b4838514c
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
 class SelectEvent extends Event {
-  constructor(type, selected, deselected, mapBrowserEvent) {
+  constructor (type, selected, deselected, mapBrowserEvent) {
     super(type)
     this.selected = selected
     this.deselected = deselected
@@ -51,7 +56,7 @@ class PopupDefaultInsert extends Component {
       // safeSelectIdx prevents a bug of setting an index out of range of the features available to select
       const safeSelectIdx = selectedIdx > nextProps.features.length ? 0 : selectedIdx
 
-      this.setState({selectedIdx: safeSelectIdx})
+      this.setState({ selectedIdx: safeSelectIdx })
       this.selectFeature(nextProps.features[safeSelectIdx])
     }
   }
@@ -85,7 +90,10 @@ class PopupDefaultInsert extends Component {
     const { selectedIdx } = this.state
 
     const getChildren = feature => {
-      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />, <PopupActionGoogleMaps key='nav' />]
+      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
+        <PopupActionDuplicate key='dupe' />,
+        <PopupActionRemove key='remove' />,
+        <PopupActionGoogleMaps key='nav' />]
 
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
@@ -97,17 +105,18 @@ class PopupDefaultInsert extends Component {
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
         {dedupedFeatures.length
           ? dedupedFeatures.map((f, i) => (
-              <PopupDefaultPage
-                attributes={propertiesFilter(f.getProperties())}
-                key={i}
-                loading={loading}
-                onClose={onClose}
-                onSettingsClick={onSettingsClick}
-                title={f.get('title') || `Feature ${i+1}`}
-                translations={translations}>
-                {getChildren(f)}
-              </PopupDefaultPage>
-            ))
+            <PopupDefaultPage
+              attributes={propertiesFilter(f.getProperties())}
+              key={i}
+              loading={loading}
+              onClose={onClose}
+              onSettingsClick={onSettingsClick}
+              title={f.get('title') || `Feature ${i + 1}`}
+              translations={translations}
+              subtitle={f.get('featuretype') || null}>
+              {getChildren(f)}
+            </PopupDefaultPage>
+          ))
           : <PopupDefaultPage
             title={loading ? 'Loading features' : 'Select a feature'}
             loading={loading}

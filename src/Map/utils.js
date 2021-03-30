@@ -37,7 +37,7 @@ export function replaceZoomBoxCSS (dragStyle) {
  * @category Map
  * @since 0.1.0
  * @param {Object} [opts] - Object of optional params
- * @param {String} [opts.target] - htm id tag that map will into which the map will render
+ * @param {String} [opts.target] - html id tag that map will into which the map will render
  * @returns {ol.Map} A newly constructed [ol.Map]{@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html}
  */
 export function createMap (opts = {}) {

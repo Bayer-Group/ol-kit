@@ -11,7 +11,17 @@ import ZmdiButton from '../_PopupZmdiButton'
 import LoadingSpinner from '../_LoadingSpinner'
 import DataList from '../PopupDataList'
 import PopupTabs from '../PopupTabs'
-import { Header, Body, Close, Title, FeatureNavigator, FeatureCount, HeaderDetails, Frame } from '../PopupHeader/styled'
+import {
+  Header,
+  Body,
+  Close,
+  Title,
+  FeatureNavigator,
+  FeatureCount,
+  HeaderDetails,
+  Frame,
+  Subtitle
+} from '../PopupHeader/styled'
 
 /**
  * @component
@@ -33,7 +43,8 @@ class PopupDefaultPage extends Component {
       currentPage,
       onClose,
       onSettingsClick,
-      showCustomizeDetails
+      showCustomizeDetails,
+      subtitle
     } = this.props
 
     const isReactFragment = child => {
@@ -65,6 +76,7 @@ class PopupDefaultPage extends Component {
           }
           <HeaderDetails loading={loading.toString()}>
             <Title>{title}</Title>
+            <Subtitle>{subtitle}</Subtitle>
           </HeaderDetails>
         </Header>
 
@@ -85,10 +97,18 @@ class PopupDefaultPage extends Component {
                 </div>
                 {childrenCount > 3
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
-                    {children}
+                    {React.Children.map(children, item =>
+                      React.cloneElement(item, {
+                        ...item.props, onClose: onClose
+                      })
+                    )}
                   </Frame>
                   : <div title={translations['_ol_kit.PopupDefaultPage.actions']} style={{ height: '169px', overflowY: 'scroll' }}>
-                    {children}
+                    {React.Children.map(children, item =>
+                      React.cloneElement(item, {
+                        ...item.props, onClose: onClose
+                      })
+                    )}
                   </div>
                 }
               </PopupTabs>
@@ -128,7 +148,8 @@ PopupDefaultPage.propTypes = {
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
     '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
-  }).isRequired
+  }).isRequired,
+  subtitle: PropTypes.string
 }
 
 PopupDefaultPage.defaultProps = {
