@@ -5,12 +5,9 @@ import en from 'locales/en'
 import { sanitizeProperties } from '../utils'
 import { connectToContext } from 'Provider'
 import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
-<<<<<<< HEAD
 import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
-=======
 import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
 import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
->>>>>>> 3c62d7c695db9f8c04066c885b21a77b4838514c
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 
