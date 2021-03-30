@@ -15,6 +15,10 @@ export default {
   '_ol_kit.HeatmapControls.blur': 'Blur size',
   '_ol_kit.HeatmapControls.radius': 'Radius size',
   '_ol_kit.HeatmapControls.title': 'Heatmap Controls',
+  // ImageExif
+  '_ol_kit.ImageExif.title': 'Image Exif Loader',
+  '_ol_kit.ImageExif.dragActive': 'Drop the files here ...',
+  '_ol_kit.ImageExif.dragInactive': 'Drag and drop some image files here, or click to select files',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'Export KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',

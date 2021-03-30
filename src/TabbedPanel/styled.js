@@ -10,7 +10,7 @@ export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
   height: props => props.open ? `auto` : '48px',
   position: 'absolute',
   maxHeight: '645px',
-  width: '345px',
+  width: '400px',
   top: '20px',
   left: '15px',
   transition: 'all .3s',

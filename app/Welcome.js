@@ -45,6 +45,11 @@ export default function Welcome ({ desc = 'There\'s a lot you can do with ol-kit
             <NavImg src='https://cdn4.iconfinder.com/data/icons/award-and-trophy-flat-0619/64/trophy-ribbon-gold-winner-512.png' title='Trophy Icon for Geohack Winners' />
           </NavLink>
         </Link>
+        <Link to='/image-exif'>
+          <NavLink>
+            <NavImg src='https://img.icons8.com/plasticine/2x/camera.png' title='image exif demo' />
+          </NavLink>
+        </Link>
       </GridWrapper>
     </div>
   )
