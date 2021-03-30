@@ -228,10 +228,7 @@ Object {
   "Provider": [Function],
   "ProviderContext": null,
   "SafeParent": [Function],
-<<<<<<< HEAD
   "Snackbar": [Function],
-=======
->>>>>>> 786ac588378398e3374c7c2a96debd9510b51999
   "StyledMap": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [
