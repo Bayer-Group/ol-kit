@@ -55,6 +55,20 @@ export const Title = styled.div`
 `
 
 
+export const Subtitle = styled.div`
+  font-size: 12px;
+  font-style: normal;
+  color: #787878;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 2px 0;
+  text-align: center;
+  text-transform: uppercase;
+`
+
+
 export const FeatureNavigator = styled.div`
   display: inline-block;
   position: absolute;

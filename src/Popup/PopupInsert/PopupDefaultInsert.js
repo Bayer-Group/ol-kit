@@ -94,6 +94,7 @@ class PopupDefaultInsert extends Component {
                 onSettingsClick={onSettingsClick}
                 title={f.get('title') || `Feature ${i+1}`}
                 translations={translations}>
+                subtitle={f.get('featuretype') || null}>
                 {getChildren(f)}
               </PopupDefaultPage>
             ))
