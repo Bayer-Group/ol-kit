@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 
-
 export const Header = styled.div`
   background-color: #ededed;
 `
-
 
 export const HeaderDetails = styled.div`
   padding: 32px 20px ${p => JSON.parse(p.loading) ? '20px' : '0'} 20px;
@@ -12,11 +10,9 @@ export const HeaderDetails = styled.div`
   color: #787878;
 `
 
-
 export const Body = styled.div`
   height: 100%;
 `
-
 
 export const Frame = styled.div`
   height: ${props => props.height}px;
@@ -41,19 +37,30 @@ export const Frame = styled.div`
   }
 `
 
-
 export const Title = styled.div`
   font-size: 17px;
   font-style: normal;
   color: #333333;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 2px 0;
+  text-align: center;
+  font-weight: bold;
+`
+
+export const Subtitle = styled.div`
+  font-size: 12px;
+  font-style: normal;
+  color: #787878;
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 2px 0;
   text-align: center;
+  text-transform: uppercase;
 `
-
 
 export const FeatureNavigator = styled.div`
   display: inline-block;
@@ -68,14 +75,12 @@ export const FeatureNavigator = styled.div`
   left: 4px;
 `
 
-
 export const FeatureCount = styled.div`
   display: inline-block;
   vertical-align: inherit;
   line-height: 1px;
   user-select: none;
 `
-
 
 export const Close = styled.button`
   display: block;

@@ -24,6 +24,7 @@ Object {
   "DrawContainer": [Function],
   "DrawFreehand": [Function],
   "DrawLine": [Function],
+  "DrawPin": [Function],
   "DrawPoint": [Function],
   "DrawPolygon": [Function],
   "FlexMap": Object {
@@ -98,6 +99,7 @@ Object {
     "warnTooManyClasses": [Function],
     "withComponent": [Function],
   },
+  "GoogleDirections": [Function],
   "GooglePlacesSearch": [Function],
   "HeatmapControls": [Function],
   "LayerPanel": [Function],
@@ -226,7 +228,10 @@ Object {
   "Provider": [Function],
   "ProviderContext": null,
   "SafeParent": [Function],
+<<<<<<< HEAD
   "Snackbar": [Function],
+=======
+>>>>>>> 786ac588378398e3374c7c2a96debd9510b51999
   "StyledMap": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [
@@ -288,8 +293,10 @@ Object {
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
   "getStyledFeatures": [Function],
+  "getVertices": [Function],
   "loadDataLayer": [Function],
   "mapChangeHandler": [Function],
+  "pointsFromVertices": [Function],
   "removeMovementListener": [Function],
   "replaceZoomBoxCSS": [Function],
   "sanitizeProperties": [Function],

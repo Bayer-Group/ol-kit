@@ -109,5 +109,9 @@ export default {
   '_ol_kit.settings.coordinateLabels.description': '',
   '_ol_kit.settings.snapping.title': 'Vertex Snapping',
   '_ol_kit.settings.snapping.description': 'Vertex snapping connects two vertices while drawing and editing features when they are within the specified pixel tolerance.',
-  '_ol_kit.settings.turnOnOff': 'Turn on/off'
+  '_ol_kit.settings.turnOnOff': 'Turn on/off',
+  // Google Directions
+  '_ol_kit.directions.placeOriginPoint': 'Place a point at your origin',
+  '_ol_kit.directions.placeWaypoint': 'Now place a point to add a destination and click finish when you\'re done:',
+  '_ol_kit.directions.waypointLabel': 'Waypoint'
 }
