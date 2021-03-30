@@ -52,6 +52,7 @@ export const Title = styled.div`
   text-overflow: ellipsis;
   padding: 2px 0;
   text-align: center;
+  font-weight: bold;
 `
 
 
