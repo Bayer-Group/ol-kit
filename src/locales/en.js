@@ -11,6 +11,10 @@ export default {
   // ContextMenu
   '_ol_kit_.ContextMenuCoords.lat': 'latitude',
   '_ol_kit_.ContextMenuCoords.long': 'longitude',
+  // HeatmapControls
+  '_ol_kit.HeatmapControls.blur': 'Blur size',
+  '_ol_kit.HeatmapControls.radius': 'Radius size',
+  '_ol_kit.HeatmapControls.title': 'Heatmap Controls',
   // LayerPanel
   '_ol_kit.LayerPanelActions.kml': 'Export KML',
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',
@@ -70,6 +74,10 @@ export default {
   '_ol_kit.PopupDefaultPage.details': 'Details',
   // Popup Actions
   '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy Geometry as Coordinates',
+  '_ol_kit.PopupActionGoogleMaps.navigateGoogleMaps': 'View location in Google Maps',
+  '_ol_kit.PopupActionRemove.title': 'Remove Feature',
+  '_ol_kit.PopupActionDuplicate.alert': 'Shape duplicated!',
+  '_ol_kit.PopupActionDuplicate.title': 'Duplicate Shape',
   // TimeSliderBase
   '_ol_kit_.TimeSliderBase.dateRange': 'Date Range',
   '_ol_kit_.TimeSliderBase.next': 'Next >',
@@ -102,5 +110,9 @@ export default {
   '_ol_kit.settings.coordinateLabels.description': '',
   '_ol_kit.settings.snapping.title': 'Vertex Snapping',
   '_ol_kit.settings.snapping.description': 'Vertex snapping connects two vertices while drawing and editing features when they are within the specified pixel tolerance.',
-  '_ol_kit.settings.turnOnOff': 'Turn on/off'
+  '_ol_kit.settings.turnOnOff': 'Turn on/off',
+  // Google Directions
+  '_ol_kit.directions.placeOriginPoint': 'Place a point at your origin',
+  '_ol_kit.directions.placeWaypoint': 'Now place a point to add a destination and click finish when you\'re done:',
+  '_ol_kit.directions.waypointLabel': 'Waypoint'
 }

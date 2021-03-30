@@ -18,7 +18,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
         [33mclass[39m=[32m\\"sc-gtssRu fBppYk\\"[39m
         [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
         [33mtarget[39m=[32m\\"_blank\\"[39m
-        [33mtitle[39m=[32m\\"Powered by ol-kit v1.5.0\\"[39m
+        [33mtitle[39m=[32m\\"Powered by ol-kit v1.7.0\\"[39m
       [36m>[39m
         [36m<svg[39m
           [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
@@ -63,18 +63,18 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
     [36m</div>[39m
   [36m</div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-eCApGN kpkDGM\\"[39m
+    [33mclass[39m=[32m\\"sc-gKAblj qioHn\\"[39m
   [36m>[39m
     [36m<div>[39m
       [36m<div[39m
-        [33mclass[39m=[32m\\"sc-iCoHVE ghVwUy\\"[39m
+        [33mclass[39m=[32m\\"sc-pNWxx eghRuN\\"[39m
       [36m>[39m
         [36m<div[39m
-          [33mclass[39m=[32m\\"sc-fujyUd fSNpKS\\"[39m
+          [33mclass[39m=[32m\\"sc-jrsJCI gBTtMU\\"[39m
           [33mid[39m=[32m\\"_POINT_LABELS_ENABLED\\"[39m
         [36m>[39m
           [36m<label[39m
-            [33mclass[39m=[32m\\"sc-pNWxx kryAYs\\"[39m
+            [33mclass[39m=[32m\\"sc-kEqYlL dlkeav\\"[39m
             [33mfor[39m=[32m\\"_POINT_LABELS_ENABLED\\"[39m
           [36m>[39m
             [0mCoordinate Labels[0m
@@ -119,10 +119,10 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
           [33mstyle[39m=[32m\\"width: 100%;\\"[39m
         [36m>[39m
           [36m<div[39m
-            [33mclass[39m=[32m\\"sc-iCoHVE ghVwUy\\"[39m
+            [33mclass[39m=[32m\\"sc-pNWxx eghRuN\\"[39m
           [36m>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"sc-fujyUd fSNpKS\\"[39m
+              [33mclass[39m=[32m\\"sc-jrsJCI gBTtMU\\"[39m
               [33mid[39m=[32m\\"_DISTANCE_LABEL_ENABLED\\"[39m
             [36m>[39m
               [36m<span[39m
@@ -155,7 +155,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"sc-jrsJCI cIQApe\\"[39m
+              [33mclass[39m=[32m\\"sc-iqAbSa eMfxro\\"[39m
             [36m>[39m
               [36m<span>[39m
                 [0mDistance: [0m
@@ -164,5 +164,5 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root Mui..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiIn..."
 `;

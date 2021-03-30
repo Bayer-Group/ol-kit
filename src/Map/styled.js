@@ -26,7 +26,9 @@ export const LogoText = styled.p`
   margin: 0px;
 `
 
-export const StyledMap = styled.div`
+export const StyledMap = styled.div.attrs(props => ({
+  id: props.id
+}))`
   height: 100%;
   width: 100%;
   position: ${p => p.fullScreen ? 'fixed' : 'relative'};

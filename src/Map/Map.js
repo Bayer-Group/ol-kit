@@ -34,7 +34,11 @@ class Map extends React.Component {
     this.passedMap = props.map
 
     // this is used to create a unique identifier for the map div
-    this.target = `_ol_kit_map_${nanoid(6)}`
+    this.target = props.id || `_ol_kit_map_${nanoid(6)}`
+    if (this.passedMap) {
+      // override target with openlayers map DOM target
+      this.target = this.passedMap.getTarget()
+    }
   }
 
   componentDidMount () {
@@ -65,6 +69,10 @@ class Map extends React.Component {
 
     // if no map was passed, create the map
     this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
+
+    if (this.passedMap && !this.passedMap.getTargetElement()) {
+      ugh.warn('A `map` prop has been passed to `<Map>` but the openlayers map has not been mounted to the DOM!')
+    }
 
     // setup select interactions for the map
     this.initializeSelect(this.map)
@@ -152,6 +160,7 @@ Map.defaultProps = {
   addMapToContext: () => {},
   fullScreen: false,
   logoPosition: 'right',
+  isMultiMap: false,
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,
@@ -173,6 +182,10 @@ Map.propTypes = {
   ]),
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
+  /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */
+  id: PropTypes.string,
+  /** flag passed for <MultiMapManager> to recognize when <Map> is in multi-map mode */
+  isMultiMap: PropTypes.bool,
   /** place the ol-kit logo on the 'left', 'right', or set to 'none' to hide */
   logoPosition: PropTypes.string,
   /** optionally pass a custom map */

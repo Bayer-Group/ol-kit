@@ -455,7 +455,7 @@ export function getStyledFeatures (layers, resolution) {
   return featureStyles
 }
 
-function getVertices (feature, resolution) {
+export function getVertices (feature, resolution) {
   const geometry = feature.getGeometry()
 
   switch (geometry.getType()) {
@@ -478,7 +478,7 @@ function getVertices (feature, resolution) {
   }
 }
 
-function pointsFromVertices (geometry) {
+export function pointsFromVertices (geometry) {
   const featureType = geometry.getType()
   const coordinates = getCoordinates(geometry, true)
 

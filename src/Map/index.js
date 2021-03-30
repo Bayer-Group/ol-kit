@@ -4,4 +4,6 @@
 */
 
 export { default as Map } from './_Map'
+export { default as MapLogo } from './MapLogo'
+export * from './styled'
 export * from './utils'
