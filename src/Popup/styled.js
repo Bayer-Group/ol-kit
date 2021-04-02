@@ -1,16 +1,40 @@
 import styled from 'styled-components'
 
 const positionContainer = (arrowDirection, [x, y], width, height) => {
+  const safeHeight = safeDimension(height)
+  const safeWidth = safeDimension(width)
+
   if (arrowDirection === 'top') {
-    return { top: y + 16, left: x - width / 2 }
+    return { top: y + 16, left: x - safeWidth / 2 }
   } else if (arrowDirection === 'right') {
-    return { top: y - height / 2, left: x - width - 16 }
+    return { top: y - safeHeight / 2, left: x - safeWidth - 16 }
   } else if (arrowDirection === 'bottom') {
-    return { top: y - height - 16, left: x - width / 2 }
+    return { top: y - safeHeight - 16, left: x - safeWidth / 2 }
   } else if (arrowDirection === 'left') {
-    return { top: y - height / 2, left: x + 16 }
+    return { top: y - safeHeight / 2, left: x + 16 }
   } else {
     return { top: y, left: x }
+  }
+}
+
+const safeDimension = (input) => {
+  const parsedInput = parseFloat(input)
+  const safeInput = isNaN(parsedInput) ? 280 : parsedInput
+
+  return safeInput
+}
+
+const hasNumber = (input) => {
+  return !isNaN(parseFloat(input))
+}
+
+const appendPx = (input) => {
+  if (typeof input === 'number') {
+    return `${input}px`
+  } else if (typeof input === 'string' && hasNumber(input)) {
+    return input.endsWith('px') ? input : `${input}px`
+  } else {
+    return input
   }
 }
 
@@ -22,8 +46,8 @@ export const Container = styled.div`
   font-weight: 400;
   z-index: 99;
   opacity: ${p => p.transparent ? 0.8 : 1};
-  width: ${p => p.width}px;
-  height: ${p => p.height};
+  width: ${p => appendPx(p.width)};
+  height: ${p => appendPx(p.height)};
   left: ${({ arrow, height, pixel, width }) => positionContainer(arrow, pixel, width, height).left}px;
   top: ${({ arrow, height, pixel, width }) => positionContainer(arrow, pixel, width, height).top}px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
