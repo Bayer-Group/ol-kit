@@ -26,14 +26,15 @@ export async function createProject (map) {
       values[key] = layer.get(key)
     })
     const isVectorLayer = layer instanceof LayerVector || layer.isVectorLayer
-    const isBasemap = !!layer.get('_ol_kit_basemap')
 
     if (isVectorLayer && !layer.get('_ol_kit_data_source')) {
-      // this is a vector layer that was created within ol-kit...get the feature geometries
+      // this is a vector layer that was created within ol-kit; get the feature geometries
       const features = layer.getSource().getFeatures()
+
+      features.forEach(feature => feature.set('_ol_kit_parent', null))
       const geoJson = new olFormatGeoJSON().writeFeatures(features)
 
-      values['_ol_kit_project_geojson'] = geoJson
+      values._ol_kit_project_geojson = geoJson
     }
 
     return values
