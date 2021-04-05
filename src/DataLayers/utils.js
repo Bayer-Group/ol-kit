@@ -96,6 +96,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
 
   // set attribute for LayerPanel title
   layer.set('title', 'Data Layer')
+  layer.set('_ol_kit_data_source', query)
 
   source.addFeatures(features)
 
