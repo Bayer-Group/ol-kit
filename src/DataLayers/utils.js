@@ -30,7 +30,7 @@ const getFeaturesFromDataSet = (map, dataSet) => {
   return []
 }
 
-const isValidUrl = string => {
+const urlValidator = string => {
   try {
     new URL(string) // eslint-disable-line no-new
   } catch (_) {
@@ -50,17 +50,19 @@ const isValidUrl = string => {
  * @param {Object} [opts] - Object of optional params
  * @param {Boolean} [opts.addToMap] - opt out of adding the layer to the map (default true)
  * @param {String} [opts.style] - style object used to apply styles to the layer
+ * @param {String} [opts.title] - set custom title on layer (default: "Data Layer")
  * @returns {ol.Layer} Promise that resolves with the newly created data layer
  */
 export const loadDataLayer = async (map, query, optsArg = {}) => {
   if (!(map instanceof Map)) return ugh.throw('\'loadDataLayer\' requires a valid openlayers map as the first argument')
   const style = { fill: { color: '#fefefe91' }, stroke: { color: '#3399cd', width: 2 }, ...optsArg.style }
-  const opts = { addToMap: true, ...optsArg }
+  const opts = { addToMap: true, title: 'Data Layer', ...optsArg }
 
   // getFeaturesFromDataSet returns empty array if query arg is not a supported data type (ex. url)
   let features = getFeaturesFromDataSet(map, query)
+  const isValidUrl = urlValidator(query)
 
-  if (!features.length && isValidUrl(query)) {
+  if (!features.length && isValidUrl) {
     // query is an endpoint to fetch valid data set
     let response
 
@@ -95,9 +97,10 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
   const layer = new VectorLayer({ source })
 
   // set attribute for LayerPanel title
-  layer.set('title', 'Data Layer')
-  layer.set('_ol_kit_data_source', query)
+  layer.set('title', opts.title)
+  if (isValidUrl) layer.set('_ol_kit_data_source', query)
 
+  features.forEach(feature => feature.set('_ol_kit_parent', layer))
   source.addFeatures(features)
 
   // style based on opts
@@ -113,7 +116,7 @@ export const loadDataLayer = async (map, query, optsArg = {}) => {
     })
   )
 
-  // conditinally add this new layer to the map
+  // conditionally add this new layer to the map
   if (opts.addToMap) map.addLayer(layer)
 
   return layer

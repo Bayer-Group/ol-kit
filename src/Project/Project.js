@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connectToContext } from 'Provider'
 import { ProjectMenuContainer } from './styled'
-import { createProject } from './utils'
+import { createProject, loadProject } from './utils'
 
 /** A project save/load component
  * @component
@@ -15,12 +15,26 @@ class ProjectMenu extends React.Component {
 
     const projectFile = await createProject(map)
     // download the project file to local machine
-    const dataString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(projectFile))}`
+    const dataString = `data:text/jsoncharset=utf-8,${encodeURIComponent(JSON.stringify(projectFile))}`
     const downloadAnchorElement = document.getElementById('_ol_kit_project_download_anchor')
 
     downloadAnchorElement.setAttribute('href', dataString)
-    downloadAnchorElement.setAttribute('download', 'ol_kit_project.json')
+    downloadAnchorElement.setAttribute('download', 'ol_kit_project.olkproj')
     downloadAnchorElement.click()
+  }
+
+  onLoadProject = async () => {
+    const { map } = this.props
+    const upload = document.getElementById('myFile')
+    const reader = new FileReader()
+
+    reader.addEventListener('load', e => {
+      const data = e.target.result
+      const project = JSON.parse(data)
+
+      loadProject(map, project)
+    })
+    reader.readAsBinaryString(upload.files[0])
   }
 
   render () {
@@ -28,6 +42,7 @@ class ProjectMenu extends React.Component {
       <ProjectMenuContainer>
         <a id='_ol_kit_project_download_anchor' style={{ display: 'none' }}></a>
         <button id='_ol_kit_create_project' onClick={this.onCreateProject}>Create a project</button>
+        <input type='file' id='myFile' accept='.olkproj' onChange={this.onLoadProject} />
       </ProjectMenuContainer>
     )
   }
