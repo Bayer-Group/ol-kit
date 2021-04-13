@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connectToContext } from 'Provider'
-import { ProjectMenuContainer } from './styled'
+import { MiniContainer, MiniHeader, ProjectMenuContainer } from './styled'
 import { createProject, loadProject } from './utils'
 
 /** A project save/load component
@@ -41,8 +41,14 @@ class ProjectMenu extends React.Component {
     return (
       <ProjectMenuContainer>
         <a id='_ol_kit_project_download_anchor' style={{ display: 'none' }}></a>
-        <button id='_ol_kit_create_project' onClick={this.onCreateProject}>Create a project</button>
-        <input type='file' id='myFile' accept='.olkproj' onChange={this.onLoadProject} />
+        <MiniContainer>
+          <MiniHeader>Save this map as a project:</MiniHeader>
+          <button id='_ol_kit_create_project' onClick={this.onCreateProject}>Download Project File</button>
+        </MiniContainer>
+        <MiniContainer>
+          <MiniHeader>Load a map from a project file:</MiniHeader>
+          <input type='file' id='myFile' accept='.olkproj' onChange={this.onLoadProject} />
+        </MiniContainer>
       </ProjectMenuContainer>
     )
   }

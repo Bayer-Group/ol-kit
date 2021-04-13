@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { ProjectMenu } from '@bayer/ol-kit'
 
 const Description = styled.p`
   line-height: 1.5rem;
@@ -23,7 +24,7 @@ export default function Welcome ({ desc = 'There\'s a lot you can do with ol-kit
   return (
     <div style={{margin: '20px', fontFamily: 'sans-serif'}}>
       <Description>{desc}</Description>
-      <h3>Other Demos</h3>
+      <h3>Demos</h3>
       <GridWrapper>
         <Link to='/'>
           <NavLink>
@@ -51,6 +52,8 @@ export default function Welcome ({ desc = 'There\'s a lot you can do with ol-kit
           </NavLink>
         </Link>
       </GridWrapper>
+      <h3>Project</h3>
+      <ProjectMenu />
     </div>
   )
 }

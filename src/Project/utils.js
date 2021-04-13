@@ -1,14 +1,8 @@
 import Map from 'ol/Map'
 import LayerVector from 'ol/layer/Vector'
 import GeoJSON from 'ol/format/GeoJSON'
-import olVectorSource from 'ol/source/Vector'
-import olStyle from 'ol/style/Style'
-import olCircleStyle from 'ol/style/Circle'
-import olFill from 'ol/style/Fill'
-import olStroke from 'ol/style/Stroke'
-
 import { loadDataLayer } from 'DataLayers'
-import { VectorLayer } from 'classes'
+import { loadBasemapLayer } from 'Basemaps'
 import ugh from 'ugh'
 import { version } from '../../package.json'
 
@@ -25,13 +19,15 @@ export async function createProject (map) {
 
   const rawLayers = map.getLayers().getArray()
   const layers = rawLayers.map(layer => {
-    // some key/values are too large to store in the project file metadata
-    const keysBlacklist = ['source']
-    const keys = layer.getKeys().filter(key => !keysBlacklist.includes(key))
+    const keys = layer.getKeys()
     const values = {}
 
     keys.forEach(key => {
-      values[key] = layer.get(key)
+      const value = layer.get(key)
+      // some key/values are too large to store in the project file metadata
+      const safeValueCheck = key => (typeof key === 'string' || typeof key === 'boolean' || typeof key === 'number')
+
+      if (safeValueCheck(value)) values[key] = value
     })
     const isVectorLayer = layer instanceof LayerVector || layer.isVectorLayer
 
@@ -61,35 +57,34 @@ export async function createProject (map) {
  * @category Project
  * @since 1.9.0
  * @param {Map} - a reference to openlayers map
- * @param {File} - a JSON file in ol-kit project format
+ * @param {File} - a JSON file in .olkprj format
  */
 export async function loadProject (map, project) {
   if (!(map instanceof Map)) return ugh.throw('\'loadProject\' requires a valid openlayers map as the first argument')
 
-  const layers = project.layers.map(layerData => {
+  // clear old layers from current map
+  map.getLayers().getArray().forEach(layer => map.removeLayer(layer))
+
+  project.layers.forEach(layerData => {
     const opts = {
       title: layerData.title
     }
 
-    console.log(layerData)
-    if (layerData?._ol_kit_project_geojson) {
+    if (layerData?._ol_kit_basemap) {
+      // set the basemap
+      loadBasemapLayer(map, layerData._ol_kit_basemap)
+    } else if (layerData?._ol_kit_project_geojson) {
       // create layer based off geometries
       const geoJson = new GeoJSON()
       const features = geoJson.readFeatures(layerData._ol_kit_project_geojson)
       const geoJsonFile = geoJson.writeFeaturesObject(features)
-      console.log(geoJsonFile)
 
       loadDataLayer(map, geoJsonFile, opts)
     } else if (layerData?._ol_kit_data_source) {
       // fetch the external
       loadDataLayer(map, layerData._ol_kit_data_source, opts)
-    } else if (layerData?._ol_kit_basemap) {
-      // set the basemap
-      const basemapLayer = map.getLayers().getArray().find(l => !!l.get('_ol_kit_basemap'))
-
-      console.log('basemap layer', basemapLayer)
     } else {
-      console.log('ruh roh!')
+      ugh.error(`Layer (title: ${layerData.title}) failed to load from project file!`)
     }
   })
 }

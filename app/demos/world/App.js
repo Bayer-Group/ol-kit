@@ -9,7 +9,6 @@ import {
   LayerStyler,
   LayerPanelLayersPage,
   TabbedPanelPage,
-  ProjectMenu,
   BasemapContainer,
   VectorLayer,
   DrawContainer,
@@ -66,7 +65,6 @@ class App extends React.Component {
         <ContextMenu />
         <Controls />
         <BasemapContainer />
-        <ProjectMenu />
       </Map>
     )
   }
