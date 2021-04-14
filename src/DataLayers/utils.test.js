@@ -33,8 +33,8 @@ describe('loadDataLayer', () => {
     expect(layers[1]).toBe(dataLayer)
     // 52 us states/territories
     expect(layers[1].getSource().getFeatures().length).toBe(52)
-    // properties should be passed to features (there are 6 from the geoJson)
-    expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(6)
+    // properties should be passed to features (there are 6 from the geoJson, +1 _ol_kit_parent)
+    expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(7)
     // get missouri feature
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
@@ -54,8 +54,8 @@ describe('loadDataLayer', () => {
     expect(layers[0]).not.toBe(dataLayer)
     // 52 us states/territories
     expect(dataLayer.getSource().getFeatures().length).toBe(52)
-    // properties should be passed to features (there are 6 from the geoJson)
-    expect(Object.keys(dataLayer.getSource().getFeatures()[0].getProperties()).length).toBe(6)
+    // properties should be passed to features (there are 6 from the geoJson, +1 _ol_kit_parent)
+    expect(Object.keys(dataLayer.getSource().getFeatures()[0].getProperties()).length).toBe(7)
     // get missouri feature
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
@@ -80,8 +80,8 @@ describe('loadDataLayer', () => {
     expect(layers[1]).toBe(dataLayer)
     // 52 us states/territories
     expect(layers[1].getSource().getFeatures().length).toBe(52)
-    // properties should be passed to features (there are 6 from the geoJson)
-    expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(6)
+    // properties should be passed to features (there are 6 from the geoJson, +1 _ol_kit_parent)
+    expect(Object.keys(layers[1].getSource().getFeatures()[0].getProperties()).length).toBe(7)
     // get missouri feature
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD).length).toBe(1)
     expect(dataLayer.getSource().getFeaturesAtCoordinate(STL_COORD)[0].get('NAME')).toBe('Missouri')
