@@ -42,8 +42,8 @@ class ProjectMenu extends React.Component {
       <ProjectMenuContainer>
         <a id='_ol_kit_project_download_anchor' style={{ display: 'none' }}></a>
         <MiniContainer>
-          <MiniHeader>Save this map as a project:</MiniHeader>
-          <button id='_ol_kit_create_project' onClick={this.onCreateProject}>Download Project File</button>
+          <MiniHeader>Save this map as an ol-kit project file:</MiniHeader>
+          <button id='_ol_kit_create_project' onClick={this.onCreateProject}>Save Project</button>
         </MiniContainer>
         <MiniContainer>
           <MiniHeader>Load a map from a project file:</MiniHeader>
