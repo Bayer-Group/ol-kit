@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | Project/utils.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToContext.html">connectToContext</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFileToFeatures">convertFileToFeatures</a></li><li><a href="global.html#convertFileToLayer">convertFileToLayer</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#loadBasemapLayer">loadBasemapLayer</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li><li><a href="VectorTileLayer.html">VectorTileLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>Draw</h2><h3>Components</h3><ul><li><a href="Draw.html">Draw</a></li><li><a href="DrawBox.html">DrawBox</a></li><li><a href="DrawCircle.html">DrawCircle</a></li><li><a href="DrawContainer.html">DrawContainer</a></li><li><a href="DrawFreehand.html">DrawFreehand</a></li><li><a href="DrawLine.html">DrawLine</a></li><li><a href="DrawPin.html">DrawPin</a></li><li><a href="DrawPoint.html">DrawPoint</a></li><li><a href="DrawPolygon.html">DrawPolygon</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#getStyledFeatures">getStyledFeatures</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>GoogleDirections</h2><h3>Components</h3><ul><li><a href="GoogleDirections.html">GoogleDirections</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>Heatmap</h2><h3>Components</h3><ul><li><a href="HeatmapControls.html">HeatmapControls</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>MultiMap</h2><h3>Components</h3><ul><li><a href="MultiMapManager.html">MultiMapManager</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#syncViewEvents">syncViewEvents</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupActionLink.html">PopupActionLink</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>PopupActionGoogleMaps</h2><h3>Components</h3><ul><li><a href="PopupActionGoogleMaps.html">PopupActionGoogleMaps</a></li></ul></div><div class="category"><h2>Project</h2><h3>Components</h3><ul><li><a href="ProjectMenu.html">ProjectMenu</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#createProject">createProject</a></li><li><a href="global.html#loadProject">loadProject</a></li></ul></div><div class="category"><h2>Provider</h2><h3>Utils</h3><ul><li><a href="global.html#connectToContext">connectToContext</a></li></ul></div><div class="category"><h2>TabbedPanel</h2><h3>Components</h3><ul><li><a href="TabbedPanel.html">TabbedPanel</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Map from 'ol/Map'
+import LayerVector from 'ol/layer/Vector'
+import GeoJSON from 'ol/format/GeoJSON'
+import { loadDataLayer } from 'DataLayers'
+import { loadBasemapLayer } from 'Basemaps'
+import { transform } from 'ol/proj'
+import { centerAndZoom } from 'Map'
+import ugh from 'ugh'
+import { version } from '../../package.json'
+
+const readOpts = { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' }
+
+/**
+ * A utility that takes map state and outputs it as a project file
+ * @function
+ * @category Project
+ * @since 1.9.0
+ * @param {Map} - a reference to openlayers map
+ * @returns {object} - object in ol-kit project format
+ */
+export async function createProject (map) {
+  if (!(map instanceof Map)) return ugh.throw('\'createProject\' requires a valid openlayers map as the first argument')
+
+  const rawLayers = map.getLayers().getArray()
+  const layers = rawLayers.map(layer => {
+    const keys = layer.getKeys()
+    const values = {}
+
+    keys.forEach(key => {
+      const value = layer.get(key)
+      // some key/values are too large to store in the project file metadata
+      const safeValueCheck = key => (typeof key === 'string' || typeof key === 'boolean' || typeof key === 'number')
+
+      if (safeValueCheck(value)) values[key] = value
+    })
+    const isVectorLayer = layer instanceof LayerVector || layer.isVectorLayer
+
+    if (isVectorLayer &amp;&amp; !layer.get('_ol_kit_data_source')) {
+      // this is a vector layer that was created within ol-kit; get the feature geometries
+      const features = layer.getSource().getFeatures()
+
+      features.forEach(feature => feature.set('_ol_kit_parent', null))
+      const geoJson = new GeoJSON({ featureProjection: 'EPSG:3857' }).writeFeatures(features)
+
+      values._ol_kit_project_geojson = geoJson
+    }
+
+    return values
+  })
+  const coords = transform(map.getView().getCenter(), map.getView().getProjection().getCode(), 'EPSG:4326')
+  const x = parseFloat(coords[0]).toFixed(6)
+  const y = parseFloat(coords[1]).toFixed(6)
+  const zoom = parseFloat(map.getView().getZoom()).toFixed(2)
+  const rotation = parseFloat(map.getView().getRotation()).toFixed(2)
+  const outputFile = {
+    version,
+    layers,
+    view: {
+      x,
+      y,
+      zoom,
+      rotation
+    }
+  }
+
+  return outputFile
+}
+
+/**
+ * A utility that accepts an ol-kit project file and updates the map state
+ * @function
+ * @category Project
+ * @since 1.9.0
+ * @param {Map} - a reference to openlayers map
+ * @returns {object} - object in ol-kit project format
+ */
+export async function loadProject (map, project) {
+  if (!(map instanceof Map)) return ugh.throw('\'loadProject\' requires a valid openlayers map as the first argument')
+
+  // clear old layers from current map
+  map.getLayers().getArray().forEach(layer => map.removeLayer(layer))
+
+  const { layers, view } = project
+
+  layers.forEach(layerData => {
+    const opts = {
+      title: layerData.title
+    }
+
+    if (layerData?._ol_kit_basemap) {
+      // set the basemap
+      loadBasemapLayer(map, layerData._ol_kit_basemap)
+    } else if (layerData?._ol_kit_project_geojson) {
+      // create layer based off geometries
+      const geoJson = new GeoJSON()
+      const features = geoJson.readFeatures(layerData._ol_kit_project_geojson, readOpts)
+      const geoJsonFile = geoJson.writeFeaturesObject(features, { featureProjection: 'EPSG:3857' })
+
+      loadDataLayer(map, geoJsonFile, opts)
+    } else if (layerData?._ol_kit_data_source) {
+      // fetch the external
+      loadDataLayer(map, layerData._ol_kit_data_source, opts)
+    } else {
+      ugh.error(`Layer (title: ${layerData.title}) failed to load from project file!`)
+    }
+  })
+
+  // load view from project
+  const { rotation, x, y, zoom } = view
+
+  centerAndZoom(map, { x, y, zoom })
+  map.getView().animate({
+    rotation,
+    duration: 0
+  })
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
