@@ -7,6 +7,14 @@ import olSourceOSM from 'ol/source/OSM'
 import olSourceStamen from 'ol/source/Stamen'
 import ugh from 'ugh'
 
+/**
+ * A utility that takes a string identifier and updates the basemap
+ * @function
+ * @category Basemap
+ * @since 1.9.0
+ * @param {Map} - a reference to openlayers map
+ * @param {basemapIdentifier} - string identifier to update the basemap
+ */
 export function loadBasemapLayer (map, basemapIdentifier) {
   if (!(map instanceof Map)) return ugh.throw('\'loadBasemapLayer\' requires a valid openlayers map as the first argument')
 

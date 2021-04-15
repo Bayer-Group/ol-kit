@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | classes/VectorLayer.js</title>
+    <title>ol-kit | Basemaps/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,190 +80,128 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import nanoid from 'nanoid'
+            <pre class="prettyprint source linenums"><code>import Map from 'ol/Map'
 import olLayerVector from 'ol/layer/Vector'
-import OpenLayersParser from 'geostyler-openlayers-parser'
-import olStyleStyle from 'ol/style/Style'
-import olStyleFill from 'ol/style/Fill'
-import olStyleStroke from 'ol/style/Stroke'
-import olStyleCircle from 'ol/style/Circle'
-import olGeomPoint from 'ol/geom/Point'
-import olGeomLinestring from 'ol/geom/LineString'
-import olGeomMultiPoint from 'ol/geom/MultiPoint'
-import olGeomMultiLinestring from 'ol/geom/MultiLineString'
+import olSourceVector from 'ol/source/Vector'
+import olLayerTile from 'ol/layer/Tile'
+import olSourceBingMaps from 'ol/source/BingMaps'
+import olSourceOSM from 'ol/source/OSM'
+import olSourceStamen from 'ol/source/Stamen'
+import ugh from 'ugh'
 
 /**
- * VectorLayer class extends olLayerVector {@link https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html}
+ * A utility that takes a string identifier and updates the basemap
  * @function
- * @category Classes
- * @since 0.1.0
- * @param {Object} [opts] - Object of optional params for olLayerVector
+ * @category Basemap
+ * @since 1.9.0
+ * @param {Map} - a reference to openlayers map
+ * @param {basemapIdentifier} - string identifier to update the basemap
  */
-class VectorLayer extends olLayerVector {
-  constructor (opts) {
-    if (!opts?.className) opts.className = `_ol_kit_vector_layer_${nanoid()}`
-    super(opts)
+export function loadBasemapLayer (map, basemapIdentifier) {
+  if (!(map instanceof Map)) return ugh.throw('\'loadBasemapLayer\' requires a valid openlayers map as the first argument')
 
-    this.parser = new OpenLayersParser()
-    this.userStyles = []
-    this.defaultStyles = []
-    this._defaultStylesCache = []
-    this.isVectorLayer = true
-    if (!opts?.style) this._setInitialStyle()
-    this.setDefaultVectorStyles()
+  const layerTypeID = '_ol_kit_basemap'
 
-    return this
-  }
+  let basemap
 
-  /**
-   * A function that returns the VectorLayers attributes
-   * @function
-   * @since 0.1.0
-   * @returns {Array} VectorLayer attributes
-   */
-  getAttributes () {
-    return Object.keys(this.getSource().getFeatures()[0].getProperties())
-  }
-
-  /**
-   * A function that returns the VectorLayers values of a specific attribute
-   * @function
-   * @since 0.1.0
-   * @param {String} - olFeature property
-   * @returns {Array} VectorLayer values of a specific attribute
-   */
-  fetchValuesForAttribute (attribute) {
-    const dupes = this.getSource().getFeatures().map(feature => feature.getProperties()[`${attribute}`])
-
-    return [...new Set(dupes)]
-  }
-
-  /**
-   * A function that sets custom styles from ManageLayer
-   * @function
-   * @since 0.1.0
-   * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
-   */
-  setUserVectorStyles (styles) {
-    this.userStyles = styles
-
-    this._applyVectorStyles()
-  }
-
-  /**
-   * A function that returns the VectorLayers custom user styles
-   * @function
-   * @since 0.1.0
-   * @returns {Object} Geostyler rules object
-   */
-  getUserVectorStyles () {
-    return this.userStyles
-  }
-
-  /**
-   * A function that sets default styles of a VectorLayer
-   * @function
-   * @since 0.1.0
-   */
-  setDefaultVectorStyles () {
-    return this.parser.readStyle(this.getStyleFunction()()).then(style => {
-      this._defaultStylesCache = style.rules
-      this.defaultStyles = style.rules
+  if (basemapIdentifier === 'blankWhite') {
+    basemap = new olLayerVector({
+      className: '_ol_kit_basemap_layer',
+      [layerTypeID]: basemapIdentifier,
+      source: new olSourceVector()
     })
-  }
-
-  /**
-   * A function that returns the VectorLayers default VectorLayer styles
-   * @function
-   * @since 0.1.0
-   * @returns {Object} Geostyler rules object
-   */
-  getDefaultVectorStyles () {
-    return this.defaultStyles
-  }
-
-  /**
-   * A function that updates default styles of a VectorLayer
-   * @function
-   * @since 0.1.0
-   * @param {Object} - Geostyler OpenLayers Parser rules object {@link https://github.com/geostyler/geostyler-openlayers-parser}
-   */
-  updateDefaultVectorStyles (styles) {
-    this.defaultStyles = styles
-
-    this._applyVectorStyles()
-  }
-
-  /**
-   * A function that resets default styles of a VectorLayer back to its original default
-   * @function
-   * @since 0.1.0
-   */
-  resetDefaultVectorStyles () {
-    this.defaultStyles = this._defaultStylesCache
-
-    this._applyVectorStyles()
-  }
-
-  _applyVectorStyles () {
-    const filteredUserStyles = this.getUserVectorStyles().filter(style => {
-      // do a safe check for the filter key
-      if (!Array.isArray(style.filter)) return true
-      const attributeValue = style.filter[1][2]
-
-      return attributeValue !== ''
+  } else if (basemapIdentifier === 'osm') {
+    const source = new olSourceOSM({
+      layer: 'osm',
+      cacheSize: 4096,
+      reprojectionErrorThreshold: 0,
+      crossOrigin: 'Anonymous'
     })
 
-    const style = {
-      name: this.get('title') || 'Custom Vector Style',
-      rules: [
-        ...this.getDefaultVectorStyles(),
-        ...filteredUserStyles
-      ]
-    }
+    basemap = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
+      preload: Infinity,
+      extent: undefined,
+      [layerTypeID]: 'osm',
+      source
+    })
+  } else if (basemapIdentifier === 'stamenTerrain') {
+    const source = new olSourceStamen({
+      layer: 'terrain',
+      url: 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',
+      maxZoom: 18,
+      cacheSize: 4096
+    })
 
-    return this.parser
-      .writeStyle(style)
-      .then(olStyle => {
-        // update the sld_body which is what geoserver uses to style the layer
-        this.setStyle(olStyle)
-      })
+    basemap = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
+      preload: Infinity,
+      extent: undefined,
+      [layerTypeID]: 'stamenTerrain',
+      source
+    })
+  } else if (basemapIdentifier === 'stamenTonerDark') {
+    const source = new olSourceStamen({
+      layer: 'toner',
+      url: 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+      maxZoom: 18,
+      cacheSize: 40
+    })
+
+    basemap = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
+      preload: Infinity,
+      extent: undefined,
+      [layerTypeID]: 'stamenTonerDark', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
+      source
+    })
+  } else if (basemapIdentifier === 'stamenTonerLite') {
+    const source = new olSourceStamen({
+      layer: 'toner-lite',
+      url: 'https://stamen-tiles-{a-d}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png',
+      maxZoom: 18,
+      cacheSize: 4096
+    })
+
+    basemap = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
+      preload: Infinity,
+      extent: undefined,
+      [layerTypeID]: 'stamenTonerLite', // make sure we can identify this layer as a layer that has been created from the ol-kit basemap component.
+      source
+    })
+  } else if (basemapIdentifier === 'bingAerial') {
+    const DEFAULT_OPTS = {
+      thumbnail: '',
+      culture: 'en-us',
+      imagerySet: 'Aerial',
+      hidpi: false,
+      cacheSize: 4096,
+      maxZoom: 19,
+      reprojectionErrorThreshold: 0,
+      wrapX: true
+    }
+    const source = new olSourceBingMaps(DEFAULT_OPTS)
+
+    basemap = new olLayerTile({
+      className: '_ol_kit_basemap_layer',
+      [layerTypeID]: 'bingAerial',
+      source
+    })
+  } else {
+    ugh.throw(`${basemapIdentifier} is not a valid basemap type!`)
   }
 
-  _setInitialStyle () {
-    let style = {}
-    const hasFeatures = this.getSource().getFeatures().length
-    const geomType = hasFeatures ? this.getSource().getFeatures()[0].getGeometry() : null
+  const layers = map.getLayers()
+  const hasBasemap = layers?.getArray()?.length ? layers.getArray()[0].get(layerTypeID) : false
 
-    if (geomType instanceof olGeomPoint || geomType instanceof olGeomMultiPoint) {
-      style = [new olStyleStyle({
-        image: new olStyleCircle({
-          fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
-          stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
-          radius: 5
-        })
-      })]
-    } else if (geomType instanceof olGeomLinestring || geomType instanceof olGeomMultiLinestring) {
-      style = [new olStyleStyle({
-        stroke: new olStyleStroke({ color: '#3399CC', width: 2 })
-      })]
-    } else {
-      style = [new olStyleStyle({
-        image: new olStyleCircle({
-          fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
-          stroke: new olStyleStroke({ color: '#3399CC', width: 2 }),
-          radius: 5
-        }),
-        fill: new olStyleFill({ color: 'rgba(255,255,255,0.4)' }),
-        stroke: new olStyleStroke({ color: '#3399CC', width: 2 })
-      })]
-    }
-
-    this.setStyle(() => style)
+  if (hasBasemap) {
+    layers.setAt(0, basemap)
+  } else {
+    layers.insertAt(0, basemap)
   }
+  layers.changed() // ol.Collection insertAt and setAt do not trigger a change event so we fire one manually so that we can rerender to display the active and inactive BasemapOptions
 }
-
-export default VectorLayer
 </code></pre>
         </article>
     </section>
