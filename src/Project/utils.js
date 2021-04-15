@@ -16,7 +16,7 @@ const readOpts = { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' }
  * @category Project
  * @since 1.9.0
  * @param {Map} - a reference to openlayers map
- * @returns {File} - a JSON file in ol-kit project format
+ * @returns {object} - object in ol-kit project format
  */
 export async function createProject (map) {
   if (!(map instanceof Map)) return ugh.throw('\'createProject\' requires a valid openlayers map as the first argument')
@@ -72,7 +72,7 @@ export async function createProject (map) {
  * @category Project
  * @since 1.9.0
  * @param {Map} - a reference to openlayers map
- * @param {File} - a JSON file in .olkprj format
+ * @returns {object} - object in ol-kit project format
  */
 export async function loadProject (map, project) {
   if (!(map instanceof Map)) return ugh.throw('\'loadProject\' requires a valid openlayers map as the first argument')
