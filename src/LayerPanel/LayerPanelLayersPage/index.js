@@ -329,25 +329,18 @@ class LayerPanelLayersPage extends Component {
       let finished = false
       // if a callback to handle imported features is passed, IAs handle add them to the map
       if (onFileImport) {
-        while (!finished) {
-          const { value, done } = features.next()
-
-          finished = done
-          onFileImport(value.features, `${name}/${value.fileName}`)
-        }
-
+        features.forEach(({ featureArray, fileName }) => {
+          onFileImport(featureArray, `${name}(${fileName})`)
+        })
       // if no onFileImport prop is passed, create a layer, add it and center/zoom the map
       } else {
-        while (!finished) {
-          const { value, done } = features.next()
-
-          finished = done
-          const source = new olSourceVector({ features: value.features })
-          const layer = new VectorLayer({ title: `${name}/${value.fileName}`, source })
+        features.forEach(({ featureArray, fileName }) => {
+          const source = new olSourceVector({ features: featureArray })
+          const layer = new VectorLayer({ title: `${name}(${fileName})`, source })
 
           map.addLayer(layer)
           map.getView().fit(source.getExtent(), map.getSize())
-        }
+        })
       }
     }).catch(ugh.error)
   }
