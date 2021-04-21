@@ -326,7 +326,6 @@ class LayerPanelLayersPage extends Component {
 
     // otherwise, add them to the map ourselves
     convertFileToFeatures(file, map).then(({ features, name }) => {
-      let finished = false
       // if a callback to handle imported features is passed, IAs handle add them to the map
       if (onFileImport) {
         features.forEach(({ featureArray, fileName }) => {
