@@ -55,9 +55,7 @@ class DrawContainer extends React.Component {
     this.handleToggle = this.handleToggle.bind(this)
   }
 
-  safeGetPreference = (key) => {
-    return this.props.preferences?.payload?.get?.(key)
-  }
+  safeGetPreference = (key) => this.props.preferences?.payload?.get?.(key)
 
   getUoms = () => {
     const uom = this.safeGetPreference('_UOM') || 'imperial'
