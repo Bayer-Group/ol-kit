@@ -18,7 +18,7 @@ class MockPreferences {
   }
 
   get (key) {
-    const value = localStorage.getItem([key]) || this.state[key]
+    const value = localStorage.getItem(key) || this.state[key]
 
     // checking to see if the localstorage value is 'true' or 'false' so we can cast to an actual bool
     if (value === 'true' || value === 'false') {
@@ -29,7 +29,7 @@ class MockPreferences {
   }
 
   async put (key, val) {
-    localStorage.setItem([key], val)
+    localStorage.setItem(key, val)
     this.state = { ...this.state, [key]: val }
 
     return val
