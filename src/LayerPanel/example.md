@@ -93,7 +93,7 @@ return (
         {layerFilter(layers).filter((layer) => {
           const filteredFeatures = this.getFeaturesForLayer(layer)
 
-          return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures.length
+          return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures?.length
         }).sort(this.zIndexSort).map((layer, i) => {
           const features = this.getFeaturesForLayer(layer)
 
