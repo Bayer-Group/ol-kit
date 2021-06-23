@@ -43,7 +43,6 @@ class PopupDefaultPage extends Component {
       currentPage,
       onClose,
       onSettingsClick,
-      showCustomizeDetails,
       subtitle
     } = this.props
 
