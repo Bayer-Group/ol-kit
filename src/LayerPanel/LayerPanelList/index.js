@@ -31,7 +31,6 @@ const applyDrag = (arr, dragResult) => {
  * @since 0.5.0
  */
 class LayerPanelList extends Component {
-
   handleDrop = e => {
     const { onSort, onReorderedItems, items, onLayerReorder } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
@@ -71,8 +70,8 @@ class LayerPanelList extends Component {
 
     do {
       if (dropNode.className === 'draggable') {
-        const removedIndex = this.dragTarget.id.split('_')[0]
-        const addedIndex = this.displaced.id.split('_')[0]
+        const removedIndex = parseInt(this.dragTarget.id.split('_')[0]) - 1
+        const addedIndex = parseInt(this.displaced.id.split('_')[0]) - 1
         const payload = this.dragTarget
 
         this.handleDrop({ ...e, removedIndex, addedIndex, payload })
@@ -93,7 +92,6 @@ class LayerPanelList extends Component {
         <List>
           <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd} >
             {React.Children.map(this.props.children, (child, i) => {
-
               const id = `${i}_${nanoid(6)}`
 
               return (

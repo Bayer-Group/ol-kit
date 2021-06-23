@@ -96,11 +96,14 @@ class LayerPanelLayersPage extends Component {
     if (disableHover) return
     // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
     this.selectInteraction.getFeatures().clear()
-    features.forEach(feature => {
-      if (feature.get('_ol_kit_feature_visibility')) {
-        this.selectInteraction.getFeatures().push(feature)
-      }
-    })
+
+    if (features) {
+      features.forEach(feature => {
+        if (feature.get('_ol_kit_feature_visibility')) {
+          this.selectInteraction.getFeatures().push(feature)
+        }
+      })
+    }
   }
 
   componentDidMount = () => {
@@ -396,17 +399,18 @@ class LayerPanelLayersPage extends Component {
                 </LayerPanelActions>
               </ListItemSecondaryAction>
             </LayerPanelListItem>
-            {layerFilter(layers).map((layer, i) => {
+            {layerFilter(layers).filter((layer) => {
+              const filteredFeatures = this.getFeaturesForLayer(layer)
+
+              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures.length
+            }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
-              const layerCheckboxState = !layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()
-              const showLayer = !enableFilter || !(layer instanceof olLayerVector) ||
-                this.props.shouldHideFeatures(layer) ? true : features.length
 
               return (
-                <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])} style={{ display: showLayer ? 'block' : 'none' }}>
+                <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
-                      checkboxState={layerCheckboxState}
+                      checkboxState={!layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()}
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
