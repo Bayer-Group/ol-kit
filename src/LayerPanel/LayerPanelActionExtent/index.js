@@ -39,7 +39,7 @@ class LayerPanelActionExtent extends Component {
 
     return (
       <MenuItem data-testid='LayerPanelAction.extent' key={'zoom'} onClick={() => this.gotoLayerExtent(layer)}>
-        {translations['_ol_kit.actions.zoomToExtent'] || 'Zoom to Layer Extent'}
+        {translations['_ol_kit.actions.zoomToExtent']}
       </MenuItem>
     )
   }

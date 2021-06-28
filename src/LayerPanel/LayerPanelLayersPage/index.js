@@ -55,7 +55,7 @@ class LayerPanelLayersPage extends Component {
       layers: [],
       masterCheckboxVisibility: true,
       featureListeners: [],
-      filterText: null,
+      filterText: '',
       expandedLayers: []
     }
   }
@@ -65,7 +65,7 @@ class LayerPanelLayersPage extends Component {
 
     if (disableHover) return // opt-out
 
-    const { stroke = 'red', fill = '#ffffff', color = 'red'} = setHoverStyle()
+    const { stroke = 'red', fill = '#ffffff', color = 'red' } = setHoverStyle()
 
     const style = new olStyleStyle({
       stroke: new olStroke({
@@ -96,11 +96,14 @@ class LayerPanelLayersPage extends Component {
     if (disableHover) return
     // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
     this.selectInteraction.getFeatures().clear()
-    features.forEach(feature => {
-      if (feature.get('_ol_kit_feature_visibility')) {
-        this.selectInteraction.getFeatures().push(feature)
-      }
-    })
+
+    if (features?.length) {
+      features.forEach(feature => {
+        if (feature.get('_ol_kit_feature_visibility')) {
+          this.selectInteraction.getFeatures().push(feature)
+        }
+      })
+    }
   }
 
   componentDidMount = () => {
@@ -259,7 +262,8 @@ class LayerPanelLayersPage extends Component {
   handleMasterCheckbox = () => {
     const visibleLayers = this.getVisibleLayers().length
     const allLayers = this.state.layers.length
-    const indeterminateLayers = this.getVisibleLayers().filter(layer => layer.getVisible() === INDETERMINATE).length
+    const indeterminateLayers = this.getVisibleLayers().filter(layer => layer.get('_ol_kit_layerpanel_visibility') === INDETERMINATE).length
+
     const masterCheckboxState = indeterminateLayers ? INDETERMINATE : visibleLayers === allLayers && allLayers > 0 ? true : visibleLayers > 0 ? INDETERMINATE : false // eslint-disable-line
 
     this.setState({ masterCheckboxVisibility: masterCheckboxState })
@@ -273,8 +277,15 @@ class LayerPanelLayersPage extends Component {
 
     if (layerCheckboxClick && layerVisibility === INDETERMINATE) {
       layer.setVisible(true)
+      layer.set('_ol_kit_layerpanel_visibility', true)
+    } else if (layerCheckboxClick) {
+      const lv = !layer.getVisible()
+
+      layer.setVisible(lv)
+      layer.set('_ol_kit_layerpanel_visibility', lv)
     } else {
-      layerCheckboxClick ? layer.setVisible(!layer.getVisible()) : layer.setVisible(layerVisibility)
+      layer.setVisible(layerVisibility === INDETERMINATE ? true : layerVisibility)
+      layer.set('_ol_kit_layerpanel_visibility', layerVisibility)
     }
 
     if (layerCheckboxClick) this.setVisibilityForAllFeaturesOfLayer(layer, layer.getVisible())
@@ -354,17 +365,15 @@ class LayerPanelLayersPage extends Component {
 
     return (
       <LayerPanelPage tabIcon={tabIcon}>
-        {enableFilter &&
-          <TextField
-            id='feature-filter-input'
-            label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
-            type='text'
-            style={{ margin: '8px' }}
-            fullWidth
-            value={filterText}
-            onChange={(e) => this.handleFilter(e.target.value)} />
-        }
-        <LayerPanelContent padding='0px 15px'>
+        <TextField
+          id='feature-filter-input'
+          label={translations['_ol_kit.LayerPanelLayersPage.filterText']}
+          type='text'
+          style={{ margin: '8px', display: enableFilter ? 'block' : 'none' }}
+          fullWidth
+          value={filterText}
+          onChange={(e) => this.handleFilter(e.target.value)} />
+        <LayerPanelContent padding={enableFilter ? '0px 15px 58px 15px !important' : '0px 15px'}>
           <LayerPanelList
             disableDrag={disableDrag}
             onSort={this.zIndexSort}
@@ -396,7 +405,7 @@ class LayerPanelLayersPage extends Component {
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
-              return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures?.length
+              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
@@ -404,7 +413,7 @@ class LayerPanelLayersPage extends Component {
                 <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
-                      checkboxState={!layer ? null : layer.getVisible()}
+                      checkboxState={!layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()}
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}

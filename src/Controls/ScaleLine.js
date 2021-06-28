@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { ScaleLineContainer } from './styled'
 import { ScaleLine as olScaleLine } from 'ol/control'
@@ -17,7 +16,7 @@ class ScaleLine extends React.Component {
     const scale = new olScaleLine({
       target: this.scaleLineContainer.current,
       units: units,
-      text: false,
+      text: false
     })
 
     this.setState({ scale }, () => scale.setMap(map))

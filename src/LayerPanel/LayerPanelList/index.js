@@ -31,13 +31,13 @@ const applyDrag = (arr, dragResult) => {
  * @since 0.5.0
  */
 class LayerPanelList extends Component {
-
   handleDrop = e => {
-    const { onSort, onReorderedItems, items } = this.props
+    const { onSort, onReorderedItems, items, onLayerReorder } = this.props
     const reorderedItems = applyDrag(items.sort(onSort), e)
 
     if (onReorderedItems) {
       onReorderedItems(reorderedItems)
+      onLayerReorder()
     }
   }
 
@@ -70,8 +70,8 @@ class LayerPanelList extends Component {
 
     do {
       if (dropNode.className === 'draggable') {
-        const removedIndex = this.dragTarget.id[0]
-        const addedIndex = this.displaced.id[0]
+        const removedIndex = parseInt(this.dragTarget.id.split('_')[0]) - 1
+        const addedIndex = parseInt(this.displaced.id.split('_')[0]) - 1
         const payload = this.dragTarget
 
         this.handleDrop({ ...e, removedIndex, addedIndex, payload })
@@ -92,7 +92,6 @@ class LayerPanelList extends Component {
         <List>
           <div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd} >
             {React.Children.map(this.props.children, (child, i) => {
-
               const id = `${i}_${nanoid(6)}`
 
               return (
@@ -143,12 +142,16 @@ LayerPanelList.propTypes = {
   items: PropTypes.array,
 
   /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool
+  disableDrag: PropTypes.bool,
+
+  /** A callback function to inform when the list is reordered */
+  onLayerReorder: PropTypes.func
 }
 
 LayerPanelList.defaultProps = {
   onSort: (a, b) => { return a - b },
-  disableDrag: false
+  disableDrag: false,
+  onLayerReorder: () => {}
 }
 
 export default LayerPanelList
