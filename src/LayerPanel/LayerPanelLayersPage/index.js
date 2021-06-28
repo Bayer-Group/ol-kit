@@ -97,7 +97,7 @@ class LayerPanelLayersPage extends Component {
     // clear the previously selected feature before adding newly selected feature so only one feature is "selected" at a time
     this.selectInteraction.getFeatures().clear()
 
-    if (features) {
+    if (features?.length) {
       features.forEach(feature => {
         if (feature.get('_ol_kit_feature_visibility')) {
           this.selectInteraction.getFeatures().push(feature)
@@ -402,7 +402,7 @@ class LayerPanelLayersPage extends Component {
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
-              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures.length
+              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
