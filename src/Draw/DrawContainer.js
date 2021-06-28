@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import nanoid from 'nanoid'
-import { VectorLayer } from '../classes'
+import { VectorLayer, Preferences } from '../classes'
 import olSourceVector from 'ol/source/Vector'
 import { createBox } from 'ol/interaction/Draw'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -11,30 +11,6 @@ import { SnapPreference, CoordinateLabelPreference } from 'Preferences'
 import { connectToContext } from 'Provider'
 import { styleMeasure } from './utils'
 import { Container, ProgressWrapper } from './styled'
-
-class MockPreferences {
-  constructor () {
-    this.state = {}
-  }
-
-  get (key) {
-    const value = localStorage.getItem(key) || this.state[key]
-
-    // checking to see if the localstorage value is 'true' or 'false' so we can cast to an actual bool
-    if (value === 'true' || value === 'false') {
-      return value === 'true'
-    } else {
-      return value
-    }
-  }
-
-  async put (key, val) {
-    localStorage.setItem(key, val)
-    this.state = { ...this.state, [key]: val }
-
-    return val
-  }
-}
 
 /**
  * A prebuilt Draw Tools component
@@ -309,7 +285,7 @@ DrawContainer.defaultProps = {
   snap: true,
   showMeasurements: true,
   showCoordinateLabels: true,
-  preferences: { status: 'success', payload: new MockPreferences() },
+  preferences: { status: 'success', payload: new Preferences() },
   selectedFeature: () => {}
 }
 
