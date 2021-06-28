@@ -13,10 +13,10 @@ class ScaleLine extends React.Component {
   }
 
   componentDidMount () {
-    const { map } = this.props
+    const { map, units } = this.props
     const scale = new olScaleLine({
       target: this.scaleLineContainer.current,
-      units: 'metric',
+      units: units,
       text: false,
     })
 
@@ -34,9 +34,15 @@ class ScaleLine extends React.Component {
   }
 }
 
+ScaleLine.defaultProps = {
+  units: 'us'
+}
+
 ScaleLine.propTypes = {
   /** reference to Openlayers map object */
   map: PropTypes.object.isRequired,
+  /** unit preference for the scale bar */
+  units: PropTypes.string
 }
 
 export default connectToContext(ScaleLine)
