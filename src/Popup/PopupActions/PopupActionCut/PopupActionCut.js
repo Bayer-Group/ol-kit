@@ -52,12 +52,12 @@ class ActionCut extends Component {
 
     return (
       <>
-        <PopupActionItem title={'Cut Selected Feature'} onClick={() => this.cut()} />
+        <PopupActionItem title={'_ol_kit.PopupActionCut.title'} onClick={() => this.cut()} />
         <Snackbar
           open={showSnackbar}
           closeSnackbar={() => this.setState({ showSnackbar: false })}
           duration={5000}
-          message={'Cut Complete!'}
+          message={'_ol_kit.PopupActionCut.alert'}
           variant='info'/>
       </>
     )
@@ -70,7 +70,7 @@ ActionCut.propTypes = {
   onActionEnd: PropTypes.func,
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
-    '_ol_kit.PopupActionRemove.title': PropTypes.string
+    '_ol_kit.PopupActionCut.title': PropTypes.string
   }).isRequired,
   map: PropTypes.object
 }
@@ -78,7 +78,8 @@ ActionCut.propTypes = {
 ActionCut.defaultProps = {
   parentLayerKey: '_ol_kit_parent',
   translations: {
-    '_ol_kit.PopupActionRemove.title': 'Remove Feature'
+    '_ol_kit.PopupActionCut.title': 'Remove Feature',
+    '_ol_kit.PopupActionCut.alert': 'Cut Complete!'
   }
 }
 
