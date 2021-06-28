@@ -119,7 +119,7 @@
     "@testing-library/dom": "~7.0.4",
     "@testing-library/jest-dom": "~5.5.0",
     "@testing-library/react": "~10.0.1",
-    "@turf/difference": "~6.0.1",
+    "@turf/difference": "6.0.1",
     "apollo-boost": "~0.4.9",
     "babel-eslint": "~10.0.1",
     "babel-jest": "~24.9.0",
