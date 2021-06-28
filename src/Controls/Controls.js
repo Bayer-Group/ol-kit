@@ -9,6 +9,7 @@ import CurrentLocation from './CurrentLocation'
 import ZoomIn from './ZoomIn'
 import ZoomOut from './ZoomOut'
 import Compass from './Compass'
+import ScaleLine from './ScaleLine'
 import { connectToContext } from 'Provider'
 
 /**
@@ -25,6 +26,7 @@ function Controls (props) {
       <ControlsContainer position={position} orientation={orientation}>
         {children || (
           <>
+            <ScaleLine map={map} orientation={orientation}/>
             <ControlGroup map={map} orientation={orientation}>
               <CurrentLocation map={map} />
               <ZoomIn map={map} />

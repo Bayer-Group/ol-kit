@@ -151,29 +151,38 @@ export function transformFeature (opts) {
   return new olFeature({ ...opts.feature.getProperties(), geometry: opts.feature.clone().getGeometry().transform('EPSG:4326', proj) })
 }
 
-export function convertFormatToLayer ({ format, results }, map, fileName) {
+export function convertFormatToLayer({ format, results }, map, fileName) {
   const features = convertFormatToFeatures({ format, results }, map, fileName)
 
-  return new olLayerVector({
-    source: createFeaturesVectorSource(features),
-    renderMode: 'image',
-    name: fileName
-  })
+  const buildLayer = (feats) => {
+    return new olLayerVector({
+      source: createFeaturesVectorSource(feats),
+      renderMode: 'image',
+      name: fileName
+    })
+  }
+  return Array.isArray(features) ? features.map(buildLayer) : [buildLayer(features)]
 }
 
-export function convertFormatToFeatures ({ format, results }, map) {
+export function convertFormatToFeatures({ format, results }, map) {
   if (!format || !results) throw new Error('File failed to properly')
 
-  const getFeatures = () => {
-    if (results instanceof olCollection) return results.getArray()
+  const getFeatures = (res) => {
+    if (res instanceof olCollection) return res.getArray()
 
-    return getFeaturesFromFormat(format, results)
+    return getFeaturesFromFormat(format, res)
   }
   const nonGeomFeatures = f => f.getGeometry()
+  const convert = (res) => {
+    return {
+      featureArray: (getFeatures(res)
+        .filter(nonGeomFeatures)
+        .map(feature => transformFeature({ feature, map }))),
+      fileName: res.fileName
+    }
+  }
 
-  return getFeatures()
-    .filter(nonGeomFeatures)
-    .map(feature => transformFeature({ feature, map }))
+  return Array.isArray(results) ? results.map(convert) : [convert(results)]
 }
 
 export function getFileType (file) {

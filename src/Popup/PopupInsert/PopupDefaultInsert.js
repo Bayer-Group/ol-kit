@@ -8,8 +8,10 @@ import { PopupActionCopyWkt } from 'Popup/PopupActions/PopupActionCopyWkt'
 import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
 import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
 import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
+import { PopupActionCut } from 'Popup/PopupActions/PopupActionCut'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
+import olGeomPoint from 'ol/geom/Point'
 
 class SelectEvent extends Event {
   constructor (type, selected, deselected, mapBrowserEvent) {
@@ -87,10 +89,14 @@ class PopupDefaultInsert extends Component {
     const { selectedIdx } = this.state
 
     const getChildren = feature => {
-      const defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
+      const pointGeom = feature.getGeometry() instanceof olGeomPoint
+
+      let defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
         <PopupActionDuplicate key='dupe' />,
         <PopupActionRemove key='remove' />,
         <PopupActionGoogleMaps key='nav' />]
+
+      if (!pointGeom) defaultActions = [...defaultActions, <PopupActionCut key='cut' />]
 
       return React.Children.map(actions || defaultActions, c => React.cloneElement(c, { feature }))
     }
