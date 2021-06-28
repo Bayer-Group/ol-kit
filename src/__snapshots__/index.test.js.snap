@@ -227,6 +227,7 @@ Object {
   "PopupPageLayout": [Function],
   "PopupPageLayoutChild": [Function],
   "PopupTabs": [Function],
+  "Preferences": [Function],
   "ProjectMenu": [Function],
   "Provider": [Function],
   "ProviderContext": null,
