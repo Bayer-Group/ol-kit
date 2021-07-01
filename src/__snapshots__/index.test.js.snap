@@ -31,9 +31,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 1837062671,
+      "baseHash": -633946211,
       "baseStyle": undefined,
-      "componentId": "sc-jRQAMF",
+      "componentId": "sc-jSFkmK",
       "isStatic": false,
       "rules": Array [
         "
@@ -59,7 +59,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-jRQAMF",
+    "styledComponentId": "sc-jSFkmK",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -69,9 +69,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": -1307652241,
+      "baseHash": 488360518,
       "baseStyle": undefined,
-      "componentId": "sc-gKckTs",
+      "componentId": "sc-gKAblj",
       "isStatic": false,
       "rules": Array [
         "
@@ -93,7 +93,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-gKckTs",
+    "styledComponentId": "sc-gKAblj",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -125,9 +125,9 @@ Object {
       [Function],
     ],
     "componentStyle": e {
-      "baseHash": -34303019,
+      "baseHash": 1335391198,
       "baseStyle": undefined,
-      "componentId": "sc-furvIG",
+      "componentId": "sc-fujyUd",
       "isStatic": false,
       "rules": Array [
         "
@@ -143,7 +143,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-furvIG",
+    "styledComponentId": "sc-fujyUd",
     "target": "a",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -153,9 +153,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 1264389338,
+      "baseHash": -396000879,
       "baseStyle": undefined,
-      "componentId": "sc-iCfLBT",
+      "componentId": "sc-iCoHVE",
       "isStatic": false,
       "rules": Array [
         "
@@ -176,7 +176,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-iCfLBT",
+    "styledComponentId": "sc-iCoHVE",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -186,9 +186,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 995693522,
+      "baseHash": 1268401350,
       "baseStyle": undefined,
-      "componentId": "sc-pVTma",
+      "componentId": "sc-pNWxx",
       "isStatic": false,
       "rules": Array [
         "
@@ -204,7 +204,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-pVTma",
+    "styledComponentId": "sc-pNWxx",
     "target": "p",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -240,9 +240,9 @@ Object {
       [Function],
     ],
     "componentStyle": e {
-      "baseHash": 1622735600,
+      "baseHash": 1611134500,
       "baseStyle": undefined,
-      "componentId": "sc-jrQzUz",
+      "componentId": "sc-jrsJCI",
       "isStatic": false,
       "rules": Array [
         "
@@ -266,7 +266,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-jrQzUz",
+    "styledComponentId": "sc-jrsJCI",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -286,6 +286,7 @@ Object {
   "centerAndZoom": [Function],
   "connectToContext": [Function],
   "convertFeatureToWkt": [Function],
+  "convertSvgToTemplate": [Function],
   "convertXYtoLatLong": [Function],
   "copyTextToClipboard": [Function],
   "copyWktToClipbard": [Function],
@@ -302,6 +303,7 @@ Object {
   "loadProject": [Function],
   "mapChangeHandler": [Function],
   "pointsFromVertices": [Function],
+  "printPDF": [Function],
   "removeMovementListener": [Function],
   "replaceZoomBoxCSS": [Function],
   "sanitizeProperties": [Function],
