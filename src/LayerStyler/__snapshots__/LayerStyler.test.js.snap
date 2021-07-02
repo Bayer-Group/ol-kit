@@ -41,16 +41,14 @@ Array [
 exports[`<LayerStyler /> should change an ol-kit vector layer's style 1`] = `
 Array [
   Object {
-    "_index": 0,
     "filter": Array [
       "&&",
       Array [
         "==",
-        "testData",
+        "",
         "",
       ],
     ],
-    "hidden": false,
     "name": "New Auto Style",
     "symbolizers": Array [
       Object {
