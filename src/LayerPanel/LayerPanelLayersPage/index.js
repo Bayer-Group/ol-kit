@@ -156,7 +156,10 @@ class LayerPanelLayersPage extends Component {
 
   bindFeatureListeners = () => {
     const { layers = [] } = this.state
+
     const featureListeners = layers.reduce((listeners = [], layer) => {
+      if (this.props.shouldHideFeatures(layer)) return
+
       const isVectorLayer = this.isValidVectorLayer(layer)
       const canGetSource = typeof layer.getSource === 'function'
       const hasVectorSource = canGetSource && layer.getSource() instanceof olSourceVector
@@ -362,6 +365,8 @@ class LayerPanelLayersPage extends Component {
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
+
+    console.log('this is rendering again')
 
     return (
       <LayerPanelPage tabIcon={tabIcon}>
