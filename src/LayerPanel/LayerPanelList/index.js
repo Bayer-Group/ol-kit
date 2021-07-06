@@ -55,7 +55,7 @@ class LayerPanelList extends Component {
         break
       }
     }
-    while (dropNode = dropNode.parentNode, (dropNode.id !== '_ol_kit_layer_panel_drag_container' && dropNode.id !== this.dragTarget.id))
+    while (dropNode = dropNode.parentNode, (dropNode.id !== '_ol_kit_layer_panel_drag_container' && dropNode.id !== this.dragTarget.id)) // eslint-disable-line
   }
 
   onDragStart = e => {
@@ -70,8 +70,8 @@ class LayerPanelList extends Component {
 
     do {
       if (dropNode.className === 'draggable') {
-        const removedIndex = parseInt(this.dragTarget.id.split('_')[0]) - 1
-        const addedIndex = parseInt(this.displaced.id.split('_')[0]) - 1
+        const removedIndex = parseInt(this.dragTarget.id.split('_')[0])
+        const addedIndex = parseInt(this.displaced.id.split('_')[0])
         const payload = this.dragTarget
 
         this.handleDrop({ ...e, removedIndex, addedIndex, payload })
@@ -79,7 +79,7 @@ class LayerPanelList extends Component {
         break
       }
     }
-    while (dropNode = dropNode.parentNode, dropNode.id !== '_ol_kit_layer_panel_drag_container')
+    while (dropNode = dropNode.parentNode, dropNode.id !== '_ol_kit_layer_panel_drag_container') // eslint-disable-line
 
     this.dragTarget.style.opacity = '1'
   }
@@ -96,7 +96,7 @@ class LayerPanelList extends Component {
 
               return (
                 <div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id} >
-                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart} onMouseEnter={() => this.addInteraction} >{child}</div>
+                  <div id={id} className={'draggable'} draggable={!disableDrag} onDragStart={this.onDragStart} onMouseEnter={() => this.addInteraction} >{child}</div>
                 </div>
               )
             })}
@@ -112,7 +112,7 @@ class LayerPanelList extends Component {
 
               return (
                 <div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
-                  <div id={id} className={'draggable'} draggable={disableDrag ? false : true} onDragStart={this.onDragStart} >
+                  <div id={id} className={'draggable'} draggable={!disableDrag} onDragStart={this.onDragStart} >
                     <LayerPanelListItem onMouseOver={() => this.addInteraction}>{item}</LayerPanelListItem>
                   </div>
                 </div>
