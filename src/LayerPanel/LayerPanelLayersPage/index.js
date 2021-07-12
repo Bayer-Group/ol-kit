@@ -156,7 +156,10 @@ class LayerPanelLayersPage extends Component {
 
   bindFeatureListeners = () => {
     const { layers = [] } = this.state
+
     const featureListeners = layers.reduce((listeners = [], layer) => {
+      if (this.props.shouldHideFeatures(layer)) return
+
       const isVectorLayer = this.isValidVectorLayer(layer)
       const canGetSource = typeof layer.getSource === 'function'
       const hasVectorSource = canGetSource && layer.getSource() instanceof olSourceVector
@@ -374,43 +377,48 @@ class LayerPanelLayersPage extends Component {
           value={filterText}
           onChange={(e) => this.handleFilter(e.target.value)} />
         <LayerPanelContent padding={enableFilter ? '0px 15px 58px 15px !important' : '0px 15px'}>
+          <LayerPanelListItem
+            id='all_layers'
+            title={translations['_ol_kit.LayerPanelLayersPage.title']}
+            translations={translations} >
+            <LayerPanelCheckbox
+              checkboxState={masterCheckboxVisibility}
+              handleClick={this.setVisibilityForAllLayers} />
+            <ListItemText primary={'All Layers'} />
+            <ListItemSecondaryAction style={{ right: '0px !important' }}>
+              <LayerPanelActions
+                icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
+                translations={translations}
+                layers={layers}
+                map={map}>
+                <LayerPanelActionRemove
+                  removeFeaturesForLayer={this.removeFeaturesForLayer}
+                  shouldAllowLayerRemoval={shouldAllowLayerRemoval}
+                  onLayerRemoved={onLayerRemoved} />
+                <LayerPanelActionImport handleImport={this.onFileImport} />
+                <LayerPanelActionExport onExportFeatures={onExportFeatures} />
+              </LayerPanelActions>
+            </ListItemSecondaryAction>
+          </LayerPanelListItem>
           <LayerPanelList
             disableDrag={disableDrag}
             onSort={this.zIndexSort}
             onReorderedItems={this.reorderLayers}
             items={layers}
             onLayerReorder={onLayerReorder} >
-            <LayerPanelListItem
-              title={translations['_ol_kit.LayerPanelLayersPage.title']}
-              translations={translations} >
-              <LayerPanelCheckbox
-                checkboxState={masterCheckboxVisibility}
-                handleClick={this.setVisibilityForAllLayers} />
-              <ListItemText primary={'All Layers'} />
-              <ListItemSecondaryAction style={{ right: '0px !important' }}>
-                <LayerPanelActions
-                  icon={<MoreHorizIcon data-testid='LayerPanel.masterActionsIcon' />}
-                  translations={translations}
-                  layers={layers}
-                  map={map}>
-                  <LayerPanelActionRemove
-                    removeFeaturesForLayer={this.removeFeaturesForLayer}
-                    shouldAllowLayerRemoval={shouldAllowLayerRemoval}
-                    onLayerRemoved={onLayerRemoved} />
-                  <LayerPanelActionImport handleImport={this.onFileImport} />
-                  <LayerPanelActionExport onExportFeatures={onExportFeatures} />
-                </LayerPanelActions>
-              </ListItemSecondaryAction>
-            </LayerPanelListItem>
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
-              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
+              return !enableFilter ||
+                !(layer instanceof olLayerVector) ||
+                this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
               return (
-                <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])}>
+                <div key={i}
+                  onMouseEnter={() => this.selectFeatures(features)}
+                  onMouseLeave={() => this.selectFeatures([])}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={!layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()}
