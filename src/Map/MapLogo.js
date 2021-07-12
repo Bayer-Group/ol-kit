@@ -21,8 +21,8 @@ export default function MapLogo (props) {
             href='https://ol-kit.com/'
             target='_blank'>
             {isHovered
-              ? <OL_KIT_MARK />
-              : <OL_KIT_MARK_BLACK />
+              ? <OL_KIT_MARK id={'_ol_kit_logo'} />
+              : <OL_KIT_MARK_BLACK id={'_ol_kit_logo'} />
             }
           </Logo>
         </LogoContainer>
