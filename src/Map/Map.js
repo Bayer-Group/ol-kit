@@ -119,7 +119,7 @@ class Map extends React.Component {
       this.selectInteraction = selectInteraction
     } else {
       // otherwise create a new select interaction
-      this.selectInteraction = createSelectInteraction()
+      this.selectInteraction = createSelectInteraction({ map }, 'ol_kit_map')
     }
 
     // check the map to see if select interaction has been added

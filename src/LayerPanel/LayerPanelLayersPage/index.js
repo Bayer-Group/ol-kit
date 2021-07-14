@@ -84,7 +84,8 @@ class LayerPanelLayersPage extends Component {
       })
     })
 
-    this.selectInteraction = createSelectInteraction({ _ol_kit_interaction_type: '_ol_kit_layer_panel_hover', style: [style] })
+    this.selectInteraction = createSelectInteraction({ map }, '_ol_kit_layer_panel_hover', '', [style])
+    // this.selectInteraction = createSelectInteraction({ _ol_kit_interaction_type: '_ol_kit_layer_panel_hover', style: [style] })
 
     // Add a second select interaction to show hover states
     map.addInteraction(this.selectInteraction)
@@ -405,12 +406,16 @@ class LayerPanelLayersPage extends Component {
             {layerFilter(layers).filter((layer) => {
               const filteredFeatures = this.getFeaturesForLayer(layer)
 
-              return !enableFilter || !(layer instanceof olLayerVector) || this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
+              return !enableFilter ||
+                !(layer instanceof olLayerVector) ||
+                this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
 
               return (
-                <div key={i} onMouseEnter={() => this.selectFeatures(features)} onMouseLeave={() => this.selectFeatures([])}>
+                <div key={i}
+                  onMouseEnter={() => this.selectFeatures(features)}
+                  onMouseLeave={() => this.selectFeatures([])}>
                   <LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
                     {<LayerPanelCheckbox
                       checkboxState={!layer ? null : layer.get('_ol_kit_layerpanel_visibility') || layer.getVisible()}

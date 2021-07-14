@@ -10,9 +10,31 @@ import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
 import qs from 'qs'
 
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+
 import ugh from 'ugh'
 
+const fill = new olFill({
+  color: 'rgba(255,255,255,0)'
+})
+const stroke = new olStroke({
+  color: '#00FFFF',
+  width: 3
+})
+
 const OLKIT_ZOOMBOX_ID = '_ol-kit-css-zoombox-style'
+const DEFAULT_SELECT_STYLE = [
+  new olStyle({
+    image: new olCircle({
+      fill: fill,
+      stroke: stroke,
+      radius: 5
+    }),
+    fill: fill,
+    stroke: stroke
+  })
+]
 
 export function replaceZoomBoxCSS (dragStyle) {
   const exists = document.getElementById(OLKIT_ZOOMBOX_ID)
@@ -165,27 +187,17 @@ export function convertXYtoLatLong (map, x, y) {
  * @since 0.2.0
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
-export function createSelectInteraction (props) {
-  const DEFAULT_SELECT_STYLE = new olStyle({
-    stroke: new olStroke({
-      color: 'cyan',
-      width: 3
-    }),
-    image: new olCircle({
-      radius: 5,
-      fill: new olFill({
-        color: '#ffffff'
-      }),
-      stroke: new olStroke({
-        color: 'cyan',
-        width: 2
-      })
-    })
-  })
 
-  return new olInteractionSelect({
-    hitTolerance: 3,
-    style: [DEFAULT_SELECT_STYLE],
-    ...props
-  })
+// TODO: This needs to take in a layername, select name, and styles and props so you can override anything
+export function createSelectInteraction (opts, selectName, layerName, selectStyle) {
+  const layerStyle = selectStyle || DEFAULT_SELECT_STYLE
+  const select = new olInteractionSelect({ hitTolerance: 3, style: layerStyle, origin: selectName, ...opts })
+  const source = new VectorSource({ features: select.getFeatures() })
+  const vectorLayer = new VectorLayer({ style: layerStyle, source, map: opts.map })
+
+  select.set('origin', selectName)
+  vectorLayer.set('origin', layerName)
+  vectorLayer.set('_ol_kit_select', true)
+
+  return select
 }
