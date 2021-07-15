@@ -192,12 +192,18 @@ export function convertXYtoLatLong (map, x, y) {
 export function createSelectInteraction (opts, selectName, layerName, selectStyle) {
   const layerStyle = selectStyle || DEFAULT_SELECT_STYLE
   const select = new olInteractionSelect({ hitTolerance: 3, style: layerStyle, origin: selectName, ...opts })
-  const source = new VectorSource({ features: select.getFeatures() })
-  const vectorLayer = new VectorLayer({ style: layerStyle, source, map: opts.map })
 
   select.set('origin', selectName)
-  vectorLayer.set('origin', layerName)
-  vectorLayer.set('_ol_kit_select', true)
+
+  if (opts?.map) {
+    const source = new VectorSource({ features: select.getFeatures() })
+    const vectorLayer = new VectorLayer({ style: layerStyle, source, map: opts.map })
+
+    vectorLayer.set('origin', layerName)
+    vectorLayer.set('_ol_kit_select', true)
+  }
+
+  console.warn('In order for the SelectInteraction to work properly the Map needs to be passed through the opts param.') // eslint-disable-line
 
   return select
 }
