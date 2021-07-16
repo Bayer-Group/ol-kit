@@ -15,26 +15,23 @@ import VectorSource from 'ol/source/Vector'
 
 import ugh from 'ugh'
 
-const fill = new olFill({
-  color: 'rgba(255,255,255,0)'
-})
-const stroke = new olStroke({
-  color: '#00FFFF',
-  width: 3
-})
-
 const OLKIT_ZOOMBOX_ID = '_ol-kit-css-zoombox-style'
-const DEFAULT_SELECT_STYLE = [
-  new olStyle({
-    image: new olCircle({
-      fill: fill,
-      stroke: stroke,
-      radius: 5
+const DEFAULT_SELECT_STYLE = new olStyle({
+  stroke: new olStroke({
+    color: 'cyan',
+    width: 3
+  }),
+  image: new olCircle({
+    radius: 5,
+    fill: new olFill({
+      color: '#ffffff'
     }),
-    fill: fill,
-    stroke: stroke
+    stroke: new olStroke({
+      color: 'cyan',
+      width: 2
+    })
   })
-]
+})
 
 export function replaceZoomBoxCSS (dragStyle) {
   const exists = document.getElementById(OLKIT_ZOOMBOX_ID)
@@ -187,23 +184,35 @@ export function convertXYtoLatLong (map, x, y) {
  * @since 0.2.0
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
+export function createSelectInteraction (opts) {
+  return new olInteractionSelect({
+    hitTolerance: 3,
+    style: [DEFAULT_SELECT_STYLE],
+    ...opts
+  })
+}
 
-// TODO: This needs to take in a layername, select name, and styles and props so you can override anything
-export function createSelectInteraction (opts, selectName, layerName, selectStyle) {
-  const layerStyle = selectStyle || DEFAULT_SELECT_STYLE
-  const select = new olInteractionSelect({ hitTolerance: 3, style: layerStyle, origin: selectName, ...opts })
+/**
+ * Create a new openlayers select interaction with default styling and add the vector layer to the map
+ * @function
+ * @category Map
+ * @since 0.2.0
+ * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
+ */
+export function addSelectInteraction (map, name, opts) {
+  const select = createSelectInteraction(opts)
+  const source = new VectorSource({ features: select.getFeatures() })
+  const layer = new VectorLayer({ source, style: [DEFAULT_SELECT_STYLE], map })
 
-  select.set('origin', selectName)
-
-  if (opts?.map) {
-    const source = new VectorSource({ features: select.getFeatures() })
-    const vectorLayer = new VectorLayer({ style: layerStyle, source, map: opts.map })
-
-    vectorLayer.set('origin', layerName)
-    vectorLayer.set('_ol_kit_select', true)
+  if (name) {
+    layer.set('_ol_kit_origin', name)
+    select.set('_ol_kit_origin', name)
+  } else {
+    layer.set('_ol_kit_origin', '_ol_kit_selection')
+    select.set('_ol_kit_origin', '_ol_kit_selection')
   }
 
-  console.warn('In order for the SelectInteraction to work properly the Map needs to be passed through the opts param.') // eslint-disable-line
+  map.addInteraction(select)
 
-  return select
+  return { select, layer }
 }

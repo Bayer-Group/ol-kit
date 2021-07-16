@@ -9,12 +9,13 @@ import {
   updateMapFromUrl,
   updateUrlFromMap,
   replaceZoomBoxCSS,
-  createSelectInteraction
+  addSelectInteraction
 } from './utils'
 import { StyledMap } from './styled'
 import { connectToContext } from 'Provider'
 import en from 'locales/en'
 import ugh from 'ugh'
+import olInteractionSelect from 'ol/interaction/Select'
 
 /**
  * A Reactified ol.Map wrapper component
@@ -114,20 +115,24 @@ class Map extends React.Component {
   initializeSelect = map => {
     const { selectInteraction } = this.props
 
-    if (selectInteraction) {
-      // if select is passed as a prop always use that one first
-      this.selectInteraction = selectInteraction
-    } else {
-      // otherwise create a new select interaction
-      this.selectInteraction = createSelectInteraction({ map }, 'ol_kit_map')
-    }
-
     // check the map to see if select interaction has been added
     const selectInteractionOnMap = map.getInteractions().getArray()
       // Layer panel also adds a select interaction
       .filter(interaction => interaction._ol_kit_interaction_type !== '_ol_kit_layer_panel_hover')
       // this checks if the select interaction created or passed in is the same instance on the map and never double adds
-      .find(interaction => interaction === this.selectInteraction)
+      .find(interaction => interaction instanceof olInteractionSelect)
+
+    if (selectInteraction) {
+      // if select is passed as a prop always use that one first
+      this.selectInteraction = selectInteraction
+    } else if (selectInteractionOnMap) {
+      this.selectInteraction = selectInteractionOnMap
+    } else {
+      // otherwise create a new select interaction
+      const { select } = addSelectInteraction(map, 'ol_kit_map')
+
+      this.selectInteraction = select
+    }
 
     // do not double add the interaction to the map
     if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)

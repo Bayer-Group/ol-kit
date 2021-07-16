@@ -218,7 +218,6 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
   const getFitsForFeatures = rawFeatures => {
     // create a new array so original features are not mutated when _ol_kit_parent is nullified
     const features = rawFeatures.map(feature => {
-      feature.setStyle(null)
       const clone = feature.clone()
 
       // this removes a ref to _ol_kit_parent to solve circularJSON bug
