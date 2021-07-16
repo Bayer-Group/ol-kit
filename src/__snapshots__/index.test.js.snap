@@ -282,6 +282,7 @@ Object {
   "ZoomIn": [Function],
   "ZoomOut": [Function],
   "addMovementListener": [Function],
+  "addSelectInteraction": [Function],
   "calculateViewPadding": [Function],
   "centerAndZoom": [Function],
   "connectToContext": [Function],
