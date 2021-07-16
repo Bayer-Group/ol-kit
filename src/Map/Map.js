@@ -116,7 +116,7 @@ class Map extends React.Component {
     const { selectInteraction } = this.props
 
     // check the map to see if select interaction has been added
-    const selectInteractionOnMap = map.getInteractions().getArray()
+    let selectInteractionOnMap = map.getInteractions().getArray()
       // Layer panel also adds a select interaction
       .filter(interaction => interaction._ol_kit_interaction_type !== '_ol_kit_layer_panel_hover')
       // this checks if the select interaction created or passed in is the same instance on the map and never double adds
@@ -129,9 +129,12 @@ class Map extends React.Component {
       this.selectInteraction = selectInteractionOnMap
     } else {
       // otherwise create a new select interaction
-      const { select } = addSelectInteraction(map, 'ol_kit_map')
+      const { select, layer } = addSelectInteraction(map, 'ol_kit_map')
+
+      window.layer = layer
 
       this.selectInteraction = select
+      selectInteractionOnMap = true
     }
 
     // do not double add the interaction to the map

@@ -116,6 +116,7 @@ class Popup extends Component {
     }, () => onMapClick(this.state))
 
     const layers = await Promise.all(promises)
+
     const parsedFeatures = layers.reduce((acc, { features }) => {
       return [...acc, ...features]
     }, [])
@@ -160,7 +161,6 @@ class Popup extends Component {
           ReactDOM.createPortal(
             <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
-              // TODO: doesn't this need the selectineraction passed? It says its required in the popupDefaultInsert comp
                 <PopupDefaultInsert
                   actions={actions}
                   features={features}
