@@ -30,6 +30,9 @@ const DEFAULT_SELECT_STYLE = new olStyle({
       color: 'cyan',
       width: 2
     })
+  }),
+  fill: new olFill({
+    color: 'rgba(255,255,255,0.01)'
   })
 })
 
