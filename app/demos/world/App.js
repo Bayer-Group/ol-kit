@@ -42,12 +42,13 @@ class App extends React.Component {
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
 
     window.map = map
+    window.select = map.getInteractions().getArray()[9]
   }
 
   render () {
     return (
       <Map onMapInit={this.onMapInit} fullScreen>
-        <Popup />
+        <Popup selectInteraction={window.select} />
         <TabbedPanel>
           <TabbedPanelPage tabIcon='Home'>
             <Welcome />
