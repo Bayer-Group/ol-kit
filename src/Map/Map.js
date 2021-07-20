@@ -125,20 +125,18 @@ class Map extends React.Component {
     if (selectInteraction) {
       // if select is passed as a prop always use that one first
       this.selectInteraction = selectInteraction
-    } else if (selectInteractionOnMap) {
-      this.selectInteraction = selectInteractionOnMap
+
+      // do not double add the interaction to the map
+      if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
     } else {
       // otherwise create a new select interaction
-      const { select, layer } = addSelectInteraction(map, 'ol_kit_map')
+      const { select } = addSelectInteraction(map, 'ol_kit_map')
 
-      window.layer = layer
+      ugh.warn('ol-kit has created a select interaction with the origin as `_ol_kit_map`. To have ol-kit use a specific selectInteraction pass `selectInteraction` as a prop to your <Map>.')
 
       this.selectInteraction = select
       selectInteractionOnMap = true
     }
-
-    // do not double add the interaction to the map
-    if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
   }
 
   render () {

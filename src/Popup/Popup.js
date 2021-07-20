@@ -116,7 +116,6 @@ class Popup extends Component {
     }, () => onMapClick(this.state))
 
     const layers = await Promise.all(promises)
-
     const parsedFeatures = layers.reduce((acc, { features }) => {
       return [...acc, ...features]
     }, [])

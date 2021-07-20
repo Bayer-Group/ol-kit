@@ -199,21 +199,17 @@ export function createSelectInteraction (opts) {
  * Create a new openlayers select interaction with default styling and add the vector layer to the map
  * @function
  * @category Map
- * @since 0.2.0
+ * @since 1.11.0
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
 export function addSelectInteraction (map, name, opts) {
   const select = createSelectInteraction(opts)
   const source = new VectorSource({ features: select.getFeatures() })
   const layer = new VectorLayer({ source, style: [DEFAULT_SELECT_STYLE], map })
+  const origin = name || '_ol_kit_selection'
 
-  if (name) {
-    layer.set('_ol_kit_origin', name)
-    select.set('_ol_kit_origin', name)
-  } else {
-    layer.set('_ol_kit_origin', '_ol_kit_selection')
-    select.set('_ol_kit_origin', '_ol_kit_selection')
-  }
+  layer.set('_ol_kit_origin', origin)
+  select.set('_ol_kit_origin', origin)
 
   map.addInteraction(select)
 
