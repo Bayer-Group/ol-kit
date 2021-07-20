@@ -9,6 +9,7 @@ import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
 import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
 import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
 import { PopupActionCut } from 'Popup/PopupActions/PopupActionCut'
+import PopupActionIntersect from 'Popup/PopupActions/PopupActionIntersect/PopupActionIntersect'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 import olGeomPoint from 'ol/geom/Point'
@@ -94,7 +95,11 @@ class PopupDefaultInsert extends Component {
       let defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
         <PopupActionDuplicate key='dupe' />,
         <PopupActionRemove key='remove' />,
-        <PopupActionGoogleMaps key='nav' />]
+        <PopupActionGoogleMaps key='nav' />,
+        <PopupActionIntersect onActionEnd={fArray => {
+          fArray.forEach(f => features.push(f))
+          this.setState({ selectedIdx: 0 })
+        }} key = 'intersect' />] // eslint-disable-line no-console
 
       if (!pointGeom) defaultActions = [...defaultActions, <PopupActionCut key='cut' />]
 
@@ -102,14 +107,14 @@ class PopupDefaultInsert extends Component {
     }
 
     // dedupe the features to remove possible duplicates introduced in ol6
-    const dedupedFeatures = [...new Set(features).values()]
+    const dedupedFeatures = [...new Set(features).values()].filter(f => f)
 
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
         {dedupedFeatures.length
           ? dedupedFeatures.map((f, i) => (
             <PopupDefaultPage
-              attributes={propertiesFilter(f.getProperties())}
+              attributes={propertiesFilter(f.getProperties?.())}
               key={i}
               loading={loading}
               onClose={onClose}
