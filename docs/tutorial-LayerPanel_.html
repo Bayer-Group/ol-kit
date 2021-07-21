@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | LayerPanel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToContext.html">connectToContext</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFileToFeatures">convertFileToFeatures</a></li><li><a href="global.html#convertFileToLayer">convertFileToLayer</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#loadBasemapLayer">loadBasemapLayer</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Classes</h3><ul><li><a href="VectorLayer.html">VectorLayer</a></li><li><a href="VectorTileLayer.html">VectorTileLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>Draw</h2><h3>Components</h3><ul><li><a href="Draw.html">Draw</a></li><li><a href="DrawBox.html">DrawBox</a></li><li><a href="DrawCircle.html">DrawCircle</a></li><li><a href="DrawContainer.html">DrawContainer</a></li><li><a href="DrawFreehand.html">DrawFreehand</a></li><li><a href="DrawLine.html">DrawLine</a></li><li><a href="DrawPin.html">DrawPin</a></li><li><a href="DrawPoint.html">DrawPoint</a></li><li><a href="DrawPolygon.html">DrawPolygon</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#getStyledFeatures">getStyledFeatures</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>GoogleDirections</h2><h3>Components</h3><ul><li><a href="GoogleDirections.html">GoogleDirections</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>Heatmap</h2><h3>Components</h3><ul><li><a href="HeatmapControls.html">HeatmapControls</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addSelectInteraction">addSelectInteraction</a></li><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>MultiMap</h2><h3>Components</h3><ul><li><a href="MultiMapManager.html">MultiMapManager</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#syncViewEvents">syncViewEvents</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupActionLink.html">PopupActionLink</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>PopupActionGoogleMaps</h2><h3>Components</h3><ul><li><a href="PopupActionGoogleMaps.html">PopupActionGoogleMaps</a></li></ul></div><div class="category"><h2>Project</h2><h3>Components</h3><ul><li><a href="ProjectMenu.html">ProjectMenu</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#createProject">createProject</a></li><li><a href="global.html#loadProject">loadProject</a></li></ul></div><div class="category"><h2>Provider</h2><h3>Utils</h3><ul><li><a href="global.html#connectToContext">connectToContext</a></li></ul></div><div class="category"><h2>TabbedPanel</h2><h3>Components</h3><ul><li><a href="TabbedPanel.html">TabbedPanel</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    <section>
+
+<header>
+    
+</header>
+
+<article>
+    <p>The <code>LayerPanel</code> is a convenient way to view things that are on the map. The original intent is to view layers but with this <code>LayerPanel</code> you can view whatever you want. Build pages into the <code>LayerPanel</code> that will show up in their own tabs to make whatever customization you want. Another common page that works well with the <code>LayerPanel</code> is a Legends page which you can make with a <code>LayerPanelPage</code> component.</p>
+<p>Its as simple as that. This will give you a <code>LayerPanel</code> placed on the right side of the screen that allows you to view the Layers from the map and toggle visibility/remove.</p>
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel } from '@bayer/ol-kit'
+
+return &lt;LayerPanel />
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/cb487900-86d2-11ea-8a6c-587e8bb8377c" alt="image"></p>
+<p>If you want an easy way to add a second page use the <code>LayerPanelPage</code> component and give it an icon. We use <code>@material-ui/icons</code> most of the time, they work well. This gives you a second page that has it's own tab to toggle through.</p>
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelPage, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelContent>
+        Legends Page
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/59702f80-86d2-11ea-8633-e35602cec3c5" alt="image"></p>
+<p>Use a <code>LayerPanelHeader</code> to get a nice header at the top. There are several props for the Header component. (title, avatar, and actions)</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader title='Legends Page' />
+      &lt;LayerPanelContent>
+        Place your legend images here...
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/0e0a5100-86d3-11ea-8e23-738dd4d92d57" alt="image"></p>
+<p>The <code>LayerPanelHeader</code> can be powerful. If you want actions in your header pass a <code>LayerPanelActions</code> component with the actions you want in it. We have built in actions in <code>ol-kit</code>. Check out the docs for all of them. In the example we're using <code>LayerPanelActionRemove</code> which is from <code>ol-kit</code> and the Update Legends <code>@material-ui/core/MenuItem</code> is custom.</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />}
+        actions={
+          &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+            &lt;LayerPanelActionRemove />
+            &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+          &lt;/LayerPanelActions>
+        } />
+      &lt;LayerPanelContent>
+        Place your legend images here...
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/76f1c900-86d3-11ea-9fd2-cfc39e019e36" alt="image"></p>
+<p>You can make a list by passing items down. Which should be an array. There's also a built in drag for the <code>LayerPanelListItem</code>. You can disable it buy passing the prop <code>disableDrag</code> to the <code>LayerPanelList</code>. If you want to persist the reorder of items then you'll need to pass the onReorderedItems callback to the <code>LayerPanelList</code> and update the items in your parent component.</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove,
+  LayerPanelList } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+return (
+  &lt;LayerPanel>
+    &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+      &lt;LayerPanelHeader
+        title='Legends Page'
+        avatar={&lt;VpnKeyIcon />}
+        actions={
+          &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+            &lt;LayerPanelActionRemove />
+            &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+            &lt;MenuItem onClick={this.setLegendsToOriginalOrder}>Original Order Legends&lt;/MenuItem>
+          &lt;/LayerPanelActions>
+        } />
+      &lt;LayerPanelContent>
+        &lt;LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems} />
+      &lt;/LayerPanelContent>
+    &lt;/LayerPanelPage>
+  &lt;/LayerPanel>
+)
+</code></pre>
+<p><img src="https://github.platforms.engineering/storage/user/2990/files/cf28cb00-86d3-11ea-850b-a33275dd4c1c" alt="image"></p>
+<p>Below you can see how we add custom actions to our <code>LayerPanel</code> and also that you can render an array of <code>LayerPanelListItem</code>'s in your <code>LayerPanelList</code>. Also the list is draggable and has a callback to allow you to reorder the items however you want. Theres an <code>onSort</code> prop that receives a Javascript Sort function to customize the way the items get sorted.</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelActionRemove,
+  LayerPanelList } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+
+class MyCustomLayerPanelContainer extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = { legends: ['First Legend', 'Second Legend', 'Third Legend'] }
+
+    this.updateLegends = this.updateLegends.bind(this)
+    this.handleReorderedItems = this.handleReorderedItems.bind(this)
+  }
+
+  updateLegends () {
+    console.log('updated my legends')
+  }
+
+  handleReorderedItems (newItems) {
+    this.setState({ legends: newItems })
+  }
+
+  render () {
+    const { maps } = this.props
+    const { legends } = this.state
+
+    return (
+      &lt;LayerPanel>
+        &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+          &lt;LayerPanelHeader
+            title='Legends Page'
+            avatar={&lt;VpnKeyIcon />}
+            actions={
+              &lt;LayerPanelActions icon={&lt;MoreHorizIcon />}>
+                &lt;LayerPanelActionRemove />
+                &lt;MenuItem onClick={this.updateLegends}>Update Legends&lt;/MenuItem>
+              &lt;/LayerPanelActions>
+            } />
+          &lt;LayerPanelContent>
+            &lt;LayerPanelList items={legends} onReorderedItems={this.handleReorderedItems}>
+              {legends.map(legend => {
+                return &lt;LayerPanelListItem>{legend}&lt;/LayerPanelListItem>
+              })}
+            &lt;/LayerPanelList>
+          &lt;/LayerPanelContent>
+        &lt;/LayerPanelPage>
+      &lt;/LayerPanel>
+    )
+  }
+}
+</code></pre>
+<p>We also have a prebuilt page that ships with the <code>LayerPanel</code> called <code>LayerPanelLayersPage</code>. It's a simple drop in that allows you to customize things like handleFeatureDoubleClick of a list item and quite a few other props. Check out the docs on the <code>LayerPanelLayersPage</code> to see more of the props you can pass. You can either customize it by importing it yourself (which requires you to switch to the <code>LayerPanelBase</code> as the parent component) or you can pass the props of the <code>LayerPanelLayersPage</code> down through the prebuilt <code>LayerPanel</code>.</p>
+<pre class="prettyprint source lang-jsx"><code>import { LayerPanel, LayerPanelPage, LayerPanelHeader, LayerPanelContent } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+
+// Passing the props through the LayerPanel component
+&lt;LayerPanel handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+  &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+    &lt;LayerPanelHeader
+      title='Legends Page'
+      avatar={&lt;VpnKeyIcon />} />
+    &lt;LayerPanelContent>
+      Hello world
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+&lt;/LayerPanel>
+
+// Directly pulling in the LayerPanelLayersPage and passing props through it
+&lt;LayerPanelBase>
+  &lt;LayerPanelLayersPage handleFeatureDoubleClick={this.onFeatureDoubleClick}>
+  &lt;LayerPanelPage tabIcon={&lt;VpnKeyIcon />}>
+    &lt;LayerPanelHeader
+      title='Legends Page'
+      avatar={&lt;VpnKeyIcon />} />
+    &lt;LayerPanelContent>
+      Hello world
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+&lt;/LayerPanelBase>
+</code></pre>
+<p>To show you the amount of customization possible with these pages, here's the <code>LayerPanelLayersPage</code>.</p>
+<pre class="prettyprint source lang-jsx"><code>import {
+  LayerPanel,
+  LayerPanelPage,
+  LayerPanelHeader,
+  LayerPanelContent,
+  LayerPanelActions,
+  LayerPanelCheckbox,
+  LayerPanelActionRemove,
+  LayerPanelActionImport,
+  LayerPanelActionExport,
+  LayerPanelList,
+  LayerPanelListItem } from '@bayer/ol-kit'
+import VpnKeyIcon from '@material-ui/icons/VpnKeyIcon'
+import MoreHorizIcon from '@material-ui/icons/MoreHorizIcon'
+
+return (
+  &lt;LayerPanelPage>
+    &lt;LayerPanelHeader
+      title={'Active Layers'}
+      translations={translations}
+      avatar={&lt;LayerPanelCheckbox checkboxState={masterCheckboxVisibility} handleClick={this.setVisibilityForAllLayers} />}
+      actions={customActions ||
+        &lt;LayerPanelActions
+          icon={&lt;MoreHorizIcon />}
+          translations={translations}
+          layers={layers}
+          map={map}>
+          &lt;LayerPanelActionRemove
+            removeFeaturesForLayer={this.removeFeaturesForLayer}
+            shouldAllowLayerRemoval={shouldAllowLayerRemoval} />
+          {onFileImport && &lt;LayerPanelActionImport handleImport={onFileImport} />}
+          {onExportFeatures && &lt;LayerPanelActionExport onExportFeatures={onExportFeatures} />}
+        &lt;/LayerPanelActions>} />
+    {enableFilter &&
+      &lt;TextField
+        id='feature-filter-input'
+        label={'Filter Layers'}
+        type='text'
+        style={{ margin: '8px' }}
+        fullWidth
+        value={filterText}
+        onChange={(e) => this.handleFilter(e.target.value)} />
+    }
+    &lt;LayerPanelContent>
+      &lt;LayerPanelList disableDrag={disableDrag} onSort={this.zIndexSort} onReorderedItems={this.reorderLayers} items={layers} >
+        {layerFilter(layers).filter((layer) => {
+          const filteredFeatures = this.getFeaturesForLayer(layer)
+
+          return !enableFilter || !(layer instanceof olLayerVector) ? true : filteredFeatures?.length
+        }).sort(this.zIndexSort).map((layer, i) => {
+          const features = this.getFeaturesForLayer(layer)
+
+          return (
+            &lt;div key={i}>
+              &lt;LayerPanelListItem handleDoubleClick={() => { handleLayerDoubleClick(layer) }}>
+                {&lt;LayerPanelCheckbox
+                  checkboxState={!layer ? null : layer.getVisible()}
+                  handleClick={(e) => this.handleVisibility(e, layer)} />}
+                {&lt;LayerPanelExpandableList show={!!features} open={expandedLayer} handleClick={this.handleExpandedLayer} />}
+                &lt;ListItemText primary={layer.get('title') || 'Untitled Layer'} />
+                &lt;ListItemSecondaryAction>
+                  &lt;LayerPanelActions
+                    icon={&lt;MoreVertIcon />}
+                    translations={translations}
+                    layer={layer}
+                    map={map} >
+                    {getMenuItemsForLayer(layer) ||
+                    [&lt;LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
+                      &lt;LayerPanelActionExtent key='gotoExtent' />,
+                      &lt;LayerPanelActionOpacity key='layerOpacity' />]}
+                  &lt;/LayerPanelActions>
+                &lt;/ListItemSecondaryAction>
+              &lt;/LayerPanelListItem>
+              { features
+                ? &lt;Collapse in={expandedLayer} timeout='auto' unmountOnExit>
+                  &lt;List component='div' disablePadding style={{ paddingLeft: '36px' }}>
+                    {features.map((feature, i) => {
+                      return (
+                        &lt;ListItem key={i} hanldeDoubleClick={() => handleFeatureDoubleClick(feature)}>
+                          &lt;LayerPanelCheckbox
+                            handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
+                            checkboxState={feature.get('_feature_visibility')} />
+                          &lt;ListItemText inset={false} primary={feature.get('name') || `Feature ${i}`} />
+                        &lt;/ListItem>
+                      )
+                    })}
+                  &lt;/List>
+                &lt;/Collapse> : null }
+            &lt;/div>
+          )
+        })}
+      &lt;/LayerPanelList>
+    &lt;/LayerPanelContent>
+  &lt;/LayerPanelPage>
+)
+</code></pre>
+<p><a href="./LayerPanel.html">See the docs for LayerPanel</a></p>
+</article>
+
+</section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
