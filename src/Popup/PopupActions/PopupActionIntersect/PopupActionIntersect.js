@@ -16,17 +16,6 @@ class ActionIntersect extends Component {
     this.state = { showSnackbar: false }
   }
 
-  toTwoDCoords = (coords) => {
-    const flatCoords = coords.flat(Infinity)
-    let out = []
-
-    for (let i = 0; i < flatCoords.length; i++) {
-      out.push([flatCoords[i], flatCoords[i++]])
-    }
-
-    return out
-  }
-
   intersect = () => {
     const { optLayers, map, feature, onActionEnd } = this.props
     const format = new olFormatGeoJson()
@@ -83,8 +72,8 @@ ActionIntersect.propTypes = {
 ActionIntersect.defaultProps = {
   parentLayerKey: '_ol_kit_parent',
   translations: {
-    '_ol_kit.PopupActionIntersect.title': 'Spatial Search',
-    '_ol_kit.PopupActionIntersect.alert': 'Search Complete!'
+    '_ol_kit.PopupActionIntersect.title': 'Intersect',
+    '_ol_kit.PopupActionIntersect.alert': 'Intersect Complete!'
   }
 }
 
