@@ -91,7 +91,7 @@ export function createMap (opts = {}) {
  * @function
  * @category Map
  * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {String} viewParam - the query param that will be used to update the url with view info
  * @returns {String} The url that is set within the function
  */
@@ -114,7 +114,7 @@ export function updateUrlFromMap (map, viewParam = 'view') {
  * @function
  * @category Map
  * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {String} viewParam - the query param that will be read to update the map position
  * @returns {Promise} Resolved with transformed center coords after the map has been updated by url info
  */
@@ -144,7 +144,7 @@ export function updateMapFromUrl (map, viewParam = 'view') {
  * @function
  * @category Map
  * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {Object} opts - include x, y, & zoom options
  * @returns {Array} Coordinates used to update the map
  */
@@ -163,7 +163,7 @@ export function centerAndZoom (map, opts = {}) {
  * @function
  * @category Map
  * @since 0.16.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {Number} x - the x coordinate
  * @param {Number} y - the x coordinate
  * @returns {Object} An object containing a `longitude` and `latitude` property
@@ -201,10 +201,10 @@ export function createSelectInteraction (opts = {}) {
  * @function
  * @category Map
  * @since 1.11.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {String} name - identifier to set as _ol_kit_origin on the interaction
  * @param {Object} opts - select interaction opts
- * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
+ * @returns {Object} object - { layer: {ol.layer.Vector} https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html, select: {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html }
  */
 export function addSelectInteraction (map, name = DEFAULT_SELECT_NAME, opts = {}) {
   if (!(map instanceof Map)) return ugh.throw('\'addSelectInteraction\' requires a valid openlayers map as the first argument')
@@ -218,7 +218,7 @@ export function addSelectInteraction (map, name = DEFAULT_SELECT_NAME, opts = {}
 
   map.addInteraction(select)
 
-  return { select, layer }
+  return { layer, select }
 }
 
 /**
@@ -226,17 +226,17 @@ export function addSelectInteraction (map, name = DEFAULT_SELECT_NAME, opts = {}
  * @function
  * @category Map
  * @since 1.11.0
- * @param {ol.Map} map - reference to the openlayer map object
- * @param {String} name - identifier to find _ol_kit_origin on the interaction
- * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
+ * @param {ol.Map} map - reference to the openlayers map object
+ * @param {String} name - identifier to find _ol_kit_origin on the select interaction
+ * @returns {Object} object - { layer: {ol.layer.Vector} https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html, select: {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html }
  */
 export function getSelectInteraction (map, name = DEFAULT_SELECT_NAME) {
-  if (!(map instanceof Map)) return ugh.throw('\'findSelectInteraction\' requires a valid openlayers map as the first argument')
+  if (!(map instanceof Map)) return ugh.throw('\'getSelectInteraction\' requires a valid openlayers map as the first argument')
 
   const interactions = map.getInteractions().getArray()
-  const interaction = interactions.find(interaction => interaction instanceof olInteractionSelect && interaction.get('_ol_kit_origin') === name)
+  const select = interactions.find(interaction => interaction instanceof olInteractionSelect && interaction.get('_ol_kit_origin') === name)
 
-  if (!interaction) return ugh.throw(`Select interaction with name '${name}' could not be found on the map`)
+  if (!select) return ugh.throw(`Select interaction with name '${name}' could not be found on the map`)
 
-  return interaction
+  return select
 }

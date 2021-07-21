@@ -2,8 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import { waitFor } from '@testing-library/react'
+import olInteractionSelect from 'ol/interaction/Select'
+import olVectorLayer from 'ol/layer/Vector'
 import qs from 'qs'
-import { Map, createMap, updateMapFromUrl } from 'Map'
+import {
+  Map,
+  addSelectInteraction,
+  createMap,
+  getSelectInteraction,
+  updateMapFromUrl
+} from 'Map'
 import { connectToContext } from 'Provider'
 
 describe('createMap', () => {
@@ -195,6 +203,57 @@ describe('updateUrlFromMap', () => {
       // waitFor allows the map to load/moveend which triggers the url update before checking the query to see if the param exists
       // check to make sure the view param was added to the url
       await waitFor(() => expect(query.view).toBe('39.000000,-96.000000,5.00,0.00'))
+    }
+
+    // default updateUrlFromView is true (which is what we're testing here)
+    mount(<Map onMapInit={onMapInit} />)
+  })
+})
+
+describe('selectInteractions', () => {
+  // jest does not reset the DOM after each test, so we do this manually
+  afterEach(() => {
+    document.getElementsByTagName('html')[0].innerHTML = ''
+  })
+
+  it('should create and find default select interaction', async () => {
+    global.document.body.innerHTML = '<div id="map"></div>'
+
+    const onMapInit = async map => {
+      const defaultSelect = getSelectInteraction(map)
+
+      // find default select without providing a name arg
+      expect(defaultSelect).toBeInstanceOf(olInteractionSelect)
+      const selectInteractionsOnMap = map.getInteractions().getArray().filter(interaction => {
+        return interaction instanceof olInteractionSelect
+      })
+
+      expect(selectInteractionsOnMap.length).toBe(1)
+
+      const { layer, select } = addSelectInteraction(map, 'custom_test_select')
+
+      // test addSelectInteraction
+      expect(select).toBeInstanceOf(olInteractionSelect)
+      expect(layer).toBeInstanceOf(olVectorLayer)
+      // new select should be on the map
+      expect(getSelectInteraction(map, 'custom_test_select')).toBeInstanceOf(olInteractionSelect)
+      const selectInteractionsOnMapAgain = map.getInteractions().getArray().filter(interaction => {
+        return interaction instanceof olInteractionSelect
+      })
+
+      expect(selectInteractionsOnMapAgain.length).toBe(2)
+    }
+
+    // default updateUrlFromView is true (which is what we're testing here)
+    mount(<Map onMapInit={onMapInit} />)
+  })
+
+  it('should throw an error getting a select interaction by bad name', async () => {
+    global.document.body.innerHTML = '<div id="map"></div>'
+
+    const onMapInit = async map => {
+      // this named select has never been added to the map- should throw error
+      expect(getSelectInteraction(map, 'bad_bad_fake_name')).toThrowErrorMatchingSnapshot()
     }
 
     // default updateUrlFromView is true (which is what we're testing here)

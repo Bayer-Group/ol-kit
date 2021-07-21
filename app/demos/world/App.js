@@ -11,8 +11,7 @@ import {
   TabbedPanelPage,
   BasemapContainer,
   VectorLayer,
-  DrawContainer,
-  getSelectInteraction
+  DrawContainer
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
