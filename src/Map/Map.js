@@ -116,7 +116,7 @@ class Map extends React.Component {
     const { selectInteraction } = this.props
 
     // check the map to see if select interaction has been added
-    let selectInteractionOnMap = map.getInteractions().getArray()
+    const selectInteractionOnMap = map.getInteractions().getArray()
       // Layer panel also adds a select interaction
       .filter(interaction => interaction._ol_kit_origin !== '_ol_kit_layer_panel_hover')
       // this checks if the select interaction created or passed in is the same instance on the map and never double adds
@@ -135,7 +135,6 @@ class Map extends React.Component {
       ugh.warn('<Map> has created a default select interaction (use `getSelectInteraction(map)` to access it). To have ol-kit use your custom select interaction, pass `selectInteraction` as a prop to <Map>.')
 
       this.selectInteraction = select
-      selectInteractionOnMap = true
     }
   }
 

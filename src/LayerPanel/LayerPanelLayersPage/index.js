@@ -18,7 +18,7 @@ import olFill from 'ol/style/Fill'
 import olCircle from 'ol/style/Circle'
 import ugh from 'ugh'
 
-import { addSelectInteraction } from '../../Map/utils'
+import { addSelectInteraction } from 'Map'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
