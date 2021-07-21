@@ -296,6 +296,7 @@ Object {
   "exportFeatures": [Function],
   "getLayersAndFeaturesForEvent": [Function],
   "getPopupPositionFromFeatures": [Function],
+  "getSelectInteraction": [Function],
   "getStyledFeatures": [Function],
   "getVertices": [Function],
   "loadBasemapLayer": [Function],

@@ -8,14 +8,14 @@ import olFill from 'ol/style/Fill'
 import olCircle from 'ol/style/Circle'
 import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
-import qs from 'qs'
-
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
+import qs from 'qs'
 
 import ugh from 'ugh'
 
 const OLKIT_ZOOMBOX_ID = '_ol-kit-css-zoombox-style'
+const DEFAULT_SELECT_NAME = '_ol_kit_default_select'
 const DEFAULT_SELECT_STYLE = new olStyle({
   stroke: new olStroke({
     color: 'cyan',
@@ -185,9 +185,10 @@ export function convertXYtoLatLong (map, x, y) {
  * @function
  * @category Map
  * @since 0.2.0
+ * @param {Object} opts - select interaction opts
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
-export function createSelectInteraction (opts) {
+export function createSelectInteraction (opts = {}) {
   return new olInteractionSelect({
     hitTolerance: 3,
     style: [DEFAULT_SELECT_STYLE],
@@ -200,18 +201,42 @@ export function createSelectInteraction (opts) {
  * @function
  * @category Map
  * @since 1.11.0
+ * @param {ol.Map} map - reference to the openlayer map object
+ * @param {String} name - identifier to set as _ol_kit_origin on the interaction
+ * @param {Object} opts - select interaction opts
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
-export function addSelectInteraction (map, name, opts) {
+export function addSelectInteraction (map, name = DEFAULT_SELECT_NAME, opts = {}) {
+  if (!(map instanceof Map)) return ugh.throw('\'addSelectInteraction\' requires a valid openlayers map as the first argument')
+
   const select = createSelectInteraction(opts)
   const source = new VectorSource({ features: select.getFeatures() })
   const layer = new VectorLayer({ source, style: [DEFAULT_SELECT_STYLE], map })
-  const origin = name || '_ol_kit_selection'
 
-  layer.set('_ol_kit_origin', origin)
-  select.set('_ol_kit_origin', origin)
+  layer.set('_ol_kit_origin', name)
+  select.set('_ol_kit_origin', name)
 
   map.addInteraction(select)
 
   return { select, layer }
+}
+
+/**
+ * Find a select interaction on the map by name (defaults to internal select created by ol-kit if name not passed)
+ * @function
+ * @category Map
+ * @since 1.11.0
+ * @param {ol.Map} map - reference to the openlayer map object
+ * @param {String} name - identifier to find _ol_kit_origin on the interaction
+ * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
+ */
+export function getSelectInteraction (map, name = DEFAULT_SELECT_NAME) {
+  if (!(map instanceof Map)) return ugh.throw('\'findSelectInteraction\' requires a valid openlayers map as the first argument')
+
+  const interactions = map.getInteractions().getArray()
+  const interaction = interactions.find(interaction => interaction instanceof olInteractionSelect && interaction.get('_ol_kit_origin') === name)
+
+  if (!interaction) return ugh.throw(`Select interaction with name '${name}' could not be found on the map`)
+
+  return interaction
 }

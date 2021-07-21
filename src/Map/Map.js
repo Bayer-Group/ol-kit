@@ -130,9 +130,9 @@ class Map extends React.Component {
       if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
     } else {
       // otherwise create a new select interaction
-      const { select } = addSelectInteraction(map, 'ol_kit_map')
+      const { select } = addSelectInteraction(map)
 
-      ugh.warn('ol-kit has created a select interaction with the origin as `_ol_kit_map`. To have ol-kit use a specific selectInteraction pass `selectInteraction` as a prop to your <Map>.')
+      ugh.warn('<Map> has created a default select interaction (use `getSelectInteraction(map)` to access it). To have ol-kit use your custom select interaction, pass `selectInteraction` as a prop to <Map>.')
 
       this.selectInteraction = select
       selectInteractionOnMap = true
