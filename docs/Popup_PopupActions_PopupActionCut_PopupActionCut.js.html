@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerPanel/LayerPanelList/index.js</title>
+    <title>ol-kit | Popup/PopupActions/PopupActionCut/PopupActionCut.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,162 +81,91 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-
-import List from '@material-ui/core/List'
-import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
-import nanoid from 'nanoid'
 import PropTypes from 'prop-types'
+import { PopupActionItem } from 'Popup'
+import { connectToContext } from 'Provider'
+import difference from '@turf/difference'
+import booleanIntersects from '@turf/boolean-intersects'
+import { Snackbar } from 'Snackbar'
 
-const applyDrag = (arr, dragResult) => {
-  const { removedIndex, addedIndex, payload } = dragResult
+import olFormatGeoJson from 'ol/format/GeoJSON'
+import olLayerVector from 'ol/layer/Vector'
 
-  if (removedIndex === null &amp;&amp; addedIndex === null) return arr
+class ActionCut extends Component {
+  constructor (props) {
+    super(props)
 
-  const result = [...arr]
-
-  let itemToAdd = payload
-
-  if (removedIndex !== null) {
-    itemToAdd = result.splice(removedIndex, 1)[0]
+    this.state = { showSnackbar: false }
   }
 
-  if (addedIndex !== null) {
-    result.splice(addedIndex, 0, itemToAdd)
-  }
+  cut = () => {
+    const format = new olFormatGeoJson()
+    const cutJsonFeature = format.writeFeatureObject(this.props.feature)
 
-  return result
-}
-
-/**
- * @component
- * @category LayerPanel
- * @since 0.5.0
- */
-class LayerPanelList extends Component {
-  handleDrop = e => {
-    const { onSort, onReorderedItems, items, onLayerReorder } = this.props
-    const reorderedItems = applyDrag(items.sort(onSort), e)
-
-    if (onReorderedItems) {
-      onReorderedItems(reorderedItems)
-      onLayerReorder()
-    }
-  }
-
-  onDragOver = e => {
-    e.preventDefault()
-    e.dataTransfer.dropEffect = 'move'
-    let dropNode = e.target
-
-    do {
-      if (dropNode.className === 'dropzone') {
-        this.displaced = dropNode.firstChild
-        this.dragTarget.parentNode.replaceChild(dropNode.firstChild, this.dragTarget)
-        dropNode.appendChild(this.dragTarget)
-
-        break
+    delete cutJsonFeature.properties._ol_kit_parent
+    const allFeaturesOnMap = this.props.map.getLayers().getArray().map(layer => {
+      if (layer.isVectorLayer || layer instanceof olLayerVector) {
+        return layer.getSource().getFeatures()
       }
-    }
-    while (dropNode = dropNode.parentNode, (dropNode.id !== '_ol_kit_layer_panel_drag_container' &amp;&amp; dropNode.id !== this.dragTarget.id)) // eslint-disable-line
-  }
+    }).flat()
+      .filter(feature => feature &amp;&amp; feature.getId() !== this.props.feature.getId())
+      .map(feature => {
+        feature.unset('_ol_kit_parent')
 
-  onDragStart = e => {
-    e.dataTransfer.dropEffect = 'move'
-    this.dragTarget = e.target
-    e.target.style.opacity = '0.25'
-  }
+        return feature
+      })
 
-  onDragEnd = e => {
-    e.preventDefault()
-    let dropNode = e.target
+    allFeaturesOnMap.forEach(feature => {
+      const geoJsonFeature = format.writeFeatureObject(feature)
 
-    do {
-      if (dropNode.className === 'draggable') {
-        const removedIndex = parseInt(this.dragTarget.id.split('_')[0])
-        const addedIndex = parseInt(this.displaced.id.split('_')[0])
-        const payload = this.dragTarget
+      if (booleanIntersects(geoJsonFeature, cutJsonFeature)) {
+        const featureDiff = difference(geoJsonFeature, cutJsonFeature)
+        const olCutFeature = format.readFeature(featureDiff)
 
-        this.handleDrop({ ...e, removedIndex, addedIndex, payload })
-
-        break
+        feature.setGeometry(olCutFeature.getGeometry())
       }
-    }
-    while (dropNode = dropNode.parentNode, dropNode.id !== '_ol_kit_layer_panel_drag_container') // eslint-disable-line
+    })
 
-    this.dragTarget.style.opacity = '1'
+    this.setState({ showSnackbar: true })
   }
 
   render () {
-    const { children, disableDrag, items } = this.props
+    const { showSnackbar } = this.state
 
-    if (children) {
-      return (
-        &lt;List>
-          &lt;div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd} >
-            {React.Children.map(this.props.children, (child, i) => {
-              const id = `${i}_${nanoid(6)}`
-
-              return (
-                &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={id || child.id} >
-                  &lt;div id={id} className={'draggable'} draggable={!disableDrag} onDragStart={this.onDragStart} onMouseEnter={() => this.addInteraction} >{child}&lt;/div>
-                &lt;/div>
-              )
-            })}
-          &lt;/div>
-        &lt;/List>
-      )
-    } else if (items) {
-      return (
-        &lt;List>
-          &lt;div id='_ol_kit_layer_panel_drag_container' onDragEnd={this.onDragEnd}>
-            {items.map((item, i) => {
-              const id = `${i}_${nanoid(6)}`
-
-              return (
-                &lt;div className={'dropzone'} onDragOver={this.onDragOver} key={item}>
-                  &lt;div id={id} className={'draggable'} draggable={!disableDrag} onDragStart={this.onDragStart} >
-                    &lt;LayerPanelListItem onMouseOver={() => this.addInteraction}>{item}&lt;/LayerPanelListItem>
-                  &lt;/div>
-                &lt;/div>
-              )
-            }
-            )}
-          &lt;/div>
-        &lt;/List>
-      )
-    } else {
-      return &lt;div>Must either pass `children` or a prop of `items` for LayerPanelList to render its list&lt;/div>
-    }
+    return (
+      &lt;>
+        &lt;PopupActionItem title={'_ol_kit.PopupActionCut.title'} onClick={() => this.cut()} />
+        &lt;Snackbar
+          open={showSnackbar}
+          closeSnackbar={() => this.setState({ showSnackbar: false })}
+          duration={5000}
+          message={'_ol_kit.PopupActionCut.alert'}
+          variant='info'/>
+      &lt;/>
+    )
   }
 }
 
-LayerPanelList.propTypes = {
-  /** The content of the LayerPanelList (likely `LayerPanelListItem` components) */
-  children: PropTypes.node,
-
-  /** callback when item prop is dropped */
-  onSort: PropTypes.func,
-
-  /** callback with reordered items */
-  onReorderedItems: PropTypes.func,
-
-  /** array of items to be rendered in the list */
-  items: PropTypes.array,
-
-  /** A boolean to disable the drag event on the LayerPanelList */
-  disableDrag: PropTypes.bool,
-
-  /** A callback function to inform when the list is reordered */
-  onLayerReorder: PropTypes.func
+ActionCut.propTypes = {
+  feature: PropTypes.object,
+  /** Called with removed feature */
+  onActionEnd: PropTypes.func,
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.shape({
+    '_ol_kit.PopupActionCut.title': PropTypes.string
+  }).isRequired,
+  map: PropTypes.object
 }
 
-LayerPanelList.defaultProps = {
-  onSort: (a, b) => { return a - b },
-  disableDrag: false,
-  onLayerReorder: () => {}
+ActionCut.defaultProps = {
+  parentLayerKey: '_ol_kit_parent',
+  translations: {
+    '_ol_kit.PopupActionCut.title': 'Remove Feature',
+    '_ol_kit.PopupActionCut.alert': 'Cut Complete!'
+  }
 }
 
-export default LayerPanelList
+export default connectToContext(ActionCut)
 </code></pre>
         </article>
     </section>
