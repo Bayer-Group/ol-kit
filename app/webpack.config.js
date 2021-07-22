@@ -25,7 +25,11 @@ module.exports = {
 
   resolve: {
     // Create aliases to import or require certain modules more easily
-    alias: {...alias}
+    alias: {...alias},
+    fallback: {
+      fs: false,
+      "stream": false
+    }
   },
 
   module: {
@@ -63,6 +67,11 @@ module.exports = {
       favicon: path.resolve(__dirname, 'favicon.ico'),
     }),
 
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    
+
     // Do not emit compiled assets that include errors
     new webpack.NoEmitOnErrorsPlugin()
   ],
@@ -73,6 +82,5 @@ module.exports = {
     publicPath: path.resolve('/'),
     contentBase: path.resolve(__dirname, '../', 'build'),
     historyApiFallback: true
-  },
-  node: { fs: 'empty' }
+  }
 }
