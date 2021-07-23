@@ -53,7 +53,7 @@ class App extends React.Component {
             <Welcome />
           </TabbedPanelPage>
           <TabbedPanelPage label='Layers'>
-            <LayerPanelLayersPage />
+            <LayerPanelLayersPage disableHover={true} />
           </TabbedPanelPage>
           <TabbedPanelPage label='Styles'>
             <LayerStyler />

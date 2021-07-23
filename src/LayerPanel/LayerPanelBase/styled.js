@@ -14,8 +14,7 @@ export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
   transition: 'all .3s',
   position: props => props.inline ? 'inline' : 'absolute',
   right: props => props.open ? '15px' : '-400px',
-  opacity: 0.9,
-  overflow: 'scroll'
+  opacity: 0.9
 })
 
 export const Tabs = styled(({ ...props }) => {
@@ -73,10 +72,11 @@ export const Checkbox = styled(({ ...props }) => <MaterialCheckbox {...props} />
   }
 })
 
-export const CardContent = styled(({ ...props }) => <MaterialCardContent {...props} />) ({
+export const CardContent = styled(({ ...props }) => <MaterialCardContent {...props} />)({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '0px 0px 0px 16px',
-  background: '#ededed'
+  background: '#ededed',
+  overflow: 'scroll'
 })
