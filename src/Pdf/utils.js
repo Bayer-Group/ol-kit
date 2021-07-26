@@ -3,31 +3,43 @@ import ugh from 'ugh'
 
 import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 
-export function convertSvgToTemplate (svg, inputs) {
-  const svgDoc = svg.contentDocument
+export function convertSvgToTemplate (svgString, inputs) {
+  const parser = new DOMParser()
+  const svgDoc = parser.parseFromString(svgString, 'application/xml')
+  const svgContainer = svgDoc.children[0]
+  const svgHeight = svgContainer.getAttribute('height')
+  const svgWidth = svgContainer.getAttribute('width')
+
+  // calc unit from svg
+  let unit
+  if (svgHeight.split('mm').length > 1) unit = 'mm'
+  else if (svgHeight.split('cm').length > 1) unit = 'cm'
+  else if (svgHeight.split('m').length > 1) unit = 'm'
+  else if (svgHeight.split('px').length > 1) unit = 'px'
+  else if (svgHeight.split('pt').length > 1) unit = 'pt'
+  else if (svgHeight.split('in').length > 1) unit = 'in'
+  const numberify = string => {
+    const [numberAsString] = string.split(unit) // closure, order matters
+
+    return Number(numberAsString)
+  }
+  // calc dimensions from svg
+  const height = numberify(svgHeight)
+  const width = numberify(svgWidth)
+  const orientation = width > height ? 'landscape' : 'portrait'
+  const dimensions = [height, width]
+
   const elements = inputs.map(input => {
     const { content, id, type } = input
-    const convertToPixels = attribute => {
-      if (attribute.split('mm').length > 1) {
-        // convert mm to pixel here
-        const [milimeters] = attribute.split('mm')
-        const pixels = milimeters * 3.78 // mm to pixel conversion
-        
-        return pixels
-      }
-      // add more catches to convert other units here
-
-      return attribute
-    }
     const element = svgDoc.getElementById(id)
     if (!element) {
       ugh.warn(`Element with id '${id}' is missing from svg document`)
       return undefined // this will be filtered out
     }
-    const x = convertToPixels(element.getAttribute('x'))
-    const y = convertToPixels(element.getAttribute('y'))
-    const height = convertToPixels(element.getAttribute('height'))
-    const width = convertToPixels(element.getAttribute('width'))
+    const x = numberify(element.getAttribute('x'))
+    const y = numberify(element.getAttribute('y'))
+    const height = numberify(element.getAttribute('height'))
+    const width = numberify(element.getAttribute('width'))
     const config = {
       id,
       type,
@@ -43,8 +55,9 @@ export function convertSvgToTemplate (svg, inputs) {
 
   const template = {
     elements,
-    dimensions: [793, 1112],
-    orientation: 'landscape',
+    dimensions,
+    orientation,
+    unit,
     fileName: 'kill_geoprint.pdf',
   }
 
@@ -53,18 +66,19 @@ export function convertSvgToTemplate (svg, inputs) {
 
 export async function printPDF (template, passedOpts) {
   const opts = {
-    hideLogo: false,
+    hideLogo: true, // TODO false
     ...passedOpts
   }
   const {
     dimensions,
-    elements,
-    fileName,
-    orientation,
+    elements = [],
+    fileName = 'ol-kit-map',
+    orientation = 'landscape',
+    unit = 'px',
   } = template
   const doc = new jsPDF({
     orientation,
-    unit: 'px',
+    unit,
     format: dimensions
   })
 
