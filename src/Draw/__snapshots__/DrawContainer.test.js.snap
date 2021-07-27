@@ -3,19 +3,19 @@
 exports[`<DrawContainer /> should render a basic prebuilt DrawContainer component 1`] = `
 "[36m<div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-hKFyIo gQSimQ\\"[39m
+    [33mclass[39m=[32m\\"sc-hKwCoD jAEajR\\"[39m
     [33mid[39m=[32m\\"_ol_kit_map_test_id\\"[39m
   [36m>[39m
     [36m<div[39m
-      [33mclass[39m=[32m\\"sc-bdnylx kHErEJ\\"[39m
+      [33mclass[39m=[32m\\"sc-bdvvaa kHDtCR\\"[39m
     [36m>[39m
       [36m<p[39m
-        [33mclass[39m=[32m\\"sc-dlnjPT kmmhpS\\"[39m
+        [33mclass[39m=[32m\\"sc-dkPtyc kxUrqc\\"[39m
       [36m>[39m
         [0mPowered by ol-kit[0m
       [36m</p>[39m
       [36m<a[39m
-        [33mclass[39m=[32m\\"sc-gtssRu fBppYk\\"[39m
+        [33mclass[39m=[32m\\"sc-gsDJrp ewyKwv\\"[39m
         [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
         [33mtarget[39m=[32m\\"_blank\\"[39m
         [33mtitle[39m=[32m\\"Powered by ol-kit v1.11.0\\"[39m
@@ -63,18 +63,18 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
     [36m</div>[39m
   [36m</div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-gKAblj qioHn\\"[39m
+    [33mclass[39m=[32m\\"sc-gKckTs fGYIqi\\"[39m
   [36m>[39m
     [36m<div>[39m
       [36m<div[39m
-        [33mclass[39m=[32m\\"sc-pNWxx eghRuN\\"[39m
+        [33mclass[39m=[32m\\"sc-pVTma eSmZeZ\\"[39m
       [36m>[39m
         [36m<div[39m
-          [33mclass[39m=[32m\\"sc-jrsJCI gBTtMU\\"[39m
+          [33mclass[39m=[32m\\"sc-jrQzUz ljxGlg\\"[39m
           [33mid[39m=[32m\\"_POINT_LABELS_ENABLED\\"[39m
         [36m>[39m
           [36m<label[39m
-            [33mclass[39m=[32m\\"sc-kEqYlL dlkeav\\"[39m
+            [33mclass[39m=[32m\\"sc-kDThTU jiCjdw\\"[39m
             [33mfor[39m=[32m\\"_POINT_LABELS_ENABLED\\"[39m
           [36m>[39m
             [0mCoordinate Labels[0m
@@ -84,13 +84,13 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
           [36m>[39m
             [36m<span[39m
               [33maria-disabled[39m=[32m\\"false\\"[39m
-              [33mclass[39m=[32m\\"MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-16 MuiSwitch-switchBase WithStyles(ForwardRef(Switch))-switchBase-1 MuiSwitch-colorPrimary\\"[39m
+              [33mclass[39m=[32m\\"MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-4 MuiSwitch-switchBase WithStyles(ForwardRef(Switch))-switchBase-1 MuiSwitch-colorPrimary\\"[39m
             [36m>[39m
               [36m<span[39m
                 [33mclass[39m=[32m\\"MuiIconButton-label\\"[39m
               [36m>[39m
                 [36m<input[39m
-                  [33mclass[39m=[32m\\"PrivateSwitchBase-input-19 MuiSwitch-input\\"[39m
+                  [33mclass[39m=[32m\\"PrivateSwitchBase-input-7 MuiSwitch-input\\"[39m
                   [33mtype[39m=[32m\\"checkbox\\"[39m
                   [33mvalue[39m=[32m\\"false\\"[39m
                 [36m/>[39m
@@ -110,19 +110,19 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
       [36m</div>[39m
     [36m</div>[39m
     [36m<div[39m
-      [33mclass[39m=[32m\\"MuiContainer-root WithStyles(ForwardRef(Container))-root-32 MuiContainer-maxWidthLg\\"[39m
+      [33mclass[39m=[32m\\"MuiContainer-root WithStyles(ForwardRef(Container))-root-8 MuiContainer-maxWidthLg\\"[39m
     [36m>[39m
       [36m<div[39m
-        [33mclass[39m=[32m\\"MuiContainer-root WithStyles(ForwardRef(Container))-root-41 MuiContainer-maxWidthLg\\"[39m
+        [33mclass[39m=[32m\\"MuiContainer-root WithStyles(ForwardRef(Container))-root-9 MuiContainer-maxWidthLg\\"[39m
       [36m>[39m
         [36m<div[39m
           [33mstyle[39m=[32m\\"width: 100%;\\"[39m
         [36m>[39m
           [36m<div[39m
-            [33mclass[39m=[32m\\"sc-pNWxx eghRuN\\"[39m
+            [33mclass[39m=[32m\\"sc-pVTma eSmZeZ\\"[39m
           [36m>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"sc-jrsJCI gBTtMU\\"[39m
+              [33mclass[39m=[32m\\"sc-jrQzUz ljxGlg\\"[39m
               [33mid[39m=[32m\\"_DISTANCE_LABEL_ENABLED\\"[39m
             [36m>[39m
               [36m<span[39m
@@ -130,13 +130,13 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m>[39m
                 [36m<span[39m
                   [33maria-disabled[39m=[32m\\"false\\"[39m
-                  [33mclass[39m=[32m\\"MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-16 MuiSwitch-switchBase WithStyles(ForwardRef(Switch))-switchBase-1 MuiSwitch-colorPrimary\\"[39m
+                  [33mclass[39m=[32m\\"MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-4 MuiSwitch-switchBase WithStyles(ForwardRef(Switch))-switchBase-1 MuiSwitch-colorPrimary\\"[39m
                 [36m>[39m
                   [36m<span[39m
                     [33mclass[39m=[32m\\"MuiIconButton-label\\"[39m
                   [36m>[39m
                     [36m<input[39m
-                      [33mclass[39m=[32m\\"PrivateSwitchBase-input-19 MuiSwitch-input\\"[39m
+                      [33mclass[39m=[32m\\"PrivateSwitchBase-input-7 MuiSwitch-input\\"[39m
                       [33mdata-testid[39m=[32m\\"geokit-MeasureLabelPreference-uomToggle\\"[39m
                       [33mtype[39m=[32m\\"checkbox\\"[39m
                       [33mvalue[39m=[32m\\"false\\"[39m
@@ -155,7 +155,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"sc-iqAbSa eMfxro\\"[39m
+              [33mclass[39m=[32m\\"sc-iqsfdx bFFQaj\\"[39m
             [36m>[39m
               [36m<span>[39m
                 [0mDistance: [0m
@@ -164,5 +164,5 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiI..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput-..."
 `;
