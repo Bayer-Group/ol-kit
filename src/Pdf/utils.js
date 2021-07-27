@@ -3,7 +3,18 @@ import ugh from 'ugh'
 
 import OL_KIT_MARK from 'images/ol_kit_mark.svg'
 
-export function convertSvgToTemplate (svgString, inputs) {
+/**
+ * Take an svg template and list of inputs and convert it into a fully loaded template to print a PDF
+ * @function
+ * @category PDF
+ * @since 1.12.0
+ * @param {String} svg - Stringified svg used as a template for creating pdf
+ * @param {Object[]} inputs - Array of inputs that fill in the svg elements required: { id: string, type: 'text' | 'image', content: canvas | string }
+ * @param {Object} opts - Non template options: { fileName: string }
+ * @returns {Object} Template ready to be used by `printPDF`
+ */
+export function convertSvgToTemplate (svgString, inputs, opts = {}) {
+  const { fileName } = opts
   const parser = new DOMParser()
   const svgDoc = parser.parseFromString(svgString, 'application/xml')
   const svgContainer = svgDoc.children[0]
@@ -58,12 +69,21 @@ export function convertSvgToTemplate (svgString, inputs) {
     dimensions,
     orientation,
     unit,
-    fileName: 'kill_geoprint.pdf',
+    fileName
   }
 
   return template
 }
 
+/**
+ * Build a PDF from a template and print locally
+ * @function
+ * @category PDF
+ * @since 1.12.0
+ * @param {Object} template - { elements, dimensions, orientation, unit, fileName }
+ * @param {Object} opts - PDF options: { hideLogo: false }
+ * @returns {Object} 
+ */
 export async function printPDF (template, passedOpts) {
   const opts = {
     hideLogo: true, // TODO false
@@ -92,8 +112,6 @@ export async function printPDF (template, passedOpts) {
       height,
       width,
     } = element
-
-    console.log('template element', element)
 
     if (type === 'image') {
       // http://raw.githack.com/MrRio/jsPDF/master/docs/module-addImage.html
