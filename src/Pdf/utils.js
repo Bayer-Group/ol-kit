@@ -9,7 +9,7 @@ import OL_KIT_MARK from 'images/ol_kit_mark.svg'
  * @category PDF
  * @since 1.12.0
  * @param {String} svg - Stringified svg used as a template for creating pdf
- * @param {Object[]} inputs - Array of inputs that fill in the svg elements required: { id: string, type: 'text' | 'image', content: canvas | string }
+ * @param {Object[]} inputs - Array of inputs that fill in the svg elements required: { id: string, type: 'text' | 'image', content: canvas | string, uri: string }
  * @param {Object} opts - Non template options: { fileName: string }
  * @returns {Object} Template ready to be used by `printPDF`
  */
@@ -23,6 +23,7 @@ export function convertSvgToTemplate (svgString, inputs, opts = {}) {
 
   // calc unit from svg
   let unit
+
   if (svgHeight.split('mm').length > 1) unit = 'mm'
   else if (svgHeight.split('cm').length > 1) unit = 'cm'
   else if (svgHeight.split('m').length > 1) unit = 'm'
@@ -43,8 +44,10 @@ export function convertSvgToTemplate (svgString, inputs, opts = {}) {
   const elements = inputs.map(input => {
     const { content, id, type } = input
     const element = svgDoc.getElementById(id)
+
     if (!element) {
       ugh.warn(`Element with id '${id}' is missing from svg document`)
+
       return undefined // this will be filtered out
     }
     const x = numberify(element.getAttribute('x'))
@@ -58,7 +61,7 @@ export function convertSvgToTemplate (svgString, inputs, opts = {}) {
       x,
       y,
       height,
-      width,
+      width
     }
 
     return config
@@ -82,7 +85,7 @@ export function convertSvgToTemplate (svgString, inputs, opts = {}) {
  * @since 1.12.0
  * @param {Object} template - { elements, dimensions, orientation, unit, fileName }
  * @param {Object} opts - PDF options: { hideLogo: false }
- * @returns {Object} 
+ * @returns {Object}
  */
 export async function printPDF (template, passedOpts) {
   const opts = {
@@ -94,7 +97,7 @@ export async function printPDF (template, passedOpts) {
     elements = [],
     fileName = 'ol-kit-map',
     orientation = 'landscape',
-    unit = 'px',
+    unit = 'px'
   } = template
   const doc = new jsPDF({
     orientation,
@@ -102,7 +105,7 @@ export async function printPDF (template, passedOpts) {
     format: dimensions
   })
 
-  elements?.forEach(element => {
+  elements.forEach(element => {
     const {
       id,
       type,
@@ -111,11 +114,17 @@ export async function printPDF (template, passedOpts) {
       y,
       height,
       width,
+      uri
     } = element
 
     if (type === 'image') {
       // http://raw.githack.com/MrRio/jsPDF/master/docs/module-addImage.html
-      doc.addImage(content, 'JPEG', x, y, width, height, id, 'NONE', 0)
+      if (uri) {
+        // image link print
+      } else {
+        // canvas print
+        doc.addImage(content, 'JPEG', x, y, width, height, id, 'NONE', 0)
+      }
     } else if (type === 'text') {
       doc.text(content, x, y)
     }
@@ -127,7 +136,6 @@ export async function printPDF (template, passedOpts) {
     img.setAttribute('src', OL_KIT_MARK)
     document.body.appendChild(img)
     doc.addImage(img, 'WEBP', 0, 0, 30, 30, '_ol_kit_logo', 'NONE', 0)
-    console.log('do not hide logo')
   }
 
   // download pdf
