@@ -120,7 +120,10 @@ export async function printPDF (template, passedOpts) {
     if (type === 'image') {
       // http://raw.githack.com/MrRio/jsPDF/master/docs/module-addImage.html
       if (uri) {
-        // image link print
+        const image = new Image()
+
+        image.src = uri
+        doc.addImage(image, 'JPEG', x, y, width, height, id, 'NONE', 0)
       } else {
         // canvas print
         doc.addImage(content, 'JPEG', x, y, width, height, id, 'NONE', 0)
