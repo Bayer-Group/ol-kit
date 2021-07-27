@@ -37,11 +37,7 @@ class PopupActionGroup extends Component {
     const { title, children, feature } = this.props
     const { right, top } = this.el ? this.el.getBoundingClientRect() : { right: 0, top: 0 }
     const transformedChildren = React.Children.map(children, c => {
-      return React.cloneElement(c, {
-        ...this.props,
-        children: c.props.children,
-        ...(feature && { feature })
-      })
+      return React.cloneElement(c, { ...(feature && { feature }) })
     })
 
     return (
