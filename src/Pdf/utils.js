@@ -89,7 +89,7 @@ export function convertSvgToTemplate (svgString, inputs, opts = {}) {
  */
 export async function printPDF (template, passedOpts) {
   const opts = {
-    hideLogo: true, // TODO false
+    hideLogo: false,
     ...passedOpts
   }
   const {
@@ -134,11 +134,10 @@ export async function printPDF (template, passedOpts) {
   })
 
   if (!opts.hideLogo) {
-    const img = document.createElement('img')
+    const image = new Image()
 
-    img.setAttribute('src', OL_KIT_MARK)
-    document.body.appendChild(img)
-    doc.addImage(img, 'WEBP', 0, 0, 30, 30, '_ol_kit_logo', 'NONE', 0)
+    image.src = 'https://ol-kit.com/favicon.ico'
+    doc.addImage(image, 'JPEG', 0, 0, 30, 30, '_ol_kit_logo', 'NONE', 0)
   }
 
   // download pdf
