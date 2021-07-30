@@ -18,7 +18,7 @@ import olFill from 'ol/style/Fill'
 import olCircle from 'ol/style/Circle'
 import ugh from 'ugh'
 
-import { createSelectInteraction } from '../../Map/utils'
+import { addSelectInteraction } from 'Map'
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -84,10 +84,9 @@ class LayerPanelLayersPage extends Component {
       })
     })
 
-    this.selectInteraction = createSelectInteraction({ _ol_kit_interaction_type: '_ol_kit_layer_panel_hover', style: [style] })
+    const { select } = addSelectInteraction(map, '_ol_kit_layer_panel_hover', { style: [style] })
 
-    // Add a second select interaction to show hover states
-    map.addInteraction(this.selectInteraction)
+    this.selectInteraction = select
   }
 
   selectFeatures = features => {
