@@ -11,7 +11,7 @@ import {
   TabbedPanelPage,
   BasemapContainer,
   VectorLayer,
-  DrawContainer,
+  DrawContainer
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
@@ -67,7 +67,7 @@ class App extends React.Component {
             <Welcome />
           </TabbedPanelPage>
           <TabbedPanelPage label='Layers'>
-            <LayerPanelLayersPage />
+            <LayerPanelLayersPage disableHover={true} />
           </TabbedPanelPage>
           <TabbedPanelPage label='Styles'>
             <LayerStyler />

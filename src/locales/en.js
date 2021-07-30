@@ -80,6 +80,8 @@ export default {
   '_ol_kit.PopupActionWkt.copyToClipboard': 'Copy Geometry as Coordinates',
   '_ol_kit.PopupActionGoogleMaps.navigateGoogleMaps': 'View location in Google Maps',
   '_ol_kit.PopupActionRemove.title': 'Remove Feature',
+  '_ol_kit.PopupActionCut.title': 'Cut Selected Feature',
+  '_ol_kit.PopupActionCut.alert': 'Cut Complete!',
   '_ol_kit.PopupActionDuplicate.alert': 'Shape duplicated!',
   '_ol_kit.PopupActionDuplicate.title': 'Duplicate Shape',
   // TimeSliderBase

@@ -17,6 +17,36 @@ export const CompassContainer = styled.div`
     opacity: 1;
   }
 `
+export const ScaleLineContainer = styled.div`
+  opacity: 0.75;
+  margin: 8px;
+  padding: 3px;
+  background: white;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+  min-width: 64px;
+  min-height: 15px;
+  display: flex;
+  flex-direction: ${props => props.orientation === 'vertical' ? 'column' : 'row'};
+  align-items: center;
+  justify-content: center;
+  & .ol-scale-line {
+    background: unset;
+    position: unset;
+    padding: 3px;
+  }
+  & .ol-scale-line-inner {
+    border: 1px solid #565656;
+    border-top: none;
+    color: #565656;
+    font-size: 10px;
+    text-align: center;
+    margin: 1px;
+    will-change: contents, width;
+    transition: all 0.25s;
+  }
+`
 
 export const ControlsContainer = styled.div`
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;

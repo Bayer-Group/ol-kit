@@ -40,7 +40,7 @@ class LayerPanelActionImport extends Component {
     return (
       <MenuItem disableGutters={false}>
         <label htmlFor='file-upload'>
-          {translations['_ol_kit.LayerPanelActions.import'] || 'Import File'}
+          {translations['_ol_kit.LayerPanelActions.import']}
         </label>
         <UploadInput
           value={this.state.value || ''}
