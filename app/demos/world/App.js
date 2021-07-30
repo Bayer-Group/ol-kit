@@ -18,6 +18,8 @@ import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
+import { ScaleInteraction } from '../../../src/Draw/ScaleInteraction'
+
 import Welcome from '../../Welcome'
 
 class App extends React.Component {
@@ -37,11 +39,23 @@ class App extends React.Component {
 
     map.addLayer(layer)
 
-    const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
+    this.dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 
-    dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+    this.dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
 
     window.map = map
+
+    this.setupScaleInteraction()
+  }
+
+  setupScaleInteraction = () => {
+    const feature = this.dataLayer.getSource().getFeatures().find(feature => feature.get('name') === 'United States of America')
+
+    console.log(feature)
+
+    const scaleInteraction = new ScaleInteraction({ feature })
+
+    window.map.addInteraction(scaleInteraction)
   }
 
   render () {

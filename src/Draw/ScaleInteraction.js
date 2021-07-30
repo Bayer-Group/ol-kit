@@ -138,7 +138,7 @@ export class ScaleInteraction extends olPointerInteraction {
     if (this.lastCoordinate_) {
       const newCoordinate = event.coordinate
       const deltaX = this.lastCoordinate_[0] / newCoordinate[0]
-      const deltaY = this.lastCoordinate_[1] / newCoordinate[1]
+      const deltaY = this.lastCoordinate_[0] / newCoordinate[0]
 
       const feature = this.features_ || this.lastFeature_
 
