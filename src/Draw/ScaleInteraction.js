@@ -23,7 +23,7 @@ export class ScaleFeature {
   }
 }
 
-export class ScaleInteraction extends olPointerInteraction {
+export default class ScaleInteraction extends olPointerInteraction {
   constructor (opts) {
     const options = opts || {}
 
