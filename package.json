@@ -82,6 +82,7 @@
     "depcheck": "~1.2.0",
     "exifreader": "^3.14.0",
     "geostyler-openlayers-parser": "~2.1.0",
+    "jspdf": "^2.3.1",
     "jszip": "^3.5.0",
     "lodash.clonedeep": "~4.5.0",
     "lodash.debounce": "~4.0.8",

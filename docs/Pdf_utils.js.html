@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | LayerStyler/LayerStyler.js</title>
+    <title>ol-kit | Pdf/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,229 +80,149 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
-import PropTypes from 'prop-types'
-import StyleManager from 'LayerStyler/StyleManager'
-import HeatmapLayer from 'ol/layer/Heatmap'
-import olFormatFilterAnd from 'ol/format/filter/And'
-import olFormatFilterOr from 'ol/format/filter/Or'
-import olFormatFilterEqualTo from 'ol/format/filter/EqualTo'
-import olFormatFilterIsLike from 'ol/format/filter/IsLike'
-import olFilterFunction from '../classes/FilterFunction'
+            <pre class="prettyprint source linenums"><code>import { jsPDF } from 'jspdf'
 import ugh from 'ugh'
 
-import escapeRegExp from 'lodash.escaperegexp'
+/**
+ * Take an svg template and list of inputs and convert it into a fully loaded template to print a PDF
+ * @function
+ * @category PDF
+ * @since 1.12.0
+ * @param {String} svg - Stringified svg used as a template for creating pdf
+ * @param {Object[]} inputs - Array of inputs that fill in the svg elements required: { id: string, type: 'text' | 'image', content: canvas | string, uri: string }
+ * @param {Object} opts - Non template options: { fileName: string }
+ * @returns {Object} Template ready to be used by `printPDF`
+ */
+export function convertSvgToPDFTemplate (svgString, inputs, opts = {}) {
+  const { fileName } = opts
+  const parser = new DOMParser()
+  const svgDoc = parser.parseFromString(svgString, 'application/xml')
+  const svgContainer = svgDoc.children[0]
+  const svgHeight = svgContainer.getAttribute('height')
+  const svgWidth = svgContainer.getAttribute('width')
 
-import { addMovementListener, removeMovementListener } from 'Popup'
-import { connectToContext } from 'Provider'
+  // calc unit from svg
+  let unit
+
+  if (svgHeight.split('mm').length > 1) unit = 'mm'
+  else if (svgHeight.split('cm').length > 1) unit = 'cm'
+  else if (svgHeight.split('m').length > 1) unit = 'm'
+  else if (svgHeight.split('px').length > 1) unit = 'px'
+  else if (svgHeight.split('pt').length > 1) unit = 'pt'
+  else if (svgHeight.split('in').length > 1) unit = 'in'
+  const numberify = string => {
+    const [numberAsString] = string.split(unit) // closure, order matters
+
+    return Number(numberAsString)
+  }
+  // calc dimensions from svg
+  const height = numberify(svgHeight)
+  const width = numberify(svgWidth)
+  const orientation = width > height ? 'landscape' : 'portrait'
+  const dimensions = [height, width]
+
+  const elements = inputs.map(input => {
+    const { content, id, type } = input
+    const element = svgDoc.getElementById(id)
+
+    if (!element) {
+      ugh.warn(`Element with id '${id}' is missing from svg document`)
+
+      return undefined // this will be filtered out
+    }
+    const x = numberify(element.getAttribute('x'))
+    const y = numberify(element.getAttribute('y'))
+    const height = numberify(element.getAttribute('height'))
+    const width = numberify(element.getAttribute('width'))
+    const config = {
+      id,
+      type,
+      content,
+      x,
+      y,
+      height,
+      width
+    }
+
+    return config
+  }).filter(element => element)
+
+  const template = {
+    elements,
+    dimensions,
+    orientation,
+    unit,
+    fileName
+  }
+
+  return template
+}
 
 /**
- * UI to choose color, stroke, fill etc. for styles and labels on layers
- * @component
- * @category LayerStyler
+ * Build a PDF from a template and print locally
+ * @function
+ * @category PDF
+ * @since 1.12.0
+ * @param {Object} template - { elements, dimensions, orientation, unit, fileName }
+ * @param {Object} opts - PDF options: { hideLogo: false }
+ * @returns {Object}
  */
-class LayerStyler extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      attributeValues: [],
-      listeners: [],
-      whitelistedLayers: props.whitelistedLayers
-    }
+export async function printPDFTemplate (template, passedOpts) {
+  const opts = {
+    hideLogo: false,
+    ...passedOpts
   }
+  const {
+    dimensions,
+    elements = [],
+    fileName = 'ol-kit-map',
+    orientation = 'landscape',
+    unit = 'px'
+  } = template
+  const doc = new jsPDF({
+    orientation,
+    unit,
+    format: dimensions
+  })
 
-  componentDidMount () {
-    const { map } = this.props
-    const layers = map.getLayers()
+  elements.forEach(element => {
+    const {
+      id,
+      type,
+      content,
+      x,
+      y,
+      height,
+      width,
+      uri
+    } = element
 
-    // if a layer is added or removed, the list of layers should be updated
-    const handleLayersChange = (e) => this.forceUpdate()
+    if (type === 'image') {
+      // http://raw.githack.com/MrRio/jsPDF/master/docs/module-addImage.html
+      if (uri) {
+        const image = new Image()
 
-    // bind the event listeners
-    const onAddKey = layers.on('add', handleLayersChange)
-    const onRemoveKey = layers.on('remove', handleLayersChange)
-
-    // make sure the attributes get updated each time the view extent changes
-    const listeners = addMovementListener(map, () => this.forceUpdate())
-
-    this.setState({ listeners: [...listeners, onAddKey, onRemoveKey] })
-  }
-
-  componentWillUnmount () {
-    const { listeners } = this.state
-
-    removeMovementListener(listeners)
-  }
-
-  getTitleForLayer = (layer) => {
-    return layer?.get?.('title') || layer?.getTypeName?.() || 'untitled layer'
-  }
-
-  getAttributesForLayer = layer => {
-    if (layer) {
-      if (layer.isGeoserverLayer) {
-        return layer.getAttributes().sort((a, b) => a.localeCompare(b))
-      } else if (layer.isVectorLayer || layer.isVectorTileLayer) {
-        return layer.getAttributes().sort((a, b) => a.localeCompare(b))
-      }
-    }
-  }
-
-  getValuesForAttribute = async (layer, attribute) => {
-    if (layer) {
-      if (layer.isGeoserverLayer) {
-        const { typeName } = layer
-        const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
-        const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
-        const attributeValues = await layer.fetchValuesForAttribute(this.props.map, attribute, opts)
-
-        this.setState({ attributeValues })
-      } else if (layer.isVectorLayer || layer.isVectorTileLayer) {
-        const attributeValues = layer.fetchValuesForAttribute(attribute)
-
-        this.setState({ attributeValues })
-      }
-    }
-  }
-
-  getCommaDelimitedAttributesForLayer = (layer) => {
-    if (layer &amp;&amp; layer.isGeoserverLayer) {
-      const { typeName } = layer
-      const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
-
-      return whitelistedLayer ? whitelistedLayer.commaDelimitedAttributes : []
-    }
-  }
-
-  onFilterChange = (layer, filters) => {
-    if (layer &amp;&amp; layer.isGeoserverLayer) {
-      const { typeName } = layer
-      const whitelistedLayer = this.state.whitelistedLayers.find(l => l.typename === typeName)
-      const opts = whitelistedLayer ? { commaDelimitedAttributes: whitelistedLayer.commaDelimitedAttributes } : {}
-
-      layer.setWMSFilters(filters, opts)
-      layer.setOlFilters(this.setOlFilters(filters, opts))
-
-      // cause a re-render which will re-hydrate the latest styles
-      this.forceUpdate()
-    }
-  }
-
-  setOlFilters = (filters = [], opts) => {
-    const olFilters = filters.map(({ attribute, value }) => {
-      if (opts.commaDelimitedAttributes &amp;&amp; opts.commaDelimitedAttributes.includes(attribute)) {
-        // this filter is due to commaDelimitedAttributes, we have to make an OR filter with 3 regex filters
-        // the olFilterFunction is our custom filter function due to openlayers not supporting functions as filters
-        return new olFormatFilterOr(
-          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `^${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
-          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `.*,( )??${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
-          new olFormatFilterIsLike(new olFilterFunction('strMatches', attribute, `.*,( )??${escapeRegExp(value)}( )??,.*`), true, '*', '.', '!'),
-          new olFormatFilterEqualTo(attribute, escapeRegExp(value))
-        )
+        image.src = uri
+        doc.addImage(image, 'JPEG', x, y, width, height, id, 'NONE', 0)
       } else {
-        return new olFormatFilterEqualTo(attribute, value)
+        // canvas print
+        doc.addImage(content, 'JPEG', x, y, width, height, id, 'NONE', 0)
       }
-    })
-
-    if (filters[0]?.logical === 'AND' &amp;&amp; filters.length > 1) {
-      return new olFormatFilterAnd(...olFilters)
-    } else if (filters[0]?.logical === 'OR' &amp;&amp; filters.length > 1) {
-      return new olFormatFilterOr(...olFilters)
-    } else {
-      return olFilters[0]
+    } else if (type === 'text') {
+      doc.text(content, x, y)
     }
+  })
+
+  if (!opts.hideLogo) {
+    const image = new Image()
+
+    image.src = 'https://ol-kit.com/favicon.ico'
+    doc.addImage(image, 'JPEG', 0, 0, 30, 30, '_ol_kit_logo', 'NONE', 0)
   }
 
-  onDefaultStyleChange = (layer, styles) => {
-    if (layer &amp;&amp; layer.isGeoserverLayer) {
-      layer.setDefaultWMSStyles(styles)
-    } else {
-      layer.updateDefaultVectorStyles(styles)
-    }
-
-    // cause a re-render which will re-hydrate the latest styles
-    this.forceUpdate()
-  }
-
-  onUserStyleChange = (layer, styles) => {
-    if (layer &amp;&amp; layer.isGeoserverLayer) {
-      layer.setUserWMSStyles(styles)
-    } else if (layer &amp;&amp; (layer.isVectorLayer || layer.isVectorTileLayer)) {
-      layer.setUserVectorStyles(styles)
-    }
-
-    // cause a re-render which will re-hydrate the latest styles
-    this.forceUpdate()
-  }
-
-  onDefaultStyleReset = (layer) => {
-    if (layer &amp;&amp; layer.isGeoserverLayer) {
-      layer.resetDefaultWMSStyles()
-    } else if (layer.isVectorLayer || layer.isVectorTileLayer) {
-      layer.resetDefaultVectorStyles()
-    }
-
-    // cause a re-render which will re-hydrate the latest styles
-    this.forceUpdate()
-  }
-
-  getValidLayers = () => {
-    const { map } = this.props
-    const layers = map.getLayers().getArray()
-    const validLayers = layers.filter(layer => {
-      return !layer.get('_ol_kit_basemap') &amp;&amp; (layer.isGeoserverLayer || layer.isVectorLayer || layer.isVectorTileLayer || layer instanceof HeatmapLayer)
-    })
-
-    if (layers.length - validLayers.length > 1) {
-      ugh.warn('In order to use ManageLayers, the layer must be either an VectorLayer or GeoserverLayer')
-    }
-
-    return validLayers
-  }
-
-  render () {
-    const layers = this.getValidLayers()
-    const { attributeValues } = this.state
-    const { translations } = this.props
-
-    return (
-      &lt;StyleManager
-        layers={layers}
-        translations={translations}
-        filters={layers.map(l => l.isGeoserverLayer &amp;&amp; l.getWMSFilters())}
-        userStyles={layers.map(l => l.isGeoserverLayer ? l.getUserWMSStyles() : l.getUserVectorStyles?.())}
-        defaultStyles={layers.map(l => l.isGeoserverLayer ? l.getDefaultWMSStyles() : l.getDefaultVectorStyles?.())}
-        getCommaDelimitedAttributesForLayer={this.getCommaDelimitedAttributesForLayer}
-        getTitleForLayer={this.getTitleForLayer}
-        getValuesForAttribute={this.getValuesForAttribute}
-        getAttributesForLayer={this.getAttributesForLayer}
-        attributeValues={attributeValues}
-        onFilterChange={this.onFilterChange}
-        onUserStyleChange={this.onUserStyleChange}
-        onDefaultStyleChange={this.onDefaultStyleChange}
-        onDefaultStyleReset={this.onDefaultStyleReset}
-        {...this.props} />
-    )
-  }
+  // download pdf
+  doc.save(fileName)
 }
-
-LayerStyler.defaultProps = {
-  whitelistedLayers: []
-}
-
-LayerStyler.propTypes = {
-  /** Openlayers map object */
-  map: PropTypes.object.isRequired,
-
-  /** Object with key/value pairs for translated strings */
-  translations: PropTypes.object.isRequired,
-
-  /** An array of layer typenames that will be used for a whitelist */
-  whitelistedLayers: PropTypes.array
-}
-
-export default connectToContext(LayerStyler)
 </code></pre>
         </article>
     </section>
