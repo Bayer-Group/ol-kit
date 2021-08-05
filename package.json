@@ -53,8 +53,8 @@
     "integrations": "./app/integration.sh",
     "lint": "eslint src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
-    "prepublishOnly": "run preventPublish",
-    "ship": "run ship",
+    "prepublishOnly": "node ./scripts/preventPublish.js",
+    "ship": "node ./scripts/ship.js",
     "test": "jest --notify --config=jest.config.js",
     "test:coverage": "jest --config=jest.config.js --coverage",
     "test:watch": "jest --notify --config=jest.config.js --watch --coverage"
@@ -166,7 +166,6 @@
     "react-hot-loader": "~4.12.21",
     "react-router-dom": "~5.2.0",
     "recharts": "~1.8.5",
-    "runjs": "~4.4.2",
     "semver": "~7.3.2",
     "styled-components": "~5.2.0",
     "webpack": "~4.43.0",

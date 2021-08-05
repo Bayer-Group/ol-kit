@@ -1,8 +1,6 @@
 import { jsPDF } from 'jspdf'
 import ugh from 'ugh'
 
-import OL_KIT_MARK from 'images/ol_kit_mark.svg'
-
 /**
  * Take an svg template and list of inputs and convert it into a fully loaded template to print a PDF
  * @function
@@ -13,7 +11,7 @@ import OL_KIT_MARK from 'images/ol_kit_mark.svg'
  * @param {Object} opts - Non template options: { fileName: string }
  * @returns {Object} Template ready to be used by `printPDF`
  */
-export function convertSvgToTemplate (svgString, inputs, opts = {}) {
+export function convertSvgToPDFTemplate (svgString, inputs, opts = {}) {
   const { fileName } = opts
   const parser = new DOMParser()
   const svgDoc = parser.parseFromString(svgString, 'application/xml')
@@ -87,7 +85,7 @@ export function convertSvgToTemplate (svgString, inputs, opts = {}) {
  * @param {Object} opts - PDF options: { hideLogo: false }
  * @returns {Object}
  */
-export async function printPDF (template, passedOpts) {
+export async function printPDFTemplate (template, passedOpts) {
   const opts = {
     hideLogo: false,
     ...passedOpts
