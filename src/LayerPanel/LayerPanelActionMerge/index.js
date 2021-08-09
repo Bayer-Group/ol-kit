@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import olLayerVector from 'ol/layer/Vector'
 import { connectToContext } from 'Provider'
-import { addNewLayer } from './utils'
+import { addVectorLayer } from './utils'
 
 /**
  * @component
@@ -16,7 +16,7 @@ class LayerPanelActionMerge extends Component {
     const { onExportFeatures, handleMenuClose } = this.props
     const allVectorFeatures = this.collectVectorFeatures()
     
-    addNewLayer(map, allVectorFeatures)
+    addVectorLayer(map, allVectorFeatures)
     handleMenuClose()
   }
 

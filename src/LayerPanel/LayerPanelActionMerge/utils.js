@@ -1,5 +1,4 @@
-
-import olFeature from 'ol/Feature'
+import olMap from 'ol/Map'
 import olLayerVector from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import ugh from 'ugh'
@@ -12,7 +11,10 @@ import ugh from 'ugh'
  * @param {Object} map - Openlayers map object
  * @param {Object[]} [features] - An array of the features to be included in the new layer
  */
-export function addNewLayer (map, features, opts) {
+export function addVectorLayer (map, features = [], opts) {
+  if (!(map instanceof olMap)) return ugh.error('addVectorLayer requires a valid openlayers map as arg')
+  if (!Array.isArray(features)) return ugh.error('addVectorLayer second arg must be an array of features')
+
   const source = new VectorSource({ features })
   const layer = new olLayerVector({ source })
 
