@@ -34,6 +34,7 @@ import olStyleStyle from 'ol/style/Style'
 
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
+import LayerPanelActionMerge from 'LayerPanel/LayerPanelActionMerge'
 
 import isEqual from 'lodash.isequal'
 import { connectToContext } from 'Provider'
@@ -396,6 +397,7 @@ class LayerPanelLayersPage extends Component {
                   onLayerRemoved={onLayerRemoved} />
                 <LayerPanelActionImport handleImport={this.onFileImport} />
                 <LayerPanelActionExport onExportFeatures={onExportFeatures} />
+                <LayerPanelActionMerge />
               </LayerPanelActions>
             </ListItemSecondaryAction>
           </LayerPanelListItem>
