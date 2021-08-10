@@ -17,7 +17,11 @@ export function addVectorLayer (map, features = [], opts) {
   if (!Array.isArray(features)) return ugh.error('addVectorLayer second arg must be an array of features')
 
   const source = new VectorSource({ features })
-  const layer = new VectorLayer({ source })
+  const layer = new VectorLayer({
+    source,
+    title: 'Merged Layer',
+    _ol_kit_layerpanel_visibility: true
+  })
 
   map.addLayer(layer)
 

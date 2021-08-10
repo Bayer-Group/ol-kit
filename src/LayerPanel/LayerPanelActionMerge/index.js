@@ -13,7 +13,7 @@ import { addVectorLayer } from './utils'
 class LayerPanelActionMerge extends Component {
   handleMerge = () => {
     const { map, onMergeLayers } = this.props
-    const { onExportFeatures, handleMenuClose } = this.props
+    const { handleMenuClose } = this.props
     const allVectorFeatures = this.collectVectorFeatures()
     const layer = addVectorLayer(map, allVectorFeatures)
 
@@ -26,7 +26,8 @@ class LayerPanelActionMerge extends Component {
       return layer.getSource().getFeatures()
     })
 
-    return features.flat()
+    // clone important so new features are not connected to original
+    return features.flat().map(feature => feature.clone()) 
   }
 
   hasVisibleVectorLayers = () => {
