@@ -12,11 +12,12 @@ import { addVectorLayer } from './utils'
  */
 class LayerPanelActionMerge extends Component {
   handleMerge = () => {
-    const { map } = this.props
+    const { map, onMergeLayers } = this.props
     const { onExportFeatures, handleMenuClose } = this.props
     const allVectorFeatures = this.collectVectorFeatures()
-    
-    addVectorLayer(map, allVectorFeatures)
+    const layer = addVectorLayer(map, allVectorFeatures)
+
+    onMergeLayers(layer)
     handleMenuClose()
   }
 
@@ -70,12 +71,16 @@ LayerPanelActionMerge.propTypes = {
   /** Openlayers map */
   map: PropTypes.object.isRequired,
 
+  /** Callback fired after merge, called with new layer as argument */
+  onMergeLayers: PropTypes.func,
+
   /** An object of translation key/value pairs */
   translations: PropTypes.object.isRequired
 }
 
 LayerPanelActionMerge.defaultProps = {
-  handleMenuClose: () => {}
+  handleMenuClose: () => {},
+  onMergeLayers: () => {}
 }
 
 export default connectToContext(LayerPanelActionMerge)

@@ -361,7 +361,7 @@ class LayerPanelLayersPage extends Component {
   render () {
     const {
       translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
-      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures
+      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
@@ -397,7 +397,7 @@ class LayerPanelLayersPage extends Component {
                   onLayerRemoved={onLayerRemoved} />
                 <LayerPanelActionImport handleImport={this.onFileImport} />
                 <LayerPanelActionExport onExportFeatures={onExportFeatures} />
-                <LayerPanelActionMerge />
+                <LayerPanelActionMerge onMergeLayers={onMergeLayers} />
               </LayerPanelActions>
             </ListItemSecondaryAction>
           </LayerPanelListItem>
@@ -515,6 +515,9 @@ LayerPanelLayersPage.propTypes = {
 
   /** A callback function that returns the file type and the features that are being exported */
   onExportFeatures: PropTypes.func,
+
+  /** A callback fired when layers are merged */
+  onMergeLayers: PropTypes.func,
 
   /** A callback function to set custom Menu Items for a specific layer. Should recieve an array of `@material-ui/core/MenuItem` */
   getMenuItemsForLayer: PropTypes.func,
