@@ -10,6 +10,7 @@ import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
+import Extent from 'ol/extent'
 import qs from 'qs'
 
 import ugh from 'ugh'
@@ -239,4 +240,26 @@ export function getSelectInteraction (map, name = DEFAULT_SELECT_NAME) {
   if (!select) return ugh.throw(`Select interaction with name '${name}' could not be found on the map`)
 
   return select
+}
+
+/**
+ * Sets the map extent to the given values.
+ *
+ * @param {ol.Map} map Open Layers map
+ * @param {ol.Extent} extent New extent definition
+ */
+export function setMapExtent (map, extent) {
+  map.getView().fit(extent, map.getSize())
+}
+
+/**
+ * Calculates a map extent that would make all features in the list visible.
+ *
+ * @param {ol.Feature[]} featureList List of Open Layers features
+ * @returns {ol.Extent} Map extent
+ */
+export function getExtentForFeatures (featureList) {
+  const extent = featureList.reduce((acc, f) => Extent.extend(acc, f.getGeometry().getExtent()), Extent.createEmpty())
+
+  return extent
 }
