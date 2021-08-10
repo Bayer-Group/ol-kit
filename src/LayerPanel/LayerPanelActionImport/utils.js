@@ -26,6 +26,7 @@ export function arrRegexIndexOf (arr, re) {
 /**
  * Converts the given file into a layer
  * @function convertFileToLayer
+ * @category LayerPanel
  * @since 6.5.0
  * @param {Blob} [file] - the file to be converted.  Accepts, 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types.
  * @param {olMap} [map] - the openlayers map
@@ -47,6 +48,7 @@ export function convertFileToLayer (file, map) {
 /**
  * Converts the given file into an array of features
  * @function convertFileToFeatures
+ * @category LayerPanel
  * @since 7.0.0
  * @param {Blob} [file] - the file to be converted.  Accepts, 'kmz', 'kml', 'geojson', 'wkt', 'csv', 'zip', and 'json' file types.
  * @param {olMap} [map] - the openlayers map
