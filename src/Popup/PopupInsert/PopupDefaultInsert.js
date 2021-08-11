@@ -9,6 +9,7 @@ import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
 import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
 import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
 import { PopupActionCut } from 'Popup/PopupActions/PopupActionCut'
+import { PopupActionZoomToExtent } from 'Popup/PopupActions/PopupActionZoomToExtent'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 import olGeomPoint from 'ol/geom/Point'
@@ -94,7 +95,8 @@ class PopupDefaultInsert extends Component {
       let defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
         <PopupActionDuplicate key='dupe' />,
         <PopupActionRemove key='remove' />,
-        <PopupActionGoogleMaps key='nav' />]
+        <PopupActionGoogleMaps key='nav' />,
+        <PopupActionZoomToExtent key='zoom' />]
 
       if (!pointGeom) defaultActions = [...defaultActions, <PopupActionCut key='cut' />]
 

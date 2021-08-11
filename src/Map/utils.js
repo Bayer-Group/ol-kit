@@ -10,7 +10,7 @@ import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
-import Extent from 'ol/extent'
+import { extend, createEmpty } from 'ol/extent'
 import qs from 'qs'
 
 import ugh from 'ugh'
@@ -259,7 +259,7 @@ export function setMapExtent (map, extent) {
  * @returns {ol.Extent} Map extent
  */
 export function getExtentForFeatures (featureList) {
-  const extent = featureList.reduce((acc, f) => Extent.extend(acc, f.getGeometry().getExtent()), Extent.createEmpty())
+  const extent = featureList.reduce((acc, f) => extend(acc, f.getGeometry().getExtent()), createEmpty())
 
   return extent
 }

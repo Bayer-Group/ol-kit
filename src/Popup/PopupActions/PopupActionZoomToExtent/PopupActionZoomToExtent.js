@@ -17,8 +17,7 @@ class ActionZoomToExtent extends Component {
     return (
       <PopupActionItem
         title={translations['_ol_kit.PopupActionZoomToExtent.title']}
-        onClick={() => this.zoom()}
-        style={{ color: '#c0392b' }} />
+        onClick={() => this.zoom()} />
     )
   }
 }
