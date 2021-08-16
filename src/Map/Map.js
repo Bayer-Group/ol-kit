@@ -132,7 +132,7 @@ class Map extends React.Component {
       // otherwise create a new select interaction
       const { select } = addSelectInteraction(map)
 
-      ugh.warn('<Map> has created a default select interaction (use `getSelectInteraction(map)` to access it). To have ol-kit use your custom select interaction, pass `selectInteraction` as a prop to <Map>.')
+      ugh.warn('<Map> has created a default select interaction (you can use getSelectInteraction(map) to access it). To have ol-kit use your custom select interaction, pass `selectInteraction` as a prop to <Map>.')
 
       this.selectInteraction = select
     }

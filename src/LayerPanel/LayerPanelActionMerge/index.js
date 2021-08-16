@@ -14,20 +14,36 @@ class LayerPanelActionMerge extends Component {
   handleMerge = () => {
     const { map, onMergeLayers } = this.props
     const { handleMenuClose } = this.props
-    const allVectorFeatures = this.collectVectorFeatures()
-    const layer = addVectorLayer(map, allVectorFeatures)
+    const { features, title } = this.collectVectorFeatures()
+    const opts = { title }
+    const layer = addVectorLayer(map, features, opts)
 
     onMergeLayers(layer)
     handleMenuClose()
   }
 
   collectVectorFeatures = () => {
-    const features = this.getVisibleLayers().filter(layer => this.isValidVectorLayer(layer)).map(layer => {
+    let title = 'Merged: '
+    const originalFeatures = this.getVisibleLayers().filter(layer => this.isValidVectorLayer(layer)).map((layer, i) => {
+      const multi = i === 0 ? '' : ', '
+      const thisTitle = multi + layer.get('title')
+      
+      // add layer title to full string
+      title += thisTitle
+
       return layer.getSource().getFeatures()
     })
 
     // clone important so new features are not connected to original
-    return features.flat().map(feature => feature.clone()) 
+    const features = originalFeatures.flat().map(feature => {
+      const cloned = feature.clone()
+
+      cloned.setStyle(feature.getStyle())
+
+      return cloned
+    })
+
+    return { features, title }
   }
 
   hasVisibleVectorLayers = () => {
@@ -35,7 +51,7 @@ class LayerPanelActionMerge extends Component {
 
     return visibleLayers.filter(layer => {
       return this.isValidVectorLayer(layer)
-    }).length !== visibleLayers.length || visibleLayers.length === 0
+    }).length > 1 // at least two layers required for a merge
   }
 
   isValidVectorLayer = (layer) => {
@@ -54,7 +70,7 @@ class LayerPanelActionMerge extends Component {
         key='merge'
         data-testid='LayerPanel.merge'
         disableGutters={false}
-        disabled={this.hasVisibleVectorLayers()}
+        disabled={!this.hasVisibleVectorLayers()}
         onClick={this.handleMerge} >
         {translations['_ol_kit.LayerPanelActions.merge']}
       </MenuItem>
