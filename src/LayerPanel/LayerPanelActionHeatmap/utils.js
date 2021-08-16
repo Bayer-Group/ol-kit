@@ -1,3 +1,4 @@
+import olMap from 'ol/Map'
 import HeatmapLayer from 'ol/layer/Heatmap'
 import Layer from 'ol/layer/Layer'
 import olSourceVector from 'ol/source/Vector'
@@ -16,8 +17,8 @@ import olSourceVector from 'ol/source/Vector'
   
   // set defaults that will be read by HeatmapControls component
   const {
-    blur = 30,
-    radius = 2
+    blur = 60,
+    radius = 60
   } = opts
   const title = opts?.title || `Heatmap from ${layer.get('title') || 'vector'}`
   const features = layer.getSource().getFeatures()

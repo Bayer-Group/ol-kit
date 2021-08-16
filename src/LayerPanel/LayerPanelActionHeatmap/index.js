@@ -12,11 +12,11 @@ import { addHeatmapLayer } from './utils'
  */
 class LayerPanelActionHeatmap extends Component {
   handleCreateHeatmap = () => {
-    const { map, onCreateHeatmap } = this.props
+    const { map, layer, onCreateHeatmap } = this.props
     const { handleMenuClose } = this.props
-    const layer = addHeatmapLayer(map, features, opts)
+    const heatmapLayer = addHeatmapLayer(map, layer)
 
-    onCreateHeatmap(layer)
+    onCreateHeatmap(heatmapLayer)
     handleMenuClose()
   }
 
@@ -33,14 +33,14 @@ class LayerPanelActionHeatmap extends Component {
   }
 
   render () {
-    const { translations } = this.props
+    const { layer, translations } = this.props
 
     return (
       <MenuItem
         key='heatmap'
         data-testid='LayerPanel.heatmap'
         disableGutters={false}
-        disabled={!this.isValidVectorLayer()}
+        disabled={!this.isValidVectorLayer(layer)}
         onClick={this.handleCreateHeatmap} >
         {translations['_ol_kit.LayerPanelActions.heatmap']}
       </MenuItem>
@@ -52,8 +52,8 @@ LayerPanelActionHeatmap.propTypes = {
   /** A function that closes the LayerPanelMenu */
   handleMenuClose: PropTypes.func,
 
-  /** An array of openlayers layers */
-  layers: PropTypes.array.isRequired,
+  /** A Vector Layer */
+  layer: PropTypes.array.isRequired,
 
   /** Openlayers map */
   map: PropTypes.object.isRequired,

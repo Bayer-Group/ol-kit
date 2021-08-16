@@ -25,6 +25,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
 import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
 import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
+import LayerPanelActionHeatmap from 'LayerPanel/LayerPanelActionHeatmap'
 
 import TextField from '@material-ui/core/TextField'
 
@@ -438,6 +439,7 @@ class LayerPanelLayersPage extends Component {
                         {getMenuItemsForLayer(layer) ||
                         [<LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
                           <LayerPanelActionExtent key='gotoExtent' />,
+                          <LayerPanelActionHeatmap key='heatmap' layer={layer} />,
                           <LayerPanelActionOpacity key='layerOpacity' />]}
                       </LayerPanelActions>
                     </ListItemSecondaryAction>
