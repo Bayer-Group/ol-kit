@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
 import olLayerVector from 'ol/layer/Vector'
 import { connectToContext } from 'Provider'
+import en from 'locales/en'
 import { addVectorLayer } from './utils'
 
 /**
@@ -97,7 +98,8 @@ LayerPanelActionMerge.propTypes = {
 
 LayerPanelActionMerge.defaultProps = {
   handleMenuClose: () => {},
-  onMergeLayers: () => {}
+  onMergeLayers: () => {},
+  translations: en
 }
 
 export default connectToContext(LayerPanelActionMerge)
