@@ -282,6 +282,7 @@ Object {
   "ZoomControls": [Function],
   "ZoomIn": [Function],
   "ZoomOut": [Function],
+  "addHeatmapLayer": [Function],
   "addMovementListener": [Function],
   "addSelectInteraction": [Function],
   "addVectorLayer": [Function],
