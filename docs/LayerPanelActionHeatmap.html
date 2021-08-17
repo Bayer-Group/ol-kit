@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/Compass.js</title>
+    <title>ol-kit | LayerPanelActionHeatmap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,107 +75,229 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+        <h2>
+            &ltLayerPanelActionHeatmap /&gt
+        </h2>
+        
+    
+</header>
 
-import { connectToContext } from 'Provider'
-import { CompassContainer } from './styled'
-import { rotateMap } from './utils'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-const colors = {
-  light: {
-    background: '#ffffff',
-    arrows: '#4d4d4d',
-    needleTop: '#e04343',
-    needleBottom: '#000000'
-  },
-  dark: {
-    background: '#000000',
-    arrows: '#cccccc',
-    needleTop: '#e04343',
-    needleBottom: '#ffffff'
-  }
-}
 
-/**
- * A map rotation control
- * @component
- * @category Controls
- * @since 0.1.0
- */
-function Compass (props) {
-  const { map, size, variation } = props
-  const [radians, setRadians] = useState(map.getView().getRotation())
+    
+    <h4 class="name" id="LayerPanelActionHeatmap">
+        <a class="href-link" href="#LayerPanelActionHeatmap">#</a>
+        
+        <span class="code-name">
+            
+                &ltLayerPanelActionHeatmap <i>handleMenuClose</i> <i>layer</i> <i>map</i> <i>onCreateHeatmap</i> <i>translations</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-  useEffect(() => {
-    const listener = () => setRadians(map.getView().getRotation())
+    
+    
 
-    map.getView().on('change:rotation', listener)
 
-    return function cleanup () {
-      map.getView().un('change:rotation', listener)
-    }
-  }, [map]) // optimization: listeners will only attach/cleanup if the map prop changes
 
-  const getRadianOffset = (radians, clockwiseTurn) => {
-    return clockwiseTurn
-      ? radians + (Math.PI / 8)
-      : radians - (Math.PI / 8)
-  }
-  const rotate = direction => {
-    const currentRotation = map.getView().getRotation()
-    const clockwiseTurn = direction === 'right'
-    // set the rotation to 0 for a north arrow click
-    const finalRotation = direction === 'north' ? 0 : getRadianOffset(currentRotation, clockwiseTurn)
 
-    // animate map
-    rotateMap(map, finalRotation)
-    // animate UI
-    setRadians(finalRotation)
-  }
-  const degrees = radians * 57.296 // the number of degrees per radian
 
-  return (
-    &lt;CompassContainer size={size} background={colors[variation].background}>
-      &lt;svg width={size} height={size} viewBox='0 0 48 48' version='1.1' xmlns='http://www.w3.org/2000/svg'>
-        &lt;g onClick={() => rotate('left')} transform='translate(8, 11)' id='_ol_kit_rotate_left'>
-          &lt;path stroke={colors[variation].arrows} strokeWidth='2' strokeLinecap='square' fill='transparent' d='M6.08917588,0.274482759 C2.08917588,3.50525199 0.0891758754,7.27448276 0.0891758754,11.5821751 C0.0891758754,18.0437135 3.5177473,21.2744828 3.5177473,21.2744828'>&lt;/path>
-          &lt;polygon fill={colors[variation].arrows} transform='translate(5.838799, 24.192853) rotate(143.000000) translate(-5.838799, -24.192853) ' points='5.93396953 20.6928529 8.83879936 27.636638 2.83879936 27.6928529'>&lt;/polygon>
-        &lt;/g>
-        &lt;g onClick={() => rotate('north')} transform={`translate(18.0, 10.0) rotate(${degrees} 6.0 15.0)`} id='_ol_kit_true_north'>
-          &lt;polygon fill={colors[variation].needleTop} points='5.74325656 0 11.4865131 15.4007427 0 15.4007427'>&lt;/polygon>
-          &lt;polygon fill={colors[variation].needleBottom} points='5.74325656 30.8014854 0 15.4007427 11.4865131 15.4007427'>&lt;/polygon>
-        &lt;/g>
-        &lt;g onClick={() => rotate('right')} transform='translate(34.500000, 25.500000) scale(-1, 1) translate(-34.500000, -25.500000) translate(29.000000, 11.000000)' id='_ol_kit_rotate_right'>
-          &lt;path stroke={colors[variation].arrows} strokeWidth='2' strokeLinecap='square' fill='transparent' d='M6.08917588,0.274482759 C2.08917588,3.50525199 0.0891758754,7.27448276 0.0891758754,11.5821751 C0.0891758754,18.0437135 3.5177473,21.2744828 3.5177473,21.2744828'>&lt;/path>
-          &lt;polygon fill={colors[variation].arrows} transform='translate(5.838799, 24.192853) rotate(143.000000) translate(-5.838799, -24.192853) ' points='5.93396953 20.6928529 8.83879936 27.636638 2.83879936 27.6928529'>&lt;/polygon>
-        &lt;/g>
-      &lt;/svg>
-    &lt;/CompassContainer>
-  )
-}
 
-Compass.defaultProps = {
-  variation: 'light',
-  size: '45px'
-}
 
-Compass.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired,
-  /** sets the width/height of the compass in a valid CSS unit like px or ems */
-  size: PropTypes.string,
-  /** light or dark variation for styling */
-  variation: PropTypes.oneOf(['light', 'dark'])
-}
+    
+        <h5>PropTypes:</h5>
+        
 
-export default connectToContext(Compass)
-</code></pre>
-        </article>
-    </section>
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>handleMenuClose</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>A function that closes the LayerPanelMenu</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>layer</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>A Vector Layer</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>Openlayers map</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onCreateHeatmap</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>Callback fired after merge, called with new layer as argument</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>An object of translation key/value pairs</td>
+          <td>function()</td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.13.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LayerPanel_LayerPanelActionHeatmap_index.js.html" class="button">View Source</a>
+            <span>
+                <a href="LayerPanel_LayerPanelActionHeatmap_index.js.html">LayerPanel/LayerPanelActionHeatmap/index.js</a>, <a href="LayerPanel_LayerPanelActionHeatmap_index.js.html#line14">line 14</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+</article>
+
+</section>
 
 
 

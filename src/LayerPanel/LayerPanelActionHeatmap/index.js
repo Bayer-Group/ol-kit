@@ -54,7 +54,7 @@ LayerPanelActionHeatmap.propTypes = {
   handleMenuClose: PropTypes.func,
 
   /** A Vector Layer */
-  layer: PropTypes.array.isRequired,
+  layer: PropTypes.object.isRequired,
 
   /** Openlayers map */
   map: PropTypes.object.isRequired,
