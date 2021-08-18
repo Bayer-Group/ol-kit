@@ -25,6 +25,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
 import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
 import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
+import LayerPanelActionHeatmap from 'LayerPanel/LayerPanelActionHeatmap'
 
 import TextField from '@material-ui/core/TextField'
 
@@ -34,6 +35,7 @@ import olStyleStyle from 'ol/style/Style'
 
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
+import LayerPanelActionMerge from 'LayerPanel/LayerPanelActionMerge'
 
 import isEqual from 'lodash.isequal'
 import { connectToContext } from 'Provider'
@@ -360,7 +362,7 @@ class LayerPanelLayersPage extends Component {
   render () {
     const {
       translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
-      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures
+      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers, onCreateHeatmap
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
@@ -396,6 +398,7 @@ class LayerPanelLayersPage extends Component {
                   onLayerRemoved={onLayerRemoved} />
                 <LayerPanelActionImport handleImport={this.onFileImport} />
                 <LayerPanelActionExport onExportFeatures={onExportFeatures} />
+                <LayerPanelActionMerge onMergeLayers={onMergeLayers} />
               </LayerPanelActions>
             </ListItemSecondaryAction>
           </LayerPanelListItem>
@@ -436,6 +439,7 @@ class LayerPanelLayersPage extends Component {
                         {getMenuItemsForLayer(layer) ||
                         [<LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
                           <LayerPanelActionExtent key='gotoExtent' />,
+                          <LayerPanelActionHeatmap key='heatmap' layer={layer} onCreateHeatmap={onCreateHeatmap} />,
                           <LayerPanelActionOpacity key='layerOpacity' />]}
                       </LayerPanelActions>
                     </ListItemSecondaryAction>
@@ -472,6 +476,7 @@ LayerPanelLayersPage.defaultProps = {
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
+  onCreateHeatmap: () => {},
   tabIcon: <LayersIcon />,
   setHoverStyle: () => ({ color: 'red', fill: '#ffffff', stroke: 'red' }),
   disableHover: false
@@ -511,8 +516,14 @@ LayerPanelLayersPage.propTypes = {
   /** A callback function to determine if a given layer should be allowed to be removed from the panel page display */
   shouldAllowLayerRemoval: PropTypes.func,
 
+  /** A callback fired when a new heatmap is created */
+  onCreateHeatmap: PropTypes.func,
+
   /** A callback function that returns the file type and the features that are being exported */
   onExportFeatures: PropTypes.func,
+
+  /** A callback fired when layers are merged */
+  onMergeLayers: PropTypes.func,
 
   /** A callback function to set custom Menu Items for a specific layer. Should recieve an array of `@material-ui/core/MenuItem` */
   getMenuItemsForLayer: PropTypes.func,
