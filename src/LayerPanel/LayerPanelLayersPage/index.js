@@ -362,7 +362,7 @@ class LayerPanelLayersPage extends Component {
   render () {
     const {
       translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
-      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers
+      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers, onCreateHeatmap
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
@@ -439,7 +439,7 @@ class LayerPanelLayersPage extends Component {
                         {getMenuItemsForLayer(layer) ||
                         [<LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
                           <LayerPanelActionExtent key='gotoExtent' />,
-                          <LayerPanelActionHeatmap key='heatmap' layer={layer} />,
+                          <LayerPanelActionHeatmap key='heatmap' layer={layer} onCreateHeatmap={onCreateHeatmap} />,
                           <LayerPanelActionOpacity key='layerOpacity' />]}
                       </LayerPanelActions>
                     </ListItemSecondaryAction>
@@ -476,6 +476,7 @@ LayerPanelLayersPage.defaultProps = {
   shouldHideFeatures: (layer) => false,
   shouldAllowLayerRemoval: (layer) => true,
   getMenuItemsForLayer: () => false,
+  onCreateHeatmap: () => {},
   tabIcon: <LayersIcon />,
   setHoverStyle: () => ({ color: 'red', fill: '#ffffff', stroke: 'red' }),
   disableHover: false
@@ -514,6 +515,9 @@ LayerPanelLayersPage.propTypes = {
 
   /** A callback function to determine if a given layer should be allowed to be removed from the panel page display */
   shouldAllowLayerRemoval: PropTypes.func,
+
+  /** A callback fired when a new heatmap is created */
+  onCreateHeatmap: PropTypes.func,
 
   /** A callback function that returns the file type and the features that are being exported */
   onExportFeatures: PropTypes.func,

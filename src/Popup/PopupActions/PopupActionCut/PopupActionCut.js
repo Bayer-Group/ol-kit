@@ -49,10 +49,11 @@ class ActionCut extends Component {
 
   render () {
     const { showSnackbar } = this.state
+    const { translations } = this.props
 
     return (
       <>
-        <PopupActionItem title={'_ol_kit.PopupActionCut.title'} onClick={() => this.cut()} />
+        <PopupActionItem title={translations['_ol_kit.PopupActionCut.title']} onClick={() => this.cut()} />
         <Snackbar
           open={showSnackbar}
           closeSnackbar={() => this.setState({ showSnackbar: false })}
