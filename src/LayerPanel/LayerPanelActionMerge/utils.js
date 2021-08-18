@@ -22,14 +22,9 @@ export function addVectorLayer (map, features = [], opts = {}) {
   const source = new VectorSource({ features })
   const layer = new VectorLayer({
     source,
-    title,
-    // _ol_kit_layerpanel_visibility: true
+    title
   })
   mergedIndex++
-
-  console.log('CLONED features', features)
-
-  // layer.setVisible(true)
 
   map.addLayer(layer)
 
