@@ -9,6 +9,7 @@ import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
 import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
 import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
 import { PopupActionCut } from 'Popup/PopupActions/PopupActionCut'
+import { PopupActionEdit } from 'Popup/PopupActions/PopupActionEdit'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
 import olGeomPoint from 'ol/geom/Point'
@@ -85,7 +86,7 @@ class PopupDefaultInsert extends Component {
   }
 
   render () {
-    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations } = this.props
+    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations, onEdit } = this.props
     const { selectedIdx } = this.state
 
     const getChildren = feature => {
@@ -94,7 +95,9 @@ class PopupDefaultInsert extends Component {
       let defaultActions = [<PopupActionCopyWkt key={'wkt'} />,
         <PopupActionDuplicate key='dupe' />,
         <PopupActionRemove key='remove' />,
-        <PopupActionGoogleMaps key='nav' />]
+        <PopupActionGoogleMaps key='nav' />,
+        <PopupActionEdit key='edit' onEdit={onEdit} />,
+      ]
 
       if (!pointGeom) defaultActions = [...defaultActions, <PopupActionCut key='cut' />]
 
@@ -103,6 +106,8 @@ class PopupDefaultInsert extends Component {
 
     // dedupe the features to remove possible duplicates introduced in ol6
     const dedupedFeatures = [...new Set(features).values()]
+
+    console.log('dedupedFeatures:', dedupedFeatures) // eslint-disable-line no-console
 
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>
@@ -136,7 +141,8 @@ PopupDefaultInsert.defaultProps = {
   onClose: () => {},
   onSelectFeature: () => {},
   propertiesFilter: sanitizeProperties,
-  translations: en
+  translations: en,
+  onEdit: () => false,
 }
 
 PopupDefaultInsert.propTypes = {
@@ -166,7 +172,8 @@ PopupDefaultInsert.propTypes = {
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
     '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
-  }).isRequired
+  }).isRequired,
+  onEdit: PropTypes.func,
 }
 
 export default connectToContext(PopupDefaultInsert)

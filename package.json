@@ -96,6 +96,7 @@
     "react-draggable": "~4.4.3",
     "react-dropzone": "^11.3.1",
     "react-hook-form": "~5.7.2",
+    "react-rotary-knob": "^1.1.8",
     "react-select": "~3.1.0",
     "react-viewer": "^3.2.2",
     "shp-write": "~0.3.2",

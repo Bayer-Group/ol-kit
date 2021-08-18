@@ -29,6 +29,9 @@ import {
  * @example ./example.md
  */
 class PopupDefaultPage extends Component {
+  componentWillUnmount () {
+    console.log('UNMOUNT', this.props) // eslint-disable-line no-console
+  }
   render () {
     const {
       translations,
