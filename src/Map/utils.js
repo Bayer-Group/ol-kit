@@ -249,6 +249,7 @@ export function getSelectInteraction (map, name = DEFAULT_SELECT_NAME) {
  * @param {ol.Extent} extent New extent definition
  */
 export function setMapExtent (map, extent) {
+  if (!(map instanceof Map)) return ugh.throw('\'setMapExtent\' requires a valid openlayers map as the first argument')
   map.getView().fit(extent, map.getSize())
 }
 
