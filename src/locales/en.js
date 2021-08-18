@@ -84,6 +84,7 @@ export default {
   '_ol_kit.PopupActionCut.alert': 'Cut Complete!',
   '_ol_kit.PopupActionDuplicate.alert': 'Shape duplicated!',
   '_ol_kit.PopupActionDuplicate.title': 'Duplicate Shape',
+  '_ol_kit.PopupActionZoomToExtent.title': 'Zoom to Extent',
   // TimeSliderBase
   '_ol_kit_.TimeSliderBase.dateRange': 'Date Range',
   '_ol_kit_.TimeSliderBase.next': 'Next >',
