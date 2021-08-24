@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { memo, PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { FixedSizeList, areEqual } from 'react-window'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
@@ -9,7 +10,6 @@ import LayerPanelExpandableList from 'LayerPanel/_LayerPanelExpandableList'
 import LayerPanelActions from 'LayerPanel/LayerPanelActions'
 import { ListItem, ListItemText } from 'LayerPanel/LayerPanelListItem/styled'
 import { ListItemSecondaryAction } from './styled'
-import List from '@material-ui/core/List'
 import Collapse from '@material-ui/core/Collapse'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import LayersIcon from '@material-ui/icons/Layers'
@@ -44,12 +44,29 @@ import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
 
+console.log(FixedSizeList)
+
+const FeatureRow = memo((props) => {
+  const { data, index } = props
+  const { features, handleFeatureCheckbox, handleFeatureDoubleClick, layer } = data
+  const feature = features[index]
+  console.log('props', props, feature)
+  return (
+    <ListItem data-testid={`LayerPanel.feature${index}`} key={index} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
+      <LayerPanelCheckbox
+        handleClick={(event) => handleFeatureCheckbox(layer, feature, event)}
+        checkboxState={feature.get('_ol_kit_feature_visibility')} />
+      <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${index + 1}`} />
+    </ListItem>
+  )
+}, areEqual)
+
 /**
  * @component
  * @category LayerPanel
  * @since 0.5.0
  */
-class LayerPanelLayersPage extends Component {
+class LayerPanelLayersPage extends PureComponent {
   constructor (props) {
     super(props)
 
@@ -366,7 +383,8 @@ class LayerPanelLayersPage extends Component {
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
-
+    const renderStart = Date.now()
+    console.log('RENDER')
     return (
       <LayerPanelPage tabIcon={tabIcon}>
         <TextField
@@ -416,7 +434,8 @@ class LayerPanelLayersPage extends Component {
                 this.props.shouldHideFeatures(layer) ? true : filteredFeatures?.length
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
-
+              const isExpanded = isExpandedLayer(layer)
+              console.log(`layer ${i}`, 'features?.length', features?.length)
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
@@ -427,7 +446,7 @@ class LayerPanelLayersPage extends Component {
                       handleClick={(e) => this.handleVisibility(e, layer)} />}
                     {<LayerPanelExpandableList
                       show={!!features}
-                      open={isExpandedLayer(layer)}
+                      open={isExpanded}
                       handleClick={() => this.handleExpandedLayer(layer)} />}
                     <ListItemText primary={layer.get('title') || 'Untitled Layer'} />
                     <ListItemSecondaryAction style={{ right: '0px !important' }}>
@@ -444,21 +463,25 @@ class LayerPanelLayersPage extends Component {
                       </LayerPanelActions>
                     </ListItemSecondaryAction>
                   </LayerPanelListItem>
-                  { features
-                    ? <Collapse in={isExpandedLayer(layer)} timeout='auto' unmountOnExit>
-                      <List component='div' disablePadding style={{ paddingLeft: '36px' }}>
-                        {features.map((feature, i) => {
-                          return (
-                            <ListItem data-testid={`LayerPanel.feature${i}`} key={i} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
-                              <LayerPanelCheckbox
-                                handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
-                                checkboxState={feature.get('_ol_kit_feature_visibility')} />
-                              <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${i + 1}`} />
-                            </ListItem>
-                          )
-                        })}
-                      </List>
-                    </Collapse> : null }
+                  {isExpanded
+                    ? <Collapse in={isExpanded} timeout='auto' unmountOnExit>
+                      <FixedSizeList
+                        height={52*features.length}
+                        width={'100%'}
+                        itemSize={52}
+                        itemCount={features.length}
+                        style={{ paddingLeft: '36px', maxHeight: '300px' }}
+                        itemData={{
+                          features,
+                          handleFeatureCheckbox: this.handleFeatureCheckbox,
+                          handleFeatureDoubleClick: this.handleFeatureDoubleClick,
+                          layer
+                        }}>
+                        {FeatureRow}
+                      </FixedSizeList>
+                    </Collapse>
+                    : null
+                  }
                 </div>
               )
             })}
