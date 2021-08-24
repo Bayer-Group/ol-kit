@@ -44,13 +44,11 @@ import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
 
-console.log(FixedSizeList)
-
 const FeatureRow = memo((props) => {
   const { data, index } = props
-  const { features, handleFeatureCheckbox, handleFeatureDoubleClick, layer } = data
+  const { features, handleFeatureCheckbox, handleFeatureDoubleClick, layer, translations } = data
   const feature = features[index]
-  console.log('props', props, feature)
+
   return (
     <ListItem data-testid={`LayerPanel.feature${index}`} key={index} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
       <LayerPanelCheckbox
@@ -383,8 +381,7 @@ class LayerPanelLayersPage extends PureComponent {
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
-    const renderStart = Date.now()
-    console.log('RENDER')
+
     return (
       <LayerPanelPage tabIcon={tabIcon}>
         <TextField
@@ -435,7 +432,7 @@ class LayerPanelLayersPage extends PureComponent {
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
               const isExpanded = isExpandedLayer(layer)
-              console.log(`layer ${i}`, 'features?.length', features?.length)
+
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
@@ -466,16 +463,17 @@ class LayerPanelLayersPage extends PureComponent {
                   {isExpanded
                     ? <Collapse in={isExpanded} timeout='auto' unmountOnExit>
                       <FixedSizeList
-                        height={52*features.length}
+                        height={52*features.length > 300 ? 300 : 52*features.length}
                         width={'100%'}
                         itemSize={52}
                         itemCount={features.length}
-                        style={{ paddingLeft: '36px', maxHeight: '300px' }}
+                        style={{ paddingLeft: '36px' }}
                         itemData={{
                           features,
                           handleFeatureCheckbox: this.handleFeatureCheckbox,
-                          handleFeatureDoubleClick: this.handleFeatureDoubleClick,
-                          layer
+                          handleFeatureDoubleClick,
+                          layer,
+                          translations
                         }}>
                         {FeatureRow}
                       </FixedSizeList>
