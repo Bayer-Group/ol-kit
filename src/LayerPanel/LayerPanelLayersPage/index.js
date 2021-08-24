@@ -1,6 +1,6 @@
 import React, { memo, PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { FixedSizeList, areEqual } from 'react-window'
+import { Virtuoso } from 'react-virtuoso'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
 import LayerPanelContent from 'LayerPanel/LayerPanelContent'
 import LayerPanelList from 'LayerPanel/LayerPanelList'
@@ -44,10 +44,10 @@ import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
 
-const FeatureRow = memo((props) => {
-  const { data, index } = props
-  const { features, handleFeatureCheckbox, handleFeatureDoubleClick, layer, translations } = data
-  const feature = features[index]
+const FeatureRow = (index, data) => {
+  console.log('FeatureRow data', data)
+  const { feature, handleFeatureCheckbox, handleFeatureDoubleClick, layer, translations } = data
+  console.log('FeatureRow', FeatureRow)
 
   return (
     <ListItem data-testid={`LayerPanel.feature${index}`} key={index} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
@@ -57,7 +57,7 @@ const FeatureRow = memo((props) => {
       <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${index + 1}`} />
     </ListItem>
   )
-}, areEqual)
+}
 
 /**
  * @component
@@ -432,7 +432,18 @@ class LayerPanelLayersPage extends PureComponent {
             }).map((layer, i) => {
               const features = this.getFeaturesForLayer(layer)
               const isExpanded = isExpandedLayer(layer)
+              const data = Array.from({ length: features.length }, 
+                (_, index) => ({
+                  feature: features[index],
+                  handleFeatureCheckbox: this.handleFeatureCheckbox,
+                  handleFeatureDoubleClick,
+                  layer,
+                  translations
+                })
+              )
 
+
+              console.log('data', data)
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
@@ -462,22 +473,12 @@ class LayerPanelLayersPage extends PureComponent {
                   </LayerPanelListItem>
                   {isExpanded
                     ? <Collapse in={isExpanded} timeout='auto' unmountOnExit>
-                      <FixedSizeList
-                        height={52*features.length > 300 ? 300 : 52*features.length}
-                        width={'100%'}
-                        itemSize={52}
-                        itemCount={features.length}
-                        style={{ paddingLeft: '36px' }}
-                        itemData={{
-                          features,
-                          handleFeatureCheckbox: this.handleFeatureCheckbox,
-                          handleFeatureDoubleClick,
-                          layer,
-                          translations
-                        }}>
-                        {FeatureRow}
-                      </FixedSizeList>
-                    </Collapse>
+                        <Virtuoso
+                          style={{ paddingLeft: '36px', height: features.length*52 > 300 ? 300 : features.length*52 }}
+                          data={data}
+                          itemContent={FeatureRow}
+                        />
+                      </Collapse>
                     : null
                   }
                 </div>
