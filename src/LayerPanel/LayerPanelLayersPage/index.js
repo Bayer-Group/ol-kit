@@ -44,10 +44,8 @@ import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
 
-const FeatureRow = (index, data) => {
-  console.log('FeatureRow data', data)
+const renderFeatureRow = (index, data) => {
   const { feature, handleFeatureCheckbox, handleFeatureDoubleClick, layer, translations } = data
-  console.log('FeatureRow', FeatureRow)
 
   return (
     <ListItem data-testid={`LayerPanel.feature${index}`} key={index} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
@@ -312,10 +310,12 @@ class LayerPanelLayersPage extends PureComponent {
     this.handleMasterCheckbox()
   }
 
-  handleFeatureCheckbox = (layer, feature) => {
+  handleFeatureCheckbox = memo((layer, feature) => {
     feature.set('_ol_kit_feature_visibility', !feature.get('_ol_kit_feature_visibility'))
     this.handleLayerCheckbox(layer)
-  }
+  })
+
+  handleFeatureDoubleClick = memo(this.props.handleFeatureDoubleClick)
 
   handleVisibility = (event, layer) => {
     event.stopPropagation()
@@ -381,7 +381,6 @@ class LayerPanelLayersPage extends PureComponent {
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
-
     return (
       <LayerPanelPage tabIcon={tabIcon}>
         <TextField
@@ -436,14 +435,12 @@ class LayerPanelLayersPage extends PureComponent {
                 (_, index) => ({
                   feature: features[index],
                   handleFeatureCheckbox: this.handleFeatureCheckbox,
-                  handleFeatureDoubleClick,
+                  handleFeatureDoubleClick: this.handleFeatureDoubleClick,
                   layer,
                   translations
                 })
               )
-
-
-              console.log('data', data)
+              
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
@@ -476,7 +473,7 @@ class LayerPanelLayersPage extends PureComponent {
                         <Virtuoso
                           style={{ paddingLeft: '36px', height: features.length*52 > 300 ? 300 : features.length*52 }}
                           data={data}
-                          itemContent={FeatureRow}
+                          itemContent={renderFeatureRow}
                         />
                       </Collapse>
                     : null
