@@ -1,4 +1,4 @@
-import React, { memo, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Virtuoso } from 'react-virtuoso'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
@@ -43,19 +43,6 @@ import { convertFileToFeatures } from 'LayerPanel/LayerPanelActionImport/utils'
 import VectorLayer from 'classes/VectorLayer'
 
 const INDETERMINATE = 'indeterminate'
-
-const renderFeatureRow = (index, data) => {
-  const { feature, handleFeatureCheckbox, handleFeatureDoubleClick, layer, translations } = data
-
-  return (
-    <ListItem data-testid={`LayerPanel.feature${index}`} key={index} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
-      <LayerPanelCheckbox
-        handleClick={(event) => handleFeatureCheckbox(layer, feature, event)}
-        checkboxState={feature.get('_ol_kit_feature_visibility')} />
-      <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${index + 1}`} />
-    </ListItem>
-  )
-}
 
 /**
  * @component
@@ -310,12 +297,10 @@ class LayerPanelLayersPage extends PureComponent {
     this.handleMasterCheckbox()
   }
 
-  handleFeatureCheckbox = memo((layer, feature) => {
+  handleFeatureCheckbox = (layer, feature) => {
     feature.set('_ol_kit_feature_visibility', !feature.get('_ol_kit_feature_visibility'))
     this.handleLayerCheckbox(layer)
-  })
-
-  handleFeatureDoubleClick = memo(this.props.handleFeatureDoubleClick)
+  }
 
   handleVisibility = (event, layer) => {
     event.stopPropagation()
@@ -372,6 +357,20 @@ class LayerPanelLayersPage extends PureComponent {
         })
       }
     }).catch(ugh.error)
+  }
+
+  renderFeatureRow = (index, data) => {
+    const { feature, layer } = data
+    const { handleFeatureDoubleClick, translations } = this.props
+  
+    return (
+      <ListItem data-testid={`LayerPanel.feature${index}`} key={index} onDoubleClick={() => handleFeatureDoubleClick(feature)}>
+        <LayerPanelCheckbox
+          handleClick={(event) => this.handleFeatureCheckbox(layer, feature, event)}
+          checkboxState={feature.get('_ol_kit_feature_visibility')} />
+        <ListItemText inset={false} primary={feature.get('name') || `${translations['_ol_kit.LayerPanelListItem.feature']} ${index + 1}`} />
+      </ListItem>
+    )
   }
 
   render () {
@@ -434,13 +433,10 @@ class LayerPanelLayersPage extends PureComponent {
               const data = Array.from({ length: features.length }, 
                 (_, index) => ({
                   feature: features[index],
-                  handleFeatureCheckbox: this.handleFeatureCheckbox,
-                  handleFeatureDoubleClick: this.handleFeatureDoubleClick,
                   layer,
-                  translations
                 })
               )
-              
+
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
@@ -473,7 +469,7 @@ class LayerPanelLayersPage extends PureComponent {
                         <Virtuoso
                           style={{ paddingLeft: '36px', height: features.length*52 > 300 ? 300 : features.length*52 }}
                           data={data}
-                          itemContent={renderFeatureRow}
+                          itemContent={this.renderFeatureRow}
                         />
                       </Collapse>
                     : null
