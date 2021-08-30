@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { createRef, PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Virtuoso } from 'react-virtuoso'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
@@ -60,6 +60,9 @@ class LayerPanelLayersPage extends PureComponent {
       filterText: '',
       expandedLayers: []
     }
+
+    this.virtuoso = createRef(null)
+    this.scrollIndex = createRef(0)
   }
 
   initializeSelect = map => {
@@ -153,6 +156,12 @@ class LayerPanelLayersPage extends PureComponent {
     } else if (prevState.layers.length === 0 && this.state.layers.length > 0) {
       this.handleMasterCheckbox()
     }
+    console.log('componentDidUpdate', this.virtuoso.current, this.scrollIndex.current)
+    this.virtuoso.current?.scrollToIndex({
+      index: this.scrollIndex.current,
+      align: 'start',
+      behavior: 'auto'
+    })
   }
 
   bindFeatureListeners = () => {
@@ -359,6 +368,16 @@ class LayerPanelLayersPage extends PureComponent {
     }).catch(ugh.error)
   }
 
+  handleRangeChange = visibleRange => {
+    console.log('handleRangeChange', visibleRange)
+    // this.virtuoso.current.scrollToIndex({
+    //   index: visibleRange.startIndex,
+    //   align: 'start',
+    //   behavior: 'auto'
+    // })
+    this.scrollIndex.current = visibleRange.startIndex
+  }
+
   renderFeatureRow = (index, data) => {
     const { feature, layer } = data
     const { handleFeatureDoubleClick, translations } = this.props
@@ -375,11 +394,12 @@ class LayerPanelLayersPage extends PureComponent {
 
   render () {
     const {
-      translations, layerFilter, handleFeatureDoubleClick, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
+      translations, layerFilter, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
       onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers, onCreateHeatmap
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
+    console.log('RENDER')
     return (
       <LayerPanelPage tabIcon={tabIcon}>
         <TextField
@@ -469,7 +489,9 @@ class LayerPanelLayersPage extends PureComponent {
                         <Virtuoso
                           style={{ paddingLeft: '36px', height: features.length*52 > 300 ? 300 : features.length*52 }}
                           data={data}
+                          ref={this.virtuoso}
                           itemContent={this.renderFeatureRow}
+                          rangeChanged={this.handleRangeChange}
                         />
                       </Collapse>
                     : null
