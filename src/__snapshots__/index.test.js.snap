@@ -27,6 +27,7 @@ Object {
   "DrawPin": [Function],
   "DrawPoint": [Function],
   "DrawPolygon": [Function],
+  "FeatureEditor": [Function],
   "FlexMap": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
@@ -216,6 +217,7 @@ Object {
   "MultiMapManager": [Function],
   "Popup": [Function],
   "PopupActionCopyWkt": [Function],
+  "PopupActionEdit": [Function],
   "PopupActionGoogleMaps": [Function],
   "PopupActionGroup": [Function],
   "PopupActionItem": [Function],
@@ -276,6 +278,7 @@ Object {
   "TabbedPanelPage": [Function],
   "TimeSlider": [Function],
   "TimeSliderBase": [Function],
+  "Translate": [Function],
   "VectorLayer": [Function],
   "VectorTileLayer": [Function],
   "ZoomControls": [Function],

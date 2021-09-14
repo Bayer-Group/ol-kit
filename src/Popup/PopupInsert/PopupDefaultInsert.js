@@ -32,7 +32,7 @@ class PopupDefaultInsert extends Component {
     super(props)
 
     this.state = {
-      selectedIdx: 0
+      selectedIdx: 0,
     }
   }
 
@@ -106,8 +106,6 @@ class PopupDefaultInsert extends Component {
 
     // dedupe the features to remove possible duplicates introduced in ol6
     const dedupedFeatures = [...new Set(features).values()]
-
-    console.log('dedupedFeatures:', dedupedFeatures) // eslint-disable-line no-console
 
     return (
       <PopupPageLayout selectedIdx={selectedIdx} onPageChange={this.onPageChange} data-testid='popup-insert-default'>

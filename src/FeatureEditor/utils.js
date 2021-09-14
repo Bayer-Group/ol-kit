@@ -1,4 +1,3 @@
-import olGeomPolygon from 'ol/geom/Polygon'
 import ugh from 'ugh'
 import { radiansToDegrees } from '@turf/helpers'
 import turfDestination from '@turf/destination'
@@ -6,7 +5,7 @@ import turfDistance from '@turf/distance'
 import turfBearing from '@turf/bearing'
 import * as turfAssert from '@turf/invariant'
 
-import { fromCircle } from 'ol/geom/Polygon'
+import olGeomPolygon, { fromCircle } from 'ol/geom/Polygon'
 import * as olProj from 'ol/proj'
 
 import olFormatGeoJson from 'ol/format/GeoJSON'
@@ -15,21 +14,7 @@ import olCollection from 'ol/Collection'
 
 const defaultDataProjection = 'EPSG:4326'
 
-export function assertTurf(assertion, hard, ...args) {
-  try {
-    turfAssert[assertion].apply(null, args)
-  } catch (error) {
-    if (hard) {
-      throw new Error(error.message)
-    } else {
-      return false
-    }
-  }
-
-  return true
-}
-
-export default function turf(turfFunc, argArray, projection = 'EPSG:3857') {
+export function olKitTurf (turfFunc, argArray, projection = 'EPSG:3857') {
   const transformedArgs = argArray.map((arg) => {
     return transform(arg, projection, true)
   })
@@ -38,7 +23,7 @@ export default function turf(turfFunc, argArray, projection = 'EPSG:3857') {
   return transform(turfResults, projection, false)
 }
 
-export function transform(value, projection, toWgs84) {
+export function transform (value, projection, toWgs84) {
   const { type } = describeType(value)
   const format = new olFormatGeoJson({
     defaultDataProjection,
@@ -50,7 +35,7 @@ export function transform(value, projection, toWgs84) {
     : output(value, projection, type, format)
 }
 
-export function input(value, projection, type, format) {
+export function input (value, projection, type, format) {
   switch (type) {
     case 'coordinate':
       return olProj.toLonLat(value, projection)
@@ -69,7 +54,7 @@ export function input(value, projection, type, format) {
   }
 }
 
-export function output(value, projection, type, format) {
+export function output (value, projection, type, format) {
   switch (type) {
     case 'coordinate':
       return olProj.transform(value, 'EPSG:4326', projection)
@@ -91,7 +76,7 @@ export function output(value, projection, type, format) {
       return value
   }
 }
-export function describeType(query) {
+export function describeType (query) {
   if (Array.isArray(query)) {
     const containsNumber = assertTurf('containsNumber', false, [query])
 
@@ -166,13 +151,27 @@ export function describeType(query) {
   }
 }
 
-export function coordValidator(coord) {
+export function assertTurf (assertion, hard, ...args) {
+  try {
+    turfAssert[assertion].apply(null, args)
+  } catch (error) {
+    if (hard) {
+      throw new Error(error.message)
+    } else {
+      return false
+    }
+  }
+
+  return true
+}
+
+export function coordValidator (coord) {
   return coord.map((val) => {
     return isNaN(val) ? 0 : val || 0
   })
 }
 
-export function getCoordinates(geometry, optCircle = false) {
+export function getCoordinates (geometry, optCircle = false) {
   switch (geometry.getType()) {
     case 'GeometryCollection':
       return geometry.getGeometries().map(geom => getCoordinates(geom, optCircle))
@@ -204,18 +203,18 @@ export const getHeading = (coordinate, index, allowNegative = true) => {
   }
 }
 
-export function coordDiff(coord1, coord2, view) {
+export function coordDiff (coord1, coord2, view) {
   const projection = view.getProjection()
 
   const args = [coordValidator(coord1), coordValidator(coord2)]
 
-  const distance = turf(turfDistance, args, projection)
-  const bearing = turf(turfBearing, args, projection)
+  const distance = olKitTurf(turfDistance, args, projection)
+  const bearing = olKitTurf(turfBearing, args, projection)
 
   return { distance, bearing }
 }
 
-export function targetDestination(startCoord, distance, bearing, view) {
+export function targetDestination (startCoord, distance, bearing, view) {
   const projection = view.getProjection()
 
   const coord = olProj.toLonLat(coordValidator(startCoord), projection)
@@ -224,7 +223,7 @@ export function targetDestination(startCoord, distance, bearing, view) {
   return olProj.fromLonLat(destination.geometry.coordinates, projection)
 }
 
-export function normalizeExtent(extent) {
+export function normalizeExtent (extent) {
   const newExtent = []
 
   newExtent[0] = extent[1]
@@ -243,7 +242,7 @@ export function normalizeExtent(extent) {
   })
 }
 
-export function pairCoords(flatCoords) {
+export function pairCoordinates (flatCoords) {
   const pairedCoords = []
 
   for (let i = 0; i < flatCoords.length - 1;) {
@@ -254,7 +253,7 @@ export function pairCoords(flatCoords) {
   return pairedCoords
 }
 
-export function convertXYtoLatLong(map, x, y) {
+export function convertXYtoLatLong (map, x, y) {
   const coords = map.getCoordinateFromPixel([x, y])
   const transformed = olProj.transform(coords, map.getView().getProjection().getCode(), 'EPSG:4326')
   const longitude = Number((Number(transformed[0] || 0) % 180).toFixed(6))
@@ -266,7 +265,7 @@ export function convertXYtoLatLong(map, x, y) {
   }
 }
 
-export function createNewBoxGeom(map, geometry, height, width) {
+export function createNewBoxGeom (map, geometry, height, width) {
   const coords = geometry.getCoordinates()
   const topLeft = map.getPixelFromCoordinate(coords)
 
@@ -290,7 +289,7 @@ export function createNewBoxGeom(map, geometry, height, width) {
   }
 }
 
-export function createTextBox(fontSize = 16, text, resolution) {
+export function createTextBox (fontSize = 16, text, resolution) {
   const textbox = document.createElement('div')
 
   textbox.class = 'text-box-size'
@@ -304,7 +303,7 @@ export function createTextBox(fontSize = 16, text, resolution) {
   }
 }
 
-export function translatePoint(pointGeom, angle = 0, distance, map) {
+export function translatePoint (pointGeom, angle = 0, distance, map) {
   const view = map.getView()
   const res = view.getResolution()
   const projection = view.getProjection()
@@ -312,10 +311,10 @@ export function translatePoint(pointGeom, angle = 0, distance, map) {
   const dist = distance * res
   const oneEighty = properAngle > 180 ? properAngle - 360 : properAngle
 
-  return turf(turfDestination, [pointGeom, dist, oneEighty], projection).getGeometry()
+  return olKitTurf(turfDestination, [pointGeom, dist, oneEighty], projection).getGeometry()
 }
 
-export function pointsFromVertices(geometry) {
+export function pointsFromVertices (geometry) {
   const featureType = geometry.getType()
   const coordinates = getCoordinates(geometry, true)
 
@@ -330,4 +329,80 @@ export function pointsFromVertices(geometry) {
 
     return coordinates
   }
+}
+
+export function getText (labelProps = { text: '' }, resolution, opts = {}) {
+  if (resolution > opts.maxreso) return ''
+
+  switch (opts.type) {
+    case 'hide':
+      return ''
+    case 'shorten':
+      return labelProps.text.substring(0, 12)
+    case 'wrap':
+      return stringDivider(labelProps.text, 32, '\n')
+    default:
+      return labelProps.text
+  }
+}
+
+export function getTextWidth (text = '') {
+  // We want the width of the longest line of text so split with \n and reverse sort by length
+  const lines = text.split(`\n`).sort((a, b) => b.length - a.length)
+  const ctx = document.createElement('canvas').getContext('2d')
+  const textMetrics = ctx.measureText(lines[0])
+  const fontSize = ctx.font.split('px')[0] || 16
+
+  return {
+    width: textMetrics.width,
+    fontSize
+  }
+}
+
+export function stringDivider (str, width, spaceReplacer) {
+  if (str.length > width) {
+    let p = width
+
+    while (p > 0 && (str[p] !== ' ' && str[p] !== '-')) {
+      p--
+    }
+    if (p > 0) {
+      let left
+
+      if (str.substring(p, p + 1) === '-') {
+        left = str.substring(0, p + 1)
+      } else {
+        left = str.substring(0, p)
+      }
+      const right = str.substring(p + 1)
+
+      return left + spaceReplacer + stringDivider(right, width, spaceReplacer)
+    }
+  }
+
+  return str
+}
+
+export function calculateScale (map, feature) {
+  const currentResolution = map.getView().getResolution()
+  const vmfLabel = feature.get('_vmf_label') || {}
+  const labelResolution = vmfLabel.resolution || currentResolution
+  const scaleFactor = labelResolution / currentResolution
+
+  return vmfLabel.scaling ? scaleFactor : 1
+}
+
+export function formatStyleString (textStyle) {
+  const font = textStyle.getFont() || 14
+  const scale = textStyle.getScale() || 1
+  const px = font.indexOf('px')
+  const size = font.slice(px - 2, px)
+  const scaledSize = (size - 6) * scale // Size - 6 is just done to make the text appear the same relative size as it is on the map
+  const scaledFont = font.replace(`${size}px`, `${scaledSize}px`)
+  const fillColor = textStyle.getFill().getColor()
+  const stroke = textStyle.getStroke()
+  const strokeColor = stroke.getColor()
+  const strokeWidth = stroke.getWidth()
+
+  return `font: ${scaledFont}; letter-spacing: 0px; paint-order: stroke; stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: ${fillColor}`
 }

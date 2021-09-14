@@ -24,18 +24,6 @@ class PopupActionEdit extends Component {
     const { feature } = this.props
     const style = feature.getStyle() // grab the original feature's style
 
-    // get user preferences
-    // const prefs = createClient('velocity-map')
-
-    // prefs.promise().then(() => {
-      // const uom = prefs.get()._UOM || 'imperial'
-      // Get the feature properties from the preferences or just off the feature
-      // const areaUOM = prefs.get()._AREA_LABEL_UOM || uom === 'imperial' ? 'acres' : 'hectares'
-      // const distanceUOM = prefs.get()._DISTANCE_LABEL_UOM || uom === 'imperial' ? 'feet' : 'meters'
-
-      // this.setState({ areaUOM, distanceUOM })
-    // })
-
     this.setState({ style }) // save that style to state
   }
 
@@ -44,7 +32,7 @@ class PopupActionEdit extends Component {
     const { feature, onEditFinish, persistState, persistedStateKey, onEdit } = this.props
     const { style } = this.state
 
-    onEdit(false)
+    onEdit({ active: false })
 
     if (!feature) return
 
@@ -52,7 +40,6 @@ class PopupActionEdit extends Component {
 
     feature.setStyle(style || null) // restore the original feature's style
     onEditFinish && onEditFinish(features)
-    // persistState({ isEditActive: false }, persistedStateKey)
     this.setState({ showFeatureEditor: false })
   }
 
@@ -60,7 +47,7 @@ class PopupActionEdit extends Component {
     const { feature, onEditCancel, persistedStateKey, persistStat, onEdit } = this.props
     const { style } = this.state
 
-    onEdit(false)
+    onEdit({ active: false })
 
     feature.setStyle(style || null) // restore the original feature's style
     onEditCancel && onEditCancel(features)
@@ -70,14 +57,11 @@ class PopupActionEdit extends Component {
 
   onEditStart = (opts) => {
     const { persistState, persistedStateKey, onEdit } = this.props
-
-    onEdit(true)
-
-    // persistState({ isEditActive: true }, persistedStateKey)
     const { feature, showPopup, onEditBegin } = this.props
-    const style = feature.getStyle() // grab the original feature's style
 
-    console.log('showPopup:', showPopup) // eslint-disable-line no-console
+    onEdit({ active: true })
+
+    const style = feature.getStyle() // grab the original feature's style
 
     this.setState({ style }) // save that style to state
     showPopup && showPopup(false)

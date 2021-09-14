@@ -8,6 +8,8 @@ import { Knob } from 'react-rotary-knob'
 import { connectToContext } from 'Provider'
 import { Card, Grid, CardActions, Button, FormControlLabel } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import centroid from '@turf/centroid'
+import { olKitTurf } from './utils'
 
 import olInteractionModify from 'ol/interaction/Modify'
 import olCollection from 'ol/Collection'
@@ -56,7 +58,8 @@ class FeatureEditor extends Component {
       editFeatures: undefined,
       showMeasurements: false,
       canceled: false,
-      finished: false
+      finished: false,
+      rotation: 0
     }
   }
 
@@ -86,7 +89,7 @@ class FeatureEditor extends Component {
             vectorContext,
             feature,
             editStyle(feature, map, showMeasurements, { areaUOM, distanceUOM })
-          ) // eslint-disable-line Openlayers style functions return style objects or arrays of style objects so we can call functions recursively.
+          ) // Openlayers style functions return style objects or arrays of style objects so we can call functions recursively.
           break
         default: // style object
           vectorContext.drawFeature(feature, editStyle)
@@ -112,13 +115,13 @@ class FeatureEditor extends Component {
   _addPostComposeListener = () => {
     const { editFeatures } = this.state
 
-    editFeatures.getArray()[0]?.get('_ol_kit_parent')?.on('postrender', this._renderEditOverlay)
+    editFeatures.getArray()[0]?.get('_ol_kit_parent')?.on('postrender', this._renderEditOverlay) // eslint-disable-line
   }
 
   _removePostComposeListener = () => {
     const { editFeatures } = this.state
 
-    editFeatures.getArray()[0]?.get('_ol_kit_parent')?.un('postrender', this._renderEditOverlay)
+    editFeatures.getArray()[0]?.get('_ol_kit_parent')?.un('postrender', this._renderEditOverlay) // eslint-disable-line
   }
 
   _end = () => { // this function cleans up our state and map.  If this does not execute correctly we could get stuck in a corrupted map state.
@@ -175,7 +178,6 @@ class FeatureEditor extends Component {
 
     const translateInteraction = new Translate({ features: editFeatures }) // ol/interaction/translate only checks for features on the map and since we are not adding these to the map (see additional comments) we use our own that knows to look for the features we pass to it whether or not they're on the map.
     const modifyInteraction = new olInteractionModify(opts) // ol/interaction/modify doesn't care about the features being on the map or not so it's good to go
-    // const rotateInteraction = new Rotate(map, editFeatures.item(0), icons.rotate)
 
     this.setState({
       interactions: [modifyInteraction, translateInteraction],
@@ -185,7 +187,6 @@ class FeatureEditor extends Component {
     }, () => {
       this._addPostComposeListener()
     })
-    // map.addInteraction(rotateInteraction)
     map.addInteraction(translateInteraction)
     map.addInteraction(modifyInteraction)
     onEditBegin({ oldFeatures: features, newFeatures: editFeatures.getArray(), newFeaturesCollection: editFeatures }) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
@@ -199,8 +200,23 @@ class FeatureEditor extends Component {
     this._end()
   }
 
+  rotate = (val) => {
+    const { editFeatures, rotation } = this.state
+    const geometry = editFeatures.getArray()[0].getGeometry()
+    const anchor = olKitTurf(centroid, [geometry]).getGeometry().getCoordinates()
+    const rotationDiff = val - rotation
+
+    geometry.rotate(-rotationDiff * (Math.PI / 180), anchor)
+    this.setState({ rotation: val })
+  }
+
   render () {
-    const { translations } = this.props
+    // const { translations } = this.props
+    const knobStyle = {
+      width: '35px',
+      height: '35px',
+      padding: '2px'
+    }
 
     return (
       <Toolbar>
@@ -215,7 +231,7 @@ class FeatureEditor extends Component {
               <FormControlLabel
                 style={{ marginBottom: '0px' }}
                 control={
-                  <Knob defaultValue={0} onChange={(val) => console.log(val)} />
+                  <Knob style={knobStyle} unlockDistance={0} defaultValue={0} onChange={this.rotate} />
                 }
                 label={'Rotate'}
               />

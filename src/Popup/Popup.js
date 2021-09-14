@@ -28,7 +28,7 @@ class Popup extends Component {
         pixel: [0, 0]
       },
       show: false,
-      editState: false,
+      editState: { active: false }
     }
 
     this.timer = 0
@@ -45,7 +45,6 @@ class Popup extends Component {
   }
 
   componentWillUnmount () {
-    console.log('UNMOUNT') // eslint-disable-line no-console
     const { map } = this.props
 
     map.un('click', this.mapClickHandler)
@@ -138,7 +137,10 @@ class Popup extends Component {
     // stop tracking movement when popup show is set to false
     this.movementListener && removeMovementListener(this.movementListener)
 
-    this.setState({ ...this.defaultState, editState, features: editState ? features : [] }, () => onMapClick(this.state))
+    this.setState(
+      { ...this.defaultState, editState, features: editState?.active ? features : [] },
+      () => onMapClick(this.state)
+    )
   }
 
   onDragEnd = e => {
@@ -157,25 +159,25 @@ class Popup extends Component {
 
   render () {
     const { actions, children, map, show: propShow } = this.props
-    const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
+    const { features, loading, popupPosition: { arrow, pixel }, show: stateShow, editState } = this.state
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
-    console.log('show:', show) // eslint-disable-line no-console
+    if (!show && !editState?.active) return null
 
     return (
-        ReactDOM.createPortal(
-          <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
-            {children || ( // default ui if no children are passed
-              <PopupDefaultInsert
-                actions={actions}
-                features={features}
-                loading={loading}
-                onClose={this.hidePopup}
-                onEdit={this.handleEditEvent} />
-            )}
-          </PopupBase>,
-          map.getTargetElement()
-        )
+      ReactDOM.createPortal(
+        <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
+          {children || ( // default ui if no children are passed
+            <PopupDefaultInsert
+              actions={actions}
+              features={features}
+              loading={loading}
+              onClose={this.hidePopup}
+              onEdit={this.handleEditEvent} />
+          )}
+        </PopupBase>,
+        map.getTargetElement()
+      )
     )
   }
 }
