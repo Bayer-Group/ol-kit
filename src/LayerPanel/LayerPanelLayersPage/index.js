@@ -461,7 +461,7 @@ class LayerPanelLayersPage extends PureComponent {
               const features = this.getFeaturesForLayer(layer)
               const isExpanded = isExpandedLayer(layer)
               const data = this.formatFeatureRows(features, layer)
-
+              
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
@@ -497,7 +497,7 @@ class LayerPanelLayersPage extends PureComponent {
                           ref={this.virtuoso}
                           itemContent={this.renderFeatureRow}
                           rangeChanged={this.handleRangeChange}
-                          totalCount={features.length}
+                          initialItemCount={data.length}
                         />
                       </Collapse>
                     : null
