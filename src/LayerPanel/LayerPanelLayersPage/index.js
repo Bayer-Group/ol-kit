@@ -405,7 +405,7 @@ class LayerPanelLayersPage extends PureComponent {
   render () {
     const {
       translations, layerFilter, handleLayerDoubleClick, disableDrag, tabIcon, onLayerRemoved,
-      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers, onCreateHeatmap
+      onLayerReorder, enableFilter, getMenuItemsForLayer, shouldAllowLayerRemoval, map, onExportFeatures, onMergeLayers, onCreateHeatmap, expandedHeight
     } = this.props
     const { layers, masterCheckboxVisibility, filterText, expandedLayers } = this.state
     const isExpandedLayer = (layer) => !!expandedLayers.find(expandedLayerId => expandedLayerId === layer.ol_uid)
@@ -461,6 +461,7 @@ class LayerPanelLayersPage extends PureComponent {
               const features = this.getFeaturesForLayer(layer)
               const isExpanded = isExpandedLayer(layer)
               const data = this.formatFeatureRows(features, layer)
+              const initialItemCount = data.length > this.props.initialItemCount ? this.props.initialItemCount : data.length
 
               return (
                 <div key={i}
@@ -492,12 +493,12 @@ class LayerPanelLayersPage extends PureComponent {
                   {isExpanded
                     ? <Collapse in={isExpanded} timeout='auto'>
                         <Virtuoso
-                          style={{ paddingLeft: '36px', height: features.length * 52 > 300 ? 300 : features.length * 52 }}
+                          style={{ paddingLeft: '36px', height: features.length * 52 > expandedHeight ? expandedHeight : features.length * 52 }}
                           data={data}
                           ref={this.virtuoso}
                           itemContent={this.renderFeatureRow}
                           rangeChanged={this.handleRangeChange}
-                          initialItemCount={data.length > 6 ? 6 : data.length}
+                          initialItemCount={initialItemCount}
                         />
                       </Collapse>
                     : null
@@ -522,7 +523,9 @@ LayerPanelLayersPage.defaultProps = {
   onCreateHeatmap: () => {},
   tabIcon: <LayersIcon />,
   setHoverStyle: () => ({ color: 'red', fill: '#ffffff', stroke: 'red' }),
-  disableHover: false
+  disableHover: false,
+  initialItemCount: 6,
+  expandedHeight: 300
 }
 
 LayerPanelLayersPage.propTypes = {
@@ -583,7 +586,13 @@ LayerPanelLayersPage.propTypes = {
   disableHover: PropTypes.bool,
 
   /** Pass fill, stroke, and color hover style values */
-  setHoverStyle: PropTypes.func
+  setHoverStyle: PropTypes.func,
+
+  /** Set initial item count to render feature rows in virtualized list */
+  initialItemCount: PropTypes.number,
+
+  /** Set max height for feature scroll area (number equates to pixels) */
+  expandedHeight: PropTypes.number
 }
 
 export default connectToContext(LayerPanelLayersPage)
