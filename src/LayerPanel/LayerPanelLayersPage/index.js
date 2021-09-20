@@ -497,7 +497,7 @@ class LayerPanelLayersPage extends PureComponent {
                           ref={this.virtuoso}
                           itemContent={this.renderFeatureRow}
                           rangeChanged={this.handleRangeChange}
-                          initialItemCount={data.length}
+                          initialItemCount={data.length > 6 ? 6 : data.length}
                         />
                       </Collapse>
                     : null
