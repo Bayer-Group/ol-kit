@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | DrawFreehand</title>
+    <title>ol-kit | Popup/PopupActions/PopupActionZoomToExtent/PopupActionZoomToExtent.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,244 +77,52 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltDrawFreehand /&gt
-        </h2>
-        
-            <div class="class-description">A button for drawing freehand line strings.</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="DrawFreehand">
-        <a class="href-link" href="#DrawFreehand">#</a>
-        
-        <span class="code-name">
-            
-                &ltDrawFreehand <i>type</i> <i>addInteraction</i> <i>freehand</i> <i>tooltipTitle</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>type</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>the openlayers draw type</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>addInteraction</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>a function that adds the draw interaction to the openlayers map on click of the button</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>freehand</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>A boolean to check if the button is freehand</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>tooltipTitle</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>a title for the tooltip</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.18.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Draw_Freehand.js.html" class="button">View Source</a>
-            <span>
-                <a href="Draw_Freehand.js.html">Draw/Freehand.js</a>, <a href="Draw_Freehand.js.html#line12">line 12</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <h1>DrawContainer</h1>
-<p>The <code>&lt;DrawContainer&gt;</code> component will render a set prebuilt draw and measure tools or child component(s) passed in as the <code>children</code> prop. These tools allow the user to draw features with point, line, and polygon geometries on a map user configurable geometry snap settings. These features can also be styled with perimiter and area measurement labels. Measurements are calculated geodesically using the WGS84 ellipsoid. The user can also label the geometry vertices with their respective coordinates in decimal degrees.</p>
-<h2>Drop-in example:</h2>
-<p>This one-liner will render prebuilt draw components in a map.</p>
-<pre class="prettyprint source lang-javascript"><code>import React from 'react'
-import { Map, DrawContainer } from '@bayer/ol-kit'
-
-const App = () => {
-  return (
-  &lt;Map>
-    &lt;DrawContainer />
-  &lt;/Map>
-  )
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { PopupActionItem } from 'Popup'
+import { connectToContext } from 'Provider'
+import { setMapExtent, getExtentForFeatures } from 'Map'
+
+class ActionZoomToExtent extends Component {
+  zoom = () => {
+    const { feature, map } = this.props
+
+    setMapExtent(map, getExtentForFeatures([feature]))
+  }
+
+  render () {
+    const { translations } = this.props
+
+    return (
+      &lt;PopupActionItem
+        title={translations['_ol_kit.PopupActionZoomToExtent.title']}
+        onClick={() => this.zoom()} />
+    )
+  }
 }
 
-export default App
-</code></pre>
-            </div>
-        </div>
-    
-    
-</article>
+ActionZoomToExtent.propTypes = {
+  feature: PropTypes.object,
+  /** olMap */
+  map: PropTypes.object,
+  translations: PropTypes.shape({
+    '_ol_kit.PopupActionZoomToExtent.title': PropTypes.string
+  }).isRequired
+}
 
-</section>
+ActionZoomToExtent.defaultProps = {
+  translations: {
+    '_ol_kit.PopupActionZoomToExtent.title': 'Zoom to Extent'
+  }
+}
+
+export default connectToContext(ActionZoomToExtent)
+</code></pre>
+        </article>
+    </section>
 
 
 
