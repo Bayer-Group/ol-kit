@@ -1,4 +1,4 @@
-import React, { createRef, memo, PureComponent } from 'react'
+import React, { createRef, PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Virtuoso } from 'react-virtuoso'
 import LayerPanelPage from 'LayerPanel/LayerPanelPage'
@@ -461,7 +461,7 @@ class LayerPanelLayersPage extends PureComponent {
               const features = this.getFeaturesForLayer(layer)
               const isExpanded = isExpandedLayer(layer)
               const data = this.formatFeatureRows(features, layer)
-              
+
               return (
                 <div key={i}
                   onMouseEnter={() => this.selectFeatures(features)}
