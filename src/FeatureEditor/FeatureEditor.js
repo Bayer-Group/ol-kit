@@ -180,6 +180,7 @@ class FeatureEditor extends Component {
     const modifyInteraction = new olInteractionModify(opts) // ol/interaction/modify doesn't care about the features being on the map or not so it's good to go
 
     this.setState({
+      anchor: olKitTurf(centroid, [editFeatures.getArray()[0].getGeometry()]).getGeometry().getCoordinates(),
       interactions: [modifyInteraction, translateInteraction],
       editFeatures,
       canceled: false,
@@ -201,13 +202,11 @@ class FeatureEditor extends Component {
   }
 
   rotate = (val) => {
-    const { editFeatures, rotation } = this.state
+    const { editFeatures, rotation, anchor } = this.state
     const geometry = editFeatures.getArray()[0].getGeometry()
-    const anchor = olKitTurf(centroid, [geometry]).getGeometry().getCoordinates()
     const rotationDiff = val - rotation
 
-    geometry.rotate(-rotationDiff * (Math.PI / 180), anchor)
-    this.setState({ rotation: val })
+    this.setState({ rotation: val }, () => geometry.rotate(-rotationDiff * (Math.PI / 45), anchor))
   }
 
   render () {
