@@ -45,6 +45,7 @@ class Map extends React.Component {
   componentDidMount () {
     const {
       addMapToContext,
+      contextProps,
       map: passedMap,
       onMapInit,
       translations,
@@ -54,20 +55,6 @@ class Map extends React.Component {
       urlViewParam,
       dragZoomboxStyle
     } = this.props
-    const onMapReady = map => {
-      // pass map back via callback prop
-      const initCallback = onMapInit(map)
-      // if onMapInit prop returns a promise, render children after promise is resolved
-      const isPromise = !!initCallback && typeof initCallback.then === 'function'
-
-      // update AFTER onMapInit to get map into the state/context
-      isPromise
-        ? initCallback
-          .catch(e => ugh.error('Error caught in \'onMapInit\'', e))
-          .finally(() => this.setState({ mapInitialized: true })) // always initialize app
-        : this.setState({ mapInitialized: true })
-    }
-
     // if no map was passed, create the map
     this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
 
@@ -78,15 +65,41 @@ class Map extends React.Component {
     // setup select interactions for the map
     this.initializeSelect(this.map)
 
+    // optionally add zoombox styling
+    replaceZoomBoxCSS(dragZoomboxStyle)
+
     // callback for <Provider> if it is mounted as hoc
-    const mapConfig = {
+    let mapConfig = {
       map: this.map,
       mapId: this.target,
       selectInteraction: this.selectInteraction,
-      translations // this can be hoisted to <Provider> only in the future
+      translations, // this can be hoisted to <Provider> only in the future
+      ...contextProps
     }
+    const onMapReady = map => {
+      const allSystemsGo = () => {
+        addMapToContext(mapConfig)
+        this.setState({ mapInitialized: true })
+      }
+      // pass map back via callback prop
+      const initCallback = onMapInit(map)
+      // if onMapInit prop returns a promise, render children after promise is resolved
+      const isPromise = !!initCallback && typeof initCallback.then === 'function'
 
-    addMapToContext(mapConfig)
+      // update AFTER onMapInit to get map into the state/context
+      isPromise
+        ? initCallback
+          .then(({ contextProps }) => {
+            // result of onMapInit may contain contextProps
+            mapConfig = {
+              ...mapConfig,
+              ...contextProps
+            }
+          })
+          .catch(e => ugh.error('Error caught in \'onMapInit\'', e))
+          .finally(allSystemsGo) // always initialize app
+        : allSystemsGo()
+    }
 
     // optionally attach map listener
     if (updateUrlFromView) {
@@ -107,9 +120,6 @@ class Map extends React.Component {
       // callback that returns a reference to the created map
       onMapReady(this.map)
     }
-
-    // optionally add zoombox styling
-    replaceZoomBoxCSS(dragZoomboxStyle)
   }
 
   initializeSelect = map => {
@@ -163,6 +173,7 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   addMapToContext: () => {},
+  contextProps: {},
   fullScreen: false,
   logoPosition: 'right',
   isMultiMap: false,
@@ -185,6 +196,8 @@ Map.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
+  /** custom props that get added to Provider context and passed to connectToContext components */
+  contextProps: PropTypes.object,
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */
