@@ -234,8 +234,8 @@ class LayerPanelLayersPage extends PureComponent {
   }
 
   getFeaturesForLayer = (layer) => {
-    if (!this.isValidVectorLayer(layer)) return
-    if (this.props.shouldHideFeatures(layer)) return
+    if (!this.isValidVectorLayer(layer)) return []
+    if (this.props.shouldHideFeatures(layer)) return []
 
     return layer.getSource().getFeatures().map(feature => {
       const isVisible = feature.get('_ol_kit_feature_visibility') === undefined ? true : feature.get('_ol_kit_feature_visibility')
