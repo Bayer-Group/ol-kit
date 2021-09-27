@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | DrawBox</title>
+    <title>ol-kit | Provider</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,10 +81,10 @@
 <header>
     
         <h2>
-            &ltDrawBox /&gt
+            &ltProvider /&gt
         </h2>
         
-            <div class="class-description">A button for drawing boxes.</div>
+            <div class="class-description">A higher order component that provides context to connectToContext wrapped children</div>
         
     
 </header>
@@ -100,12 +100,12 @@
 
 
     
-    <h4 class="name" id="DrawBox">
-        <a class="href-link" href="#DrawBox">#</a>
+    <h4 class="name" id="Provider">
+        <a class="href-link" href="#Provider">#</a>
         
         <span class="code-name">
             
-                &ltDrawBox <i>type</i> <i>geometryFunction</i> <i>addInteraction</i> <i>tooltipTitle</i> /&gt
+                &ltProvider <i>children</i> <i>contextProps</i> <i>map</i> <i>maps</i> <i>translations</i> /&gt
             
         </span>
     </h4>
@@ -138,46 +138,57 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>type</code></td>
+          <td class="name"><code>children</code></td>
           <td>
-            string
+            union
           </td>
-          <td>No</td>
-          <td>the openlayers draw type</td>
+          <td>Yes</td>
+          <td>Pass components as children of Provider component</td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>geometryFunction</code></td>
+          <td class="name"><code>contextProps</code></td>
           <td>
-            func
+            object
           </td>
           <td>No</td>
-          <td>A function that creates a openlayers draw interaction box</td>
+          <td>Add any custom props to context and they will be passed to all components wrapped by connectToContext</td>
+          <td>{}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>OL map object (required if maps array is not passed)</td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>addInteraction</code></td>
+          <td class="name"><code>maps</code></td>
           <td>
-            func
+            array
           </td>
           <td>No</td>
-          <td>a function that adds the draw interaction to the openlayers map on click of the button</td>
-          <td></td>
+          <td>Array of Openlayers map objects for components that support multi-map (this will override anything passed to map prop)</td>
+          <td>[]</td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>tooltipTitle</code></td>
+          <td class="name"><code>translations</code></td>
           <td>
-            string
+            object
           </td>
           <td>No</td>
-          <td>a title for the tooltip</td>
-          <td></td>
+          <td>Object with key/value pairs for component translation strings</td>
+          <td>function()</td>
         </tr>
         
   
@@ -197,7 +208,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.18.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>1.0.0</li></ul></dd>
     
 
     
@@ -227,9 +238,9 @@
 
     
         <p class="tag-source">
-            <a href="Draw_Box.js.html" class="button">View Source</a>
+            <a href="Provider_Provider.js.html" class="button">View Source</a>
             <span>
-                <a href="Draw_Box.js.html">Draw/Box.js</a>, <a href="Draw_Box.js.html#line18">line 18</a>
+                <a href="Provider_Provider.js.html">Provider/Provider.js</a>, <a href="Provider_Provider.js.html#line15">line 15</a>
             </span>
         </p>
     
@@ -253,6 +264,22 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    
+        
+
+<div id='edskm1bvnsku32vyrr'></div>
+
+<script>
+  ReactDOM.render(ReactWrapper({
+    example: "./example.md",
+    uniqId: "edskm1bvnsku32vyrr",
+  }), document.getElementById('edskm1bvnsku32vyrr'));
+</script>
+    
 
 
 </div>
@@ -289,23 +316,23 @@
             <br/>
             <h2 class="title">Examples</h2>
             <div class="example">
-                <h1>DrawContainer</h1>
-<p>The <code>&lt;DrawContainer&gt;</code> component will render a set prebuilt draw and measure tools or child component(s) passed in as the <code>children</code> prop. These tools allow the user to draw features with point, line, and polygon geometries on a map user configurable geometry snap settings. These features can also be styled with perimiter and area measurement labels. Measurements are calculated geodesically using the WGS84 ellipsoid. The user can also label the geometry vertices with their respective coordinates in decimal degrees.</p>
-<h2>Drop-in example:</h2>
-<p>This one-liner will render prebuilt draw components in a map.</p>
+                <p>The Provider component should wrap your entire application and never be unmounted. It will automatically interface with any ol-kit children within the component tree and connect them to context for things like <code>map</code>, <code>translations</code> and <code>selectInteraction</code> props. A <code>&lt;Map&gt;</code> mounts a <code>&lt;Provider&gt;</code> for you behind the scenes, but if you mount <code>&lt;Provider&gt;</code> declaratively (see below), components do not have to be children of <code>&lt;Map&gt;</code> (only <code>&lt;Provider&gt;</code>).</p>
+<p>Fully integrated example:</p>
 <pre class="prettyprint source lang-javascript"><code>import React from 'react'
-import { Map, DrawContainer } from '@bayer/ol-kit'
+import { Map, Popup, Provider } from '@bayer/ol-kit'
 
-const App = () => {
+function App() {
   return (
-  &lt;Map>
-    &lt;DrawContainer />
-  &lt;/Map>
+    &lt;Provider>
+      &lt;Map />
+      &lt;Popup />
+    &lt;/Provider>
   )
 }
 
 export default App
 </code></pre>
+<p>Make sure the <Provider> never unmounts!</p>
             </div>
         </div>
     

@@ -56,6 +56,7 @@ class Map extends React.Component {
       dragZoomboxStyle
     } = this.props
     // if no map was passed, create the map
+
     this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
 
     if (this.passedMap && !this.passedMap.getTargetElement()) {

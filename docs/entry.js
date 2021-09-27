@@ -211,20 +211,23 @@ reactComponents['PopupTabs'] = Component61;
 import Component62 from '../src/Project/Project.js';
 reactComponents['ProjectMenu'] = Component62;
 
-import Component63 from '../src/TabbedPanel/TabbedPanel.js';
-reactComponents['TabbedPanel'] = Component63;
+import Component63 from '../src/Provider/Provider.js';
+reactComponents['Provider'] = Component63;
 
-import Component64 from '../src/TimeSlider/TimeSlider.js';
-reactComponents['TimeSlider'] = Component64;
+import Component64 from '../src/TabbedPanel/TabbedPanel.js';
+reactComponents['TabbedPanel'] = Component64;
 
-import Component65 from '../src/TimeSlider/TimeSliderBase.js';
-reactComponents['TimeSliderBase'] = Component65;
+import Component65 from '../src/TimeSlider/TimeSlider.js';
+reactComponents['TimeSlider'] = Component65;
 
-import Component66 from '../src/Controls/ZoomControls.js';
-reactComponents['ZoomControls'] = Component66;
+import Component66 from '../src/TimeSlider/TimeSliderBase.js';
+reactComponents['TimeSliderBase'] = Component66;
 
-import Component67 from '../src/Controls/ZoomIn.js';
-reactComponents['ZoomIn'] = Component67;
+import Component67 from '../src/Controls/ZoomControls.js';
+reactComponents['ZoomControls'] = Component67;
 
-import Component68 from '../src/Controls/ZoomOut.js';
-reactComponents['ZoomOut'] = Component68;
+import Component68 from '../src/Controls/ZoomIn.js';
+reactComponents['ZoomIn'] = Component68;
+
+import Component69 from '../src/Controls/ZoomOut.js';
+reactComponents['ZoomOut'] = Component69;
