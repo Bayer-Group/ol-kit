@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { PopupActionItem } from 'Popup'
-import { FeatureEditor } from 'FeatureEditor'
 import { connectToContext } from 'Provider'
-
-import olStyleStyle from 'ol/style/Style'
 
 class PopupActionEdit extends Component {
   constructor (props) {
@@ -16,10 +13,6 @@ class PopupActionEdit extends Component {
     }
   }
 
-  componentWillUnmount () {
-    this.onEditCancel([this.props.feature])
-  }
-
   componentDidMount () {
     const { feature } = this.props
     const style = feature.getStyle() // grab the original feature's style
@@ -27,65 +20,19 @@ class PopupActionEdit extends Component {
     this.setState({ style }) // save that style to state
   }
 
-  onEditEnd = (features) => {
-    const geom = features[0].getGeometry()
-    const { feature, onEditFinish, persistState, persistedStateKey, onEdit } = this.props
-    const { style } = this.state
-
-    onEdit({ active: false })
-
-    if (!feature) return
-
-    feature.setGeometry(geom)
-
-    feature.setStyle(style || null) // restore the original feature's style
-    onEditFinish && onEditFinish(features)
-    this.setState({ showFeatureEditor: false })
-  }
-
-  onEditCancel = (features) => {
-    const { feature, onEditCancel, persistedStateKey, persistStat, onEdit } = this.props
-    const { style } = this.state
-
-    onEdit({ active: false })
-
-    feature.setStyle(style || null) // restore the original feature's style
-    onEditCancel && onEditCancel(features)
-    // persistState({ isEditActive: false }, persistedStateKey)
-    this.setState({ showFeatureEditor: false })
-  }
-
-  onEditStart = (opts) => {
-    const { persistState, persistedStateKey, onEdit } = this.props
-    const { feature, showPopup, onEditBegin } = this.props
-
-    onEdit({ active: true })
-
-    const style = feature.getStyle() // grab the original feature's style
-
-    this.setState({ style }) // save that style to state
-    showPopup && showPopup(false)
-    onEditBegin && onEditBegin(opts)
-    feature.setStyle(new olStyleStyle({}))
+  onClick = () => {
+    const { addEditFeatureToContext, feature } = this.props
+ 
+    addEditFeatureToContext(feature)
+    this.forceUpdate()
   }
 
   render () {
-    const { translations, feature, map } = this.props
-    const { showFeatureEditor, areaUOM, distanceUOM } = this.state
+    const { translations } = this.props
 
     return (
       <div>
-        <PopupActionItem title={translations['popup.editGeom'] || 'Edit Geometry'} onClick={() => this.setState({ showFeatureEditor: true })} />
-        {showFeatureEditor && (
-          <FeatureEditor
-            map={map}
-            editOpts={{ features: [feature] }}
-            onEditFinish={this.onEditEnd}
-            onEditBegin={this.onEditStart}
-            onEditCancel={this.onEditCancel}
-            areaUOM={areaUOM}
-            distanceUOM={distanceUOM} />
-        )}
+        <PopupActionItem title={translations['popup.editGeom'] || 'Edit Geometry'} onClick={this.onClick} />
       </div>
     )
   }
@@ -104,7 +51,8 @@ PopupActionEdit.propTypes = {
   persistedState: PropTypes.object,
   persistedStateKey: PropTypes.string,
   persistState: PropTypes.func,
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  addEditFeatureToContext: PropTypes.func
 }
 
 PopupActionEdit.defaultProps = {

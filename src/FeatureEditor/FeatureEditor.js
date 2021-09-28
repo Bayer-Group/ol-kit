@@ -142,7 +142,7 @@ class FeatureEditor extends Component {
   }
 
   cancelEdit = () => {
-    const { onEditCancel, editOpts: { features } } = this.props
+    const { onEditCancel, features } = this.props
 
     this.setState({ canceled: true }, () => onEditCancel(features))
   }
@@ -155,17 +155,16 @@ class FeatureEditor extends Component {
   }
 
   componentDidMount () {
-    const { editOpts, map, onEditBegin } = this.props
-    const { features } = editOpts
+    const { features, editOpts, map, onEditBegin } = this.props
     const { interactions } = this.state
 
     if (interactions.length === 2) return
 
-    const editFeatures = new olCollection(features.map(f => f.clone())) // create a collection of clones of the features in props, this avoids modifying the existing features
+    const clonedFeatures = new olCollection(features.map(f => f.clone())) // create a collection of clones of the features in props, this avoids modifying the existing features
 
     const opts = Object.assign({}, editOpts, {
       pixelTolerance: 10,
-      features: editFeatures,
+      features: clonedFeatures,
       deleteCondition: ({ originalEvent, type }) => {
         const { altKey, ctrlKey, shiftKey, metaKey } = originalEvent
         const modifierKeyActive = altKey || ctrlKey || shiftKey || metaKey
@@ -176,13 +175,13 @@ class FeatureEditor extends Component {
       }
     })
 
-    const translateInteraction = new Translate({ features: editFeatures }) // ol/interaction/translate only checks for features on the map and since we are not adding these to the map (see additional comments) we use our own that knows to look for the features we pass to it whether or not they're on the map.
+    const translateInteraction = new Translate({ features: clonedFeatures }) // ol/interaction/translate only checks for features on the map and since we are not adding these to the map (see additional comments) we use our own that knows to look for the features we pass to it whether or not they're on the map.
     const modifyInteraction = new olInteractionModify(opts) // ol/interaction/modify doesn't care about the features being on the map or not so it's good to go
 
     this.setState({
-      anchor: olKitTurf(centroid, [editFeatures.getArray()[0].getGeometry()]).getGeometry().getCoordinates(),
+      anchor: olKitTurf(centroid, [clonedFeatures.getArray()[0].getGeometry()]).getGeometry().getCoordinates(),
       interactions: [modifyInteraction, translateInteraction],
-      editFeatures,
+      editFeatures: clonedFeatures,
       canceled: false,
       finished: false
     }, () => {
@@ -190,7 +189,7 @@ class FeatureEditor extends Component {
     })
     map.addInteraction(translateInteraction)
     map.addInteraction(modifyInteraction)
-    onEditBegin({ oldFeatures: features, newFeatures: editFeatures.getArray(), newFeaturesCollection: editFeatures }) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
+    onEditBegin({ oldFeatures: features, newFeatures: clonedFeatures.getArray(), newFeaturesCollection: clonedFeatures }) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
   }
 
   componentWillUnmount () {
@@ -255,9 +254,9 @@ FeatureEditor.propTypes = {
     pixelTolerance: PropTypes.number,
     style: PropTypes.object,
     source: PropTypes.object,
-    features: PropTypes.array,
     wrapX: PropTypes.bool
   }).isRequired,
+  features: PropTypes.array,
   map: PropTypes.object,
   onEditBegin: PropTypes.func,
   onEditFinish: PropTypes.func,

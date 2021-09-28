@@ -13,8 +13,11 @@ import {
 } from './utils'
 import { StyledMap } from './styled'
 import { connectToContext } from 'Provider'
+import { FeatureEditor } from 'FeatureEditor'
 import en from 'locales/en'
 import ugh from 'ugh'
+
+import olStyleStyle from 'ol/style/Style'
 
 /**
  * A Reactified ol.Map wrapper component
@@ -133,8 +136,51 @@ class Map extends React.Component {
     if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
   }
 
+  onEditEnd = (features) => {
+    const geom = features[0].getGeometry()
+    const { editFeature, onEditFinish, onEdit, addEditFeatureToContext } = this.props
+    const { style } = this.state
+
+    onEdit({ active: false })
+
+    if (!editFeature) return
+
+    editFeature.setGeometry(geom)
+
+    editFeature.setStyle(style || null) // restore the original feature's style
+    onEditFinish?.(features)
+    this.setState({ showFeatureEditor: false })
+    addEditFeatureToContext(null)
+  }
+
+  onEditCancel = (features) => {
+    const { editFeature, onEditCancel, onEdit, addEditFeatureToContext } = this.props
+    const { style } = this.state
+
+    onEdit({ active: false })
+
+    editFeature.setStyle(style || null) // restore the original feature's style
+    onEditCancel?.(features)
+    this.setState({ showFeatureEditor: false })
+    addEditFeatureToContext(null)
+  }
+
+  onEditStart = (opts) => {
+    const { onEdit, editFeature, showPopup, onEditBegin } = this.props
+
+    onEdit({ active: true })
+
+    const style = editFeature.getStyle() // grab the original feature's style
+
+    this.setState({ style }) // save that style to state
+    showPopup?.(false)
+    onEditBegin?.(opts)
+    editFeature.setStyle(new olStyleStyle({}))
+  }
+
+
   render () {
-    const { children, fullScreen, logoPosition, style, translations } = this.props
+    const { children, fullScreen, logoPosition, style, translations, editFeature } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -144,7 +190,8 @@ class Map extends React.Component {
             id={this.target}
             fullScreen={fullScreen}
             style={style}>
-            <MapLogo logoPosition={logoPosition} translations={translations} />
+              {editFeature && <FeatureEditor features={[editFeature]} onEditBegin={this.onEditStart} onEditCancel={this.onEditCancel} onEditFinish={this.onEditEnd} />}
+              <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
         }
         {mapInitialized // wait for map to initialize before rendering children
@@ -158,6 +205,7 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   addMapToContext: () => {},
+  onEdit: () => {},
   fullScreen: false,
   logoPosition: 'right',
   isMultiMap: false,
@@ -180,6 +228,9 @@ Map.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
+  editFeature: PropTypes.object,
+  addEditFeatureToContext: PropTypes.func,
+  onEdit: PropTypes.func,
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */

@@ -162,22 +162,24 @@ class Popup extends Component {
     const { features, loading, popupPosition: { arrow, pixel }, show: stateShow, editState } = this.state
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
-    if (!show && !editState?.active) return null
-
     return (
-      ReactDOM.createPortal(
-        <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
-          {children || ( // default ui if no children are passed
-            <PopupDefaultInsert
-              actions={actions}
-              features={features}
-              loading={loading}
-              onClose={this.hidePopup}
-              onEdit={this.handleEditEvent} />
-          )}
-        </PopupBase>,
-        map.getTargetElement()
-      )
+      !show
+       ? null
+       : (
+          ReactDOM.createPortal(
+            <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
+              {children || ( // default ui if no children are passed
+                <PopupDefaultInsert
+                  actions={actions}
+                  features={features}
+                  loading={loading}
+                  onClose={this.hidePopup}
+                  onEdit={this.handleEditEvent} />
+              )}
+            </PopupBase>,
+            map.getTargetElement()
+          )
+       )
     )
   }
 }
