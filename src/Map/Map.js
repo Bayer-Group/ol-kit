@@ -138,46 +138,35 @@ class Map extends React.Component {
 
   onEditEnd = (features) => {
     const geom = features[0].getGeometry()
-    const { editFeature, onEditFinish, onEdit, addEditFeatureToContext } = this.props
+    const { editFeature, addEditFeatureToContext } = this.props
     const { style } = this.state
-
-    onEdit({ active: false })
 
     if (!editFeature) return
 
     editFeature.setGeometry(geom)
 
     editFeature.setStyle(style || null) // restore the original feature's style
-    onEditFinish?.(features)
     this.setState({ showFeatureEditor: false })
     addEditFeatureToContext(null)
   }
 
-  onEditCancel = (features) => {
-    const { editFeature, onEditCancel, onEdit, addEditFeatureToContext } = this.props
+  onEditCancel = () => {
+    const { editFeature, addEditFeatureToContext } = this.props
     const { style } = this.state
 
-    onEdit({ active: false })
-
     editFeature.setStyle(style || null) // restore the original feature's style
-    onEditCancel?.(features)
     this.setState({ showFeatureEditor: false })
     addEditFeatureToContext(null)
   }
 
-  onEditStart = (opts) => {
-    const { onEdit, editFeature, showPopup, onEditBegin } = this.props
-
-    onEdit({ active: true })
+  onEditStart = () => {
+    const { editFeature } = this.props
 
     const style = editFeature.getStyle() // grab the original feature's style
 
     this.setState({ style }) // save that style to state
-    showPopup?.(false)
-    onEditBegin?.(opts)
     editFeature.setStyle(new olStyleStyle({}))
   }
-
 
   render () {
     const { children, fullScreen, logoPosition, style, translations, editFeature } = this.props
@@ -190,8 +179,13 @@ class Map extends React.Component {
             id={this.target}
             fullScreen={fullScreen}
             style={style}>
-              {editFeature && <FeatureEditor features={[editFeature]} onEditBegin={this.onEditStart} onEditCancel={this.onEditCancel} onEditFinish={this.onEditEnd} />}
-              <MapLogo logoPosition={logoPosition} translations={translations} />
+            {editFeature && <FeatureEditor
+              features={[editFeature]}
+              onEditBegin={this.onEditStart}
+              onEditCancel={this.onEditCancel}
+              onEditFinish={this.onEditEnd}
+            />}
+            <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
         }
         {mapInitialized // wait for map to initialize before rendering children
@@ -230,7 +224,6 @@ Map.propTypes = {
   ]),
   editFeature: PropTypes.object,
   addEditFeatureToContext: PropTypes.func,
-  onEdit: PropTypes.func,
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */

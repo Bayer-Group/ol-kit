@@ -27,8 +27,7 @@ class Popup extends Component {
         fits: false,
         pixel: [0, 0]
       },
-      show: false,
-      editState: { active: false }
+      show: false
     }
 
     this.timer = 0
@@ -153,19 +152,15 @@ class Popup extends Component {
     })
   }
 
-  handleEditEvent = e => {
-    this.setState({ editState: e })
-  }
-
   render () {
     const { actions, children, map, show: propShow } = this.props
-    const { features, loading, popupPosition: { arrow, pixel }, show: stateShow, editState } = this.state
+    const { features, loading, popupPosition: { arrow, pixel }, show: stateShow } = this.state
     const show = typeof propShow === 'boolean' ? propShow : stateShow // keep show prop as source of truth over state
 
     return (
       !show
-       ? null
-       : (
+        ? null
+        : (
           ReactDOM.createPortal(
             <PopupBase arrow={arrow} onPopupDragEnd={this.onDragEnd} pixel={pixel} {...this.props} show={show}>
               {children || ( // default ui if no children are passed
@@ -174,12 +169,12 @@ class Popup extends Component {
                   features={features}
                   loading={loading}
                   onClose={this.hidePopup}
-                  onEdit={this.handleEditEvent} />
+                />
               )}
             </PopupBase>,
             map.getTargetElement()
           )
-       )
+        )
     )
   }
 }

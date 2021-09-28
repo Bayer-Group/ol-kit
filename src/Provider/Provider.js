@@ -95,7 +95,7 @@ Provider.propTypes = {
   /** Object with key/value pairs for component translation strings */
   translations: PropTypes.object,
   /** An Ol feature object that is being edited */
-  editFeature: PropTypes.object,
+  editFeature: PropTypes.object
 }
 
 export default Provider

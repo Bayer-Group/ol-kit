@@ -63,7 +63,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
     [36m</div>[39m
   [36m</div>[39m
   [36m<div[39m
-    [33mclass[39m=[32m\\"sc-gKAblj qioHn\\"[39m
+    [33mclass[39m=[32m\\"sc-iCoHVE dUbRnc\\"[39m
   [36m>[39m
     [36m<div>[39m
       [36m<div[39m
@@ -164,5 +164,5 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiI..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root Mui..."
 `;

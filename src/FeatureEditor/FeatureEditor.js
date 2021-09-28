@@ -189,7 +189,11 @@ class FeatureEditor extends Component {
     })
     map.addInteraction(translateInteraction)
     map.addInteraction(modifyInteraction)
-    onEditBegin({ oldFeatures: features, newFeatures: clonedFeatures.getArray(), newFeaturesCollection: clonedFeatures }) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
+    onEditBegin({
+      oldFeatures: features,
+      newFeatures: clonedFeatures.getArray(),
+      newFeaturesCollection: clonedFeatures
+    }) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
   }
 
   componentWillUnmount () {
