@@ -190,19 +190,20 @@ function centroidLabel (geometry, resolution, opts) {
 function getVertices (args) {
   const { feature } = resolveStyleFunctionArgs(args)
   const geometry = feature.getGeometry()
+  const layout = geometry.getLayout()
 
   switch (geometry.getType()) {
     case 'MultiPolygon': {
-      const polygons = geometry.getPolygons()
-      const vertexArray = polygons.map(polygon => pointsFromVertices(polygon))
-      const vertices = vertexArray.reduce((acc, val) => acc.concat(val), [])
+      const coordinates = geometry.getCoordinates()
+      const flatCoords = coordinates.flat(Infinity)
+      const pairedCoords = pairCoordinates(flatCoords, layout.length)
 
-      return new olGeomMultiPoint(vertices)
+      return new olGeomMultiPoint(pairedCoords, 'XYZ')
     }
     case 'GeometryCollection': {
       const deepCoords = getCoordinates(geometry)
       const flatCoords = deepCoords.flat(Infinity)
-      const pairedCoords = pairCoordinates(flatCoords)
+      const pairedCoords = pairCoordinates(flatCoords, layout.length)
 
       return new olGeomMultiPoint(pairedCoords)
     }

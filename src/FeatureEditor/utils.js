@@ -242,12 +242,12 @@ export function normalizeExtent (extent) {
   })
 }
 
-export function pairCoordinates (flatCoords) {
+export function pairCoordinates (flatCoords, groupSize = 2) {
   const pairedCoords = []
 
   for (let i = 0; i < flatCoords.length - 1;) {
     pairedCoords.push([flatCoords[i], flatCoords[i + 1]])
-    i += 2
+    i += groupSize
   }
 
   return pairedCoords
