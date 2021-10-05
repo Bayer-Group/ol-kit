@@ -10,7 +10,7 @@ Maybe it's deeply nested or rendered in a way where passing props down the compo
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connectToContext } from '@bayer/ol-kit'
-import Container from './Container' // made up styling component
+import Container from './Container' // made up styled component
 
 const CustomMapWidget = props => {
   const { restrictedLayers, theme } = props
@@ -47,7 +47,7 @@ const App = () => {
       theme: 'dark'
     }
 
-    return { contextProps } // this is the magic right here
+    return { contextProps } // contextProps in this object get attached to context
   }
 
   return (

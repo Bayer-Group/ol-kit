@@ -46,14 +46,14 @@ class Map extends React.Component {
     const {
       addMapToContext,
       contextProps,
+      dragZoomboxStyle,
       map: passedMap,
       onMapInit,
       translations,
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
-      urlViewParam,
-      dragZoomboxStyle
+      urlViewParam
     } = this.props
 
     // if no map was passed, create the map
@@ -148,6 +148,8 @@ class Map extends React.Component {
       this.selectInteraction = select
     }
   }
+
+  
 
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
