@@ -149,8 +149,6 @@ class Map extends React.Component {
     }
   }
 
-  
-
   render () {
     const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state

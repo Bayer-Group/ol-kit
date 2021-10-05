@@ -83,50 +83,55 @@
 <h2>How does it work?</h2>
 <p>When the <code>&lt;Map&gt;</code> component is constructed, a <a href="https://reactjs.org/docs/context.html">context</a> is instantiated that passes useful props like <code>map</code> down to any component wrapped with <a href="./tutorial-connectToContext.html">connectToContext</a>. You can add your own custom props to this context one of two ways:</p>
 <h3>Let's say you have this component that needs access to global state...</h3>
-<p>Maybe it's deeply nested or rendered in a way where passing props down the component tree is not ideal.</p>
+<p>Maybe it's deeply nested or rendered in a way where passing props down the component tree is not ideal. Maybe something like this:</p>
 <pre class="prettyprint source lang-javascript"><code>import React from 'react'
 import PropTypes from 'prop-types'
 import { connectToContext } from '@bayer/ol-kit'
-import Container from './Container' // made up styling component
+import Container from './Container' // made up styled component
 
 const CustomMapWidget = props => {
-  const { restrictedLayers, theme } = props
+  const { activeData, preferences, theme } = props
 
   return (
-    &lt;Container theme={theme}>
-      &lt;h1>This component has restrictedLayers as a prop from context!&lt;/h1>
-      {restrictedLayers.map((layer, i) => &lt;div key={i}>{layer.title}&lt;/div>)}
+    &lt;Container preferences={preferences} theme={theme}>
+      &lt;h1>This component has `activeData`, `preferences` and `theme` as props from context!&lt;/h1>
+
+      &lt;h3>Active Data:&lt;/h3>
+      &lt;ul>
+        {activeData.map(data => &lt;li>{data.value}&lt;/li>)}
+      &lt;/ul>
     &lt;/Container>
   )
 }
 
 CustomMapWidget.propTypes = {
-  restrictedLayers: PropTypes.array.isRequired,
+  activeData: PropTypes.array.isRequired,
+  preferences: PropTypes.array.isRequired,
   theme: PropTypes.string.isRequired
 }
 
 export default connectToContext(CustomMapWidget)
 </code></pre>
-<h2>onMapInit Example</h2>
-<p>It's common get data that needs to live in global state from an asyncronous network call. A great place for this to be attached is by returning an object with <code>contextProps</code> from the <code>onMapInit</code> callback.</p>
+<h2>onMapInit Example (one-time set to context)</h2>
+<p>It's common get data from an asyncronous network call after the map initializes that needs to live in global state. A great place for this to be attached to context is by returning an object with <code>contextProps</code> from the <code>onMapInit</code> callback.</p>
 <pre class="prettyprint source lang-javascript"><code>import React from 'react'
 import { Map } from '@bayer/ol-kit'
 import CustomMapWidget from './CustomMapWidget' // made up component (see above)
-import { fetchRestrictedLayers } from './utils' // made up util for async data fetching
+import { fetchPreferences } from './utils' // made up util for async data fetching
 
 const App = () => {
   const onMapInit = async map => {
-    const restrictedLayers = await fetchRestrictedLayers()
+    const preferences = await fetchPreferences()
     const contextProps = {
-      restrictedLayers,
+      preferences,
       theme: 'dark'
     }
 
-    return { contextProps } // this is the magic right here
+    return { contextProps } // contextProps in this object get attached to context
   }
 
   return (
-    &lt;Map>
+    &lt;Map onMapInit={onMapInit}>
       &lt;CustomMapWidget /> {/* This component was automatically given context props when wrapped by connectToContext above */}
     &lt;/Map>
   )
@@ -134,26 +139,30 @@ const App = () => {
 
 export default App
 </code></pre>
-<h2>Inline Props Example</h2>
-<p>It's common get data that needs to live in global state from an asyncronous network call. A great place for this to be attached is by returning an object with <code>contextProps</code> from the <code>onMapInit</code> callback.</p>
-<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+<h2>Inline Props Example (continually update context)</h2>
+<p>You can also store data in component state and pass props inline to <code>&lt;Map&gt;</code> to be added to context. This approach is nice if <code>contextProps</code> are often changing after the initial load.</p>
+<pre class="prettyprint source lang-javascript"><code>import React, { useEffect, useState } from 'react'
 import { Map } from '@bayer/ol-kit'
 import CustomMapWidget from './CustomMapWidget' // made up component (see above)
-import { fetchRestrictedLayers } from './utils' // made up util for async data fetching
+import { fetchLatestData } from './utils' // made up util for async data fetching
 
 const App = () => {
-  const onMapInit = async map => {
-    const restrictedLayers = await fetchRestrictedLayers()
+  const [contextProps, setContextProps] = useState({})
+  const fetchData = async () => {
+    const activeData = await fetchLatestData()
     const contextProps = {
-      restrictedLayers,
-      theme: 'dark'
+      activeData
     }
 
-    return { contextProps } // this is the magic right here
+    setContextProps(contextProps)
   }
 
+  useEffect(() => {
+    fetchData()
+  })
+
   return (
-    &lt;Map>
+    &lt;Map contextProps={contextProps}>
       &lt;CustomMapWidget /> {/* This component was automatically given context props when wrapped by connectToContext above */}
     &lt;/Map>
   )
