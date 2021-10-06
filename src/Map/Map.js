@@ -17,8 +17,6 @@ import { FeatureEditor } from 'FeatureEditor'
 import en from 'locales/en'
 import ugh from 'ugh'
 
-import olStyleStyle from 'ol/style/Style'
-
 /**
  * A Reactified ol.Map wrapper component
  * @component
@@ -136,40 +134,8 @@ class Map extends React.Component {
     if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
   }
 
-  onEditEnd = (features) => {
-    const geom = features[0].getGeometry()
-    const { editFeature, addEditFeatureToContext } = this.props
-    const { style } = this.state
-
-    if (!editFeature) return
-
-    editFeature.setGeometry(geom)
-
-    editFeature.setStyle(style || null) // restore the original feature's style
-    this.setState({ showFeatureEditor: false })
-    addEditFeatureToContext(null)
-  }
-
-  onEditCancel = () => {
-    const { editFeature, addEditFeatureToContext } = this.props
-    const { style } = this.state
-
-    editFeature.setStyle(style || null) // restore the original feature's style
-    this.setState({ showFeatureEditor: false })
-    addEditFeatureToContext(null)
-  }
-
-  onEditStart = () => {
-    const { editFeature } = this.props
-
-    const style = editFeature.getStyle() // grab the original feature's style
-
-    this.setState({ style }) // save that style to state
-    editFeature.setStyle(new olStyleStyle({}))
-  }
-
   render () {
-    const { children, fullScreen, logoPosition, style, translations, editFeature } = this.props
+    const { children, fullScreen, logoPosition, style, translations } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -179,12 +145,7 @@ class Map extends React.Component {
             id={this.target}
             fullScreen={fullScreen}
             style={style}>
-            {editFeature && <FeatureEditor
-              features={[editFeature]}
-              onEditBegin={this.onEditStart}
-              onEditCancel={this.onEditCancel}
-              onEditFinish={this.onEditEnd}
-            />}
+            <FeatureEditor />
             <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
         }
@@ -222,8 +183,6 @@ Map.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  editFeature: PropTypes.object,
-  addEditFeatureToContext: PropTypes.func,
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */

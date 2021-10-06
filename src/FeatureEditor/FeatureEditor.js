@@ -13,6 +13,7 @@ import { olKitTurf } from './utils'
 
 import olInteractionModify from 'ol/interaction/Modify'
 import olCollection from 'ol/Collection'
+import olStyleStyle from 'ol/style/Style'
 
 const ButtonCardActions = withStyles(() => ({
   root: {
@@ -55,11 +56,12 @@ class FeatureEditor extends Component {
     super(props)
     this.state = {
       interactions: [],
-      editFeatures: undefined,
+      editingFeature: null,
       showMeasurements: false,
       canceled: false,
       finished: false,
-      rotation: 0
+      rotation: 0,
+      style: null
     }
   }
 
@@ -101,27 +103,27 @@ class FeatureEditor extends Component {
 
   _renderEditOverlay = (e) => {
     const { map, editStyle } = this.props
-    const { editFeatures } = this.state
+    const { editingFeature } = this.state
 
     const vectorContext = getVectorContext(e)
 
-    if (!editFeatures) return // to avoid using a setStateCallback we just check for editFeatures first
+    if (!editingFeature) return // to avoid using a setStateCallback we just check for editFeatures first
 
-    editFeatures.forEach(feature => this._renderFeature(vectorContext, feature, editStyle))
+    this._renderFeature(vectorContext, editingFeature, editStyle)
 
     return map.render() // render the results asynchronously
   }
 
   _addPostComposeListener = () => {
-    const { editFeatures } = this.state
+    const { editingFeature } = this.state
 
-    editFeatures.getArray()[0]?.get('_ol_kit_parent')?.on('postrender', this._renderEditOverlay) // eslint-disable-line
+    editingFeature?.get('_ol_kit_parent')?.on('postrender', this._renderEditOverlay) // eslint-disable-line
   }
 
   _removePostComposeListener = () => {
-    const { editFeatures } = this.state
+    const { editingFeature } = this.state
 
-    editFeatures.getArray()[0]?.get('_ol_kit_parent')?.un('postrender', this._renderEditOverlay) // eslint-disable-line
+    editingFeature?.get('_ol_kit_parent')?.un('postrender', this._renderEditOverlay) // eslint-disable-line
   }
 
   _end = () => { // this function cleans up our state and map.  If this does not execute correctly we could get stuck in a corrupted map state.
@@ -132,6 +134,7 @@ class FeatureEditor extends Component {
       this._removePostComposeListener()
 
       interactions.forEach(i => map.removeInteraction(i))
+      this.setState({ editingFeature: null, style: null })
     } catch (err) {
       console.warn(`Geokit encountered a problem while editing a feature: ${err.message}. \n`, err) // eslint-disable-line no-console
     }
@@ -142,29 +145,40 @@ class FeatureEditor extends Component {
   }
 
   cancelEdit = () => {
-    const { onEditCancel, features } = this.props
+    const { onEditCancel, editFeature, addEditFeatureToContext } = this.props
+    const { style } = this.state
 
-    this.setState({ canceled: true }, () => onEditCancel(features))
+    this.setState({ canceled: true }, () => onEditCancel(editFeature, addEditFeatureToContext, style))
   }
 
   finishEdit = () => {
-    const { onEditFinish } = this.props
-    const { editFeatures } = this.state
+    const { onEditFinish, addEditFeatureToContext, editFeature } = this.props
+    const { editingFeature, style } = this.state
 
-    this.setState({ finished: true }, () => onEditFinish(editFeatures.getArray()))
+    this.setState({ finished: true }, () => onEditFinish(editFeature, editingFeature, addEditFeatureToContext, style))
   }
 
-  componentDidMount () {
-    const { features, editOpts, map, onEditBegin } = this.props
+  componentWillUnmount = () => {
+    const { canceled, finished } = this.state
+
+    if (!canceled && !finished) console.warn(`Geokit FeatureEditor has been unmounted unexpectedly.  This may lead undesirable behaviour in your application.`) // eslint-disable-line no-console
+
+    return this._end()
+  }
+
+  componentDidUpdate (prevProps) {
+    const { editOpts, map, onEditBegin, editFeature } = this.props
     const { interactions } = this.state
 
-    if (interactions.length === 2) return
+    if (prevProps.editFeature && !editFeature) return this._end()
 
-    const clonedFeatures = new olCollection(features.map(f => f.clone())) // create a collection of clones of the features in props, this avoids modifying the existing features
+    if (interactions.length === 2 || !editFeature) return
+
+    const clonedFeature = editFeature.clone() // create a collection of clones of the features in props, this avoids modifying the existing features
 
     const opts = Object.assign({}, editOpts, {
       pixelTolerance: 10,
-      features: clonedFeatures,
+      features: new olCollection([clonedFeature]),
       deleteCondition: ({ originalEvent, type }) => {
         const { altKey, ctrlKey, shiftKey, metaKey } = originalEvent
         const modifierKeyActive = altKey || ctrlKey || shiftKey || metaKey
@@ -175,50 +189,43 @@ class FeatureEditor extends Component {
       }
     })
 
-    const translateInteraction = new Translate({ features: clonedFeatures }) // ol/interaction/translate only checks for features on the map and since we are not adding these to the map (see additional comments) we use our own that knows to look for the features we pass to it whether or not they're on the map.
+    const translateInteraction = new Translate({ features: new olCollection([clonedFeature]) }) // ol/interaction/translate only checks for features on the map and since we are not adding these to the map (see additional comments) we use our own that knows to look for the features we pass to it whether or not they're on the map.
     const modifyInteraction = new olInteractionModify(opts) // ol/interaction/modify doesn't care about the features being on the map or not so it's good to go
+    const style = clonedFeature.getStyle()
 
     this.setState({
-      anchor: olKitTurf(centroid, [clonedFeatures.getArray()[0].getGeometry()]).getGeometry().getCoordinates(),
+      anchor: olKitTurf(centroid, [clonedFeature.getGeometry()]).getGeometry().getCoordinates(),
       interactions: [modifyInteraction, translateInteraction],
-      editFeatures: clonedFeatures,
+      editingFeature: clonedFeature,
       canceled: false,
-      finished: false
+      finished: false,
+      style
     }, () => {
       this._addPostComposeListener()
     })
     map.addInteraction(translateInteraction)
     map.addInteraction(modifyInteraction)
-    onEditBegin({
-      oldFeatures: features,
-      newFeatures: clonedFeatures.getArray(),
-      newFeaturesCollection: clonedFeatures
-    }) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
-  }
-
-  componentWillUnmount () {
-    const { canceled, finished } = this.state
-
-    if (!canceled && !finished) console.warn(`Geokit FeatureEditor has been unmounted unexpectedly.  This may lead undesirable behaviour in your application.`) // eslint-disable-line no-console
-
-    this._end()
+    onEditBegin(clonedFeature) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
   }
 
   rotate = (val) => {
-    const { editFeatures, rotation, anchor } = this.state
-    const geometry = editFeatures.getArray()[0].getGeometry()
+    const { editingFeature, rotation, anchor } = this.state
+    const geometry = editingFeature.getGeometry()
     const rotationDiff = val - rotation
 
     this.setState({ rotation: val }, () => geometry.rotate(-rotationDiff * (Math.PI / 45), anchor))
   }
 
   render () {
-    // const { translations } = this.props
+    const { translations } = this.props
+    const { editingFeature } = this.state
     const knobStyle = {
       width: '35px',
       height: '35px',
       padding: '2px'
     }
+
+    if (!editingFeature) return null
 
     return (
       <Toolbar>
@@ -226,7 +233,7 @@ class FeatureEditor extends Component {
           <ButtonCardActions>
             <LeftCard>
               <Button color='secondary' onClick={this.cancelEdit}>
-                {'Cancel'}
+                {translations['_ol_kit.edit.cancel']}
               </Button>
             </LeftCard>
             <CenterCard style={{ paddingLeft: '20px', marginLeft: '0px' }}>
@@ -235,12 +242,12 @@ class FeatureEditor extends Component {
                 control={
                   <Knob style={knobStyle} unlockDistance={0} defaultValue={0} onChange={this.rotate} />
                 }
-                label={'Rotate'}
+                label={translations['_ol_kit.edit.rotate']}
               />
             </CenterCard>
             <RightCard>
               <Button color='primary' onClick={this.finishEdit}>
-                {'Finish'}
+                {translations['_ol_kit.edit.finish']}
               </Button>
             </RightCard>
           </ButtonCardActions>
@@ -260,7 +267,8 @@ FeatureEditor.propTypes = {
     source: PropTypes.object,
     wrapX: PropTypes.bool
   }).isRequired,
-  features: PropTypes.array,
+  editFeature: PropTypes.object,
+  addEditFeatureToContext: PropTypes.func,
   map: PropTypes.object,
   onEditBegin: PropTypes.func,
   onEditFinish: PropTypes.func,
@@ -271,14 +279,29 @@ FeatureEditor.propTypes = {
     PropTypes.array
   ]),
   areaUOM: PropTypes.string,
-  distanceUOM: PropTypes.string
+  distanceUOM: PropTypes.string,
+  translations: PropTypes.object
 }
 
 FeatureEditor.defaultProps = {
   editOpts: {},
-  onEditFinish: () => {},
-  onEditBegin: () => {},
-  onEditCancel: () => {},
+  onEditFinish: (feature, updatedFeature, addEditFeatureToContext, style) => {
+    const geom = updatedFeature.getGeometry()
+
+    if (!feature) return
+
+    feature.setGeometry(geom)
+
+    feature.setStyle(style || null) // restore the original feature's style
+    addEditFeatureToContext(null)
+  },
+  onEditBegin: (feature) => {
+    feature.setStyle(new olStyleStyle({}))
+  },
+  onEditCancel: (feature, addEditFeatureToContext, style) => {
+    feature.setStyle(style || null) // restore the original feature's style
+    addEditFeatureToContext(null)
+  },
   editStyle: (feature, map, showMeasurements = false, { areaUOM, distanceUOM }) => { // eslint-disable-line
     const translations = {
       '_ol_kit.DrawToolbar.cancel': 'Cancel [ESC]',

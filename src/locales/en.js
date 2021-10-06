@@ -120,5 +120,9 @@ export default {
   // Google Directions
   '_ol_kit.directions.placeOriginPoint': 'Place a point at your origin',
   '_ol_kit.directions.placeWaypoint': 'Now place a point to add a destination and click finish when you\'re done:',
-  '_ol_kit.directions.waypointLabel': 'Waypoint'
+  '_ol_kit.directions.waypointLabel': 'Waypoint',
+  // FeatureEditor
+  '_ol_kit.edit.cancel': 'Cancel',
+  '_ol_kit.edit.finish': 'Finish',
+  '_ol_kit.edit.rotate': 'Rotate'
 }

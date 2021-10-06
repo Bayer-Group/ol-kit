@@ -198,7 +198,7 @@ function getVertices (args) {
       const flatCoords = coordinates.flat(Infinity)
       const pairedCoords = pairCoordinates(flatCoords, layout.length)
 
-      return new olGeomMultiPoint(pairedCoords, 'XYZ')
+      return new olGeomMultiPoint(pairedCoords, layout)
     }
     case 'GeometryCollection': {
       const deepCoords = getCoordinates(geometry)
