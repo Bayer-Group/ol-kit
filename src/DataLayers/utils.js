@@ -56,7 +56,7 @@ const urlValidator = string => {
 export const loadDataLayer = async (map, query, optsArg = {}) => {
   if (!(map instanceof Map)) return ugh.throw('\'loadDataLayer\' requires a valid openlayers map as the first argument')
   const style = { fill: { color: '#fefefe91' }, stroke: { color: '#3399cd', width: 2 }, ...optsArg.style }
-  const opts = { addToMap: true, title: 'Data Layer', ...optsArg }
+  const opts = { addToMap: true, title: 'Data Layer 69', ...optsArg }
 
   // getFeaturesFromDataSet returns empty array if query arg is not a supported data type (ex. url)
   let features = getFeaturesFromDataSet(map, query)
