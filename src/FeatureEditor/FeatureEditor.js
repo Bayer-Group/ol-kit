@@ -58,8 +58,6 @@ class FeatureEditor extends Component {
       interactions: [],
       editingFeature: null,
       showMeasurements: false,
-      canceled: false,
-      finished: false,
       rotation: 0,
       style: null
     }
@@ -71,9 +69,9 @@ class FeatureEditor extends Component {
    or layers than we can get left in a broken state that requires a reload.  Using vectorContext.drawFeature instead of
    a layer added to the map alleviates at least some of this risk.*/
   _renderFeature = (vectorContext, feature, editStyle = this.props.editStyle) => { // vectorContext.drawFeature only respects a style object and since it is common to have style functions and arrays in Openlayers we need to break the other formats down into objects
-    const { map, areaUOM, distanceUOM } = this.props
+    const { map, areaUOM, distanceUOM, translations } = this.props
     const { showMeasurements } = this.state
-    const measurementStyles = showMeasurements ? editStyle(feature, map, showMeasurements, { areaUOM, distanceUOM }) : editStyle // eslint-disable-line
+    const measurementStyles = showMeasurements ? editStyle(feature, map, showMeasurements, { areaUOM, distanceUOM }, translations) : editStyle // eslint-disable-line
     const styleType = Array.isArray(measurementStyles) ? 'array' : typeof editStyle
 
     try {
@@ -90,7 +88,7 @@ class FeatureEditor extends Component {
           this._renderFeature(
             vectorContext,
             feature,
-            editStyle(feature, map, showMeasurements, { areaUOM, distanceUOM })
+            editStyle(feature, map, showMeasurements, { areaUOM, distanceUOM }, translations)
           ) // Openlayers style functions return style objects or arrays of style objects so we can call functions recursively.
           break
         default: // style object
@@ -134,7 +132,7 @@ class FeatureEditor extends Component {
       this._removePostComposeListener()
 
       interactions.forEach(i => map.removeInteraction(i))
-      this.setState({ editingFeature: null, style: null })
+      this.setState({ editingFeature: null, style: null, interactions: [] })
     } catch (err) {
       console.warn(`Geokit encountered a problem while editing a feature: ${err.message}. \n`, err) // eslint-disable-line no-console
     }
@@ -148,31 +146,24 @@ class FeatureEditor extends Component {
     const { onEditCancel, editFeature, addEditFeatureToContext } = this.props
     const { style } = this.state
 
-    this.setState({ canceled: true }, () => onEditCancel(editFeature, addEditFeatureToContext, style))
+    this.setState(
+      { canceled: true, editingFeature: null },
+      () => onEditCancel(editFeature, addEditFeatureToContext, style)
+    )
   }
 
   finishEdit = () => {
     const { onEditFinish, addEditFeatureToContext, editFeature } = this.props
     const { editingFeature, style } = this.state
 
-    this.setState({ finished: true }, () => onEditFinish(editFeature, editingFeature, addEditFeatureToContext, style))
+    this.setState(
+      { editingFeature: null },
+      () => onEditFinish(editFeature, editingFeature, addEditFeatureToContext, style)
+    )
   }
 
-  componentWillUnmount = () => {
-    const { canceled, finished } = this.state
-
-    if (!canceled && !finished) console.warn(`Geokit FeatureEditor has been unmounted unexpectedly.  This may lead undesirable behaviour in your application.`) // eslint-disable-line no-console
-
-    return this._end()
-  }
-
-  componentDidUpdate (prevProps) {
+  init () {
     const { editOpts, map, onEditBegin, editFeature } = this.props
-    const { interactions } = this.state
-
-    if (prevProps.editFeature && !editFeature) return this._end()
-
-    if (interactions.length === 2 || !editFeature) return
 
     const clonedFeature = editFeature.clone() // create a collection of clones of the features in props, this avoids modifying the existing features
 
@@ -197,8 +188,6 @@ class FeatureEditor extends Component {
       anchor: olKitTurf(centroid, [clonedFeature.getGeometry()]).getGeometry().getCoordinates(),
       interactions: [modifyInteraction, translateInteraction],
       editingFeature: clonedFeature,
-      canceled: false,
-      finished: false,
       style
     }, () => {
       this._addPostComposeListener()
@@ -206,6 +195,31 @@ class FeatureEditor extends Component {
     map.addInteraction(translateInteraction)
     map.addInteraction(modifyInteraction)
     onEditBegin(clonedFeature) // callback function for IAs.  FeatureEditor doesn't do anything to the original features so we tell the IA which features they passed in as props and what features we are editing.  This should help if they want to add custom logic around these features.
+  }
+
+  componentDidMount () {
+    if (!this.props.editFeature) return
+
+    this.init()
+  }
+
+  componentDidUpdate (prevProps) {
+    const { editFeature } = this.props
+    const { interactions } = this.state
+
+    if (prevProps.editFeature && !editFeature) return this._end()
+
+    if (interactions.length === 2 || !editFeature) return
+
+    this.init()
+  }
+
+  componentWillUnmount = () => {
+    const { editingFeature } = this.state
+
+    if (editingFeature) console.warn(`Geokit FeatureEditor has been unmounted unexpectedly.  This may lead undesirable behaviour in your application.`) // eslint-disable-line no-console
+
+    return this._end()
   }
 
   rotate = (val) => {
@@ -302,13 +316,7 @@ FeatureEditor.defaultProps = {
     feature.setStyle(style || null) // restore the original feature's style
     addEditFeatureToContext(null)
   },
-  editStyle: (feature, map, showMeasurements = false, { areaUOM, distanceUOM }) => { // eslint-disable-line
-    const translations = {
-      '_ol_kit.DrawToolbar.cancel': 'Cancel [ESC]',
-      '_ol_kit.DrawToolbar.finish': 'Finish',
-      '_ol_kit.DrawToolbar.showMeasurements': 'Show measurements'
-    }
-
+  editStyle: (feature, map, showMeasurements = false, { areaUOM, distanceUOM }, translations) => { // eslint-disable-line
     return immediateEditStyle(
       { areaUOM, distanceUOM, showMeasurements, map, translations, language: navigator.language },
       feature,

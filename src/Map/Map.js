@@ -13,7 +13,6 @@ import {
 } from './utils'
 import { StyledMap } from './styled'
 import { connectToContext } from 'Provider'
-import { FeatureEditor } from 'FeatureEditor'
 import en from 'locales/en'
 import ugh from 'ugh'
 
@@ -145,7 +144,6 @@ class Map extends React.Component {
             id={this.target}
             fullScreen={fullScreen}
             style={style}>
-            <FeatureEditor />
             <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
         }
