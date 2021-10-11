@@ -244,7 +244,8 @@ export function getSelectInteraction (map, name = DEFAULT_SELECT_NAME) {
 
 /**
  * Sets the map extent to the given values.
- *
+ * @function
+ * @category Map
  * @param {ol.Map} map Open Layers map
  * @param {ol.Extent} extent New extent definition
  */
@@ -255,7 +256,8 @@ export function setMapExtent (map, extent) {
 
 /**
  * Calculates a map extent that would make all features in the list visible.
- *
+ * @function
+ * @category Map
  * @param {ol.Feature[]} featureList List of Open Layers features
  * @returns {ol.Extent} Map extent
  */
