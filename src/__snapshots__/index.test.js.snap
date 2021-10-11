@@ -103,6 +103,7 @@ Object {
   "GooglePlacesSearch": [Function],
   "HeatmapControls": [Function],
   "LayerPanel": [Function],
+  "LayerPanelActionDuplicate": [Function],
   "LayerPanelActionExport": [Function],
   "LayerPanelActionExtent": [Function],
   "LayerPanelActionHeatmap": [Function],

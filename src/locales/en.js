@@ -32,6 +32,7 @@ export default {
   '_ol_kit.actions.removeLayer': 'Remove Layer',
   '_ol_kit.actions.removeLayers': 'Remove All Layers',
   '_ol_kit.actions.zoomToExtent': 'Zoom to Extent',
+  '_ol_kit.actions.duplicate': 'Duplicate',
   // LayerStyler
   '_ol_kit.AttributesFilter.where': 'Where',
   '_ol_kit.AttributesFilter.AND': 'AND',

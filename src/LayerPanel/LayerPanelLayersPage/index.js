@@ -26,6 +26,7 @@ import LayerPanelActionOpacity from 'LayerPanel/LayerPanelActionOpacity'
 import LayerPanelActionRemove from 'LayerPanel/LayerPanelActionRemove'
 import LayerPanelActionExtent from 'LayerPanel/LayerPanelActionExtent'
 import LayerPanelActionHeatmap from 'LayerPanel/LayerPanelActionHeatmap'
+import LayerPanelActionDuplicate from 'LayerPanel/LayerPanelActionDuplicate'
 
 import TextField from '@material-ui/core/TextField'
 
@@ -485,6 +486,7 @@ class LayerPanelLayersPage extends PureComponent {
                         {getMenuItemsForLayer(layer) ||
                         [<LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
                           <LayerPanelActionExtent key='gotoExtent' />,
+                          <LayerPanelActionDuplicate key='duplicateLayer'/>,
                           <LayerPanelActionHeatmap key='heatmap' layer={layer} onCreateHeatmap={onCreateHeatmap} />,
                           <LayerPanelActionOpacity key='layerOpacity' />]}
                       </LayerPanelActions>
