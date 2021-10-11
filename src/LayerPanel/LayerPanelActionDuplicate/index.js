@@ -11,52 +11,23 @@ import VectorSource from 'ol/source/Vector'
  * @since 1.14.1
  */
 class LayerPanelActionDuplicate extends Component {
-  // incrementTitle(dupeLayer) {
-  //   const { map } = this.props;
-  //   const originalTitle = dupeLayer.get('title').trim()
-  //   const layers = map.getLayers().getArray().filter(layer => layer instanceof VectorLayer || layer.isVectorLayer)
-  //   const strippedTitle = originalTitle.replace(/\d+$/, '').trim()
-  //   const count = layers.filter((layer) => {
-  //     const includes = originalTitle.includes(layer.get('title').replace(/\d+$/, '').trim());
-  //     return includes;
-  //   }).length
-
-  //   if ((strippedTitle !== originalTitle) && isNaN(strippedTitle.substr(-1).trim())) {
-  //     return (!isNaN(originalTitle.substr(-1).trim()) ? originalTitle : strippedTitle) + ' ' + count.toString()
-  //   }
-
-  //   if( (strippedTitle !== originalTitle)) {
-  //     return (count == 1 ? originalTitle : strippedTitle) + ' ' + count.toString()
-  //   }
-    
-  //   return strippedTitle + ' ' + count.toString()
-  // }
   incrementTitle(dupeLayer) {
     const { map } = this.props;
     const originalTitle = dupeLayer.get('title').trim()
     const layers = map.getLayers().getArray().filter(layer => layer instanceof VectorLayer || layer.isVectorLayer)
     const strippedTitle = originalTitle.replace(/\d+$/, '').trim()
     const count = layers.filter((layer) => {
-      const includes = originalTitle.includes(layer.get('title').replace(/\d+$/, '').trim());
-      return includes;
+      const includes = originalTitle.includes(layer.get('title').replace(/\d+$/, '').trim())
+      return includes
     }).length
     
-    const exactCount = layers.filter(layer => layer.get('title').trim() === strippedTitle ).length;
+    const exactCount = layers.filter(layer => layer.get('title').trim() === strippedTitle ).length
 
-    // if(!isNaN(strippedTitle.substr(-1).trim()) &&  !isNaN(originalTitle.substr(-1).trim()))
-    // {
-    //  return strippedTitle + ' ' + count.toString()
-    // }
-
-    // if(isNaN(strippedTitle.substr(-1).trim()) &&  !isNaN(originalTitle.substr(-1).trim()))
-    // {
-    //  return originalTitle + ' ' + count.toString()
-    // }
-
-    if( (strippedTitle !== originalTitle)) {
-      return (count == 1 || exactCount == 0 || (exactCount == 1 && isNaN(strippedTitle.substr(-1)) && isNaN(originalTitle.substr(-1))) ? originalTitle : strippedTitle) + ' ' + count.toString()
+    if((strippedTitle !== originalTitle)) {
+      return (count == 1 || exactCount == 0 || (exactCount == 1 && isNaN(strippedTitle.substr(-1)) && isNaN(originalTitle.substr(-1))) 
+      ? originalTitle 
+      : strippedTitle) + ' ' + count.toString()
     }
-    
     return strippedTitle + ' ' + count.toString()
   }
   
@@ -64,7 +35,8 @@ class LayerPanelActionDuplicate extends Component {
     const { map, onLayerDuplicated, handleMenuClose } = this.props
     
     if (layer.isGeoserverLayer) {
-        return layer;
+        onLayerDuplicated(layer);
+        handleMenuClose();
 
     } else {
         const newTitle = this.incrementTitle(layer)
