@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | DrawContainer</title>
+    <title>ol-kit | contextProps</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -71,350 +71,108 @@
             </div>
             <div class="column is-9-desktop" id="main-content-wrapper">
                 <div class="content">
-                    
-
-
-
-
-<section>
+                    <section>
 
 <header>
-    
-        <h2>
-            &ltDrawContainer /&gt
-        </h2>
-        
-            <div class="class-description">A prebuilt Draw Tools component</div>
-        
     
 </header>
 
 <article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
-
-
-    
-    <h4 class="name" id="DrawContainer">
-        <a class="href-link" href="#DrawContainer">#</a>
-        
-        <span class="code-name">
-            
-                &ltDrawContainer <i>map</i> <i>selectInteraction</i> <i>preferences</i> <i>translations</i> <i>snap</i> <i>snapOpts</i> <i>showMeasurements</i> <i>showCoordinateLabels</i> <i>uom</i> <i>drawOpts</i> <i>selectedFeature</i> <i>style</i> <i>children</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>Yes</td>
-          <td>openlayers map</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>selectInteraction</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>reference to openlayers select interaction which can optionally be managed by IA</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>preferences</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>an object with `get` and `put` methods to handle measure state</td>
-          <td>{ status: 'success', payload: new Preferences() }</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>translations</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>translations object</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>snap</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>boolean for enabling snap interaction</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>snapOpts</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>openlayers snap options</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>showMeasurements</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>boolean enabling the measurement component</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>showCoordinateLabels</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>boolean enabling the coordinate labels component</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>uom</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>velocity preference of either imperial or metric</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>drawOpts</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>openlayers draw interaction constructor props</td>
-          <td>{}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>selectedFeature</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>callback that returns the selected openlayers feature from the map</td>
-          <td>() => {}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>style</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>pass custom style object to DrawContainer</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            union
-          </td>
-          <td>No</td>
-          <td>pass child comps to opt out of the default controls</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.18.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Draw_DrawContainer.js.html" class="button">View Source</a>
-            <span>
-                <a href="Draw_DrawContainer.js.html">Draw/DrawContainer.js</a>, <a href="Draw_DrawContainer.js.html#line21">line 21</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <h1>DrawContainer</h1>
-<p>The <code>&lt;DrawContainer&gt;</code> component will render a set prebuilt draw and measure tools or child component(s) passed in as the <code>children</code> prop. These tools allow the user to draw features with point, line, and polygon geometries on a map user configurable geometry snap settings. These features can also be styled with perimiter and area measurement labels. Measurements are calculated geodesically using the WGS84 ellipsoid. The user can also label the geometry vertices with their respective coordinates in decimal degrees.</p>
-<h2>Drop-in example:</h2>
-<p>This one-liner will render prebuilt draw components in a map.</p>
+    <h1>contextProps</h1>
+<p>Use <code>contextProps</code> to add custom props to the global <a href="https://reactjs.org/docs/context.html">context</a> instantiated by ol-kit.</p>
+<h2>How does it work?</h2>
+<p>When the <code>&lt;Map&gt;</code> component is constructed, a <a href="https://reactjs.org/docs/context.html">context</a> is instantiated that passes useful props like <code>map</code> down to any component wrapped with <a href="./tutorial-connectToContext.html">connectToContext</a>. You can add your own custom props to this context one of two ways:</p>
+<h3>Let's say you have this component that needs access to global state...</h3>
+<p>Maybe it's deeply nested or rendered in a way where passing props down the component tree is not ideal. Maybe something like this:</p>
 <pre class="prettyprint source lang-javascript"><code>import React from 'react'
-import { Map, DrawContainer } from '@bayer/ol-kit'
+import PropTypes from 'prop-types'
+import { connectToContext } from '@bayer/ol-kit'
+import Container from './Container' // made up styled component
+
+const CustomMapWidget = props => {
+  const { activeData, preferences, theme } = props
+
+  return (
+    &lt;Container preferences={preferences} theme={theme}>
+      &lt;h1>This component has `activeData`, `preferences` and `theme` as props from context!&lt;/h1>
+
+      &lt;h3>Active Data:&lt;/h3>
+      &lt;ul>
+        {activeData.map(data => &lt;li>{data.value}&lt;/li>)}
+      &lt;/ul>
+    &lt;/Container>
+  )
+}
+
+CustomMapWidget.propTypes = {
+  activeData: PropTypes.array.isRequired,
+  preferences: PropTypes.array.isRequired,
+  theme: PropTypes.string.isRequired
+}
+
+export default connectToContext(CustomMapWidget)
+</code></pre>
+<h2>onMapInit Example (one-time set to context)</h2>
+<p>It's common get data from an asyncronous network call after the map initializes that needs to live in global state. A great place for this to be attached to context is by returning an object with <code>contextProps</code> from the <code>onMapInit</code> callback.</p>
+<pre class="prettyprint source lang-javascript"><code>import React from 'react'
+import { Map } from '@bayer/ol-kit'
+import CustomMapWidget from './CustomMapWidget' // made up component (see above)
+import { fetchPreferences } from './utils' // made up util for async data fetching
 
 const App = () => {
+  const onMapInit = async map => {
+    const preferences = await fetchPreferences()
+    const contextProps = {
+      preferences,
+      theme: 'dark'
+    }
+
+    return { contextProps } // contextProps in this object get attached to context
+  }
+
   return (
-  &lt;Map>
-    &lt;DrawContainer />
-  &lt;/Map>
+    &lt;Map onMapInit={onMapInit}>
+      &lt;CustomMapWidget /> {/* This component was automatically given context props when wrapped by connectToContext above */}
+    &lt;/Map>
   )
 }
 
 export default App
 </code></pre>
-            </div>
-        </div>
-    
-    
+<h2>Inline Props Example (continually update context)</h2>
+<p>You can also store data in component state and pass props inline to <code>&lt;Map&gt;</code> to be added to context. This approach is nice if <code>contextProps</code> are often changing after the initial load.</p>
+<pre class="prettyprint source lang-javascript"><code>import React, { useEffect, useState } from 'react'
+import { Map } from '@bayer/ol-kit'
+import CustomMapWidget from './CustomMapWidget' // made up component (see above)
+import { fetchLatestData } from './utils' // made up util for async data fetching
+
+const App = () => {
+  const [contextProps, setContextProps] = useState({})
+  const fetchData = async () => {
+    const activeData = await fetchLatestData()
+    const contextProps = {
+      activeData
+    }
+
+    setContextProps(contextProps)
+  }
+
+  useEffect(() => {
+    fetchData()
+  })
+
+  return (
+    &lt;Map contextProps={contextProps}>
+      &lt;CustomMapWidget /> {/* This component was automatically given context props when wrapped by connectToContext above */}
+    &lt;/Map>
+  )
+}
+
+export default App
+</code></pre>
 </article>
 
 </section>
-
-
-
 
                 </div>
             </div>

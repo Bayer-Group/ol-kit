@@ -8,7 +8,7 @@ function _Map (props) {
   return (
     !MultiMapContext
       ? (
-        <Provider>
+        <Provider {...props}>
           <Map {...props} />
         </Provider>
       )

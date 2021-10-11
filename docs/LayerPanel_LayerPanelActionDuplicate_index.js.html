@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | DrawContainer</title>
+    <title>ol-kit | LayerPanel/LayerPanelActionDuplicate/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -75,343 +77,99 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            &ltDrawContainer /&gt
-        </h2>
-        
-            <div class="class-description">A prebuilt Draw Tools component</div>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import MenuItem from '@material-ui/core/MenuItem'
+import { connectToContext } from 'Provider'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class='vertical-section'>
-                <h3 class="title"><span>Constructor</span></h3>
-                <div class="members">
-                    <div class="member">
+/**
+ * @component
+ * @category LayerPanel
+ * @since 1.15.0
+ */
+class LayerPanelActionDuplicate extends Component {
+  incrementTitle(dupeLayer) {
+    const { map } = this.props
+    const originalTitle = dupeLayer.get('title').trim()
+    const layers = map.getLayers().getArray().filter(layer => layer instanceof VectorLayer || layer.isVectorLayer)
+    const strippedTitle = originalTitle.replace(/\d+$/, '').trim()
+    const count = layers.filter((layer) => {
+      const includes = originalTitle.includes(layer.get('title').replace(/\d+$/, '').trim())
+      return includes
+    }).length
+    const exactCount = layers.filter(layer => layer.get('title').trim() === strippedTitle ).length
 
-
-    
-    <h4 class="name" id="DrawContainer">
-        <a class="href-link" href="#DrawContainer">#</a>
-        
-        <span class="code-name">
-            
-                &ltDrawContainer <i>map</i> <i>selectInteraction</i> <i>preferences</i> <i>translations</i> <i>snap</i> <i>snapOpts</i> <i>showMeasurements</i> <i>showCoordinateLabels</i> <i>uom</i> <i>drawOpts</i> <i>selectedFeature</i> <i>style</i> <i>children</i> /&gt
-            
-        </span>
-    </h4>
-    
-
-    
-    
-
-
-
-
-
-
-
-    
-        <h5>PropTypes:</h5>
-        
-
-<table class="params">
-  <thead>
-  <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Required</th>
-      <th>Description</th>
-      <th class="last">Default</th>
-  </tr>
-  </thead>
-
-  <tbody>
+    if ((strippedTitle !== originalTitle)) {
+      return (count == 1 || exactCount == 0 || (exactCount == 1 &amp;&amp; isNaN(strippedTitle.substr(-1)) &amp;&amp; isNaN(originalTitle.substr(-1))) 
+      ? originalTitle 
+      : strippedTitle) + ' ' + count.toString()
+    }
+    return strippedTitle + ' ' + count.toString()
+  }
   
-        <tr class="deep-level-0">
-          <td class="name"><code>map</code></td>
-          <td>
-            object
-          </td>
-          <td>Yes</td>
-          <td>openlayers map</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>selectInteraction</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>reference to openlayers select interaction which can optionally be managed by IA</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>preferences</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>an object with `get` and `put` methods to handle measure state</td>
-          <td>{ status: 'success', payload: new Preferences() }</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>translations</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>translations object</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>snap</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>boolean for enabling snap interaction</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>snapOpts</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>openlayers snap options</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>showMeasurements</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>boolean enabling the measurement component</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>showCoordinateLabels</code></td>
-          <td>
-            bool
-          </td>
-          <td>No</td>
-          <td>boolean enabling the coordinate labels component</td>
-          <td>true</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>uom</code></td>
-          <td>
-            string
-          </td>
-          <td>No</td>
-          <td>velocity preference of either imperial or metric</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>drawOpts</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>openlayers draw interaction constructor props</td>
-          <td>{}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>selectedFeature</code></td>
-          <td>
-            func
-          </td>
-          <td>No</td>
-          <td>callback that returns the selected openlayers feature from the map</td>
-          <td>() => {}</td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>style</code></td>
-          <td>
-            object
-          </td>
-          <td>No</td>
-          <td>pass custom style object to DrawContainer</td>
-          <td></td>
-        </tr>
-        
-  
-        <tr class="deep-level-0">
-          <td class="name"><code>children</code></td>
-          <td>
-            union
-          </td>
-          <td>No</td>
-          <td>pass child comps to opt out of the default controls</td>
-          <td></td>
-        </tr>
-        
-  
-  </tbody>
-</table>
+  duplicateLayer = (layer) => {
+    const { map, onLayerDuplicated, handleMenuClose } = this.props
     
+    if (layer.isGeoserverLayer) {
+      onLayerDuplicated(layer)
+      handleMenuClose()
+    } else {
+      const newTitle = this.incrementTitle(layer)
+      const dupeFeatures = layer.getSource().getFeatures().map(feature => feature.clone())
+      const source = new VectorSource({
+        features: dupeFeatures
+      })
+      const properties = Object.assign(layer.getProperties(), { source, title: newTitle})
+      const dupeLayer = new VectorLayer({...properties})
+      
+      map.addLayer(dupeLayer)
+      onLayerDuplicated(dupeLayer)
+      handleMenuClose()
+    } 
+  }
 
+  render () {
+    const { layer, translations } = this.props
 
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.18.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Draw_DrawContainer.js.html" class="button">View Source</a>
-            <span>
-                <a href="Draw_DrawContainer.js.html">Draw/DrawContainer.js</a>, <a href="Draw_DrawContainer.js.html#line21">line 21</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div>
-            <br/>
-            <h2 class="title">Examples</h2>
-            <div class="example">
-                <h1>DrawContainer</h1>
-<p>The <code>&lt;DrawContainer&gt;</code> component will render a set prebuilt draw and measure tools or child component(s) passed in as the <code>children</code> prop. These tools allow the user to draw features with point, line, and polygon geometries on a map user configurable geometry snap settings. These features can also be styled with perimiter and area measurement labels. Measurements are calculated geodesically using the WGS84 ellipsoid. The user can also label the geometry vertices with their respective coordinates in decimal degrees.</p>
-<h2>Drop-in example:</h2>
-<p>This one-liner will render prebuilt draw components in a map.</p>
-<pre class="prettyprint source lang-javascript"><code>import React from 'react'
-import { Map, DrawContainer } from '@bayer/ol-kit'
-
-const App = () => {
-  return (
-  &lt;Map>
-    &lt;DrawContainer />
-  &lt;/Map>
-  )
+    return (
+      &lt;MenuItem data-testid='LayerPanelAction.duplicate' key={'zoom'} onClick={() => this.duplicateLayer(layer)}>
+        {translations['_ol_kit.actions.duplicate']}
+      &lt;/MenuItem>
+    )
+  }
 }
 
-export default App
-</code></pre>
-            </div>
-        </div>
-    
-    
-</article>
+LayerPanelActionDuplicate.defaultProps = {
+  handleMenuClose: () => {},
+  onLayerDuplicated: () => {}
+}
 
-</section>
+LayerPanelActionDuplicate.propTypes = {
+  /** An openlayers `ol.map` object */
+  map: PropTypes.object.isRequired,
+
+  /** An openlayers `ol.layer` */
+  layer: PropTypes.object.isRequired,
+
+  /** A callback function that closes the `LayerPanelMenu` */
+  handleMenuClose: PropTypes.func,
+
+  /** A callback function that informs when a layer has been removed and passes that layer back to the IA */
+  onLayerDuplicated: PropTypes.func,
+
+  /** An object of translation key/value pairs */
+  translations: PropTypes.object.isRequired
+}
+
+export default connectToContext(LayerPanelActionDuplicate)
+</code></pre>
+        </article>
+    </section>
 
 
 
