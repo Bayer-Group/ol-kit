@@ -215,13 +215,12 @@ function getVertices (args) {
 /**
  * Style an ol/Feature with orange circle vertices, a blue outline, an area label, and a perimeter length label. Can be used with individual features as a style function or call it directly to get a style object for use with `vectorContext.drawFeature`
  * @function
- * @since 6.3.0
  * @param {object} opts - The config object
  * @param {ol/Feature} feature - The feature you want to style
  * @param {number} resolution - the resolution of the map
  * @returns {object} The style object for the passed feature
  */
-export function immediateEditStyle (...args) { // eslint-disable-line
+export function immediateEditStyle (...args) {
   const { feature, resolution, opts = {} } = resolveStyleFunctionArgs(args)
   const fill = new olStyleFill({
     color: 'rgba(0, 0, 255, 0.2)'
@@ -251,15 +250,15 @@ export function immediateEditStyle (...args) { // eslint-disable-line
   const geometry = opts.geometry || feature.clone().getGeometry()
   const areaLabelsFlag = feature.get('_ol_kit_area_labels')
   const distanceLabelsFlag = feature.get('_ol_kit_distance_labels')
-  const isLegacyMeasure = feature.get('_vmf_type') === '_vmf_measurement' && !(distanceLabelsFlag || areaLabelsFlag) // ignore legacy measure flag if either of the new flags are used.  Legacy features won't have the new flags and new features will only have the legacy flag if it also has one of the new flags (we still add the legacy flag to avoid a breaking change).
   const needsVertexLabels = feature.get('_ol_kit_coordinate_labels') !== undefined
   const needsCentroidLabels = feature.get('_ol_kit_needs_centroid_label') !== undefined
-  const needsAreaLabels = opts.showMeasurements ? areaLabelsFlag : isLegacyMeasure
-  const needsDistanceLabels = opts.showMeasurements ? (distanceLabelsFlag) : isLegacyMeasure
+  const needsAreaLabels = opts.showMeasurements && areaLabelsFlag
+  const needsDistanceLabels = opts.showMeasurements && distanceLabelsFlag
   const isNotCircle = feature.get('_ol_kit_draw_mode') !== 'circle'
   const vertexLabels = (needsVertexLabels && opts.showMeasurements && isNotCircle) ? coordinateLabels(getVertices(feature), resolution, opts) : [] // eslint-disable-line
+  const type = geometry.getType()
 
-  switch (geometry.getType()) {
+  switch (type) {
     case 'Point':
       return [new olStyleStyle({
         image

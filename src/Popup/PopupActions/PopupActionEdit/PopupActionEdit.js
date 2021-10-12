@@ -21,10 +21,10 @@ class PopupActionEdit extends Component {
   }
 
   onClick = () => {
-    const { addEditFeatureToContext, feature } = this.props
+    const { addEditFeatureToContext, feature, onEdit } = this.props
  
     addEditFeatureToContext(feature)
-    this.forceUpdate()
+    onEdit()
   }
 
   render () {
@@ -42,9 +42,7 @@ PopupActionEdit.propTypes = {
   translations: PropTypes.object,
   feature: PropTypes.object,
   map: PropTypes.object,
-  onEditFinish: PropTypes.func,
-  onEditCancel: PropTypes.func,
-  onEditBegin: PropTypes.func,
+  onEdit: PropTypes.func,
   showPopup: PropTypes.func,
   areaUOM: PropTypes.string,
   distanceUOM: PropTypes.string,

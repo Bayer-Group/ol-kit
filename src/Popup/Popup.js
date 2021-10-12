@@ -131,15 +131,11 @@ class Popup extends Component {
 
   hidePopup = () => {
     const { onMapClick } = this.props
-    const { editState, features } = this.state
 
     // stop tracking movement when popup show is set to false
     this.movementListener && removeMovementListener(this.movementListener)
 
-    this.setState(
-      { ...this.defaultState, editState, features: editState?.active ? features : [] },
-      () => onMapClick(this.state)
-    )
+    this.setState({ ...this.defaultState }, () => onMapClick(this.state))
   }
 
   onDragEnd = e => {

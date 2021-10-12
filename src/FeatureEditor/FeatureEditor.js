@@ -227,7 +227,7 @@ class FeatureEditor extends Component {
     const geometry = editingFeature.getGeometry()
     const rotationDiff = val - rotation
 
-    this.setState({ rotation: val }, () => geometry.rotate(-rotationDiff * (Math.PI / 45), anchor))
+    this.setState({ rotation: val }, () => geometry.rotate(-rotationDiff * (Math.PI / 180), anchor))
   }
 
   render () {
@@ -254,7 +254,7 @@ class FeatureEditor extends Component {
               <FormControlLabel
                 style={{ marginBottom: '0px' }}
                 control={
-                  <Knob style={knobStyle} unlockDistance={0} defaultValue={0} onChange={this.rotate} />
+                  <Knob style={knobStyle} unlockDistance={0} defaultValue={0} max={360} onChange={this.rotate} />
                 }
                 label={translations['_ol_kit.edit.rotate']}
               />

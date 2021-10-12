@@ -158,7 +158,6 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   addMapToContext: () => {},
-  onEdit: () => {},
   fullScreen: false,
   logoPosition: 'right',
   isMultiMap: false,
