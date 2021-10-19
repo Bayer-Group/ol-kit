@@ -24,7 +24,7 @@ class PopupActionEdit extends Component {
     const { addEditFeatureToContext, feature, onEdit } = this.props
  
     addEditFeatureToContext(feature)
-    onEdit()
+    onEdit(feature)
   }
 
   render () {
