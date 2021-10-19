@@ -131,33 +131,12 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     }
   }
 
-  const exhaustiveVectorFeaturesAtPixel = layer => {
-    if (!layer.getVisible()) return // don't resolve features for hidden layers
-    const exhaustivePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-      const orphanedFeatures = []
-
-      layer?.getSource?.()?.getFeatures?.()?.forEach(f => { // eslint-disable-line no-unused-expressions
-        if (f.getGeometry().intersectsCoordinate(clickCoordinate)) {
-          orphanedFeatures.push(f)
-        }
-      })
-      const { features } = await setParentLayer({ features: orphanedFeatures, layer })
-
-      resolve({ features, layer })
-    })
-
-    promises.push(exhaustivePromise)
-  }
-
   // check for featuresAtPixel to account for hitTolerance
   const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
     layerFilter: () => true,
     hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3,
     checkWrapped: true
   })
-
-  // as of ol v6.x getFeaturesAtPixel is not very reliable so we perform an exhaustive search asynchronously
-  map.getLayers().forEach(exhaustiveVectorFeaturesAtPixel)
 
   // if there's features at click, loop through the layers to find corresponding layer & features
   if (featuresAtPixel?.length) {
@@ -234,6 +213,7 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
     bottom: getPadding(2),
     left: getPadding(3)
   }
+
   // find bbox for passed features
   const getFitsForFeatures = rawFeatures => {
     // create a new array so original features are not mutated when _ol_kit_parent is nullified
@@ -288,7 +268,9 @@ export const getPopupPositionFromFeatures = (event, features = [], opts = {}) =>
     return { arrow: 'none', pixel, fits: false }
   }
 
-  return getPosition(getFitsForFeatures(features))
+  const fitsForFeature = getFitsForFeatures(features)
+
+  return getPosition(fitsForFeature)
 }
 
 /**

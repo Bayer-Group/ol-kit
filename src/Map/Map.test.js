@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import { render, waitFor } from '@testing-library/react'
 import { prettyDOM } from '@testing-library/dom'
@@ -6,6 +7,7 @@ import olMap from 'ol/Map'
 import olView from 'ol/View'
 import olInteractionSelect from 'ol/interaction/Select'
 import { Map, createMap } from 'Map'
+import { connectToContext } from 'Provider'
 
 describe('<Map />', () => {
   it('should render with a map prop', (done) => {
@@ -68,6 +70,39 @@ describe('<Map />', () => {
 
     // updateViewFromUrl should be defaulted to true
     mount(<Map onMapInit={onMapInit} />)
+  })
+
+  it('should attach contextProps from onMapInit to context', async (done) => {
+    const onMapInit = async map => {
+      const contextProps = {
+        catchphrase: 'to infinity and beyond'
+      }
+
+      // object returned from onMapInit will pass contextProps to all wrapped components
+      return { contextProps }
+    }
+
+    function Comp (props) {
+      return <div>{props.catchphrase}</div>
+    }
+    // setting propTypes is required for connectToContext to attach props correctly
+    Comp.propTypes = {
+      catchphrase: PropTypes.string
+    }
+    const WrappedComp = connectToContext(Comp)
+    const { container, getByText } = render(<Map onMapInit={onMapInit}><><WrappedComp /><WrappedComp catchphrase='clever girl' /></></Map>)
+
+    // wait for async child render
+    await waitFor(() => {}, { container })
+
+    // wait for rerender from provider addMapToContext call
+    setTimeout(() => {
+      // this proves contextProps from onMapInit get attached to context
+      expect(getByText('to infinity and beyond')).toBeInTheDocument()
+      // this proves explicit props always override context props
+      expect(getByText('clever girl')).toBeInTheDocument()
+      done()
+    }, 1000)
   })
 })
 

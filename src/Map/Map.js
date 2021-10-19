@@ -9,12 +9,13 @@ import {
   updateMapFromUrl,
   updateUrlFromMap,
   replaceZoomBoxCSS,
-  createSelectInteraction
+  addSelectInteraction
 } from './utils'
 import { StyledMap } from './styled'
 import { connectToContext } from 'Provider'
 import en from 'locales/en'
 import ugh from 'ugh'
+import olInteractionSelect from 'ol/interaction/Select'
 
 /**
  * A Reactified ol.Map wrapper component
@@ -44,28 +45,16 @@ class Map extends React.Component {
   componentDidMount () {
     const {
       addMapToContext,
+      contextProps,
+      dragZoomboxStyle,
       map: passedMap,
       onMapInit,
       translations,
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
-      urlViewParam,
-      dragZoomboxStyle
+      urlViewParam
     } = this.props
-    const onMapReady = map => {
-      // pass map back via callback prop
-      const initCallback = onMapInit(map)
-      // if onMapInit prop returns a promise, render children after promise is resolved
-      const isPromise = !!initCallback && typeof initCallback.then === 'function'
-
-      // update AFTER onMapInit to get map into the state/context
-      isPromise
-        ? initCallback
-          .catch(e => ugh.error('Error caught in \'onMapInit\'', e))
-          .finally(() => this.setState({ mapInitialized: true })) // always initialize app
-        : this.setState({ mapInitialized: true })
-    }
 
     // if no map was passed, create the map
     this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
@@ -77,15 +66,41 @@ class Map extends React.Component {
     // setup select interactions for the map
     this.initializeSelect(this.map)
 
+    // optionally add zoombox styling
+    replaceZoomBoxCSS(dragZoomboxStyle)
+
     // callback for <Provider> if it is mounted as hoc
-    const mapConfig = {
+    let mapConfig = {
       map: this.map,
       mapId: this.target,
       selectInteraction: this.selectInteraction,
-      translations // this can be hoisted to <Provider> only in the future
+      translations, // this can be hoisted to <Provider> only in the future
+      ...contextProps
     }
+    const onMapReady = map => {
+      const allSystemsGo = () => {
+        addMapToContext(mapConfig)
+        this.setState({ mapInitialized: true })
+      }
+      // pass map back via callback prop
+      const initCallback = onMapInit(map)
+      // if onMapInit prop returns a promise, render children after promise is resolved
+      const isPromise = !!initCallback && typeof initCallback.then === 'function'
 
-    addMapToContext(mapConfig)
+      // update AFTER onMapInit to get map into the state/context
+      isPromise
+        ? initCallback
+          .then(({ contextProps }) => {
+            // result of onMapInit may contain contextProps
+            mapConfig = {
+              ...mapConfig,
+              ...contextProps
+            }
+          })
+          .catch(e => ugh.error('Error caught in \'onMapInit\'', e))
+          .finally(allSystemsGo) // always initialize app
+        : allSystemsGo()
+    }
 
     // optionally attach map listener
     if (updateUrlFromView) {
@@ -106,31 +121,32 @@ class Map extends React.Component {
       // callback that returns a reference to the created map
       onMapReady(this.map)
     }
-
-    // optionally add zoombox styling
-    replaceZoomBoxCSS(dragZoomboxStyle)
   }
 
   initializeSelect = map => {
     const { selectInteraction } = this.props
 
-    if (selectInteraction) {
-      // if select is passed as a prop always use that one first
-      this.selectInteraction = selectInteraction
-    } else {
-      // otherwise create a new select interaction
-      this.selectInteraction = createSelectInteraction()
-    }
-
     // check the map to see if select interaction has been added
     const selectInteractionOnMap = map.getInteractions().getArray()
       // Layer panel also adds a select interaction
-      .filter(interaction => interaction._ol_kit_interaction_type !== '_ol_kit_layer_panel_hover')
+      .filter(interaction => interaction._ol_kit_origin !== '_ol_kit_layer_panel_hover')
       // this checks if the select interaction created or passed in is the same instance on the map and never double adds
-      .find(interaction => interaction === this.selectInteraction)
+      .find(interaction => interaction instanceof olInteractionSelect)
 
-    // do not double add the interaction to the map
-    if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
+    if (selectInteraction) {
+      // if select is passed as a prop always use that one first
+      this.selectInteraction = selectInteraction
+
+      // do not double add the interaction to the map
+      if (!selectInteractionOnMap) map.addInteraction(this.selectInteraction)
+    } else {
+      // otherwise create a new select interaction
+      const { select } = addSelectInteraction(map)
+
+      ugh.warn('<Map> has created a default select interaction (you can use getSelectInteraction(map) to access it). To have ol-kit use your custom select interaction, pass `selectInteraction` as a prop to <Map>.')
+
+      this.selectInteraction = select
+    }
   }
 
   render () {
@@ -158,6 +174,7 @@ class Map extends React.Component {
 
 Map.defaultProps = {
   addMapToContext: () => {},
+  contextProps: {},
   fullScreen: false,
   logoPosition: 'right',
   isMultiMap: false,
@@ -180,6 +197,8 @@ Map.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
+  /** custom props that get added to Provider context and passed to connectToContext components */
+  contextProps: PropTypes.object,
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */

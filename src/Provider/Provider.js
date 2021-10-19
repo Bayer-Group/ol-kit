@@ -6,8 +6,7 @@ import ugh from 'ugh'
 // context is only created when <Provider> is implemented (see constructor)
 export let ProviderContext = null
 
-// TODO reenable this documentation once multi-map is available (add /** below)
-/* A higher order component that provides context to connectToContext wrapped children
+/** A higher order component that provides context to connectToContext wrapped children
  * @component
  * @example ./example.md
  * @category Provider
@@ -42,14 +41,16 @@ class Provider extends React.Component {
 
   getContextValue = () => {
     const { contextProps, map: mapProp, maps: mapsProp, translations } = this.props
+    const { mapContext } = this.state
+    const activeMap = mapProp || mapContext.map // map prop will override context map
 
-    // if (!mapProp && !mapsProp.length) return ugh.throw('Provider requires either a \'map\' or \'maps\' prop to work!')
+    // if (!activeMap && !mapsProp.length) return ugh.throw('Provider requires either a \'map\' or \'maps\' prop to work!')
 
     // support multi-map components
     // default map reference to zeroith map from mapsProp if an array of maps has been passed
-    const map = mapsProp.length ? mapsProp[0] : mapProp
+    const map = mapsProp.length ? mapsProp[0] : activeMap
     // default an array with single value of map prop if maps array has not been passed
-    const maps = mapsProp.length ? mapsProp : [mapProp]
+    const maps = mapsProp.length ? mapsProp : [activeMap]
 
     return {
       addMapToContext: this.addMapToContext,

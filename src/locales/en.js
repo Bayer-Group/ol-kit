@@ -24,11 +24,15 @@ export default {
   '_ol_kit.LayerPanelActions.shapefile': 'Export Shapefile',
   '_ol_kit.LayerPanelActions.geojson': 'Export GeoJSON',
   '_ol_kit.LayerPanelActions.import': 'Import File',
+  '_ol_kit.LayerPanelActions.merge': 'Create New Layer Via Merge',
+  '_ol_kit.LayerPanelActions.heatmap': 'Create Heatmap Layer',
   '_ol_kit.LayerPanelLayersPage.title': 'Active Layers',
   '_ol_kit.LayerPanelLayersPage.filterText': 'Filter Layers',
   '_ol_kit.LayerPanelListItem.feature': 'feature',
   '_ol_kit.actions.removeLayer': 'Remove Layer',
   '_ol_kit.actions.removeLayers': 'Remove All Layers',
+  '_ol_kit.actions.zoomToExtent': 'Zoom to Extent',
+  '_ol_kit.actions.duplicate': 'Duplicate',
   // LayerStyler
   '_ol_kit.AttributesFilter.where': 'Where',
   '_ol_kit.AttributesFilter.AND': 'AND',
@@ -84,6 +88,7 @@ export default {
   '_ol_kit.PopupActionCut.alert': 'Cut Complete!',
   '_ol_kit.PopupActionDuplicate.alert': 'Shape duplicated!',
   '_ol_kit.PopupActionDuplicate.title': 'Duplicate Shape',
+  '_ol_kit.PopupActionZoomToExtent.title': 'Zoom to Extent',
   // TimeSliderBase
   '_ol_kit_.TimeSliderBase.dateRange': 'Date Range',
   '_ol_kit_.TimeSliderBase.next': 'Next >',

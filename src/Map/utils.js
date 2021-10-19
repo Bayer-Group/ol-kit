@@ -8,11 +8,34 @@ import olFill from 'ol/style/Fill'
 import olCircle from 'ol/style/Circle'
 import olStyle from 'ol/style/Style'
 import olStroke from 'ol/style/Stroke'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import { extend, createEmpty } from 'ol/extent'
 import qs from 'qs'
 
 import ugh from 'ugh'
 
 const OLKIT_ZOOMBOX_ID = '_ol-kit-css-zoombox-style'
+const DEFAULT_SELECT_NAME = '_ol_kit_default_select'
+const DEFAULT_SELECT_STYLE = new olStyle({
+  stroke: new olStroke({
+    color: 'cyan',
+    width: 3
+  }),
+  image: new olCircle({
+    radius: 5,
+    fill: new olFill({
+      color: '#ffffff'
+    }),
+    stroke: new olStroke({
+      color: 'cyan',
+      width: 2
+    })
+  }),
+  fill: new olFill({
+    color: 'rgba(255,255,255,0.01)'
+  })
+})
 
 export function replaceZoomBoxCSS (dragStyle) {
   const exists = document.getElementById(OLKIT_ZOOMBOX_ID)
@@ -69,7 +92,7 @@ export function createMap (opts = {}) {
  * @function
  * @category Map
  * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {String} viewParam - the query param that will be used to update the url with view info
  * @returns {String} The url that is set within the function
  */
@@ -92,7 +115,7 @@ export function updateUrlFromMap (map, viewParam = 'view') {
  * @function
  * @category Map
  * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {String} viewParam - the query param that will be read to update the map position
  * @returns {Promise} Resolved with transformed center coords after the map has been updated by url info
  */
@@ -122,7 +145,7 @@ export function updateMapFromUrl (map, viewParam = 'view') {
  * @function
  * @category Map
  * @since 0.1.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {Object} opts - include x, y, & zoom options
  * @returns {Array} Coordinates used to update the map
  */
@@ -141,7 +164,7 @@ export function centerAndZoom (map, opts = {}) {
  * @function
  * @category Map
  * @since 0.16.0
- * @param {ol.Map} map - reference to the openlayer map object
+ * @param {ol.Map} map - reference to the openlayers map object
  * @param {Number} x - the x coordinate
  * @param {Number} y - the x coordinate
  * @returns {Object} An object containing a `longitude` and `latitude` property
@@ -163,29 +186,83 @@ export function convertXYtoLatLong (map, x, y) {
  * @function
  * @category Map
  * @since 0.2.0
+ * @param {Object} opts - select interaction opts
  * @returns {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html
  */
-export function createSelectInteraction (props) {
-  const DEFAULT_SELECT_STYLE = new olStyle({
-    stroke: new olStroke({
-      color: 'cyan',
-      width: 3
-    }),
-    image: new olCircle({
-      radius: 5,
-      fill: new olFill({
-        color: '#ffffff'
-      }),
-      stroke: new olStroke({
-        color: 'cyan',
-        width: 2
-      })
-    })
-  })
-
+export function createSelectInteraction (opts = {}) {
   return new olInteractionSelect({
     hitTolerance: 3,
     style: [DEFAULT_SELECT_STYLE],
-    ...props
+    ...opts
   })
+}
+
+/**
+ * Create a new openlayers select interaction with default styling and add the vector layer to the map
+ * @function
+ * @category Map
+ * @since 1.11.0
+ * @param {ol.Map} map - reference to the openlayers map object
+ * @param {String} name - identifier to set as _ol_kit_origin on the interaction
+ * @param {Object} opts - select interaction opts
+ * @returns {Object} object - { layer: {ol.layer.Vector} https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html, select: {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html }
+ */
+export function addSelectInteraction (map, name = DEFAULT_SELECT_NAME, opts = {}) {
+  if (!(map instanceof Map)) return ugh.throw('\'addSelectInteraction\' requires a valid openlayers map as the first argument')
+
+  const select = createSelectInteraction(opts)
+  const source = new VectorSource({ features: select.getFeatures() })
+  const layer = new VectorLayer({ source, style: [DEFAULT_SELECT_STYLE], map })
+
+  layer.set('_ol_kit_origin', name)
+  select.set('_ol_kit_origin', name)
+
+  map.addInteraction(select)
+
+  return { layer, select }
+}
+
+/**
+ * Find a select interaction on the map by name (defaults to internal select created by ol-kit if name not passed)
+ * @function
+ * @category Map
+ * @since 1.11.0
+ * @param {ol.Map} map - reference to the openlayers map object
+ * @param {String} name - identifier to find _ol_kit_origin on the select interaction
+ * @returns {Object} object - { layer: {ol.layer.Vector} https://openlayers.org/en/latest/apidoc/module-ol_layer_Vector-VectorLayer.html, select: {ol.interaction.Select} https://openlayers.org/en/latest/apidoc/module-ol_interaction_Select-Select.html }
+ */
+export function getSelectInteraction (map, name = DEFAULT_SELECT_NAME) {
+  if (!(map instanceof Map)) return ugh.throw('\'getSelectInteraction\' requires a valid openlayers map as the first argument')
+
+  const interactions = map.getInteractions().getArray()
+  const select = interactions.find(interaction => interaction instanceof olInteractionSelect && interaction.get('_ol_kit_origin') === name)
+
+  if (!select) return ugh.throw(`Select interaction with name '${name}' could not be found on the map`)
+
+  return select
+}
+
+/**
+ * Sets the map extent to the given values.
+ * @function
+ * @category Map
+ * @param {ol.Map} map Open Layers map
+ * @param {ol.Extent} extent New extent definition
+ */
+export function setMapExtent (map, extent) {
+  if (!(map instanceof Map)) return ugh.throw('\'setMapExtent\' requires a valid openlayers map as the first argument')
+  map.getView().fit(extent, map.getSize())
+}
+
+/**
+ * Calculates a map extent that would make all features in the list visible.
+ * @function
+ * @category Map
+ * @param {ol.Feature[]} featureList List of Open Layers features
+ * @returns {ol.Extent} Map extent
+ */
+export function getExtentForFeatures (featureList) {
+  const extent = featureList.reduce((acc, f) => extend(acc, f.getGeometry().getExtent()), createEmpty())
+
+  return extent
 }
