@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | ContextMenuListItem</title>
+    <title>ol-kit | FeatureEditor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,10 +81,10 @@
 <header>
     
         <h2>
-            &ltContextMenuListItem /&gt
+            &ltFeatureEditor /&gt
         </h2>
         
-            <div class="class-description">A context menu list item with a title and click handler</div>
+            <div class="class-description">A component to edit geometries</div>
         
     
 </header>
@@ -100,12 +100,12 @@
 
 
     
-    <h4 class="name" id="ContextMenuListItem">
-        <a class="href-link" href="#ContextMenuListItem">#</a>
+    <h4 class="name" id="FeatureEditor">
+        <a class="href-link" href="#FeatureEditor">#</a>
         
         <span class="code-name">
             
-                &ltContextMenuListItem <i>title</i> <i>onClick</i> <i>disabled</i> /&gt
+                &ltFeatureEditor <i>editOpts</i> <i>editFeature</i> <i>addEditFeatureToContext</i> <i>map</i> <i>onEditBegin</i> <i>onEditFinish</i> <i>onEditCancel</i> <i>editStyle</i> <i>areaUOM</i> <i>distanceUOM</i> <i>translations</i> /&gt
             
         </span>
     </h4>
@@ -138,35 +138,143 @@
   <tbody>
   
         <tr class="deep-level-0">
-          <td class="name"><code>title</code></td>
+          <td class="name"><code>editOpts</code></td>
           <td>
-            string
+            exact
           </td>
-          <td>Yes</td>
-          <td>Title text which is shown for the list item</td>
+          <td>No</td>
+          <td></td>
+          <td>{}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>editFeature</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td></td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>onClick</code></td>
+          <td class="name"><code>addEditFeatureToContext</code></td>
           <td>
             func
           </td>
-          <td>Yes</td>
-          <td>A callback function when the menu item is clicked</td>
+          <td>No</td>
+          <td></td>
           <td></td>
         </tr>
         
   
         <tr class="deep-level-0">
-          <td class="name"><code>disabled</code></td>
+          <td class="name"><code>map</code></td>
           <td>
-            bool
+            object
           </td>
           <td>No</td>
-          <td>Indicates if the context menu item is clickable</td>
-          <td>false</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onEditBegin</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>(feature) => {
+  feature.setStyle(new olStyleStyle({}))
+}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onEditFinish</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>(feature, updatedFeature, addEditFeatureToContext, style) => {
+  const geom = updatedFeature.getGeometry()
+
+  if (!feature) return
+
+  feature.setGeometry(geom)
+
+  feature.setStyle(style || null) // restore the original feature's style
+  addEditFeatureToContext(null)
+}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onEditCancel</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>(feature, addEditFeatureToContext, style) => {
+  feature.setStyle(style || null) // restore the original feature's style
+  addEditFeatureToContext(null)
+}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>editStyle</code></td>
+          <td>
+            union
+          </td>
+          <td>No</td>
+          <td></td>
+          <td>(feature, map, showMeasurements = false, { areaUOM, distanceUOM }, translations) => { // eslint-disable-line
+  return immediateEditStyle(
+    { areaUOM, distanceUOM, showMeasurements, map, translations, language: navigator.language },
+    feature,
+    map.getView().getResolution()
+  )
+}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>areaUOM</code></td>
+          <td>
+            string
+          </td>
+          <td>No</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>distanceUOM</code></td>
+          <td>
+            string
+          </td>
+          <td>No</td>
+          <td></td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td></td>
+          <td></td>
         </tr>
         
   
@@ -186,7 +294,7 @@
 
     
     <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>0.16.0</li></ul></dd>
+    <dd class="tag-since"><ul class="dummy"><li>1.16.0</li></ul></dd>
     
 
     
@@ -216,9 +324,9 @@
 
     
         <p class="tag-source">
-            <a href="ContextMenu_ContextMenuListItem.js.html" class="button">View Source</a>
+            <a href="FeatureEditor_FeatureEditor.js.html" class="button">View Source</a>
             <span>
-                <a href="ContextMenu_ContextMenuListItem.js.html">ContextMenu/ContextMenuListItem.js</a>, <a href="ContextMenu_ContextMenuListItem.js.html#line11">line 11</a>
+                <a href="FeatureEditor_FeatureEditor.js.html">FeatureEditor/FeatureEditor.js</a>, <a href="FeatureEditor_FeatureEditor.js.html#line60">line 60</a>
             </span>
         </p>
     
@@ -265,6 +373,86 @@
 
     
 
+    
+        <div class='vertical-section'>
+            <h3 class="title"><span>Members</span></h3>
+            <div class="members">
+            
+                <div class="member">
+
+<h4 class="name" id="_renderFeature">
+    <a class="href-link" href="#_renderFeature">#</a>
+    
+    <span class="code-name">
+        _renderFeature
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    In the past we've used temporary layers added to the map to avoid modifying the original features directly.
+  However, this leads to a lot of cleanup since those layers need to be added/removed from both the map and state.
+  That is fine as long as everything goes smoothly but if there is additional logic listening to the map for changes to it's features
+   or layers than we can get left in a broken state that requires a reload.  Using vectorContext.drawFeature instead of
+   a layer added to the map alleviates at least some of this risk.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="FeatureEditor_FeatureEditor.js.html" class="button">View Source</a>
+            <span>
+                <a href="FeatureEditor_FeatureEditor.js.html">FeatureEditor/FeatureEditor.js</a>, <a href="FeatureEditor_FeatureEditor.js.html#line77">line 77</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
     
 
     

@@ -51,6 +51,12 @@ const RightCard = withStyles(() => ({
   }
 }))(Card)
 
+/**
+ * A component to edit geometries
+ * @component
+ * @category FeatureEditor
+ * @since 1.16.0
+ */
 class FeatureEditor extends Component {
   constructor (props) {
     super(props)
