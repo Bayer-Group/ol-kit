@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [
@@ -103,6 +103,7 @@
     "react-draggable": "~4.4.3",
     "react-dropzone": "~11.3.1",
     "react-hook-form": "~5.7.2",
+    "react-rotary-knob": "^1.1.8",
     "react-select": "~3.1.0",
     "react-viewer": "~3.2.2",
     "react-virtuoso": "~1.10.8",
