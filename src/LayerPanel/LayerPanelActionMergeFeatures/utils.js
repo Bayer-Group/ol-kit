@@ -1,4 +1,5 @@
 import union from '@turf/union'
+import combine from '@turf/combine';
 import { featureCollection, feature } from '@turf/helpers'
 import GeoJSON from 'ol/format/GeoJSON';
 import olGeomPolygon from 'ol/geom/Polygon';
