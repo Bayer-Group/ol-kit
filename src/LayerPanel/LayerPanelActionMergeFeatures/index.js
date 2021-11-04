@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem'
+import olFeature from 'ol/Feature'
 import olLayerVector from 'ol/layer/Vector'
 import { connectToContext } from 'Provider'
 import en from 'locales/en'
@@ -19,8 +20,7 @@ class LayerPanelActionMergeFeatures extends Component {
     const mergedGeometry = mergeLayerFeatures(layer)
     // create new ol feature w new geometry
     const newFeature = new olFeature({ geometry: mergedGeometry, name: 'Merged Feature' })
-    const opts = { title: 'Merged Layer' }
-    const mergedLayer = addVectorLayer(map, [newFeature], opts)
+    const mergedLayer = addVectorLayer(map, [newFeature])
 
     onMergeFeatures(mergedLayer)
     handleMenuClose()
@@ -39,20 +39,19 @@ class LayerPanelActionMergeFeatures extends Component {
     // check layer feature types all match (all polygon, all point, all line, etc)
     const features = layer.getSource().getFeatures()
     const featureTypes = features.map((feature) => feature.getGeometry().getType())
-    const distinctTypes = [...new Set(featureTypes)]  
-    return (distinctTypes === 1 && features.length > 1)  ? true : false
+    const distinctTypes = [...new Set(featureTypes)]
+    return (distinctTypes.length === 1 && features.length > 1 && layer.getVisible())  ? true : false
   }
 
   render () {
     const { translations } = this.props
-    const isVisible = layer.getVisible()
 
     return (
       <MenuItem
         key='mergeFeatures'
         data-testid='LayerPanelAction.mergeFeatures'
         disableGutters={false}
-        disabled={!isVisible && !this.featuresAreMergable()}
+        disabled={!this.featuresAreMergable()}
         onClick={this.handleMerge} >
         {translations['_ol_kit.LayerPanelActions.mergeFeatures']}
       </MenuItem>
@@ -63,9 +62,6 @@ class LayerPanelActionMergeFeatures extends Component {
 LayerPanelActionMergeFeatures.propTypes = {
   /** A function that closes the LayerPanelMenu */
   handleMenuClose: PropTypes.func,
-
-  /** An array of openlayers layers */
-  layers: PropTypes.array.isRequired,
 
   /** An openlayers `ol.layer` object */
   layer: PropTypes.object,
