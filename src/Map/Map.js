@@ -92,8 +92,8 @@ class Map extends React.Component {
         ? initCallback
           .then((res = {}) => {
             const { contextProps = {} } = res
+            
             // result of onMapInit may contain contextProps
-
             mapConfig = {
               ...mapConfig,
               ...contextProps
