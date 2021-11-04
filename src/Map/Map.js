@@ -90,8 +90,10 @@ class Map extends React.Component {
       // update AFTER onMapInit to get map into the state/context
       isPromise
         ? initCallback
-          .then(({ contextProps }) => {
+          .then((res = {}) => {
+            const { contextProps = {} } = res
             // result of onMapInit may contain contextProps
+
             mapConfig = {
               ...mapConfig,
               ...contextProps
