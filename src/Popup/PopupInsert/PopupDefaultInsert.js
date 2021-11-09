@@ -9,6 +9,7 @@ import { PopupActionGoogleMaps } from 'Popup/PopupActions/PopupActionGoogleMaps'
 import { PopupActionRemove } from 'Popup/PopupActions/PopupActionRemove'
 import { PopupActionDuplicate } from 'Popup/PopupActions/PopupActionDuplicate'
 import { PopupActionCut } from 'Popup/PopupActions/PopupActionCut'
+import { PopupActionEdit } from 'Popup/PopupActions/PopupActionEdit'
 import { PopupActionZoomToExtent } from 'Popup/PopupActions/PopupActionZoomToExtent'
 import PopupDefaultPage from './PopupDefaultPage'
 import PopupPageLayout from './PopupPageLayout'
@@ -32,7 +33,7 @@ class PopupDefaultInsert extends Component {
     super(props)
 
     this.state = {
-      selectedIdx: 0
+      selectedIdx: 0,
     }
   }
 
@@ -86,7 +87,7 @@ class PopupDefaultInsert extends Component {
   }
 
   render () {
-    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations } = this.props
+    const { actions, features, loading, onClose, onSettingsClick, propertiesFilter, translations, onEdit } = this.props
     const { selectedIdx } = this.state
 
     const getChildren = feature => {
@@ -96,6 +97,7 @@ class PopupDefaultInsert extends Component {
         <PopupActionDuplicate key='dupe' />,
         <PopupActionRemove key='remove' />,
         <PopupActionGoogleMaps key='nav' />,
+        <PopupActionEdit key='edit' onEdit={onEdit} />,
         <PopupActionZoomToExtent key='zoom' />]
 
       if (!pointGeom) defaultActions = [...defaultActions, <PopupActionCut key='cut' />]
@@ -138,7 +140,8 @@ PopupDefaultInsert.defaultProps = {
   onClose: () => {},
   onSelectFeature: () => {},
   propertiesFilter: sanitizeProperties,
-  translations: en
+  translations: en,
+  onEdit: () => false,
 }
 
 PopupDefaultInsert.propTypes = {
@@ -168,7 +171,8 @@ PopupDefaultInsert.propTypes = {
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
     '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
-  }).isRequired
+  }).isRequired,
+  onEdit: PropTypes.func,
 }
 
 export default connectToContext(PopupDefaultInsert)

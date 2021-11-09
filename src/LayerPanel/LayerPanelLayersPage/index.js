@@ -37,6 +37,7 @@ import olStyleStyle from 'ol/style/Style'
 import LayerPanelActionImport from 'LayerPanel/LayerPanelActionImport'
 import LayerPanelActionExport from 'LayerPanel/LayerPanelActionExport'
 import LayerPanelActionMerge from 'LayerPanel/LayerPanelActionMerge'
+import LayerPanelActionMergeFeatures from 'LayerPanel/LayerPanelActionMergeFeatures'
 
 import isEqual from 'lodash.isequal'
 import { connectToContext } from 'Provider'
@@ -487,6 +488,7 @@ class LayerPanelLayersPage extends PureComponent {
                         [<LayerPanelActionRemove key='removeLayer' shouldAllowLayerRemoval={shouldAllowLayerRemoval} />,
                           <LayerPanelActionExtent key='gotoExtent' />,
                           <LayerPanelActionDuplicate key='duplicateLayer'/>,
+                          <LayerPanelActionMergeFeatures key='mergeFeatures' />,
                           <LayerPanelActionHeatmap key='heatmap' layer={layer} onCreateHeatmap={onCreateHeatmap} />,
                           <LayerPanelActionOpacity key='layerOpacity' />]}
                       </LayerPanelActions>

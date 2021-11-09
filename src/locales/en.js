@@ -25,6 +25,7 @@ export default {
   '_ol_kit.LayerPanelActions.geojson': 'Export GeoJSON',
   '_ol_kit.LayerPanelActions.import': 'Import File',
   '_ol_kit.LayerPanelActions.merge': 'Create New Layer Via Merge',
+  '_ol_kit.LayerPanelActions.mergeFeatures': 'Merge All Features',
   '_ol_kit.LayerPanelActions.heatmap': 'Create Heatmap Layer',
   '_ol_kit.LayerPanelLayersPage.title': 'Active Layers',
   '_ol_kit.LayerPanelLayersPage.filterText': 'Filter Layers',
@@ -125,5 +126,9 @@ export default {
   // Google Directions
   '_ol_kit.directions.placeOriginPoint': 'Place a point at your origin',
   '_ol_kit.directions.placeWaypoint': 'Now place a point to add a destination and click finish when you\'re done:',
-  '_ol_kit.directions.waypointLabel': 'Waypoint'
+  '_ol_kit.directions.waypointLabel': 'Waypoint',
+  // FeatureEditor
+  '_ol_kit.edit.cancel': 'Cancel',
+  '_ol_kit.edit.finish': 'Finish',
+  '_ol_kit.edit.rotate': 'Rotate'
 }

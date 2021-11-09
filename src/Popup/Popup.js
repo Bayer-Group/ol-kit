@@ -164,7 +164,8 @@ class Popup extends Component {
                   actions={actions}
                   features={features}
                   loading={loading}
-                  onClose={this.hidePopup} />
+                  onClose={this.hidePopup}
+                />
               )}
             </PopupBase>,
             map.getTargetElement()
