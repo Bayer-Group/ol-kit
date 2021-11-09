@@ -7,6 +7,8 @@ import GeoJSON from 'ol/format/GeoJSON'
 import olLayerVector from 'ol/layer/Vector'
 import olVectorTile from 'ol/layer/VectorTile'
 import olSourceCluster from 'ol/source/Cluster'
+import olFeature from 'ol/Feature'
+import olGeomPoint from 'ol/geom/Point'
 import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
@@ -138,37 +140,56 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     checkWrapped: true
   })
 
-  // if there's features at click, loop through the layers to find corresponding layer & features
-  if (featuresAtPixel?.length) {
-    map.getLayers().forEach(async layer => {
-      if (layer instanceof olVectorTile) {
-        const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-          const vectorTileSourceFeatures = await layer.getSource()
-            .getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
-          const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
-            const { ol_uid } = sourceFeature // eslint-disable-line camelcase
+  const pixelSelector = layer => {
+    let renderedLayer = layer
+    if (layer.isGeoserverLayer) renderedLayer = layer.getWMSLayer()
 
-            let isFeatureAtClick = false
+    const renderContext = renderedLayer.getRenderer().context
+    const pixelImageData = renderContext.getImageData(pixel[0], pixel[1], 1, 1)
+    const [red, green, blue, alpha] = pixelImageData.data
+    const feature = new olFeature({
+      geometry: new olGeomPoint(clickCoordinate),
+      title: layer.getProperties().title || 'Raster Pixel',
+      red,
+      green,
+      blue,
+      alpha
+    })
 
-            featuresAtPixel.forEach(feat => {
-              if (feat?.ol_uid === ol_uid) isFeatureAtClick = true // eslint-disable-line camelcase
-            })
+    promises.push({ features: [feature] })
+  }
 
-            return isFeatureAtClick
+
+  map.getLayers().forEach(async layer => {
+    if (layer instanceof olVectorTile) {
+      const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+        const vectorTileSourceFeatures = await layer.getSource()
+          .getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
+        const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
+          const { ol_uid } = sourceFeature // eslint-disable-line camelcase
+
+          let isFeatureAtClick = false
+
+          featuresAtPixel.forEach(feat => {
+            if (feat?.ol_uid === ol_uid) isFeatureAtClick = true // eslint-disable-line camelcase
           })
 
-          const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
-
-          resolve({ features, layer })
+          return isFeatureAtClick
         })
 
-        promises.push(vectorTilePromise)
-      } else {
-      // handle non vector tile wfs layers
-        wfsSelector(layer)
-      }
-    })
-  }
+        const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
+
+        resolve({ features, layer })
+      })
+
+      promises.push(vectorTilePromise)
+    } else if (layer.isVectorLayer || layer instanceof olLayerVector) {
+    // handle non vector tile wfs layers
+      wfsSelector(layer)
+    } else if (!layer.getProperties()._ol_kit_basemap) {
+      pixelSelector(layer)
+    }
+  })
 
   // this check is for wms features
   map.forEachLayerAtPixel(pixel, wmsSelector)
