@@ -35,6 +35,10 @@ class Provider extends React.Component {
     this.setState({ mapContext })
   }
 
+  addEditFeatureToContext = editFeature => {
+    this.setState({ editFeature })
+  }
+
   getContextValue = () => {
     const { contextProps, map: mapProp, maps: mapsProp, translations } = this.props
     const { mapContext } = this.state
@@ -52,6 +56,8 @@ class Provider extends React.Component {
       addMapToContext: this.addMapToContext,
       map,
       maps,
+      editFeature: this.state.editFeature,
+      addEditFeatureToContext: this.addEditFeatureToContext,
       persistedState: this.state,
       persistState: this.persistState,
       translations,
@@ -88,7 +94,9 @@ Provider.propTypes = {
   /** Array of Openlayers map objects for components that support multi-map (this will override anything passed to map prop) */
   maps: PropTypes.array,
   /** Object with key/value pairs for component translation strings */
-  translations: PropTypes.object
+  translations: PropTypes.object,
+  /** An Ol feature object that is being edited */
+  editFeature: PropTypes.object
 }
 
 export default Provider

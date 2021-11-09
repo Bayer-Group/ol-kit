@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ol-kit | FeatureEditor/styles.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+
+
+    <!-- these scripts must be at the top to properly syntax highlight code examples -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha256-FiZMk1zgTeujzf/+vomWZGZ9r00+xnGvOgXoj0Jo1jA=" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a href="index.html"><img src="static/ol-kit-logo.png" alt="logo"></a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="tutorial-Getting%20Started.html">
+                                Get Started
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="docs.html">
+                                Docs
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/MonsantoCo/ol-kit">
+                                Github
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div id="page-wrapper" class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebar-nav">
+                <div class="sidebar sidebar__inner">
+                    <nav>
+                        <div class="category"><h3>Tutorials</h3><ul><li><a class="undefined"href="tutorial-Getting Started.html">Getting Started</a></li><li><a class="undefined"href="tutorial-LayerPanel_.html">LayerPanel</a></li><li><a class="undefined"href="tutorial-Popup_.html">Popup</a></li><li><a class="undefined"href="tutorial-TimeSlider_.html">TimeSlider</a></li><li><a class="undefined"href="tutorial-connectToContext.html">connectToContext</a></li><li><a class="undefined"href="tutorial-contextProps.html">contextProps</a></li><li><a class="undefined"href="tutorial-i18n Support.html">i18n Support</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#immediateEditStyle">immediateEditStyle</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>Basemap</h2><h3>Components</h3><ul><li><a href="BasemapBingMaps.html">BasemapBingMaps</a></li><li><a href="BasemapBlankWhite.html">BasemapBlankWhite</a></li><li><a href="BasemapContainer.html">BasemapContainer</a></li><li><a href="BasemapManager.html">BasemapManager</a></li><li><a href="BasemapOpenStreetMap.html">BasemapOpenStreetMap</a></li><li><a href="BasemapStamenTerrain.html">BasemapStamenTerrain</a></li><li><a href="BasemapStamenTonerDark.html">BasemapStamenTonerDark</a></li><li><a href="BasemapStamenTonerLite.html">BasemapStamenTonerLite</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#loadBasemapLayer">loadBasemapLayer</a></li></ul></div><div class="category"><h2>Classes</h2><h3>Utils</h3><ul><li><a href="global.html#VectorLayer">VectorLayer</a></li><li><a href="global.html#VectorTileLayer">VectorTileLayer</a></li></ul></div><div class="category"><h2>ContextMenu</h2><h3>Components</h3><ul><li><a href="ContextMenu.html">ContextMenu</a></li><li><a href="ContextMenuCoords.html">ContextMenuCoords</a></li><li><a href="ContextMenuListItem.html">ContextMenuListItem</a></li></ul></div><div class="category"><h2>Controls</h2><h3>Components</h3><ul><li><a href="Compass.html">Compass</a></li><li><a href="ControlGroup.html">ControlGroup</a></li><li><a href="ControlGroupButton.html">ControlGroupButton</a></li><li><a href="Controls.html">Controls</a></li><li><a href="CurrentLocation.html">CurrentLocation</a></li><li><a href="ZoomControls.html">ZoomControls</a></li><li><a href="ZoomIn.html">ZoomIn</a></li><li><a href="ZoomOut.html">ZoomOut</a></li></ul></div><div class="category"><h2>DataLayers</h2><h3>Utils</h3><ul><li><a href="global.html#loadDataLayer">loadDataLayer</a></li></ul></div><div class="category"><h2>Draw</h2><h3>Components</h3><ul><li><a href="Draw.html">Draw</a></li><li><a href="DrawBox.html">DrawBox</a></li><li><a href="DrawCircle.html">DrawCircle</a></li><li><a href="DrawContainer.html">DrawContainer</a></li><li><a href="DrawFreehand.html">DrawFreehand</a></li><li><a href="DrawLine.html">DrawLine</a></li><li><a href="DrawPin.html">DrawPin</a></li><li><a href="DrawPoint.html">DrawPoint</a></li><li><a href="DrawPolygon.html">DrawPolygon</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#getStyledFeatures">getStyledFeatures</a></li><li><a href="global.html#styleText">styleText</a></li></ul></div><div class="category"><h2>FeatureEditor</h2><h3>Components</h3><ul><li><a href="FeatureEditor.html">FeatureEditor</a></li></ul></div><div class="category"><h2>GoogleDirections</h2><h3>Components</h3><ul><li><a href="GoogleDirections.html">GoogleDirections</a></li></ul></div><div class="category"><h2>GooglePlacesSearch</h2><h3>Components</h3><ul><li><a href="GooglePlacesSearch.html">GooglePlacesSearch</a></li></ul></div><div class="category"><h2>Heatmap</h2><h3>Components</h3><ul><li><a href="HeatmapControls.html">HeatmapControls</a></li></ul></div><div class="category"><h2>LayerPanel</h2><h3>Components</h3><ul><li><a href="LayerPanel.html">LayerPanel</a></li><li><a href="LayerPanelActionDuplicate.html">LayerPanelActionDuplicate</a></li><li><a href="LayerPanelActionExport.html">LayerPanelActionExport</a></li><li><a href="LayerPanelActionExtent.html">LayerPanelActionExtent</a></li><li><a href="LayerPanelActionHeatmap.html">LayerPanelActionHeatmap</a></li><li><a href="LayerPanelActionImport.html">LayerPanelActionImport</a></li><li><a href="LayerPanelActionMerge.html">LayerPanelActionMerge</a></li><li><a href="LayerPanelActionOpacity.html">LayerPanelActionOpacity</a></li><li><a href="LayerPanelActionRemove.html">LayerPanelActionRemove</a></li><li><a href="LayerPanelActions.html">LayerPanelActions</a></li><li><a href="LayerPanelBase.html">LayerPanelBase</a></li><li><a href="LayerPanelCheckbox.html">LayerPanelCheckbox</a></li><li><a href="LayerPanelContent.html">LayerPanelContent</a></li><li><a href="LayerPanelHeader.html">LayerPanelHeader</a></li><li><a href="LayerPanelLayersPage.html">LayerPanelLayersPage</a></li><li><a href="LayerPanelList.html">LayerPanelList</a></li><li><a href="LayerPanelListItem.html">LayerPanelListItem</a></li><li><a href="LayerPanelMenu.html">LayerPanelMenu</a></li><li><a href="LayerPanelPage.html">LayerPanelPage</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addHeatmapLayer">addHeatmapLayer</a></li><li><a href="global.html#addVectorLayer">addVectorLayer</a></li><li><a href="global.html#convertFileToFeatures">convertFileToFeatures</a></li><li><a href="global.html#convertFileToLayer">convertFileToLayer</a></li><li><a href="global.html#exportFeatures">exportFeatures</a></li></ul></div><div class="category"><h2>LayerStyler</h2><h3>Components</h3><ul><li><a href="LayerStyler.html">LayerStyler</a></li></ul></div><div class="category"><h2>Map</h2><h3>Components</h3><ul><li><a href="Map.html">Map</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addSelectInteraction">addSelectInteraction</a></li><li><a href="global.html#centerAndZoom">centerAndZoom</a></li><li><a href="global.html#convertXYtoLatLong">convertXYtoLatLong</a></li><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createSelectInteraction">createSelectInteraction</a></li><li><a href="global.html#getExtentForFeatures">getExtentForFeatures</a></li><li><a href="global.html#getSelectInteraction">getSelectInteraction</a></li><li><a href="global.html#setMapExtent">setMapExtent</a></li><li><a href="global.html#updateMapFromUrl">updateMapFromUrl</a></li><li><a href="global.html#updateUrlFromMap">updateUrlFromMap</a></li></ul></div><div class="category"><h2>MultiMap</h2><h3>Components</h3><ul><li><a href="MultiMapManager.html">MultiMapManager</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#syncViewEvents">syncViewEvents</a></li></ul></div><div class="category"><h2>PDF</h2><h3>Utils</h3><ul><li><a href="global.html#convertSvgToPDFTemplate">convertSvgToPDFTemplate</a></li><li><a href="global.html#printPDFTemplate">printPDFTemplate</a></li></ul></div><div class="category"><h2>Popup</h2><h3>Components</h3><ul><li><a href="Popup.html">Popup</a></li><li><a href="PopupActionGroup.html">PopupActionGroup</a></li><li><a href="PopupActionItem.html">PopupActionItem</a></li><li><a href="PopupActionLink.html">PopupActionLink</a></li><li><a href="PopupBase.html">PopupBase</a></li><li><a href="PopupDataList.html">PopupDataList</a></li><li><a href="PopupDefaultInsert.html">PopupDefaultInsert</a></li><li><a href="PopupDefaultPage.html">PopupDefaultPage</a></li><li><a href="PopupPageLayout.html">PopupPageLayout</a></li><li><a href="PopupPageLayoutChild.html">PopupPageLayoutChild</a></li><li><a href="PopupTabs.html">PopupTabs</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#addMovementListener">addMovementListener</a></li><li><a href="global.html#calculateViewPadding">calculateViewPadding</a></li><li><a href="global.html#getLayersAndFeaturesForEvent">getLayersAndFeaturesForEvent</a></li><li><a href="global.html#getPopupPositionFromFeatures">getPopupPositionFromFeatures</a></li><li><a href="global.html#removeMovementListener">removeMovementListener</a></li><li><a href="global.html#sanitizeProperties">sanitizeProperties</a></li></ul></div><div class="category"><h2>PopupActionCopyWkt</h2><h3>Components</h3><ul><li><a href="PopupActionCopyWkt.html">PopupActionCopyWkt</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#convertFeatureToWkt">convertFeatureToWkt</a></li><li><a href="global.html#copyTextToClipboard">copyTextToClipboard</a></li><li><a href="global.html#copyWktToClipbard">copyWktToClipbard</a></li></ul></div><div class="category"><h2>PopupActionGoogleMaps</h2><h3>Components</h3><ul><li><a href="PopupActionGoogleMaps.html">PopupActionGoogleMaps</a></li></ul></div><div class="category"><h2>Project</h2><h3>Components</h3><ul><li><a href="ProjectMenu.html">ProjectMenu</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#createProject">createProject</a></li><li><a href="global.html#loadProject">loadProject</a></li></ul></div><div class="category"><h2>Provider</h2><h3>Components</h3><ul><li><a href="Provider.html">Provider</a></li></ul><h3>Utils</h3><ul><li><a href="global.html#connectToContext">connectToContext</a></li></ul></div><div class="category"><h2>TabbedPanel</h2><h3>Components</h3><ul><li><a href="TabbedPanel.html">TabbedPanel</a></li></ul></div><div class="category"><h2>TimeSlider</h2><h3>Components</h3><ul><li><a href="TimeSlider.html">TimeSlider</a></li><li><a href="TimeSliderBase.html">TimeSliderBase</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop" id="main-content-wrapper">
+                <div class="content">
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import olFeature from 'ol/Feature'
+import olGeomLineString from 'ol/geom/LineString'
+import olGeomMultiPoint from 'ol/geom/MultiPoint'
+import olStyleFill from 'ol/style/Fill'
+import olStyleStroke from 'ol/style/Stroke'
+import olStyleStyle from 'ol/style/Style'
+import olStyleCircle from 'ol/style/Circle'
+import olStyleText from 'ol/style/Text'
+import olPoint from 'ol/geom/Point'
+import centroid from '@turf/centroid'
+
+import { pointsFromVertices, olKitTurf, pairCoordinates, getCoordinates, getText, calculateScale } from './utils'
+
+function resolveStyleFunctionArgs (args) {
+  // Using function.prototype.bind with additional arguments injects those arguments at the zeroth index of the arguements object and since opts is optional we need to handle a variable arguement object
+  const argLength = args.length
+  const feature = args[argLength - 2] || args
+  const resolution = args[argLength - 1]
+  const opts = argLength >= 3 ? args[0] : {}
+
+  return { feature, resolution, opts }
+}
+
+/**
+ * Style ol/Features
+ * @function
+ * @param {object} opts - The config object
+ * @param {ol/Feature} feature - The feature you want to style
+ * @param {number} resolution - the resolution of the map
+ * @returns {object} The style object for the passed feature
+ */
+function styleText (...args) {
+  const { feature, resolution, opts } = resolveStyleFunctionArgs(args)
+  const label = feature.get('_vmf_label')
+  const isMeasurement = feature.get('_vmf_type') === '_vmf_measurement'
+  const isCentroidLabel = feature.get('_ol_kit_needs_centroid_label')
+  const offsetY = isCentroidLabel ? 20 : isMeasurement ? 0 : (label.fontSize || 16) / 2 // eslint-disable-line
+  const styleOpts = {
+    placement: opts.placement || 'point',
+    textAlign: opts.textAlign,
+    textBaseline: opts.textBaseLine || 'top',
+    maxAngle: opts.maxAngle || Infinity,
+    // These weird calculations provide the most accurate placement relative to the textarea where people edit their text
+    offsetX: isMeasurement ? 0 : (label.fontSize || 16) / 2,
+    offsetY: offsetY,
+    rotation: -feature.get('_vmf_rotation') || 0,
+    font: `bold ${label.fontSize || 16}px sans-serif`,
+    stroke: new olStyleStroke({
+      // show a black outline unless the text color is black; then show a white outline
+      color: label.color === '#000000' ? '#ffffff' : '#000000',
+      width: 3
+    }),
+    text: getText(label, resolution, opts),
+    scale: calculateScale(opts.store.map, feature),
+    fill: new olStyleFill({
+      color: label.color || '#ffffff'
+    }),
+    image: new olStyleCircle({
+      radius: 7,
+      fill: new olStyleFill({
+        color: '#ffcc33'
+      })
+    }),
+    rotateWithView: false,
+    overflow: true
+  }
+
+  return new olStyleText(styleOpts)
+}
+
+function coordinateLabels (multiPoint, resolution, opts) {
+  return multiPoint.getPoints().map(point => coordinateLabel(point, resolution, opts))
+}
+
+function coordinateLabel (pointGeometry, resolution, opts) {
+  const geom = pointGeometry.clone()
+  const pointFeature = new olFeature({
+    geometry: geom,
+    _vmf_label: {
+      fontSize: 16
+    }
+  })
+
+  return new olStyleStyle({
+    text: styleText({
+      store: opts,
+      placement: 'point',
+      maxAngle: Math.PI / 4,
+      textAlign: undefined,
+      textBaseline: 'hanging'
+    }, pointFeature, resolution),
+    geometry: geom
+  })
+}
+
+function lengthLabel (lineGeometry, resolution, opts) {
+  const geom = lineGeometry.clone()
+  const perimeterFeature = new olFeature({
+    geometry: geom,
+    _vmf_type: '_vmf_measurement',
+    _vmf_label: {
+      fontSize: 16
+    }
+  })
+
+  return new olStyleStyle({
+    text: styleText({
+      store: opts,
+      placement: 'line',
+      maxAngle: Math.PI / 4,
+      textAlign: undefined,
+      textBaseline: 'hanging'
+    }, perimeterFeature, resolution),
+    geometry: geom
+  })
+}
+
+function perimeterSegmentLabels (polygonGeometry, resolution, opts) {
+  const labelStyles = []
+  const clonedGeom = polygonGeometry.clone()
+  const perimeterCoords = clonedGeom.getLinearRing(0).getCoordinates()
+
+  for (let i = 0; i &lt; perimeterCoords.length - 1;) {
+    const segment = [perimeterCoords[i], perimeterCoords[i += 1]]
+
+    if (segment.flat(Infinity).includes(undefined)) break // exit the loop if we get any undefined values.  It's better to not label a segment than to break draw entirely.
+    const segmentGeom = new olGeomLineString(segment)
+    const segmentFeature = new olFeature({
+      geometry: segmentGeom,
+      _vmf_type: '_vmf_measurement',
+      _vmf_label: {
+        fontSize: 16
+      }
+    })
+
+    labelStyles.push(new olStyleStyle({
+      text: styleText({
+        store: opts,
+        placement: 'line',
+        textBaseline: 'hanging'
+      }, segmentFeature, resolution),
+      geometry: segmentGeom
+    }))
+  }
+
+  return labelStyles
+}
+
+function areaLabel (polygonGeometry, resolution, opts) {
+  const areaGeometry = polygonGeometry.clone()
+  const areaFeature = new olFeature({
+    geometry: areaGeometry,
+    _vmf_type: '_vmf_measurement',
+    _vmf_label: {
+      fontSize: 16
+    }
+  })
+
+  return new olStyleStyle({
+    text: styleText({
+      store: opts
+    }, areaFeature, resolution),
+    geometry: areaGeometry
+  })
+}
+
+function centroidLabel (geometry, resolution, opts) {
+  const point = geometry.getType() === 'Circle ' ? new olPoint(geometry.clone().getCenter()) : olKitTurf(centroid, [geometry]).getGeometry()
+  const pointFeature = new olFeature({
+    geometry: point,
+    _vmf_type: '_vmf_measurement', // styleText determines the type of label to render based on the feature's type so we need this temporary feature to be a 'measurement' feature
+    _vmf_label: {
+      fontSize: 16
+    },
+    _ol_kit_needs_centroid_label: true
+  })
+
+  return new olStyleStyle({
+    text: styleText({
+      store: opts,
+      placement: 'point',
+      maxAngle: Math.PI / 4,
+      textAlign: undefined,
+      textBaseline: 'hanging'
+    }, pointFeature, resolution),
+    geometry: point
+  })
+}
+
+function getVertices (args) {
+  const { feature } = resolveStyleFunctionArgs(args)
+  const geometry = feature.getGeometry()
+  const layout = geometry.getLayout()
+
+  switch (geometry.getType()) {
+    case 'MultiPolygon': {
+      const coordinates = geometry.getCoordinates()
+      const flatCoords = coordinates.flat(Infinity)
+      const pairedCoords = pairCoordinates(flatCoords, layout.length)
+
+      return new olGeomMultiPoint(pairedCoords, layout)
+    }
+    case 'GeometryCollection': {
+      const deepCoords = getCoordinates(geometry)
+      const flatCoords = deepCoords.flat(Infinity)
+      const pairedCoords = pairCoordinates(flatCoords, layout.length)
+
+      return new olGeomMultiPoint(pairedCoords)
+    }
+    default:
+      return new olGeomMultiPoint(pointsFromVertices(geometry))
+  }
+}
+
+/**
+ * Style an ol/Feature with orange circle vertices, a blue outline, an area label, and a perimeter length label. Can be used with individual features as a style function or call it directly to get a style object for use with `vectorContext.drawFeature`
+ * @function
+ * @param {object} opts - The config object
+ * @param {ol/Feature} feature - The feature you want to style
+ * @param {number} resolution - the resolution of the map
+ * @returns {object} The style object for the passed feature
+ */
+export function immediateEditStyle (...args) {
+  const { feature, resolution, opts = {} } = resolveStyleFunctionArgs(args)
+  const fill = new olStyleFill({
+    color: 'rgba(0, 0, 255, 0.2)'
+  })
+  const stroke = new olStyleStroke({
+    color: 'blue',
+    width: 3
+  })
+  const image = new olStyleCircle({
+    radius: 7,
+    fill: new olStyleFill({
+      color: '#ffcc33'
+    })
+  })
+  const vertexGeometry = getVertices(args)
+  const vertices = [new olStyleStyle({
+    image: new olStyleCircle({
+      radius: 5,
+      fill: new olStyleFill({
+        color: 'orange'
+      })
+    }),
+    geometry: vertexGeometry
+  })]
+
+  // checking to see if opts.geometry is defined allows us to call this function recursively for geometry collections
+  const geometry = opts.geometry || feature.clone().getGeometry()
+  const areaLabelsFlag = feature.get('_ol_kit_area_labels')
+  const distanceLabelsFlag = feature.get('_ol_kit_distance_labels')
+  const needsVertexLabels = feature.get('_ol_kit_coordinate_labels') !== undefined
+  const needsCentroidLabels = feature.get('_ol_kit_needs_centroid_label') !== undefined
+  const needsAreaLabels = opts.showMeasurements &amp;&amp; areaLabelsFlag
+  const needsDistanceLabels = opts.showMeasurements &amp;&amp; distanceLabelsFlag
+  const isNotCircle = feature.get('_ol_kit_draw_mode') !== 'circle'
+  const vertexLabels = (needsVertexLabels &amp;&amp; opts.showMeasurements &amp;&amp; isNotCircle) ? coordinateLabels(getVertices(feature), resolution, opts) : [] // eslint-disable-line
+  const type = geometry.getType()
+
+  switch (type) {
+    case 'Point':
+      return [new olStyleStyle({
+        image
+      }), ...vertexLabels]
+    case 'LineString': {
+      const lengthLabels = needsDistanceLabels ? [lengthLabel(geometry, resolution, opts)] : []
+
+      return [new olStyleStyle({
+        stroke,
+        image
+      }), ...vertices, ...lengthLabels, ...vertexLabels]
+    }
+    case 'MultiLineString': {
+      const lineStrings = geometry.getLineStrings()
+      const lengthLabels = needsDistanceLabels
+        ? lineStrings.map(lineString => lengthLabel(lineString, resolution, opts)) : []
+
+      return [new olStyleStyle({
+        stroke,
+        image
+      }), ...vertices, ...lengthLabels, ...vertexLabels]
+    }
+    case 'MultiPolygon': {
+      const polygons = geometry.getPolygons()
+      // create a label for each polygon
+      const perimeterLabels = needsDistanceLabels
+        ? polygons.map(polygon => perimeterSegmentLabels(polygon, resolution, opts)) : []
+      const areaLabels = needsAreaLabels
+        ? polygons.map(polygon => areaLabel(polygon, resolution, opts)) : []
+
+      return [new olStyleStyle({
+        stroke,
+        fill,
+        image
+      }), ...vertices, ...areaLabels, ...perimeterLabels.flat(Infinity), ...vertexLabels]
+    }
+    case 'Polygon': {
+      let labels = vertexLabels // eslint-disable-line
+
+      if (needsAreaLabels) labels.push(areaLabel(geometry, resolution, opts))
+      if (needsDistanceLabels &amp;&amp; isNotCircle) labels = [...labels, ...perimeterSegmentLabels(geometry, resolution, opts)] //eslint-disable-line
+      if (needsCentroidLabels) labels.push(centroidLabel(geometry, resolution, opts))
+
+      return [new olStyleStyle({
+        stroke,
+        fill,
+        image
+      }), ...vertices, ...labels]
+    }
+    case 'GeometryCollection': {
+      // Recursive.  Since feature stores our metadata it needs to be preserved.  Therefore we pass the geometry we want to use through the opts object.
+      const componentStyles = geometry.getGeometries().map(geom => {
+        return immediateEditStyle.apply(this, [Object.assign(opts, { geometry: geom }), feature, resolution])
+      })
+      const flatStyles = componentStyles.flat(Infinity)
+
+      return flatStyles
+    }
+    case 'Circle': {
+      const labels = vertexLabels
+
+      if (needsAreaLabels) labels.push(areaLabel(geometry, resolution, opts))
+      if (needsCentroidLabels) labels.push(centroidLabel(geometry, resolution, opts))
+
+      return [new olStyleStyle({
+        stroke,
+        fill
+      }), ...labels]
+    }
+    default:
+      return [new olStyleStyle({
+        stroke,
+        fill,
+        image
+      }), ...vertices]
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <div style="margin: 0 auto; text-align: center; background: white; margin: 30px 0;">
+            <a href="https://www.cropscience.bayer.com" target="_blank">
+                <img src="static/bayer-logo.png" width="200px" />
+            </a>
+            <div>&copy; 2020 Bayer Crop Science; All Rights Reserved. <br />
+            <a style="color: #a2a2a2" target="_blank" href="https://bayer.talentnet.community/jobs/881c8317-33b7-435f-9410-359b1b925322"> Geospatial Developer Career Opportunities </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sticky-sidebar/dist/sticky-sidebar.min.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
