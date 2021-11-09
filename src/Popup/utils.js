@@ -142,6 +142,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
   const pixelSelector = layer => {
     let renderedLayer = layer
+
     if (layer.isGeoserverLayer) renderedLayer = layer.getWMSLayer()
 
     const renderContext = renderedLayer.getRenderer().context
@@ -158,7 +159,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
 
     promises.push({ features: [feature] })
   }
-
 
   map.getLayers().forEach(async layer => {
     if (layer instanceof olVectorTile) {
