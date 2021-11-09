@@ -22,18 +22,24 @@ function ZoomOut (props) {
   let repeatTimeout
 
   const repeatZoom = () => {
-    zoomDelta(map, -0.2, 300)
+    const { holdDecrement } = props
+
+    zoomDelta(map, holdDecrement, 300)
     repeatTimeout = setTimeout(() => repeatZoom(), 300)
   }
+
   const handleMouseDown = () => {
     mouseDownTime = Date.now()
     mouseDownTimeout = setTimeout(() => {
       repeatZoom()
     }, 150)
   }
+
   const stopZoom = () => {
+    const { decrement } = props
+
     if (Date.now() - mouseDownTime < 150) {
-      zoomDelta(map, -0.5, 150)
+      zoomDelta(map, decrement, 150)
       clearTimeout(mouseDownTimeout)
     }
     clearTimeout(repeatTimeout)
@@ -50,9 +56,18 @@ function ZoomOut (props) {
   )
 }
 
+ZoomOut.defaultProps = {
+  decrement: -0.5,
+  holdDecrement: -0.2
+}
+
 ZoomOut.propTypes = {
   /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired
+  map: PropTypes.object.isRequired,
+  /** delta for the amount of zoom */
+  decrement: PropTypes.number,
+  /** delta for the amount of zoom when holding down */
+  holdDecrement: PropTypes.number
 }
 
 export default connectToContext(ZoomOut)
