@@ -25,6 +25,7 @@ export default {
   '_ol_kit.LayerPanelActions.geojson': 'Export GeoJSON',
   '_ol_kit.LayerPanelActions.import': 'Import File',
   '_ol_kit.LayerPanelActions.merge': 'Create New Layer Via Merge',
+  '_ol_kit.LayerPanelActions.mergeFeatures': 'Merge All Features',
   '_ol_kit.LayerPanelActions.heatmap': 'Create Heatmap Layer',
   '_ol_kit.LayerPanelLayersPage.title': 'Active Layers',
   '_ol_kit.LayerPanelLayersPage.filterText': 'Filter Layers',
