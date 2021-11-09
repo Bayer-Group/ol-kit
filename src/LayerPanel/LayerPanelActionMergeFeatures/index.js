@@ -11,7 +11,7 @@ import { mergeLayerFeatures } from './utils'
 /**
  * @component
  * @category LayerPanel
- * @since 1.15.1
+ * @since 1.17.0
  */
 class LayerPanelActionMergeFeatures extends Component {
   handleMerge = () => {

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Draw/Polygon.js</title>
+    <title>ol-kit | LayerPanel/LayerPanelActionMergeFeatures/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -82,44 +82,89 @@
         <article>
             <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Tooltip, IconButton } from './styled'
-import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined'
+import MenuItem from '@material-ui/core/MenuItem'
+import olFeature from 'ol/Feature'
+import olLayerVector from 'ol/layer/Vector'
+import { connectToContext } from 'Provider'
+import en from 'locales/en'
+import { addVectorLayer } from '../LayerPanelActionMerge/utils'
+import { mergeLayerFeatures } from './utils'
 
 /**
- * A button for drawing polygons.
  * @component
- * @category Draw
- * @since 0.18.0
+ * @category LayerPanel
+ * @since 1.17.0
  */
-class DrawPolygon extends Component {
+class LayerPanelActionMergeFeatures extends Component {
+  handleMerge = () => {
+    const { map, layer, onMergeFeatures, handleMenuClose } = this.props
+    // merge all feature geoms into new geometry
+    const mergedGeometry = mergeLayerFeatures(layer)
+    // create new ol feature w new geometry
+    const newFeature = new olFeature({ geometry: mergedGeometry, name: 'Merged Feature' })
+    const mergedLayer = addVectorLayer(map, [newFeature])
+
+    onMergeFeatures(mergedLayer)
+    handleMenuClose()
+  }
+
+  isValidVectorLayer = (layer) => {
+    return (layer instanceof olLayerVector || (layer &amp;&amp; layer.isVectorLayer))
+  }
+
+  getVisibleLayers = () => {
+    return this.props.layers.filter(layer => layer.getVisible())
+  }
+
+  featuresAreMergable = () => {
+    const { layer } = this.props
+    // check layer feature types all match (all polygon, all point, all line, etc)
+    const features = layer.getSource().getFeatures()
+    const featureTypes = features.map((feature) => feature.getGeometry().getType())
+    const distinctTypes = [...new Set(featureTypes)]
+    return (distinctTypes.length === 1 &amp;&amp; features.length > 1 &amp;&amp; layer.getVisible())  ? true : false
+  }
+
   render () {
-    const { addInteraction, type, tooltipTitle } = this.props
+    const { translations } = this.props
 
     return (
-      &lt;Tooltip title={tooltipTitle}>
-        &lt;IconButton
-          data-testid='Draw.polygon'
-          size='small'
-          onClick={() => addInteraction({ type: 'Polygon' })}>
-          &lt;ChangeHistoryOutlinedIcon size={1} htmlColor={type === 'Polygon' ? '#1976D2' : '#656565'} />
-        &lt;/IconButton>
-      &lt;/Tooltip>
+      &lt;MenuItem
+        key='mergeFeatures'
+        data-testid='LayerPanelAction.mergeFeatures'
+        disableGutters={false}
+        disabled={!this.featuresAreMergable()}
+        onClick={this.handleMerge} >
+        {translations['_ol_kit.LayerPanelActions.mergeFeatures']}
+      &lt;/MenuItem>
     )
   }
 }
 
-DrawPolygon.propTypes = {
-  /** the openlayers draw type */
-  type: PropTypes.string,
+LayerPanelActionMergeFeatures.propTypes = {
+  /** A function that closes the LayerPanelMenu */
+  handleMenuClose: PropTypes.func,
 
-  /** a function that adds the draw interaction to the openlayers map on click of the button */
-  addInteraction: PropTypes.func,
+  /** An openlayers `ol.layer` object */
+  layer: PropTypes.object,
 
-  /** a title for the tooltip */
-  tooltipTitle: PropTypes.string
+  /** Openlayers map */
+  map: PropTypes.object.isRequired,
+
+  /** Callback fired after merge, called with new feature as argument */
+  onMergeFeatures: PropTypes.func,
+
+  /** An object of translation key/value pairs */
+  translations: PropTypes.object.isRequired
 }
 
-export default DrawPolygon
+LayerPanelActionMergeFeatures.defaultProps = {
+  handleMenuClose: () => {},
+  onMergeFeatures: () => {},
+  translations: en
+}
+
+export default connectToContext(LayerPanelActionMergeFeatures)
 </code></pre>
         </article>
     </section>

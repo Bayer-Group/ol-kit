@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Draw/Polygon.js</title>
+    <title>ol-kit | LayerPanelActionMergeFeatures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -77,52 +75,229 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Tooltip, IconButton } from './styled'
-import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined'
+        <h2>
+            &ltLayerPanelActionMergeFeatures /&gt
+        </h2>
+        
+    
+</header>
 
-/**
- * A button for drawing polygons.
- * @component
- * @category Draw
- * @since 0.18.0
- */
-class DrawPolygon extends Component {
-  render () {
-    const { addInteraction, type, tooltipTitle } = this.props
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-    return (
-      &lt;Tooltip title={tooltipTitle}>
-        &lt;IconButton
-          data-testid='Draw.polygon'
-          size='small'
-          onClick={() => addInteraction({ type: 'Polygon' })}>
-          &lt;ChangeHistoryOutlinedIcon size={1} htmlColor={type === 'Polygon' ? '#1976D2' : '#656565'} />
-        &lt;/IconButton>
-      &lt;/Tooltip>
-    )
-  }
-}
 
-DrawPolygon.propTypes = {
-  /** the openlayers draw type */
-  type: PropTypes.string,
+    
+    <h4 class="name" id="LayerPanelActionMergeFeatures">
+        <a class="href-link" href="#LayerPanelActionMergeFeatures">#</a>
+        
+        <span class="code-name">
+            
+                &ltLayerPanelActionMergeFeatures <i>handleMenuClose</i> <i>layer</i> <i>map</i> <i>onMergeFeatures</i> <i>translations</i> /&gt
+            
+        </span>
+    </h4>
+    
 
-  /** a function that adds the draw interaction to the openlayers map on click of the button */
-  addInteraction: PropTypes.func,
+    
+    
 
-  /** a title for the tooltip */
-  tooltipTitle: PropTypes.string
-}
 
-export default DrawPolygon
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+    
+        <h5>PropTypes:</h5>
+        
+
+<table class="params">
+  <thead>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Required</th>
+      <th>Description</th>
+      <th class="last">Default</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>handleMenuClose</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>A function that closes the LayerPanelMenu</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>layer</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>An openlayers `ol.layer` object</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>map</code></td>
+          <td>
+            object
+          </td>
+          <td>Yes</td>
+          <td>Openlayers map</td>
+          <td></td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>onMergeFeatures</code></td>
+          <td>
+            func
+          </td>
+          <td>No</td>
+          <td>Callback fired after merge, called with new feature as argument</td>
+          <td>() => {}</td>
+        </tr>
+        
+  
+        <tr class="deep-level-0">
+          <td class="name"><code>translations</code></td>
+          <td>
+            object
+          </td>
+          <td>No</td>
+          <td>An object of translation key/value pairs</td>
+          <td>function()</td>
+        </tr>
+        
+  
+  </tbody>
+</table>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.17.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="LayerPanel_LayerPanelActionMergeFeatures_index.js.html" class="button">View Source</a>
+            <span>
+                <a href="LayerPanel_LayerPanelActionMergeFeatures_index.js.html">LayerPanel/LayerPanelActionMergeFeatures/index.js</a>, <a href="LayerPanel_LayerPanelActionMergeFeatures_index.js.html#line16">line 16</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+</article>
+
+</section>
 
 
 

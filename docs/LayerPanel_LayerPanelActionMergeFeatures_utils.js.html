@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Draw/Polygon.js</title>
+    <title>ol-kit | LayerPanel/LayerPanelActionMergeFeatures/utils.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,47 +80,115 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Tooltip, IconButton } from './styled'
-import ChangeHistoryOutlinedIcon from '@material-ui/icons/ChangeHistoryOutlined'
+            <pre class="prettyprint source linenums"><code>import union from '@turf/union'
+import combine from '@turf/combine'
+import { featureCollection, feature } from '@turf/helpers'
+import GeoJSON from 'ol/format/GeoJSON'
+import olGeomPolygon from 'ol/geom/Polygon'
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon'
+import olGeomPoint from 'ol/geom/Point'
+import olGeomLineString from 'ol/geom/LineString'
+import olGeomMultiLineString from 'ol/geom/MultiLineString'
+import olGeomCircle from 'ol/geom/Circle'
+import olGeomMultiPoint from 'ol/geom/MultiPoint'
+
+import ugh from 'ugh'
+
+const format = new GeoJSON()
+const projectionOpts = {
+  dataProjection: 'EPSG:4326',
+  featureProjection: 'EPSG:3857'
+}
+
+
+function combineGeos(geometries) {
+    const collection = featureCollection(geometries)
+    const fc = combine(collection)
+    return fc.features[0].geometry
+  }
+
+function getNewGeoJsonGeom(feature, mergeFeature) {
+    try {
+        switch (feature.geometry.type) {
+            case 'Point':
+            case 'MultiPoint':
+              return combineGeos([feature, mergeFeature])
+            case 'LineString':
+            case 'MultiLineString':
+              return combineGeos([feature, mergeFeature])
+            case 'Polygon':
+            case 'MultiPolygon':
+              return union(feature.geometry, mergeFeature.geometry).geometry
+            default:
+              return null
+          }
+    } catch (error) {
+        return ugh.error(error)
+    }   
+}
+
+function olFeatureToGeoJsonFeature(olFeature) {
+  const clonedFeature = olFeature.clone()
+  clonedFeature.unset('_ol_kit_parent')
+  clonedFeature.setId(olFeature.getId())
+  const geoJsonFeature = format.writeFeatureObject(clonedFeature, projectionOpts)
+  geoJsonFeature.properties = Object.assign({}, geoJsonFeature.properties)
+  return geoJsonFeature
+}
+
+function geoJsonGeomToOlGeom(geoJsonGeom) {
+    const coordinates = geoJsonFeatureToOlFeature(geoJsonGeom).getGeometry().getCoordinates()
+
+    return getOlGeometryByType(geoJsonGeom.type, coordinates)
+  }
+
+function geoJsonFeatureToOlFeature(geoJsonFeature) {
+    return format.readFeature(geoJsonFeature, projectionOpts)
+  }
+
+function getOlGeometryByType(type, coordinateArray) {
+    switch (type) {
+      case 'Polygon':
+        return new olGeomPolygon(coordinateArray)
+      case 'LineString':
+        return new olGeomLineString(coordinateArray)
+      case 'MultiLineString':
+        return new olGeomMultiLineString(coordinateArray)
+      case 'Point':
+        return new olGeomPoint(coordinateArray)
+      case 'Circle':
+        return new olGeomCircle(coordinateArray)
+      case 'MultiPolygon':
+        return new olGeomMultiPolygon(coordinateArray)
+      case 'MultiPoint':
+        return new olGeomMultiPoint(coordinateArray)
+      default:
+        return undefined
+    }
+  }
+
 
 /**
- * A button for drawing polygons.
- * @component
- * @category Draw
- * @since 0.18.0
+ * Takes an array of vector features and creates a new merged geometry
+ * @category LayerPanel
+ * @function
+ * @since 1.17.0
+ * @param {Layer} VectorLayer - VectorLayer with features to be merged
+ * @returns {Feature} olFeature
  */
-class DrawPolygon extends Component {
-  render () {
-    const { addInteraction, type, tooltipTitle } = this.props
+export function mergeLayerFeatures (layer) {
+  const features = layer.getSource().getFeatures()
+  const firstFeature = features.shift()
+  const { geometry: geoJsonGeom } = features.reduce((prevTarget, mergeTarget) => {
+    const baseFeature = prevTarget
+    const newGeom = getNewGeoJsonGeom(baseFeature, olFeatureToGeoJsonFeature(mergeTarget))
+    return feature(newGeom)
+  }, olFeatureToGeoJsonFeature(firstFeature))
 
-    return (
-      &lt;Tooltip title={tooltipTitle}>
-        &lt;IconButton
-          data-testid='Draw.polygon'
-          size='small'
-          onClick={() => addInteraction({ type: 'Polygon' })}>
-          &lt;ChangeHistoryOutlinedIcon size={1} htmlColor={type === 'Polygon' ? '#1976D2' : '#656565'} />
-        &lt;/IconButton>
-      &lt;/Tooltip>
-    )
-  }
-}
 
-DrawPolygon.propTypes = {
-  /** the openlayers draw type */
-  type: PropTypes.string,
 
-  /** a function that adds the draw interaction to the openlayers map on click of the button */
-  addInteraction: PropTypes.func,
-
-  /** a title for the tooltip */
-  tooltipTitle: PropTypes.string
-}
-
-export default DrawPolygon
-</code></pre>
+  return geoJsonGeomToOlGeom(geoJsonGeom)
+}</code></pre>
         </article>
     </section>
 
