@@ -16,7 +16,7 @@ import ugh from 'ugh'
  * Creates a new feature with point geometry at the location of the pixel and attributes describing the pixel's value
  * @function
  * @category Popup
- * @since 1.1.0
+ * @since 1.17.0
  * @param {ol.Layer} layer - The openlayers layer
  * @param {Object} event - An object with a `map` and `pixel` property
  * @returns {ol.Feature} An openlayers feature with point geometry at the location of the pixel and attributes describing the pixel's value
