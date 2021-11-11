@@ -13,6 +13,37 @@ import debounce from 'lodash.debounce'
 import ugh from 'ugh'
 
 /**
+ * Creates a new feature with point geometry at the location of the pixel and attributes describing the pixel's value
+ * @function
+ * @category Popup
+ * @since 1.1.0
+ * @param {ol.Layer} layer - The openlayers layer
+ * @param {Object} event - An object with a `map` and `pixel` property
+ * @returns {ol.Feature} An openlayers feature with point geometry at the location of the pixel and attributes describing the pixel's value
+ */
+export const getPixelValue = (layer, event) => {
+  const { map, pixel } = event
+  const clickCoordinate = map.getCoordinateFromPixel(pixel)
+
+  let renderedLayer = layer
+
+  if (layer.isGeoserverLayer) renderedLayer = layer.getWMSLayer()
+
+  const renderContext = renderedLayer.getRenderer().context
+  const pixelImageData = renderContext.getImageData(pixel[0], pixel[1], 1, 1)
+  const [red, green, blue, alpha] = pixelImageData.data
+
+  return new olFeature({
+    geometry: new olGeomPoint(clickCoordinate),
+    title: layer.getProperties().title || 'Raster Pixel',
+    red,
+    green,
+    blue,
+    alpha
+  })
+}
+
+/**
  * Bind multiple move listeners with the same callback
  * @function
  * @category Popup
@@ -54,7 +85,7 @@ export const removeMovementListener = (keys = []) => {
  * @function
  * @category Popup
  * @since 0.2.0
- * @param {Object} event - An object with an `event` and `pixel` property
+ * @param {Object} event - An object with a `map` and `pixel` property
  * @param {ol.Map} event.map - The openlayers map where the layer exists
  * @param {Number[]} event.pixel - An array consisting of `x` and `y` pixel locations
  * @param {Object} [opts] - Object of optional params
@@ -140,26 +171,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     checkWrapped: true
   })
 
-  const pixelSelector = layer => {
-    let renderedLayer = layer
-
-    if (layer.isGeoserverLayer) renderedLayer = layer.getWMSLayer()
-
-    const renderContext = renderedLayer.getRenderer().context
-    const pixelImageData = renderContext.getImageData(pixel[0], pixel[1], 1, 1)
-    const [red, green, blue, alpha] = pixelImageData.data
-    const feature = new olFeature({
-      geometry: new olGeomPoint(clickCoordinate),
-      title: layer.getProperties().title || 'Raster Pixel',
-      red,
-      green,
-      blue,
-      alpha
-    })
-
-    promises.push({ features: [feature] })
-  }
-
   map.getLayers().forEach(async layer => {
     if (layer instanceof olVectorTile) {
       const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
@@ -187,7 +198,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     // handle non vector tile wfs layers
       wfsSelector(layer)
     } else if (!layer.getProperties()._ol_kit_basemap) {
-      pixelSelector(layer)
+      promises.push({ features: [getPixelValue(layer, event)] })
     }
   })
 
