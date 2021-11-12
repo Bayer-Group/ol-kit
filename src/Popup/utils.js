@@ -74,10 +74,103 @@ export const addMovementListener = (map, callback) => {
  * @category Popup
  * @since 0.2.0
  * @param {ol.Map} map - The openlayers map to which the events are bound
- * @param {Array} keys - remove the listeners via an array of event keys
+ * @param {Array} keys - remove the listeners via` an array of event keys
  */
 export const removeMovementListener = (keys = []) => {
   keys.forEach(({ target, type, listener }) => target.un(type, listener))
+}
+
+const setParentLayer = ({ features, layer }) => {
+  return new Promise(resolve => {
+    const parentLayer = layer.get('_ol_kit_parent')
+    const parent = parentLayer || layer
+
+    features.forEach((feature, i) => {
+      // true makes this performant with a silent trigger: https://openlayers.org/en/latest/apidoc/module-ol_Feature.html#set
+      feature.set('_ol_kit_parent', parent, true)
+
+      return feature
+    })
+
+    resolve({ features, layer })
+  })
+}
+
+const wfsSelector = (layer, event, opts) => {
+  let features = []
+  const source = layer.getSource()
+  const { map, pixel } = event
+  const clickCoordinate = map.getCoordinateFromPixel(pixel)
+  // check for featuresAtPixel to account for hitTolerance
+  const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
+    layerFilter: () => true,
+    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3,
+    checkWrapped: true
+  })
+
+  if (source instanceof olSourceCluster) {
+    // support for clustered feature clicks
+    const clusteredFeatures = source.getClosestFeatureToCoordinate(clickCoordinate).get('features')
+
+    features = clusteredFeatures
+  } else {
+    const sourceFeatures = source.getFeatures()
+
+    sourceFeatures.forEach(sourceFeature => {
+      // check if any feature on layer source is also at click location
+      const isAtPixel = featuresAtPixel ? featuresAtPixel.find(f => f === sourceFeature) : null
+
+      if (isAtPixel) features.push(sourceFeature)
+    })
+  }
+
+  if (features.length) return setParentLayer({ features, layer })
+}
+
+const wmsSelector = (layer, event) => {
+  const { pixel, map } = event
+  const coords = map.getCoordinateFromPixel(pixel)
+
+  return new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+    const rawFeatures = await layer.fetchFeaturesAtClick(coords, map)
+    const { features } = await setParentLayer({ features: rawFeatures, layer })
+
+    if (features.length) {
+      resolve({ features, layer })
+    } else {
+      resolve({ features: [getPixelValue(layer, event)], layer })
+    }
+  })
+}
+
+const vectorTileSelector = (layer, event, opts) => {
+  const { map, pixel } = event
+  // check for featuresAtPixel to account for hitTolerance
+  const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
+    layerFilter: () => true,
+    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3,
+    checkWrapped: true
+  })
+
+  return new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+    const vectorTileSourceFeatures = await layer.getSource()
+      .getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
+    const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
+      const { ol_uid } = sourceFeature // eslint-disable-line camelcase
+
+      let isFeatureAtClick = false
+
+      featuresAtPixel.forEach(feat => {
+        if (feat?.ol_uid === ol_uid) isFeatureAtClick = true // eslint-disable-line camelcase
+      })
+
+      return isFeatureAtClick
+    })
+
+    const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
+
+    resolve({ features, layer })
+  })
 }
 
 /**
@@ -95,115 +188,24 @@ export const removeMovementListener = (keys = []) => {
 export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
   if (typeof event !== 'object') return ugh.error('getLayersAndFeaturesForEvent first arg must be an object') // eslint-disable-line
   const { map, pixel } = event
-  const promises = []
-  const clickCoordinate = map.getCoordinateFromPixel(pixel)
 
   if (!(map instanceof olMap) || !Array.isArray(pixel)) return ugh.error('getLayersAndFeaturesForEvent requires a valid openlayers map & pixel location (as an array)') // eslint-disable-line
 
-  const setParentLayer = ({ features, layer }) => {
-    return new Promise(resolve => {
-      const parentLayer = layer.get('_ol_kit_parent')
-      const parent = parentLayer || layer
-
-      features.forEach((feature, i) => {
-        // true makes this performant with a silent trigger: https://openlayers.org/en/latest/apidoc/module-ol_Feature.html#set
-        feature.set('_ol_kit_parent', parent, true)
-
-        return feature
-      })
-
-      resolve({ features, layer })
-    })
-  }
-
-  const wfsSelector = layer => {
-    // this logic only handles clicks on vector layer types
-    const allowedLayerType = layer.isVectorLayer || layer instanceof olLayerVector
-
-    // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
-    if (!layer.getLayerState().managed || !allowedLayerType) return // do nothing with these layer types
-
-    let features = []
-    const source = layer.getSource()
-
-    if (source instanceof olSourceCluster) {
-      // support for clustered feature clicks
-      const clusteredFeatures = source.getClosestFeatureToCoordinate(clickCoordinate).get('features')
-
-      features = clusteredFeatures
-    } else {
-      const sourceFeatures = source.getFeatures()
-
-      sourceFeatures.forEach(sourceFeature => {
-        // check if any feature on layer source is also at click location
-        const isAtPixel = featuresAtPixel ? featuresAtPixel.find(f => f === sourceFeature) : null
-
-        if (isAtPixel) features.push(sourceFeature)
-      })
-    }
-
-    if (features.length) {
-      const wfsPromise = setParentLayer({ features, layer })
-
-      promises.push(wfsPromise)
-    }
-  }
-  const wmsSelector = layer => {
-    if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
-      // this logic handles clicks on GeoserverLayers
-      const geoserverLayer = layer.get('_ol_kit_parent')
-      const coords = map.getCoordinateFromPixel(pixel)
-      const wmsPromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-        const rawFeatures = await geoserverLayer.fetchFeaturesAtClick(coords, map)
-        const { features } = await setParentLayer({ features: rawFeatures, layer })
-
-        resolve({ features, layer })
-      })
-
-      promises.push(wmsPromise)
-    }
-  }
-
-  // check for featuresAtPixel to account for hitTolerance
-  const featuresAtPixel = map.getFeaturesAtPixel(pixel, {
-    layerFilter: () => true,
-    hitTolerance: opts.hitTolerance ? opts.hitTolerance : 3,
-    checkWrapped: true
-  })
-
-  map.getLayers().forEach(async layer => {
+  const promises = map.getLayers().getArray().map(layer => {
     if (layer instanceof olVectorTile) {
-      const vectorTilePromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-        const vectorTileSourceFeatures = await layer.getSource()
-          .getFeaturesInExtent(map.getView().calculateExtent(map.getSize()))
-        const matchingFeaturesAtPixel = vectorTileSourceFeatures.filter(sourceFeature => {
-          const { ol_uid } = sourceFeature // eslint-disable-line camelcase
-
-          let isFeatureAtClick = false
-
-          featuresAtPixel.forEach(feat => {
-            if (feat?.ol_uid === ol_uid) isFeatureAtClick = true // eslint-disable-line camelcase
-          })
-
-          return isFeatureAtClick
-        })
-
-        const { features } = await setParentLayer({ features: matchingFeaturesAtPixel, layer })
-
-        resolve({ features, layer })
-      })
-
-      promises.push(vectorTilePromise)
-    } else if (layer.isVectorLayer || layer instanceof olLayerVector) {
-    // handle non vector tile wfs layers
-      wfsSelector(layer)
+      // handle vector tile features
+      return vectorTileSelector(layer, event, opts)
+    } else if (layer.isVectorLayer || layer instanceof olLayerVector || !layer.getLayerState().managed) { // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
+      // handle non vector tile wfs layers
+      return wfsSelector(layer, event, opts)
+    } else if (layer.isGeoserverLayer) {
+      // handle geoserver layers
+      return wmsSelector(layer, event)
     } else if (!layer.getProperties()._ol_kit_basemap) {
-      promises.push({ features: [getPixelValue(layer, event)] })
+      // get the pixel value for any other non-basemap layers
+      return { features: [getPixelValue(layer, event)] }
     }
-  })
-
-  // this check is for wms features
-  map.forEachLayerAtPixel(pixel, wmsSelector)
+  }).filter(Boolean)
 
   return promises
 }
