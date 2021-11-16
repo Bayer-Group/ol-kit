@@ -306,6 +306,7 @@ Object {
   "exportFeatures": [Function],
   "getExtentForFeatures": [Function],
   "getLayersAndFeaturesForEvent": [Function],
+  "getPixelValue": [Function],
   "getPopupPositionFromFeatures": [Function],
   "getSelectInteraction": [Function],
   "getStyledFeatures": [Function],
