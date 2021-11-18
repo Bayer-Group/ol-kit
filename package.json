@@ -13,6 +13,32 @@
   ],
   "contributors": [
     {
+      "name": "Ajay Kumar",
+      "email": "connect.ajkumar@gmail.com",
+      "url": "https://github.com/akuma1"
+    },
+    {
+      "name": "Chris Reams",
+      "email": "chrisreams91@gmail.com",
+      "url": "https://github.com/chrisreams91"
+    },
+
+    {
+      "name": "Gabriel Schuetzner",
+      "email": "gabriel.schuetzner@bayer.com",
+      "url": "https://github.com/gabe647"
+    },
+    {
+      "name": "Shaun Bonk",
+      "email": "shaun.bonk.ext@bayer.com",
+      "url": "https://github.com/introvertedspud"
+    },
+    {
+      "name": "Douglas Andrews",
+      "email": "douglas.andrews@bayer.com",
+      "url": "https://github.com/DAndrews99"
+    },
+    {
       "name": "Jake Stäzrad",
       "email": "jake.webb@1904labs.com",
       "url": "https://github.com/stazrad"
@@ -44,7 +70,7 @@
     }
   ],
   "homepage": "https://ol-kit.com",
-  "bugs": "https://github.com/MonsantoCo/ol-kit/issues",
+  "bugs": "https://github.com/Bayer-Group/ol-kit/issues",
   "main": "./core/index.js",
   "bin": {
     "create-map": "cli/index.js"
@@ -66,7 +92,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:MonsantoCo/ol-kit.git"
+    "url":"git@github.com:Bayer-Group/ol-kit.git"
   },
   "dependencies": {
     "@date-io/moment": "~1.3.13",
