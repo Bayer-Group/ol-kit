@@ -1,4 +1,8 @@
 # Current Maintainers
+[@glenselle](https://github.com/glenselle) (Glen Selle)\
+[@drodenberg](https://github.com/drodenberg) (Daniel Rodenberg)\
+[@stazrad](https://github.com/stazrad) (Jake Stäzrad)\
+[@PatchesMaps](https://github.com/PatchesMaps) (Patrick Moulden)
 [@akuma1](https://github.com/akuma1) (Ajay Kumar)\
 [@chrisreams91](https://github.com/chrisreams91) (Chris Reams)\
 [@DAndrews99](https://github.com/DAndrews99) (Douglas Andrews)\
