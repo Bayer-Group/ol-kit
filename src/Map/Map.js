@@ -58,7 +58,7 @@ class Map extends React.Component {
 
     // if no map was passed, create the map
     this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
-
+    console.log('<Map> did mount', this.passedMap, !this.passedMap.getTargetElement())
     if (this.passedMap && !this.passedMap.getTargetElement()) {
       ugh.warn('A `map` prop has been passed to `<Map>` but the openlayers map has not been mounted to the DOM!')
     }

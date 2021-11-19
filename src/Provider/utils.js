@@ -32,6 +32,7 @@ export function connectToContext (Component) {
         <MultiMapContext.Consumer>
           {
             (providerProps = {}) => {
+              console.log('safeParent', Component)
               return (
                 <SafeParent
                   defaultProps={defaultProps}

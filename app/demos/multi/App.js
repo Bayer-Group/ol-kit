@@ -2,28 +2,54 @@ import React from 'react'
 import {
   Map,
   Popup,
-  TabbedPanel,
   Controls,
   ContextMenu,
   loadDataLayer,
-  LayerStyler,
-  LayerPanelLayersPage,
   MultiMapManager,
-  TabbedPanelPage,
   BasemapContainer,
   VectorLayer,
-  DrawContainer,
   FlexMap,
-  FullScreenFlex
+  FullScreenFlex,
+  SplitScreen,
+  SyncableMap
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
-
-import Welcome from '../../Welcome'
+import olView from 'ol/View'
 
 class App extends React.Component {
+  constructor () {
+    super()
+
+    const mapKeys = [
+      'map0',
+      'map1',
+      'map2',
+      'map3',
+      'map4',
+      'map5',
+      'map6',
+      'map7',
+    ]
+
+    this.maps = mapKeys.map((target, i) => {
+      return new SyncableMap({
+        target,
+        controls: [],
+        renderer: 'canvas',
+        view: new olView({
+          projection: 'EPSG:3857',
+          center: [-11000000, 4600000],
+          zoom: 4
+        }),
+        // Only show the first map
+        visible: i === 0,
+        synced: i === 0
+      })
+    })
+  }
   onMapInit = async (map) => {
     // create a vector layer and add to the map
     const layer = new VectorLayer({
@@ -48,29 +74,19 @@ class App extends React.Component {
   }
 
   render () {
-    const mapKeys = [
-      'map0',
-      'map1',
-      'map2',
-      'map3',
-      'map4',
-      'map5',
-      'map6',
-      'map7',
-    ]
-
     return (
       <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
         <FullScreenFlex>
-          {mapKeys.map((key, i, array) => {
+          {this.maps.map((map, i, array) => {
             return (
               <FlexMap
-                key={key}
+                key={map.getTargetElement().id}
                 index={i}
                 total={array.length}
                 numberOfRows={2}
                 numberOfColumns={4}>
-                <Map id={key} onMapInit={this.onMapInit} isMultiMap>
+                <Map map={map} onMapInit={this.onMapInit} isMultiMap>
+                  {/* <SplitScreen /> */}
                   <Popup />
                   <ContextMenu />
                   <Controls />
