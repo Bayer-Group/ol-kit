@@ -47,6 +47,7 @@ class Map extends React.Component {
       addMapToContext,
       contextProps,
       dragZoomboxStyle,
+      isMultiMap,
       map: passedMap,
       onMapInit,
       translations,
@@ -57,8 +58,8 @@ class Map extends React.Component {
     } = this.props
 
     // if no map was passed, create the map
-    this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
-    console.log('<Map> did mount', this.passedMap, !this.passedMap.getTargetElement())
+    this.map = !this.passedMap ? createMap({ isSyncableMap: isMultiMap, target: this.target }) : passedMap
+
     if (this.passedMap && !this.passedMap.getTargetElement()) {
       ugh.warn('A `map` prop has been passed to `<Map>` but the openlayers map has not been mounted to the DOM!')
     }

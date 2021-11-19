@@ -61,6 +61,10 @@ class MultiMapManager extends React.Component {
 
   getContextValue = () => {
     const { contextProps } = this.props
+    console.log('contextValue',  {
+      ...contextState,
+      ...contextProps
+    })
 
     return {
       ...contextState,
@@ -68,38 +72,40 @@ class MultiMapManager extends React.Component {
     }
   }
 
-  render () {
-    const childModifier = rawChildren => {
-      const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
+  childModifier = rawChildren => {
+    const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
-      return children.map((child, i) => {
-        if (child.props.isMultiMap) {
-          // we caught a map
-          const propOverride = config => this.addToContext(config, child.props.addMapToContext)
-          const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
-          const propsOverride = {
-            ...child.props,
-            addMapToContext: propOverride,
-            onMapInit: onMapInitOverride,
-            _ol_kit_context_id: child.props.id,
-            map: null,
-            key: i
-          }
-          const adoptedChild = React.cloneElement(child, propsOverride)
-
-          return adoptedChild
-        } else if (Array.isArray(child)) {
-          // child is an array of children
-          return childModifier(child)
-        } else if (child?.props?.children) {
-          // loop through children of children
-          return React.cloneElement(child, { ...child.props }, [childModifier(child.props.children)])
-        } else {
-          return child
+    return children.map((child, i) => {
+      if (child.props.isMultiMap) {
+        // we caught a map
+        const addToContextOverride = config => this.addToContext(config, child.props.addMapToContext)
+        const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
+        const propsOverride = {
+          ...child.props,
+          addMapToContext: addToContextOverride,
+          onMapInit: onMapInitOverride,
+          _ol_kit_context_id: child.props.id,
+          isMultiMap: true,
+          key: i,
+          map: null // important so <Map> creates a SyncableMap
         }
-      })
-    }
-    const adoptedChildren = childModifier(this.props.children)
+        const adoptedChild = React.cloneElement(child, propsOverride)
+
+        return adoptedChild
+      } else if (Array.isArray(child)) {
+        // child is an array of children
+        return this.childModifier(child)
+      } else if (child?.props?.children) {
+        // loop through children of children
+        return React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
+      } else {
+        return child
+      }
+    })
+  }
+
+  render () {
+    const adoptedChildren = this.childModifier(this.props.children)
 
     return (
       <MultiMapContext.Provider value={this.getContextValue()}>

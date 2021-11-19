@@ -14,6 +14,7 @@ import { extend, createEmpty } from 'ol/extent'
 import qs from 'qs'
 
 import ugh from 'ugh'
+import { SyncableMap } from 'classes'
 
 const OLKIT_ZOOMBOX_ID = '_ol-kit-css-zoombox-style'
 const DEFAULT_SELECT_NAME = '_ol_kit_default_select'
@@ -60,6 +61,7 @@ export function replaceZoomBoxCSS (dragStyle) {
  * @category Map
  * @since 0.1.0
  * @param {Object} [opts] - Object of optional params
+ * @param {String} [opts.isSyncableMap] - flag to return a SyncableMap class for multi-map implementations
  * @param {String} [opts.target] - html id tag that map will into which the map will render
  * @returns {ol.Map} A newly constructed [ol.Map]{@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html}
  */
@@ -67,8 +69,9 @@ export function createMap (opts = {}) {
   if (!opts.target) return ugh.throw('You must pass an options object with a DOM target for the map')
   if (typeof opts.target !== 'string' && opts.target instanceof Element !== true) return ugh.throw('The target should either by a string id of an existing DOM element or the element itself')
 
+  const MapClass = opts.isSyncableMap ? SyncableMap : Map
   // create a new map instance
-  const map = new Map({
+  const map = new MapClass({
     view: new View({
       center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
       zoom: 5
