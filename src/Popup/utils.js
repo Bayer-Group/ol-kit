@@ -212,7 +212,7 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
       const pixelValue = getPixelValue(layer, event)
       const pixelFeatures = !!pixelValue ? [pixelValue] : []
      
-      resolve({ features: pixelFeatures, layer })
+      return { features: pixelFeatures, layer }
     }
   }).filter(Boolean)
 
