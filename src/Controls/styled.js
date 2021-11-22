@@ -62,6 +62,7 @@ export const ControlsContainer = styled.div`
   flex-direction: ${props => props.orientation === 'vertical' ? 'column' : 'row'};
   align-items: center;
   justify-content: center;
+  ${props => props.style};
 `
 
 export const ControlGroupContainer = styled.div`
