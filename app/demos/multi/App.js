@@ -20,10 +20,10 @@ import olSourceVector from 'ol/source/Vector'
 
 class App extends React.Component {
   mapKeys = [
-    'map0',
-    'map1',
-    'map2',
-    'map3',
+    'map00',
+    'map01',
+    'map02',
+    'map03',
     // 'map4',
     // 'map5',
     // 'map6',
@@ -56,9 +56,7 @@ class App extends React.Component {
   render () {
     return (
       <MultiMapManager>
-        <TabbedPanel tabIcon='Split Screen'>
-          <SplitScreen />
-        </TabbedPanel>
+        <SplitScreen />
         <FullScreenFlex>
           {this.mapKeys.map((key, i, array) => {
             return (

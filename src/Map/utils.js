@@ -83,8 +83,8 @@ export function createMap (opts = {}) {
         source: new OSM()
       })
     ],
-    target: opts.target,
-    controls: []
+    controls: [],
+    ...opts
   })
 
   return map

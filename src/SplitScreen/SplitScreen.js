@@ -26,10 +26,10 @@ class SplitScreen extends Component {
   handleMapChange = (mapCount, force = true) => {
     const { maps, forceUpdate } = this.props
 
-    refreshMapSizeCSS(mapCount, this.sliderNode?.getBoundingClientRect?.())
+    // refreshMapSizeCSS(mapCount, this.sliderNode?.getBoundingClientRect?.())
     this.updateMapSize(maps)
 
-    if (force) forceUpdate()
+    // if (force) forceUpdate()
   }
 
   handleResize = () => {
@@ -241,6 +241,7 @@ class SplitScreen extends Component {
 }
 
 SplitScreen.defaultProps = {
+  forceUpdate: () => {},
   onMapAdded: () => {},
   onMapRemoved: () => {},
   toggleSyncMap: () => {},

@@ -49,7 +49,7 @@ export default class SafeParent extends React.Component {
     const contextKey = explicitProps._ol_kit_context_id || parentContextKey
     const relativeProviderProps = !!contextKey ? providerProps[contextKey] : providerProps
     const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
-    console.log('SafeParent providerProps', providerProps)
+    // console.log('SafeParent providerProps', providerProps)
 
     if (Component.propTypes) {
       // filter out any props from context that do not need to get passed to this wrapped component
