@@ -5,8 +5,6 @@ import { syncViewEvents } from './utils'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
-const contextState = {}
-const multiMaps = []
 
 /**
  * A higher order component that manages MultiMapContext for connectToContext wrapped children
@@ -20,8 +18,10 @@ class MultiMapManager extends React.Component {
 
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
     this.state = {
-      mapContext: {},
-      mapInitialized: false
+      maps: [],
+      syncedState: [],
+      visibleState: [],
+      visibleMapCount: []
     }
 
     // create context when <MultiMapManager> is included in component tree
@@ -31,43 +31,52 @@ class MultiMapManager extends React.Component {
   addToContext = (config, addToContextProp = () => {}) => {
     const mapId = config.map.getTargetElement().id
 
-    contextState[mapId] = { ...config }
+    const newState = { ...this.state, [mapId]: { ...config }}
 
     // call original prop
     addToContextProp(config)
-    this.forceUpdate()
+    this.setState({ ...newState })
   }
 
   onMapInitOverride = (map, onMapInitProp = () => {}) => {
-    const mapId = map?.getTargetElement()?.id
+    const mapId = map.getTargetElement().id
+    const maps = [...this.state.maps, map]
 
-    multiMaps.push(mapId)
+    this.setState({ maps })
+    console.log('onMapINit', maps)
 
     // call original prop
     onMapInitProp(map)
     // TODO maps are initializing more than once
 
-    if (multiMaps.length === Object.keys(contextState).length) {
-      const { groups } = this.props
+    // if (maps.length === Object.keys(contextState).length) {
+    //   const { groups } = this.props
 
-      groups.forEach(groupIds => {
-        // sync events by map groups
-        const groupedViews = groupIds.map(id => contextState[id].map.getView())
+    //   groups.forEach(groupIds => {
+    //     // sync events by map groups
+    //     const groupedViews = groupIds.map(id => contextState[id].map.getView())
 
-        syncViewEvents(groupedViews)
-      })
-    }
+    //     syncViewEvents(groupedViews)
+    //   })
+    // }
   }
 
   getContextValue = () => {
     const { contextProps } = this.props
+    const { maps } = this.state
     console.log('contextValue',  {
-      ...contextState,
+      ...this.state,
+      syncedState: maps.map(m => m.getSyncedState()),
+      visibleState: maps.map(m => m.getVisibleState()),
+      visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
       ...contextProps
     })
 
     return {
-      ...contextState,
+      ...this.state,
+      syncedState: maps.map(m => m.getSyncedState()),
+      visibleState: maps.map(m => m.getVisibleState()),
+      visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
       ...contextProps
     }
   }
@@ -117,6 +126,7 @@ class MultiMapManager extends React.Component {
 
 MultiMapManager.defaultProps = {
   contextProps: {},
+  groups: [],
   translations: en
 }
 

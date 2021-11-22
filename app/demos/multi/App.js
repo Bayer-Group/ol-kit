@@ -10,7 +10,8 @@ import {
   VectorLayer,
   FlexMap,
   FullScreenFlex,
-  SplitScreen
+  SplitScreen,
+  TabbedPanel
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
@@ -23,10 +24,10 @@ class App extends React.Component {
     'map1',
     'map2',
     'map3',
-    'map4',
-    'map5',
-    'map6',
-    'map7',
+    // 'map4',
+    // 'map5',
+    // 'map6',
+    // 'map7',
   ]
 
   onMapInit = async (map) => {
@@ -54,8 +55,10 @@ class App extends React.Component {
 
   render () {
     return (
-      <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
-        {/* <SplitScreen /> */}
+      <MultiMapManager>
+        <TabbedPanel tabIcon='Split Screen'>
+          <SplitScreen />
+        </TabbedPanel>
         <FullScreenFlex>
           {this.mapKeys.map((key, i, array) => {
             return (
@@ -64,7 +67,7 @@ class App extends React.Component {
                 index={i}
                 total={array.length}
                 numberOfRows={2}
-                numberOfColumns={4}>
+                numberOfColumns={2}>
                 <Map id={key} onMapInit={this.onMapInit} isMultiMap>
                   <Popup />
                   <ContextMenu />

@@ -4,7 +4,7 @@ import { PrimaryButton, LockIcon } from './styled'
 
 /**
  * @component
- * @category vmc
+ * @category SplitScreen
  */
 class MapDisplayElement extends Component {
   render () {

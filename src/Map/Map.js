@@ -58,7 +58,9 @@ class Map extends React.Component {
     } = this.props
 
     // if no map was passed, create the map
-    this.map = !this.passedMap ? createMap({ isSyncableMap: isMultiMap, target: this.target }) : passedMap
+    this.map = !this.passedMap
+      ? createMap({ isSyncableMap: isMultiMap, synced: true, target: this.target, visible: true })
+      : passedMap
 
     if (this.passedMap && !this.passedMap.getTargetElement()) {
       ugh.warn('A `map` prop has been passed to `<Map>` but the openlayers map has not been mounted to the DOM!')

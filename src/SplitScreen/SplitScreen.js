@@ -53,14 +53,14 @@ class SplitScreen extends Component {
     // when the window is resized, update the maps
     window.addEventListener('resize', this.handleResize)
 
-    const { right } = maps[0]?.getTargetElement()?.getBoundingClientRect()
+    // const { right } = maps[0]?.getTargetElement()?.getBoundingClientRect()
 
-    if (right === window.innerWidth && !startPosition) {
-      this.setState({ startPosition: window.innerWidth / 2 })
-      forceUpdate()
-    } else {
-      this.setState({ startPosition: right })
-    }
+    // if (right === window.innerWidth && !startPosition) {
+    //   this.setState({ startPosition: window.innerWidth / 2 })
+    //   forceUpdate()
+    // } else {
+    //   this.setState({ startPosition: right })
+    // }
   }
 
   componentWillUnmount () {
@@ -261,16 +261,6 @@ SplitScreen.propTypes = {
   toggleSyncMap: PropTypes.func,
   syncedState: PropTypes.array,
   visibleState: PropTypes.array
-}
-
-function transformProps ({ maps, translations }) {
-  return {
-    maps,
-    translations,
-    syncedState: maps.map(m => m.getSyncedState()),
-    visibleState: maps.map(m => m.getVisibleState()),
-    visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length
-  }
 }
 
 export default connectToContext(SplitScreen)
