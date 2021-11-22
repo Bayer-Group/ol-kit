@@ -30,8 +30,12 @@ class MultiMapManager extends React.Component {
 
   addToContext = (config, addToContextProp = () => {}) => {
     const mapId = config.map.getTargetElement().id
-
-    const newState = { ...this.state, [mapId]: { ...config }}
+    const mapConfig = {
+      ...config,
+      synced: config.map.getSyncedState(),
+      visible: config.map.getVisibleState()
+    }
+    const newState = { ...this.state, [mapId]: mapConfig}
 
     // call original prop
     addToContextProp(config)
@@ -43,7 +47,6 @@ class MultiMapManager extends React.Component {
     const maps = [...this.state.maps, map]
 
     this.setState({ maps })
-    console.log('onMapINit', maps)
 
     // call original prop
     onMapInitProp(map)
@@ -61,6 +64,18 @@ class MultiMapManager extends React.Component {
     // }
   }
 
+  onMapAdded = index => {
+    // const maps = [...this.state.maps].splice(index, 1)
+
+    // this.setState({ maps })
+  }
+
+  onMapRemoved = index => {
+    const maps = [...this.state.maps].splice(index, 1)
+
+    this.setState({ maps })
+  }
+
   getContextValue = () => {
     const { contextProps } = this.props
     const { maps } = this.state
@@ -74,6 +89,8 @@ class MultiMapManager extends React.Component {
 
     return {
       ...this.state,
+      onMapAdded: this.onMapAdded,
+      onMapRemoved: this.onMapRemoved,
       syncedState: maps.map(m => m.getSyncedState()),
       visibleState: maps.map(m => m.getVisibleState()),
       visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,

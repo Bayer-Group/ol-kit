@@ -6,8 +6,6 @@ export default class SyncableMap extends olMap {
 
     this.synced = opts.synced || false
     this.visible = opts.visible || false
-
-    console.log('constructor', opts)
   }
 
   // methods handling map syncing

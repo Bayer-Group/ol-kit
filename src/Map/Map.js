@@ -50,16 +50,18 @@ class Map extends React.Component {
       isMultiMap,
       map: passedMap,
       onMapInit,
+      synced,
       translations,
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
-      urlViewParam
+      urlViewParam,
+      visible
     } = this.props
 
     // if no map was passed, create the map
     this.map = !this.passedMap
-      ? createMap({ isSyncableMap: isMultiMap, synced: true, target: this.target, visible: true })
+      ? createMap({ isSyncableMap: isMultiMap, synced, target: this.target, visible })
       : passedMap
 
     if (this.passedMap && !this.passedMap.getTargetElement()) {
@@ -155,7 +157,7 @@ class Map extends React.Component {
   }
 
   render () {
-    const { children, fullScreen, logoPosition, style, translations } = this.props
+    const { children, fullScreen, logoPosition, style, translations, visible } = this.props
     const { mapInitialized } = this.state
 
     return (
@@ -164,6 +166,7 @@ class Map extends React.Component {
           <StyledMap
             id={this.target}
             fullScreen={fullScreen}
+            show={visible}
             style={style}>
             <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
@@ -190,8 +193,10 @@ Map.defaultProps = {
   updateViewFromUrl: true,
   urlViewParam: 'view',
   style: {},
+  synced: true,
   dragZoomboxStyle: { backgroundColor: 'rgb(0, 50, 50, 0.5)' },
-  translations: en
+  translations: en,
+  visible: true,
 }
 
 Map.propTypes = {
@@ -230,10 +235,14 @@ Map.propTypes = {
   selectInteraction: PropTypes.object,
   /** apply inline styles to the map container */
   style: PropTypes.object,
+  /** (only used with isMultiMap) sets initial synced state for a SyncableMap */
+  synced: PropTypes.bool,
   /** apply styles to the OL shift-zoom box */
   dragZoomboxStyle: PropTypes.object,
   /** object of string key/values (see: locales) */
-  translations: PropTypes.object
+  translations: PropTypes.object,
+  /** (only used with isMultiMap) sets initial visibility state for a SyncableMap */
+  visible: PropTypes.bool
 }
 
 export default connectToContext(Map)

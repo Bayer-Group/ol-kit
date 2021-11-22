@@ -34,6 +34,9 @@ export default class SafeParent extends React.Component {
       }
 
       this.setState({ parentContextKey, parentLookupAttempted: true })
+    } else if (current && Component.name === 'Map') {
+      console.log('SafeParent Map', Component.props, this.props.explicitProps)
+      this.setState({ parentLookupAttempted: true })
     } else {
       this.setState({ parentLookupAttempted: true })
     }
