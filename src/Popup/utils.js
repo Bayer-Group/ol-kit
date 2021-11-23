@@ -30,7 +30,7 @@ export const getPixelValue = (layer, event) => {
   if (layer.isGeoserverLayer) renderedLayer = layer.getWMSLayer()
 
   const renderContext = renderedLayer?.getRenderer()?.context
-  
+
   if (!renderContext) return null
 
   const pixelImageData = renderContext.getImageData(pixel[0], pixel[1], 1, 1)
@@ -138,14 +138,7 @@ const wmsSelector = (layer, event) => {
     const rawFeatures = await layer.fetchFeaturesAtClick(coords, map)
     const { features } = await setParentLayer({ features: rawFeatures, layer })
 
-    if (features.length) {
-      resolve({ features, layer })
-    } else {
-      const pixelValue = getPixelValue(layer, event)
-      const pixelFeatures = !!pixelValue ? [pixelValue] : []
-     
-      resolve({ features: pixelFeatures, layer })
-    }
+    resolve({ features, layer })
   })
 }
 
@@ -207,12 +200,6 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     } else if (layer.isGeoserverLayer) {
       // handle geoserver layers
       return wmsSelector(layer, event)
-    } else if (!layer.getProperties()._ol_kit_basemap) {
-      // get the pixel value for any other non-basemap layers
-      const pixelValue = getPixelValue(layer, event)
-      const pixelFeatures = !!pixelValue ? [pixelValue] : []
-     
-      return { features: pixelFeatures, layer }
     }
   }).filter(Boolean)
 
