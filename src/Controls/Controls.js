@@ -43,7 +43,8 @@ function Controls (props) {
 
 Controls.defaultProps = {
   position: 'bottom-right',
-  orientation: 'horizontal'
+  orientation: 'horizontal',
+  style: {}
 }
 
 Controls.propTypes = {

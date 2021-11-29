@@ -59,10 +59,10 @@ export const ControlsContainer = styled.div`
   margin: 0 6px 18px 6px;
   border-radius: 15px;
   display: flex;
-  flex-direction: ${props => props.orientation === 'vertical' ? 'column' : 'row'};
+  flex-direction: ${p => p.orientation === 'vertical' ? 'column' : 'row'};
   align-items: center;
   justify-content: center;
-  ${props => props.style};
+  ${p => p.style};
 `
 
 export const ControlGroupContainer = styled.div`
