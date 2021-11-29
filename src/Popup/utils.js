@@ -29,7 +29,10 @@ export const getPixelValue = (layer, event) => {
 
   if (layer.isGeoserverLayer) renderedLayer = layer.getWMSLayer()
 
-  const renderContext = renderedLayer.getRenderer().context
+  const renderContext = renderedLayer?.getRenderer()?.context
+
+  if (!renderContext) return null
+
   const pixelImageData = renderContext.getImageData(pixel[0], pixel[1], 1, 1)
   const [red, green, blue, alpha] = pixelImageData.data
 
@@ -127,22 +130,6 @@ const wfsSelector = (layer, event, opts) => {
   if (features.length) return setParentLayer({ features, layer })
 }
 
-const wmsSelector = (layer, event) => {
-  const { pixel, map } = event
-  const coords = map.getCoordinateFromPixel(pixel)
-
-  return new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
-    const rawFeatures = await layer.fetchFeaturesAtClick(coords, map)
-    const { features } = await setParentLayer({ features: rawFeatures, layer })
-
-    if (features.length) {
-      resolve({ features, layer })
-    } else {
-      resolve({ features: [getPixelValue(layer, event)], layer })
-    }
-  })
-}
-
 const vectorTileSelector = (layer, event, opts) => {
   const { map, pixel } = event
   // check for featuresAtPixel to account for hitTolerance
@@ -198,14 +185,27 @@ export const getLayersAndFeaturesForEvent = (event, opts = {}) => {
     } else if (layer.isVectorLayer || layer instanceof olLayerVector || !layer.getLayerState().managed) { // layer.getLayerState().managed is an undocumented ol prop that lets us ignore select's vector layer
       // handle non vector tile wfs layers
       return wfsSelector(layer, event, opts)
-    } else if (layer.isGeoserverLayer) {
-      // handle geoserver layers
-      return wmsSelector(layer, event)
-    } else if (!layer.getProperties()._ol_kit_basemap) {
-      // get the pixel value for any other non-basemap layers
-      return { features: [getPixelValue(layer, event)] }
     }
   }).filter(Boolean)
+
+  const wmsSelector = layer => {
+    if (layer.get('_ol_kit_parent')?.isGeoserverLayer) {
+      // this logic handles clicks on GeoserverLayers
+      const geoserverLayer = layer.get('_ol_kit_parent')
+      const coords = map.getCoordinateFromPixel(pixel)
+      const wmsPromise = new Promise(async resolve => { // eslint-disable-line no-async-promise-executor
+        const rawFeatures = await geoserverLayer.fetchFeaturesAtClick(coords, map)
+        const { features } = await setParentLayer({ features: rawFeatures, layer })
+
+        resolve({ features, layer })
+      })
+
+      promises.push(wmsPromise)
+    }
+  }
+
+  // We have to look for ImageLayers with a parent GeoserverLayer this way, as the ImageLayer doesn't show up in map.getLayers()
+  map.forEachLayerAtPixel(pixel, wmsSelector)
 
   return promises
 }
