@@ -64,7 +64,7 @@ export default App
 ## Documentation
 The documentation for the project is available in the `/docs` directory and the hosted version is available at [ol-kit.com](https://ol-kit.com/docs).
 
-If you are ol-kit project maintainer and needs to generate updated docs then run 
+If you are ol-kit project maintainer and need to generate updated docs then run 
 ``` 
 npm install better-docs --no-save
 npm run docs
