@@ -184,11 +184,12 @@ class SplitScreen extends Component {
     const disabled = false
 
     this.handleMapChange(visibleMapCount, false)
+    console.log('SplitScreen props', this.props)
 
     return (
       <Container>
         {disabled
-          ? <div className='alert alert-warning' role='alert'>{translations['geokit.SplitScreen.disabled']}</div>
+          ? <div className='alert alert-warning' role='alert'>{translations['_ol_kit.SplitScreen.disabled']}</div>
           : null
         }
         <MapDisplayContainer disabled={disabled}>
@@ -216,7 +217,7 @@ class SplitScreen extends Component {
             ref={node => (this.sliderNode = node)}
           />}
         <ControlStylesContainer>
-          <Tooltip title={translations['geokit.SplitScreen.addMap']} placement='right' disabled={false}>
+          <Tooltip title={translations['_ol_kit.SplitScreen.addMap']} placement='right' disabled={false}>
             <div>
               <MapControlButton
                 onClick={this.addMap}
@@ -225,7 +226,7 @@ class SplitScreen extends Component {
               </MapControlButton>
             </div>
           </Tooltip>
-          <Tooltip title={translations['geokit.SplitScreen.removeMap']} placement='right' disabled={!disabled}>
+          <Tooltip title={translations['_ol_kit.SplitScreen.removeMap']} placement='right' disabled={!disabled}>
             <div>
               <MapControlButton
                 onClick={this.removeMap}
@@ -244,12 +245,7 @@ SplitScreen.defaultProps = {
   forceUpdate: () => {},
   onMapAdded: () => {},
   onMapRemoved: () => {},
-  toggleSyncMap: () => {},
-  translations: {
-    'geokit.SplitScreen.disabled': 'Disabled',
-    'geokit.SplitScreen.addMap': 'Add Map',
-    'geokit.SplitScreen.removeMap': 'Remove Map'
-  }
+  toggleSyncMap: () => {}
 }
 
 SplitScreen.propTypes = {

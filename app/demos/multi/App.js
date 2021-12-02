@@ -8,11 +8,8 @@ import {
   MultiMapManager,
   BasemapContainer,
   VectorLayer,
-  FlexMap,
   FullScreenFlex,
   SplitScreen,
-  TabbedPanel,
-  TabbedPanelPage
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'

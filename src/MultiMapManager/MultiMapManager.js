@@ -21,21 +21,31 @@ class MultiMapManager extends React.Component {
       maps: [],
       syncedState: [],
       visibleState: [],
-      visibleMapCount: []
+      visibleMapCount: 0
     }
 
     // create context when <MultiMapManager> is included in component tree
     MultiMapContext = React.createContext()
   }
 
+  syncableMapListener = e => {
+    const { synced, type, visible } = e
+
+    console.log('syncableMapListener', type)
+    this.forceUpdate()
+  }
+
   addToContext = (config, addToContextProp = () => {}) => {
-    const mapId = config.map.getTargetElement().id
+    const { map } = config
+    const mapId = map.getTargetElement().id
     const mapConfig = {
       ...config,
-      synced: config.map.getSyncedState(),
-      visible: config.map.getVisibleState()
+      synced: map.getSyncedState(),
+      visible: map.getVisibleState()
     }
     const newState = { ...this.state, [mapId]: mapConfig}
+
+    map.on(['synced', 'visible'], this.syncableMapListener)
 
     // call original prop
     addToContextProp(config)
@@ -64,20 +74,8 @@ class MultiMapManager extends React.Component {
     // }
   }
 
-  onMapAdded = index => {
-    // const maps = [...this.state.maps].splice(index, 1)
-
-    // this.setState({ maps })
-  }
-
-  onMapRemoved = index => {
-    const maps = [...this.state.maps].splice(index, 1)
-
-    this.setState({ maps })
-  }
-
   getContextValue = () => {
-    const { contextProps } = this.props
+    const { contextProps, translations } = this.props
     const { maps } = this.state
     console.log('contextValue',  {
       ...this.state,
@@ -92,6 +90,7 @@ class MultiMapManager extends React.Component {
       onMapAdded: this.onMapAdded,
       onMapRemoved: this.onMapRemoved,
       syncedState: maps.map(m => m.getSyncedState()),
+      translations,
       visibleState: maps.map(m => m.getVisibleState()),
       visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
       ...contextProps

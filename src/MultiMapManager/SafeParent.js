@@ -29,13 +29,13 @@ export default class SafeParent extends React.Component {
       const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`)) // search the dom, starting at the placeholder ref created in the initial render and moving up; searching first for the map div itself and then siblings of the map div to handle how the map component currently handles children.
 
       if (!parentContextKey) {
-        console.log('bad comp', Component, providerProps)
-        ugh.warn(`Could not find parent <Map> for component: "${Component.name}" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
+        // TODO only fire this for an ol-kit component
+        ugh.warn(`Could not find parent <Map> for component: "<${Component.name}>" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
       }
 
       this.setState({ parentContextKey, parentLookupAttempted: true })
     } else if (current && Component.name === 'Map') {
-      console.log('SafeParent Map', Component.props, this.props.explicitProps)
+      // console.log('SafeParent Map', Component.props, this.props.explicitProps)
       this.setState({ parentLookupAttempted: true })
     } else {
       this.setState({ parentLookupAttempted: true })
@@ -50,7 +50,7 @@ export default class SafeParent extends React.Component {
     const { Component, defaultProps, explicitProps, providerProps } = this.props
     const { parentContextKey, parentLookupAttempted } = this.state
     const contextKey = explicitProps._ol_kit_context_id || parentContextKey
-    const relativeProviderProps = !!contextKey ? providerProps[contextKey] : providerProps
+    const relativeProviderProps = !!contextKey ? providerProps[contextKey] : providerProps // without a key, pass all props in context
     const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
     // console.log('SafeParent providerProps', providerProps)
 
