@@ -29,7 +29,7 @@ export default class SafeParent extends React.Component {
       const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`)) // search the dom, starting at the placeholder ref created in the initial render and moving up; searching first for the map div itself and then siblings of the map div to handle how the map component currently handles children.
 
       if (!parentContextKey) {
-        // TODO only fire this for an ol-kit component
+        // TODO only fire this warn for an ol-kit component
         ugh.warn(`Could not find parent <Map> for component: "<${Component.name}>" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
       }
 

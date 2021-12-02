@@ -8,6 +8,7 @@ import {
   MultiMapManager,
   BasemapContainer,
   VectorLayer,
+  LayerPanel,
   FullScreenFlex,
   SplitScreen,
 } from '@bayer/ol-kit'
@@ -15,6 +16,7 @@ import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
+import { Layer } from 'recharts'
 
 class App extends React.Component {
   mapConfigs = [
@@ -75,6 +77,7 @@ class App extends React.Component {
                 <ContextMenu />
                 <Controls />
                 <BasemapContainer />
+                <LayerPanel />
               </Map>
             )
           })}
