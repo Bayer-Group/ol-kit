@@ -5,14 +5,14 @@ import { FlexMapStyled } from './styled'
 
 class FlexMap extends React.Component {
   render () {
-    const { index, maps, numberOfColumns, numberOfRows, total: totalProp, visibleState } = this.props
+    const { children, index, maps, numberOfColumns, numberOfRows, total: totalProp, visibleState } = this.props
     const columns = numberOfColumns || visibleState.filter(_=>_).length
     const rows = numberOfRows || visibleState.filter(_=>_).length
     const total = totalProp || maps.length
   
     console.log('FlexMap render')
   
-    return <FlexMapStyled columns={columns} index={index} rows={rows} total={total} />
+    return <FlexMapStyled columns={columns} index={index} rows={rows} total={total}>{children}</FlexMapStyled>
   }
 }
 
