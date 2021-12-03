@@ -29,9 +29,6 @@ class MultiMapManager extends React.Component {
   }
 
   syncableMapListener = e => {
-    const { synced, type, visible } = e
-
-    console.log('syncableMapListener', type)
     this.forceUpdate()
   }
 

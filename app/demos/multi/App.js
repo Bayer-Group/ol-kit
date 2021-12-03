@@ -74,10 +74,7 @@ class App extends React.Component {
             return (
               <FlexMap
                 key={id}
-                index={i}
-                total={this.mapConfigs.length}
-                numberOfRows={1}
-                numberOfColumns={2}>
+                index={i}>
                 <Map id={id} onMapInit={this.onMapInit} synced={synced} visible={visible} isMultiMap>
                   <Popup />
                   <ContextMenu />
