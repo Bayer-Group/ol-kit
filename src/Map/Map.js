@@ -166,7 +166,6 @@ class Map extends React.Component {
           <StyledMap
             id={this.target}
             fullScreen={fullScreen}
-            show={visible}
             style={style}>
             <MapLogo logoPosition={logoPosition} translations={translations} />
           </StyledMap>
