@@ -10,13 +10,13 @@ import {
   VectorLayer,
   LayerPanel,
   FullScreenFlex,
+  FlexMap,
   SplitScreen,
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
-import { Layer } from 'recharts'
 
 class App extends React.Component {
   mapConfigs = [
@@ -70,15 +70,21 @@ class App extends React.Component {
           <SplitScreen />
         </div>
         <FullScreenFlex>
-          {this.mapConfigs.map(({ id, synced, visible }, i, array) => {
+          {this.mapConfigs.map(({ id, synced, visible }, i) => {
             return (
-              <Map id={id} onMapInit={this.onMapInit} synced={synced} visible={visible} isMultiMap>
-                <Popup />
-                <ContextMenu />
-                <Controls />
-                <BasemapContainer />
-                <LayerPanel />
-              </Map>
+              <FlexMap
+                key={id}
+                index={i}
+                total={this.mapConfigs.length}
+                numberOfRows={1}
+                numberOfColumns={2}>
+                <Map id={id} onMapInit={this.onMapInit} synced={synced} visible={visible} isMultiMap>
+                  <Popup />
+                  <ContextMenu />
+                  <Controls />
+                  <BasemapContainer />
+                </Map>
+              </FlexMap>
             )
           })}
         </FullScreenFlex>
