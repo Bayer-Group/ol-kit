@@ -578,6 +578,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
             style="position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;"
           />
         </div>,
+        "emulateClicks_": false,
         "eventTarget_": [Circular],
         "listeners_": Object {
           "click": Array [
@@ -711,7 +712,6 @@ exports[`<Controls /> should shallow controls default position 1`] = `
       "previousExtent_": null,
       "renderer_": CompositeMapRenderer {
         "children_": Array [],
-        "declutterTree_": null,
         "disposed": false,
         "element_": <div
           class="ol-unselectable ol-layers"
@@ -888,6 +888,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "minZoom_": 0,
           "ol_uid": "15",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -957,6 +958,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "minZoom_": 0,
           "ol_uid": "15",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -1027,6 +1029,7 @@ exports[`<Controls /> should shallow controls default position 1`] = `
           "minZoom_": 0,
           "ol_uid": "15",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -1670,6 +1673,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
             style="position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;"
           />
         </div>,
+        "emulateClicks_": false,
         "eventTarget_": [Circular],
         "listeners_": Object {
           "click": Array [
@@ -1803,7 +1807,6 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
       "previousExtent_": null,
       "renderer_": CompositeMapRenderer {
         "children_": Array [],
-        "declutterTree_": null,
         "disposed": false,
         "element_": <div
           class="ol-unselectable ol-layers"
@@ -1983,6 +1986,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "minZoom_": 0,
           "ol_uid": "63",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -2052,6 +2056,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "minZoom_": 0,
           "ol_uid": "63",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -2122,6 +2127,7 @@ exports[`<Controls /> should shallow controls in bottom left 1`] = `
           "minZoom_": 0,
           "ol_uid": "63",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -2765,6 +2771,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
             style="position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;"
           />
         </div>,
+        "emulateClicks_": false,
         "eventTarget_": [Circular],
         "listeners_": Object {
           "click": Array [
@@ -2898,7 +2905,6 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
       "previousExtent_": null,
       "renderer_": CompositeMapRenderer {
         "children_": Array [],
-        "declutterTree_": null,
         "disposed": false,
         "element_": <div
           class="ol-unselectable ol-layers"
@@ -3076,6 +3082,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "minZoom_": 0,
           "ol_uid": "31",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -3145,6 +3152,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "minZoom_": 0,
           "ol_uid": "31",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -3215,6 +3223,7 @@ exports[`<Controls /> should shallow controls in top left 1`] = `
           "minZoom_": 0,
           "ol_uid": "31",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -3858,6 +3867,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
             style="position: absolute; z-index: 0; width: 100%; height: 100%; pointer-events: none;"
           />
         </div>,
+        "emulateClicks_": false,
         "eventTarget_": [Circular],
         "listeners_": Object {
           "click": Array [
@@ -3991,7 +4001,6 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
       "previousExtent_": null,
       "renderer_": CompositeMapRenderer {
         "children_": Array [],
-        "declutterTree_": null,
         "disposed": false,
         "element_": <div
           class="ol-unselectable ol-layers"
@@ -4170,6 +4179,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "minZoom_": 0,
           "ol_uid": "47",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -4239,6 +4249,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "minZoom_": 0,
           "ol_uid": "47",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",
@@ -4309,6 +4320,7 @@ exports[`<Controls /> should shallow controls in top right 1`] = `
           "minZoom_": 0,
           "ol_uid": "47",
           "options_": Object {},
+          "padding": undefined,
           "pendingRemovals_": null,
           "projection_": EPSG3857Projection {
             "axisOrientation_": "enu",

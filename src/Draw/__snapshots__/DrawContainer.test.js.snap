@@ -18,29 +18,16 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
         [33mclass[39m=[32m\\"sc-gtssRu fBppYk\\"[39m
         [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
         [33mtarget[39m=[32m\\"_blank\\"[39m
-        [33mtitle[39m=[32m\\"Powered by ol-kit v1.18.0\\"[39m
+        [33mtitle[39m=[32m\\"Powered by ol-kit v1.18.1\\"[39m
       [36m>[39m
         [36m<svg[39m
           [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
           [33mxmlns[39m=[32m\\"http://www.w3.org/2000/svg\\"[39m
         [36m>[39m
-          [36m<defs>[39m
-            [36m<style>[39m
-              [0m.cls-1[0m
-              [0m{[0m
-              [0mfill:#231f20[0m
-              [0m}[0m
-            [36m</style>[39m
-          [36m</defs>[39m
-          [36m<g[39m
-            [33mid[39m=[32m\\"Layer_2\\"[39m
-          [36m>[39m
-            [36m<path[39m
-              [33mclass[39m=[32m\\"cls-1\\"[39m
-              [33md[39m=[32m\\"M102.38 0L0 59.11v118.22l102.38 59.11 102.38-59.11V59.11zM106 15.64l87 50.26v102L80.49 104.09zM18 62.27l74.66-43.1-33.95 118L18 62.27zM43.8 189l-32-18.51V75.37l42.35 77.86zm10.49 6.06l7.82-27.17 25.12 46.19zm50.38 26.44l-37.93-69.67 10.4-36.13 106.4 60.3z\\"[39m
-              [33mid[39m=[32m\\"logo_examples\\"[39m
-            [36m/>[39m
-          [36m</g>[39m
+          [36m<path[39m
+            [33md[39m=[32m\\"M102.38 0 0 59.11v118.22l102.38 59.11 102.38-59.11V59.11ZM106 15.64l87 50.26v102L80.49 104.09ZM18 62.27l74.66-43.1-33.95 118L18 62.27ZM43.8 189l-32-18.51V75.37l42.35 77.86Zm10.49 6.06 7.82-27.17 25.12 46.19Zm50.38 26.44-37.93-69.67 10.4-36.13 106.4 60.3Z\\"[39m
+            [33mstyle[39m=[32m\\"fill: #231f20;\\"[39m
+          [36m/>[39m
         [36m</svg>[39m
       [36m</a>[39m
     [36m</div>[39m
@@ -164,5 +151,10 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
               [36m</span>[39m
             [36m</div>[39m
             [36m<div[39m
-              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiI..."
+              [33mclass[39m=[32m\\"MuiInputBase-root MuiInput-root MuiInput-underline\\"[39m
+              [33mdata-testid[39m=[32m\\"geokit-MeasureLabelPreference-uomOptions\\"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-haspopup[39m=[32m\\"listbox\\"[39m
+                [33mclass[39m=[32m\\"MuiSelect-root WithStyles(ForwardRef(Select))-root-42 WithStyles(ForwardRef(Select))-root-43 MuiSelect-select MuiSelect-selectMenu MuiI..."
 `;

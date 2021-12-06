@@ -1,4 +1,4 @@
-const vorpal = require('vorpal')()
+const vorpal = require('@seneca/vorpal')()
 
 const chalk = require('chalk')
 const cliInput = require('./cliInput')
