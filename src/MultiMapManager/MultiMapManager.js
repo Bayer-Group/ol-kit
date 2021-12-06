@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
-import { syncViewEvents } from './utils'
+import View from 'ol/View'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
@@ -19,6 +19,7 @@ class MultiMapManager extends React.Component {
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
     this.state = {
       maps: [],
+      syncView: null,
       syncedState: [],
       visibleState: [],
       visibleMapCount: 0
@@ -28,25 +29,53 @@ class MultiMapManager extends React.Component {
     MultiMapContext = React.createContext()
   }
 
-  syncableMapListener = e => {
+  syncableMapListener = (map, e) => {
+    const { synced, type } = e
+
+    if (type === 'synced' && !synced) {
+      // reset view of newly desynced map
+      map.setView(new View({
+        center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
+        zoom: 5
+      }))
+    } else {
+      this.setSyncedView(map)
+    }
     this.forceUpdate()
+  }
+
+  setSyncedView = map => {
+    const { syncedView } = this.state
+
+    if (!syncedView) {
+      // this is the first map, set the view in state
+      this.setState({ syncedView: map.getView() })
+    } else {
+      map.setView(syncedView)
+    }
   }
 
   addToContext = (config, addToContextProp = () => {}) => {
     const { map } = config
     const mapId = map.getTargetElement().id
+    const synced = map.getSyncedState()
+    const visible = map.getVisibleState()
     const mapConfig = {
       ...config,
-      synced: map.getSyncedState(),
-      visible: map.getVisibleState()
+      synced,
+      visible
     }
     const newState = { ...this.state, [mapId]: mapConfig}
-
-    map.on(['synced', 'visible'], this.syncableMapListener)
 
     // call original prop
     addToContextProp(config)
     this.setState({ ...newState })
+
+    // attach listener
+    const listener = e => this.syncableMapListener(map, e)
+
+    map.on(['synced', 'visible'], listener)
+    if (synced) this.setSyncedView(map)
   }
 
   onMapInitOverride = (map, onMapInitProp = () => {}) => {
@@ -74,13 +103,6 @@ class MultiMapManager extends React.Component {
   getContextValue = () => {
     const { contextProps, translations } = this.props
     const { maps } = this.state
-    console.log('contextValue',  {
-      ...this.state,
-      syncedState: maps.map(m => m.getSyncedState()),
-      visibleState: maps.map(m => m.getVisibleState()),
-      visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
-      ...contextProps
-    })
 
     return {
       ...this.state,

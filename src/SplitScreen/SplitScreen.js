@@ -144,14 +144,14 @@ class SplitScreen extends Component {
 
     mapToAdd.getLayers().setAt(0, prevMapLayer)
 
-    mapToAdd.getView().setCenter(prevMap.getView().getCenter())
-    mapToAdd.getView().setZoom(prevMap.getView().getZoom())
+    // mapToAdd.getView().setCenter(prevMap.getView().getCenter())
+    // mapToAdd.getView().setZoom(prevMap.getView().getZoom())
 
-    // first de-sync everything (this prevents double binding sync events)
-    maps.map(m => this.desyncMapEvents(m.getView()))
+    // // first de-sync everything (this prevents double binding sync events)
+    // maps.map(m => this.desyncMapEvents(m.getView()))
 
-    // now get the syncable maps and then sync them
-    maps.filter(m => m.getSyncedState()).map(m => this.syncMapEvents(m.getView()))
+    // // now get the syncable maps and then sync them
+    // maps.filter(m => m.getSyncedState()).map(m => this.syncMapEvents(m.getView()))
 
     // update UI & alert component parent of change
     this.handleMapChange(visibleMapCount + 1)
@@ -167,14 +167,14 @@ class SplitScreen extends Component {
     // set the map sync state to the inverse
     maps[i].setSyncedState(!currentSyncState)
 
-    // first de-sync everything (this prevents double binding sync events)
-    maps.map(m => this.desyncMapEvents(m.getView()))
+    // // first de-sync everything (this prevents double binding sync events)
+    // maps.map(m => this.desyncMapEvents(m.getView()))
 
-    // now get the syncable maps and then sync them
-    maps.filter(m => m.getSyncedState()).map(m => this.syncMapEvents(m.getView()))
+    // // now get the syncable maps and then sync them
+    // maps.filter(m => m.getSyncedState()).map(m => this.syncMapEvents(m.getView()))
 
-    // update UI & alert component parent of change
-    this.props.forceUpdate()
+    // // update UI & alert component parent of change
+    // this.props.forceUpdate()
     toggleSyncMap()
   }
 
@@ -184,7 +184,6 @@ class SplitScreen extends Component {
     const disabled = false
 
     this.handleMapChange(visibleMapCount, false)
-    console.log('SplitScreen props', this.props)
 
     return (
       <Container>
