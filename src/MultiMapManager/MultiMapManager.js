@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
-import View from 'ol/View'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
@@ -34,10 +33,9 @@ class MultiMapManager extends React.Component {
 
     if (type === 'synced' && !synced) {
       // reset view of newly desynced map
-      map.setView(new View({
-        center: [-10686671.119494, 4721671.569715], // centered over US in EPSG:3857
-        zoom: 5
-      }))
+      const view = this.state[map.getTargetElement().id].view
+
+      map.setView(view)
     } else {
       this.setSyncedView(map)
     }
@@ -63,9 +61,10 @@ class MultiMapManager extends React.Component {
     const mapConfig = {
       ...config,
       synced,
-      visible
+      visible,
+      view: map.getView()
     }
-    const newState = { ...this.state, [mapId]: mapConfig}
+    const newState = { ...this.state, [mapId]: mapConfig }
 
     // call original prop
     addToContextProp(config)

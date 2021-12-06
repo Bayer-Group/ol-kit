@@ -6,7 +6,7 @@ import { FlexMapStyled } from './styled'
 function FlexMap (props) {
   const { children, index, maps, numberOfColumns, numberOfRows, total, visibleState } = props
   const totalMaps = total || maps.length
-  const visibleMapCount = visibleState.filter(_=>_).length
+  const visibleMapCount = visibleState.filter(_ => _).length
   // TODO also check for index against total to see if its on a row with 1 or 2 collumns
   const columns = numberOfColumns ||
     (visibleMapCount === 1 || visibleMapCount === 3) && (index !== 0) ? 1 : 2

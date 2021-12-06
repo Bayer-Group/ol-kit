@@ -27,7 +27,7 @@ export function connectToContext (Component) {
     }
 
     // multimap context will take precedence over the provider context
-    return !!MultiMapContext
+    return MultiMapContext
       ? (
         <MultiMapContext.Consumer>
           {

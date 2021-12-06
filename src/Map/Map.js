@@ -196,7 +196,7 @@ Map.defaultProps = {
   style: {},
   synced: true,
   translations: en,
-  visible: true,
+  visible: true
 }
 
 Map.propTypes = {
