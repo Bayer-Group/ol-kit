@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { syncViewEvents } from './utils'
+import { ErrorBoundary } from 'ErrorBoundary'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
@@ -102,9 +103,11 @@ class MultiMapManager extends React.Component {
     const adoptedChildren = childModifier(this.props.children)
 
     return (
-      <MultiMapContext.Provider value={this.getContextValue()}>
-        {adoptedChildren}
-      </MultiMapContext.Provider>
+      <ErrorBoundary floating={true}>
+        <MultiMapContext.Provider value={this.getContextValue()}>
+          {adoptedChildren}
+        </MultiMapContext.Provider>
+      </ErrorBoundary>
     )
   }
 }

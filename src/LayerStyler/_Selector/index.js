@@ -102,7 +102,7 @@ class Selector extends Component {
     }
 
     return (
-      <Container style={styles} {...this.props}>
+      <Container style={styles} selected={selected} disabled={disabled}>
         <Group>
           <TextInput
             autoFocus={false /* autoFocus would open the menu on mount which blocks some of the ui */}
