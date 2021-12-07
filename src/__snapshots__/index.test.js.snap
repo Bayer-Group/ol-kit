@@ -27,14 +27,15 @@ Object {
   "DrawPin": [Function],
   "DrawPoint": [Function],
   "DrawPolygon": [Function],
+  "ErrorBoundary": [Function],
   "FeatureEditor": [Function],
   "FlexMap": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": -633946211,
+      "baseHash": 1611134500,
       "baseStyle": undefined,
-      "componentId": "sc-jSFkmK",
+      "componentId": "sc-jrsJCI",
       "isStatic": false,
       "rules": Array [
         "
@@ -60,7 +61,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-jSFkmK",
+    "styledComponentId": "sc-jrsJCI",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -70,9 +71,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 488360518,
+      "baseHash": 398197481,
       "baseStyle": undefined,
-      "componentId": "sc-gKAblj",
+      "componentId": "sc-kEqYlL",
       "isStatic": false,
       "rules": Array [
         "
@@ -94,7 +95,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-gKAblj",
+    "styledComponentId": "sc-kEqYlL",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -130,9 +131,9 @@ Object {
       [Function],
     ],
     "componentStyle": e {
-      "baseHash": 1335391198,
+      "baseHash": 1040098478,
       "baseStyle": undefined,
-      "componentId": "sc-fujyUd",
+      "componentId": "sc-crzoUp",
       "isStatic": false,
       "rules": Array [
         "
@@ -148,7 +149,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-fujyUd",
+    "styledComponentId": "sc-crzoUp",
     "target": "a",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -158,9 +159,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": -396000879,
+      "baseHash": -1976809178,
       "baseStyle": undefined,
-      "componentId": "sc-iCoHVE",
+      "componentId": "sc-iqAbSa",
       "isStatic": false,
       "rules": Array [
         "
@@ -181,7 +182,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-iCoHVE",
+    "styledComponentId": "sc-iqAbSa",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -191,9 +192,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 1268401350,
+      "baseHash": 1495093269,
       "baseStyle": undefined,
-      "componentId": "sc-pNWxx",
+      "componentId": "sc-dIsAE",
       "isStatic": false,
       "rules": Array [
         "
@@ -209,7 +210,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-pNWxx",
+    "styledComponentId": "sc-dIsAE",
     "target": "p",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -246,9 +247,9 @@ Object {
       [Function],
     ],
     "componentStyle": e {
-      "baseHash": 1611134500,
+      "baseHash": -1760493615,
       "baseStyle": undefined,
-      "componentId": "sc-jrsJCI",
+      "componentId": "sc-bqGHjH",
       "isStatic": false,
       "rules": Array [
         "
@@ -272,7 +273,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-jrsJCI",
+    "styledComponentId": "sc-bqGHjH",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],

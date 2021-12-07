@@ -2,7 +2,7 @@ import React from 'react'
 import ugh from 'ugh'
 import { ProviderContext } from 'Provider'
 import { MultiMapContext, SafeParent } from 'MultiMapManager'
-
+import { ErrorBoundary } from 'ErrorBoundary'
 let contextConflictWarning = false
 
 /**
@@ -27,52 +27,59 @@ export function connectToContext (Component) {
     }
 
     // multimap context will take precedence over the provider context
-    return MultiMapContext
-      ? (
-        <MultiMapContext.Consumer>
-          {
-            (providerProps = {}) => {
-              return (
-                <SafeParent
-                  defaultProps={defaultProps}
-                  explicitProps={explicitProps}
-                  providerProps={providerProps}
-                  Component={Component} />
-              )
-            }
-          }
-        </MultiMapContext.Consumer>
-      ) : (
-        <ProviderContext.Consumer>
-          {
-            (providerProps = {}) => {
-              // if propTypes is not defined on the component just pass all providerProps
-              const filteredProviderProps = { ...providerProps }
-              const { propTypes } = Component
+    return (
+      <ErrorBoundary>
+        {
+          MultiMapContext
+            ? (
+              <MultiMapContext.Consumer>
+                {
+                  (providerProps = {}) => {
+                    return (
+                      <SafeParent
+                        defaultProps={defaultProps}
+                        explicitProps={explicitProps}
+                        providerProps={providerProps}
+                        Component={Component} />
+                    )
+                  }
+                }
+              </MultiMapContext.Consumer>
+            ) : (
+              <ProviderContext.Consumer>
+                {
+                  (providerProps = {}) => {
+                    // if propTypes is not defined on the component just pass all providerProps
+                    const filteredProviderProps = { ...providerProps }
+                    const { propTypes } = Component
 
-              if (propTypes) {
-                // filter out any props that do not need to get passed to this wrapped component
-                Object.keys(providerProps).forEach(key => {
-                  if (!propTypes[key]) delete filteredProviderProps[key]
-                })
-              }
+                    if (propTypes) {
+                      // filter out any props that do not need to get passed to this wrapped component
+                      Object.keys(providerProps).forEach(key => {
+                        if (!propTypes[key]) delete filteredProviderProps[key]
+                      })
+                    }
 
-              // // persistedState logic
-              // const { persistedState, persistState } = providerProps
-              // // set the key to look up component's persisted state
-              // const persistedStateKey = props.persistedStateKey || Component.displayName || Component.name // eslint-disable-line react/prop-types
+                    // // persistedState logic
+                    // const { persistedState, persistState } = providerProps
+                    // // set the key to look up component's persisted state
+                    // const persistedStateKey = props.persistedStateKey || Component.displayName || Component.name // eslint-disable-line react/prop-types
 
-              return (
-                <Component
-                  // persistedState={persistedState[persistedStateKey]} // note: persistedState is undefined if persistedStateKey key doesn't exist yet (components should check for this)
-                  // persistState={persistState}
-                  {...defaultProps}
-                  {...filteredProviderProps}
-                  {...explicitProps} />
-              )
-            }
-          }
-        </ProviderContext.Consumer>
-      )
+                    return (
+                      <Component
+                        // persistedState={persistedState[persistedStateKey]} // note: persistedState is undefined if persistedStateKey key doesn't exist yet (components should check for this)
+                        // persistState={persistState}
+                        {...defaultProps}
+                        {...filteredProviderProps}
+                        {...explicitProps} />
+                    )
+                  }
+                }
+              </ProviderContext.Consumer>
+            )
+
+        }
+      </ErrorBoundary>
+    )
   }
 }
