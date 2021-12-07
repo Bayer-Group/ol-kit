@@ -22,7 +22,6 @@
       "email": "chrisreams91@gmail.com",
       "url": "https://github.com/chrisreams91"
     },
-
     {
       "name": "Gabriel Schuetzner",
       "email": "gabriel.schuetzner@bayer.com",
@@ -92,7 +91,7 @@
   },
   "repository": {
     "type": "git",
-    "url":"git@github.com:Bayer-Group/ol-kit.git"
+    "url": "git@github.com:Bayer-Group/ol-kit.git"
   },
   "dependencies": {
     "@date-io/moment": "~1.3.13",
