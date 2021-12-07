@@ -17,7 +17,7 @@ describe('ErrorBoundary', () => {
     expect(getByText('Something went wrong!')).toBeInTheDocument()
   })
 
-  xit('displays mappy on MultiMap render errors', async () => {
+  it.skip('displays mappy on MultiMap render errors', async () => {
     const mapKeys = [
       'map0',
       'map1',

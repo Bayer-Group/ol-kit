@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import ugh from 'ugh'
+import { ErrorBoundary } from 'ErrorBoundary'
 
 // context is only created when <Provider> is implemented (see constructor)
 export let ProviderContext = null
@@ -68,9 +69,11 @@ class Provider extends React.Component {
 
   render () {
     return (
-      <ProviderContext.Provider value={this.getContextValue()}>
-        {this.props.children}
-      </ProviderContext.Provider>
+      <ErrorBoundary floating={true}>
+        <ProviderContext.Provider value={this.getContextValue()}>
+          {this.props.children}
+        </ProviderContext.Provider>
+      </ErrorBoundary>
     )
   }
 }
