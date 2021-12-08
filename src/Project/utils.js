@@ -6,8 +6,8 @@ import { loadBasemapLayer } from 'Basemaps'
 import { transform } from 'ol/proj'
 import { centerAndZoom } from 'Map'
 import ugh from 'ugh'
-import { version } from '../../package.json'
-
+import packageJson from '../../package.json'
+const { version } = packageJson
 const readOpts = { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857' }
 
 /**

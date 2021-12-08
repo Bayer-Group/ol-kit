@@ -253,18 +253,6 @@ export function pairCoordinates (flatCoords, groupSize = 2) {
   return pairedCoords
 }
 
-export function convertXYtoLatLong (map, x, y) {
-  const coords = map.getCoordinateFromPixel([x, y])
-  const transformed = olProj.transform(coords, map.getView().getProjection().getCode(), 'EPSG:4326')
-  const longitude = Number((Number(transformed[0] || 0) % 180).toFixed(6))
-  const latitude = Number((transformed[1] || 0).toFixed(6))
-
-  return {
-    longitude,
-    latitude
-  }
-}
-
 export function createNewBoxGeom (map, geometry, height, width) {
   const coords = geometry.getCoordinates()
   const topLeft = map.getPixelFromCoordinate(coords)

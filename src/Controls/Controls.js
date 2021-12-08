@@ -19,11 +19,11 @@ import { connectToContext } from 'Provider'
  * @since 0.1.0
  */
 function Controls (props) {
-  const { children, map, position, orientation } = props
+  const { children, map, position, orientation, style } = props
 
   return (
     ReactDOM.createPortal(
-      <ControlsContainer position={position} orientation={orientation}>
+      <ControlsContainer position={position} orientation={orientation} style={style}>
         {children || (
           <>
             <ScaleLine map={map} orientation={orientation}/>
@@ -43,7 +43,8 @@ function Controls (props) {
 
 Controls.defaultProps = {
   position: 'bottom-right',
-  orientation: 'horizontal'
+  orientation: 'horizontal',
+  style: {}
 }
 
 Controls.propTypes = {
@@ -57,7 +58,9 @@ Controls.propTypes = {
   /** render controls in a position relative to the map  */
   position: PropTypes.oneOf(['bottom-right', 'bottom-left', 'top-right', 'top-left']),
   /** render controls in a position relative to the map  */
-  orientation: PropTypes.oneOf(['vertical', 'horizontal'])
+  orientation: PropTypes.oneOf(['vertical', 'horizontal']),
+  /** apply inline styles to the Map Controls container */
+  style: PropTypes.object
 }
 
 export default connectToContext(Controls)

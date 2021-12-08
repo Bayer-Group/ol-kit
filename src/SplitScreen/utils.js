@@ -104,18 +104,6 @@ export function pairCoords (flatCoords) {
   return pairedCoords
 }
 
-export function convertXYtoLatLong (map, x, y) {
-  const coords = map.getCoordinateFromPixel([x, y])
-  const transformed = olProj.transform(coords, map.getView().getProjection().getCode(), 'EPSG:4326')
-  const longitude = Number((Number(transformed[0] || 0) % 180).toFixed(6))
-  const latitude = Number((transformed[1] || 0).toFixed(6))
-
-  return {
-    longitude,
-    latitude
-  }
-}
-
 export function refreshMapSizeCSS (mapCount, sliderPosition) {
   const map0 = document.getElementById('map0') || {} // these empty objects solve a 'cannot set style of null' error
   const map1 = document.getElementById('map1') || {}
