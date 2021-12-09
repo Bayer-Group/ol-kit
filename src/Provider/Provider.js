@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import ugh from 'ugh'
-import ErrorBoundary from 'ErrorBoundary'
+import { ErrorBoundary } from 'ErrorBoundary'
 
 // context is only created when <Provider> is implemented (see constructor)
 export let ProviderContext = null

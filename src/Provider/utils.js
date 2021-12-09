@@ -2,7 +2,7 @@ import React from 'react'
 import ugh from 'ugh'
 import { ProviderContext } from 'Provider'
 import { MultiMapContext, SafeParent } from 'MultiMapManager'
-import ErrorBoundary from 'ErrorBoundary'
+import { ErrorBoundary } from 'ErrorBoundary'
 let contextConflictWarning = false
 
 /**
