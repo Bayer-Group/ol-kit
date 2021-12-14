@@ -26,7 +26,7 @@ export default class SafeParent extends React.Component {
     const { current } = this.ref
 
     if (current && Component.name !== 'Map') {
-      const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`)) // search the dom, starting at the placeholder ref created in the initial render and moving up; searching first for the map div itself and then siblings of the map div to handle how the map component currently handles children.
+      const parentContextKey = keys.find(key => current.closest(`#${key}`) || current.closest(`#${key} ~ *`)) // search the dom, starting at the placeholder ref created in the initial render and moving up; searching first for the map div itself and then siblings of the map div to handle how the <Map> component currently handles children.
 
       if (!parentContextKey) {
         // TODO only fire this warn for an ol-kit component
@@ -35,7 +35,6 @@ export default class SafeParent extends React.Component {
 
       this.setState({ parentContextKey, parentLookupAttempted: true })
     } else if (current && Component.name === 'Map') {
-      // console.log('SafeParent Map', Component.props, this.props.explicitProps)
       this.setState({ parentLookupAttempted: true })
     } else {
       this.setState({ parentLookupAttempted: true })
@@ -51,8 +50,7 @@ export default class SafeParent extends React.Component {
     const { parentContextKey, parentLookupAttempted } = this.state
     const contextKey = explicitProps._ol_kit_context_id || parentContextKey
     const relativeProviderProps = contextKey ? providerProps[contextKey] : providerProps // without a key, pass all props in context
-    const filteredProviderProps = { ...relativeProviderProps, ref: this.ref }
-    // console.log('SafeParent providerProps', providerProps)
+    const filteredProviderProps = { ...relativeProviderProps }
 
     if (Component.propTypes) {
       // filter out any props from context that do not need to get passed to this wrapped component

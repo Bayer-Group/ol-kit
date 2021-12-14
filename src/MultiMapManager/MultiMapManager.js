@@ -108,10 +108,8 @@ class MultiMapManager extends React.Component {
     // }
     if (maps.length === 4) {
       this.props.onMapsInit(maps)
-      this.setState({ intialized: true })
-      console.log('after onMapsInit')
+      setTimeout(() => this.setState({ intialized: true }), 5000)
       await Promise.all(this.promises)
-      console.log('after Promise.all')
     }
   }
 
@@ -119,7 +117,17 @@ class MultiMapManager extends React.Component {
     const { contextProps, translations } = this.props
     const { maps } = this.state
     const map = maps[0]
-    console.log('getContextValue', map)
+    // console.log('getContextValue', {
+    //   ...this.state,
+    //   map,
+    //   onMapAdded: this.onMapAdded,
+    //   onMapRemoved: this.onMapRemoved,
+    //   syncedState: maps.map(m => m.getSyncedState()),
+    //   translations,
+    //   visibleState: maps.map(m => m.getVisibleState()),
+    //   visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
+    //   ...contextProps
+    // })
 
     return {
       ...this.state,
@@ -160,7 +168,11 @@ class MultiMapManager extends React.Component {
         return this.childModifier(child)
       } else if (child?.props?.children) {
         // loop through children of children
-        return React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
+        // only render Map, FlexMap & FullScreenFlex until initialized
+        const checkKey = key => key === 'full_screen_flex' || key === 'map0' || key === 'map1' || key === 'map2' || key === 'map3'
+        const allow = intialized || checkKey(child.key)
+
+        return allow && React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
       } else {
         // this allows the Maps to render and initialize first before all other comps
         return intialized ? child : null
