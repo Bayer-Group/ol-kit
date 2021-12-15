@@ -1,12 +1,10 @@
 # Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
 version: 0.2
 
-# Default CI build
-
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 12
 
   build:
     commands:
@@ -16,9 +14,8 @@ phases:
       - echo Running build
       - npm run app:build
 
-  upload:
+  post_build:
     commands:
       - echo uploading to S3
       - aws s3 sync ./build s3://ol-kit
-  
   
