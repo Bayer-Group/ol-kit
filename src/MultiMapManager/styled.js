@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const FlexMapStyled = styled.div`
-  display: flex;
+  display: ${p => p.hidden ? 'none' : 'flex'};
   width: ${p => {
     const adjustedColumns = p.columns - (p.total % 2)
     const breakPoint = p.index < adjustedColumns
@@ -9,7 +9,7 @@ export const FlexMapStyled = styled.div`
 
     return needsAdjustment ? `${100 / adjustedColumns}%` : `${100 / p.columns}%`
   }};
-  height: ${p => `${100 / p.rows}%`};
+  height: ${p => `${100 / p.numOfRows}%`};
   flex-grow: ${p => !p.index && (p.total % 2) ? '2' : '1'};
   flex-shrink: ${p => !p.index && (p.total % 2) ? '1' : '2'};
   position: relative;

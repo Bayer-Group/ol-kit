@@ -36,6 +36,5 @@ export const StyledMap = styled.div.attrs(props => ({
   bottom: 0;
   left: 0;
   right: 0;
-  display: ${p => p.show ? 'block' : 'none'};
   ${p => p.style};
 `

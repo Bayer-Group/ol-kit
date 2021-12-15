@@ -6,17 +6,19 @@ import { FlexMapStyled } from './styled'
 function FlexMap (props) {
   const { children, index, maps, numberOfColumns, numberOfRows, total, visibleState } = props
   const totalMaps = total || maps.length
-  const visibleMapCount = visibleState.filter(_ => _).length
+  const visibleMapCount = visibleState.filter(_=>_).length
   // TODO also check for index against total to see if its on a row with 1 or 2 columns
-  const columns = numberOfColumns ||
-    (visibleMapCount === 1 || visibleMapCount === 3) && (index !== 0) ? 1 : 2
+  const columns = numberOfColumns || (visibleMapCount % 2 === 1) ? 1 : 2
   const rows = numberOfRows || (visibleMapCount > 2) ? 2 : 1
+
+  console.log('FlexMap index:', index, 'maps:', maps.length, 'columns:', columns, 'rows:', rows)
 
   return (
     <FlexMapStyled
       columns={columns}
+      hidden={!visibleState[index]}
       index={index}
-      rows={rows}
+      numOfRows={rows}
       total={totalMaps}>
       {children}
     </FlexMapStyled>

@@ -30,7 +30,7 @@ export default class SafeParent extends React.Component {
 
       if (!parentContextKey) {
         // TODO only fire this warn for an ol-kit component
-        ugh.warn(`Could not find parent <Map> for component: "<${Component.name}>" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
+        // ugh.warn(`Could not find parent <Map> for component: "<${Component.name}>" during context lookup (tip: make sure portals render as children of their map.getTarget() parent)`) // eslint-disable-line max-len
       }
 
       this.setState({ parentContextKey, parentLookupAttempted: true })

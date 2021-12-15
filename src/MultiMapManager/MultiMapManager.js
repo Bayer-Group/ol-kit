@@ -20,16 +20,26 @@ class MultiMapManager extends React.Component {
     this.state = {
       intialized: false,
       maps: [],
-      syncView: null,
       syncedState: [],
       visibleState: [],
       visibleMapCount: 0
     }
 
+    this.syncedView = null
+
     this.promises = []
 
     // create context when <MultiMapManager> is included in component tree
     MultiMapContext = React.createContext()
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.refreshMaps)
+  }
+
+  refreshMaps = () => {
+    this.state.maps.map(map => map.updateSize())
+    this.forceUpdate()
   }
 
   syncableMapListener = (map, e) => {
@@ -43,17 +53,16 @@ class MultiMapManager extends React.Component {
     } else {
       this.setSyncedView(map)
     }
-    this.forceUpdate()
+
+    this.refreshMaps()
   }
 
   setSyncedView = map => {
-    const { syncedView } = this.state
-
-    if (!syncedView) {
+    if (!this.syncedView) {
       // this is the first map, set the view in state
-      this.setState({ syncedView: map.getView() })
+      this.syncedView = map.getView()
     } else {
-      map.setView(syncedView)
+      map.setView(this.syncedView)
     }
   }
 
@@ -94,21 +103,13 @@ class MultiMapManager extends React.Component {
     })
 
     this.promises.push(promise)
-    // TODO maps are initializing more than once
 
-    // if (maps.length === Object.keys(contextState).length) {
-    //   const { groups } = this.props
-
-    //   groups.forEach(groupIds => {
-    //     // sync events by map groups
-    //     const groupedViews = groupIds.map(id => contextState[id].map.getView())
-
-    //     syncViewEvents(groupedViews)
-    //   })
-    // }
     if (maps.length === 4) {
       this.props.onMapsInit(maps)
-      setTimeout(() => this.setState({ intialized: true }), 5000)
+      setTimeout(() => {
+        this.refreshMaps()
+        this.setState({ intialized: true })
+      }, 3000)
       await Promise.all(this.promises)
     }
   }
@@ -117,17 +118,6 @@ class MultiMapManager extends React.Component {
     const { contextProps, translations } = this.props
     const { maps } = this.state
     const map = maps[0]
-    // console.log('getContextValue', {
-    //   ...this.state,
-    //   map,
-    //   onMapAdded: this.onMapAdded,
-    //   onMapRemoved: this.onMapRemoved,
-    //   syncedState: maps.map(m => m.getSyncedState()),
-    //   translations,
-    //   visibleState: maps.map(m => m.getVisibleState()),
-    //   visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
-    //   ...contextProps
-    // })
 
     return {
       ...this.state,
