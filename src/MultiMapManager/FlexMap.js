@@ -7,10 +7,8 @@ function FlexMap (props) {
   const { children, index, maps, numberOfColumns, numberOfRows, total, visibleState } = props
   const totalMaps = total || maps.length
   const visibleMapCount = visibleState.filter(_=>_).length
-  // TODO also check for index against total to see if its on a row with 1 or 2 columns
   let columns = numberOfColumns || (visibleMapCount % 2 === 1) ? 1 : 2
   let rows = numberOfRows || (visibleMapCount > 2) ? 2 : 1
-
   // 3 maps
   if (visibleMapCount === 3) {
     columns = index === 0 ? 1 : 2

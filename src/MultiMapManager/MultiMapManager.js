@@ -2,9 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { ErrorBoundary } from 'ErrorBoundary'
+import { FullScreenFlex } from './styled'
+import FlexMap from './FlexMap'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
+
+// only render FlexMap & FullScreenFlex until initialized
+const isValidType = component => component.type === FlexMap || component.type === FullScreenFlex
 
 /**
  * A higher order component that manages MultiMapContext for connectToContext wrapped children
@@ -26,7 +31,6 @@ class MultiMapManager extends React.Component {
     }
 
     this.syncedView = null
-
     this.promisesResolvers = []
 
     // create context when <MultiMapManager> is included in component tree
@@ -89,15 +93,9 @@ class MultiMapManager extends React.Component {
 
     map.on(['synced', 'visible'], listener)
     if (synced) this.setSyncedView(map)
-
-    return new Promise(resolve => {
-      console.log('tineout', this.state)
-      setTimeout(resolve, 0)
-    })
   }
 
   onMapInitOverride = async (map, onMapInitProp = () => {}) => {
-    const mapId = map.getTargetElement().id
     const maps = [...this.state.maps, map]
 
     this.setState({ maps })
@@ -108,8 +106,8 @@ class MultiMapManager extends React.Component {
       this.promisesResolvers.push(resolve)
     })
 
-    // TODO check this length against config obj length
-    if (maps.length === 4) this.intialize()
+    // check for that last time this is called & initialize
+    if (maps.length === this.props.mapsConfig.length) this.intialize()
 
     return promise
   }
@@ -144,6 +142,7 @@ class MultiMapManager extends React.Component {
 
   childModifier = rawChildren => {
     const { intialized } = this.state
+    const whiteListedKeys = this.props.mapsConfig.map(({ id }) => id)
     const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
     return children.map((child, i) => {
@@ -168,11 +167,8 @@ class MultiMapManager extends React.Component {
         return this.childModifier(child)
       } else if (child?.props?.children) {
         // loop through children of children
-        // only render Map, FlexMap & FullScreenFlex until initialized
-        const checkKey = key => key === 'full_screen_flex' || key === 'map0' || key === 'map1' || key === 'map2' || key === 'map3'
-        const allow = intialized || checkKey(child.key)
-
-        // if (checkKey(child.key)) console.log(child)
+        // only render FlexMap & FullScreenFlex until initialized
+        const allow = intialized || isValidType(child)
 
         return allow && React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
       } else {
@@ -212,6 +208,8 @@ MultiMapManager.propTypes = {
   contextProps: PropTypes.object,
   /** Nested arrays of ids grouped together to syncronize events across multiple maps */
   groups: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
+  /** Array of map config objects */
+  mapsConfig: PropTypes.array.isRequired,
   /** callback called with array of map objects after all multimaps have been created */
   onMapsInit: PropTypes.func,
   /** Object with key/value pairs for component translation strings */
