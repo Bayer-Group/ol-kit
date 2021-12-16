@@ -27,7 +27,7 @@ class MultiMapManager extends React.Component {
 
     this.syncedView = null
 
-    this.promises = []
+    this.promisesResolvers = []
 
     // create context when <MultiMapManager> is included in component tree
     MultiMapContext = React.createContext()
@@ -38,8 +38,9 @@ class MultiMapManager extends React.Component {
   }
 
   refreshMaps = () => {
-    this.state.maps.map(map => map.updateSize())
     this.forceUpdate()
+    // this refresh needs to fire after the component updates the map views
+    setTimeout(() => this.state.maps.map(map => map.updateSize()), 200)
   }
 
   syncableMapListener = (map, e) => {
@@ -88,6 +89,11 @@ class MultiMapManager extends React.Component {
 
     map.on(['synced', 'visible'], listener)
     if (synced) this.setSyncedView(map)
+
+    return new Promise(resolve => {
+      console.log('tineout', this.state)
+      setTimeout(resolve, 0)
+    })
   }
 
   onMapInitOverride = async (map, onMapInitProp = () => {}) => {
@@ -99,19 +105,23 @@ class MultiMapManager extends React.Component {
     const promise = new Promise((resolve) => {
       // call original prop
       onMapInitProp(map)
-      resolve()
+      this.promisesResolvers.push(resolve)
     })
 
-    this.promises.push(promise)
+    // TODO check this length against config obj length
+    if (maps.length === 4) this.intialize()
 
-    if (maps.length === 4) {
-      this.props.onMapsInit(maps)
-      setTimeout(() => {
-        this.refreshMaps()
-        this.setState({ intialized: true })
-      }, 3000)
-      await Promise.all(this.promises)
-    }
+    return promise
+  }
+
+  intialize = async () => {
+    const { maps } = this.state
+
+    const { contextProps } = await this.props.onMapsInit(maps)
+    // resolve all onMapInit promises now
+    this.promisesResolvers.map(resolve => resolve())
+    this.refreshMaps()
+    this.setState({ intialized: true, ...contextProps })
   }
 
   getContextValue = () => {
@@ -161,6 +171,8 @@ class MultiMapManager extends React.Component {
         // only render Map, FlexMap & FullScreenFlex until initialized
         const checkKey = key => key === 'full_screen_flex' || key === 'map0' || key === 'map1' || key === 'map2' || key === 'map3'
         const allow = intialized || checkKey(child.key)
+
+        // if (checkKey(child.key)) console.log(child)
 
         return allow && React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
       } else {

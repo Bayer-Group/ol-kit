@@ -83,9 +83,10 @@ class Map extends React.Component {
       ...contextProps
     }
     const onMapReady = map => {
-      const allSystemsGo = () => {
-        addMapToContext(mapConfig)
+      const allSystemsGo = async () => {
+        await addMapToContext(mapConfig)
         this.setState({ mapInitialized: true })
+        console.log('allSystemsGo', map.getTargetElement().id)
       }
       // pass map back via callback prop
       const initCallback = onMapInit(map)
