@@ -10,7 +10,7 @@ class Toolbar extends React.Component {
 
     return ReactDOM.createPortal(
       <Container>
-        <Grid container justify='center' alignItems='center'>
+        <Grid container justifyContent='center' alignItems='center'>
           {children}
         </Grid>
       </Container>,
