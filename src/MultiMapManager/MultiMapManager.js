@@ -9,7 +9,7 @@ import FlexMap from './FlexMap'
 export let MultiMapContext = null
 
 // only render FlexMap & FullScreenFlex until initialized
-const isValidType = component => component.type === FlexMap || component.type === FullScreenFlex
+const isPreInitComponent = component => component.type === FlexMap || component.type === FullScreenFlex
 
 /**
  * A higher order component that manages MultiMapContext for connectToContext wrapped children
@@ -117,6 +117,7 @@ class MultiMapManager extends React.Component {
 
     const { contextProps } = await this.props.onMapsInit(maps)
     // resolve all onMapInit promises now
+
     this.promisesResolvers.map(resolve => resolve())
     this.refreshMaps()
     this.setState({ intialized: true, ...contextProps })
@@ -142,7 +143,7 @@ class MultiMapManager extends React.Component {
 
   childModifier = rawChildren => {
     const { intialized } = this.state
-    const whiteListedKeys = this.props.mapsConfig.map(({ id }) => id)
+    const mapIds = this.props.mapsConfig.map(({ id }) => id)
     const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
 
     return children.map((child, i) => {
@@ -168,7 +169,7 @@ class MultiMapManager extends React.Component {
       } else if (child?.props?.children) {
         // loop through children of children
         // only render FlexMap & FullScreenFlex until initialized
-        const allow = intialized || isValidType(child)
+        const allow = intialized || isPreInitComponent(child) || mapIds.includes(child.id)
 
         return allow && React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
       } else {
