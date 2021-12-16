@@ -8,7 +8,7 @@ import {
   LayerStyler, // HeatmapControls lives in here
   LayerPanelLayersPage,
   TabbedPanelPage,
-  BasemapContainer,
+  BasemapContainer
 } from '@bayer/ol-kit'
 import HeatmapLayer from 'ol/layer/Heatmap'
 import olFeature from 'ol/Feature'
@@ -22,7 +22,7 @@ class App extends React.Component {
     const features = DATA.features.map(feature => {
       const formattedFeature = new olFeature({
         ...feature.properties,
-        geometry: new olGeomPoint(feature.geometry.coordinates),
+        geometry: new olGeomPoint(feature.geometry.coordinates)
       })
 
       return formattedFeature
@@ -30,7 +30,7 @@ class App extends React.Component {
 
     // set defaults that will be read by HeatmapControls component
     const blur = 30
-    const radius = 2 
+    const radius = 2
 
     // create a heatmap layer and add to the map
     const layer = new HeatmapLayer({
@@ -48,7 +48,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit} fullScreen>
+      <Map onMapInit={this.onMapInit} fullScreen updateViewFromUrl={false}>
         <Popup />
         <TabbedPanel>
           <TabbedPanelPage label='Styles'>

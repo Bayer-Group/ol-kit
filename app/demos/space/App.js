@@ -27,20 +27,20 @@ const client = new ApolloClient({
 function App (props) {
   const onMapInit = async (map) => {
     window.map = map
-    
+
     // Here we are fetching a KML layer and adding this layer to the map. This data maps out NASA's geopolitical boundries (countries)
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
-    
+
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
     dataLayer.set('title', 'NASA Geopolitcal Boundaries')
-    //setting to false by default, to view the layer the user must go to the layer panel and make it visible
+    // setting to false by default, to view the layer the user must go to the layer panel and make it visible
     dataLayer.set('visible', false)
   }
 
   return (
     <ApolloProvider client={client}>
-      <Map onMapInit={onMapInit} fullScreen>
-        
+      <Map onMapInit={onMapInit} fullScreen updateViewFromUrl={false}>
+
         <TimeSlider />
         <Popup />
         <SpaceX />

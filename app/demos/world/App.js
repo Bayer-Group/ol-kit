@@ -14,6 +14,7 @@ import {
   DrawContainer,
   FeatureEditor
 } from '@bayer/ol-kit'
+
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
@@ -54,7 +55,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit} fullScreen>
+      <Map onMapInit={this.onMapInit} fullScreen updateViewFromUrl={false}>
         <FeatureEditor />
         <Popup />
         <TabbedPanel>

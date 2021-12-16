@@ -1,10 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WebpackBar = require('webpackbar')
 const babelConfig = require('../babel.config.js')
 
 // during development be sure to pass this env variable so that we get the alias to src gets created
-const alias = process.env.OL_KIT_DEVELOPMENT ? { '@bayer/ol-kit': path.resolve(__dirname, '../', 'src') }: {}
+const alias = process.env.OL_KIT_DEVELOPMENT ? { '@bayer/ol-kit': path.resolve(__dirname, '../', 'src') } : {}
 
 module.exports = {
   mode: 'development',
@@ -25,10 +26,13 @@ module.exports = {
 
   resolve: {
     // Create aliases to import or require certain modules more easily
-    alias: {...alias},
+    alias: {
+      ...alias,
+      'react-dom': '@hot-loader/react-dom'
+    },
     fallback: {
       fs: false,
-      "stream": false
+      stream: false
     }
   },
 
@@ -52,25 +56,26 @@ module.exports = {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
-          },
-        ],
+            loader: 'file-loader'
+          }
+        ]
       }
     ]
   },
 
   plugins: [
+    new WebpackBar({ name: 'ol-kit' }),
+
     // Injects path.appSrc into public/index.html
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve(__dirname, 'index.html'),
-      favicon: path.resolve(__dirname, 'favicon.ico'),
+      favicon: path.resolve(__dirname, 'favicon.ico')
     }),
 
     new webpack.ProvidePlugin({
-      process: 'process/browser',
+      process: 'process/browser'
     }),
-    
 
     // Do not emit compiled assets that include errors
     new webpack.NoEmitOnErrorsPlugin()

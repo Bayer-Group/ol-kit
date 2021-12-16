@@ -5,7 +5,7 @@ import olSourceStamen from 'ol/source/Stamen'
 import DataLoader from './DataLoader'
 import Welcome from '../../Welcome'
 
-function App() {
+function App () {
   const onMapInit = map => {
     // create a Stamen basemap source
     const source = new olSourceStamen({
@@ -30,7 +30,7 @@ function App() {
   }
 
   return (
-    <Map onMapInit={onMapInit} fullScreen>
+    <Map onMapInit={onMapInit} fullScreen updateViewFromUrl={false}>
       <TabbedPanel>
         <TabbedPanelPage label='Home'>
           <Welcome />

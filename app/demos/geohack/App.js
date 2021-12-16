@@ -17,15 +17,16 @@ import Welcome from '../../Welcome'
 
 class MapView extends Component {
     state= {
-        selectedFeature:null
+      selectedFeature: null
     }
 
   mapClickHandler = e => {
-    const { pixel } = e;
+    const { pixel } = e
     const featuresAtPixel = this.state.map.getFeaturesAtPixel(pixel)
-    console.log('featuresAtPixel',featuresAtPixel)
-    if(featuresAtPixel && featuresAtPixel.length){
-        this.setState({selectedFeature: featuresAtPixel[0], isState: featuresAtPixel[0].values_.LSAD ? false : true})
+
+    console.log('featuresAtPixel', featuresAtPixel)
+    if (featuresAtPixel && featuresAtPixel.length) {
+      this.setState({ selectedFeature: featuresAtPixel[0], isState: !featuresAtPixel[0].values_.LSAD })
     }
   }
 
@@ -34,12 +35,14 @@ class MapView extends Component {
     const fileName = ev.target.fileName
     const content = ev.target.result
     const layer = await loadDataLayer(map, content, { addToMap: false })
+
     layer.set('title', fileName)
     map.addLayer(layer)
   }
 
   addLayerFromFile = (file) => {
     const fileData = new FileReader()
+
     fileData.fileName = file.name
     fileData.onloadend = this.addLayerOnLoaded
     fileData.readAsText(file)
@@ -55,9 +58,9 @@ class MapView extends Component {
     map.on('click', this.mapClickHandler)
   }
 
-  render() {
+  render () {
     return (
-      <Map onMapInit={this.onMapInit} fullScreen className="vw-100 vh-100">
+      <Map onMapInit={this.onMapInit} fullScreen className='vw-100 vh-100' updateViewFromUrl={false}>
         <Controls />
         <Popup />
         <TimeSlider />
@@ -70,7 +73,7 @@ class MapView extends Component {
           </TabbedPanelPage>
         </TabbedPanel>
         <BasemapContainer />
-        {this.state.selectedFeature? <Chart feature={this.state.selectedFeature} isState={this.state.isState}/>:null}
+        {this.state.selectedFeature ? <Chart feature={this.state.selectedFeature} isState={this.state.isState}/> : null}
       </Map>
     )
   }

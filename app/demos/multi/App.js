@@ -56,11 +56,11 @@ class App extends React.Component {
       'map4',
       'map5',
       'map6',
-      'map7',
+      'map7'
     ]
 
     return (
-      <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
+      <MultiMapManager groups={[['map0', 'map1'], ['map2', 'map3']]}>
         <FullScreenFlex>
           {mapKeys.map((key, i, array) => {
             return (
@@ -70,7 +70,7 @@ class App extends React.Component {
                 total={array.length}
                 numberOfRows={2}
                 numberOfColumns={4}>
-                <Map id={key} onMapInit={this.onMapInit} isMultiMap>
+                <Map id={key} onMapInit={this.onMapInit} isMultiMap updateViewFromUrl={false}>
                   <Popup />
                   <ContextMenu />
                   <Controls />

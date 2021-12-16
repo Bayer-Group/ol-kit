@@ -30,7 +30,7 @@ class App extends React.Component {
           featureClass: olFeature
         }),
         url: 'https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf'
-      }),
+      })
     })
 
     map.addLayer(layer)
@@ -40,7 +40,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <Map onMapInit={this.onMapInit} fullScreen>
+      <Map onMapInit={this.onMapInit} fullScreen updateViewFromUrl={false}>
         <Popup />
         <LayerPanel>
           <LayerPanelPage tabIcon='Layer Styler'>

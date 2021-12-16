@@ -66,7 +66,7 @@ function App (props) {
         <p style={QuoteStyle}>“Earth is a small town with many neighborhoods in a very big universe.” – Ron Garan</p>
       </div>
       <div style={MapStyle}>
-        <Map>
+        <Map updateViewFromUrl={false}>
           <Popup />
           <TabbedPanel>
             <TabbedPanelPage label='Home'>

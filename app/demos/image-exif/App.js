@@ -19,7 +19,7 @@ function App () {
   const [activeImage, setActiveImage] = useState(null)
 
   return (
-    <Map fullScreen>
+    <Map fullScreen updateViewFromUrl={false}>
       <Viewer
         visible={!!activeImage}
         onClose={() => { setActiveImage(null) } }
