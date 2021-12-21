@@ -1,6 +1,6 @@
 {
   "name": "@bayer/ol-kit",
-  "version": "1.20.0-3",
+  "version": "1.20.0-4",
   "license": "BSD",
   "description": "Mapping components & utils built with openlayers + react",
   "keywords": [

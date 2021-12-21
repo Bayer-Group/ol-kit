@@ -54,8 +54,11 @@ class MultiMapManager extends React.Component {
       // reset view of newly desynced map
       const view = this.state[map.getTargetElement().id].view
 
+      console.log('sync listener! revert to this view: ', view, this.state[map.getTargetElement().id])
+
       map.setView(view)
     } else {
+      console.log('syncableMapListener', map)
       this.setSyncedView(map)
     }
 
@@ -67,6 +70,7 @@ class MultiMapManager extends React.Component {
       // this is the first map, set the view in state
       this.syncedView = map.getView()
     } else {
+      console.log('sync map to this view: ', this.syncedView, map)
       map.setView(this.syncedView)
     }
   }
@@ -143,10 +147,11 @@ class MultiMapManager extends React.Component {
 
   childModifier = rawChildren => {
     const { intialized } = this.state
-    const mapIds = this.props.mapsConfig.map(({ id }) => id)
     const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
+    const adoptedChildren = children.map((child, i) => {
+      // only render FlexMap & FullScreenFlex until initialized
+      const allow = intialized || isPreInitComponent(child)
 
-    return children.map((child, i) => {
       if (child.props.isMultiMap) {
         // we caught a map
         const addToContextOverride = config => this.addToContext(config, child.props.addMapToContext)
@@ -168,15 +173,14 @@ class MultiMapManager extends React.Component {
         return this.childModifier(child)
       } else if (child?.props?.children) {
         // loop through children of children
-        // only render FlexMap & FullScreenFlex until initialized
-        const allow = intialized || isPreInitComponent(child) || mapIds.includes(child.id)
-
         return allow && React.cloneElement(child, { ...child.props }, [this.childModifier(child.props.children)])
       } else {
         // this allows the Maps to render and initialize first before all other comps
-        return intialized ? child : null
+        return allow ? child : null
       }
     })
+    // console.log('children rendered by MultiMapManager: ', adoptedChildren)
+    return adoptedChildren
   }
 
   render () {
