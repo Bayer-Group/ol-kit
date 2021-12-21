@@ -44,7 +44,7 @@ class MultiMapManager extends React.Component {
   refreshMaps = () => {
     this.forceUpdate()
     // this refresh needs to fire after the component updates the map views
-    setTimeout(() => this.state.maps.map(map => map.updateSize()), 200)
+    setTimeout(() => this.state.maps.map(map => map.updateSize()), 0)
   }
 
   syncableMapListener = (map, e) => {
@@ -58,7 +58,6 @@ class MultiMapManager extends React.Component {
 
       map.setView(view)
     } else {
-      console.log('syncableMapListener', map)
       this.setSyncedView(map)
     }
 
@@ -70,7 +69,6 @@ class MultiMapManager extends React.Component {
       // this is the first map, set the view in state
       this.syncedView = map.getView()
     } else {
-      console.log('sync map to this view: ', this.syncedView, map)
       map.setView(this.syncedView)
     }
   }

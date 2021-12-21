@@ -37,7 +37,6 @@ class SplitScreen extends Component {
 
     mapToRemove.setVisibleState(false)
     mapToRemove.setSyncedState(false)
-    mapToRemove.setLayerGroup(new olLayerGroup())
 
     if (visibleMapCount - 1 === 2) this.setState({ startPosition: window.innerWidth / 2 })
     onMapRemoved(mapIndex)
@@ -46,14 +45,10 @@ class SplitScreen extends Component {
   addMap = () => {
     const { onMapAdded, maps, visibleMapCount } = this.props
     const nextMapIdx = visibleMapCount
-    const prevMap = maps[nextMapIdx - 1]
     const mapToAdd = maps[nextMapIdx]
-    const prevMapLayer = prevMap.getLayerGroup().getLayers().item(0)
 
     mapToAdd.setVisibleState(true)
     mapToAdd.setSyncedState(true)
-
-    mapToAdd.getLayers().setAt(0, prevMapLayer)
 
     if (visibleMapCount + 1 === 2) this.setState({ startPosition: window.innerWidth / 2 })
     onMapAdded(nextMapIdx)
