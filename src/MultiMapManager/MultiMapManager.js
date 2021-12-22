@@ -2,14 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import en from 'locales/en'
 import { ErrorBoundary } from 'ErrorBoundary'
-import { FullScreenFlex } from './styled'
-import FlexMap from './FlexMap'
 
 // context is only created when <MultiMapManager> is implemented (see constructor)
 export let MultiMapContext = null
-
-// only render FlexMap & FullScreenFlex until initialized
-const isPreInitComponent = component => component.type === FlexMap || component.type === FullScreenFlex
 
 /**
  * A higher order component that manages MultiMapContext for connectToContext wrapped children
@@ -53,8 +48,6 @@ class MultiMapManager extends React.Component {
     if (type === 'synced' && !synced) {
       // reset view of newly desynced map
       const view = this.state[map.getTargetElement().id].view
-
-      console.log('sync listener! revert to this view: ', view, this.state[map.getTargetElement().id])
 
       map.setView(view)
     } else {
@@ -148,7 +141,7 @@ class MultiMapManager extends React.Component {
     const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
     const adoptedChildren = children.map((child, i) => {
       // only render FlexMap & FullScreenFlex until initialized
-      const allow = intialized || isPreInitComponent(child)
+      const allow = intialized || child.props.disableAsyncRender
 
       if (child.props.isMultiMap) {
         // we caught a map
@@ -177,7 +170,7 @@ class MultiMapManager extends React.Component {
         return allow ? child : null
       }
     })
-    // console.log('children rendered by MultiMapManager: ', adoptedChildren)
+    console.log('children rendered by MultiMapManager: ', adoptedChildren)
     return adoptedChildren
   }
 
