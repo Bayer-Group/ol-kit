@@ -2,28 +2,46 @@ import React from 'react'
 import {
   Map,
   Popup,
-  TabbedPanel,
   Controls,
   ContextMenu,
   loadDataLayer,
-  LayerStyler,
-  LayerPanelLayersPage,
   MultiMapManager,
-  TabbedPanelPage,
   BasemapContainer,
   VectorLayer,
-  DrawContainer,
+  LayerPanel,
+  FullScreenFlex,
   FlexMap,
-  FullScreenFlex
+  SplitScreen,
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
 import olGeomPoint from 'ol/geom/Point'
 import olSourceVector from 'ol/source/Vector'
 
-import Welcome from '../../Welcome'
-
 class App extends React.Component {
+  mapConfigs = [
+    {
+      id: 'map0',
+      synced: true,
+      visible: true
+    },
+    {
+      id: 'map1',
+      synced: false,
+      visible: false
+    },
+    {
+      id: 'map2',
+      synced: false,
+      visible: false
+    },
+    {
+      id: 'map3',
+      synced: false,
+      visible: false
+    },
+  ]
+
   onMapInit = async (map) => {
     // create a vector layer and add to the map
     const layer = new VectorLayer({
@@ -43,34 +61,21 @@ class App extends React.Component {
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
-
-    window.map = map
   }
 
   render () {
-    const mapKeys = [
-      'map0',
-      'map1',
-      'map2',
-      'map3',
-      'map4',
-      'map5',
-      'map6',
-      'map7',
-    ]
-
     return (
-      <MultiMapManager groups={[['map0', 'map1'],['map2', 'map3']]}>
+      <MultiMapManager>
+        <div style={{position: 'absolute', top: 20, left: 20, zIndex: 1, }}>
+          <SplitScreen />
+        </div>
         <FullScreenFlex>
-          {mapKeys.map((key, i, array) => {
+          {this.mapConfigs.map(({ id, synced, visible }, i) => {
             return (
               <FlexMap
-                key={key}
-                index={i}
-                total={array.length}
-                numberOfRows={2}
-                numberOfColumns={4}>
-                <Map id={key} onMapInit={this.onMapInit} isMultiMap>
+                key={id}
+                index={i}>
+                <Map id={id} onMapInit={this.onMapInit} synced={synced} visible={visible} isMultiMap>
                   <Popup />
                   <ContextMenu />
                   <Controls />

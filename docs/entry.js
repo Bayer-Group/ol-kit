@@ -97,146 +97,152 @@ reactComponents['DrawPoint'] = Component23;
 import Component24 from '../src/Draw/Polygon.js';
 reactComponents['DrawPolygon'] = Component24;
 
-import Component25 from '../src/FeatureEditor/FeatureEditor.js';
-reactComponents['FeatureEditor'] = Component25;
+import Component25 from '../src/ErrorBoundary/ErrorBoundary.js';
+reactComponents['ErrorBoundary'] = Component25;
 
-import Component26 from '../src/GoogleDirections/GoogleDirections.js';
-reactComponents['GoogleDirections'] = Component26;
+import Component26 from '../src/FeatureEditor/FeatureEditor.js';
+reactComponents['FeatureEditor'] = Component26;
 
-import Component27 from '../src/GooglePlacesSearch/GooglePlacesSearch.js';
-reactComponents['GooglePlacesSearch'] = Component27;
+import Component27 from '../src/GoogleDirections/GoogleDirections.js';
+reactComponents['GoogleDirections'] = Component27;
 
-import Component28 from '../src/Heatmap/HeatmapControls.js';
-reactComponents['HeatmapControls'] = Component28;
+import Component28 from '../src/GooglePlacesSearch/GooglePlacesSearch.js';
+reactComponents['GooglePlacesSearch'] = Component28;
 
-import Component29 from '../src/LayerPanel/LayerPanel.js';
-reactComponents['LayerPanel'] = Component29;
+import Component29 from '../src/Heatmap/HeatmapControls.js';
+reactComponents['HeatmapControls'] = Component29;
 
-import Component30 from '../src/LayerPanel/LayerPanelActionDuplicate/index.js';
-reactComponents['LayerPanelActionDuplicate'] = Component30;
+import Component30 from '../src/LayerPanel/LayerPanel.js';
+reactComponents['LayerPanel'] = Component30;
 
-import Component31 from '../src/LayerPanel/LayerPanelActionExport/index.js';
-reactComponents['LayerPanelActionExport'] = Component31;
+import Component31 from '../src/LayerPanel/LayerPanelActionDuplicate/index.js';
+reactComponents['LayerPanelActionDuplicate'] = Component31;
 
-import Component32 from '../src/LayerPanel/LayerPanelActionExtent/index.js';
-reactComponents['LayerPanelActionExtent'] = Component32;
+import Component32 from '../src/LayerPanel/LayerPanelActionExport/index.js';
+reactComponents['LayerPanelActionExport'] = Component32;
 
-import Component33 from '../src/LayerPanel/LayerPanelActionHeatmap/index.js';
-reactComponents['LayerPanelActionHeatmap'] = Component33;
+import Component33 from '../src/LayerPanel/LayerPanelActionExtent/index.js';
+reactComponents['LayerPanelActionExtent'] = Component33;
 
-import Component34 from '../src/LayerPanel/LayerPanelActionImport/index.js';
-reactComponents['LayerPanelActionImport'] = Component34;
+import Component34 from '../src/LayerPanel/LayerPanelActionHeatmap/index.js';
+reactComponents['LayerPanelActionHeatmap'] = Component34;
 
-import Component35 from '../src/LayerPanel/LayerPanelActionMerge/index.js';
-reactComponents['LayerPanelActionMerge'] = Component35;
+import Component35 from '../src/LayerPanel/LayerPanelActionImport/index.js';
+reactComponents['LayerPanelActionImport'] = Component35;
 
-import Component36 from '../src/LayerPanel/LayerPanelActionMergeFeatures/index.js';
-reactComponents['LayerPanelActionMergeFeatures'] = Component36;
+import Component36 from '../src/LayerPanel/LayerPanelActionMerge/index.js';
+reactComponents['LayerPanelActionMerge'] = Component36;
 
-import Component37 from '../src/LayerPanel/LayerPanelActionOpacity/index.js';
-reactComponents['LayerPanelActionOpacity'] = Component37;
+import Component37 from '../src/LayerPanel/LayerPanelActionMergeFeatures/index.js';
+reactComponents['LayerPanelActionMergeFeatures'] = Component37;
 
-import Component38 from '../src/LayerPanel/LayerPanelActionRemove/index.js';
-reactComponents['LayerPanelActionRemove'] = Component38;
+import Component38 from '../src/LayerPanel/LayerPanelActionOpacity/index.js';
+reactComponents['LayerPanelActionOpacity'] = Component38;
 
-import Component39 from '../src/LayerPanel/LayerPanelActions/index.js';
-reactComponents['LayerPanelActions'] = Component39;
+import Component39 from '../src/LayerPanel/LayerPanelActionRemove/index.js';
+reactComponents['LayerPanelActionRemove'] = Component39;
 
-import Component40 from '../src/LayerPanel/LayerPanelBase/index.js';
-reactComponents['LayerPanelBase'] = Component40;
+import Component40 from '../src/LayerPanel/LayerPanelActions/index.js';
+reactComponents['LayerPanelActions'] = Component40;
 
-import Component41 from '../src/LayerPanel/LayerPanelCheckbox/index.js';
-reactComponents['LayerPanelCheckbox'] = Component41;
+import Component41 from '../src/LayerPanel/LayerPanelBase/index.js';
+reactComponents['LayerPanelBase'] = Component41;
 
-import Component42 from '../src/LayerPanel/LayerPanelContent/index.js';
-reactComponents['LayerPanelContent'] = Component42;
+import Component42 from '../src/LayerPanel/LayerPanelCheckbox/index.js';
+reactComponents['LayerPanelCheckbox'] = Component42;
 
-import Component43 from '../src/LayerPanel/LayerPanelHeader/index.js';
-reactComponents['LayerPanelHeader'] = Component43;
+import Component43 from '../src/LayerPanel/LayerPanelContent/index.js';
+reactComponents['LayerPanelContent'] = Component43;
 
-import Component44 from '../src/LayerPanel/LayerPanelLayersPage/index.js';
-reactComponents['LayerPanelLayersPage'] = Component44;
+import Component44 from '../src/LayerPanel/LayerPanelHeader/index.js';
+reactComponents['LayerPanelHeader'] = Component44;
 
-import Component45 from '../src/LayerPanel/LayerPanelList/index.js';
-reactComponents['LayerPanelList'] = Component45;
+import Component45 from '../src/LayerPanel/LayerPanelLayersPage/index.js';
+reactComponents['LayerPanelLayersPage'] = Component45;
 
-import Component46 from '../src/LayerPanel/LayerPanelListItem/index.js';
-reactComponents['LayerPanelListItem'] = Component46;
+import Component46 from '../src/LayerPanel/LayerPanelList/index.js';
+reactComponents['LayerPanelList'] = Component46;
 
-import Component47 from '../src/LayerPanel/LayerPanelMenu/index.js';
-reactComponents['LayerPanelMenu'] = Component47;
+import Component47 from '../src/LayerPanel/LayerPanelListItem/index.js';
+reactComponents['LayerPanelListItem'] = Component47;
 
-import Component48 from '../src/LayerPanel/LayerPanelPage/index.js';
-reactComponents['LayerPanelPage'] = Component48;
+import Component48 from '../src/LayerPanel/LayerPanelMenu/index.js';
+reactComponents['LayerPanelMenu'] = Component48;
 
-import Component49 from '../src/LayerStyler/LayerStyler.js';
-reactComponents['LayerStyler'] = Component49;
+import Component49 from '../src/LayerPanel/LayerPanelPage/index.js';
+reactComponents['LayerPanelPage'] = Component49;
 
-import Component50 from '../src/Map/Map.js';
-reactComponents['Map'] = Component50;
+import Component50 from '../src/LayerStyler/LayerStyler.js';
+reactComponents['LayerStyler'] = Component50;
 
-import Component51 from '../src/MultiMapManager/MultiMapManager.js';
-reactComponents['MultiMapManager'] = Component51;
+import Component51 from '../src/Map/Map.js';
+reactComponents['Map'] = Component51;
 
-import Component52 from '../src/Popup/Popup.js';
-reactComponents['Popup'] = Component52;
+import Component52 from '../src/SplitScreen/MapDisplayElement/index.js';
+reactComponents['MapDisplayElement'] = Component52;
 
-import Component53 from '../src/Popup/PopupActions/PopupActionCopyWkt/PopupActionCopyWkt.js';
-reactComponents['PopupActionCopyWkt'] = Component53;
+import Component53 from '../src/MultiMapManager/MultiMapManager.js';
+reactComponents['MultiMapManager'] = Component53;
 
-import Component54 from '../src/Popup/PopupActions/PopupActionGoogleMaps/PopupActionGoogleMaps.js';
-reactComponents['PopupActionGoogleMaps'] = Component54;
+import Component54 from '../src/Popup/Popup.js';
+reactComponents['Popup'] = Component54;
 
-import Component55 from '../src/Popup/PopupInsert/PopupActionGroup/index.js';
-reactComponents['PopupActionGroup'] = Component55;
+import Component55 from '../src/Popup/PopupActions/PopupActionCopyWkt/PopupActionCopyWkt.js';
+reactComponents['PopupActionCopyWkt'] = Component55;
 
-import Component56 from '../src/Popup/PopupInsert/PopupActionItem/index.js';
-reactComponents['PopupActionItem'] = Component56;
+import Component56 from '../src/Popup/PopupActions/PopupActionGoogleMaps/PopupActionGoogleMaps.js';
+reactComponents['PopupActionGoogleMaps'] = Component56;
 
-import Component57 from '../src/Popup/PopupInsert/PopupActionLink/index.js';
-reactComponents['PopupActionLink'] = Component57;
+import Component57 from '../src/Popup/PopupInsert/PopupActionGroup/index.js';
+reactComponents['PopupActionGroup'] = Component57;
 
-import Component58 from '../src/Popup/PopupBase.js';
-reactComponents['PopupBase'] = Component58;
+import Component58 from '../src/Popup/PopupInsert/PopupActionItem/index.js';
+reactComponents['PopupActionItem'] = Component58;
 
-import Component59 from '../src/Popup/PopupInsert/PopupDataList/index.js';
-reactComponents['PopupDataList'] = Component59;
+import Component59 from '../src/Popup/PopupInsert/PopupActionLink/index.js';
+reactComponents['PopupActionLink'] = Component59;
 
-import Component60 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
-reactComponents['PopupDefaultInsert'] = Component60;
+import Component60 from '../src/Popup/PopupBase.js';
+reactComponents['PopupBase'] = Component60;
 
-import Component61 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
-reactComponents['PopupDefaultPage'] = Component61;
+import Component61 from '../src/Popup/PopupInsert/PopupDataList/index.js';
+reactComponents['PopupDataList'] = Component61;
 
-import Component62 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
-reactComponents['PopupPageLayout'] = Component62;
+import Component62 from '../src/Popup/PopupInsert/PopupDefaultInsert.js';
+reactComponents['PopupDefaultInsert'] = Component62;
 
-import Component63 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
-reactComponents['PopupPageLayoutChild'] = Component63;
+import Component63 from '../src/Popup/PopupInsert/PopupDefaultPage/index.js';
+reactComponents['PopupDefaultPage'] = Component63;
 
-import Component64 from '../src/Popup/PopupInsert/PopupTabs/index.js';
-reactComponents['PopupTabs'] = Component64;
+import Component64 from '../src/Popup/PopupInsert/PopupPageLayout/index.js';
+reactComponents['PopupPageLayout'] = Component64;
 
-import Component65 from '../src/Project/Project.js';
-reactComponents['ProjectMenu'] = Component65;
+import Component65 from '../src/Popup/PopupInsert/PopupPageLayoutChild/index.js';
+reactComponents['PopupPageLayoutChild'] = Component65;
 
-import Component66 from '../src/Provider/Provider.js';
-reactComponents['Provider'] = Component66;
+import Component66 from '../src/Popup/PopupInsert/PopupTabs/index.js';
+reactComponents['PopupTabs'] = Component66;
 
-import Component67 from '../src/TabbedPanel/TabbedPanel.js';
-reactComponents['TabbedPanel'] = Component67;
+import Component67 from '../src/Project/Project.js';
+reactComponents['ProjectMenu'] = Component67;
 
-import Component68 from '../src/TimeSlider/TimeSlider.js';
-reactComponents['TimeSlider'] = Component68;
+import Component68 from '../src/Provider/Provider.js';
+reactComponents['Provider'] = Component68;
 
-import Component69 from '../src/TimeSlider/TimeSliderBase.js';
-reactComponents['TimeSliderBase'] = Component69;
+import Component69 from '../src/TabbedPanel/TabbedPanel.js';
+reactComponents['TabbedPanel'] = Component69;
 
-import Component70 from '../src/Controls/ZoomControls.js';
-reactComponents['ZoomControls'] = Component70;
+import Component70 from '../src/TimeSlider/TimeSlider.js';
+reactComponents['TimeSlider'] = Component70;
 
-import Component71 from '../src/Controls/ZoomIn.js';
-reactComponents['ZoomIn'] = Component71;
+import Component71 from '../src/TimeSlider/TimeSliderBase.js';
+reactComponents['TimeSliderBase'] = Component71;
 
-import Component72 from '../src/Controls/ZoomOut.js';
-reactComponents['ZoomOut'] = Component72;
+import Component72 from '../src/Controls/ZoomControls.js';
+reactComponents['ZoomControls'] = Component72;
+
+import Component73 from '../src/Controls/ZoomIn.js';
+reactComponents['ZoomIn'] = Component73;
+
+import Component74 from '../src/Controls/ZoomOut.js';
+reactComponents['ZoomOut'] = Component74;

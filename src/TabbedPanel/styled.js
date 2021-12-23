@@ -17,7 +17,8 @@ export const Card = styled(({ ...props }) => <MaterialCard {...props} />)({
   opacity: 0.9,
   '&:hover': {
     opacity: '1'
-  }
+  },
+  zIndex: 1
 })
 
 export const Tabs = styled(({ ...props }) => {

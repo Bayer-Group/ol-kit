@@ -1,15 +1,15 @@
 import styled from 'styled-components'
 
-export const FlexMap = styled.div`
-  display: flex;
+export const FlexMapStyled = styled.div`
+  display: ${p => p.hidden ? 'none' : 'flex'};
   width: ${p => {
-    const adjustedColumns = p.numberOfColumns - (p.total % 2)
+    const adjustedColumns = p.columns - (p.total % 2)
     const breakPoint = p.index < adjustedColumns
     const needsAdjustment = !!(p.total % 2) && breakPoint
 
-    return needsAdjustment ? `${100 / adjustedColumns}%` : `${100 / p.numberOfColumns}%`
+    return needsAdjustment ? `${100 / adjustedColumns}%` : `${100 / p.columns}%`
   }};
-  height: ${p => `${100 / p.numberOfRows}%`};
+  height: ${p => `${100 / p.numOfRows}%`};
   flex-grow: ${p => !p.index && (p.total % 2) ? '2' : '1'};
   flex-shrink: ${p => !p.index && (p.total % 2) ? '1' : '2'};
   position: relative;

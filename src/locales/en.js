@@ -131,5 +131,9 @@ export default {
   // FeatureEditor
   '_ol_kit.edit.cancel': 'Cancel',
   '_ol_kit.edit.finish': 'Finish',
-  '_ol_kit.edit.rotate': 'Rotate'
+  '_ol_kit.edit.rotate': 'Rotate',
+  // SplitScreen
+  '_ol_kit.SplitScreen.disabled': 'Disabled',
+  '_ol_kit.SplitScreen.addMap': 'Add Map',
+  '_ol_kit.SplitScreen.removeMap': 'Remove Map'
 }

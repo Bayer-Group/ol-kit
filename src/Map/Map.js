@@ -47,17 +47,22 @@ class Map extends React.Component {
       addMapToContext,
       contextProps,
       dragZoomboxStyle,
+      isMultiMap,
       map: passedMap,
       onMapInit,
+      synced,
       translations,
       updateUrlDebounce,
       updateUrlFromView,
       updateViewFromUrl,
-      urlViewParam
+      urlViewParam,
+      visible
     } = this.props
 
     // if no map was passed, create the map
-    this.map = !this.passedMap ? createMap({ target: this.target }) : passedMap
+    this.map = !this.passedMap
+      ? createMap({ isSyncableMap: isMultiMap, synced, target: this.target, visible })
+      : passedMap
 
     if (this.passedMap && !this.passedMap.getTargetElement()) {
       ugh.warn('A `map` prop has been passed to `<Map>` but the openlayers map has not been mounted to the DOM!')
@@ -177,9 +182,10 @@ class Map extends React.Component {
 Map.defaultProps = {
   addMapToContext: () => {},
   contextProps: {},
+  dragZoomboxStyle: { backgroundColor: 'rgb(0, 50, 50, 0.5)' },
   fullScreen: false,
-  logoPosition: 'right',
   isMultiMap: false,
+  logoPosition: 'right',
   map: null,
   onMapInit: () => {},
   updateUrlDebounce: 400,
@@ -187,8 +193,9 @@ Map.defaultProps = {
   updateViewFromUrl: true,
   urlViewParam: 'view',
   style: {},
-  dragZoomboxStyle: { backgroundColor: 'rgb(0, 50, 50, 0.5)' },
-  translations: en
+  synced: true,
+  translations: en,
+  visible: true
 }
 
 Map.propTypes = {
@@ -201,6 +208,8 @@ Map.propTypes = {
   ]),
   /** custom props that get added to Provider context and passed to connectToContext components */
   contextProps: PropTypes.object,
+  /** apply styles to the OL shift-zoom box */
+  dragZoomboxStyle: PropTypes.object,
   /** if this is set to false, the map will fill it's parent container */
   fullScreen: PropTypes.bool,
   /** optional id to set on openlayers map and htmk id that map renders into (defaulted to unique id internally) */
@@ -227,10 +236,12 @@ Map.propTypes = {
   selectInteraction: PropTypes.object,
   /** apply inline styles to the map container */
   style: PropTypes.object,
-  /** apply styles to the OL shift-zoom box */
-  dragZoomboxStyle: PropTypes.object,
+  /** (only used with isMultiMap) sets initial synced state for a SyncableMap */
+  synced: PropTypes.bool,
   /** object of string key/values (see: locales) */
-  translations: PropTypes.object
+  translations: PropTypes.object,
+  /** (only used with isMultiMap) sets initial visibility state for a SyncableMap */
+  visible: PropTypes.bool
 }
 
 export default connectToContext(Map)
