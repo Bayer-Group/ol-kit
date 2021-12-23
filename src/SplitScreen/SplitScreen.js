@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip } from '@material-ui/core'
-import olLayerGroup from 'ol/layer/Group'
 
 import { connectToContext } from 'Provider'
 import MapDisplayElement from './MapDisplayElement'

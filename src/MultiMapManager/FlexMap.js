@@ -8,6 +8,7 @@ class FlexMap extends React.Component {
     const { children, index, maps, numberOfColumns, numberOfRows, total, visibleState } = this.props
     const totalMaps = total || maps.length
     const visibleMapCount = visibleState.filter(_ => _).length
+
     let columns = numberOfColumns || (visibleMapCount % 2 === 1) ? 1 : 2
     const rows = numberOfRows || (visibleMapCount > 2) ? 2 : 1
 
@@ -15,7 +16,7 @@ class FlexMap extends React.Component {
     if (visibleMapCount === 3) {
       columns = index === 0 ? 1 : 2
     }
-  
+
     return (
       <FlexMapStyled
         columns={columns}
@@ -38,6 +39,7 @@ FlexMap.defaultProps = {
 }
 
 FlexMap.propTypes = {
+  children: PropTypes.node,
   index: PropTypes.number,
   maps: PropTypes.array,
   numberOfColumns: PropTypes.number,

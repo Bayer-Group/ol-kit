@@ -170,7 +170,7 @@ class MultiMapManager extends React.Component {
         return allow ? child : null
       }
     })
-    console.log('children rendered by MultiMapManager: ', adoptedChildren)
+
     return adoptedChildren
   }
 
