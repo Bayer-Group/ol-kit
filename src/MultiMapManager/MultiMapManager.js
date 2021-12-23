@@ -143,7 +143,7 @@ class MultiMapManager extends React.Component {
       // only render FlexMap & FullScreenFlex until initialized
       const allow = intialized || child.props.disableAsyncRender
 
-      if (child.props.isMultiMap) {
+      if (child?.props?.isMultiMap) {
         // we caught a map
         const addToContextOverride = config => this.addToContext(config, child.props.addMapToContext)
         const onMapInitOverride = map => this.onMapInitOverride(map, child.props.onMapInit)
