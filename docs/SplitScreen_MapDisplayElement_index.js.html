@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/CurrentLocation.js</title>
+    <title>ol-kit | SplitScreen/MapDisplayElement/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -80,58 +80,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from 'react'
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
-import ControlGroupButton from './ControlGroupButton'
-import GpsFixedIcon from '@material-ui/icons/GpsFixed'
-import { centerAndZoom } from 'Map'
-import { connectToContext } from 'Provider'
-import ugh from 'ugh'
+import { PrimaryButton, LockIcon } from './styled'
 
 /**
- * A simple map zoom control
  * @component
- * @category Controls
- * @since 0.14.0
+ * @category SplitScreen
  */
-class CurrentLocation extends React.Component {
-  gotoCurrentLocation = () => {
-    const { map } = this.props
-
-    try {
-      navigator.geolocation.getCurrentPosition((position) => { // eslint-disable-line no-unused-expressions
-        const opts = {
-          x: position.coords.longitude,
-          y: position.coords.latitude,
-          zoom: 13,
-          showPointIcon: true
-        }
-
-        centerAndZoom(map, opts)
-      })
-    } catch (e) {
-      ugh.warn('Navigator not availble - could not find current location')
-    }
-  }
-
+class MapDisplayElement extends Component {
   render () {
+    const { translations, toggleSyncMap, synced, index, grow, disabled, mapNumber } = this.props
+
     return (
-      &lt;ControlGroupButton
-        onClick={this.gotoCurrentLocation}
-        data-testid='_ol_kit_current_location'>
-        &lt;GpsFixedIcon style={{ fontSize: '1.2rem' }} />
-      &lt;/ControlGroupButton>
+      &lt;PrimaryButton
+        grow={grow}
+        synced={synced}
+        disabled={disabled}
+        onClick={toggleSyncMap.bind(this, index)}>
+        {disabled
+          ? &lt;LockIcon className={'zmdi zmdi-lock'}/>
+          : &lt;div>{translations['_ol_kit.MapDisplayElement.map']} {mapNumber}&lt;/div>
+        }
+      &lt;/PrimaryButton>
     )
   }
 }
 
-CurrentLocation.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired
+MapDisplayElement.propTypes = {
+  /** Object with key/value pairs for translated strings */
+  translations: PropTypes.object,
+
+  /** Callback function fired when the preview is clicked */
+  toggleSyncMap: PropTypes.func,
+
+  /** Determines if the preview should be highlighted to indicate synced state */
+  synced: PropTypes.bool,
+
+  /** The index of the map being represented */
+  index: PropTypes.number,
+
+  /** Determines if the preview UI should grow to fill width */
+  grow: PropTypes.bool,
+
+  /** Determines if the UI should allow clicking on the map preview to toggle syncing */
+  disabled: PropTypes.bool,
+
+  /** The number of the map being represented */
+  mapNumber: PropTypes.number
 }
 
-export default connectToContext(CurrentLocation)
+MapDisplayElement.defaultProps = {
+  translations: {
+    '_ol_kit.MapDisplayElement.map': 'Map'
+  }
+}
+
+export default MapDisplayElement
 </code></pre>
         </article>
     </section>

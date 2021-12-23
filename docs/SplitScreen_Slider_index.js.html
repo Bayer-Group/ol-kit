@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ol-kit | Controls/CurrentLocation.js</title>
+    <title>ol-kit | SplitScreen/Slider/index.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
 
 
@@ -81,57 +81,41 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import Draggable from 'react-draggable'
+import { DragBar } from './styled'
+import DragBarIcon from './svgIcons/DragBarIcon'
 
-import ControlGroupButton from './ControlGroupButton'
-import GpsFixedIcon from '@material-ui/icons/GpsFixed'
-import { centerAndZoom } from 'Map'
-import { connectToContext } from 'Provider'
-import ugh from 'ugh'
+const Slider = ({ initialPosition, onDrag, innerRef }) => {
+  const limit = window.innerWidth * 0.2
+  const leftBound = (window.innerWidth - limit - (window.innerWidth - initialPosition)) * -1
+  const rightBound = window.innerWidth - initialPosition - limit
 
-/**
- * A simple map zoom control
- * @component
- * @category Controls
- * @since 0.14.0
- */
-class CurrentLocation extends React.Component {
-  gotoCurrentLocation = () => {
-    const { map } = this.props
-
-    try {
-      navigator.geolocation.getCurrentPosition((position) => { // eslint-disable-line no-unused-expressions
-        const opts = {
-          x: position.coords.longitude,
-          y: position.coords.latitude,
-          zoom: 13,
-          showPointIcon: true
-        }
-
-        centerAndZoom(map, opts)
-      })
-    } catch (e) {
-      ugh.warn('Navigator not availble - could not find current location')
-    }
-  }
-
-  render () {
-    return (
-      &lt;ControlGroupButton
-        onClick={this.gotoCurrentLocation}
-        data-testid='_ol_kit_current_location'>
-        &lt;GpsFixedIcon style={{ fontSize: '1.2rem' }} />
-      &lt;/ControlGroupButton>
+  return (
+    ReactDOM.createPortal(
+      &lt;Draggable axis={'x'} bounds={{ left: leftBound, right: rightBound }} onDrag={onDrag}>
+        &lt;DragBar position={initialPosition} yOffset={55} ref={innerRef}>
+          &lt;DragBarIcon color={'lightgray'} />
+        &lt;/DragBar>
+      &lt;/Draggable>,
+      document.body
     )
-  }
+  )
 }
 
-CurrentLocation.propTypes = {
-  /** reference to Openlayers map object */
-  map: PropTypes.object.isRequired
+Slider.propTypes = {
+  /** render slider in a specific position */
+  initialPosition: PropTypes.number,
+
+  /** Callback that get's fired when the slider is dragged */
+  onDrag: PropTypes.func,
+
+  /** A reference to the inner DOM node */
+  innerRef: PropTypes.func
 }
 
-export default connectToContext(CurrentLocation)
+export default Slider
 </code></pre>
         </article>
     </section>
