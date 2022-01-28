@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import { VectorLayer, Preferences } from '../classes'
 import olSourceVector from 'ol/source/Vector'
 import { createBox } from 'ol/interaction/Draw'

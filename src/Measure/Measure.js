@@ -1,4 +1,4 @@
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import React from 'react'
 import PropTypes from 'prop-types'
 

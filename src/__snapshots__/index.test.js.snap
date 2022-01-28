@@ -29,17 +29,20 @@ Object {
   "DrawPolygon": [Function],
   "ErrorBoundary": [Function],
   "FeatureEditor": [Function],
-  "FlexMap": Object {
+  "FlexMap": [Function],
+  "FlexMapStyled": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 1611134500,
+      "baseHash": -620189328,
       "baseStyle": undefined,
-      "componentId": "sc-jrsJCI",
+      "componentId": "sc-jrQzAO",
       "isStatic": false,
       "rules": Array [
         "
-  display: flex;
+  display: ",
+        [Function],
+        ";
   width: ",
         [Function],
         ";
@@ -61,7 +64,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-jrsJCI",
+    "styledComponentId": "sc-jrQzAO",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -71,9 +74,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 398197481,
+      "baseHash": 851465943,
       "baseStyle": undefined,
-      "componentId": "sc-kEqYlL",
+      "componentId": "sc-kDTinF",
       "isStatic": false,
       "rules": Array [
         "
@@ -95,7 +98,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-kEqYlL",
+    "styledComponentId": "sc-kDTinF",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -131,9 +134,9 @@ Object {
       [Function],
     ],
     "componentStyle": e {
-      "baseHash": 1040098478,
+      "baseHash": -658045346,
       "baseStyle": undefined,
-      "componentId": "sc-crzoUp",
+      "componentId": "sc-crHmcD",
       "isStatic": false,
       "rules": Array [
         "
@@ -149,7 +152,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-crzoUp",
+    "styledComponentId": "sc-crHmcD",
     "target": "a",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -159,9 +162,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": -1976809178,
+      "baseHash": 1287171908,
       "baseStyle": undefined,
-      "componentId": "sc-iqAbSa",
+      "componentId": "sc-iqseJM",
       "isStatic": false,
       "rules": Array [
         "
@@ -182,7 +185,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-iqAbSa",
+    "styledComponentId": "sc-iqseJM",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -192,9 +195,9 @@ Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [],
     "componentStyle": e {
-      "baseHash": 1495093269,
+      "baseHash": -225017612,
       "baseStyle": undefined,
-      "componentId": "sc-dIsAE",
+      "componentId": "sc-egiyK",
       "isStatic": false,
       "rules": Array [
         "
@@ -210,7 +213,7 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-dIsAE",
+    "styledComponentId": "sc-egiyK",
     "target": "p",
     "toString": [Function],
     "warnTooManyClasses": [Function],
@@ -241,15 +244,16 @@ Object {
   "SafeParent": [Function],
   "ScaleLine": [Function],
   "Snackbar": [Function],
+  "SplitScreen": [Function],
   "StyledMap": Object {
     "$$typeof": Symbol(react.forward_ref),
     "attrs": Array [
       [Function],
     ],
     "componentStyle": e {
-      "baseHash": -1760493615,
+      "baseHash": -22428885,
       "baseStyle": undefined,
-      "componentId": "sc-bqGHjH",
+      "componentId": "sc-bqiRlB",
       "isStatic": false,
       "rules": Array [
         "
@@ -273,12 +277,13 @@ Object {
     "foldedComponentIds": Array [],
     "render": [Function],
     "shouldForwardProp": undefined,
-    "styledComponentId": "sc-bqGHjH",
+    "styledComponentId": "sc-bqiRlB",
     "target": "div",
     "toString": [Function],
     "warnTooManyClasses": [Function],
     "withComponent": [Function],
   },
+  "SyncableMap": [Function],
   "TabbedPanel": [Function],
   "TabbedPanelPage": [Function],
   "TimeSlider": [Function],

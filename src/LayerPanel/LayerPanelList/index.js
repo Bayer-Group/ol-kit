@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import List from '@material-ui/core/List'
 import LayerPanelListItem from 'LayerPanel/LayerPanelListItem'
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import PropTypes from 'prop-types'
 
 const applyDrag = (arr, dragResult) => {
