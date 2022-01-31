@@ -18,7 +18,7 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
         [33mclass[39m=[32m\\"sc-gsDKAQ iJJRQN\\"[39m
         [33mhref[39m=[32m\\"https://ol-kit.com/\\"[39m
         [33mtarget[39m=[32m\\"_blank\\"[39m
-        [33mtitle[39m=[32m\\"Powered by ol-kit v1.21.0\\"[39m
+        [33mtitle[39m=[32m\\"Powered by ol-kit v2.0.0\\"[39m
       [36m>[39m
         [36m<svg[39m
           [33mviewBox[39m=[32m\\"0 0 204.76 236.44\\"[39m
@@ -156,5 +156,5 @@ exports[`<DrawContainer /> should render a basic prebuilt DrawContainer componen
             [36m>[39m
               [36m<div[39m
                 [33maria-haspopup[39m=[32m\\"listbox\\"[39m
-                [33mclass[39m=[32m\\"MuiSelect-root WithStyles(ForwardRef(Select))-root-10 WithStyles(ForwardRef(Select))-root-11 MuiSelect-select MuiSelect-selectMenu MuiInput..."
+                [33mclass[39m=[32m\\"MuiSelect-root WithStyles(ForwardRef(Select))-root-10 WithStyles(ForwardRef(Select))-root-11 MuiSelect-select MuiSelect-selectMenu MuiInputB..."
 `;
