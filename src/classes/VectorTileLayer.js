@@ -1,4 +1,4 @@
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import olVectorTile from 'ol/layer/VectorTile'
 import OpenLayersParser from 'geostyler-openlayers-parser'
 import olStyleStyle from 'ol/style/Style'

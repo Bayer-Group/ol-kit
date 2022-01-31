@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import { Container, Header, SubHeader, TextInput, Bar, Highlight, Group } from './styled'
 
 class Selector extends Component {
