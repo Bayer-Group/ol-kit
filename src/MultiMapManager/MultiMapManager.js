@@ -18,7 +18,7 @@ class MultiMapManager extends React.Component {
 
     // state becomes an object of persistedStateKeys (or component names) with their persisted states'
     this.state = {
-      intialized: false,
+      initialized: false,
       maps: [],
       syncedState: [],
       visibleState: [],
@@ -102,12 +102,12 @@ class MultiMapManager extends React.Component {
     })
 
     // check for that last time this is called & initialize
-    if (maps.length === this.props.mapsConfig.length) this.intialize()
+    if (maps.length === this.props.mapsConfig.length) this.initialize()
 
     return promise
   }
 
-  intialize = async () => {
+  initialize = async () => {
     const { maps } = this.state
 
     const { contextProps } = await this.props.onMapsInit(maps)
@@ -115,7 +115,7 @@ class MultiMapManager extends React.Component {
 
     this.promisesResolvers.map(resolve => resolve())
     this.refreshMaps()
-    this.setState({ intialized: true, ...contextProps })
+    this.setState({ initialized: true, ...contextProps })
   }
 
   getContextValue = () => {
@@ -124,7 +124,6 @@ class MultiMapManager extends React.Component {
     const map = maps[0]
 
     return {
-      ...this.state,
       map,
       onMapAdded: this.onMapAdded,
       onMapRemoved: this.onMapRemoved,
@@ -132,16 +131,19 @@ class MultiMapManager extends React.Component {
       translations,
       visibleState: maps.map(m => m.getVisibleState()),
       visibleMapCount: maps.map(m => m.getVisibleState()).filter(e => e).length,
-      ...contextProps
+      ...contextProps,
+      // We need to spread state last so that translations and other contextProps provided
+      // from onMapsInit are not shadowed by any defaultProps
+      ...this.state
     }
   }
 
   childModifier = rawChildren => {
-    const { intialized } = this.state
+    const { initialized } = this.state
     const children = !Array.isArray(rawChildren) ? [rawChildren] : rawChildren
     const adoptedChildren = children.map((child, i) => {
       // only render FlexMap & FullScreenFlex until initialized
-      const allow = intialized || child.props.disableAsyncRender
+      const allow = initialized || child.props.disableAsyncRender
 
       if (child?.props?.isMultiMap) {
         // we caught a map
