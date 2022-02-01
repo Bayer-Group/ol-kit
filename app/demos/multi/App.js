@@ -8,10 +8,9 @@ import {
   MultiMapManager,
   BasemapContainer,
   VectorLayer,
-  LayerPanel,
   FullScreenFlex,
   FlexMap,
-  SplitScreen,
+  SplitScreen
 } from '@bayer/ol-kit'
 import { fromLonLat } from 'ol/proj'
 import olFeature from 'ol/Feature'
@@ -39,10 +38,11 @@ class App extends React.Component {
       id: 'map3',
       synced: false,
       visible: false
-    },
+    }
   ]
 
-  onMapInit = async (map) => {
+  onMapsInit = async (maps) => {
+    const map = maps[0]
     // create a vector layer and add to the map
     const layer = new VectorLayer({
       title: '1904Labs HQ',
@@ -61,21 +61,26 @@ class App extends React.Component {
     const dataLayer = await loadDataLayer(map, 'https://data.nasa.gov/api/geospatial/7zbq-j77a?method=export&format=KML')
 
     dataLayer.getSource().getFeatures().forEach(f => f.set('title', f.get('name')))
+
+    return {
+      contextProps: {}
+    }
   }
 
   render () {
     return (
-      <MultiMapManager>
-        <div style={{position: 'absolute', top: 20, left: 20, zIndex: 1, }}>
+      <MultiMapManager mapsConfig={this.mapConfigs} onMapsInit={this.onMapsInit}>
+        <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 1 }}>
           <SplitScreen />
         </div>
-        <FullScreenFlex>
+        <FullScreenFlex disableAsyncRender>
           {this.mapConfigs.map(({ id, synced, visible }, i) => {
             return (
               <FlexMap
                 key={id}
-                index={i}>
-                <Map id={id} onMapInit={this.onMapInit} synced={synced} visible={visible} isMultiMap>
+                index={i}
+                disableAsyncRender>
+                <Map id={id} synced={synced} visible={visible} isMultiMap>
                   <Popup />
                   <ContextMenu />
                   <Controls />
