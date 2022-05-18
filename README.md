@@ -1,10 +1,16 @@
+#  DEPRECATED.
+THIS PROJECT IS NO LONGER BEING MAINTAINED.
+
+It will not receive any future updates or bug fixes. 
+If you are using it, please consider using the latest offerings from [OpenLayers](https://openlayers.org/) and other related [Libraries](https://openlayers.org/3rd-party/).
+
+
 ![ol-kit logo](./config/jsdoc/template/static/readme-ol-kit-logo.png)
 
 ![npm version](https://img.shields.io/npm/v/@bayer/ol-kit)
 
 An easy-to-use, open source [React](https://github.com/facebook/react) & [OpenLayers](https://github.com/openlayers/openlayers) map component toolkit.
 
-Check out the [demo site here!](https://demo.ol-kit.com/)
 
 ## Prebuilt Map Components
 ![ol-kit logo](./config/jsdoc/template/static/example-screenshot-1.png)
@@ -60,15 +66,6 @@ class App extends React.Component {
 
 export default App
 ```
-
-## Documentation
-The documentation for the project is available in the `/docs` directory and the hosted version is available at [ol-kit.com](https://ol-kit.com/docs).
-
-If you are ol-kit project maintainer and need to generate updated docs then run 
-``` 
-npm install better-docs --no-save
-npm run docs
-``` 
 
 ## Running the Demo application locally
 
